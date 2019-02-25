@@ -1,0 +1,12 @@
+{
+  "name": "singlecloud-ui",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "generate": "plop --plopfile generators/index.js"
+  },
+  "devDependencies": {
+    "lerna": "^2.11.0",
+    "plop": "^2.2.1"
+  }
+}

@@ -1,0 +1,83 @@
+{
+  "name": "{{dashCase name}}",
+  "version": "0.0.1",
+  "description": "description of {{properCase name}}",
+  "repository": "zdnscloud/singlecloud-ui",
+  "license": "MIT",
+  "authors": [
+    "gsmlg"
+  ],
+  "files": [
+    "es",
+    "index.js",
+    "umd"
+  ],
+  "main": "index.js",
+  "module": "es/index.js",
+  "sideEffects": false,
+  "scripts": {
+    "build": "node ./tools/build.js",
+    "watch": "babel ./modules -d . --ignore __tests__ --watch",
+    "prepublishOnly": "node ./tools/build.js",
+    "clean": "git clean -fdX .",
+    "lint": "eslint modules",
+    "test": "jest"
+  },
+  "peerDependencies": {
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.0.0",
+    "@babel/core": "^7.0.0",
+    "@babel/plugin-external-helpers": "^7.0.0",
+    "@babel/plugin-proposal-class-properties": "^7.0.0",
+    "@babel/plugin-proposal-decorators": "^7.0.0",
+    "@babel/plugin-proposal-do-expressions": "^7.0.0",
+    "@babel/plugin-proposal-export-default-from": "^7.0.0",
+    "@babel/plugin-proposal-export-namespace-from": "^7.0.0",
+    "@babel/plugin-proposal-function-sent": "^7.0.0",
+    "@babel/plugin-proposal-json-strings": "^7.0.0",
+    "@babel/plugin-proposal-logical-assignment-operators": "^7.0.0",
+    "@babel/plugin-proposal-nullish-coalescing-operator": "^7.0.0",
+    "@babel/plugin-proposal-numeric-separator": "^7.0.0",
+    "@babel/plugin-proposal-optional-chaining": "^7.0.0",
+    "@babel/plugin-proposal-pipeline-operator": "^7.0.0",
+    "@babel/plugin-proposal-throw-expressions": "^7.0.0",
+    "@babel/plugin-syntax-dynamic-import": "^7.0.0",
+    "@babel/plugin-syntax-import-meta": "^7.0.0",
+    "@babel/preset-env": "^7.0.0",
+    "@babel/preset-react": "^7.0.0",
+    "babel-core": "^7.0.0-bridge.0",
+    "babel-eslint": "^10.0.1",
+    "babel-jest": "^24.1.0",
+    "babel-plugin-dev-expression": "^0.2.1",
+    "babel-plugin-transform-react-remove-prop-types": "^0.4.13",
+    "eslint": "^5.14.1",
+    "eslint-plugin-import": "^2.11.0",
+    "eslint-plugin-react": "^7.7.0",
+    "gzip-size": "^5.0.0",
+    "jest": "^24.1.0",
+    "pretty-bytes": "^5.1.0",
+    "raf": "^3.4.0",
+    "rollup": "^1.2.3",
+    "rollup-plugin-babel": "^4.0.1",
+    "rollup-plugin-commonjs": "^9.1.0",
+    "rollup-plugin-node-resolve": "^4.0.1",
+    "rollup-plugin-replace": "^2.0.0",
+    "rollup-plugin-uglify": "^6.0.2"
+  },
+  "browserify": {
+    "transform": [
+      "loose-envify"
+    ]
+  },
+  "jest": {
+    "setupFiles": [
+      "raf/polyfill"
+    ]
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "keywords": [
+  ]
+}
