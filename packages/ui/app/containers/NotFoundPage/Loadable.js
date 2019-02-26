@@ -1,0 +1,8 @@
+/**
+ * Asynchronously loads the component for NotFoundPage
+ */
+import loadable from '@loadable/component';
+
+export default loadable(() =>
+  import(/* webpackChunkName: "NotFoundPage" */ './index'),
+);
