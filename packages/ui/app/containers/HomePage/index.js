@@ -10,16 +10,44 @@
  */
 
 import React from 'react';
+import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import messages from './messages';
+import { Link } from "react-router-dom";
+import { withStyles } from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button';
+
+const styles = theme => ({
+  button: {
+    margin: theme.spacing.unit,
+  },
+  input: {
+    display: 'none',
+  },
+});
 
 /* eslint-disable react/prefer-stateless-function */
-export default class HomePage extends React.PureComponent {
+class HomePage extends React.PureComponent {
+  static propTypes = {
+    classes: PropTypes.object.isRequired,
+  };
+
   render() {
+    const { classes } = this.props;
+
     return (
-      <h1>
-        <FormattedMessage {...messages.header} />
-      </h1>
+      <div>
+        <h1>
+          <FormattedMessage {...messages.header} />
+        </h1>
+        <div>
+          <Button variant="contained" component={Link} to="/clusters" className={classes.button}>
+            Clusters
+          </Button>
+        </div>
+      </div>
     );
   }
 }
+
+export default withStyles(styles)(HomePage);
