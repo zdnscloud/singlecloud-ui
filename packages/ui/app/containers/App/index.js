@@ -13,6 +13,7 @@ import { Switch, Route } from 'react-router-dom';
 import HomePage from 'containers/HomePage/Loadable';
 import NotFoundPage from 'containers/NotFoundPage/Loadable';
 import ClustersPage from 'containers/ClustersPage/Loadable';
+import NodesPage from 'containers/NodesPage/Loadable';
 
 
 import GlobalStyle from '../../global-styles';
@@ -23,6 +24,7 @@ export default function App() {
       <Switch>
         <Route exact path="/" component={HomePage} />
         <Route exact path="/clusters" component={ClustersPage} />
+        <Route exact path="/clusters/:cluster_id/nodes" component={NodesPage} />
         <Route component={NotFoundPage} />
       </Switch>
       <GlobalStyle />

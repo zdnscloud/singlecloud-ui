@@ -12,7 +12,10 @@ module.exports = (app) => {
         type:    'folder',
         id:      'b1b2e7006be',
         name:    'Documents',
-        links:   { /* see links */ },
+        links:   {
+          self: '/zcloud.cn/v1/clusters/b1b2e7006be',
+          nodes: '/zcloud.cn/v1/clusters/b1b2e7006be/nodes',
+        },
         actions: { /* see actions */ }
       },
       /* ... more folder resources ... */
@@ -31,13 +34,31 @@ module.exports = (app) => {
   });
 
   app.post('/zcloud.cn/v1/clusters', (req, res) => {
+    const id = parseInt(Math.random().toString().slice(2), 10).toString(36);
     clusters.data.push({
+      id,
       type:    'folder',
-      id: parseInt(Math.random().toString().slice(2), 10).toString(36),
       name: req.body.name,
-      links:   { /* see links */ },
+      links:   {
+        self: `/zcloud.cn/v1/clusters/${id}`,
+        nodes: `/zcloud.cn/v1/clusters/${id}/nodes`,
+      },
       actions: { /* see actions */ }
     });
     res.status(201).json({});
   });
+
+  app.get('/zcloud.cn/v1/clusters/:cluster_id', (req, res) => {
+    const cluster = clusters.data.find((c) => c.id === req.params.cluster_id);
+    if (cluster) {
+      res.status(200).json(cluster);
+    } else {
+      res.status(404).end();
+    }
+  });
+
+  app.get('/zcloud.cn/v1/clusters/:cluster_id/nodes', (req, res) => {
+    res.status(200).json(clusters);
+  });
+
 };
