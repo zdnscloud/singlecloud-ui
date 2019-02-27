@@ -113,6 +113,7 @@
     "babel-plugin-react-transform": "3.0.0",
     "babel-plugin-styled-components": "1.10.0",
     "babel-plugin-transform-react-remove-prop-types": "0.4.24",
+    "body-parser": "^1.18.3",
     "circular-dependency-plugin": "5.0.2",
     "compare-versions": "3.4.0",
     "compression-webpack-plugin": "2.0.0",

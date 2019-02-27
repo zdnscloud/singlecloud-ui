@@ -1,13 +1,13 @@
-import { defaultAction } from '../actions';
-import { DEFAULT_ACTION } from '../constants';
+import { initAction } from '../actions';
+import { INIT_ACTION } from '../constants';
 
 describe('{{ properCase name }} actions', () => {
   describe('Default Action', () => {
-    it('has a type of DEFAULT_ACTION', () => {
+    it('has a type of INIT_ACTION', () => {
       const expected = {
-        type: DEFAULT_ACTION,
+        type: INIT_ACTION,
       };
-      expect(defaultAction()).toEqual(expected);
+      expect(initAction()).toEqual(expected);
     });
   });
 });

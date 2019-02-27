@@ -11,16 +11,34 @@ const selectClustersPageDomain = state =>
 /**
  * Other specific selectors
  */
+export const makeSelectClusters = () => createSelector(
+  selectClustersPageDomain,
+  (substate) => substate.get('clusters'),
+);
+
+export const makeSelectTableList = () => createSelector(
+  selectClustersPageDomain,
+  (substate) => substate.get('tableList'),
+);
+
+export const makeSelectCreateIsOpen = () => createSelector(
+  selectClustersPageDomain,
+  (substate) => substate.get('createIsOpen'),
+);
+
+export const makeSelectCreateFormData = () => createSelector(
+  selectClustersPageDomain,
+  (substate) => substate.get('createFormData'),
+);
 
 /**
  * Default selector used by ClustersPage
  */
 
-const makeSelectClustersPage = () =>
+export const makeSelectClustersPage = () =>
   createSelector(
     selectClustersPageDomain,
-    substate => substate.toJS(),
+    substate => substate,
   );
 
 export default makeSelectClustersPage;
-export { selectClustersPageDomain };
