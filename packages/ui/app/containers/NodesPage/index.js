@@ -69,7 +69,7 @@ export class NodesPage extends React.PureComponent {
         <div className={classes.content}>
           <div className={classes.appBarSpacer} />
           <Typography variant="h4" gutterBottom component="h2">
-            Nodes
+            <FormattedMessage {...messages.nodes} />
           </Typography>
           <Typography component="div" className={classes.chartContainer}>
             <NodesList />

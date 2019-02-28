@@ -1,4 +1,18 @@
 {
+  "app.containers.ClustersPage.clusters": "",
+  "app.containers.ClustersPage.header": "",
+  "app.containers.ClustersPage.pageDesc": "",
+  "app.containers.ClustersPage.pageTitle": "",
+  "app.containers.ClustersPage.tableTitleName": "",
+  "app.containers.ClustersPage.tableTitleNodesCount": "",
   "app.containers.HomePage.header": "This is the HomePage container!",
+  "app.containers.NodesPage.header": "",
+  "app.containers.NodesPage.nodes": "",
+  "app.containers.NodesPage.pageDesc": "",
+  "app.containers.NodesPage.pageTitle": "",
+  "app.containers.NodesPage.tableTitleAddress": "",
+  "app.containers.NodesPage.tableTitleLabels": "",
+  "app.containers.NodesPage.tableTitleName": "",
+  "app.containers.NodesPage.tableTitleRole": "",
   "app.containers.NotFoundPage.header": "This is the NotFoundPage container!"
 }

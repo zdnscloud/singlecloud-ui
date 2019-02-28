@@ -21,16 +21,16 @@ export default defineMessages({
     id: `${scope}.header`,
     defaultMessage: 'This is the ClustersPage header!',
   },
-  table: {
-    title: {
-      name: {
-        id: `${scope}.table.title.name`,
-        defaultMessage: 'Name',
-      },
-      nodeCounts: {
-        id: `${scope}.table.title.nodeCounts`,
-        defaultMessage: 'NodeCounts',
-      },
-    },
+  clusters: {
+    id: `${scope}.clusters`,
+    defaultMessage: 'Clusters',
+  },
+  tableTitleName: {
+    id: `${scope}.tableTitleName`,
+    defaultMessage: 'Name',
+  },
+  tableTitleNodesCount: {
+    id: `${scope}.tableTitleNodesCount`,
+    defaultMessage: 'NodesCount',
   },
 });

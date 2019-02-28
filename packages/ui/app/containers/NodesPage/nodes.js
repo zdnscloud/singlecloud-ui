@@ -48,10 +48,16 @@ export class NodesTable extends React.PureComponent {
           <TableHead>
             <TableRow>
               <TableCell>
-                <FormattedMessage {...messages.table.title.name} />
+                <FormattedMessage {...messages.tableTitleName} />
               </TableCell>
-              <TableCell align="right">
-                <FormattedMessage {...messages.table.title.nodeCounts} />
+              <TableCell>
+                <FormattedMessage {...messages.tableTitleAddress} />
+              </TableCell>
+              <TableCell>
+                <FormattedMessage {...messages.tableTitleRole} />
+              </TableCell>
+              <TableCell>
+                <FormattedMessage {...messages.tableTitleLabels} />
               </TableCell>
             </TableRow>
           </TableHead>
@@ -61,7 +67,9 @@ export class NodesTable extends React.PureComponent {
                 <TableCell component="th" scope="row">
                   {nodes.getIn([id, 'name'])}
                 </TableCell>
-                <TableCell align="right">{}</TableCell>
+                <TableCell>{nodes.getIn([id, 'address'])}</TableCell>
+                <TableCell>{nodes.getIn([id, 'role'])}</TableCell>
+                <TableCell>{nodes.getIn([id, 'labels'])}</TableCell>
               </TableRow>
             ))}
           </TableBody>

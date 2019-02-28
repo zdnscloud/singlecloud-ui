@@ -21,16 +21,24 @@ export default defineMessages({
     id: `${scope}.header`,
     defaultMessage: 'This is the NodesPage header!',
   },
-  table: {
-    title: {
-      name: {
-        id: `${scope}.table.title.name`,
-        defaultMessage: 'Name',
-      },
-      nodeCounts: {
-        id: `${scope}.table.title.nodeCounts`,
-        defaultMessage: 'NodeCounts',
-      },
-    },
+  nodes: {
+    id: `${scope}.nodes`,
+    defaultMessage: 'Nodes',
+  },
+  tableTitleName: {
+    id: `${scope}.tableTitleName`,
+    defaultMessage: 'Name',
+  },
+  tableTitleAddress: {
+    id: `${scope}.tableTitleAddress`,
+    defaultMessage: 'Address',
+  },
+  tableTitleRole: {
+    id: `${scope}.tableTitleRole`,
+    defaultMessage: 'Role',
+  },
+  tableTitleLabels: {
+    id: `${scope}.tableTitleLabels`,
+    defaultMessage: 'Labels',
   },
 });

@@ -49,10 +49,10 @@ export class ClustersTable extends React.PureComponent {
           <TableHead>
             <TableRow>
               <TableCell>
-                <FormattedMessage {...messages.table.title.name} />
+                <FormattedMessage {...messages.tableTitleName} />
               </TableCell>
               <TableCell align="right">
-                <FormattedMessage {...messages.table.title.nodeCounts} />
+                <FormattedMessage {...messages.tableTitleNodesCount} />
               </TableCell>
             </TableRow>
           </TableHead>

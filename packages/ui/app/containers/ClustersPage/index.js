@@ -81,7 +81,7 @@ export class ClustersPage extends React.PureComponent {
           </Fab>
           <CreateClusterModal />
           <Typography variant="h4" gutterBottom component="h2">
-            Clusters
+            <FormattedMessage {...messages.clusters} />
           </Typography>
           <Typography component="div" className={classes.chartContainer}>
             <ClustersList />
