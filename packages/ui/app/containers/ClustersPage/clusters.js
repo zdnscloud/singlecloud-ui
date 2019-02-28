@@ -13,6 +13,7 @@ import { bindActionCreators, compose } from 'redux';
 
 import { Link } from "react-router-dom";
 import { withStyles } from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -59,10 +60,10 @@ export class ClustersTable extends React.PureComponent {
           <TableBody>
             {tableList.map((id) => (
               <TableRow key={id}>
-                <TableCell component="th" scope="row">
-                  <Link to={`/clusters/${id}/nodes`}>
+                <TableCell>
+                  <Button component={Link} to={`/clusters/${id}/nodes`}>
                     {clusters.getIn([id, 'name'])}
-                  </Link>
+                  </Button>
                 </TableCell>
                 <TableCell align="right">{}</TableCell>
               </TableRow>

@@ -9,25 +9,33 @@
 
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 
 import HomePage from 'containers/HomePage/Loadable';
 import NotFoundPage from 'containers/NotFoundPage/Loadable';
 import ClustersPage from 'containers/ClustersPage/Loadable';
 import NodesPage from 'containers/NodesPage/Loadable';
 
-
-import GlobalStyle from '../../global-styles';
+const theme = createMuiTheme({
+  typography: {
+    useNextVariants: true,
+  },
+  palette: {
+    type: 'dark',
+  },
+});
 
 export default function App() {
   return (
-    <div>
-      <Switch>
-        <Route exact path="/" component={HomePage} />
-        <Route exact path="/clusters" component={ClustersPage} />
-        <Route exact path="/clusters/:cluster_id/nodes" component={NodesPage} />
-        <Route component={NotFoundPage} />
-      </Switch>
-      <GlobalStyle />
-    </div>
+    <MuiThemeProvider theme={theme}>
+      <div>
+        <Switch>
+          <Route exact path="/" component={HomePage} />
+          <Route exact path="/clusters" component={ClustersPage} />
+          <Route exact path="/clusters/:cluster_id/nodes" component={NodesPage} />
+          <Route component={NotFoundPage} />
+        </Switch>
+      </div>
+    </MuiThemeProvider>
   );
 }
