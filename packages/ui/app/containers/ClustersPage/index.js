@@ -21,7 +21,6 @@ import Typography from '@material-ui/core/Typography';
 import Fab from '@material-ui/core/Fab';
 import IconButton from '@material-ui/core/IconButton';
 import CloudIcon from '@material-ui/icons/Cloud';
-import AddIcon from '@material-ui/icons/Add';
 
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
@@ -32,7 +31,6 @@ import saga from './saga';
 import messages from './messages';
 import styles from './styles';
 import ClustersList from './clusters';
-import CreateClusterModal from './createCluster';
 
 /* eslint-disable react/prefer-stateless-function */
 export class ClustersPage extends React.PureComponent {
@@ -43,7 +41,6 @@ export class ClustersPage extends React.PureComponent {
   render() {
     const {
       classes,
-      openCreateCluster,
     } = this.props;
 
     return (
@@ -71,15 +68,6 @@ export class ClustersPage extends React.PureComponent {
         </AppBar>
         <div className={classes.content}>
           <div className={classes.appBarSpacer} />
-          <Fab
-            color="primary"
-            aria-label="create cluster"
-            className={classes.menuButton}
-            onClick={openCreateCluster}
-          >
-            <AddIcon />
-          </Fab>
-          <CreateClusterModal />
           <Typography variant="h4" gutterBottom component="h2">
             <FormattedMessage {...messages.clusters} />
           </Typography>
@@ -93,6 +81,7 @@ export class ClustersPage extends React.PureComponent {
 }
 
 ClustersPage.propTypes = {
+  initAction: PropTypes.func,
   classes: PropTypes.object.isRequired,
 };
 
