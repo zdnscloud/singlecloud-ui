@@ -11,7 +11,7 @@ import { FormattedMessage } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import { bindActionCreators, compose } from 'redux';
 
-import { Link } from "react-router-dom";
+import { Link } from 'react-router-dom';
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
@@ -21,10 +21,7 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 
-import {
-  makeSelectClusters,
-  makeSelectTableList,
-} from './selectors';
+import { makeSelectClusters, makeSelectTableList } from './selectors';
 import * as actions from './actions';
 import messages from './messages';
 import styles from './styles';
@@ -38,11 +35,7 @@ export class ClustersTable extends React.PureComponent {
   };
 
   render() {
-    const {
-      classes,
-      tableList,
-      clusters,
-    } = this.props;
+    const { classes, tableList, clusters } = this.props;
 
     return (
       <Paper className={classes.tableWrapper}>
@@ -58,7 +51,7 @@ export class ClustersTable extends React.PureComponent {
             </TableRow>
           </TableHead>
           <TableBody>
-            {tableList.map((id) => (
+            {tableList.map(id => (
               <TableRow key={id}>
                 <TableCell>
                   <Button component={Link} to={`/clusters/${id}/nodes`}>
@@ -75,15 +68,18 @@ export class ClustersTable extends React.PureComponent {
   }
 }
 
-
 const mapStateToProps = createStructuredSelector({
   clusters: makeSelectClusters(),
   tableList: makeSelectTableList(),
 });
 
-const mapDispatchToProps = (dispatch) => bindActionCreators({
-  ...actions,
-}, dispatch);
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      ...actions,
+    },
+    dispatch,
+  );
 
 const withConnect = connect(
   mapStateToProps,

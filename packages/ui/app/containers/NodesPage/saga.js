@@ -1,11 +1,7 @@
 import { takeLatest, call, put, select } from 'redux-saga/effects';
 import request from 'utils/request';
 
-import {
-  INIT_ACTION,
-  LOAD_CLUSTER,
-  LOAD_NODES,
-} from './constants';
+import { INIT_ACTION, LOAD_CLUSTER, LOAD_NODES } from './constants';
 import {
   loadNodesRequest,
   loadNodesSuccess,
@@ -14,10 +10,7 @@ import {
   loadClusterSuccess,
   loadClusterFailure,
 } from './actions';
-import {
-  makeSelectClusterID,
-  makeSelectCluster,
-} from './selectors';
+import { makeSelectClusterID, makeSelectCluster } from './selectors';
 
 const url = '/zcloud.cn/v1/clusters';
 

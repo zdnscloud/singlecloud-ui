@@ -19,10 +19,7 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 
-import {
-  makeSelectNodes,
-  makeSelectTableList,
-} from './selectors';
+import { makeSelectNodes, makeSelectTableList } from './selectors';
 import * as actions from './actions';
 import messages from './messages';
 import styles from './styles';
@@ -36,11 +33,7 @@ export class NodesTable extends React.PureComponent {
   };
 
   render() {
-    const {
-      classes,
-      tableList,
-      nodes,
-    } = this.props;
+    const { classes, tableList, nodes } = this.props;
 
     return (
       <Paper className={classes.tableWrapper}>
@@ -62,7 +55,7 @@ export class NodesTable extends React.PureComponent {
             </TableRow>
           </TableHead>
           <TableBody>
-            {tableList.map((id) => (
+            {tableList.map(id => (
               <TableRow key={id}>
                 <TableCell component="th" scope="row">
                   {nodes.getIn([id, 'name'])}
@@ -79,15 +72,18 @@ export class NodesTable extends React.PureComponent {
   }
 }
 
-
 const mapStateToProps = createStructuredSelector({
   nodes: makeSelectNodes(),
   tableList: makeSelectTableList(),
 });
 
-const mapDispatchToProps = (dispatch) => bindActionCreators({
-  ...actions,
-}, dispatch);
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      ...actions,
+    },
+    dispatch,
+  );
 
 const withConnect = connect(
   mapStateToProps,

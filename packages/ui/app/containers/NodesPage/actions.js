@@ -34,12 +34,12 @@ export const loadNodesRequest = () => ({
   payload: {},
 });
 
-export const loadNodesSuccess = (data) => ({
+export const loadNodesSuccess = data => ({
   type: LOAD_NODES_SUCCESS,
   payload: { data },
 });
 
-export const loadNodesFailure = (errors) => ({
+export const loadNodesFailure = errors => ({
   type: LOAD_NODES_FAILURE,
   payload: { errors },
 });
@@ -54,12 +54,12 @@ export const loadClusterRequest = () => ({
   payload: {},
 });
 
-export const loadClusterSuccess = (data) => ({
+export const loadClusterSuccess = data => ({
   type: LOAD_CLUSTER_SUCCESS,
   payload: { data },
 });
 
-export const loadClusterFailure = (errors) => ({
+export const loadClusterFailure = errors => ({
   type: LOAD_CLUSTER_FAILURE,
   payload: { errors },
 });

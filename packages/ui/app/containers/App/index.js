@@ -32,7 +32,11 @@ export default function App() {
         <Switch>
           <Route exact path="/" component={HomePage} />
           <Route exact path="/clusters" component={ClustersPage} />
-          <Route exact path="/clusters/:cluster_id/nodes" component={NodesPage} />
+          <Route
+            exact
+            path="/clusters/:cluster_id/nodes"
+            component={NodesPage}
+          />
           <Route component={NotFoundPage} />
         </Switch>
       </div>

@@ -28,12 +28,12 @@ export const loadClustersRequest = () => ({
   payload: {},
 });
 
-export const loadClustersSuccess = (data) => ({
+export const loadClustersSuccess = data => ({
   type: LOAD_CLUSTERS_SUCCESS,
   payload: { data },
 });
 
-export const loadClustersFailure = (errors) => ({
+export const loadClustersFailure = errors => ({
   type: LOAD_CLUSTERS_FAILURE,
   payload: { errors },
 });

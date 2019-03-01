@@ -35,13 +35,11 @@ function nodesPageReducer(state = initialState, { type, payload }) {
     case LOAD_NODES_SUCCESS: {
       const { data } = payload.data;
       const nodes = {};
-      const list = data.map((item) => {
+      const list = data.map(item => {
         nodes[item.id] = item;
         return item.id;
       });
-      return state
-        .set('tableList', fromJS(list))
-        .mergeIn(['nodes'], nodes);
+      return state.set('tableList', fromJS(list)).mergeIn(['nodes'], nodes);
     }
 
     case LOAD_NODES_FAILURE:

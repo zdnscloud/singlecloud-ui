@@ -7,21 +7,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Helmet } from 'react-helmet';
 import { FormattedMessage } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import { bindActionCreators, compose } from 'redux';
 
-import classNames from 'classnames';
 import { withStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import Fab from '@material-ui/core/Fab';
 import IconButton from '@material-ui/core/IconButton';
 import CloudIcon from '@material-ui/icons/Cloud';
-import AddIcon from '@material-ui/icons/Add';
 
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
@@ -39,9 +35,7 @@ export class NodesPage extends React.PureComponent {
   }
 
   render() {
-    const {
-      classes,
-    } = this.props;
+    const { classes } = this.props;
 
     return (
       <div className={classes.root}>
@@ -81,15 +75,20 @@ export class NodesPage extends React.PureComponent {
 }
 
 NodesPage.propTypes = {
+  initAction: PropTypes.func,
   classes: PropTypes.object.isRequired,
+  match: PropTypes.object,
 };
 
-const mapStateToProps = createStructuredSelector({
-});
+const mapStateToProps = createStructuredSelector({});
 
-const mapDispatchToProps = (dispatch) => bindActionCreators({
-  ...actions,
-}, dispatch);
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      ...actions,
+    },
+    dispatch,
+  );
 
 const withConnect = connect(
   mapStateToProps,

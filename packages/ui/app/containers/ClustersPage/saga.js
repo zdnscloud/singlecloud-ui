@@ -1,23 +1,13 @@
 import { takeLatest, call, put, select, delay } from 'redux-saga/effects';
 import request from 'utils/request';
 
-import {
-  INIT_ACTION,
-  LOAD_CLUSTERS,
-} from './constants';
+import { INIT_ACTION, LOAD_CLUSTERS } from './constants';
 import {
   loadClustersRequest,
   loadClustersSuccess,
   loadClustersFailure,
-  createClusterRequest,
-  createClusterSuccess,
-  createClusterFailure,
-  closeCreateCluster,
 } from './actions';
-import {
-  makeSelectCreateFormData,
-  makeSelectClusters,
-} from './selectors';
+import { makeSelectClusters } from './selectors';
 
 const url = '/zcloud.cn/v1/clusters';
 

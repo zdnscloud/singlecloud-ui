@@ -12,10 +12,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import messages from './messages';
-import { Link } from "react-router-dom";
+import { Link } from 'react-router-dom';
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
+import messages from './messages';
 
 const styles = theme => ({
   button: {
@@ -41,7 +41,12 @@ class HomePage extends React.PureComponent {
           <FormattedMessage {...messages.header} />
         </h1>
         <div>
-          <Button variant="contained" component={Link} to="/clusters" className={classes.button}>
+          <Button
+            variant="contained"
+            component={Link}
+            to="/clusters"
+            className={classes.button}
+          >
             Clusters
           </Button>
         </div>
