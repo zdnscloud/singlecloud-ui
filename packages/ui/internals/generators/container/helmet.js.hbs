@@ -1,0 +1,40 @@
+import React from 'react';
+import PropTypes from 'prop-types';
+import Helmet from 'react-helmet';
+{{#if wantMessages}}
+import { injectIntl } from 'react-intl';
+
+import messages from './messages';
+
+function {{ properCase name }}Helmet(props) {
+  const { intl } = props;
+  return (
+    <Helmet>
+      <title>{intl.formatMessage(messages.pageTitle)}</title>
+      <meta
+        name="description"
+        content={intl.formatMessage(messages.pageDesc)}
+      />
+    </Helmet>
+  );
+}
+
+{{ properCase name }}Helmet.propTypes = {
+  intl: PropTypes.object.isRequired,
+};
+
+export default injectIntl({{ properCase name }}Helmet);
+{{else}}
+
+export default function {{ properCase name }}Helmet(props) {
+  return (
+    <Helmet>
+      <title>{{ properCase name }}</title>
+      <meta
+        name="description"
+        content="Description of {{ properCase name }}"
+      />
+    </Helmet>
+  );
+}
+{{/if}}

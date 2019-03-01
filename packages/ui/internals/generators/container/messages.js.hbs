@@ -9,6 +9,16 @@ import { defineMessages } from 'react-intl';
 export const scope = 'app.containers.{{ properCase name }}';
 
 export default defineMessages({
+  {{#if wantHeaders}}
+  pageTitle: {
+    id: `${scope}.pageTitle`,
+    defaultMessage: '{{ properCase name }}',
+  },
+  pageDesc: {
+    id: `${scope}.pageDesc`,
+    defaultMessage: 'Description of {{ properCase name }}',
+  },
+  {{/if}}
   header: {
     id: `${scope}.header`,
     defaultMessage: 'This is the {{ properCase name }} container!',

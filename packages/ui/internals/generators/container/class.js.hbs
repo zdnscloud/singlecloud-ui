@@ -7,16 +7,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-{{#if wantHeaders}}
-import { Helmet } from 'react-helmet';
-{{/if}}
 {{#if wantMessages}}
 import { FormattedMessage } from 'react-intl';
 {{/if}}
 {{#if wantActionsAndReducer}}
 import { createStructuredSelector } from 'reselect';
 {{/if}}
-import { compose } from 'redux';
+import { bindActionCreators, compose } from 'redux';
 
 {{#if wantSaga}}
 import injectSaga from 'utils/injectSaga';
@@ -26,23 +23,27 @@ import injectReducer from 'utils/injectReducer';
 import makeSelect{{properCase name}} from './selectors';
 import reducer from './reducer';
 {{/if}}
+import * as actions from './actions';
 {{#if wantSaga}}
 import saga from './saga';
 {{/if}}
 {{#if wantMessages}}
 import messages from './messages';
 {{/if}}
+{{#if wantHeaders}}
+import { {{ properCase name }}Helmet } from './helmet';
+{{/if}}
 
 /* eslint-disable react/prefer-stateless-function */
 export class {{ properCase name }} extends {{{ type }}} {
+  static propTypes = {
+  };
+
   render() {
     return (
       <div>
       {{#if wantHeaders}}
-        <Helmet>
-          <title>{{properCase name}}</title>
-          <meta name="description" content="Description of {{properCase name}}" />
-        </Helmet>
+        <{{ properCase name }}Helmet />
       {{/if}}
       {{#if wantMessages}}
         <FormattedMessage {...messages.header} />
@@ -52,21 +53,19 @@ export class {{ properCase name }} extends {{{ type }}} {
   }
 }
 
-{{ properCase name }}.propTypes = {
-  dispatch: PropTypes.func.isRequired,
-};
-
 {{#if wantActionsAndReducer}}
 const mapStateToProps = createStructuredSelector({
   {{ camelCase name }}: makeSelect{{properCase name}}(),
 });
 {{/if}}
 
-function mapDispatchToProps(dispatch) {
-  return {
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      ...actions,
+    },
     dispatch,
-  };
-}
+  );
 
 {{#if wantActionsAndReducer}}
 const withConnect = connect(

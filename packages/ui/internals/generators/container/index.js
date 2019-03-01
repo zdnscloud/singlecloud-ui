@@ -94,6 +94,16 @@ module.exports = {
       },
     ];
 
+    // If component wants headers
+    if (data.wantHeaders) {
+      actions.push({
+        type: 'add',
+        path: '../../app/containers/{{properCase name}}/helmet.js',
+        templateFile: './container/helmet.js.hbs',
+        abortOnFail: true,
+      });
+    }
+
     // If component wants messages
     if (data.wantMessages) {
       actions.push({
