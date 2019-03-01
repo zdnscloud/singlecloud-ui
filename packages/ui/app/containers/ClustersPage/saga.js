@@ -1,4 +1,4 @@
-import { takeLatest, call, put, select } from 'redux-saga/effects';
+import { takeLatest, call, put, select, delay } from 'redux-saga/effects';
 import request from 'utils/request';
 
 import {
@@ -15,12 +15,21 @@ import {
   createClusterFailure,
   closeCreateCluster,
 } from './actions';
-import { makeSelectCreateFormData } from './selectors';
+import {
+  makeSelectCreateFormData,
+  makeSelectClusters,
+} from './selectors';
 
 const url = '/zcloud.cn/v1/clusters';
 
 export function* initialize() {
   yield* loadClusters();
+  while (true) {
+    yield delay(3000);
+    const clusters = yield select(makeSelectClusters());
+    if (clusters.size > 0) break;
+    yield* loadClusters();
+  }
 }
 
 export function* loadClusters() {

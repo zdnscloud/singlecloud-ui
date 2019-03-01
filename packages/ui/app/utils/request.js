@@ -37,8 +37,14 @@ function checkStatus(response) {
  *
  * @return {object}           The response data
  */
-export default function request(url, options) {
-  return fetch(url, options)
+export default function request(url, options = {}) {
+  const headers = Object.assign({
+    Accept: 'application/json',
+  }, options.headers);
+  return fetch(url, {
+    ...options,
+    headers,
+  })
     .then(checkStatus)
     .then(parseJSON);
 }
