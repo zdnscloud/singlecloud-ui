@@ -10,17 +10,6 @@ const selectNodesPageDomain = state => state.get('nodesPage', initialState);
 /**
  * Other specific selectors
  */
-export const makeSelectNodes = () =>
-  createSelector(
-    selectNodesPageDomain,
-    substate => substate.get('nodes'),
-  );
-
-export const makeSelectTableList = () =>
-  createSelector(
-    selectNodesPageDomain,
-    substate => substate.get('tableList'),
-  );
 
 export const makeSelectClusterID = () =>
   createSelector(
@@ -28,10 +17,17 @@ export const makeSelectClusterID = () =>
     substate => substate.get('clusterID'),
   );
 
-export const makeSelectCluster = () =>
+export const makeSelectNodes = () =>
   createSelector(
     selectNodesPageDomain,
-    substate => substate.get('cluster'),
+    makeSelectClusterID(),
+    (substate, clusterID) => substate.getIn(['nodes', clusterID]),
+  );
+
+export const makeSelectTableList = () =>
+  createSelector(
+    selectNodesPageDomain,
+    substate => substate.get('tableList'),
   );
 
 /**

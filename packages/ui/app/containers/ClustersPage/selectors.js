@@ -23,18 +23,6 @@ export const makeSelectTableList = () =>
     substate => substate.get('tableList'),
   );
 
-export const makeSelectCreateIsOpen = () =>
-  createSelector(
-    selectClustersPageDomain,
-    substate => substate.get('createIsOpen'),
-  );
-
-export const makeSelectCreateFormData = () =>
-  createSelector(
-    selectClustersPageDomain,
-    substate => substate.get('createFormData'),
-  );
-
 /**
  * Default selector used by ClustersPage
  */

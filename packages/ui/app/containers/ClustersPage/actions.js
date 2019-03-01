@@ -10,6 +10,10 @@ import {
   LOAD_CLUSTERS_REQUEST,
   LOAD_CLUSTERS_SUCCESS,
   LOAD_CLUSTERS_FAILURE,
+  LOAD_CLUSTER,
+  LOAD_CLUSTER_REQUEST,
+  LOAD_CLUSTER_SUCCESS,
+  LOAD_CLUSTER_FAILURE,
 } from './constants';
 
 export function initAction() {
@@ -35,5 +39,25 @@ export const loadClustersSuccess = data => ({
 
 export const loadClustersFailure = errors => ({
   type: LOAD_CLUSTERS_FAILURE,
+  payload: { errors },
+});
+
+export const loadCluster = id => ({
+  type: LOAD_CLUSTER,
+  payload: { id },
+});
+
+export const loadClusterRequest = () => ({
+  type: LOAD_CLUSTER_REQUEST,
+  payload: {},
+});
+
+export const loadClusterSuccess = data => ({
+  type: LOAD_CLUSTER_SUCCESS,
+  payload: { data },
+});
+
+export const loadClusterFailure = errors => ({
+  type: LOAD_CLUSTER_FAILURE,
   payload: { errors },
 });

@@ -29,7 +29,7 @@ export class NodesTable extends React.PureComponent {
   static propTypes = {
     classes: PropTypes.object.isRequired,
     tableList: PropTypes.object.isRequired,
-    nodes: PropTypes.object.isRequired,
+    nodes: PropTypes.object,
   };
 
   render() {
@@ -55,16 +55,15 @@ export class NodesTable extends React.PureComponent {
             </TableRow>
           </TableHead>
           <TableBody>
-            {tableList.map(id => (
-              <TableRow key={id}>
-                <TableCell component="th" scope="row">
-                  {nodes.getIn([id, 'name'])}
-                </TableCell>
-                <TableCell>{nodes.getIn([id, 'address'])}</TableCell>
-                <TableCell>{nodes.getIn([id, 'role'])}</TableCell>
-                <TableCell>{nodes.getIn([id, 'labels'])}</TableCell>
-              </TableRow>
-            ))}
+            {nodes &&
+              tableList.map(id => (
+                <TableRow key={id}>
+                  <TableCell>{nodes.getIn([id, 'name'])}</TableCell>
+                  <TableCell>{nodes.getIn([id, 'address'])}</TableCell>
+                  <TableCell>{nodes.getIn([id, 'role'])}</TableCell>
+                  <TableCell>{nodes.getIn([id, 'labels'])}</TableCell>
+                </TableRow>
+              ))}
           </TableBody>
         </Table>
       </Paper>

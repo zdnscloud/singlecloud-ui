@@ -10,6 +10,9 @@ import {
   LOAD_CLUSTERS_REQUEST,
   LOAD_CLUSTERS_SUCCESS,
   LOAD_CLUSTERS_FAILURE,
+  LOAD_CLUSTER_REQUEST,
+  LOAD_CLUSTER_SUCCESS,
+  LOAD_CLUSTER_FAILURE,
 } from './constants';
 
 export const initialState = fromJS({
@@ -42,6 +45,15 @@ function clustersPageReducer(state = initialState, { type, payload }) {
 
     case LOAD_CLUSTERS_FAILURE:
       return state.set('loadClustersErrors', payload.errors);
+
+    case LOAD_CLUSTER_REQUEST:
+      return state;
+
+    case LOAD_CLUSTER_SUCCESS:
+      return state.setIn(['clusters', payload.data.id], fromJS(payload.data));
+
+    case LOAD_CLUSTER_FAILURE:
+      return state;
 
     default:
       return state;

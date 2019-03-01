@@ -21,7 +21,7 @@ const theme = createMuiTheme({
     useNextVariants: true,
   },
   palette: {
-    type: 'dark',
+    type: 'light',
   },
 });
 

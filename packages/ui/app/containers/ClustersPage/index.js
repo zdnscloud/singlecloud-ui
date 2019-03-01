@@ -20,9 +20,7 @@ import IconButton from '@material-ui/core/IconButton';
 import CloudIcon from '@material-ui/icons/Cloud';
 
 import injectSaga from 'utils/injectSaga';
-import injectReducer from 'utils/injectReducer';
 import * as actions from './actions';
-import reducer from './reducer';
 import saga from './saga';
 import messages from './messages';
 import styles from './styles';
@@ -94,11 +92,9 @@ const withConnect = connect(
   mapDispatchToProps,
 );
 
-const withReducer = injectReducer({ key: 'clustersPage', reducer });
 const withSaga = injectSaga({ key: 'clustersPage', saga });
 
 export default compose(
-  withReducer,
   withSaga,
   withConnect,
   withStyles(styles),
