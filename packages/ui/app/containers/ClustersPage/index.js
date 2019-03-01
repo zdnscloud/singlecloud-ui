@@ -25,9 +25,15 @@ import saga from './saga';
 import messages from './messages';
 import styles from './styles';
 import ClustersList from './clusters';
+import ClustersPageHelmet from './helmet';
 
 /* eslint-disable react/prefer-stateless-function */
 export class ClustersPage extends React.PureComponent {
+  static propTypes = {
+    initAction: PropTypes.func,
+    classes: PropTypes.object.isRequired,
+  };
+
   componentWillMount() {
     this.props.initAction();
   }
@@ -37,6 +43,7 @@ export class ClustersPage extends React.PureComponent {
 
     return (
       <div className={classes.root}>
+        <ClustersPageHelmet />
         <CssBaseline />
         <AppBar position="absolute" className={classes.appBar}>
           <Toolbar disableGutters className={classes.toolbar}>
@@ -71,11 +78,6 @@ export class ClustersPage extends React.PureComponent {
     );
   }
 }
-
-ClustersPage.propTypes = {
-  initAction: PropTypes.func,
-  classes: PropTypes.object.isRequired,
-};
 
 const mapStateToProps = createStructuredSelector({});
 

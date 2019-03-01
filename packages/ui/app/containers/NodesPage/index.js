@@ -25,9 +25,16 @@ import saga from './saga';
 import messages from './messages';
 import styles from './styles';
 import NodesList from './nodes';
+import NodesPageHelmet from './helmet';
 
 /* eslint-disable react/prefer-stateless-function */
 export class NodesPage extends React.PureComponent {
+  static propTypes = {
+    initAction: PropTypes.func,
+    classes: PropTypes.object.isRequired,
+    match: PropTypes.object,
+  };
+
   componentWillMount() {
     this.props.initAction(this.props.match);
   }
@@ -37,6 +44,7 @@ export class NodesPage extends React.PureComponent {
 
     return (
       <div className={classes.root}>
+        <NodesPageHelmet />
         <CssBaseline />
         <AppBar position="absolute" className={classes.appBar}>
           <Toolbar disableGutters className={classes.toolbar}>
@@ -71,12 +79,6 @@ export class NodesPage extends React.PureComponent {
     );
   }
 }
-
-NodesPage.propTypes = {
-  initAction: PropTypes.func,
-  classes: PropTypes.object.isRequired,
-  match: PropTypes.object,
-};
 
 const mapStateToProps = createStructuredSelector({});
 
