@@ -61,7 +61,7 @@ export class NodesTable extends React.PureComponent {
                   <TableCell>{nodes.getIn([id, 'name'])}</TableCell>
                   <TableCell>{nodes.getIn([id, 'address'])}</TableCell>
                   <TableCell>{nodes.getIn([id, 'role'])}</TableCell>
-                  <TableCell>{nodes.getIn([id, 'labels'])}</TableCell>
+                  <TableCell>{nodes.getIn([id, 'labels']).map((v, k) => `${k}=${v}`).join(', ')}</TableCell>
                 </TableRow>
               ))}
           </TableBody>
