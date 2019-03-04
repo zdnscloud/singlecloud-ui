@@ -33,4 +33,8 @@ export default defineMessages({
     id: `${scope}.tableTitleNodesCount`,
     defaultMessage: 'NodesCount',
   },
+  tableTitleLinks: {
+    id: `${scope}.tableTitleLinks`,
+    defaultMessage: 'Links',
+  },
 });

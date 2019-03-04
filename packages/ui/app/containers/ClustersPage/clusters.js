@@ -48,17 +48,27 @@ export class ClustersTable extends React.PureComponent {
               <TableCell align="right">
                 <FormattedMessage {...messages.tableTitleNodesCount} />
               </TableCell>
+              <TableCell>
+                <FormattedMessage {...messages.tableTitleLinks} />
+              </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {tableList.map(id => (
               <TableRow key={id}>
                 <TableCell>
-                  <Button component={Link} to={`/clusters/${id}/nodes`}>
-                    {clusters.getIn([id, 'name'])}
+                  {clusters.getIn([id, 'name'])}
+                </TableCell>
+                <TableCell align="right">
+                  {clusters.getIn([id, 'nodesCount'])}</TableCell>
+                <TableCell align="right">
+                  <Button variant="outlined" component={Link} to={`/clusters/${id}/nodes`} size="small">
+                    Nodes
+                  </Button>
+                  <Button variant="outlined" component={Link} to={`/clusters/${id}/deployments`} size="small">
+                    Deployments
                   </Button>
                 </TableCell>
-                <TableCell align="right">{}</TableCell>
               </TableRow>
             ))}
           </TableBody>
