@@ -15,6 +15,7 @@ import HomePage from 'containers/HomePage/Loadable';
 import NotFoundPage from 'containers/NotFoundPage/Loadable';
 import ClustersPage from 'containers/ClustersPage/Loadable';
 import NodesPage from 'containers/NodesPage/Loadable';
+import DeploymentsPage from 'containers/DeploymentsPage/Loadable';
 
 const theme = createMuiTheme({
   typography: {
@@ -36,6 +37,11 @@ export default function App() {
             exact
             path="/clusters/:cluster_id/nodes"
             component={NodesPage}
+          />
+          <Route
+            exact
+            path="/clusters/:cluster_id/deployments"
+            component={DeploymentsPage}
           />
           <Route component={NotFoundPage} />
         </Switch>

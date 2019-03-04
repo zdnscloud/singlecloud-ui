@@ -20,7 +20,7 @@ import * as actions from './actions';
 import messages from './messages';
 {{/if}}
 {{#if wantHeaders}}
-import { {{ properCase name }}Helmet } from './helmet';
+import {{ properCase name }}Helmet from './helmet';
 {{/if}}
 
 /* eslint-disable react/prefer-stateless-function */

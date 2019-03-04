@@ -56,16 +56,25 @@ export class ClustersTable extends React.PureComponent {
           <TableBody>
             {tableList.map(id => (
               <TableRow key={id}>
-                <TableCell>
-                  {clusters.getIn([id, 'name'])}
+                <TableCell>{clusters.getIn([id, 'name'])}</TableCell>
+                <TableCell align="right">
+                  {clusters.getIn([id, 'nodesCount'])}
                 </TableCell>
-                <TableCell align="right">
-                  {clusters.getIn([id, 'nodesCount'])}</TableCell>
-                <TableCell align="right">
-                  <Button variant="outlined" component={Link} to={`/clusters/${id}/nodes`} size="small">
+                <TableCell>
+                  <Button
+                    variant="outlined"
+                    component={Link}
+                    to={`/clusters/${id}/nodes`}
+                    size="small"
+                  >
                     Nodes
                   </Button>
-                  <Button variant="outlined" component={Link} to={`/clusters/${id}/deployments`} size="small">
+                  <Button
+                    variant="outlined"
+                    component={Link}
+                    to={`/clusters/${id}/deployments`}
+                    size="small"
+                  >
                     Deployments
                   </Button>
                 </TableCell>
