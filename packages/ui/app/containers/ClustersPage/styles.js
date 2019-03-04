@@ -72,6 +72,9 @@ const styles = theme => ({
   tableContainer: {
     height: 320,
   },
+  button: {
+    margin: theme.spacing.unit,
+  },
   h5: {
     marginBottom: theme.spacing.unit * 2,
   },

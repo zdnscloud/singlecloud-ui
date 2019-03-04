@@ -11,9 +11,7 @@ import { FormattedMessage } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import { bindActionCreators, compose } from 'redux';
 
-import { Link } from 'react-router-dom';
 import { withStyles } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -21,7 +19,7 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 
-import { makeSelectClusters, makeSelectTableList } from './selectors';
+import { makeSelectDeployments, makeSelectTableList } from './selectors';
 import * as actions from './actions';
 import messages from './messages';
 import styles from './styles';
@@ -31,11 +29,11 @@ export class ClustersTable extends React.PureComponent {
   static propTypes = {
     classes: PropTypes.object.isRequired,
     tableList: PropTypes.object.isRequired,
-    clusters: PropTypes.object.isRequired,
+    deployments: PropTypes.object.isRequired,
   };
 
   render() {
-    const { classes, tableList, clusters } = this.props;
+    const { classes, tableList, deployments } = this.props;
 
     return (
       <Paper className={classes.tableWrapper}>
@@ -45,41 +43,12 @@ export class ClustersTable extends React.PureComponent {
               <TableCell>
                 <FormattedMessage {...messages.tableTitleName} />
               </TableCell>
-              <TableCell align="right">
-                <FormattedMessage {...messages.tableTitleNodesCount} />
-              </TableCell>
-              <TableCell>
-                <FormattedMessage {...messages.tableTitleLinks} />
-              </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {tableList.map(id => (
               <TableRow key={id}>
-                <TableCell>{clusters.getIn([id, 'name'])}</TableCell>
-                <TableCell align="right">
-                  {clusters.getIn([id, 'nodesCount'])}
-                </TableCell>
-                <TableCell>
-                  <Button
-                    variant="outlined"
-                    component={Link}
-                    to={`/clusters/${id}/nodes`}
-                    size="small"
-                    className={classes.button}
-                  >
-                    Nodes
-                  </Button>
-                  <Button
-                    variant="outlined"
-                    component={Link}
-                    to={`/clusters/${id}/deployments`}
-                    size="small"
-                    className={classes.button}
-                  >
-                    Deployments
-                  </Button>
-                </TableCell>
+                <TableCell>{deployments.getIn([id, 'name'])}</TableCell>
               </TableRow>
             ))}
           </TableBody>
@@ -90,7 +59,7 @@ export class ClustersTable extends React.PureComponent {
 }
 
 const mapStateToProps = createStructuredSelector({
-  clusters: makeSelectClusters(),
+  deployments: makeSelectDeployments(),
   tableList: makeSelectTableList(),
 });
 

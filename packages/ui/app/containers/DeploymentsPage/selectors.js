@@ -11,6 +11,23 @@ const selectDeploymentsPageDomain = state =>
 /**
  * Other specific selectors
  */
+export const makeSelectDeployments = () =>
+  createSelector(
+    selectDeploymentsPageDomain,
+    substate => substate.get('deployments'),
+  );
+
+export const makeSelectTableList = () =>
+  createSelector(
+    selectDeploymentsPageDomain,
+    substate => substate.get('tableList'),
+  );
+
+export const makeSelectFormData = () =>
+  createSelector(
+    selectDeploymentsPageDomain,
+    substate => substate.get('createFormData'),
+  );
 
 /**
  * Default selector used by DeploymentsPage

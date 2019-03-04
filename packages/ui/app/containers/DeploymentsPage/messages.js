@@ -25,4 +25,8 @@ export default defineMessages({
     id: `${scope}.deployments`,
     defaultMessage: 'Deployments',
   },
+  tableTitleName: {
+    id: `${scope}.tableTitleName`,
+    defaultMessage: 'Name',
+  },
 });

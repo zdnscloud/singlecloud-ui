@@ -75,6 +75,12 @@ const styles = theme => ({
   h5: {
     marginBottom: theme.spacing.unit * 2,
   },
+  margin: {
+    margin: theme.spacing.unit,
+  },
+  textField: {
+    flexBasis: 200,
+  },
 });
 
 export default styles;
