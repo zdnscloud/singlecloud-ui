@@ -17,6 +17,7 @@ import ClustersPage from 'containers/ClustersPage/Loadable';
 import NodesPage from 'containers/NodesPage/Loadable';
 import DeploymentsPage from 'containers/DeploymentsPage/Loadable';
 import CreateDeployment from 'containers/DeploymentsPage/CreateLoadable';
+import TerminalPage from 'containers/TerminalPage/Loadable';
 
 const theme = createMuiTheme({
   typography: {
@@ -48,6 +49,11 @@ export default function App() {
             exact
             path="/clusters/:cluster_id/deployments/create"
             component={CreateDeployment}
+          />
+          <Route
+            exact
+            path="/clusters/:cluster_id/console"
+            component={TerminalPage}
           />
           <Route component={NotFoundPage} />
         </Switch>

@@ -1,6 +1,7 @@
 /* eslint consistent-return:0 import/order:0 */
 
 const express = require('express');
+const proxy = require('http-proxy-middleware');
 const bodyParser = require('body-parser');
 const logger = require('./logger');
 
@@ -19,7 +20,15 @@ const app = express();
 // app.use('/api', myApi);
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded());
-require('./mocks')(app);
+// require('./mocks')(app);
+app.use(
+  '/zcloud.cn/v1',
+  proxy({ target: 'http://localhost:8088', changeOrigin: true, ws: true }),
+);
+app.use(
+  '/zcloud/ws',
+  proxy({ target: 'ws://localhost:8088', changeOrigin: true, ws: true }),
+);
 
 // In production we need to pass these values in instead of relying on webpack
 setup(app, {

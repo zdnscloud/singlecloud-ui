@@ -89,6 +89,15 @@ export class ClustersTable extends React.PureComponent {
                   >
                     Deployments
                   </Button>
+                  <Button
+                    variant="outlined"
+                    component={Link}
+                    to={`/clusters/${id}/console`}
+                    size="small"
+                    className={classes.button}
+                  >
+                    Console
+                  </Button>
                 </TableCell>
               </TableRow>
             ))}
