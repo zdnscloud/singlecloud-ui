@@ -61,7 +61,9 @@ export class NodesTable extends React.PureComponent {
                   <TableCell>{nodes.getIn([id, 'name'])}</TableCell>
                   <TableCell>{nodes.getIn([id, 'address'])}</TableCell>
                   <TableCell>{nodes.getIn([id, 'role'])}</TableCell>
-                  <TableCell>{JSON.stringify( nodes.getIn([id, 'labels']).toJS() )}</TableCell>
+                  <TableCell>
+                    {JSON.stringify(nodes.getIn([id, 'labels']))}
+                  </TableCell>
                 </TableRow>
               ))}
           </TableBody>
