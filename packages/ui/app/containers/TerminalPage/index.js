@@ -14,6 +14,7 @@ import { bindActionCreators, compose } from 'redux';
 import { Terminal } from 'xterm';
 import * as fit from 'xterm/dist/addons/fit/fit';
 import * as attach from 'xterm/lib/addons/attach/attach';
+import 'xterm/dist/xterm.css';
 
 import { withStyles } from '@material-ui/core/styles';
 import Menubar from 'components/Menubar';
