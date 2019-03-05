@@ -6,7 +6,7 @@
   "app.containers.ClustersPage.pageTitle": "集群",
   "app.containers.ClustersPage.tableTitleLinks": "链接",
   "app.containers.ClustersPage.tableTitleName": "名称",
-  "app.containers.ClustersPage.tableTitleNodesCount": "节点数量",
+  "app.containers.ClustersPage.tableTitleNodeCount": "节点数量",
   "app.containers.DeploymentsPage.deployments": "Deployments",
   "app.containers.DeploymentsPage.header": "This is the DeploymentsPage container!",
   "app.containers.DeploymentsPage.pageDesc": "Description of DeploymentsPage",

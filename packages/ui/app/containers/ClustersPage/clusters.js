@@ -46,7 +46,13 @@ export class ClustersTable extends React.PureComponent {
                 <FormattedMessage {...messages.tableTitleName} />
               </TableCell>
               <TableCell align="right">
-                <FormattedMessage {...messages.tableTitleNodesCount} />
+                <FormattedMessage {...messages.tableTitleNodeCount} />
+              </TableCell>
+              <TableCell>
+                <FormattedMessage {...messages.tableTitleVersion} />
+              </TableCell>
+              <TableCell>
+                <FormattedMessage {...messages.tableTitleCreationTimestamp} />
               </TableCell>
               <TableCell>
                 <FormattedMessage {...messages.tableTitleLinks} />
@@ -58,7 +64,11 @@ export class ClustersTable extends React.PureComponent {
               <TableRow key={id}>
                 <TableCell>{clusters.getIn([id, 'name'])}</TableCell>
                 <TableCell align="right">
-                  {clusters.getIn([id, 'nodesCount'])}
+                  {clusters.getIn([id, 'nodeCount'])}
+                </TableCell>
+                <TableCell>{clusters.getIn([id, 'version'])}</TableCell>
+                <TableCell>
+                  {clusters.getIn([id, 'creationTimestamp'])}
                 </TableCell>
                 <TableCell>
                   <Button
