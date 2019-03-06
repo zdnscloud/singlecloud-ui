@@ -27,7 +27,7 @@ app.use(
 );
 app.use(
   '/zcloud/ws',
-  proxy({ target: 'ws://localhost:8088', changeOrigin: true, ws: true }),
+  proxy({ target: 'http://localhost:8088', changeOrigin: true, ws: true }),
 );
 
 // In production we need to pass these values in instead of relying on webpack

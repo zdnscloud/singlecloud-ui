@@ -15,6 +15,7 @@ import { Terminal } from 'xterm';
 import * as fit from 'xterm/dist/addons/fit/fit';
 import * as attach from 'xterm/lib/addons/attach/attach';
 import 'xterm/dist/xterm.css';
+import SockJS from 'sockjs-client';
 
 import { withStyles } from '@material-ui/core/styles';
 import Menubar from 'components/Menubar';
@@ -39,40 +40,50 @@ Terminal.applyAddon(fit);
 export class TerminalPage extends React.PureComponent {
   static propTypes = {
     classes: PropTypes.object.isRequired,
+    match: PropTypes.object.isRequired,
   };
 
   componentDidMount() {
     const term = new Terminal();
-    const socket = new WebSocket(
-      `ws://${window.location.hostname}:${
+    const socket = new SockJS(
+      `http://${window.location.hostname}:${
         window.location.port
-      }/zcloud/ws/cluster/${this.props.match.params.cluster_id}`,
+      }/zcloud/ws/clusters/${this.props.match.params.cluster_id}`,
     );
 
     term.on('data', data => {
-      console.log(data);
-      // socket.emit('data', data);
+      if (socket.readyState === 1) socket.send(data);
     });
 
     term.on('title', title => {
       document.title = title;
     });
 
-    term.open(findDOMNode(this.termEl));
+    term.open(findDOMNode(this.termEl)); // eslint-disable-line
     term.focus();
     term.fit();
-
     term.write('\x1b[31mWelcome to Terminal!\x1b[m\r\n');
 
-    term.attach(socket);
+    // term.attach(socket);
 
-    // socket.on('data', function(data) {
-    //   term.write(data);
-    // });
+    socket.onopen = () => {
+      socket.send(JSON.stringify({ cols: term.cols, rows: term.rows }));
+    };
 
-    // socket.on('disconnect', function() {
-    //   term.destroy();
-    // });
+    socket.onmessage = e => {
+      term.write(e.data);
+    };
+
+    socket.onclose = () => {
+      term.write('session is close');
+      // term.destroy();
+    };
+
+    this.socket = socket;
+  }
+
+  componentWillUnmount() {
+    this.socket.close();
   }
 
   render() {

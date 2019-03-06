@@ -49,27 +49,13 @@ export class NodesTable extends React.PureComponent {
               <TableCell>
                 <FormattedMessage {...messages.tableTitleRole} />
               </TableCell>
-              <TableCell>
-                CPU
-              </TableCell>
-              <TableCell>
-                Memory
-              </TableCell>
-              <TableCell>
-                operating system
-              </TableCell>
-              <TableCell>
-                operating system image
-              </TableCell>
-              <TableCell>
-                pod count
-              </TableCell>
-              <TableCell>
-                docker version
-              </TableCell>
-              <TableCell>
-                creation timestamp
-              </TableCell>
+              <TableCell>CPU</TableCell>
+              <TableCell>Memory</TableCell>
+              <TableCell>operating system</TableCell>
+              <TableCell>operating system image</TableCell>
+              <TableCell>pod count</TableCell>
+              <TableCell>docker version</TableCell>
+              <TableCell>creation timestamp</TableCell>
               <TableCell>
                 <FormattedMessage {...messages.tableTitleLabels} />
               </TableCell>
@@ -85,10 +71,14 @@ export class NodesTable extends React.PureComponent {
                   <TableCell>{nodes.getIn([id, 'cpu'])}</TableCell>
                   <TableCell>{nodes.getIn([id, 'memory'])}</TableCell>
                   <TableCell>{nodes.getIn([id, 'operatingSystem'])}</TableCell>
-                  <TableCell>{nodes.getIn([id, 'operatingSystemImage'])}</TableCell>
+                  <TableCell>
+                    {nodes.getIn([id, 'operatingSystemImage'])}
+                  </TableCell>
                   <TableCell>{nodes.getIn([id, 'podCount'])}</TableCell>
                   <TableCell>{nodes.getIn([id, 'dockerVersion'])}</TableCell>
-                  <TableCell>{nodes.getIn([id, 'creationTimestamp'])}</TableCell>
+                  <TableCell>
+                    {nodes.getIn([id, 'creationTimestamp'])}
+                  </TableCell>
                   <TableCell>
                     {JSON.stringify(nodes.getIn([id, 'labels']))}
                   </TableCell>
