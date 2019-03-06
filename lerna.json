@@ -4,5 +4,11 @@
   "packages": [
     "packages/*"
   ],
-  "version": "0.0.1"
+  "commands": {
+    "bootstrap": {
+      "hoist": true
+    }
+  },
+  "useWorkspaces": true,
+  "version": "independent"
 }

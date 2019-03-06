@@ -11,6 +11,13 @@ const webpack = require('webpack');
 // in the next major version of loader-utils.'
 process.noDeprecation = true;
 
+// lerna root
+const WorkspaceRoot = path.resolve(__dirname, '..', '..', '..', '..');
+
+const defaultAlias = {
+  '@gsmlg/com': `${WorkspaceRoot}/packages/com/src`,
+};
+
 module.exports = options => ({
   mode: options.mode,
   entry: options.entry,
@@ -105,6 +112,7 @@ module.exports = options => ({
     modules: ['node_modules', 'app'],
     extensions: ['.js', '.jsx', '.react.js'],
     mainFields: ['browser', 'jsnext:main', 'main'],
+    alias: defaultAlias,
   },
   devtool: options.devtool,
   target: 'web', // Make web variables accessible to webpack, e.g. window

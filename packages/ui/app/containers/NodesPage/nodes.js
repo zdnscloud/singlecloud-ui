@@ -18,54 +18,15 @@ import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
+import { SimpleTable } from '@gsmlg/com';
 
 import { makeSelectNodes, makeSelectTableList } from './selectors';
 import * as actions from './actions';
 import messages from './messages';
 import styles from './styles';
 
-/* eslint-disable react/prefer-stateless-function */
-export class NodesTable extends React.PureComponent {
-  static propTypes = {
-    classes: PropTypes.object.isRequired,
-    tableList: PropTypes.object.isRequired,
-    nodes: PropTypes.object,
-  };
-
-  render() {
-    const { classes, tableList, nodes } = this.props;
-
-    return (
-      <Paper className={classes.tableWrapper}>
-        <Table className={classes.table}>
-          <TableHead>
-            <TableRow>
-              <TableCell>
-                <FormattedMessage {...messages.tableTitleName} />
-              </TableCell>
-              <TableCell>
-                <FormattedMessage {...messages.tableTitleAddress} />
-              </TableCell>
-              <TableCell>
-                <FormattedMessage {...messages.tableTitleRole} />
-              </TableCell>
-              <TableCell>CPU</TableCell>
-              <TableCell>Memory</TableCell>
-              <TableCell>operating system</TableCell>
-              <TableCell>operating system image</TableCell>
-              <TableCell>pod count</TableCell>
-              <TableCell>docker version</TableCell>
-              <TableCell>creation timestamp</TableCell>
-              <TableCell>
-                <FormattedMessage {...messages.tableTitleLabels} />
-              </TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {nodes &&
-              tableList.map(id => (
-                <TableRow key={id}>
-                  <TableCell>{nodes.getIn([id, 'name'])}</TableCell>
+/*
+                    <TableCell>{nodes.getIn([id, 'name'])}</TableCell>
                   <TableCell>{nodes.getIn([id, 'address'])}</TableCell>
                   <TableCell>{nodes.getIn([id, 'role'])}</TableCell>
                   <TableCell>{nodes.getIn([id, 'cpu'])}</TableCell>
@@ -82,10 +43,39 @@ export class NodesTable extends React.PureComponent {
                   <TableCell>
                     {JSON.stringify(nodes.getIn([id, 'labels']))}
                   </TableCell>
-                </TableRow>
-              ))}
-          </TableBody>
-        </Table>
+*/
+const schema = [
+  { id: 'name', label: 'name', },
+  { id: 'address', label: 'address', },
+  { id: 'role', label: 'role', },
+  { id: 'cpu', label: 'cpu', },
+  { id: 'memory', label: 'memory', },
+  { id: 'operatingSystem', label: 'operatingSystem', },
+  { id: 'operatingSystemImage', label: 'operatingSystemImage', },
+  { id: 'podCount', label: 'podCount', },
+  { id: 'dockerVersion', label: 'dockerVersion', },
+  { id: 'creationTimestamp', label: 'creationTimestamp', },
+  { id: 'labels', label: 'labels', },
+];
+
+/* eslint-disable react/prefer-stateless-function */
+export class NodesTable extends React.PureComponent {
+  static propTypes = {
+    classes: PropTypes.object.isRequired,
+    tableList: PropTypes.object.isRequired,
+    nodes: PropTypes.object,
+  };
+
+  render() {
+    const { classes, tableList, nodes } = this.props;
+
+    return (
+      <Paper className={classes.tableWrapper}>
+        <SimpleTable
+          className={classes.table}
+          schema={schema}
+          data={tableList.map(id => nodes.get(id))}
+        />
       </Paper>
     );
   }

@@ -1,3 +1,5 @@
-/lerna-debug.log
+/vendor
 node_modules
 \.tern-port
+yarn-error\.log
+lerna-debug\.log
