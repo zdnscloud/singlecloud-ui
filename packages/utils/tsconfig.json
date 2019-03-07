@@ -1,0 +1,10 @@
+{
+  "extends": "../../tsconfig",
+  "compilerOptions": {
+    "baseUrl": "../../",
+    "paths": {
+      "jss": ["node_modules/@types/jss"]
+    }
+  },
+  "include": ["src", "test"]
+}

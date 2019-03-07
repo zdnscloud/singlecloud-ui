@@ -29,6 +29,7 @@ if (process.env.BABEL_ENV === 'es') {
 
 const defaultAlias = {
   '@gsmlg/com': './packages/com/src',
+  '@gsmlg/utils': './packages/utils/src',
 };
 
 const productionPlugins = [

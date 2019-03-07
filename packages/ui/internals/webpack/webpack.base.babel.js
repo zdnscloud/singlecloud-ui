@@ -16,6 +16,7 @@ const WorkspaceRoot = path.resolve(__dirname, '..', '..', '..', '..');
 
 const defaultAlias = {
   '@gsmlg/com': `${WorkspaceRoot}/packages/com/src`,
+  '@gsmlg/utils': `${WorkspaceRoot}/packages/utils/src`,
 };
 
 module.exports = options => ({

@@ -13,6 +13,8 @@
     "allowSyntheticDefaultImports": true,
     "noErrorTruncation": true,
     "paths": {
+      "@gsmlg/utils": ["./utils/src"],
+      "@gsmlg/utils/*": ["./utils/src/*"],
       "@gsmlg/com": ["./com/src"],
       "@gsmlg/com/*": ["./com/src/*"]
     }

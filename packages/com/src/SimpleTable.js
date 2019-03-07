@@ -15,24 +15,17 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 
-const schema = [
-  {
-    id: 'id',
-    label: 'str',
-  },
-];
 
-/* eslint-disable react/prefer-stateless-function */
 export class SimpleTable extends React.PureComponent {
   static propTypes = {
     schema: PropTypes.arrayOf(PropTypes.shape({
-      id: PropTypes.tring.isRequired,
+      id: PropTypes.string.isRequired,
       label: PropTypes.oneOfType([
         PropTypes.string,
         PropTypes.object,
       ]).isRequired,
     })).isRequired,
-    data: PropTypes.arrayOf(PropTypes.object).isRequired,
+    data: PropTypes.object.isRequired,
   };
 
   getKey(data, key) {
@@ -60,12 +53,13 @@ export class SimpleTable extends React.PureComponent {
           {data.map((rowData, id) => (
             <TableRow key={id}>
               {schema.map((column) => {
-                const CustomCell = this.getKey(column, 'component');
-                const Cell = CustomCell ? CustomCell : TableCell;
+                const CustomComponent = this.getKey(column, 'component');
                 return (
-                  <Cell key={this.getKey(column, 'id')} data={rowData} column={column}>
-                    {'' + this.getKey(rowData, this.getKey(column, 'id'))}
-                  </Cell>
+                  <TableCell key={this.getKey(column, 'id')}>
+                    {(CustomComponent != null) ? (
+                      <CustomComponent data={rowData} column={column} />
+                    ): ('' + this.getKey(rowData, this.getKey(column, 'id')))}
+                  </TableCell>
                 );
               })}
             </TableRow>

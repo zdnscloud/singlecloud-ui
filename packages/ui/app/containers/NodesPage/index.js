@@ -21,7 +21,7 @@ import * as actions from './actions';
 import saga from './saga';
 import messages from './messages';
 import styles from './styles';
-import NodesList from './nodes';
+import NodesTable from './NodesTable';
 import NodesPageHelmet from './helmet';
 
 /* eslint-disable react/prefer-stateless-function */
@@ -50,7 +50,7 @@ export class NodesPage extends React.PureComponent {
             <FormattedMessage {...messages.nodes} />
           </Typography>
           <Typography component="div" className={classes.chartContainer}>
-            <NodesList />
+            <NodesTable />
           </Typography>
         </div>
       </div>

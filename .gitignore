@@ -1,5 +1,6 @@
 /vendor
 node_modules
+build
 \.tern-port
 yarn-error\.log
 lerna-debug\.log

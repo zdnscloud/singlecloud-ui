@@ -6,7 +6,21 @@
 
 import { defineMessages } from 'react-intl';
 
+import tableSchema from './tableSchema';
+
 export const scope = 'app.containers.NodesPage';
+
+// eslint-disable-next-line
+const table = tableSchema.reduce(
+  (schema, col) => ({
+    [`tableTitle${col.label}`]: {
+      id: `${scope}.tableTitle${col.label}`,
+      defaultMessage: col.label,
+    },
+    ...schema,
+  }),
+  {},
+);
 
 export default defineMessages({
   pageTitle: {
@@ -24,21 +38,5 @@ export default defineMessages({
   nodes: {
     id: `${scope}.nodes`,
     defaultMessage: 'Nodes',
-  },
-  tableTitleName: {
-    id: `${scope}.tableTitleName`,
-    defaultMessage: 'Name',
-  },
-  tableTitleAddress: {
-    id: `${scope}.tableTitleAddress`,
-    defaultMessage: 'Address',
-  },
-  tableTitleRole: {
-    id: `${scope}.tableTitleRole`,
-    defaultMessage: 'Role',
-  },
-  tableTitleLabels: {
-    id: `${scope}.tableTitleLabels`,
-    defaultMessage: 'Labels',
   },
 });
