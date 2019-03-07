@@ -15,6 +15,7 @@ import HomePage from 'containers/HomePage/Loadable';
 import NotFoundPage from 'containers/NotFoundPage/Loadable';
 import ClustersPage from 'containers/ClustersPage/Loadable';
 import NodesPage from 'containers/NodesPage/Loadable';
+import NamespacesPage from 'containers/NamespacesPage/Loadable';
 import DeploymentsPage from 'containers/DeploymentsPage/Loadable';
 import CreateDeployment from 'containers/DeploymentsPage/CreateLoadable';
 import TerminalPage from 'containers/TerminalPage/Loadable';
@@ -39,6 +40,11 @@ export default function App() {
             exact
             path="/clusters/:cluster_id/nodes"
             component={NodesPage}
+          />
+          <Route
+            exact
+            path="/clusters/:cluster_id/namespaces"
+            component={NamespacesPage}
           />
           <Route
             exact

@@ -1,6 +1,6 @@
 /**
  *
- * NodesPage
+ * NamespacesPage
  *
  */
 
@@ -11,38 +11,46 @@ import { FormattedMessage } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import { bindActionCreators, compose } from 'redux';
 
+import { Link } from 'react-router-dom';
 import { withStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import { SimpleTable } from '@gsmlg/com';
 
-import { makeSelectNodes, makeSelectTableList } from './selectors';
+import { makeSelectNamespaces, makeSelectTableList } from './selectors';
 import * as actions from './actions';
 import messages from './messages';
 import styles from './styles';
 import schema from './tableSchema';
 
 /* eslint-disable react/prefer-stateless-function */
-export class NodesTable extends React.PureComponent {
+export class NamespacesTable extends React.PureComponent {
   static propTypes = {
     classes: PropTypes.object.isRequired,
     tableList: PropTypes.object.isRequired,
-    nodes: PropTypes.object,
+    namespaces: PropTypes.object,
+    location: PropTypes.object,
   };
 
   render() {
-    const { classes, tableList, nodes } = this.props;
+    const { classes, tableList, namespaces } = this.props;
+    const mergedSchema = schema.concat([
+      {
+        id: 'actions',
+        label: 'Actions',
+        component: props => (
+          <Link to={`${this.props.location.pathname}/${props.data.get('id')}`}>
+            Deployment
+          </Link>
+        ),
+      },
+    ]);
 
     return (
       <Paper className={classes.tableWrapper}>
         <SimpleTable
           className={classes.table}
-          schema={schema.map(sche => ({
-            /* label: ( */
-            /*   <FormattedMessage {...messages[`tableTitle${sche.label}`]} /> */
-            /* ), */
-            ...sche,
-          }))}
-          data={tableList.map(id => nodes.get(id))}
+          schema={mergedSchema}
+          data={tableList.map(id => namespaces.get(id))}
         />
       </Paper>
     );
@@ -50,7 +58,7 @@ export class NodesTable extends React.PureComponent {
 }
 
 const mapStateToProps = createStructuredSelector({
-  nodes: makeSelectNodes(),
+  namespaces: makeSelectNamespaces(),
   tableList: makeSelectTableList(),
 });
 
@@ -70,4 +78,4 @@ const withConnect = connect(
 export default compose(
   withConnect,
   withStyles(styles),
-)(NodesTable);
+)(NamespacesTable);

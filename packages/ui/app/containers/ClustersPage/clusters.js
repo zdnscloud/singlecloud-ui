@@ -83,11 +83,11 @@ export class ClustersTable extends React.PureComponent {
                   <Button
                     variant="outlined"
                     component={Link}
-                    to={`/clusters/${id}/deployments`}
+                    to={`/clusters/${id}/namespaces`}
                     size="small"
                     className={classes.button}
                   >
-                    Deployments
+                    Namespaces
                   </Button>
                   <Button
                     variant="outlined"
