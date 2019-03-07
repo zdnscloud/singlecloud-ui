@@ -18,8 +18,8 @@ const app = express();
 
 // If you need a backend, e.g. an API, add your custom backend-specific middleware here
 // app.use('/api', myApi);
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded());
+// app.use(bodyParser.json());
+// app.use(bodyParser.urlencoded());
 // require('./mocks')(app);
 app.use(
   '/zcloud.cn/v1',

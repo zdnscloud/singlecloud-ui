@@ -9,6 +9,7 @@ import history from 'utils/history';
 import languageProviderReducer from 'containers/LanguageProvider/reducer';
 import clustersPageReducer from 'containers/ClustersPage/reducer';
 import nodesPageReducer from 'containers/NodesPage/reducer';
+import namespacesPageReducer from 'containers/NamespacesPage/reducer';
 
 /**
  * Merges the main reducer with the router state and dynamically injected reducers
@@ -19,6 +20,7 @@ export default function createReducer(injectedReducers = {}) {
     router: connectRouter(history),
     clustersPage: clustersPageReducer,
     nodesPage: nodesPageReducer,
+    namespacesPage: namespacesPageReducer,
     ...injectedReducers,
   });
 

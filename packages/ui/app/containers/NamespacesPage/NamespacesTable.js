@@ -4,7 +4,7 @@
  *
  */
 
-import React from 'react';
+import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
@@ -13,6 +13,7 @@ import { bindActionCreators, compose } from 'redux';
 
 import { Link } from 'react-router-dom';
 import { withStyles } from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
 import { SimpleTable } from '@gsmlg/com';
 
@@ -38,9 +39,24 @@ export class NamespacesTable extends React.PureComponent {
         id: 'actions',
         label: 'Actions',
         component: props => (
-          <Link to={`${this.props.location.pathname}/${props.data.get('id')}`}>
-            Deployment
-          </Link>
+          <Fragment>
+            <Button
+              variant="outlined"
+              component={Link}
+              to={`${this.props.location.pathname}/${props.data.get('id')}`}
+              size="small"
+              className={classes.button}
+            >
+              Show Deployment
+            </Button>
+            <Button
+              variant="outlined"
+              size="small"
+              className={classes.button}
+            >
+              Delete this
+            </Button>
+          </Fragment>
         ),
       },
     ]);

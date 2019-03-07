@@ -25,6 +25,7 @@ import messages from './messages';
 import styles from './styles';
 import NamespacesTable from './NamespacesTable';
 import NamespacesPageHelmet from './helmet';
+import CreateNamespaceDialog from './CreateNamespaceDialog';
 
 /* eslint-disable react/prefer-stateless-function */
 export class NamespacesPage extends React.PureComponent {
@@ -40,7 +41,10 @@ export class NamespacesPage extends React.PureComponent {
   }
 
   render() {
-    const { classes, openCreateNamespace } = this.props;
+    const {
+      classes,
+      openCreateNamespace,
+    } = this.props;
 
     return (
       <div className={classes.root}>
@@ -59,6 +63,7 @@ export class NamespacesPage extends React.PureComponent {
             >
               <AddIcon />
             </Fab>
+            <CreateNamespaceDialog />
           </Typography>
           <Typography component="div" className={classes.chartContainer}>
             <NamespacesTable location={this.props.location} />

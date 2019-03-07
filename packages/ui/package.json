@@ -1,6 +1,6 @@
 {
   "name": "@singlecloud/ui",
-  "version": "3.7.0",
+  "version": "0.0.1",
   "description": "A highly scalable, offline-first foundation with the best DX and a focus on performance and best practices",
   "repository": {
     "type": "git",
@@ -10,7 +10,7 @@
     "npm": ">=5",
     "node": ">=8.10.0"
   },
-  "author": "Max Stoiber",
+  "author": "GSMLG",
   "license": "MIT",
   "files": [
     "build"
@@ -64,7 +64,6 @@
   },
   "dependencies": {
     "@babel/polyfill": "7.2.5",
-    "@gsmlg/com": "*",
     "@loadable/component": "^5.6.1",
     "@material-ui/core": "^3.9.2",
     "@material-ui/icons": "^3.0.2",

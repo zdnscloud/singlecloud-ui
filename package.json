@@ -6,7 +6,7 @@
     "generate": "plop --plopfile generators/index.js"
   },
   "devDependencies": {
-    "lerna": "^2.11.0",
+    "lerna": "^3.13.0",
     "plop": "^2.2.1"
   },
   "workspaces": [

@@ -1,13 +1,10 @@
 {
-  "lerna": "2.11.0",
+  "lerna": "3.13.1",
   "npmClient": "yarn",
   "packages": [
     "packages/*"
   ],
-  "commands": {
-    "bootstrap": {
-      "hoist": true
-    }
+  "command": {
   },
   "useWorkspaces": true,
   "version": "independent"
