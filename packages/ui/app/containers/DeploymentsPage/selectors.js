@@ -1,3 +1,4 @@
+import { Map } from 'immutable';
 import { createSelector } from 'reselect';
 import { initialState } from './reducer';
 
@@ -11,10 +12,25 @@ const selectDeploymentsPageDomain = state =>
 /**
  * Other specific selectors
  */
+export const makeSelectClusterID = () =>
+  createSelector(
+    selectDeploymentsPageDomain,
+    substate => substate.get('clusterID'),
+  );
+
+export const makeSelectNamespaceID = () =>
+  createSelector(
+    selectDeploymentsPageDomain,
+    substate => substate.get('namespaceID'),
+  );
+
 export const makeSelectDeployments = () =>
   createSelector(
     selectDeploymentsPageDomain,
-    substate => substate.get('deployments'),
+    makeSelectClusterID(),
+    makeSelectNamespaceID(),
+    (substate, clusterID, namespaceID) =>
+      substate.getIn(['deployments', clusterID, namespaceID]) || Map(),
   );
 
 export const makeSelectTableList = () =>
@@ -23,7 +39,7 @@ export const makeSelectTableList = () =>
     substate => substate.get('tableList'),
   );
 
-export const makeSelectFormData = () =>
+export const makeSelectCreateFormData = () =>
   createSelector(
     selectDeploymentsPageDomain,
     substate => substate.get('createFormData'),

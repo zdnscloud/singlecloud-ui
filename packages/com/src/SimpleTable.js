@@ -31,8 +31,10 @@ export class SimpleTable extends React.PureComponent {
   getKey(data, key) {
     if (isImmutable(data)) {
       return data.get(key);
+    } else if (typeof data === 'object') {
+      return data[key];
     }
-    return data[key];
+    return null;
   }
 
   render() {

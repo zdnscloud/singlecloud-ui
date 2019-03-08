@@ -48,12 +48,12 @@ export default function App() {
           />
           <Route
             exact
-            path="/clusters/:cluster_id/deployments"
+            path="/clusters/:cluster_id/namespaces/:namespace_id/deployments"
             component={DeploymentsPage}
           />
           <Route
             exact
-            path="/clusters/:cluster_id/deployments/create"
+            path="/clusters/:cluster_id/namespaces/:namespace_id/deployments/create"
             component={CreateDeployment}
           />
           <Route

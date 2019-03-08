@@ -33,7 +33,7 @@ export class NamespacesTable extends React.PureComponent {
   };
 
   render() {
-    const { classes, tableList, namespaces } = this.props;
+    const { classes, tableList, namespaces, removeNamespace } = this.props;
     const mergedSchema = schema.concat([
       {
         id: 'actions',
@@ -43,7 +43,9 @@ export class NamespacesTable extends React.PureComponent {
             <Button
               variant="outlined"
               component={Link}
-              to={`${this.props.location.pathname}/${props.data.get('id')}`}
+              to={`${this.props.location.pathname}/${props.data.get(
+                'id',
+              )}/deployments`}
               size="small"
               className={classes.button}
             >
@@ -53,6 +55,9 @@ export class NamespacesTable extends React.PureComponent {
               variant="outlined"
               size="small"
               className={classes.button}
+              onClick={evt => {
+                removeNamespace(props.data.get('id'));
+              }}
             >
               Delete this
             </Button>

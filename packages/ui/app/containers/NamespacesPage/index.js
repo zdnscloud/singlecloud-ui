@@ -41,10 +41,7 @@ export class NamespacesPage extends React.PureComponent {
   }
 
   render() {
-    const {
-      classes,
-      openCreateNamespace,
-    } = this.props;
+    const { classes, openCreateNamespace } = this.props;
 
     return (
       <div className={classes.root}>

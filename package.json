@@ -1,5 +1,5 @@
 {
-  "name": "singlecloud-ui",
+  "name": "@singlecloud/ui",
   "version": "0.0.1",
   "private": true,
   "scripts": {

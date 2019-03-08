@@ -8,6 +8,7 @@ import {
   LOAD_NAMESPACES,
   LOAD_NAMESPACE,
   CREATE_NAMESPACE,
+  REMOVE_NAMESPACE,
 } from './constants';
 import {
   loadNamespacesRequest,
@@ -20,6 +21,9 @@ import {
   createNamespaceSuccess,
   createNamespaceFailure,
   closeCreateNamespace,
+  removeNamespaceRequest,
+  removeNamespaceSuccess,
+  removeNamespaceFailure,
 } from './actions';
 import {
   makeSelectCreateFormData,
@@ -65,11 +69,26 @@ export function* createNamespace() {
       },
       body: JSON.stringify({ name: formData.get('name') }),
     });
-    yield put(createNamespaceSuccess(data));
+    yield put(createNamespaceSuccess(clusterID, data));
     yield* loadNamespaces();
     yield put(closeCreateNamespace());
   } catch (e) {
     yield put(createNamespaceFailure(e));
+  }
+}
+
+export function* removeNamespace({ payload }) {
+  try {
+    const { id } = payload;
+    const clusterID = yield select(makeSelectClusterID());
+    yield put(removeNamespaceRequest());
+    const resp = yield call(request, `${url}/${clusterID}/namespaces/${id}`, {
+      method: 'DELETE',
+    });
+    yield put(removeNamespaceSuccess(clusterID, id));
+    // yield* loadNamespaces();
+  } catch (e) {
+    yield put(removeNamespaceFailure(e));
   }
 }
 
@@ -80,4 +99,5 @@ export default function* namespacesPageSaga() {
   yield takeLatest(LOAD_NAMESPACES, loadNamespaces);
   yield takeLatest(LOAD_NAMESPACE, loadNamespace);
   yield takeLatest(CREATE_NAMESPACE, createNamespace);
+  yield takeLatest(REMOVE_NAMESPACE, removeNamespace);
 }

@@ -28,7 +28,7 @@ import saga from './saga';
 import messages from './messages';
 import DeploymentsPageHelmet from './helmet';
 import styles from './styles';
-import DeploymentsList from './deployments';
+import DeploymentsTable from './DeploymentsTable';
 
 /* eslint-disable react/prefer-stateless-function */
 export class DeploymentsPage extends React.PureComponent {
@@ -69,8 +69,8 @@ export class DeploymentsPage extends React.PureComponent {
               </Link>
             </div>
           </Typography>
-          <Typography>
-            <DeploymentsList />
+          <Typography component="div">
+            <DeploymentsTable />
           </Typography>
         </div>
       </div>

@@ -19,6 +19,9 @@ import {
   CREATE_NAMESPACE_SUCCESS,
   CREATE_NAMESPACE_FAILURE,
   UPDATE_CREATE_FORM,
+  REMOVE_NAMESPACE_REQUEST,
+  REMOVE_NAMESPACE_SUCCESS,
+  REMOVE_NAMESPACE_FAILURE,
 } from './constants';
 
 export const initialState = fromJS({
@@ -91,6 +94,17 @@ function namespacesPageReducer(state = initialState, { type, payload }) {
 
     case UPDATE_CREATE_FORM:
       return state.setIn(['createFormData', payload.name], payload.value);
+
+    case REMOVE_NAMESPACE_REQUEST:
+      return state;
+
+    case REMOVE_NAMESPACE_SUCCESS:
+      return state
+        .deleteIn(['namespaces', payload.clusterID, payload.id])
+        .updateIn(['tableList'], list => list.filterNot(n => n === payload.id));
+
+    case REMOVE_NAMESPACE_FAILURE:
+      return state;
 
     default:
       return state;

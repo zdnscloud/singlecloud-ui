@@ -21,6 +21,10 @@ import {
   CREATE_NAMESPACE_SUCCESS,
   CREATE_NAMESPACE_FAILURE,
   UPDATE_CREATE_FORM,
+  REMOVE_NAMESPACE,
+  REMOVE_NAMESPACE_REQUEST,
+  REMOVE_NAMESPACE_SUCCESS,
+  REMOVE_NAMESPACE_FAILURE,
 } from './constants';
 
 export function initAction({ params }) {
@@ -90,9 +94,9 @@ export const createNamespaceRequest = () => ({
   payload: {},
 });
 
-export const createNamespaceSuccess = data => ({
+export const createNamespaceSuccess = (clusterID, data) => ({
   type: CREATE_NAMESPACE_SUCCESS,
-  payload: { data },
+  payload: { clusterID, data },
 });
 
 export const createNamespaceFailure = errors => ({
@@ -103,4 +107,24 @@ export const createNamespaceFailure = errors => ({
 export const updateCreateForm = (name, value) => ({
   type: UPDATE_CREATE_FORM,
   payload: { name, value },
+});
+
+export const removeNamespace = id => ({
+  type: REMOVE_NAMESPACE,
+  payload: { id },
+});
+
+export const removeNamespaceRequest = () => ({
+  type: REMOVE_NAMESPACE_REQUEST,
+  payload: {},
+});
+
+export const removeNamespaceSuccess = (clusterID, id) => ({
+  type: REMOVE_NAMESPACE_SUCCESS,
+  payload: { clusterID, id },
+});
+
+export const removeNamespaceFailure = errors => ({
+  type: REMOVE_NAMESPACE_FAILURE,
+  payload: { errors },
 });
