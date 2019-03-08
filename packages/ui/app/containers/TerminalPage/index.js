@@ -48,7 +48,7 @@ export class TerminalPage extends React.PureComponent {
     const socket = new SockJS(
       `http://${window.location.hostname}:${
         window.location.port
-      }/zcloud/ws/clusters/${this.props.match.params.cluster_id}`,
+      }/apis/ws.zcloud.cn/v1/clusters/${this.props.match.params.cluster_id}`,
     );
 
     term.on('data', data => {

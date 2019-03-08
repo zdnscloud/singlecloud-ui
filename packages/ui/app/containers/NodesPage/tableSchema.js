@@ -8,7 +8,7 @@ const schema = [
   'memory',
   'operatingSystem',
   'operatingSystemImage',
-  'podCount',
+  'pod',
   'dockerVersion',
   'creationTimestamp',
   'labels',

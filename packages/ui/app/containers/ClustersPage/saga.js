@@ -12,7 +12,7 @@ import {
 } from './actions';
 import { makeSelectClusters } from './selectors';
 
-export const url = '/zcloud.cn/v1/clusters';
+export const url = '/apis/zcloud.cn/v1/clusters';
 
 export function* initialize() {
   yield* loadClusters();

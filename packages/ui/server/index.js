@@ -14,17 +14,17 @@ const app = express();
 
 // If you need a backend, e.g. an API, add your custom backend-specific middleware here
 // app.use('/api', myApi);
-// app.use(bodyParser.json());
-// app.use(bodyParser.urlencoded());
-// require('./mocks')(app);
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded());
+
 app.use(
-  '/zcloud.cn/v1',
+  '/apis',
   proxy({ target: 'http://localhost:8088', changeOrigin: true, ws: true }),
 );
-app.use(
-  '/zcloud/ws',
-  proxy({ target: 'http://localhost:8088', changeOrigin: true, ws: true }),
-);
+// app.use(
+//   '/apis/ws.zcloud.cn/v1',
+//   proxy({ target: 'http://localhost:8088', changeOrigin: true, ws: true }),
+// );
 
 // In production we need to pass these values in instead of relying on webpack
 setup(app, {

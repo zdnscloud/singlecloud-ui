@@ -12,8 +12,8 @@ module.exports = app => {
         id: 'b1b2e7006be',
         name: 'Documents',
         links: {
-          self: '/zcloud.cn/v1/clusters/b1b2e7006be',
-          nodes: '/zcloud.cn/v1/clusters/b1b2e7006be/nodes',
+          self: '/apis/zcloud.cn/v1/clusters/b1b2e7006be',
+          nodes: '/apis/zcloud.cn/v1/clusters/b1b2e7006be/nodes',
         },
         actions: {
           /* see actions */
@@ -35,11 +35,11 @@ module.exports = app => {
     },
   };
 
-  app.get('/zcloud.cn/v1/clusters', (req, res) => {
+  app.get('/apis/zcloud.cn/v1/clusters', (req, res) => {
     res.status(200).json(clusters);
   });
 
-  app.post('/zcloud.cn/v1/clusters', (req, res) => {
+  app.post('/apis/zcloud.cn/v1/clusters', (req, res) => {
     const id = parseInt(
       Math.random()
         .toString()
@@ -51,8 +51,8 @@ module.exports = app => {
       type: 'folder',
       name: req.body.name,
       links: {
-        self: `/zcloud.cn/v1/clusters/${id}`,
-        nodes: `/zcloud.cn/v1/clusters/${id}/nodes`,
+        self: `/apis/zcloud.cn/v1/clusters/${id}`,
+        nodes: `/apis/zcloud.cn/v1/clusters/${id}/nodes`,
       },
       actions: {
         /* see actions */
@@ -61,7 +61,7 @@ module.exports = app => {
     res.status(201).json({});
   });
 
-  app.get('/zcloud.cn/v1/clusters/:cluster_id', (req, res) => {
+  app.get('/apis/zcloud.cn/v1/clusters/:cluster_id', (req, res) => {
     const cluster = clusters.data.find(c => c.id === req.params.cluster_id);
     if (cluster) {
       res.status(200).json(cluster);
@@ -70,7 +70,7 @@ module.exports = app => {
     }
   });
 
-  app.get('/zcloud.cn/v1/clusters/:cluster_id/nodes', (req, res) => {
+  app.get('/apis/zcloud.cn/v1/clusters/:cluster_id/nodes', (req, res) => {
     res.status(200).json(clusters);
   });
 };
