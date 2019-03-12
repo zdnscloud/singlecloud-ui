@@ -1,6 +1,6 @@
 /**
  *
- * DeploymentsPage
+ * ConfigMapsPage
  *
  */
 
@@ -20,17 +20,17 @@ import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 
 import injectSaga from 'utils/injectSaga';
-import makeSelectDeploymentsPage from './selectors';
+import makeSelectConfigMapsPage from './selectors';
 import reducer from './reducer';
 import * as actions from './actions';
 import saga from './saga';
 import messages from './messages';
-import DeploymentsPageHelmet from './helmet';
+import ConfigMapsPageHelmet from './helmet';
 import styles from './styles';
-import DeploymentsTable from './DeploymentsTable';
+import ConfigMapsTable from './ConfigMapsTable';
 
 /* eslint-disable react/prefer-stateless-function */
-export class DeploymentsPage extends React.PureComponent {
+export class ConfigMapsPage extends React.PureComponent {
   static propTypes = {
     initAction: PropTypes.func,
     classes: PropTypes.object.isRequired,
@@ -47,20 +47,20 @@ export class DeploymentsPage extends React.PureComponent {
 
     return (
       <div className={classes.root}>
-        <DeploymentsPageHelmet />
+        <ConfigMapsPageHelmet />
         <CssBaseline />
         <Menubar headerText={<FormattedMessage {...messages.header} />} />
         <div className={classes.content}>
           <div className={classes.appBarSpacer} />
           <Typography variant="h4" gutterBottom component="h2">
-            <FormattedMessage {...messages.deployments} />
+            <FormattedMessage {...messages.configMaps} />
           </Typography>
           <Typography component="div" className={classes.chartContainer}>
             <div>
               <Link to={`${this.props.location.pathname}/create`}>
                 <Fab
                   color="primary"
-                  aria-label="create deployment"
+                  aria-label="create configMap"
                   className={classes.menuButton}
                 >
                   <AddIcon />
@@ -69,7 +69,7 @@ export class DeploymentsPage extends React.PureComponent {
             </div>
           </Typography>
           <Typography component="div">
-            <DeploymentsTable />
+            <ConfigMapsTable />
           </Typography>
         </div>
       </div>
@@ -78,7 +78,7 @@ export class DeploymentsPage extends React.PureComponent {
 }
 
 const mapStateToProps = createStructuredSelector({
-  deploymentsPage: makeSelectDeploymentsPage(),
+  configMapsPage: makeSelectConfigMapsPage(),
 });
 
 const mapDispatchToProps = dispatch =>
@@ -94,10 +94,10 @@ const withConnect = connect(
   mapDispatchToProps,
 );
 
-const withSaga = injectSaga({ key: 'deploymentsPage', saga });
+const withSaga = injectSaga({ key: 'configMapsPage', saga });
 
 export default compose(
   withSaga,
   withConnect,
   withStyles(styles),
-)(DeploymentsPage);
+)(ConfigMapsPage);

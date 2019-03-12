@@ -49,7 +49,18 @@ export class NamespacesTable extends React.PureComponent {
               size="small"
               className={classes.button}
             >
-              Show Deployment
+              Show Deployments
+            </Button>
+            <Button
+              variant="outlined"
+              component={Link}
+              to={`${this.props.location.pathname}/${props.data.get(
+                'id',
+              )}/configmaps`}
+              size="small"
+              className={classes.button}
+            >
+              Show ConfigMaps
             </Button>
             <Button
               variant="outlined"
@@ -59,7 +70,7 @@ export class NamespacesTable extends React.PureComponent {
                 removeNamespace(props.data.get('id'));
               }}
             >
-              Delete this
+              Delete this namespace
             </Button>
           </Fragment>
         ),

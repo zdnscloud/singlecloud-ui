@@ -3,56 +3,63 @@ import { createSelector } from 'reselect';
 import { initialState } from './reducer';
 
 /**
- * Direct selector to the deploymentsPage state domain
+ * Direct selector to the configMapsPage state domain
  */
 
-export const selectDeploymentsPageDomain = state =>
-  state.get('deploymentsPage', initialState);
+const selectConfigMapsPageDomain = state =>
+  state.get('configMapsPage', initialState);
 
 /**
  * Other specific selectors
  */
 export const makeSelectClusterID = () =>
   createSelector(
-    selectDeploymentsPageDomain,
+    selectConfigMapsPageDomain,
     substate => substate.get('clusterID'),
   );
 
 export const makeSelectNamespaceID = () =>
   createSelector(
-    selectDeploymentsPageDomain,
+    selectConfigMapsPageDomain,
     substate => substate.get('namespaceID'),
   );
 
-export const makeSelectDeployments = () =>
+export const makeSelectConfigMaps = () =>
   createSelector(
-    selectDeploymentsPageDomain,
+    selectConfigMapsPageDomain,
     makeSelectClusterID(),
     makeSelectNamespaceID(),
     (substate, clusterID, namespaceID) =>
-      substate.getIn(['deployments', clusterID, namespaceID]) || Map(),
+      substate.getIn(['configMaps', clusterID, namespaceID]) || Map(),
   );
 
 export const makeSelectTableList = () =>
   createSelector(
-    selectDeploymentsPageDomain,
+    selectConfigMapsPageDomain,
     substate => substate.get('tableList'),
   );
 
 export const makeSelectCreateFormData = () =>
   createSelector(
-    selectDeploymentsPageDomain,
+    selectConfigMapsPageDomain,
     substate => substate.get('createFormData'),
   );
 
+export const makeSelectOpening = () =>
+  createSelector(
+    selectConfigMapsPageDomain,
+    substate => substate.get('opening'),
+  );
+
 /**
- * Default selector used by DeploymentsPage
+ * Default selector used by ConfigMapsPage
  */
 
-const makeSelectDeploymentsPage = () =>
+const makeSelectConfigMapsPage = () =>
   createSelector(
-    selectDeploymentsPageDomain,
+    selectConfigMapsPageDomain,
     substate => substate.toJS(),
   );
 
-export default makeSelectDeploymentsPage;
+export default makeSelectConfigMapsPage;
+export { selectConfigMapsPageDomain };

@@ -1,31 +1,34 @@
 /*
  *
- * DeploymentsPage reducer
+ * ConfigMapsPage reducer
  *
  */
 
 import { fromJS } from 'immutable';
 import {
   INIT_ACTION,
-  LOAD_DEPLOYMENTS_REQUEST,
-  LOAD_DEPLOYMENTS_SUCCESS,
-  LOAD_DEPLOYMENTS_FAILURE,
+  LOAD_CONFIG_MAPS_REQUEST,
+  LOAD_CONFIG_MAPS_SUCCESS,
+  LOAD_CONFIG_MAPS_FAILURE,
   INIT_CREATE_FORM,
-  CREATE_DEPLOYMENT_REQUEST,
-  CREATE_DEPLOYMENT_SUCCESS,
-  CREATE_DEPLOYMENT_FAILURE,
+  CREATE_CONFIG_MAP_REQUEST,
+  CREATE_CONFIG_MAP_SUCCESS,
+  CREATE_CONFIG_MAP_FAILURE,
   UPDATE_CREATE_FORM,
+  SHOW_CONFIG_MAP_DATA,
+  HIDE_CONFIG_MAP_DATA,
 } from './constants';
 
 export const initialState = fromJS({
-  deployments: {},
+  configMaps: {},
   tableList: [],
-  createFormData: { name: '', replicas: '', containers: [] },
+  createFormData: { name: '', configs: [] },
   clusterID: null,
   namespaceID: null,
+  opening: null,
 });
 
-function deploymentsPageReducer(state = initialState, { type, payload }) {
+function configMapsPageReducer(state = initialState, { type, payload }) {
   switch (type) {
     case INIT_ACTION:
       return state
@@ -33,12 +36,12 @@ function deploymentsPageReducer(state = initialState, { type, payload }) {
         .set('clusterID', payload.cluster_id)
         .set('namespaceID', payload.namespace_id);
 
-    case LOAD_DEPLOYMENTS_REQUEST:
+    case LOAD_CONFIG_MAPS_REQUEST:
       return state;
 
-    case LOAD_DEPLOYMENTS_SUCCESS: {
+    case LOAD_CONFIG_MAPS_SUCCESS: {
       const { clusterID, namespaceID, data } = payload;
-      const deployments = data.data.reduce(
+      const configMaps = data.data.reduce(
         (meno, item) => ({
           ...meno,
           [item.id]: item,
@@ -46,40 +49,37 @@ function deploymentsPageReducer(state = initialState, { type, payload }) {
         {},
       );
       let newState = state.mergeIn(
-        ['deployments', clusterID, namespaceID],
-        fromJS(deployments),
+        ['configMaps', clusterID, namespaceID],
+        fromJS(configMaps),
       );
       const list = data.data.map(item => item.id);
 
-      // load deployments is async
+      // load configMaps is async
       if (
         state.get('clusterID') === clusterID &&
         state.get('namespaceID') === namespaceID
       )
         newState = newState.set('tableList', fromJS(list));
 
-      return newState.set('loadDeploymentsErrors', null);
+      return newState.set('loadConfigMapsErrors', null);
     }
 
-    case LOAD_DEPLOYMENTS_FAILURE:
-      return state.set('loadDeploymentsErrors', payload.errors);
+    case LOAD_CONFIG_MAPS_FAILURE:
+      return state.set('loadConfigMapsErrors', payload.errors);
 
     case INIT_CREATE_FORM:
       return state
-        .set(
-          'createFormData',
-          fromJS({ name: '', replicas: '', containers: [] }),
-        )
+        .set('createFormData', fromJS({ name: '', configs: [] }))
         .set('clusterID', payload.cluster_id)
         .set('namespaceID', payload.namespace_id);
 
-    case CREATE_DEPLOYMENT_REQUEST:
+    case CREATE_CONFIG_MAP_REQUEST:
       return state;
 
-    case CREATE_DEPLOYMENT_SUCCESS:
+    case CREATE_CONFIG_MAP_SUCCESS:
       return state;
 
-    case CREATE_DEPLOYMENT_FAILURE:
+    case CREATE_CONFIG_MAP_FAILURE:
       return state;
 
     case UPDATE_CREATE_FORM: {
@@ -98,9 +98,15 @@ function deploymentsPageReducer(state = initialState, { type, payload }) {
       return state.setIn(['createFormData', payload.name], payload.value);
     }
 
+    case SHOW_CONFIG_MAP_DATA:
+      return state.set('opening', { ...payload });
+
+    case HIDE_CONFIG_MAP_DATA:
+      return state.set('opening', null);
+
     default:
       return state;
   }
 }
 
-export default deploymentsPageReducer;
+export default configMapsPageReducer;

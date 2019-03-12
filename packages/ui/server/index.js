@@ -13,18 +13,13 @@ const { resolve } = require('path');
 const app = express();
 
 // If you need a backend, e.g. an API, add your custom backend-specific middleware here
-// app.use('/api', myApi);
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded());
-
 app.use(
   '/apis',
   proxy({ target: 'http://localhost:8088', changeOrigin: true, ws: true }),
 );
-// app.use(
-//   '/apis/ws.zcloud.cn/v1',
-//   proxy({ target: 'http://localhost:8088', changeOrigin: true, ws: true }),
-// );
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 
 // In production we need to pass these values in instead of relying on webpack
 setup(app, {

@@ -78,16 +78,11 @@ const styles = theme => ({
   margin: {
     margin: theme.spacing.unit,
   },
+  button: {
+    margin: theme.spacing.unit,
+  },
   textField: {
     flexBasis: 200,
-  },
-  formControl: {
-    margin: theme.spacing.unit,
-    flexBasis: 200,
-    minWidth: 120,
-  },
-  selectEmpty: {
-    marginTop: theme.spacing.unit * 2,
   },
 });
 

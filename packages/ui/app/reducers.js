@@ -10,6 +10,8 @@ import languageProviderReducer from 'containers/LanguageProvider/reducer';
 import clustersPageReducer from 'containers/ClustersPage/reducer';
 import nodesPageReducer from 'containers/NodesPage/reducer';
 import namespacesPageReducer from 'containers/NamespacesPage/reducer';
+import deploymentsPageReducer from 'containers/DeploymentsPage/reducer';
+import configMapsPageReducer from 'containers/ConfigMapsPage/reducer';
 
 /**
  * Merges the main reducer with the router state and dynamically injected reducers
@@ -21,6 +23,8 @@ export default function createReducer(injectedReducers = {}) {
     clustersPage: clustersPageReducer,
     nodesPage: nodesPageReducer,
     namespacesPage: namespacesPageReducer,
+    deploymentsPage: deploymentsPageReducer,
+    configMapsPage: configMapsPageReducer,
     ...injectedReducers,
   });
 

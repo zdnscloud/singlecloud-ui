@@ -27,6 +27,8 @@ import {
   makeSelectNamespaceID,
 } from './selectors';
 
+import { loadConfigMaps } from '../ConfigMapsPage/saga';
+
 export function* initialize() {
   yield* loadDeployments();
 }
@@ -52,6 +54,15 @@ export function* createDeployment() {
     const clusterID = yield select(makeSelectClusterID());
     const namespaceID = yield select(makeSelectNamespaceID());
     yield put(createDeploymentRequest());
+    const mapedData = formData.update('containers', containers =>
+      containers.map(ctn => {
+        const cmd = (ctn.get('command').match(/("[^"]*")|[^\s]+/g) || [])
+          .map(n => n.replace(/^"|"$/g, ''));
+        const args = (ctn.get('args').match(/("[^"]*")|[^\s]+/g) || [])
+          .map(n => n.replace(/^"|"$/g, ''));
+        return ctn.set('command', cmd).set('args', args);
+      }),
+    );
     const data = yield call(
       request,
       `${url}/${clusterID}/namespaces/${namespaceID}/deployments`,
@@ -60,7 +71,7 @@ export function* createDeployment() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formData.toJS()),
+        body: JSON.stringify(mapedData.toJS()),
       },
     );
     yield put(createDeploymentSuccess(data));

@@ -19,6 +19,8 @@ import NamespacesPage from 'containers/NamespacesPage/Loadable';
 import DeploymentsPage from 'containers/DeploymentsPage/Loadable';
 import CreateDeployment from 'containers/DeploymentsPage/CreateLoadable';
 import TerminalPage from 'containers/TerminalPage/Loadable';
+import ConfigMapsPage from 'containers/ConfigMapsPage/Loadable';
+import CreateConfigMap from 'containers/ConfigMapsPage/CreateLoadable';
 
 const theme = createMuiTheme({
   typography: {
@@ -43,6 +45,11 @@ export default function App() {
           />
           <Route
             exact
+            path="/clusters/:cluster_id/console"
+            component={TerminalPage}
+          />
+          <Route
+            exact
             path="/clusters/:cluster_id/namespaces"
             component={NamespacesPage}
           />
@@ -58,8 +65,13 @@ export default function App() {
           />
           <Route
             exact
-            path="/clusters/:cluster_id/console"
-            component={TerminalPage}
+            path="/clusters/:cluster_id/namespaces/:namespace_id/configmaps"
+            component={ConfigMapsPage}
+          />
+          <Route
+            exact
+            path="/clusters/:cluster_id/namespaces/:namespace_id/configmaps/create"
+            component={CreateConfigMap}
           />
           <Route component={NotFoundPage} />
         </Switch>
