@@ -13,7 +13,6 @@ import { createStructuredSelector } from 'reselect';
 import { bindActionCreators, compose } from 'redux';
 import { Terminal } from 'xterm';
 import * as fit from 'xterm/dist/addons/fit/fit';
-import * as attach from 'xterm/lib/addons/attach/attach';
 import 'xterm/dist/xterm.css';
 import SockJS from 'sockjs-client';
 
@@ -33,7 +32,6 @@ import messages from './messages';
 import styles from './styles';
 import TerminalPageHelmet from './helmet';
 
-Terminal.applyAddon(attach);
 Terminal.applyAddon(fit);
 
 /* eslint-disable react/prefer-stateless-function */
@@ -64,8 +62,6 @@ export class TerminalPage extends React.PureComponent {
     term.fit();
     term.write('\x1b[31mWelcome to Terminal!\x1b[m\r\n');
 
-    // term.attach(socket);
-
     socket.onopen = () => {
       socket.send(JSON.stringify({ cols: term.cols, rows: term.rows }));
     };
@@ -80,9 +76,14 @@ export class TerminalPage extends React.PureComponent {
     };
 
     this.socket = socket;
+    window.addEventListener('resize', (evt) => {
+      term.fit();
+      socket.send(JSON.stringify({ cols: term.cols, rows: term.rows }));
+    });
   }
 
   componentWillUnmount() {
+    window.removeEventListener('resize');
     this.socket.close();
   }
 

@@ -40,7 +40,7 @@ const styles = theme => ({
     marginLeft: -22,
   },
   tableContainer: {
-    height: 320,
+    height: 'calc(100% - 39px - 64px)',
   },
   button: {
     margin: theme.spacing.unit,
