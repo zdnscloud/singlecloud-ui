@@ -76,14 +76,15 @@ export class TerminalPage extends React.PureComponent {
     };
 
     this.socket = socket;
-    window.addEventListener('resize', (evt) => {
+    this.resizeListener = () => {
       term.fit();
       socket.send(JSON.stringify({ cols: term.cols, rows: term.rows }));
-    });
+    };
+    window.addEventListener('resize', this.resizeListener);
   }
 
   componentWillUnmount() {
-    window.removeEventListener('resize');
+    window.removeEventListener('resize', this.resizeListener);
     this.socket.close();
   }
 
