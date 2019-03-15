@@ -14,6 +14,8 @@ import MenuItem from '@material-ui/core/MenuItem';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
+import GridList from '@material-ui/core/GridList';
+import GridListTile from '@material-ui/core/GridListTile';
 
 export default class ContainerForm extends React.PureComponent {
   state = {
@@ -22,7 +24,7 @@ export default class ContainerForm extends React.PureComponent {
 
   componentDidMount() {
     this.setState({
-      labelWidth: findDOMNode(this.InputLabelRef).offsetWidth,
+      labelWidth: findDOMNode(this.InputLabelRef).offsetWidth, // eslint-disable-line
     });
   }
 
@@ -34,12 +36,12 @@ export default class ContainerForm extends React.PureComponent {
         <Button
           variant="contained"
           color="secondary"
-          className={classes.button}
+          className={classNames(classes.margin, classes.button)}
           onClick={(evt) => {
             updateForm(['containers', index], null);
           }}
         >
-          remove this container
+          remove this
         </Button>
         <TextField
           className={classNames(classes.margin, classes.textField)}
@@ -118,23 +120,9 @@ export default class ContainerForm extends React.PureComponent {
             updateForm(['containers', index, 'mount_path'], evt.target.value)
           }
         />
-        <List>
-          <ListItem>
-            <Button
-              color="primary"
-              onClick={() => {
-                const { size } = item.get('exposed_ports');
-                updateForm(
-                  ['containers', index, 'exposed_ports', size, 'protocol'],
-                  'tcp',
-                );
-              }}
-            >
-              ADD exposed PORT
-            </Button>
-          </ListItem>
-          {item.get('exposed_ports').map((port, idx) => (
-            <ListItem>
+        <GridList cellHeight="auto" cols="1">
+          {item.get('exposedPorts').map((port, idx) => (
+            <GridListTile>
               <TextField
                 className={classNames(classes.margin, classes.textField)}
                 variant="outlined"
@@ -142,8 +130,8 @@ export default class ContainerForm extends React.PureComponent {
                 value={port.get('name')}
                 onChange={(evt) => {
                   updateForm(
-                    ['containers', index, 'exposed_ports', idx, 'name'],
-                    Number(evt.target.value),
+                    ['containers', index, 'exposedPorts', idx, 'name'],
+                    evt.target.value,
                   );
                 }}
               />
@@ -155,7 +143,7 @@ export default class ContainerForm extends React.PureComponent {
                   value={port.get('protocol')}
                   onChange={(evt) =>
                     updateForm(
-                      ['containers', index, 'exposed_ports', idx, 'protocol'],
+                      ['containers', index, 'exposedPorts', idx, 'protocol'],
                       evt.target.value,
                     )
                   }
@@ -179,7 +167,7 @@ export default class ContainerForm extends React.PureComponent {
                 value={port.get('port')}
                 onChange={(evt) =>
                   updateForm(
-                    ['containers', index, 'exposed_ports', idx, 'port'],
+                    ['containers', index, 'exposedPorts', idx, 'port'],
                     Number(evt.target.value),
                   )
                 }
@@ -187,16 +175,32 @@ export default class ContainerForm extends React.PureComponent {
               <Button
                 variant="contained"
                 color="secondary"
-                className={classes.button}
+                className={classNames(classes.margin, classes.button)}
                 onClick={(evt) => {
-                  updateForm(['containers', index, 'exposed_ports', idx], null);
+                  updateForm(['containers', index, 'exposedPorts', idx], null);
                 }}
               >
                 remove this port
               </Button>
-            </ListItem>
+            </GridListTile>
           ))}
-        </List>
+          <GridListTile>
+            <Button
+              variant="contained"
+              color="primary"
+              className={classNames(classes.margin, classes.button)}
+              onClick={() => {
+                const { size } = item.get('exposedPorts');
+                updateForm(
+                  ['containers', index, 'exposedPorts', size, 'protocol'],
+                  'tcp',
+                );
+              }}
+            >
+              ADD exposed PORT
+            </Button>
+          </GridListTile>
+        </GridList>
       </Fragment>
     );
   }

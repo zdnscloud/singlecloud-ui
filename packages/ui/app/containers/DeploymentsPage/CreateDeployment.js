@@ -26,14 +26,21 @@ import Button from '@material-ui/core/Button';
 import OutlinedInput from '@material-ui/core/OutlinedInput';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
+import FormGroup from '@material-ui/core/FormGroup';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Switch from '@material-ui/core/Switch';
 import Select from '@material-ui/core/Select';
 import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
+import Fab from '@material-ui/core/Fab';
+import AddIcon from '@material-ui/icons/Add';
+import Collapse from '@material-ui/core/Collapse';
+import Checkbox from '@material-ui/core/Checkbox';
 
 import injectSaga from 'utils/injectSaga';
-import { makeSelectCreateFormData } from './selectors';
+import { makeSelectCreateFormData, makeSelectFormPorts } from './selectors';
 import reducer from './reducer';
 import * as actions from './actions';
 import saga from './saga';
@@ -64,6 +71,7 @@ export class CreateDeployment extends React.PureComponent {
     const {
       classes,
       formData,
+      formPorts,
       configMaps,
       updateForm,
       createDeployment,
@@ -79,7 +87,7 @@ export class CreateDeployment extends React.PureComponent {
           <Typography variant="h4" gutterBottom component="h2">
             <FormattedMessage {...messages.deployments} />
           </Typography>
-          <Typography component="div" className={classes.chartContainer}>
+          <Typography component="div" className={classes.deployContainer}>
             <div>
               <TextField
                 className={classNames(classes.margin, classes.textField)}
@@ -98,15 +106,7 @@ export class CreateDeployment extends React.PureComponent {
                   updateForm('replicas', Number(evt.target.value))
                 }
               />
-              <Button
-                variant="contained"
-                color="primary"
-                className={classes.button}
-                onClick={(evt) => createDeployment()}
-              >
-                Create
-              </Button>
-              <GridList cellHeight="auto" cols="5">
+              <GridList cellHeight="auto" cols={3}>
                 {formData.get('containers').map((item, index) => (
                   <GridListTile key={index}>
                     <ContainerForm
@@ -118,12 +118,11 @@ export class CreateDeployment extends React.PureComponent {
                     />
                   </GridListTile>
                 ))}
-                <GridListTile>
-                  <ListItemText primary="containers" />
-                  <Button
-                    variant="contained"
+                <GridListTile className={classes.addContainerWrap}>
+                  <Fab
                     color="primary"
-                    className={classes.button}
+                    aria-label="add Container"
+                    className={classes.addContainerButton}
                     onClick={(evt) => {
                       const { size } = formData.get('containers');
                       updateForm(
@@ -135,16 +134,204 @@ export class CreateDeployment extends React.PureComponent {
                           args: '',
                           config_name: '',
                           mount_path: '',
-                          exposed_ports: [],
+                          exposedPorts: [],
                         }),
                       );
                     }}
                   >
-                    more container
-                  </Button>
+                    <AddIcon />
+                  </Fab>
                 </GridListTile>
               </GridList>
             </div>
+          </Typography>
+          <Typography component="div" className={classes.advanceContainer}>
+            <FormGroup>
+              <FormControlLabel
+                control={
+                  <Switch
+                    classes={{
+                      switchBase: classes.iOSSwitchBase,
+                      bar: classes.iOSBar,
+                      icon: classes.iOSIcon,
+                      iconChecked: classes.iOSIconChecked,
+                      checked: classes.iOSChecked,
+                    }}
+                    disableRipple
+                    checked={formData.get('enableAdvancedOptions')}
+                    onChange={(evt) => {
+                      updateForm(
+                        'enableAdvancedOptions',
+                        !formData.get('enableAdvancedOptions'),
+                      );
+                    }}
+                    value="advancedOptions"
+                  />
+                }
+                label="Advanced Options"
+              />
+            </FormGroup>
+            <Collapse in={formData.get('enableAdvancedOptions')}>
+              <FormControl variant="outlined" className={classes.formControl}>
+                <InputLabel htmlFor="exposed-service-type">
+                  Exposed Service Type
+                </InputLabel>
+                <Select
+                  value={formData.getIn([
+                    'advancedOptions',
+                    'exposedServiceType',
+                  ])}
+                  onChange={(evt) =>
+                    updateForm(
+                      ['advancedOptions', 'exposedServiceType'],
+                      evt.target.value,
+                    )
+                  }
+                  input={
+                    <OutlinedInput
+                      labelWidth={180}
+                      name="Exposed Service Type"
+                      id="exposed-service-type"
+                    />
+                  }
+                >
+                  <MenuItem value="clusterip">Cluster IP</MenuItem>
+                  <MenuItem value="nodeport">Node Port</MenuItem>
+                </Select>
+              </FormControl>
+              {formPorts.map((port) => {
+                const svcs = formData.getIn([
+                  'advancedOptions',
+                  'exposedServices',
+                ]);
+                const current = svcs.find(
+                  (svc) =>
+                    svc.get('name') === port.get('name') &&
+                    svc.get('port') === port.get('port') &&
+                    svc.get('protocol') === port.get('protocol'),
+                );
+                const idx = svcs.findIndex((svc) => svc === current);
+                return (
+                  <div>
+                    <label>{`${port}`}</label>
+                    <FormControlLabel
+                      control={
+                        <Checkbox
+                          checked={!!current}
+                          onChange={(evt) => {
+                            if (current) {
+                              updateForm(
+                                ['advancedOptions', 'exposedServices', idx],
+                                null,
+                              );
+                            } else {
+                              updateForm(
+                                [
+                                  'advancedOptions',
+                                  'exposedServices',
+                                  svcs.size,
+                                ],
+                                port,
+                              );
+                            }
+                          }}
+                          value
+                          color="primary"
+                        />
+                      }
+                      label="Auto Create Service"
+                    />
+                    <TextField
+                      className={classNames(classes.margin, classes.textField)}
+                      variant="outlined"
+                      type="number"
+                      label="Servce Port"
+                      disabled={!current}
+                      value={current && current.get('servicePort') || ''}
+                      onChange={(evt) => {
+                        updateForm(
+                          [
+                            'advancedOptions',
+                            'exposedServices',
+                            idx,
+                            'servicePort',
+                          ],
+                          Number(evt.target.value),
+                        );
+                      }}
+                    />
+                    <FormControlLabel
+                      control={
+                        <Checkbox
+                          disabled={!current}
+                          checked={current && current.get('autoCreateIngress')}
+                          onChange={(evt) => {
+                            updateForm(
+                              [
+                                'advancedOptions',
+                                'exposedServices',
+                                idx,
+                                'autoCreateIngress',
+                              ],
+                              !current.get('autoCreateIngress'),
+                            );
+                          }}
+                          value
+                          color="primary"
+                        />
+                      }
+                      label="Auto Create Ingress"
+                    />
+                    <TextField
+                      className={classNames(classes.margin, classes.textField)}
+                      variant="outlined"
+                      label="Ingress Domain Name"
+                      disabled={!current || !current.get('autoCreateIngress')}
+                      value={current && current.get('ingressDomainName') || ''}
+                      onChange={(evt) => {
+                        updateForm(
+                          [
+                            'advancedOptions',
+                            'exposedServices',
+                            idx,
+                            'ingressDomainName',
+                          ],
+                          evt.target.value,
+                        );
+                      }}
+                    />
+                    <TextField
+                      className={classNames(classes.margin, classes.textField)}
+                      variant="outlined"
+                      label="Ingress Path"
+                      disabled={!current || !current.get('autoCreateIngress')}
+                      value={current && current.get('ingressPath') || ''}
+                      onChange={(evt) => {
+                        updateForm(
+                          [
+                            'advancedOptions',
+                            'exposedServices',
+                            idx,
+                            'ingressPath',
+                          ],
+                          evt.target.value,
+                        );
+                      }}
+                    />
+                  </div>
+                );
+              })}
+            </Collapse>
+          </Typography>
+          <Typography component="div" className={classes.actionContainer}>
+            <Button
+              variant="contained"
+              color="primary"
+              className={classNames(classes.margin, classes.button)}
+              onClick={(evt) => createDeployment()}
+            >
+              Create
+            </Button>
           </Typography>
         </div>
       </div>
@@ -155,6 +342,7 @@ export class CreateDeployment extends React.PureComponent {
 const mapStateToProps = createStructuredSelector({
   configMaps: makeSelectConfigMaps(),
   formData: makeSelectCreateFormData(),
+  formPorts: makeSelectFormPorts(),
 });
 
 const mapDispatchToProps = (dispatch) =>

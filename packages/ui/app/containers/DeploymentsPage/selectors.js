@@ -45,6 +45,20 @@ export const makeSelectCreateFormData = () =>
     (substate) => substate.get('createFormData'),
   );
 
+export const makeSelectFormPorts = () =>
+  createSelector(
+    makeSelectCreateFormData(),
+    (substate) =>
+      substate
+        .get('containers')
+        .map((ctn) =>
+          ctn
+            .get('exposedPorts')
+            .filter((p) => typeof p.get('port') === 'number'),
+        )
+        .flatten(true),
+  );
+
 /**
  * Default selector used by DeploymentsPage
  */
