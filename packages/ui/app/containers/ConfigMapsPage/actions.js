@@ -50,7 +50,7 @@ export const loadConfigMapsSuccess = (clusterID, namespaceID, data) => ({
   },
 });
 
-export const loadConfigMapsFailure = errors => ({
+export const loadConfigMapsFailure = (errors) => ({
   type: LOAD_CONFIG_MAPS_FAILURE,
   payload: { errors },
 });
@@ -70,12 +70,12 @@ export const createConfigMapRequest = () => ({
   payload: {},
 });
 
-export const createConfigMapSuccess = data => ({
+export const createConfigMapSuccess = (data) => ({
   type: CREATE_CONFIG_MAP_SUCCESS,
   payload: { data },
 });
 
-export const createConfigMapFailure = errors => ({
+export const createConfigMapFailure = (errors) => ({
   type: CREATE_CONFIG_MAP_FAILURE,
   payload: { errors },
 });
@@ -90,7 +90,7 @@ export function updateForm(name, value) {
   };
 }
 
-export const removeConfigMap = id => ({
+export const removeConfigMap = (id) => ({
   type: REMOVE_CONFIG_MAP,
   payload: { id },
 });
@@ -105,7 +105,7 @@ export const removeConfigMapSuccess = (clusterID, id) => ({
   payload: { clusterID, id },
 });
 
-export const removeConfigMapFailure = errors => ({
+export const removeConfigMapFailure = (errors) => ({
   type: REMOVE_CONFIG_MAP_FAILURE,
   payload: { errors },
 });

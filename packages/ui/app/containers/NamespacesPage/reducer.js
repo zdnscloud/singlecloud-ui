@@ -58,7 +58,7 @@ function namespacesPageReducer(state = initialState, { type, payload }) {
         ['namespaces', clusterID],
         fromJS(namespaces),
       );
-      const list = data.data.map(item => item.id);
+      const list = data.data.map((item) => item.id);
       // load namespaces is async
       if (state.get('clusterID') === clusterID)
         newState = newState.set('tableList', fromJS(list));
@@ -101,7 +101,9 @@ function namespacesPageReducer(state = initialState, { type, payload }) {
     case REMOVE_NAMESPACE_SUCCESS:
       return state
         .deleteIn(['namespaces', payload.clusterID, payload.id])
-        .updateIn(['tableList'], list => list.filterNot(n => n === payload.id));
+        .updateIn(['tableList'], (list) =>
+          list.filterNot((n) => n === payload.id),
+        );
 
     case REMOVE_NAMESPACE_FAILURE:
       return state;

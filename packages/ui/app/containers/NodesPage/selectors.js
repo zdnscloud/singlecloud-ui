@@ -5,7 +5,7 @@ import { initialState } from './reducer';
  * Direct selector to the nodesPage state domain
  */
 
-const selectNodesPageDomain = state => state.get('nodesPage', initialState);
+const selectNodesPageDomain = (state) => state.get('nodesPage', initialState);
 
 /**
  * Other specific selectors
@@ -14,7 +14,7 @@ const selectNodesPageDomain = state => state.get('nodesPage', initialState);
 export const makeSelectClusterID = () =>
   createSelector(
     selectNodesPageDomain,
-    substate => substate.get('clusterID'),
+    (substate) => substate.get('clusterID'),
   );
 
 export const makeSelectNodes = () =>
@@ -27,7 +27,7 @@ export const makeSelectNodes = () =>
 export const makeSelectTableList = () =>
   createSelector(
     selectNodesPageDomain,
-    substate => substate.get('tableList'),
+    (substate) => substate.get('tableList'),
   );
 
 /**
@@ -37,7 +37,7 @@ export const makeSelectTableList = () =>
 export const makeSelectNodesPage = () =>
   createSelector(
     selectNodesPageDomain,
-    substate => substate,
+    (substate) => substate,
   );
 
 export default makeSelectNodesPage;

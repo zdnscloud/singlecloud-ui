@@ -5,7 +5,7 @@ import { initialState } from './reducer';
  * Direct selector to the namespacesPage state domain
  */
 
-const selectNamespacesPageDomain = state =>
+const selectNamespacesPageDomain = (state) =>
   state.get('namespacesPage', initialState);
 
 /**
@@ -15,7 +15,7 @@ const selectNamespacesPageDomain = state =>
 export const makeSelectClusterID = () =>
   createSelector(
     selectNamespacesPageDomain,
-    substate => substate.get('clusterID'),
+    (substate) => substate.get('clusterID'),
   );
 
 export const makeSelectNamespaces = () =>
@@ -28,19 +28,19 @@ export const makeSelectNamespaces = () =>
 export const makeSelectTableList = () =>
   createSelector(
     selectNamespacesPageDomain,
-    substate => substate.get('tableList'),
+    (substate) => substate.get('tableList'),
   );
 
 export const makeSelectCreateIsOpen = () =>
   createSelector(
     selectNamespacesPageDomain,
-    substate => substate.get('createIsOpen'),
+    (substate) => substate.get('createIsOpen'),
   );
 
 export const makeSelectCreateFormData = () =>
   createSelector(
     selectNamespacesPageDomain,
-    substate => substate.get('createFormData'),
+    (substate) => substate.get('createFormData'),
   );
 
 /**
@@ -50,7 +50,7 @@ export const makeSelectCreateFormData = () =>
 export const makeSelectNamespacesPage = () =>
   createSelector(
     selectNamespacesPageDomain,
-    substate => substate,
+    (substate) => substate,
   );
 
 export default makeSelectNamespacesPage;

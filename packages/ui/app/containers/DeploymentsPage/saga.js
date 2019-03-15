@@ -54,12 +54,14 @@ export function* createDeployment() {
     const clusterID = yield select(makeSelectClusterID());
     const namespaceID = yield select(makeSelectNamespaceID());
     yield put(createDeploymentRequest());
-    const mapedData = formData.update('containers', containers =>
-      containers.map(ctn => {
-        const cmd = (ctn.get('command').match(/("[^"]*")|[^\s]+/g) || [])
-          .map(n => n.replace(/^"|"$/g, ''));
-        const args = (ctn.get('args').match(/("[^"]*")|[^\s]+/g) || [])
-          .map(n => n.replace(/^"|"$/g, ''));
+    const mapedData = formData.update('containers', (containers) =>
+      containers.map((ctn) => {
+        const cmd = (ctn.get('command').match(/("[^"]*")|[^\s]+/g) || []).map(
+          (n) => n.replace(/^"|"$/g, ''),
+        );
+        const args = (ctn.get('args').match(/("[^"]*")|[^\s]+/g) || []).map(
+          (n) => n.replace(/^"|"$/g, ''),
+        );
         return ctn.set('command', cmd).set('args', args);
       }),
     );

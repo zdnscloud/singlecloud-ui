@@ -31,12 +31,22 @@ export default class ContainerForm extends React.PureComponent {
 
     return (
       <Fragment>
+        <Button
+          variant="contained"
+          color="secondary"
+          className={classes.button}
+          onClick={(evt) => {
+            updateForm(['containers', index], null);
+          }}
+        >
+          remove this container
+        </Button>
         <TextField
           className={classNames(classes.margin, classes.textField)}
           variant="outlined"
           label="container name"
           value={item.get('name')}
-          onChange={evt =>
+          onChange={(evt) =>
             updateForm(['containers', index, 'name'], evt.target.value)
           }
         />
@@ -45,7 +55,7 @@ export default class ContainerForm extends React.PureComponent {
           variant="outlined"
           label="container image"
           value={item.get('image')}
-          onChange={evt =>
+          onChange={(evt) =>
             updateForm(['containers', index, 'image'], evt.target.value)
           }
         />
@@ -54,7 +64,7 @@ export default class ContainerForm extends React.PureComponent {
           variant="outlined"
           label="command"
           value={item.get('command')}
-          onChange={evt =>
+          onChange={(evt) =>
             updateForm(['containers', index, 'command'], evt.target.value)
           }
         />
@@ -63,13 +73,13 @@ export default class ContainerForm extends React.PureComponent {
           variant="outlined"
           label="args"
           value={item.get('args')}
-          onChange={evt =>
+          onChange={(evt) =>
             updateForm(['containers', index, 'args'], evt.target.value)
           }
         />
         <FormControl variant="outlined" className={classes.formControl}>
           <InputLabel
-            ref={ref => {
+            ref={(ref) => {
               this.InputLabelRef = ref;
             }}
             htmlFor="config_name-simple"
@@ -78,7 +88,7 @@ export default class ContainerForm extends React.PureComponent {
           </InputLabel>
           <Select
             value={item.get('config_name')}
-            onChange={evt =>
+            onChange={(evt) =>
               updateForm(['containers', index, 'config_name'], evt.target.value)
             }
             input={
@@ -92,7 +102,7 @@ export default class ContainerForm extends React.PureComponent {
             <MenuItem value="">
               <em>None</em>
             </MenuItem>
-            {configMaps.map(conf => (
+            {configMaps.map((conf) => (
               <MenuItem key={conf.get('id')} value={conf.get('id')}>
                 {conf.get('name')}
               </MenuItem>
@@ -104,13 +114,14 @@ export default class ContainerForm extends React.PureComponent {
           variant="outlined"
           label="mount_path"
           value={item.get('mount_path')}
-          onChange={evt =>
+          onChange={(evt) =>
             updateForm(['containers', index, 'mount_path'], evt.target.value)
           }
         />
         <List>
           <ListItem>
             <Button
+              color="primary"
               onClick={() => {
                 const { size } = item.get('exposed_ports');
                 updateForm(
@@ -124,13 +135,25 @@ export default class ContainerForm extends React.PureComponent {
           </ListItem>
           {item.get('exposed_ports').map((port, idx) => (
             <ListItem>
+              <TextField
+                className={classNames(classes.margin, classes.textField)}
+                variant="outlined"
+                label="Name"
+                value={port.get('name')}
+                onChange={(evt) => {
+                  updateForm(
+                    ['containers', index, 'exposed_ports', idx, 'name'],
+                    Number(evt.target.value),
+                  );
+                }}
+              />
               <FormControl variant="outlined" className={classes.formControl}>
                 <InputLabel htmlFor={`exposed-port-protocol-${idx}`}>
                   Protocol
                 </InputLabel>
                 <Select
                   value={port.get('protocol')}
-                  onChange={evt =>
+                  onChange={(evt) =>
                     updateForm(
                       ['containers', index, 'exposed_ports', idx, 'protocol'],
                       evt.target.value,
@@ -154,33 +177,26 @@ export default class ContainerForm extends React.PureComponent {
                 type="number"
                 label="Port"
                 value={port.get('port')}
-                onChange={evt =>
-                  updateForm(['containers', index, 'exposed_ports', idx, 'port'], Number(evt.target.value))
+                onChange={(evt) =>
+                  updateForm(
+                    ['containers', index, 'exposed_ports', idx, 'port'],
+                    Number(evt.target.value),
+                  )
                 }
               />
               <Button
                 variant="contained"
                 color="secondary"
                 className={classes.button}
-                onClick={evt => {
+                onClick={(evt) => {
                   updateForm(['containers', index, 'exposed_ports', idx], null);
                 }}
               >
-                remove port
+                remove this port
               </Button>
             </ListItem>
           ))}
         </List>
-        <Button
-          variant="contained"
-          color="secondary"
-          className={classes.button}
-          onClick={evt => {
-            updateForm(['containers', index], null);
-          }}
-        >
-          remove this container
-        </Button>
       </Fragment>
     );
   }

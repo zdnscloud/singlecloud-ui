@@ -1,6 +1,6 @@
 const drawerWidth = 240;
 
-const styles = theme => ({
+const styles = (theme) => ({
   root: {
     display: 'flex',
   },
@@ -84,7 +84,7 @@ const styles = theme => ({
   formControl: {
     margin: theme.spacing.unit,
     flexBasis: 200,
-    minWidth: 120,
+    minWidth: 194,
   },
   selectEmpty: {
     marginTop: theme.spacing.unit * 2,

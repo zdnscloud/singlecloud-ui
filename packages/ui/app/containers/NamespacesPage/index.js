@@ -73,7 +73,7 @@ export class NamespacesPage extends React.PureComponent {
 
 const mapStateToProps = createStructuredSelector({});
 
-const mapDispatchToProps = dispatch =>
+const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
       ...actions,

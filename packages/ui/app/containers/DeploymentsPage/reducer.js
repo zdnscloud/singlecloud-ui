@@ -49,7 +49,7 @@ function deploymentsPageReducer(state = initialState, { type, payload }) {
         ['deployments', clusterID, namespaceID],
         fromJS(deployments),
       );
-      const list = data.data.map(item => item.id);
+      const list = data.data.map((item) => item.id);
 
       // load deployments is async
       if (

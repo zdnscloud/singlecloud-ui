@@ -52,7 +52,7 @@ function configMapsPageReducer(state = initialState, { type, payload }) {
         ['configMaps', clusterID, namespaceID],
         fromJS(configMaps),
       );
-      const list = data.data.map(item => item.id);
+      const list = data.data.map((item) => item.id);
 
       // load configMaps is async
       if (

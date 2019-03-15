@@ -59,7 +59,7 @@ export class ClustersPage extends React.PureComponent {
 
 const mapStateToProps = createStructuredSelector({});
 
-const mapDispatchToProps = dispatch =>
+const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
       ...actions,

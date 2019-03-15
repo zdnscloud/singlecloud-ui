@@ -29,6 +29,8 @@ import MenuItem from '@material-ui/core/MenuItem';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
+import GridList from '@material-ui/core/GridList';
+import GridListTile from '@material-ui/core/GridListTile';
 
 import injectSaga from 'utils/injectSaga';
 import { makeSelectCreateFormData } from './selectors';
@@ -84,7 +86,7 @@ export class CreateDeployment extends React.PureComponent {
                 variant="outlined"
                 label="name"
                 value={formData.get('name')}
-                onChange={evt => updateForm('name', evt.target.value)}
+                onChange={(evt) => updateForm('name', evt.target.value)}
               />
               <TextField
                 className={classNames(classes.margin, classes.textField)}
@@ -92,7 +94,7 @@ export class CreateDeployment extends React.PureComponent {
                 type="number"
                 label="replicas"
                 value={formData.get('replicas')}
-                onChange={evt =>
+                onChange={(evt) =>
                   updateForm('replicas', Number(evt.target.value))
                 }
               />
@@ -100,18 +102,29 @@ export class CreateDeployment extends React.PureComponent {
                 variant="contained"
                 color="primary"
                 className={classes.button}
-                onClick={evt => createDeployment()}
+                onClick={(evt) => createDeployment()}
               >
                 Create
               </Button>
-              <List component="ul">
-                <ListItem>
+              <GridList cellHeight="auto" cols="5">
+                {formData.get('containers').map((item, index) => (
+                  <GridListTile key={index}>
+                    <ContainerForm
+                      classes={classes}
+                      index={index}
+                      item={item}
+                      configMaps={configMaps.toList()}
+                      updateForm={updateForm}
+                    />
+                  </GridListTile>
+                ))}
+                <GridListTile>
                   <ListItemText primary="containers" />
                   <Button
                     variant="contained"
-                    color="secondary"
+                    color="primary"
                     className={classes.button}
-                    onClick={evt => {
+                    onClick={(evt) => {
                       const { size } = formData.get('containers');
                       updateForm(
                         ['containers', size],
@@ -129,19 +142,8 @@ export class CreateDeployment extends React.PureComponent {
                   >
                     more container
                   </Button>
-                </ListItem>
-                {formData.get('containers').map((item, index) => (
-                  <ListItem key={index}>
-                    <ContainerForm
-                      classes={classes}
-                      index={index}
-                      item={item}
-                      configMaps={configMaps.toList()}
-                      updateForm={updateForm}
-                    />
-                  </ListItem>
-                ))}
-              </List>
+                </GridListTile>
+              </GridList>
             </div>
           </Typography>
         </div>
@@ -155,7 +157,7 @@ const mapStateToProps = createStructuredSelector({
   formData: makeSelectCreateFormData(),
 });
 
-const mapDispatchToProps = dispatch =>
+const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
       ...actions,

@@ -33,7 +33,7 @@ function clustersPageReducer(state = initialState, { type, payload }) {
     case LOAD_CLUSTERS_SUCCESS: {
       const { data } = payload.data;
       const clusters = {};
-      const list = data.map(item => {
+      const list = data.map((item) => {
         clusters[item.id] = item;
         return item.id;
       });

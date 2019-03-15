@@ -60,7 +60,7 @@ export class ClustersTable extends React.PureComponent {
             </TableRow>
           </TableHead>
           <TableBody>
-            {tableList.map(id => (
+            {tableList.map((id) => (
               <TableRow key={id}>
                 <TableCell>{clusters.getIn([id, 'name'])}</TableCell>
                 <TableCell align="right">
@@ -113,7 +113,7 @@ const mapStateToProps = createStructuredSelector({
   tableList: makeSelectTableList(),
 });
 
-const mapDispatchToProps = dispatch =>
+const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
       ...actions,

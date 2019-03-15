@@ -37,13 +37,13 @@ export class DeploymentsTable extends React.PureComponent {
       {
         id: 'actions',
         label: 'Actions',
-        component: props => (
+        component: (props) => (
           <Fragment>
             <Button
               variant="outlined"
               size="small"
               className={classes.button}
-              onClick={evt => removeDeployment(props.data.get('id'))}
+              onClick={(evt) => removeDeployment(props.data.get('id'))}
             >
               Delete this
             </Button>
@@ -57,7 +57,7 @@ export class DeploymentsTable extends React.PureComponent {
         <SimpleTable
           className={classes.table}
           schema={mergedSchema}
-          data={tableList.map(id => deployments.get(id))}
+          data={tableList.map((id) => deployments.get(id))}
         />
       </Paper>
     );
@@ -69,7 +69,7 @@ const mapStateToProps = createStructuredSelector({
   tableList: makeSelectTableList(),
 });
 
-const mapDispatchToProps = dispatch =>
+const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
       ...actions,
