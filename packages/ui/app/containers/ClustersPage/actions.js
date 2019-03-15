@@ -32,17 +32,17 @@ export const loadClustersRequest = () => ({
   payload: {},
 });
 
-export const loadClustersSuccess = data => ({
+export const loadClustersSuccess = (data) => ({
   type: LOAD_CLUSTERS_SUCCESS,
   payload: { data },
 });
 
-export const loadClustersFailure = errors => ({
+export const loadClustersFailure = (errors) => ({
   type: LOAD_CLUSTERS_FAILURE,
   payload: { errors },
 });
 
-export const loadCluster = id => ({
+export const loadCluster = (id) => ({
   type: LOAD_CLUSTER,
   payload: { id },
 });
@@ -52,12 +52,12 @@ export const loadClusterRequest = () => ({
   payload: {},
 });
 
-export const loadClusterSuccess = data => ({
+export const loadClusterSuccess = (data) => ({
   type: LOAD_CLUSTER_SUCCESS,
   payload: { data },
 });
 
-export const loadClusterFailure = errors => ({
+export const loadClusterFailure = (errors) => ({
   type: LOAD_CLUSTER_FAILURE,
   payload: { errors },
 });

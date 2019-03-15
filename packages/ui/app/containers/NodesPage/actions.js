@@ -34,7 +34,7 @@ export const loadNodesSuccess = (clusterID, data) => ({
   payload: { clusterID, data },
 });
 
-export const loadNodesFailure = errors => ({
+export const loadNodesFailure = (errors) => ({
   type: LOAD_NODES_FAILURE,
   payload: { errors },
 });

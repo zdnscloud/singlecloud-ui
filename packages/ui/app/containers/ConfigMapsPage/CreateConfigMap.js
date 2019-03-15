@@ -89,13 +89,13 @@ export class CreateConfigMap extends React.PureComponent {
                 variant="outlined"
                 label="name"
                 value={formData.get('name')}
-                onChange={evt => updateForm('name', evt.target.value)}
+                onChange={(evt) => updateForm('name', evt.target.value)}
               />
               <Button
                 variant="contained"
                 color="primary"
                 className={classes.button}
-                onClick={evt => createConfigMap()}
+                onClick={(evt) => createConfigMap()}
               >
                 Create
               </Button>
@@ -106,7 +106,7 @@ export class CreateConfigMap extends React.PureComponent {
                     variant="contained"
                     color="secondary"
                     className={classes.button}
-                    onClick={evt => {
+                    onClick={(evt) => {
                       const { size } = formData.get('configs');
                       updateForm(['configs', size, 'name'], '');
                     }}
@@ -121,7 +121,7 @@ export class CreateConfigMap extends React.PureComponent {
                       variant="outlined"
                       label="config name"
                       value={item.get('name')}
-                      onChange={evt =>
+                      onChange={(evt) =>
                         updateForm(['configs', idx, 'name'], evt.target.value)
                       }
                     />
@@ -129,7 +129,7 @@ export class CreateConfigMap extends React.PureComponent {
                       variant="contained"
                       size="small"
                       className={classes.button}
-                      onClick={evt => {
+                      onClick={(evt) => {
                         this.setState({ isOpen: true, currentID: idx });
                       }}
                     >
@@ -145,7 +145,7 @@ export class CreateConfigMap extends React.PureComponent {
                       variant="contained"
                       color="secondary"
                       className={classes.button}
-                      onClick={evt => {
+                      onClick={(evt) => {
                         updateForm(['configs', idx], null);
                       }}
                     >
@@ -166,7 +166,7 @@ const mapStateToProps = createStructuredSelector({
   formData: makeSelectCreateFormData(),
 });
 
-const mapDispatchToProps = dispatch =>
+const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
       ...actions,

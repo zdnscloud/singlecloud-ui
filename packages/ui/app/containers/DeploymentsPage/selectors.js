@@ -6,7 +6,7 @@ import { initialState } from './reducer';
  * Direct selector to the deploymentsPage state domain
  */
 
-export const selectDeploymentsPageDomain = state =>
+export const selectDeploymentsPageDomain = (state) =>
   state.get('deploymentsPage', initialState);
 
 /**
@@ -15,13 +15,13 @@ export const selectDeploymentsPageDomain = state =>
 export const makeSelectClusterID = () =>
   createSelector(
     selectDeploymentsPageDomain,
-    substate => substate.get('clusterID'),
+    (substate) => substate.get('clusterID'),
   );
 
 export const makeSelectNamespaceID = () =>
   createSelector(
     selectDeploymentsPageDomain,
-    substate => substate.get('namespaceID'),
+    (substate) => substate.get('namespaceID'),
   );
 
 export const makeSelectDeployments = () =>
@@ -36,13 +36,27 @@ export const makeSelectDeployments = () =>
 export const makeSelectTableList = () =>
   createSelector(
     selectDeploymentsPageDomain,
-    substate => substate.get('tableList'),
+    (substate) => substate.get('tableList'),
   );
 
 export const makeSelectCreateFormData = () =>
   createSelector(
     selectDeploymentsPageDomain,
-    substate => substate.get('createFormData'),
+    (substate) => substate.get('createFormData'),
+  );
+
+export const makeSelectFormPorts = () =>
+  createSelector(
+    makeSelectCreateFormData(),
+    (substate) =>
+      substate
+        .get('containers')
+        .map((ctn) =>
+          ctn
+            .get('exposedPorts')
+            .filter((p) => typeof p.get('port') === 'number'),
+        )
+        .flatten(true),
   );
 
 /**
@@ -52,7 +66,7 @@ export const makeSelectCreateFormData = () =>
 const makeSelectDeploymentsPage = () =>
   createSelector(
     selectDeploymentsPageDomain,
-    substate => substate.toJS(),
+    (substate) => substate.toJS(),
   );
 
 export default makeSelectDeploymentsPage;

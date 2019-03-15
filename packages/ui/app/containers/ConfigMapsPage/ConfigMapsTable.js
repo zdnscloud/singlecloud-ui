@@ -22,7 +22,11 @@ import AceEditor from 'react-ace';
 import 'brace/mode/yaml';
 import 'brace/theme/github';
 
-import { makeSelectConfigMaps, makeSelectTableList, makeSelectOpening } from './selectors';
+import {
+  makeSelectConfigMaps,
+  makeSelectTableList,
+  makeSelectOpening,
+} from './selectors';
 import * as actions from './actions';
 import messages from './messages';
 import styles from './styles';
@@ -50,14 +54,14 @@ export class ConfigMapsTable extends React.PureComponent {
       {
         id: 'configs',
         label: 'Configs',
-        component: props => (
+        component: (props) => (
           <Fragment>
             {props.data.get('configs').map((conf, idx) => (
               <Button
                 variant="outlined"
                 size="small"
                 className={classes.button}
-                onClick={evt => showConfigMapData(props.data.get('id'), idx)}
+                onClick={(evt) => showConfigMapData(props.data.get('id'), idx)}
               >
                 show `{conf.get('name')}` Config
               </Button>
@@ -68,13 +72,13 @@ export class ConfigMapsTable extends React.PureComponent {
       {
         id: 'actions',
         label: 'Actions',
-        component: props => (
+        component: (props) => (
           <Fragment>
             <Button
               variant="outlined"
               size="small"
               className={classes.button}
-              onClick={evt => removeConfigMap(props.data.get('id'))}
+              onClick={(evt) => removeConfigMap(props.data.get('id'))}
             >
               Delete this
             </Button>
@@ -96,14 +100,19 @@ export class ConfigMapsTable extends React.PureComponent {
             focus
             mode="yaml"
             theme="github"
-            value={configMaps.getIn([getByKey(opening, 'id'), 'configs', getByKey(opening, 'index'), 'data'])}
+            value={configMaps.getIn([
+              getByKey(opening, 'id'),
+              'configs',
+              getByKey(opening, 'index'),
+              'data',
+            ])}
             readOnly
           />
         </Dialog>
         <SimpleTable
           className={classes.table}
           schema={mergedSchema}
-          data={tableList.map(id => configMaps.get(id))}
+          data={tableList.map((id) => configMaps.get(id))}
         />
       </Paper>
     );
@@ -116,7 +125,7 @@ const mapStateToProps = createStructuredSelector({
   opening: makeSelectOpening(),
 });
 
-const mapDispatchToProps = dispatch =>
+const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
       ...actions,

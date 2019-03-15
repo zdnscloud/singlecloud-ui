@@ -38,7 +38,7 @@ export class NamespacesTable extends React.PureComponent {
       {
         id: 'actions',
         label: 'Actions',
-        component: props => (
+        component: (props) => (
           <Fragment>
             <Button
               variant="outlined"
@@ -66,7 +66,7 @@ export class NamespacesTable extends React.PureComponent {
               variant="outlined"
               size="small"
               className={classes.button}
-              onClick={evt => {
+              onClick={(evt) => {
                 removeNamespace(props.data.get('id'));
               }}
             >
@@ -82,7 +82,7 @@ export class NamespacesTable extends React.PureComponent {
         <SimpleTable
           className={classes.table}
           schema={mergedSchema}
-          data={tableList.map(id => namespaces.get(id))}
+          data={tableList.map((id) => namespaces.get(id))}
         />
       </Paper>
     );
@@ -94,7 +94,7 @@ const mapStateToProps = createStructuredSelector({
   tableList: makeSelectTableList(),
 });
 
-const mapDispatchToProps = dispatch =>
+const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
       ...actions,

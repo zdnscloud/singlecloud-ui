@@ -49,12 +49,12 @@ export const loadNamespacesSuccess = (clusterID, data) => ({
   payload: { clusterID, data },
 });
 
-export const loadNamespacesFailure = errors => ({
+export const loadNamespacesFailure = (errors) => ({
   type: LOAD_NAMESPACES_FAILURE,
   payload: { errors },
 });
 
-export const loadNamespace = id => ({
+export const loadNamespace = (id) => ({
   type: LOAD_NAMESPACE,
   payload: { id },
 });
@@ -64,12 +64,12 @@ export const loadNamespaceRequest = () => ({
   payload: {},
 });
 
-export const loadNamespaceSuccess = data => ({
+export const loadNamespaceSuccess = (data) => ({
   type: LOAD_NAMESPACE_SUCCESS,
   payload: { data },
 });
 
-export const loadNamespaceFailure = errors => ({
+export const loadNamespaceFailure = (errors) => ({
   type: LOAD_NAMESPACE_FAILURE,
   payload: { errors },
 });
@@ -99,7 +99,7 @@ export const createNamespaceSuccess = (clusterID, data) => ({
   payload: { clusterID, data },
 });
 
-export const createNamespaceFailure = errors => ({
+export const createNamespaceFailure = (errors) => ({
   type: CREATE_NAMESPACE_FAILURE,
   payload: { errors },
 });
@@ -109,7 +109,7 @@ export const updateCreateForm = (name, value) => ({
   payload: { name, value },
 });
 
-export const removeNamespace = id => ({
+export const removeNamespace = (id) => ({
   type: REMOVE_NAMESPACE,
   payload: { id },
 });
@@ -124,7 +124,7 @@ export const removeNamespaceSuccess = (clusterID, id) => ({
   payload: { clusterID, id },
 });
 
-export const removeNamespaceFailure = errors => ({
+export const removeNamespaceFailure = (errors) => ({
   type: REMOVE_NAMESPACE_FAILURE,
   payload: { errors },
 });

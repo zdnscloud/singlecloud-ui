@@ -17,10 +17,20 @@ import {
   UPDATE_CREATE_FORM,
 } from './constants';
 
+const defaultFormData = {
+  name: '',
+  replicas: '',
+  containers: [],
+  advancedOptions: {
+    exposedServiceType: '',
+    exposedServices: [],
+  },
+};
+
 export const initialState = fromJS({
   deployments: {},
   tableList: [],
-  createFormData: { name: '', replicas: '', containers: [] },
+  createFormData: defaultFormData,
   clusterID: null,
   namespaceID: null,
 });
@@ -49,7 +59,7 @@ function deploymentsPageReducer(state = initialState, { type, payload }) {
         ['deployments', clusterID, namespaceID],
         fromJS(deployments),
       );
-      const list = data.data.map(item => item.id);
+      const list = data.data.map((item) => item.id);
 
       // load deployments is async
       if (
@@ -66,10 +76,7 @@ function deploymentsPageReducer(state = initialState, { type, payload }) {
 
     case INIT_CREATE_FORM:
       return state
-        .set(
-          'createFormData',
-          fromJS({ name: '', replicas: '', containers: [] }),
-        )
+        .set('createFormData', fromJS(defaultFormData))
         .set('clusterID', payload.cluster_id)
         .set('namespaceID', payload.namespace_id);
 

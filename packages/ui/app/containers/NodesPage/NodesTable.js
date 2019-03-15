@@ -36,13 +36,13 @@ export class NodesTable extends React.PureComponent {
       <Paper className={classes.tableWrapper}>
         <SimpleTable
           className={classes.table}
-          schema={schema.map(sche => ({
+          schema={schema.map((sche) => ({
             /* label: ( */
             /*   <FormattedMessage {...messages[`tableTitle${sche.label}`]} /> */
             /* ), */
             ...sche,
           }))}
-          data={tableList.map(id => nodes.get(id))}
+          data={tableList.map((id) => nodes.get(id))}
         />
       </Paper>
     );
@@ -54,7 +54,7 @@ const mapStateToProps = createStructuredSelector({
   tableList: makeSelectTableList(),
 });
 
-const mapDispatchToProps = dispatch =>
+const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
       ...actions,

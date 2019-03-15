@@ -39,7 +39,7 @@ class CreateNamespaceDialog extends React.Component {
             label="Namespace Name"
             type="text"
             value={formData.get('name')}
-            onChange={evt => updateCreateForm('name', evt.target.value)}
+            onChange={(evt) => updateCreateForm('name', evt.target.value)}
             fullWidth
           />
         </DialogContent>
@@ -61,7 +61,7 @@ const mapStateToProps = createStructuredSelector({
   formData: makeSelectCreateFormData(),
 });
 
-const mapDispatchToProps = dispatch =>
+const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
       ...actions,

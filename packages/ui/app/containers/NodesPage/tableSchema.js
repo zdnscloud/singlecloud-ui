@@ -14,7 +14,7 @@ const schema = [
   'labels',
 ];
 
-const tableSchema = schema.map(id => ({
+const tableSchema = schema.map((id) => ({
   id,
   label: ucfirst(id),
 }));

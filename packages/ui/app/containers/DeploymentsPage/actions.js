@@ -48,7 +48,7 @@ export const loadDeploymentsSuccess = (clusterID, namespaceID, data) => ({
   },
 });
 
-export const loadDeploymentsFailure = errors => ({
+export const loadDeploymentsFailure = (errors) => ({
   type: LOAD_DEPLOYMENTS_FAILURE,
   payload: { errors },
 });
@@ -68,12 +68,12 @@ export const createDeploymentRequest = () => ({
   payload: {},
 });
 
-export const createDeploymentSuccess = data => ({
+export const createDeploymentSuccess = (data) => ({
   type: CREATE_DEPLOYMENT_SUCCESS,
   payload: { data },
 });
 
-export const createDeploymentFailure = errors => ({
+export const createDeploymentFailure = (errors) => ({
   type: CREATE_DEPLOYMENT_FAILURE,
   payload: { errors },
 });
@@ -88,7 +88,7 @@ export function updateForm(name, value) {
   };
 }
 
-export const removeDeployment = id => ({
+export const removeDeployment = (id) => ({
   type: REMOVE_DEPLOYMENT,
   payload: { id },
 });
@@ -103,7 +103,7 @@ export const removeDeploymentSuccess = (clusterID, id) => ({
   payload: { clusterID, id },
 });
 
-export const removeDeploymentFailure = errors => ({
+export const removeDeploymentFailure = (errors) => ({
   type: REMOVE_DEPLOYMENT_FAILURE,
   payload: { errors },
 });

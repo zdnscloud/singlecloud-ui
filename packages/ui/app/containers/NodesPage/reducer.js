@@ -40,7 +40,7 @@ function nodesPageReducer(state = initialState, { type, payload }) {
         {},
       );
       let newState = state.mergeIn(['nodes', clusterID], fromJS(nodes));
-      const list = data.data.map(item => item.id);
+      const list = data.data.map((item) => item.id);
       // load nodes is async
       if (state.get('clusterID') === clusterID)
         newState = newState.set('tableList', fromJS(list));

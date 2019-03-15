@@ -49,11 +49,11 @@ export class TerminalPage extends React.PureComponent {
       }/apis/ws.zcloud.cn/v1/clusters/${this.props.match.params.cluster_id}`,
     );
 
-    term.on('data', data => {
+    term.on('data', (data) => {
       if (socket.readyState === 1) socket.send(data);
     });
 
-    term.on('title', title => {
+    term.on('title', (title) => {
       document.title = title;
     });
 
@@ -66,7 +66,7 @@ export class TerminalPage extends React.PureComponent {
       socket.send(JSON.stringify({ cols: term.cols, rows: term.rows }));
     };
 
-    socket.onmessage = e => {
+    socket.onmessage = (e) => {
       term.write(e.data);
     };
 
@@ -102,7 +102,7 @@ export class TerminalPage extends React.PureComponent {
             <FormattedMessage {...messages.header} />
           </Typography>
           <Paper
-            ref={el => {
+            ref={(el) => {
               this.termEl = el;
             }}
             className={classes.tableContainer}
@@ -117,7 +117,7 @@ const mapStateToProps = createStructuredSelector({
   terminalPage: makeSelectTerminalPage(),
 });
 
-const mapDispatchToProps = dispatch =>
+const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
       ...actions,

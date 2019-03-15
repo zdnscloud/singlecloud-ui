@@ -81,7 +81,7 @@ const mapStateToProps = createStructuredSelector({
   configMapsPage: makeSelectConfigMapsPage(),
 });
 
-const mapDispatchToProps = dispatch =>
+const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
       ...actions,
