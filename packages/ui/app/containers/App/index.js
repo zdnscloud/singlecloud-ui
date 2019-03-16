@@ -20,6 +20,8 @@ import DeploymentsPage from 'containers/DeploymentsPage/Loadable';
 import CreateDeployment from 'containers/DeploymentsPage/CreateLoadable';
 import TerminalPage from 'containers/TerminalPage/Loadable';
 import ConfigMapsPage from 'containers/ConfigMapsPage/Loadable';
+import ServicesPage from 'containers/ServicesPage/Loadable';
+import IngressesPage from 'containers/IngressesPage/Loadable';
 import CreateConfigMap from 'containers/ConfigMapsPage/CreateLoadable';
 
 const theme = createMuiTheme({
@@ -67,6 +69,16 @@ export default function App() {
             exact
             path="/clusters/:cluster_id/namespaces/:namespace_id/configmaps"
             component={ConfigMapsPage}
+          />
+          <Route
+            exact
+            path="/clusters/:cluster_id/namespaces/:namespace_id/services"
+            component={ServicesPage}
+          />
+          <Route
+            exact
+            path="/clusters/:cluster_id/namespaces/:namespace_id/ingresses"
+            component={IngressesPage}
           />
           <Route
             exact

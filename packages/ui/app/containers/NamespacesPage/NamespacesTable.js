@@ -64,6 +64,28 @@ export class NamespacesTable extends React.PureComponent {
             </Button>
             <Button
               variant="outlined"
+              component={Link}
+              to={`${this.props.location.pathname}/${props.data.get(
+                'id',
+              )}/services`}
+              size="small"
+              className={classes.button}
+            >
+              Show Services
+            </Button>
+            <Button
+              variant="outlined"
+              component={Link}
+              to={`${this.props.location.pathname}/${props.data.get(
+                'id',
+              )}/ingresses`}
+              size="small"
+              className={classes.button}
+            >
+              Show Ingresses
+            </Button>
+            <Button
+              variant="outlined"
               size="small"
               className={classes.button}
               onClick={(evt) => {
