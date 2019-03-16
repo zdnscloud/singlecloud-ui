@@ -12,6 +12,8 @@ import nodesPageReducer from 'containers/NodesPage/reducer';
 import namespacesPageReducer from 'containers/NamespacesPage/reducer';
 import deploymentsPageReducer from 'containers/DeploymentsPage/reducer';
 import configMapsPageReducer from 'containers/ConfigMapsPage/reducer';
+import servicesPageReducer from 'containers/ServicesPage/reducer';
+import ingressesPageReducer from 'containers/IngressesPage/reducer';
 
 /**
  * Merges the main reducer with the router state and dynamically injected reducers
@@ -25,6 +27,8 @@ export default function createReducer(injectedReducers = {}) {
     namespacesPage: namespacesPageReducer,
     deploymentsPage: deploymentsPageReducer,
     configMapsPage: configMapsPageReducer,
+    servicesPage: servicesPageReducer,
+    ingressesPage: ingressesPageReducer,
     ...injectedReducers,
   });
 
