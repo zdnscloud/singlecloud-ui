@@ -19,7 +19,7 @@ const defaultAlias = {
   '@gsmlg/utils': `${WorkspaceRoot}/packages/utils/src`,
 };
 
-module.exports = options => ({
+module.exports = (options) => ({
   mode: options.mode,
   entry: options.entry,
   output: Object.assign(

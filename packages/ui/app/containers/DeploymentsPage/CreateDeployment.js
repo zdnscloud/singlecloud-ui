@@ -247,7 +247,7 @@ export class CreateDeployment extends React.PureComponent {
                       type="number"
                       label="Servce Port"
                       disabled={!current}
-                      value={current && current.get('servicePort') || ''}
+                      value={(current && current.get('servicePort')) || ''}
                       onChange={(evt) => {
                         updateForm(
                           [
@@ -287,7 +287,9 @@ export class CreateDeployment extends React.PureComponent {
                       variant="outlined"
                       label="Ingress Domain Name"
                       disabled={!current || !current.get('autoCreateIngress')}
-                      value={current && current.get('ingressDomainName') || ''}
+                      value={
+                        (current && current.get('ingressDomainName')) || ''
+                      }
                       onChange={(evt) => {
                         updateForm(
                           [
@@ -305,7 +307,7 @@ export class CreateDeployment extends React.PureComponent {
                       variant="outlined"
                       label="Ingress Path"
                       disabled={!current || !current.get('autoCreateIngress')}
-                      value={current && current.get('ingressPath') || ''}
+                      value={(current && current.get('ingressPath')) || ''}
                       onChange={(evt) => {
                         updateForm(
                           [

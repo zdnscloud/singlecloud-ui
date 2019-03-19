@@ -76,7 +76,15 @@ function servicesPageReducer(state = initialState, { type, payload }) {
       return state;
 
     case LOAD_SERVICE_SUCCESS:
-      return state.setIn(['services', state.get('clusterID'), state.get('namespaceID'), payload.data.id], fromJS(payload.data));
+      return state.setIn(
+        [
+          'services',
+          state.get('clusterID'),
+          state.get('namespaceID'),
+          payload.data.id,
+        ],
+        fromJS(payload.data),
+      );
 
     case LOAD_SERVICE_FAILURE:
       return state;

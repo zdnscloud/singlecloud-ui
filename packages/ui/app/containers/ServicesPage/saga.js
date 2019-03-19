@@ -41,7 +41,10 @@ export function* loadServices() {
     const clusterID = yield select(makeSelectClusterID());
     const namespaceID = yield select(makeSelectNamespaceID());
     yield put(loadServicesRequest());
-    const data = yield call(request, `${url}/${clusterID}/namespaces/${namespaceID}/services`);
+    const data = yield call(
+      request,
+      `${url}/${clusterID}/namespaces/${namespaceID}/services`,
+    );
     yield put(loadServicesSuccess(clusterID, namespaceID, data));
   } catch (e) {
     yield put(loadServicesFailure(e));
@@ -53,7 +56,10 @@ export function* loadService({ payload }) {
     const clusterID = payload.id;
     const namespaceID = yield select(makeSelectNamespaceID());
     yield put(loadServicesRequest());
-    const data = yield call(request, `${url}/${clusterID}/namespaces/${namespaceID}`);
+    const data = yield call(
+      request,
+      `${url}/${clusterID}/namespaces/${namespaceID}`,
+    );
     yield put(loadServicesSuccess(data));
   } catch (e) {
     yield put(loadServicesFailure(e));
@@ -66,13 +72,17 @@ export function* createService() {
     const clusterID = yield select(makeSelectClusterID());
     const namespaceID = yield select(makeSelectNamespaceID());
     yield put(createServiceRequest());
-    const data = yield call(request, `${url}/${clusterID}/namespaces/${namespaceID}/services`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
+    const data = yield call(
+      request,
+      `${url}/${clusterID}/namespaces/${namespaceID}/services`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ name: formData.get('name') }),
       },
-      body: JSON.stringify({ name: formData.get('name') }),
-    });
+    );
     yield put(createServiceSuccess(clusterID, data));
     yield* loadServices();
     yield put(closeCreateService());
@@ -87,9 +97,13 @@ export function* removeService({ payload }) {
     const clusterID = yield select(makeSelectClusterID());
     const namespaceID = yield select(makeSelectNamespaceID());
     yield put(removeServiceRequest());
-    const resp = yield call(request, `${url}/${clusterID}/namespaces/${namespaceID}/services/${id}`, {
-      method: 'DELETE',
-    });
+    const resp = yield call(
+      request,
+      `${url}/${clusterID}/namespaces/${namespaceID}/services/${id}`,
+      {
+        method: 'DELETE',
+      },
+    );
     yield put(removeServiceSuccess(clusterID, id));
     // yield* loadServices();
   } catch (e) {

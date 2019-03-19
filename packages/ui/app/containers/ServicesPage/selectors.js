@@ -29,7 +29,8 @@ export const makeSelectServices = () =>
     selectServicesPageDomain,
     makeSelectClusterID(),
     makeSelectNamespaceID(),
-    (substate, clusterID, namespaceID) => substate.getIn(['services', clusterID, namespaceID]),
+    (substate, clusterID, namespaceID) =>
+      substate.getIn(['services', clusterID, namespaceID]),
   );
 
 export const makeSelectTableList = () =>
