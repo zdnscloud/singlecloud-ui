@@ -41,7 +41,10 @@ export function* loadIngresses() {
     const clusterID = yield select(makeSelectClusterID());
     const namespaceID = yield select(makeSelectNamespaceID());
     yield put(loadIngressesRequest());
-    const data = yield call(request, `${url}/${clusterID}/namespaces/${namespaceID}/ingresses`);
+    const data = yield call(
+      request,
+      `${url}/${clusterID}/namespaces/${namespaceID}/ingresses`,
+    );
     yield put(loadIngressesSuccess(clusterID, namespaceID, data));
   } catch (e) {
     yield put(loadIngressesFailure(e));
@@ -53,7 +56,10 @@ export function* loadIngress({ payload }) {
     const clusterID = payload.id;
     const namespaceID = yield select(makeSelectNamespaceID());
     yield put(loadIngressRequest());
-    const data = yield call(request, `${url}/${clusterID}/namespaces/${namespaceID}`);
+    const data = yield call(
+      request,
+      `${url}/${clusterID}/namespaces/${namespaceID}`,
+    );
     yield put(loadIngressSuccess(data));
   } catch (e) {
     yield put(loadIngressFailure(e));
@@ -66,13 +72,17 @@ export function* createIngress() {
     const clusterID = yield select(makeSelectClusterID());
     const namespaceID = yield select(makeSelectNamespaceID());
     yield put(createIngressRequest());
-    const data = yield call(request, `${url}/${clusterID}/namespaces/${namespaceID}/ingresses`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
+    const data = yield call(
+      request,
+      `${url}/${clusterID}/namespaces/${namespaceID}/ingresses`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ name: formData.get('name') }),
       },
-      body: JSON.stringify({ name: formData.get('name') }),
-    });
+    );
     yield put(createIngressSuccess(clusterID, data));
     yield* loadIngresses();
     yield put(closeCreateIngress());
@@ -87,9 +97,13 @@ export function* removeIngress({ payload }) {
     const clusterID = yield select(makeSelectClusterID());
     const namespaceID = yield select(makeSelectNamespaceID());
     yield put(removeIngressRequest());
-    const resp = yield call(request, `${url}/${clusterID}/namespaces/${namespaceID}/ingresses/${id}`, {
-      method: 'DELETE',
-    });
+    const resp = yield call(
+      request,
+      `${url}/${clusterID}/namespaces/${namespaceID}/ingresses/${id}`,
+      {
+        method: 'DELETE',
+      },
+    );
     yield put(removeIngressSuccess(clusterID, id));
     // yield* loadIngresses();
   } catch (e) {

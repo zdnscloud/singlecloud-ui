@@ -1,4 +1,4 @@
-module.exports = app => {
+module.exports = (app) => {
   const clusters = {
     type: 'collection',
     resourceType: 'folder',
@@ -62,7 +62,7 @@ module.exports = app => {
   });
 
   app.get('/apis/zcloud.cn/v1/clusters/:cluster_id', (req, res) => {
-    const cluster = clusters.data.find(c => c.id === req.params.cluster_id);
+    const cluster = clusters.data.find((c) => c.id === req.params.cluster_id);
     if (cluster) {
       res.status(200).json(cluster);
     } else {

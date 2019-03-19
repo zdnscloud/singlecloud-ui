@@ -29,7 +29,8 @@ export const makeSelectIngresses = () =>
     selectIngressesPageDomain,
     makeSelectClusterID(),
     makeSelectNamespaceID(),
-    (substate, clusterID, namespaceID) => substate.getIn(['ingresses', clusterID, namespaceID])
+    (substate, clusterID, namespaceID) =>
+      substate.getIn(['ingresses', clusterID, namespaceID]),
   );
 
 export const makeSelectTableList = () =>

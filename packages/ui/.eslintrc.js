@@ -72,6 +72,8 @@ module.exports = {
     'react/jsx-filename-extension': 0,
     'react/jsx-no-target-blank': 0,
     'react/jsx-uses-vars': 2,
+    'react/no-array-index-key': 0,
+    'react/no-unused-prop-types': 0,
     'react/prefer-stateless-function': 0,
     'react/prop-types': 0,
     'react/require-default-props': 0,
