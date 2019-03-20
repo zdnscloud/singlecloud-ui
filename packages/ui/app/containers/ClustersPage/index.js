@@ -64,12 +64,12 @@ const mapDispatchToProps = (dispatch) =>
     {
       ...actions,
     },
-    dispatch,
+    dispatch
   );
 
 const withConnect = connect(
   mapStateToProps,
-  mapDispatchToProps,
+  mapDispatchToProps
 );
 
 const withSaga = injectSaga({ key: 'clustersPage', saga });
@@ -77,5 +77,5 @@ const withSaga = injectSaga({ key: 'clustersPage', saga });
 export default compose(
   withSaga,
   withConnect,
-  withStyles(styles),
+  withStyles(styles)
 )(ClustersPage);

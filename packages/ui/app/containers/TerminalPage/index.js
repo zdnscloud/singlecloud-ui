@@ -46,7 +46,7 @@ export class TerminalPage extends React.PureComponent {
     const socket = new SockJS(
       `http://${window.location.hostname}:${
         window.location.port
-      }/apis/ws.zcloud.cn/v1/clusters/${this.props.match.params.cluster_id}`,
+      }/apis/ws.zcloud.cn/v1/clusters/${this.props.match.params.cluster_id}`
     );
 
     term.on('data', (data) => {
@@ -122,12 +122,12 @@ const mapDispatchToProps = (dispatch) =>
     {
       ...actions,
     },
-    dispatch,
+    dispatch
   );
 
 const withConnect = connect(
   mapStateToProps,
-  mapDispatchToProps,
+  mapDispatchToProps
 );
 
 const withReducer = injectReducer({ key: 'terminalPage', reducer });
@@ -137,5 +137,5 @@ export default compose(
   withReducer,
   withSaga,
   withConnect,
-  withStyles(styles),
+  withStyles(styles)
 )(TerminalPage);

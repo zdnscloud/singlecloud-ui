@@ -52,11 +52,11 @@ function namespacesPageReducer(state = initialState, { type, payload }) {
           ...meno,
           [item.id]: item,
         }),
-        {},
+        {}
       );
       let newState = state.mergeIn(
         ['namespaces', clusterID],
-        fromJS(namespaces),
+        fromJS(namespaces)
       );
       const list = data.data.map((item) => item.id);
       // load namespaces is async
@@ -102,7 +102,7 @@ function namespacesPageReducer(state = initialState, { type, payload }) {
       return state
         .deleteIn(['namespaces', payload.clusterID, payload.id])
         .updateIn(['tableList'], (list) =>
-          list.filterNot((n) => n === payload.id),
+          list.filterNot((n) => n === payload.id)
         );
 
     case REMOVE_NAMESPACE_FAILURE:

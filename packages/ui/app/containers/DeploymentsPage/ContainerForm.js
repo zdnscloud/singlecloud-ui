@@ -131,7 +131,7 @@ export default class ContainerForm extends React.PureComponent {
                 onChange={(evt) => {
                   updateForm(
                     ['containers', index, 'exposedPorts', idx, 'name'],
-                    evt.target.value,
+                    evt.target.value
                   );
                 }}
               />
@@ -144,7 +144,7 @@ export default class ContainerForm extends React.PureComponent {
                   onChange={(evt) =>
                     updateForm(
                       ['containers', index, 'exposedPorts', idx, 'protocol'],
-                      evt.target.value,
+                      evt.target.value
                     )
                   }
                   input={
@@ -168,7 +168,7 @@ export default class ContainerForm extends React.PureComponent {
                 onChange={(evt) =>
                   updateForm(
                     ['containers', index, 'exposedPorts', idx, 'port'],
-                    Number(evt.target.value),
+                    Number(evt.target.value)
                   )
                 }
               />
@@ -193,7 +193,7 @@ export default class ContainerForm extends React.PureComponent {
                 const { size } = item.get('exposedPorts');
                 updateForm(
                   ['containers', index, 'exposedPorts', size, 'protocol'],
-                  'tcp',
+                  'tcp'
                 );
               }}
             >

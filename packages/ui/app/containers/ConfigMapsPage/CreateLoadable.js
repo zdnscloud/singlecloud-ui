@@ -7,5 +7,5 @@
 import loadable from '@loadable/component';
 
 export default loadable(() =>
-  import(/* webpackChunkName: "CreateConfigMapPage" */ './CreateConfigMap'),
+  import(/* webpackChunkName: "CreateConfigMapPage" */ './CreateConfigMap')
 );

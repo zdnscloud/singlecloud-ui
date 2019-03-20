@@ -38,7 +38,7 @@ export function* loadConfigMaps() {
     yield put(loadConfigMapsRequest());
     const data = yield call(
       request,
-      `${url}/${clusterID}/namespaces/${namespaceID}/configmaps`,
+      `${url}/${clusterID}/namespaces/${namespaceID}/configmaps`
     );
     yield put(loadConfigMapsSuccess(clusterID, namespaceID, data));
   } catch (e) {
@@ -61,11 +61,11 @@ export function* createConfigMap() {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(formData.toJS()),
-      },
+      }
     );
     yield put(createConfigMapSuccess(data));
     yield put(
-      push(`/clusters/${clusterID}/namespaces/${namespaceID}/configmaps`),
+      push(`/clusters/${clusterID}/namespaces/${namespaceID}/configmaps`)
     );
   } catch (e) {
     yield put(createConfigMapFailure(e));
@@ -83,7 +83,7 @@ export function* removeConfigMap({ payload }) {
       `${url}/${clusterID}/namespaces/${namespaceID}/configmaps/${id}`,
       {
         method: 'DELETE',
-      },
+      }
     );
     yield put(removeConfigMapSuccess(clusterID, id));
     yield* loadConfigMaps();

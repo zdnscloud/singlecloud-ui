@@ -51,11 +51,11 @@ function servicesPageReducer(state = initialState, { type, payload }) {
           ...meno,
           [item.id]: item,
         }),
-        {},
+        {}
       );
       let newState = state.mergeIn(
         ['services', clusterID, namespaceID],
-        fromJS(services),
+        fromJS(services)
       );
       const list = data.data.map((item) => item.id);
 
@@ -83,7 +83,7 @@ function servicesPageReducer(state = initialState, { type, payload }) {
           state.get('namespaceID'),
           payload.data.id,
         ],
-        fromJS(payload.data),
+        fromJS(payload.data)
       );
 
     case LOAD_SERVICE_FAILURE:
@@ -114,7 +114,7 @@ function servicesPageReducer(state = initialState, { type, payload }) {
       return state
         .deleteIn(['services', payload.clusterID, payload.id])
         .updateIn(['tableList'], (list) =>
-          list.filterNot((n) => n === payload.id),
+          list.filterNot((n) => n === payload.id)
         );
 
     case REMOVE_SERVICE_FAILURE:

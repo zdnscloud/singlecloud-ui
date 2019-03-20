@@ -162,7 +162,7 @@ export class CreateDeployment extends React.PureComponent {
                     onChange={(evt) => {
                       updateForm(
                         'enableAdvancedOptions',
-                        !formData.get('enableAdvancedOptions'),
+                        !formData.get('enableAdvancedOptions')
                       );
                     }}
                     value="advancedOptions"
@@ -184,7 +184,7 @@ export class CreateDeployment extends React.PureComponent {
                   onChange={(evt) =>
                     updateForm(
                       ['advancedOptions', 'exposedServiceType'],
-                      evt.target.value,
+                      evt.target.value
                     )
                   }
                   input={
@@ -221,7 +221,7 @@ export class CreateDeployment extends React.PureComponent {
                             if (current) {
                               updateForm(
                                 ['advancedOptions', 'exposedServices', idx],
-                                null,
+                                null
                               );
                             } else {
                               updateForm(
@@ -230,7 +230,7 @@ export class CreateDeployment extends React.PureComponent {
                                   'exposedServices',
                                   svcs.size,
                                 ],
-                                port,
+                                port
                               );
                             }
                           }}
@@ -255,7 +255,7 @@ export class CreateDeployment extends React.PureComponent {
                             idx,
                             'servicePort',
                           ],
-                          Number(evt.target.value),
+                          Number(evt.target.value)
                         );
                       }}
                     />
@@ -272,7 +272,7 @@ export class CreateDeployment extends React.PureComponent {
                                 idx,
                                 'autoCreateIngress',
                               ],
-                              !current.get('autoCreateIngress'),
+                              !current.get('autoCreateIngress')
                             );
                           }}
                           value
@@ -297,7 +297,7 @@ export class CreateDeployment extends React.PureComponent {
                             idx,
                             'ingressDomainName',
                           ],
-                          evt.target.value,
+                          evt.target.value
                         );
                       }}
                     />
@@ -315,7 +315,7 @@ export class CreateDeployment extends React.PureComponent {
                             idx,
                             'ingressPath',
                           ],
-                          evt.target.value,
+                          evt.target.value
                         );
                       }}
                     />
@@ -352,12 +352,12 @@ const mapDispatchToProps = (dispatch) =>
       ...actions,
       initConfigMaps: initAction,
     },
-    dispatch,
+    dispatch
   );
 
 const withConnect = connect(
   mapStateToProps,
-  mapDispatchToProps,
+  mapDispatchToProps
 );
 
 const withSaga = injectSaga({ key: 'deploymentsPage', saga });
@@ -370,5 +370,5 @@ export default compose(
   withConigMapsSaga,
   withSaga,
   withConnect,
-  withStyles(styles),
+  withStyles(styles)
 )(CreateDeployment);

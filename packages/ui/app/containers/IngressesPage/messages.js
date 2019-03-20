@@ -19,7 +19,7 @@ const table = tableSchema.reduce(
     },
     ...schema,
   }),
-  {},
+  {}
 );
 
 export default defineMessages({

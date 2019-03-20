@@ -15,13 +15,13 @@ const selectConfigMapsPageDomain = (state) =>
 export const makeSelectClusterID = () =>
   createSelector(
     selectConfigMapsPageDomain,
-    (substate) => substate.get('clusterID'),
+    (substate) => substate.get('clusterID')
   );
 
 export const makeSelectNamespaceID = () =>
   createSelector(
     selectConfigMapsPageDomain,
-    (substate) => substate.get('namespaceID'),
+    (substate) => substate.get('namespaceID')
   );
 
 export const makeSelectConfigMaps = () =>
@@ -30,25 +30,25 @@ export const makeSelectConfigMaps = () =>
     makeSelectClusterID(),
     makeSelectNamespaceID(),
     (substate, clusterID, namespaceID) =>
-      substate.getIn(['configMaps', clusterID, namespaceID]) || Map(),
+      substate.getIn(['configMaps', clusterID, namespaceID]) || Map()
   );
 
 export const makeSelectTableList = () =>
   createSelector(
     selectConfigMapsPageDomain,
-    (substate) => substate.get('tableList'),
+    (substate) => substate.get('tableList')
   );
 
 export const makeSelectCreateFormData = () =>
   createSelector(
     selectConfigMapsPageDomain,
-    (substate) => substate.get('createFormData'),
+    (substate) => substate.get('createFormData')
   );
 
 export const makeSelectOpening = () =>
   createSelector(
     selectConfigMapsPageDomain,
-    (substate) => substate.get('opening'),
+    (substate) => substate.get('opening')
   );
 
 /**
@@ -58,7 +58,7 @@ export const makeSelectOpening = () =>
 const makeSelectConfigMapsPage = () =>
   createSelector(
     selectConfigMapsPageDomain,
-    (substate) => substate.toJS(),
+    (substate) => substate.toJS()
   );
 
 export default makeSelectConfigMapsPage;

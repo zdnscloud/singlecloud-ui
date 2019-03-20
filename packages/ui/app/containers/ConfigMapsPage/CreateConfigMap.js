@@ -136,7 +136,7 @@ export class CreateConfigMap extends React.PureComponent {
                       <AttachmentIcon
                         className={classNames(
                           classes.leftIcon,
-                          classes.iconSmall,
+                          classes.iconSmall
                         )}
                       />
                       Setup Config file
@@ -171,12 +171,12 @@ const mapDispatchToProps = (dispatch) =>
     {
       ...actions,
     },
-    dispatch,
+    dispatch
   );
 
 const withConnect = connect(
   mapStateToProps,
-  mapDispatchToProps,
+  mapDispatchToProps
 );
 
 const withSaga = injectSaga({ key: 'configMapsPage', saga });
@@ -184,5 +184,5 @@ const withSaga = injectSaga({ key: 'configMapsPage', saga });
 export default compose(
   withSaga,
   withConnect,
-  withStyles(styles),
+  withStyles(styles)
 )(CreateConfigMap);

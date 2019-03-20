@@ -52,11 +52,11 @@ function ingressesPageReducer(state = initialState, { type, payload }) {
           ...meno,
           [item.id]: item,
         }),
-        {},
+        {}
       );
       let newState = state.mergeIn(
         ['ingresses', clusterID, namespaceID],
-        fromJS(ingresses),
+        fromJS(ingresses)
       );
       const list = data.data.map((item) => item.id);
       // load ingresses is async
@@ -105,7 +105,7 @@ function ingressesPageReducer(state = initialState, { type, payload }) {
       return state
         .deleteIn(['ingresses', payload.clusterID, payload.id])
         .updateIn(['tableList'], (list) =>
-          list.filterNot((n) => n === payload.id),
+          list.filterNot((n) => n === payload.id)
         );
 
     case REMOVE_INGRESS_FAILURE:

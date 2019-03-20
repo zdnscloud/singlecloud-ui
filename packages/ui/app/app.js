@@ -45,7 +45,7 @@ const render = (messages) => {
         </ConnectedRouter>
       </LanguageProvider>
     </Provider>,
-    MOUNT_NODE,
+    MOUNT_NODE
   );
 };
 
@@ -68,7 +68,7 @@ if (!window.Intl) {
       Promise.all([
         import(/* webpackChunkName: "intl.zh" */ 'intl/locale-data/jsonp/zh.js'),
         import(/* webpackChunkName: "intl.en" */ 'intl/locale-data/jsonp/en.js'),
-      ]),
+      ])
     )
     .then(() => render(translationMessages))
     .catch((err) => {

@@ -41,7 +41,7 @@ export function* loadDeployments() {
     yield put(loadDeploymentsRequest());
     const data = yield call(
       request,
-      `${url}/${clusterID}/namespaces/${namespaceID}/deployments`,
+      `${url}/${clusterID}/namespaces/${namespaceID}/deployments`
     );
     yield put(loadDeploymentsSuccess(clusterID, namespaceID, data));
   } catch (e) {
@@ -56,18 +56,17 @@ export function* createDeployment() {
     const clusterID = yield select(makeSelectClusterID());
     const namespaceID = yield select(makeSelectNamespaceID());
     yield put(createDeploymentRequest());
-    const mapedData = formData
-      .update('containers', (containers) =>
-        containers.map((ctn) => {
-          const cmd = (ctn.get('command').match(/("[^"]*")|[^\s]+/g) || []).map(
-            (n) => n.replace(/^"|"$/g, ''),
-          );
-          const args = (ctn.get('args').match(/("[^"]*")|[^\s]+/g) || []).map(
-            (n) => n.replace(/^"|"$/g, ''),
-          );
-          return ctn.set('command', cmd).set('args', args);
-        })
-      );
+    const mapedData = formData.update('containers', (containers) =>
+      containers.map((ctn) => {
+        const cmd = (ctn.get('command').match(/("[^"]*")|[^\s]+/g) || []).map(
+          (n) => n.replace(/^"|"$/g, '')
+        );
+        const args = (ctn.get('args').match(/("[^"]*")|[^\s]+/g) || []).map(
+          (n) => n.replace(/^"|"$/g, '')
+        );
+        return ctn.set('command', cmd).set('args', args);
+      })
+    );
     const data = yield call(
       request,
       `${url}/${clusterID}/namespaces/${namespaceID}/deployments`,
@@ -77,11 +76,11 @@ export function* createDeployment() {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(mapedData.toJS()),
-      },
+      }
     );
     yield put(createDeploymentSuccess(data));
     yield put(
-      push(`/clusters/${clusterID}/namespaces/${namespaceID}/deployments`),
+      push(`/clusters/${clusterID}/namespaces/${namespaceID}/deployments`)
     );
   } catch (e) {
     yield put(createDeploymentFailure(e));
@@ -99,7 +98,7 @@ export function* removeDeployment({ payload }) {
       `${url}/${clusterID}/namespaces/${namespaceID}/deployments/${id}`,
       {
         method: 'DELETE',
-      },
+      }
     );
     yield put(removeDeploymentSuccess(clusterID, id));
     yield* loadDeployments();

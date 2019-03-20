@@ -15,13 +15,13 @@ const selectIngressesPageDomain = (state) =>
 export const makeSelectClusterID = () =>
   createSelector(
     selectIngressesPageDomain,
-    (substate) => substate.get('clusterID'),
+    (substate) => substate.get('clusterID')
   );
 
 export const makeSelectNamespaceID = () =>
   createSelector(
     selectIngressesPageDomain,
-    (substate) => substate.get('namespaceID'),
+    (substate) => substate.get('namespaceID')
   );
 
 export const makeSelectIngresses = () =>
@@ -30,25 +30,25 @@ export const makeSelectIngresses = () =>
     makeSelectClusterID(),
     makeSelectNamespaceID(),
     (substate, clusterID, namespaceID) =>
-      substate.getIn(['ingresses', clusterID, namespaceID]),
+      substate.getIn(['ingresses', clusterID, namespaceID])
   );
 
 export const makeSelectTableList = () =>
   createSelector(
     selectIngressesPageDomain,
-    (substate) => substate.get('tableList'),
+    (substate) => substate.get('tableList')
   );
 
 export const makeSelectCreateIsOpen = () =>
   createSelector(
     selectIngressesPageDomain,
-    (substate) => substate.get('createIsOpen'),
+    (substate) => substate.get('createIsOpen')
   );
 
 export const makeSelectCreateFormData = () =>
   createSelector(
     selectIngressesPageDomain,
-    (substate) => substate.get('createFormData'),
+    (substate) => substate.get('createFormData')
   );
 
 /**
@@ -58,7 +58,7 @@ export const makeSelectCreateFormData = () =>
 export const makeSelectIngressesPage = () =>
   createSelector(
     selectIngressesPageDomain,
-    (substate) => substate,
+    (substate) => substate
   );
 
 export default makeSelectIngressesPage;

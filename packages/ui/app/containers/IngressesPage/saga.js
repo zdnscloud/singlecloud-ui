@@ -43,7 +43,7 @@ export function* loadIngresses() {
     yield put(loadIngressesRequest());
     const data = yield call(
       request,
-      `${url}/${clusterID}/namespaces/${namespaceID}/ingresses`,
+      `${url}/${clusterID}/namespaces/${namespaceID}/ingresses`
     );
     yield put(loadIngressesSuccess(clusterID, namespaceID, data));
   } catch (e) {
@@ -58,7 +58,7 @@ export function* loadIngress({ payload }) {
     yield put(loadIngressRequest());
     const data = yield call(
       request,
-      `${url}/${clusterID}/namespaces/${namespaceID}`,
+      `${url}/${clusterID}/namespaces/${namespaceID}`
     );
     yield put(loadIngressSuccess(data));
   } catch (e) {
@@ -81,7 +81,7 @@ export function* createIngress() {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({ name: formData.get('name') }),
-      },
+      }
     );
     yield put(createIngressSuccess(clusterID, data));
     yield* loadIngresses();
@@ -102,7 +102,7 @@ export function* removeIngress({ payload }) {
       `${url}/${clusterID}/namespaces/${namespaceID}/ingresses/${id}`,
       {
         method: 'DELETE',
-      },
+      }
     );
     yield put(removeIngressSuccess(clusterID, id));
     // yield* loadIngresses();

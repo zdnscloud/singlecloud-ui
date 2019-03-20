@@ -44,7 +44,7 @@ module.exports = (app) => {
       Math.random()
         .toString()
         .slice(2),
-      10,
+      10
     ).toString(36);
     clusters.data.push({
       id,

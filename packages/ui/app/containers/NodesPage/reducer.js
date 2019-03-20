@@ -37,7 +37,7 @@ function nodesPageReducer(state = initialState, { type, payload }) {
           ...meno,
           [item.id]: item,
         }),
-        {},
+        {}
       );
       let newState = state.mergeIn(['nodes', clusterID], fromJS(nodes));
       const list = data.data.map((item) => item.id);

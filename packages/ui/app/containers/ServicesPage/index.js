@@ -68,12 +68,12 @@ const mapDispatchToProps = (dispatch) =>
     {
       ...actions,
     },
-    dispatch,
+    dispatch
   );
 
 const withConnect = connect(
   mapStateToProps,
-  mapDispatchToProps,
+  mapDispatchToProps
 );
 
 const withSaga = injectSaga({ key: 'servicesPage', saga });
@@ -81,5 +81,5 @@ const withSaga = injectSaga({ key: 'servicesPage', saga });
 export default compose(
   withSaga,
   withConnect,
-  withStyles(styles),
+  withStyles(styles)
 )(ServicesPage);

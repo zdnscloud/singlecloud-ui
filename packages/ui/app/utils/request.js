@@ -42,7 +42,7 @@ export default function request(url, options = {}) {
     {
       Accept: 'application/json',
     },
-    options.headers,
+    options.headers
   );
   return fetch(url, {
     ...options,

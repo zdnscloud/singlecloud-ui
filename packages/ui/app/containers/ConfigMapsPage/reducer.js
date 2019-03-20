@@ -46,11 +46,11 @@ function configMapsPageReducer(state = initialState, { type, payload }) {
           ...meno,
           [item.id]: item,
         }),
-        {},
+        {}
       );
       let newState = state.mergeIn(
         ['configMaps', clusterID, namespaceID],
-        fromJS(configMaps),
+        fromJS(configMaps)
       );
       const list = data.data.map((item) => item.id);
 
@@ -89,7 +89,7 @@ function configMapsPageReducer(state = initialState, { type, payload }) {
         }
         return state.setIn(
           ['createFormData'].concat(payload.name),
-          payload.value,
+          payload.value
         );
       }
       if (payload.value == null) {

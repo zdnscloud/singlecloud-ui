@@ -66,10 +66,10 @@ const mapDispatchToProps = (dispatch) =>
     {
       ...actions,
     },
-    dispatch,
+    dispatch
   );
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps,
+  mapDispatchToProps
 )(CreateNamespaceDialog);

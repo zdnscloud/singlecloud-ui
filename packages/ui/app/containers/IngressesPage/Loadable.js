@@ -7,5 +7,5 @@
 import loadable from '@loadable/component';
 
 export default loadable(() =>
-  import(/* webpackChunkName: "IngressesPage" */ './index'),
+  import(/* webpackChunkName: "IngressesPage" */ './index')
 );

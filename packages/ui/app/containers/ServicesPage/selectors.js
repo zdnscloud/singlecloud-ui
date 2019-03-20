@@ -15,13 +15,13 @@ const selectServicesPageDomain = (state) =>
 export const makeSelectClusterID = () =>
   createSelector(
     selectServicesPageDomain,
-    (substate) => substate.get('clusterID'),
+    (substate) => substate.get('clusterID')
   );
 
 export const makeSelectNamespaceID = () =>
   createSelector(
     selectServicesPageDomain,
-    (substate) => substate.get('namespaceID'),
+    (substate) => substate.get('namespaceID')
   );
 
 export const makeSelectServices = () =>
@@ -30,25 +30,25 @@ export const makeSelectServices = () =>
     makeSelectClusterID(),
     makeSelectNamespaceID(),
     (substate, clusterID, namespaceID) =>
-      substate.getIn(['services', clusterID, namespaceID]),
+      substate.getIn(['services', clusterID, namespaceID])
   );
 
 export const makeSelectTableList = () =>
   createSelector(
     selectServicesPageDomain,
-    (substate) => substate.get('tableList'),
+    (substate) => substate.get('tableList')
   );
 
 export const makeSelectCreateIsOpen = () =>
   createSelector(
     selectServicesPageDomain,
-    (substate) => substate.get('createIsOpen'),
+    (substate) => substate.get('createIsOpen')
   );
 
 export const makeSelectCreateFormData = () =>
   createSelector(
     selectServicesPageDomain,
-    (substate) => substate.get('createFormData'),
+    (substate) => substate.get('createFormData')
   );
 
 /**
@@ -58,7 +58,7 @@ export const makeSelectCreateFormData = () =>
 export const makeSelectServicesPage = () =>
   createSelector(
     selectServicesPageDomain,
-    (substate) => substate,
+    (substate) => substate
   );
 
 export default makeSelectServicesPage;

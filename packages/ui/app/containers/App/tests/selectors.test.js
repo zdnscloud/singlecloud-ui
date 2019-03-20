@@ -9,7 +9,7 @@ describe('makeSelectLocation', () => {
       router: { location: { pathname: '/foo' } },
     });
     expect(locationStateSelector(mockedState)).toEqual(
-      mockedState.getIn(['router', 'location']).toJS(),
+      mockedState.getIn(['router', 'location']).toJS()
     );
   });
 });

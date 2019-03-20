@@ -19,7 +19,7 @@ const selectTerminalPageDomain = (state) =>
 const makeSelectTerminalPage = () =>
   createSelector(
     selectTerminalPageDomain,
-    (substate) => substate.toJS(),
+    (substate) => substate.toJS()
   );
 
 export default makeSelectTerminalPage;

@@ -14,13 +14,13 @@ const selectClustersPageDomain = (state) =>
 export const makeSelectClusters = () =>
   createSelector(
     selectClustersPageDomain,
-    (substate) => substate.get('clusters'),
+    (substate) => substate.get('clusters')
   );
 
 export const makeSelectTableList = () =>
   createSelector(
     selectClustersPageDomain,
-    (substate) => substate.get('tableList'),
+    (substate) => substate.get('tableList')
   );
 
 /**
@@ -30,7 +30,7 @@ export const makeSelectTableList = () =>
 export const makeSelectClustersPage = () =>
   createSelector(
     selectClustersPageDomain,
-    (substate) => substate,
+    (substate) => substate
   );
 
 export default makeSelectClustersPage;

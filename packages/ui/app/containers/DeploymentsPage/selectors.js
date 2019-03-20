@@ -15,13 +15,13 @@ export const selectDeploymentsPageDomain = (state) =>
 export const makeSelectClusterID = () =>
   createSelector(
     selectDeploymentsPageDomain,
-    (substate) => substate.get('clusterID'),
+    (substate) => substate.get('clusterID')
   );
 
 export const makeSelectNamespaceID = () =>
   createSelector(
     selectDeploymentsPageDomain,
-    (substate) => substate.get('namespaceID'),
+    (substate) => substate.get('namespaceID')
   );
 
 export const makeSelectDeployments = () =>
@@ -30,19 +30,19 @@ export const makeSelectDeployments = () =>
     makeSelectClusterID(),
     makeSelectNamespaceID(),
     (substate, clusterID, namespaceID) =>
-      substate.getIn(['deployments', clusterID, namespaceID]) || Map(),
+      substate.getIn(['deployments', clusterID, namespaceID]) || Map()
   );
 
 export const makeSelectTableList = () =>
   createSelector(
     selectDeploymentsPageDomain,
-    (substate) => substate.get('tableList'),
+    (substate) => substate.get('tableList')
   );
 
 export const makeSelectCreateFormData = () =>
   createSelector(
     selectDeploymentsPageDomain,
-    (substate) => substate.get('createFormData'),
+    (substate) => substate.get('createFormData')
   );
 
 export const makeSelectFormPorts = () =>
@@ -54,9 +54,9 @@ export const makeSelectFormPorts = () =>
         .map((ctn) =>
           ctn
             .get('exposedPorts')
-            .filter((p) => typeof p.get('port') === 'number'),
+            .filter((p) => typeof p.get('port') === 'number')
         )
-        .flatten(true),
+        .flatten(true)
   );
 
 /**
@@ -66,7 +66,7 @@ export const makeSelectFormPorts = () =>
 const makeSelectDeploymentsPage = () =>
   createSelector(
     selectDeploymentsPageDomain,
-    (substate) => substate.toJS(),
+    (substate) => substate.toJS()
   );
 
 export default makeSelectDeploymentsPage;

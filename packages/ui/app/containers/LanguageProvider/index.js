@@ -39,7 +39,7 @@ const mapStateToProps = createSelector(
   makeSelectLocale(),
   (locale) => ({
     locale,
-  }),
+  })
 );
 
 function mapDispatchToProps(dispatch) {
@@ -50,5 +50,5 @@ function mapDispatchToProps(dispatch) {
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps,
+  mapDispatchToProps
 )(LanguageProvider);

@@ -14,20 +14,20 @@ const selectNodesPageDomain = (state) => state.get('nodesPage', initialState);
 export const makeSelectClusterID = () =>
   createSelector(
     selectNodesPageDomain,
-    (substate) => substate.get('clusterID'),
+    (substate) => substate.get('clusterID')
   );
 
 export const makeSelectNodes = () =>
   createSelector(
     selectNodesPageDomain,
     makeSelectClusterID(),
-    (substate, clusterID) => substate.getIn(['nodes', clusterID]),
+    (substate, clusterID) => substate.getIn(['nodes', clusterID])
   );
 
 export const makeSelectTableList = () =>
   createSelector(
     selectNodesPageDomain,
-    (substate) => substate.get('tableList'),
+    (substate) => substate.get('tableList')
   );
 
 /**
@@ -37,7 +37,7 @@ export const makeSelectTableList = () =>
 export const makeSelectNodesPage = () =>
   createSelector(
     selectNodesPageDomain,
-    (substate) => substate,
+    (substate) => substate
   );
 
 export default makeSelectNodesPage;

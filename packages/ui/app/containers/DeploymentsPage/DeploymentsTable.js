@@ -74,15 +74,15 @@ const mapDispatchToProps = (dispatch) =>
     {
       ...actions,
     },
-    dispatch,
+    dispatch
   );
 
 const withConnect = connect(
   mapStateToProps,
-  mapDispatchToProps,
+  mapDispatchToProps
 );
 
 export default compose(
   withConnect,
-  withStyles(styles),
+  withStyles(styles)
 )(DeploymentsTable);

@@ -48,19 +48,18 @@ function deploymentsPageReducer(state = initialState, { type, payload }) {
 
     case LOAD_DEPLOYMENTS_SUCCESS: {
       const { clusterID, namespaceID, data } = payload;
-      const deployments = data.data.reduce((meno, item) => {
-        return {
+      const deployments = data.data.reduce(
+        (meno, item) => ({
           ...meno,
           [item.id]: item,
-        };
-      }, {});
+        }),
+        {}
+      );
       let newState = state.mergeIn(
         ['deployments', clusterID, namespaceID],
-        fromJS(deployments),
+        fromJS(deployments)
       );
-      const list = data.data.map((item) => {
-        return item.id;
-      });
+      const list = data.data.map((item) => item.id);
 
       // load deployments is async
       if (
@@ -106,15 +105,18 @@ function deploymentsPageReducer(state = initialState, { type, payload }) {
       } else {
         newState = state.setIn(['createFormData', payload.name], payload.value);
       }
-      const ports = newState.getIn(['createFormData', 'containers']).map((ctn) => (
-        ctn
-          .get('exposedPorts')
-          .filter((p) => typeof p.get('port') === 'number')
-      )).flatten(true);
+      const ports = newState
+        .getIn(['createFormData', 'containers'])
+        .map((ctn) =>
+          ctn
+            .get('exposedPorts')
+            .filter((p) => typeof p.get('port') === 'number')
+        )
+        .flatten(true);
 
       return newState.updateIn(
         ['createFormData', 'advancedOptions', 'exposedServices'],
-        (exposedServices) => (
+        (exposedServices) =>
           exposedServices.filter((svc) =>
             ports.find(
               (port) =>
@@ -122,7 +124,6 @@ function deploymentsPageReducer(state = initialState, { type, payload }) {
                 port.get('protocol') === svc.get('protocol')
             )
           )
-        )
       );
     }
 

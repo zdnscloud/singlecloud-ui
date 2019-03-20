@@ -44,7 +44,7 @@ export class NamespacesTable extends React.PureComponent {
               variant="outlined"
               component={Link}
               to={`${this.props.location.pathname}/${props.data.get(
-                'id',
+                'id'
               )}/deployments`}
               size="small"
               className={classes.button}
@@ -55,7 +55,7 @@ export class NamespacesTable extends React.PureComponent {
               variant="outlined"
               component={Link}
               to={`${this.props.location.pathname}/${props.data.get(
-                'id',
+                'id'
               )}/configmaps`}
               size="small"
               className={classes.button}
@@ -66,7 +66,7 @@ export class NamespacesTable extends React.PureComponent {
               variant="outlined"
               component={Link}
               to={`${this.props.location.pathname}/${props.data.get(
-                'id',
+                'id'
               )}/services`}
               size="small"
               className={classes.button}
@@ -77,7 +77,7 @@ export class NamespacesTable extends React.PureComponent {
               variant="outlined"
               component={Link}
               to={`${this.props.location.pathname}/${props.data.get(
-                'id',
+                'id'
               )}/ingresses`}
               size="small"
               className={classes.button}
@@ -121,15 +121,15 @@ const mapDispatchToProps = (dispatch) =>
     {
       ...actions,
     },
-    dispatch,
+    dispatch
   );
 
 const withConnect = connect(
   mapStateToProps,
-  mapDispatchToProps,
+  mapDispatchToProps
 );
 
 export default compose(
   withConnect,
-  withStyles(styles),
+  withStyles(styles)
 )(NamespacesTable);

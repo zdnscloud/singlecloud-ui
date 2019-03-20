@@ -43,7 +43,7 @@ export function* loadServices() {
     yield put(loadServicesRequest());
     const data = yield call(
       request,
-      `${url}/${clusterID}/namespaces/${namespaceID}/services`,
+      `${url}/${clusterID}/namespaces/${namespaceID}/services`
     );
     yield put(loadServicesSuccess(clusterID, namespaceID, data));
   } catch (e) {
@@ -58,7 +58,7 @@ export function* loadService({ payload }) {
     yield put(loadServicesRequest());
     const data = yield call(
       request,
-      `${url}/${clusterID}/namespaces/${namespaceID}`,
+      `${url}/${clusterID}/namespaces/${namespaceID}`
     );
     yield put(loadServicesSuccess(data));
   } catch (e) {
@@ -81,7 +81,7 @@ export function* createService() {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({ name: formData.get('name') }),
-      },
+      }
     );
     yield put(createServiceSuccess(clusterID, data));
     yield* loadServices();
@@ -102,7 +102,7 @@ export function* removeService({ payload }) {
       `${url}/${clusterID}/namespaces/${namespaceID}/services/${id}`,
       {
         method: 'DELETE',
-      },
+      }
     );
     yield put(removeServiceSuccess(clusterID, id));
     // yield* loadServices();
