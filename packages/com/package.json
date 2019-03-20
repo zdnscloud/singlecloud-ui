@@ -2,7 +2,7 @@
   "name": "@gsmlg/com",
   "private": false,
   "author": "GSMLG",
-  "version": "4.0.0-alpha.2",
+  "version": "0.0.1",
   "description": "React components of SingleCloud.",
   "keywords": [
     "singlecloud"

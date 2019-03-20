@@ -120,9 +120,9 @@ export default class ContainerForm extends React.PureComponent {
             updateForm(['containers', index, 'mount_path'], evt.target.value)
           }
         />
-        <GridList cellHeight="auto" cols="1">
+        <GridList cellHeight="auto" cols={1}>
           {item.get('exposedPorts').map((port, idx) => (
-            <GridListTile>
+            <GridListTile key={idx}>
               <TextField
                 className={classNames(classes.margin, classes.textField)}
                 variant="outlined"

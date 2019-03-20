@@ -48,18 +48,19 @@ function deploymentsPageReducer(state = initialState, { type, payload }) {
 
     case LOAD_DEPLOYMENTS_SUCCESS: {
       const { clusterID, namespaceID, data } = payload;
-      const deployments = data.data.reduce(
-        (meno, item) => ({
+      const deployments = data.data.reduce((meno, item) => {
+        return {
           ...meno,
           [item.id]: item,
-        }),
-        {},
-      );
+        };
+      }, {});
       let newState = state.mergeIn(
         ['deployments', clusterID, namespaceID],
         fromJS(deployments),
       );
-      const list = data.data.map((item) => item.id);
+      const list = data.data.map((item) => {
+        return item.id;
+      });
 
       // load deployments is async
       if (
@@ -90,19 +91,39 @@ function deploymentsPageReducer(state = initialState, { type, payload }) {
       return state;
 
     case UPDATE_CREATE_FORM: {
+      let newState;
       if (Array.isArray(payload.name)) {
         if (payload.value == null) {
-          return state.deleteIn(['createFormData'].concat(payload.name));
+          newState = state.deleteIn(['createFormData'].concat(payload.name));
+        } else {
+          newState = state.setIn(
+            ['createFormData'].concat(payload.name),
+            payload.value
+          );
         }
-        return state.setIn(
-          ['createFormData'].concat(payload.name),
-          payload.value,
-        );
+      } else if (payload.value == null) {
+        newState = state.deleteIn(['createFormData', payload.name]);
+      } else {
+        newState = state.setIn(['createFormData', payload.name], payload.value);
       }
-      if (payload.value == null) {
-        return state.deleteIn(['createFormData', payload.name]);
-      }
-      return state.setIn(['createFormData', payload.name], payload.value);
+      const ports = newState.getIn(['createFormData', 'containers']).map((ctn) => (
+        ctn
+          .get('exposedPorts')
+          .filter((p) => typeof p.get('port') === 'number')
+      )).flatten(true);
+
+      return newState.updateIn(
+        ['createFormData', 'advancedOptions', 'exposedServices'],
+        (exposedServices) => (
+          exposedServices.filter((svc) =>
+            ports.find(
+              (port) =>
+                port.get('port') === svc.get('port') &&
+                port.get('protocol') === svc.get('protocol')
+            )
+          )
+        )
+      );
     }
 
     default:

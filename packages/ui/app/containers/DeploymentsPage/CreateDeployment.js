@@ -135,7 +135,7 @@ export class CreateDeployment extends React.PureComponent {
                           config_name: '',
                           mount_path: '',
                           exposedPorts: [],
-                        }),
+                        })
                       );
                     }}
                   >
@@ -199,16 +199,15 @@ export class CreateDeployment extends React.PureComponent {
                   <MenuItem value="nodeport">Node Port</MenuItem>
                 </Select>
               </FormControl>
-              {formPorts.map((port) => {
+              {formPorts.map((port, index) => {
                 const svcs = formData.getIn([
                   'advancedOptions',
                   'exposedServices',
                 ]);
                 const current = svcs.find(
                   (svc) =>
-                    svc.get('name') === port.get('name') &&
                     svc.get('port') === port.get('port') &&
-                    svc.get('protocol') === port.get('protocol'),
+                    svc.get('protocol') === port.get('protocol')
                 );
                 const idx = svcs.findIndex((svc) => svc === current);
                 return (
