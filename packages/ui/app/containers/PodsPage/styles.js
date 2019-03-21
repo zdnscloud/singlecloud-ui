@@ -132,6 +132,13 @@ const styles = (theme) => ({
   iOSIconChecked: {
     boxShadow: theme.shadows[1],
   },
+  logs: {
+    backgroundColor: 'black',
+    color: 'white',
+  },
+  logTime: {
+    color: 'green',
+  },
 });
 
 export default styles;

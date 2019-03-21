@@ -41,6 +41,7 @@ export class PodsTable extends React.PureComponent {
           <Fragment>
             {props.data.get('containers').map((ctn) => (
               <Button
+                key={ctn.get('name')}
                 variant="outlined"
                 size="small"
                 className={classes.button}
