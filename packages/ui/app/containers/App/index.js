@@ -18,6 +18,7 @@ import NodesPage from 'containers/NodesPage/Loadable';
 import NamespacesPage from 'containers/NamespacesPage/Loadable';
 import DeploymentsPage from 'containers/DeploymentsPage/Loadable';
 import CreateDeployment from 'containers/DeploymentsPage/CreateLoadable';
+import PodsPage from 'containers/PodsPage/Loadable';
 import TerminalPage from 'containers/TerminalPage/Loadable';
 import ConfigMapsPage from 'containers/ConfigMapsPage/Loadable';
 import ServicesPage from 'containers/ServicesPage/Loadable';
@@ -64,6 +65,11 @@ export default function App() {
             exact
             path="/clusters/:cluster_id/namespaces/:namespace_id/deployments/create"
             component={CreateDeployment}
+          />
+          <Route
+            exact
+            path="/clusters/:cluster_id/namespaces/:namespace_id/deployments/:deployment_id/pods"
+            component={PodsPage}
           />
           <Route
             exact

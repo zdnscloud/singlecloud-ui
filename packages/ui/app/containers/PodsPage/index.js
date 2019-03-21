@@ -1,6 +1,6 @@
 /**
  *
- * DeploymentsPage
+ * PodsPage
  *
  */
 
@@ -20,17 +20,18 @@ import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 
 import injectSaga from 'utils/injectSaga';
-import makeSelectDeploymentsPage from './selectors';
+import makeSelectPodsPage from './selectors';
 import reducer from './reducer';
 import * as actions from './actions';
 import saga from './saga';
 import messages from './messages';
-import DeploymentsPageHelmet from './helmet';
+import PodsPageHelmet from './helmet';
 import styles from './styles';
-import DeploymentsTable from './DeploymentsTable';
+import PodsTable from './PodsTable';
+import LogViewDialog from './LogViewDialog';
 
 /* eslint-disable react/prefer-stateless-function */
-export class DeploymentsPage extends React.PureComponent {
+export class PodsPage extends React.PureComponent {
   static propTypes = {
     initAction: PropTypes.func,
     classes: PropTypes.object.isRequired,
@@ -47,29 +48,17 @@ export class DeploymentsPage extends React.PureComponent {
 
     return (
       <div className={classes.root}>
-        <DeploymentsPageHelmet />
+        <PodsPageHelmet />
         <CssBaseline />
         <Menubar headerText={<FormattedMessage {...messages.header} />} />
         <div className={classes.content}>
           <div className={classes.appBarSpacer} />
           <Typography variant="h4" gutterBottom component="h2">
-            <FormattedMessage {...messages.deployments} />
-          </Typography>
-          <Typography component="div" className={classes.chartContainer}>
-            <div>
-              <Link to={`${this.props.location.pathname}/create`}>
-                <Fab
-                  color="primary"
-                  aria-label="create deployment"
-                  className={classes.menuButton}
-                >
-                  <AddIcon />
-                </Fab>
-              </Link>
-            </div>
+            <FormattedMessage {...messages.pods} />
           </Typography>
           <Typography component="div">
-            <DeploymentsTable location={this.props.location} />
+            <LogViewDialog />
+            <PodsTable />
           </Typography>
         </div>
       </div>
@@ -78,7 +67,7 @@ export class DeploymentsPage extends React.PureComponent {
 }
 
 const mapStateToProps = createStructuredSelector({
-  deploymentsPage: makeSelectDeploymentsPage(),
+  podsPage: makeSelectPodsPage(),
 });
 
 const mapDispatchToProps = (dispatch) =>
@@ -94,10 +83,10 @@ const withConnect = connect(
   mapDispatchToProps
 );
 
-const withSaga = injectSaga({ key: 'deploymentsPage', saga });
+const withSaga = injectSaga({ key: 'podsPage', saga });
 
 export default compose(
   withSaga,
   withConnect,
   withStyles(styles)
-)(DeploymentsPage);
+)(PodsPage);
