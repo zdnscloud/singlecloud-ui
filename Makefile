@@ -1,7 +1,7 @@
 default:
 	@echo "try make build or test"
 
-build:
+build: bootstrap
 	make -C packages/ui build
 
 test:
