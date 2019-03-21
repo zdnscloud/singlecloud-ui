@@ -8,4 +8,4 @@ RUN cd /singlecloud-ui && make build
 FROM alpine
 COPY --from=uibuild /singlecloud-ui/packages/ui/build /www
 
-WORKDIR /singlecloud-ui
+WORKDIR /www
