@@ -75,7 +75,9 @@ function podsPageReducer(state = initialState, { type, payload }) {
       return state.set('logIsOpen', [payload.podID, payload.name]);
 
     case CLOSE_LOG_VIEW:
-      return state.set('logIsOpen', null).update('logs', (logs) => logs.clear());
+      return state
+        .set('logIsOpen', null)
+        .update('logs', (logs) => logs.clear());
 
     case ADD_LOG:
       return state.update('logs', (logs) => logs.push(payload.log).take(1985));

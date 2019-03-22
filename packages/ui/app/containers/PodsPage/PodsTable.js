@@ -45,7 +45,9 @@ export class PodsTable extends React.PureComponent {
                 variant="outlined"
                 size="small"
                 className={classes.button}
-                onClick={(evt) => openLogView(props.data.get('id'), ctn.get('name'))}
+                onClick={(evt) =>
+                  openLogView(props.data.get('id'), ctn.get('name'))
+                }
               >
                 Show Container({ctn.get('name')}) Log
               </Button>

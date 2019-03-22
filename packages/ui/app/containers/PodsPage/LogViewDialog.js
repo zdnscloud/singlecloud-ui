@@ -11,7 +11,11 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import SockJS from 'sockjs-client';
 import { withStyles } from '@material-ui/core/styles';
 
-import { makeSelectLogViewIsOpen, makeSelectLogs, makeSelectLogsURL } from './selectors';
+import {
+  makeSelectLogViewIsOpen,
+  makeSelectLogs,
+  makeSelectLogsURL,
+} from './selectors';
 import * as actions from './actions';
 import styles from './styles';
 
@@ -19,14 +23,7 @@ let socket = null;
 
 class LogViewDialog extends React.Component {
   render() {
-    const {
-      isOpen,
-      logs,
-      url,
-      closeLogView,
-      addLog,
-      classes,
-    } = this.props;
+    const { isOpen, logs, url, closeLogView, addLog, classes } = this.props;
     let t;
 
     return (
@@ -47,15 +44,17 @@ class LogViewDialog extends React.Component {
         <DialogTitle id="form-dialog-title">Contianer Log</DialogTitle>
         <DialogContent>
           <pre className={classes.logs}>
-            {logs.map((log, idx) => (
-              <div key={idx}>
-                {(t = /^.+Z/.exec(log)[0], '')}
-                <time className={classes.logTime}>
-                  {new Date(t).toLocaleString()}
-                </time>
-                {log.slice(t.length)}
-              </div>
-            ))}
+            {logs.map((log, idx) => {
+              const ti = /^.+Z/.exec(log)[0];
+              return (
+                <div key={idx}>
+                  <time className={classes.logTime}>
+                    {new Date(ti).toLocaleString()}
+                  </time>
+                  {log.slice(ti.length)}
+                </div>
+              );
+            })}
           </pre>
         </DialogContent>
         <DialogActions>

@@ -94,9 +94,9 @@ export const makeSelectLogsURL = () =>
     (substate, clusterID, namespaceID, deploymentID, logView) =>
       `${window.location.protocol}//${window.location.hostname}:${
         window.location.port
-      }/apis/ws.zcloud.cn/v1/clusters/${
-        clusterID
-      }/namespaces/${namespaceID}/pods/${logView[0]}/containers/${logView[1]}/log`
+      }/apis/ws.zcloud.cn/v1/clusters/${clusterID}/namespaces/${namespaceID}/pods/${
+        logView[0]
+      }/containers/${logView[1]}/log`
   );
 
 /**
