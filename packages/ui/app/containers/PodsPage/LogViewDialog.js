@@ -40,6 +40,7 @@ class LogViewDialog extends React.Component {
         }}
         onExit={() => {
           socket.close();
+          socket.onclose = null;
           socket = null;
         }}
         aria-labelledby="form-dialog-title"

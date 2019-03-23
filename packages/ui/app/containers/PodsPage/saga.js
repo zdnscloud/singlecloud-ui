@@ -87,10 +87,11 @@ export function* removePod({ payload }) {
     const { id } = payload;
     const clusterID = yield select(makeSelectClusterID());
     const namespaceID = yield select(makeSelectNamespaceID());
+    const deploymentID = yield select(makeSelectDeploymentID());
     yield put(removePodRequest());
     const resp = yield call(
       request,
-      `${url}/${clusterID}/namespaces/${namespaceID}/pods/${id}`,
+      `${url}/${clusterID}/namespaces/${namespaceID}/deployments/${deploymentID}/pods/${id}`,
       {
         method: 'DELETE',
       }
