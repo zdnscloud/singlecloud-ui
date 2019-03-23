@@ -10,6 +10,7 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import SockJS from 'sockjs-client';
 import { withStyles } from '@material-ui/core/styles';
+import List from 'react-virtualized/dist/es/List';
 
 import {
   makeSelectLogViewIsOpen,
@@ -44,17 +45,30 @@ class LogViewDialog extends React.Component {
         <DialogTitle id="form-dialog-title">Contianer Log</DialogTitle>
         <DialogContent>
           <pre className={classes.logs}>
-            {logs.map((log, idx) => {
-              const ti = /^.+Z/.exec(log)[0];
-              return (
-                <div key={idx}>
-                  <time className={classes.logTime}>
-                    {new Date(ti).toLocaleString()}
-                  </time>
-                  {log.slice(ti.length)}
-                </div>
-              );
-            })}
+            <List
+              width={800}
+              height={600}
+              rowCount={logs.size}
+              rowHeight={20}
+              rowRenderer={({
+                key,
+                index,
+                isScrolling,
+                isVisible,
+                style,
+              }) => {
+                const log = logs.get(index);
+                const ti = /^.+Z/.exec(log)[0];
+                return (
+                  <div key={key}>
+                    <time className={classes.logTime}>
+                      {new Date(ti).toLocaleString()}
+                    </time>
+                    {log.slice(ti.length)}
+                  </div>
+                );
+              }}
+            />
           </pre>
         </DialogContent>
         <DialogActions>
