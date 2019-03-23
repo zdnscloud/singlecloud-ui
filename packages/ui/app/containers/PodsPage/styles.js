@@ -133,6 +133,7 @@ const styles = (theme) => ({
     boxShadow: theme.shadows[1],
   },
   logs: {
+    width: '70vw',
     backgroundColor: 'black',
     color: 'white',
   },

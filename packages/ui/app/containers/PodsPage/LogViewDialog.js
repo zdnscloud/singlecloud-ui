@@ -33,7 +33,10 @@ class LogViewDialog extends React.Component {
         onClose={closeLogView}
         onEnter={() => {
           socket = new SockJS(url);
-          socket.onmessage = (e) => addLog(e.data);
+          socket.onmessage = (e) => setTimeout(() => addLog(e.data), 1);
+          socket.onclose = (e) => {
+            addLog('Pull log timeout!!!');
+          };
         }}
         onExit={() => {
           socket.close();
@@ -45,30 +48,7 @@ class LogViewDialog extends React.Component {
         <DialogTitle id="form-dialog-title">Contianer Log</DialogTitle>
         <DialogContent>
           <pre className={classes.logs}>
-            <List
-              width={800}
-              height={600}
-              rowCount={logs.size}
-              rowHeight={20}
-              rowRenderer={({
-                key,
-                index,
-                isScrolling,
-                isVisible,
-                style,
-              }) => {
-                const log = logs.get(index);
-                const ti = /^.+Z/.exec(log)[0];
-                return (
-                  <div key={key}>
-                    <time className={classes.logTime}>
-                      {new Date(ti).toLocaleString()}
-                    </time>
-                    {log.slice(ti.length)}
-                  </div>
-                );
-              }}
-            />
+            {logs.join('\n')}
           </pre>
         </DialogContent>
         <DialogActions>
