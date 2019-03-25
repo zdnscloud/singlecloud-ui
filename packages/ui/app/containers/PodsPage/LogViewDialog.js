@@ -11,6 +11,8 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import SockJS from 'sockjs-client';
 import { withStyles } from '@material-ui/core/styles';
 import List from 'react-virtualized/dist/es/List';
+import { Observable } from 'rxjs';
+import { map, scan, debounceTime } from 'rxjs/operators';
 
 import {
   makeSelectLogViewIsOpen,
@@ -21,10 +23,11 @@ import * as actions from './actions';
 import styles from './styles';
 
 let socket = null;
+let observer = null;
 
 class LogViewDialog extends React.Component {
   render() {
-    const { isOpen, logs, url, closeLogView, addLog, classes } = this.props;
+    const { isOpen, logs, url, closeLogView, setLogs, classes } = this.props;
     let t;
 
     return (
@@ -33,24 +36,52 @@ class LogViewDialog extends React.Component {
         onClose={closeLogView}
         onEnter={() => {
           socket = new SockJS(url);
-          socket.onmessage = (e) => setTimeout(() => addLog(e.data), 1);
+          const logSource = Observable.create((ob) => {
+            observer = ob;
+            socket.onmessage = (e) => ob.next(e.data);
+          });
+          logSource
+            .pipe(
+              map((log) => {
+                const i = log.indexOf(' ');
+                const tt = new Date(log.slice(0, i));
+                const l = log.slice(i + 1);
+                return [tt, l];
+              })
+            )
+            .pipe(scan((acc, val) => acc.concat([val]).slice(-2000), []))
+            .pipe(debounceTime(500))
+            .subscribe(setLogs);
           socket.onclose = (e) => {
-            addLog('Pull log timeout!!!');
+            setLogs(logs.concat([[new Date(), 'Pull log timeout!!!']]));
+            if (observer) observer.complete();
+            observer = null;
           };
         }}
         onExit={() => {
           socket.close();
           socket.onclose = null;
           socket = null;
+          if (observer) observer.complete();
+          observer = null;
         }}
         aria-labelledby="form-dialog-title"
         maxWidth="lg"
       >
         <DialogTitle id="form-dialog-title">Contianer Log</DialogTitle>
         <DialogContent>
-          <pre className={classes.logs}>
-            {logs.join('\n')}
-          </pre>
+          <div className={classes.logsWrapper}>
+            <pre className={classes.logs}>
+              {logs.map((log, i) => (
+                <div key={i}>
+                  <time className={classes.logTime}>
+                    {log[0].toLocaleString()}
+                  </time>
+                  <span className={classes.log}>{log[1]}</span>
+                </div>
+              ))}
+            </pre>
+          </div>
         </DialogContent>
         <DialogActions>
           <Button onClick={closeLogView} color="primary" variant="contained">

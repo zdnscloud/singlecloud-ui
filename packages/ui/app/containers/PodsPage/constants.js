@@ -30,3 +30,4 @@ export const OPEN_LOG_VIEW = `${prefix}/OPEN_LOG_VIEW`;
 export const CLOSE_LOG_VIEW = `${prefix}/CLOSE_LOG_VIEW`;
 
 export const ADD_LOG = `${prefix}/ADD_LOG`;
+export const SET_LOGS = `${prefix}/SET_LOGS`;

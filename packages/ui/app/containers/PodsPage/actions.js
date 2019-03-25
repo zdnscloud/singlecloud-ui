@@ -23,6 +23,7 @@ import {
   OPEN_LOG_VIEW,
   CLOSE_LOG_VIEW,
   ADD_LOG,
+  SET_LOGS,
 } from './constants';
 
 export function initAction({ params }) {
@@ -130,4 +131,9 @@ export const closeLogView = () => ({
 export const addLog = (log) => ({
   type: ADD_LOG,
   payload: { log },
+});
+
+export const setLogs = (logs) => ({
+  type: SET_LOGS,
+  payload: { logs },
 });
