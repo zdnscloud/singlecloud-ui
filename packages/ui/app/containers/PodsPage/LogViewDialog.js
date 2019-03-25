@@ -12,7 +12,7 @@ import SockJS from 'sockjs-client';
 import { withStyles } from '@material-ui/core/styles';
 import List from 'react-virtualized/dist/es/List';
 import { Observable } from 'rxjs';
-import { map, scan, debounceTime } from 'rxjs/operators';
+import { map, scan, throttleTime } from 'rxjs/operators';
 
 import {
   makeSelectLogViewIsOpen,
@@ -50,8 +50,10 @@ class LogViewDialog extends React.Component {
               })
             )
             .pipe(scan((acc, val) => acc.concat([val]).slice(-2000), []))
-            .pipe(debounceTime(500))
-            .subscribe(setLogs);
+            .pipe(throttleTime(500))
+            .subscribe((l) => {
+              setLogs(l);
+            });
           socket.onclose = (e) => {
             setLogs(logs.concat([[new Date(), 'Pull log timeout!!!']]));
             if (observer) observer.complete();

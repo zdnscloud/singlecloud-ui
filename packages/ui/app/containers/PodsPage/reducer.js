@@ -73,7 +73,9 @@ function podsPageReducer(state = initialState, { type, payload }) {
       return state.set('loadPodsErrors', payload.errors);
 
     case OPEN_LOG_VIEW:
-      return state.set('logIsOpen', [payload.podID, payload.name]);
+      return state
+        .set('logIsOpen', [payload.podID, payload.name])
+        .set('logs', []);
 
     case CLOSE_LOG_VIEW:
       return state.set('logIsOpen', null).set('logs', []);
