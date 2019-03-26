@@ -8,6 +8,7 @@ import { routerMiddleware } from 'connected-react-router/immutable';
 import createSagaMiddleware from 'redux-saga';
 import { createEpicMiddleware } from 'redux-observable';
 import createReducer from './reducers';
+import createEpic from './epics';
 
 const epicMiddleware = createEpicMiddleware();
 const sagaMiddleware = createSagaMiddleware();
@@ -46,6 +47,8 @@ export default function configureStore(initialState = {}, history) {
   store.injectedReducers = {}; // Reducer registry
   store.injectedSagas = {}; // Saga registry
   store.injectedEpics = {}; // Epic registry
+
+  store.runEpic(createEpic(store.injectedEpics));
 
   // Make reducers hot reloadable, see http://mxs.is/googmo
   /* istanbul ignore next */

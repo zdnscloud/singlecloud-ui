@@ -9,6 +9,7 @@ import history from 'utils/history';
 import languageProviderReducer from 'containers/LanguageProvider/reducer';
 import clustersPageReducer from 'containers/ClustersPage/reducer';
 import nodesPageReducer from 'containers/NodesPage/reducer';
+import eventsPageReducer from 'containers/EventsPage/reducer';
 import namespacesPageReducer from 'containers/NamespacesPage/reducer';
 import deploymentsPageReducer from 'containers/DeploymentsPage/reducer';
 import podsPageReducer from 'containers/PodsPage/reducer';
@@ -25,6 +26,7 @@ export default function createReducer(injectedReducers = {}) {
     router: connectRouter(history),
     clustersPage: clustersPageReducer,
     nodesPage: nodesPageReducer,
+    eventsPage: eventsPageReducer,
     namespacesPage: namespacesPageReducer,
     deploymentsPage: deploymentsPageReducer,
     configMapsPage: configMapsPageReducer,
