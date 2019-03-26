@@ -22,3 +22,6 @@ build-image:
 
 clean-image:
 	docker rmi zdnscloud/singlecloud-ui:${VERSION}
+
+lint-staged:
+	npm run lint:staged
