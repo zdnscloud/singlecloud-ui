@@ -7,9 +7,22 @@
  *
  */
 
-import React from 'react';
+import React, { Component } from 'react';
+import { compose } from 'redux';
 import { Switch, Route } from 'react-router-dom';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import { withRouter } from "react-router";
+
+// creates a beautiful scrollbar
+import PerfectScrollbar from 'perfect-scrollbar';
+import 'perfect-scrollbar/css/perfect-scrollbar.css';
+// @material-ui/core components
+import withStyles from '@material-ui/core/styles/withStyles';
+// core components
+import Navbar from 'components/Navbars/Navbar';
+import Footer from 'components/Footer/Footer';
+import Sidebar from 'components/Sidebar/Sidebar';
+import FixedPlugin from 'components/FixedPlugin/FixedPlugin';
 
 import HomePage from 'containers/HomePage/Loadable';
 import NotFoundPage from 'containers/NotFoundPage/Loadable';
@@ -26,6 +39,25 @@ import ServicesPage from 'containers/ServicesPage/Loadable';
 import IngressesPage from 'containers/IngressesPage/Loadable';
 import CreateConfigMap from 'containers/ConfigMapsPage/CreateLoadable';
 
+import dashboardStyle from 'assets/jss/material-dashboard-react/layouts/dashboardStyle';
+import logo from 'images/favicon.png';
+import image from 'assets/img/sidebar-2.jpg';
+
+import appRoutes from './routes';
+
+const switchRoutes = (
+  <Switch>
+    {appRoutes.map((prop, key) => (
+      <Route
+        exact
+        path={prop.path}
+        component={prop.component}
+        key={key}
+      />
+    ))}
+  </Switch>
+);
+
 const theme = createMuiTheme({
   typography: {
     useNextVariants: true,
@@ -35,71 +67,58 @@ const theme = createMuiTheme({
   },
 });
 
-export default function App() {
-  return (
-    <MuiThemeProvider theme={theme}>
-      <div>
-        <Switch>
-          <Route exact path="/" component={HomePage} />
-          <Route exact path="/clusters" component={ClustersPage} />
-          <Route
-            exact
-            path="/clusters/:cluster_id/nodes"
-            component={NodesPage}
+class App extends Component {
+  state = { image, hasError: false };
+
+  static getDerivedStateFromError(error) {
+    // Update state so the next render will show the fallback UI.
+    return { hasError: true };
+  }
+
+  componentDidCatch(error, info) {
+    // You can also log the error to an error reporting service
+    // logErrorToMyService(error, info);
+    console.error(error, info);
+  }
+
+  render() {
+    if (this.state.hasError) {
+      // You can render any custom fallback UI
+      return <h1>Something went wrong.</h1>;
+    }
+    const { classes, ...rest } = this.props;
+
+    return (
+      <MuiThemeProvider theme={theme}>
+        <div className={classes.wrapper}>
+          <Sidebar
+            routes={appRoutes}
+            logoText="SingleCloud"
+            logo={logo}
+            image={this.state.image}
+            handleDrawerToggle={this.handleDrawerToggle}
+            open={this.state.mobileOpen}
+            color={this.state.color}
+            {...rest}
           />
-          <Route
-            exact
-            path="/clusters/:cluster_id/console"
-            component={TerminalPage}
-          />
-          <Route
-            exact
-            path="/clusters/:cluster_id/events"
-            component={EventsPage}
-          />
-          <Route
-            exact
-            path="/clusters/:cluster_id/namespaces"
-            component={NamespacesPage}
-          />
-          <Route
-            exact
-            path="/clusters/:cluster_id/namespaces/:namespace_id/deployments"
-            component={DeploymentsPage}
-          />
-          <Route
-            exact
-            path="/clusters/:cluster_id/namespaces/:namespace_id/deployments/create"
-            component={CreateDeployment}
-          />
-          <Route
-            exact
-            path="/clusters/:cluster_id/namespaces/:namespace_id/deployments/:deployment_id/pods"
-            component={PodsPage}
-          />
-          <Route
-            exact
-            path="/clusters/:cluster_id/namespaces/:namespace_id/configmaps"
-            component={ConfigMapsPage}
-          />
-          <Route
-            exact
-            path="/clusters/:cluster_id/namespaces/:namespace_id/services"
-            component={ServicesPage}
-          />
-          <Route
-            exact
-            path="/clusters/:cluster_id/namespaces/:namespace_id/ingresses"
-            component={IngressesPage}
-          />
-          <Route
-            exact
-            path="/clusters/:cluster_id/namespaces/:namespace_id/configmaps/create"
-            component={CreateConfigMap}
-          />
-          <Route component={NotFoundPage} />
-        </Switch>
-      </div>
-    </MuiThemeProvider>
-  );
+          <div className={classes.mainPanel} data-ref="mainPanel">
+            <Navbar
+              routes={appRoutes}
+              handleDrawerToggle={this.handleDrawerToggle}
+              {...rest}
+            />
+            <div className={classes.content}>
+              <div className={classes.container}>{switchRoutes}</div>
+            </div>
+            <Footer />
+          </div>
+        </div>
+      </MuiThemeProvider>
+    );
+  }
 }
+
+export default compose(
+  withRouter,
+  withStyles(dashboardStyle)
+)(App);
