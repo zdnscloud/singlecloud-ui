@@ -7,8 +7,13 @@
  *
  */
 
-import React, { Component } from 'react';
-import { compose } from 'redux';
+import React, { Component, Fragment } from 'react';
+import { findDOMNode } from 'react-dom';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { FormattedMessage } from 'react-intl';
+import { createStructuredSelector } from 'reselect';
+import { bindActionCreators, compose } from 'redux';
 import { Switch, Route } from 'react-router-dom';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import { withRouter } from 'react-router';
@@ -46,6 +51,9 @@ import image from 'assets/img/sidebar-3.jpg';
 
 import SelectCluster from './SelectCluster';
 import appRoutes from './routes';
+import * as actions from './actions';
+import { makeSelectActiveCluster } from './selectors';
+import { makeSelectClusters } from '../ClustersPage/selectors';
 
 const switchRoutes = (
   <Switch>
@@ -88,7 +96,13 @@ class App extends Component {
         </div>
       );
     }
-    const { classes, ...rest } = this.props;
+    const {
+      classes,
+      clusters,
+      activeCluster,
+      changeCluster,
+      ...rest
+    } = this.props;
     const menus = [{ name: 'clusters', path: '/clusters' }];
 
     return (
@@ -105,7 +119,15 @@ class App extends Component {
             {...rest}
           />
           <div className={classes.mainPanel} data-ref="mainPanel">
-            <Menubar headerText={<SelectCluster />} />
+            <Menubar
+              headerText={
+                <SelectCluster
+                  clusters={clusters}
+                  changeCluster={changeCluster}
+                  activeCluster={activeCluster}
+                />
+              }
+            />
             <div className={classes.content}>
               <div className={classes.container}>{switchRoutes}</div>
             </div>
@@ -117,7 +139,26 @@ class App extends Component {
   }
 }
 
+const mapStateToProps = createStructuredSelector({
+  clusters: makeSelectClusters(),
+  activeCluster: makeSelectActiveCluster(),
+});
+
+const mapDispatchToProps = (dispatch) =>
+  bindActionCreators(
+    {
+      ...actions,
+    },
+    dispatch
+  );
+
+const withConnect = connect(
+  mapStateToProps,
+  mapDispatchToProps
+);
+
 export default compose(
   withRouter,
+  withConnect,
   withStyles(dashboardStyle)
 )(App);
