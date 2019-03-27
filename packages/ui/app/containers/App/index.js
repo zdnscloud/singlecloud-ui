@@ -52,7 +52,7 @@ import image from 'assets/img/sidebar-3.jpg';
 import SelectCluster from './SelectCluster';
 import appRoutes from './routes';
 import * as actions from './actions';
-import { makeSelectActiveCluster } from './selectors';
+import { makeSelectActiveCluster, makeSelectMenus } from './selectors';
 import { makeSelectClusters } from '../ClustersPage/selectors';
 
 const switchRoutes = (
@@ -101,9 +101,9 @@ class App extends Component {
       clusters,
       activeCluster,
       changeCluster,
+      menus,
       ...rest
     } = this.props;
-    const menus = [{ name: 'clusters', path: '/clusters' }];
 
     return (
       <MuiThemeProvider theme={theme}>
@@ -142,6 +142,7 @@ class App extends Component {
 const mapStateToProps = createStructuredSelector({
   clusters: makeSelectClusters(),
   activeCluster: makeSelectActiveCluster(),
+  menus: makeSelectMenus(),
 });
 
 const mapDispatchToProps = (dispatch) =>
