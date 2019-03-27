@@ -2,10 +2,16 @@ import { createSelector } from 'reselect';
 
 const selectRouter = (state) => state.get('router');
 
-const makeSelectLocation = () =>
+export const makeSelectLocation = () =>
   createSelector(
     selectRouter,
     (routerState) => routerState.get('location').toJS()
   );
 
-export { makeSelectLocation };
+const selectApp = (state) => state.get('app');
+
+export const makeSelectActiveCluster = () =>
+  createSelector(
+    selectApp,
+    (appState) => appState.get('activeCluster')
+  );

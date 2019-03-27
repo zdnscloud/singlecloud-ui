@@ -72,7 +72,8 @@ const appRoutes = [
     component: CreateDeployment,
   },
   {
-    path: '/clusters/:cluster_id/namespaces/:namespace_id/deployments/:deployment_id/pods',
+    path:
+      '/clusters/:cluster_id/namespaces/:namespace_id/deployments/:deployment_id/pods',
     name: 'pods',
     icon: Dashboard,
     component: PodsPage,

@@ -52,10 +52,7 @@ const Sidebar = ({ ...props }) => {
   );
   const brand = (
     <div className={classes.logo}>
-      <a
-        href="https://www.creative-tim.com"
-        className={classNames(classes.logoLink)}
-      >
+      <a href="https://www.zdns.cn" className={classNames(classes.logoLink)}>
         <div className={classes.logoImage}>
           <img src={logo} alt="logo" className={classes.img} />
         </div>
@@ -68,7 +65,7 @@ const Sidebar = ({ ...props }) => {
       <Hidden mdUp implementation="css">
         <Drawer
           variant="temporary"
-          anchor={'right'}
+          anchor="right"
           open={props.open}
           classes={{
             paper: classNames(classes.drawerPaper),
@@ -79,9 +76,7 @@ const Sidebar = ({ ...props }) => {
           }}
         >
           {brand}
-          <div className={classes.sidebarWrapper}>
-            {links}
-          </div>
+          <div className={classes.sidebarWrapper}>{links}</div>
           {image !== undefined ? (
             <div
               className={classes.background}
@@ -92,7 +87,7 @@ const Sidebar = ({ ...props }) => {
       </Hidden>
       <Hidden smDown implementation="css">
         <Drawer
-          anchor={'left'}
+          anchor="left"
           variant="permanent"
           open
           classes={{

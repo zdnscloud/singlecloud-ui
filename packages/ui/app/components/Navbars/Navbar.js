@@ -16,41 +16,14 @@ import AdminNavbarLinks from './AdminNavbarLinks';
 import RTLNavbarLinks from './RTLNavbarLinks';
 
 function Header({ ...props }) {
-  function makeBrand() {
-    let name;
-    props.routes.map((prop, key) => {
-      if (prop.layout + prop.path === props.location.pathname) {
-        name = props.rtlActive ? prop.rtlName : prop.name;
-      }
-      return null;
-    });
-    return name;
-  }
   const { classes, color } = props;
   const appBarClasses = classNames({
     [` ${classes[color]}`]: color,
   });
   return (
-    <AppBar className={classes.appBar + appBarClasses}>
-      <Toolbar className={classes.container}>
-        <div className={classes.flex}>
-          {/* Here we create navbar brand, based on route name */}
-          <Button color="transparent" href="#" className={classes.title}>
-            {makeBrand()}
-          </Button>
-        </div>
-        <Hidden smDown implementation="css">
-          {props.rtlActive ? <RTLNavbarLinks /> : <AdminNavbarLinks />}
-        </Hidden>
-        <Hidden mdUp implementation="css">
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            onClick={props.handleDrawerToggle}
-          >
-            <Menu />
-          </IconButton>
-        </Hidden>
+    <AppBar position="absolute" className={classes.appBar}>
+      <Toolbar disableGutters className={classes.toolbar}>
+        clusters
       </Toolbar>
     </AppBar>
   );
