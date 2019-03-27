@@ -7,6 +7,7 @@ import { connectRouter } from 'connected-react-router/immutable';
 
 import history from 'utils/history';
 import languageProviderReducer from 'containers/LanguageProvider/reducer';
+import appReducer from 'containers/App/reducer';
 import clustersPageReducer from 'containers/ClustersPage/reducer';
 import nodesPageReducer from 'containers/NodesPage/reducer';
 import eventsPageReducer from 'containers/EventsPage/reducer';
@@ -24,6 +25,7 @@ export default function createReducer(injectedReducers = {}) {
   const rootReducer = combineReducers({
     language: languageProviderReducer,
     router: connectRouter(history),
+    app: appReducer,
     clustersPage: clustersPageReducer,
     nodesPage: nodesPageReducer,
     eventsPage: eventsPageReducer,
