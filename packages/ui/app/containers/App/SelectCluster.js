@@ -38,52 +38,43 @@ import actions from './actions';
 import { makeSelectActiveCluster } from './selectors';
 import { makeSelectClusters } from '../ClustersPage/selectors';
 
-class SelectCluster extends Component {
-  static propTypes = {
-    classes: PropTypes.object.isRequired,
-    clusters: PropTypes.object.isRequired,
-    changeCluster: PropTypes.func.isRequired,
-  };
+const SelectCluster = (props) => {
+  const { classes, clusters, activeCluster, changeCluster } = props;
 
-  render() {
-    const { classes, clusters, activeCluster, changeCluster } = this.props;
-
-    return (
-      <FormControl variant="outlined" className={classes.formControl}>
-        <InputLabel
-          ref={(ref) => {
-            this.InputLabelRef = ref;
-          }}
-          htmlFor="cluster_name-id"
-        >
-          Cluster
-        </InputLabel>
-        <Select
-          value={activeCluster}
-          onChange={(evt) => {
-            changeCluster(evt.target.value);
-          }}
-          input={
-            <OutlinedInput
-              labelWidth={180}
-              name="cluster name"
-              id="cluster_name-id"
-            />
-          }
-        >
-          <MenuItem value="">
-            <em>None</em>
+  return (
+    <FormControl variant="outlined" className={classes.formControl}>
+      <InputLabel htmlFor="cluster_name-id">Cluster</InputLabel>
+      <Select
+        value={activeCluster}
+        onChange={(evt) => {
+          changeCluster(evt.target.value);
+        }}
+        input={
+          <OutlinedInput
+            labelWidth={180}
+            name="cluster name"
+            id="cluster_name-id"
+          />
+        }
+      >
+        <MenuItem value="">
+          <em>None</em>
+        </MenuItem>
+        {clusters.toList().map((c) => (
+          <MenuItem key={c.get('id')} value={c.get('id')}>
+            {c.get('name')}
           </MenuItem>
-          {clusters.toList().map((c) => (
-            <MenuItem key={c.get('id')} value={c.get('id')}>
-              {c.get('name')}
-            </MenuItem>
-          ))}
-        </Select>
-      </FormControl>
-    );
-  }
-}
+        ))}
+      </Select>
+    </FormControl>
+  );
+};
+
+SelectCluster.propTypes = {
+  classes: PropTypes.object.isRequired,
+  clusters: PropTypes.object.isRequired,
+  changeCluster: PropTypes.func.isRequired,
+};
 
 const mapStateToProps = createStructuredSelector({
   clusters: makeSelectClusters(),
@@ -103,7 +94,4 @@ const withConnect = connect(
   mapDispatchToProps
 );
 
-export default compose(
-  withConnect,
-  withStyles(styles)
-)(SelectCluster);
+export default compose(withStyles(styles))(SelectCluster);
