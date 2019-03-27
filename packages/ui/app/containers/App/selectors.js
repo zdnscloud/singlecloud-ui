@@ -15,3 +15,22 @@ export const makeSelectActiveCluster = () =>
     selectApp,
     (appState) => appState.get('activeCluster')
   );
+
+export const makeSelectMenus = () =>
+  createSelector(
+    selectApp,
+    makeSelectActiveCluster(),
+    (appState, cluster) => {
+      const menus = [{ name: 'clusters', path: '/clusters' }];
+      if (cluster !== '') {
+        return menus.concat([
+          { name: 'namespaces', path: `/clusters/${cluster}/namespaces` },
+          { name: 'applications', path: `/clusters/${cluster}/applications` },
+          { name: 'storage', path: `/clusters/${cluster}/storage` },
+          { name: 'network', path: `/clusters/${cluster}/network` },
+          { name: 'topology', path: `/clusters/${cluster}/topology` },
+        ]);
+      }
+      return menus;
+    }
+  );
