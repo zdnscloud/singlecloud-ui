@@ -23,6 +23,7 @@ import PerfectScrollbar from 'perfect-scrollbar';
 import 'perfect-scrollbar/css/perfect-scrollbar.css';
 // @material-ui/core components
 import withStyles from '@material-ui/core/styles/withStyles';
+import CssBaseline from '@material-ui/core/CssBaseline';
 // core components
 import Navbar from 'components/Navbars/Navbar';
 import Footer from 'components/Footer/Footer';
@@ -54,6 +55,8 @@ import appRoutes from './routes';
 import * as actions from './actions';
 import { makeSelectActiveCluster, makeSelectMenus } from './selectors';
 import { makeSelectClusters } from '../ClustersPage/selectors';
+
+
 
 import GlobalStyle from '../../global-styles';
 
@@ -120,19 +123,17 @@ class App extends Component {
             color={this.state.color}
             {...rest}
           />
+          <Menubar
+            headerText={
+              <SelectCluster
+                clusters={clusters}
+                changeCluster={changeCluster}
+                activeCluster={activeCluster}
+              />
+            }
+          />
           <div className={classes.mainPanel} data-ref="mainPanel">
-            <Menubar
-              headerText={
-                <SelectCluster
-                  clusters={clusters}
-                  changeCluster={changeCluster}
-                  activeCluster={activeCluster}
-                />
-              }
-            />
-            <div className={classes.content}>
-              <div className={classes.container}>{switchRoutes}</div>
-            </div>
+            <div className={classes.content}>{switchRoutes}</div>
             <Footer />
           </div>
           <GlobalStyle />
