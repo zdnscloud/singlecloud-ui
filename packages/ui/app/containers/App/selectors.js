@@ -1,4 +1,5 @@
 import { createSelector } from 'reselect';
+import { createMatchSelector, getLocation } from 'connected-react-router/immutable';
 
 const selectRouter = (state) => state.get('router');
 
@@ -6,6 +7,17 @@ export const makeSelectLocation = () =>
   createSelector(
     selectRouter,
     (routerState) => routerState.get('location').toJS()
+  );
+
+export const makeSelectClusterID = () =>
+  createSelector(
+    createMatchSelector('/clusters/:cluster_id'),
+    (match) => {
+      if (match && match.params) {
+        return match.params.cluster_id;
+      }
+      return '';
+    }
   );
 
 const selectApp = (state) => state.get('app');
@@ -19,7 +31,7 @@ export const makeSelectActiveCluster = () =>
 export const makeSelectMenus = () =>
   createSelector(
     selectApp,
-    makeSelectActiveCluster(),
+    makeSelectClusterID(),
     (appState, cluster) => {
       const menus = [{ name: 'clusters', path: '/clusters' }];
       if (cluster !== '') {
