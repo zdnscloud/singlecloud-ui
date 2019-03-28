@@ -8,6 +8,9 @@ const styles = (theme) => ({
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
     }),
+    position: 'fixed',
+    top: 0,
+    left: '260px',
   },
   menuButton: {
     marginLeft: 12,
