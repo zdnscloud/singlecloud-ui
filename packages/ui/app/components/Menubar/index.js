@@ -22,7 +22,7 @@ function Menubar(props) {
   const { classes, headerText } = props;
 
   return (
-    <AppBar position="absolute" className={classes.appBar}>
+    <AppBar position="absolute" color="default" className={classes.appBar}>
       <Toolbar disableGutters className={classes.toolbar}>
         <IconButton
           color="inherit"
@@ -32,7 +32,7 @@ function Menubar(props) {
           <CloudIcon />
         </IconButton>
         <Typography
-          component="h1"
+          component="div"
           variant="h6"
           color="inherit"
           noWrap

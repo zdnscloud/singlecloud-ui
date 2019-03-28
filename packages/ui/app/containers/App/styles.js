@@ -78,6 +78,10 @@ const styles = (theme) => ({
   h5: {
     marginBottom: theme.spacing.unit * 2,
   },
+  formControl: {
+    width: '180px',
+    backgroundColor: 'white',
+  },
 });
 
 export default styles;
