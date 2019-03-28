@@ -51,7 +51,7 @@ const SelectCluster = (props) => {
         }}
         input={
           <OutlinedInput
-            labelWidth={180}
+            labelWidth={100}
             name="cluster name"
             id="cluster_name-id"
           />
