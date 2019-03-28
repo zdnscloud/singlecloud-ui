@@ -9,6 +9,7 @@ import createSagaMiddleware from 'redux-saga';
 import { createEpicMiddleware } from 'redux-observable';
 import createReducer from './reducers';
 import createEpic from './epics';
+import appSaga from './containers/App/saga';
 
 const epicMiddleware = createEpicMiddleware();
 const sagaMiddleware = createSagaMiddleware();
@@ -48,6 +49,7 @@ export default function configureStore(initialState = {}, history) {
   store.injectedSagas = {}; // Saga registry
   store.injectedEpics = {}; // Epic registry
 
+  store.runSaga(appSaga);
   store.runEpic(createEpic(store.injectedEpics));
 
   // Make reducers hot reloadable, see http://mxs.is/googmo

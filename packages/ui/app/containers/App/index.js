@@ -7,7 +7,7 @@
  *
  */
 
-import React, { Component, Fragment } from 'react';
+import React, { PureComponent, Fragment } from 'react';
 import { findDOMNode } from 'react-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -55,9 +55,6 @@ import appRoutes from './routes';
 import * as actions from './actions';
 import { makeSelectActiveCluster, makeSelectMenus } from './selectors';
 import { makeSelectClusters } from '../ClustersPage/selectors';
-
-
-
 import GlobalStyle from '../../global-styles';
 
 const switchRoutes = (
@@ -77,7 +74,7 @@ const theme = createMuiTheme({
   },
 });
 
-class App extends Component {
+class App extends PureComponent {
   state = { image, hasError: false };
 
   static getDerivedStateFromError(error) {
@@ -89,6 +86,10 @@ class App extends Component {
     // You can also log the error to an error reporting service
     // logErrorToMyService(error, info);
     console.error(error, info); // eslint-disable-line
+  }
+
+  componentWillMount() {
+    this.props.initAction();
   }
 
   render() {
