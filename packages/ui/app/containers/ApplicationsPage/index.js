@@ -55,7 +55,7 @@ export class ApplicationsPage extends React.PureComponent {
       <div className={classes.root}>
         <ApplicationsPageHelmet />
         <CssBaseline />
-        <div>
+        <div className={classes.select}>
           <SelectNamespace />
         </div>
         <div className={classes.content}>

@@ -34,7 +34,7 @@ import Collapse from '@material-ui/core/Collapse';
 import Checkbox from '@material-ui/core/Checkbox';
 
 import styles from './styles';
-import actions from './actions';
+import * as actions from './actions';
 import { makeSelectNamespaceID } from './selectors';
 import { makeSelectNamespaces } from '../NamespacesPage/selectors';
 
@@ -91,4 +91,4 @@ const withConnect = connect(
   mapDispatchToProps
 );
 
-export default compose(withStyles(styles))(SelectNamespace);
+export default compose(withConnect, withStyles(styles))(SelectNamespace);
