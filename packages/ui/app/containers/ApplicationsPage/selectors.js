@@ -3,45 +3,45 @@ import { createSelector } from 'reselect';
 import { initialState } from './reducer';
 
 /**
- * Direct selector to the deploymentsPage state domain
+ * Direct selector to the applicationsPage state domain
  */
 
-export const selectDeploymentsPageDomain = (state) =>
-  state.get('deploymentsPage', initialState);
+export const selectApplicationsPageDomain = (state) =>
+  state.get('applicationsPage', initialState);
 
 /**
  * Other specific selectors
  */
 export const makeSelectClusterID = () =>
   createSelector(
-    selectDeploymentsPageDomain,
+    selectApplicationsPageDomain,
     (substate) => substate.get('clusterID')
   );
 
 export const makeSelectNamespaceID = () =>
   createSelector(
-    selectDeploymentsPageDomain,
+    selectApplicationsPageDomain,
     (substate) => substate.get('namespaceID')
   );
 
-export const makeSelectDeployments = () =>
+export const makeSelectApplications = () =>
   createSelector(
-    selectDeploymentsPageDomain,
+    selectApplicationsPageDomain,
     makeSelectClusterID(),
     makeSelectNamespaceID(),
     (substate, clusterID, namespaceID) =>
-      substate.getIn(['deployments', clusterID, namespaceID]) || Map()
+      substate.getIn(['applications', clusterID, namespaceID]) || Map()
   );
 
 export const makeSelectTableList = () =>
   createSelector(
-    selectDeploymentsPageDomain,
+    selectApplicationsPageDomain,
     (substate) => substate.get('tableList')
   );
 
 export const makeSelectCreateFormData = () =>
   createSelector(
-    selectDeploymentsPageDomain,
+    selectApplicationsPageDomain,
     (substate) => substate.get('createFormData')
   );
 
@@ -60,13 +60,13 @@ export const makeSelectFormPorts = () =>
   );
 
 /**
- * Default selector used by DeploymentsPage
+ * Default selector used by ApplicationsPage
  */
 
-const makeSelectDeploymentsPage = () =>
+const makeSelectApplicationsPage = () =>
   createSelector(
-    selectDeploymentsPageDomain,
+    selectApplicationsPageDomain,
     (substate) => substate.toJS()
   );
 
-export default makeSelectDeploymentsPage;
+export default makeSelectApplicationsPage;

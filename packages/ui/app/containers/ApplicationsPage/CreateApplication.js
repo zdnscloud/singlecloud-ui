@@ -1,6 +1,6 @@
 /**
  *
- * Create DeploymentsPage
+ * Create Application Page
  *
  */
 
@@ -45,7 +45,7 @@ import reducer from './reducer';
 import * as actions from './actions';
 import saga from './saga';
 import messages from './messages';
-import DeploymentsPageHelmet from './helmet';
+import ApplicationsHelmet from './helmet';
 import styles from './styles';
 import ContainerForm from './ContainerForm';
 import configMapsSaga from '../ConfigMapsPage/saga';
@@ -53,7 +53,7 @@ import { initAction } from '../ConfigMapsPage/actions';
 import { makeSelectConfigMaps } from '../ConfigMapsPage/selectors';
 
 /* eslint-disable react/prefer-stateless-function */
-export class CreateDeployment extends React.PureComponent {
+export class CreateApplication extends React.PureComponent {
   static propTypes = {
     initCreateForm: PropTypes.func,
     classes: PropTypes.object.isRequired,
@@ -74,20 +74,18 @@ export class CreateDeployment extends React.PureComponent {
       formPorts,
       configMaps,
       updateForm,
-      createDeployment,
+      createApplication,
     } = this.props;
 
     return (
       <div className={classes.root}>
-        <DeploymentsPageHelmet />
+        <ApplicationsHelmet />
         <CssBaseline />
-        <Menubar headerText={<FormattedMessage {...messages.header} />} />
         <div className={classes.content}>
-          <div className={classes.appBarSpacer} />
           <Typography variant="h4" gutterBottom component="h2">
-            <FormattedMessage {...messages.deployments} />
+            <FormattedMessage {...messages.applications} />
           </Typography>
-          <Typography component="div" className={classes.deployContainer}>
+          <Typography component="div" className={classes.appContainer}>
             <div>
               <TextField
                 className={classNames(classes.margin, classes.textField)}
@@ -329,7 +327,7 @@ export class CreateDeployment extends React.PureComponent {
               variant="contained"
               color="primary"
               className={classNames(classes.margin, classes.button)}
-              onClick={(evt) => createDeployment()}
+              onClick={(evt) => createApplication()}
             >
               Create
             </Button>
@@ -360,7 +358,7 @@ const withConnect = connect(
   mapDispatchToProps
 );
 
-const withSaga = injectSaga({ key: 'deploymentsPage', saga });
+const withSaga = injectSaga({ key: 'applicationsPage', saga });
 const withConigMapsSaga = injectSaga({
   key: 'configMapsPage',
   saga: configMapsSaga,
@@ -371,4 +369,4 @@ export default compose(
   withSaga,
   withConnect,
   withStyles(styles)
-)(CreateDeployment);
+)(CreateApplication);

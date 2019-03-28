@@ -66,7 +66,7 @@ const styles = (theme) => ({
     height: '100vh',
     overflow: 'auto',
   },
-  deployContainer: {},
+  appContainer: {},
   advanceContainer: {},
   actionContainer: {
     textAlign: 'center',

@@ -22,6 +22,7 @@ import ServicesPage from 'containers/ServicesPage/Loadable';
 import IngressesPage from 'containers/IngressesPage/Loadable';
 import CreateConfigMap from 'containers/ConfigMapsPage/CreateLoadable';
 import ApplicationsPage from 'containers/ApplicationsPage/Loadable';
+import CreateApplication from 'containers/ApplicationsPage/CreateLoadable';
 
 const appRoutes = [
   {
@@ -108,6 +109,12 @@ const appRoutes = [
     name: 'Applications',
     icon: Dashboard,
     component: ApplicationsPage,
+  },
+  {
+    path: '/clusters/:cluster_id/applications/create',
+    name: 'Create Application',
+    icon: Dashboard,
+    component: CreateApplication,
   },
 ];
 

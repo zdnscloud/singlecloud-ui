@@ -1,8 +1,8 @@
 import { fromJS } from 'immutable';
-import deploymentsPageReducer from '../reducer';
+import applicationsPageReducer from '../reducer';
 
-describe('deploymentsPageReducer', () => {
+describe('applicationsPageReducer', () => {
   it('returns the initial state', () => {
-    expect(deploymentsPageReducer(undefined, {})).toEqual(fromJS({}));
+    expect(applicationsPageReducer(undefined, {})).toEqual(fromJS({}));
   });
 });

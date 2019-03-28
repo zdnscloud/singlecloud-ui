@@ -1,11 +1,11 @@
 /**
  *
- * Asynchronously loads the component for DeploymentsPage
+ * Asynchronously loads the component for ApplicationsPage
  *
  */
 
 import loadable from '@loadable/component';
 
 export default loadable(() =>
-  import(/* webpackChunkName: "DeploymentsPage" */ './index')
+  import(/* webpackChunkName: "ApplicationsPage" */ './index')
 );

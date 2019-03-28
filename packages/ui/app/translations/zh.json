@@ -1,5 +1,10 @@
 {
   "app.components.Menubar.header": "This is the Menubar component!",
+  "app.containers.ApplicationsPage.applications": "Applications",
+  "app.containers.ApplicationsPage.header": "This is the ApplicationsPage container!",
+  "app.containers.ApplicationsPage.pageDesc": "Description of ApplicationsPage",
+  "app.containers.ApplicationsPage.pageTitle": "ApplicationsPage",
+  "app.containers.ApplicationsPage.tableTitleName": "Name",
   "app.containers.ClustersPage.clusters": "集群列表",
   "app.containers.ClustersPage.header": "集群管理",
   "app.containers.ClustersPage.pageDesc": "查看集群列表",

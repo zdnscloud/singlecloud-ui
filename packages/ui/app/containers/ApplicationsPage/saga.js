@@ -6,20 +6,20 @@ import { url } from '../ClustersPage/saga';
 
 import {
   INIT_ACTION,
-  LOAD_DEPLOYMENTS,
-  CREATE_DEPLOYMENT,
-  REMOVE_DEPLOYMENT,
+  LOAD_APPLICATIONS,
+  CREATE_APPLICATION,
+  REMOVE_APPLICATION,
 } from './constants';
 import {
-  loadDeploymentsRequest,
-  loadDeploymentsSuccess,
-  loadDeploymentsFailure,
-  createDeploymentRequest,
-  createDeploymentSuccess,
-  createDeploymentFailure,
-  removeDeploymentRequest,
-  removeDeploymentSuccess,
-  removeDeploymentFailure,
+  loadApplicationsRequest,
+  loadApplicationsSuccess,
+  loadApplicationsFailure,
+  createApplicationRequest,
+  createApplicationSuccess,
+  createApplicationFailure,
+  removeApplicationRequest,
+  removeApplicationSuccess,
+  removeApplicationFailure,
 } from './actions';
 import {
   makeSelectCreateFormData,
@@ -31,31 +31,31 @@ import {
 import { loadConfigMaps } from '../ConfigMapsPage/saga';
 
 export function* initialize() {
-  yield* loadDeployments();
+  yield* loadApplications();
 }
 
-export function* loadDeployments() {
+export function* loadApplications() {
   try {
     const clusterID = yield select(makeSelectClusterID());
     const namespaceID = yield select(makeSelectNamespaceID());
-    yield put(loadDeploymentsRequest());
+    yield put(loadApplicationsRequest());
     const data = yield call(
       request,
-      `${url}/${clusterID}/namespaces/${namespaceID}/deployments`
+      `${url}/${clusterID}/namespaces/${namespaceID}/applications`
     );
-    yield put(loadDeploymentsSuccess(clusterID, namespaceID, data));
+    yield put(loadApplicationsSuccess(clusterID, namespaceID, data));
   } catch (e) {
-    yield put(loadDeploymentsFailure(e));
+    yield put(loadApplicationsFailure(e));
   }
 }
 
-export function* createDeployment() {
+export function* createApplication() {
   try {
     const formData = yield select(makeSelectCreateFormData());
     const ports = yield select(makeSelectFormPorts());
     const clusterID = yield select(makeSelectClusterID());
     const namespaceID = yield select(makeSelectNamespaceID());
-    yield put(createDeploymentRequest());
+    yield put(createApplicationRequest());
     const mapedData = formData.update('containers', (containers) =>
       containers.map((ctn) => {
         const cmd = (ctn.get('command').match(/("[^"]*")|[^\s]+/g) || []).map(
@@ -69,7 +69,7 @@ export function* createDeployment() {
     );
     const data = yield call(
       request,
-      `${url}/${clusterID}/namespaces/${namespaceID}/deployments`,
+      `${url}/${clusterID}/namespaces/${namespaceID}/applications`,
       {
         method: 'POST',
         headers: {
@@ -78,40 +78,40 @@ export function* createDeployment() {
         body: JSON.stringify(mapedData.toJS()),
       }
     );
-    yield put(createDeploymentSuccess(data));
+    yield put(createApplicationSuccess(data));
     yield put(
-      push(`/clusters/${clusterID}/namespaces/${namespaceID}/deployments`)
+      push(`/clusters/${clusterID}/namespaces/${namespaceID}/applications`)
     );
   } catch (e) {
-    yield put(createDeploymentFailure(e));
+    yield put(createApplicationFailure(e));
   }
 }
 
-export function* removeDeployment({ payload }) {
+export function* removeApplication({ payload }) {
   try {
     const { id } = payload;
     const clusterID = yield select(makeSelectClusterID());
     const namespaceID = yield select(makeSelectNamespaceID());
-    yield put(removeDeploymentRequest());
+    yield put(removeApplicationRequest());
     const resp = yield call(
       request,
-      `${url}/${clusterID}/namespaces/${namespaceID}/deployments/${id}`,
+      `${url}/${clusterID}/namespaces/${namespaceID}/applications/${id}`,
       {
         method: 'DELETE',
       }
     );
-    yield put(removeDeploymentSuccess(clusterID, id));
-    yield* loadDeployments();
+    yield put(removeApplicationSuccess(clusterID, id));
+    yield* loadApplications();
   } catch (e) {
-    yield put(removeDeploymentFailure(e));
+    yield put(removeApplicationFailure(e));
   }
 }
 
 // Individual exports for testing
-export default function* deploymentsPageSaga() {
+export default function* applicationsPageSaga() {
   // See example in containers/HomePage/saga.js
   yield takeLatest(INIT_ACTION, initialize);
-  yield takeLatest(LOAD_DEPLOYMENTS, loadDeployments);
-  yield takeLatest(CREATE_DEPLOYMENT, createDeployment);
-  yield takeLatest(REMOVE_DEPLOYMENT, removeDeployment);
+  yield takeLatest(LOAD_APPLICATIONS, loadApplications);
+  yield takeLatest(CREATE_APPLICATION, createApplication);
+  yield takeLatest(REMOVE_APPLICATION, removeApplication);
 }
