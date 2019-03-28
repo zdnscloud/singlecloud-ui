@@ -49,7 +49,6 @@ export class DeploymentsPage extends React.PureComponent {
       <div className={classes.root}>
         <DeploymentsPageHelmet />
         <CssBaseline />
-        <Menubar headerText={<FormattedMessage {...messages.header} />} />
         <div className={classes.content}>
           <div className={classes.appBarSpacer} />
           <Typography variant="h4" gutterBottom component="h2">
