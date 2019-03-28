@@ -24,13 +24,13 @@ function Menubar(props) {
   return (
     <AppBar position="absolute" className={classes.appBar}>
       <Toolbar disableGutters className={classes.toolbar}>
-        {/* <IconButton
+        <IconButton
           color="inherit"
           aria-label="single cloud"
           className={classes.menuButton}
         >
           <CloudIcon />
-        </IconButton> */}
+        </IconButton>
         <Typography
           component="h1"
           variant="h6"

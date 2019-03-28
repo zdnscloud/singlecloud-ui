@@ -32,37 +32,38 @@ import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 import Collapse from '@material-ui/core/Collapse';
 import Checkbox from '@material-ui/core/Checkbox';
+
+import styles from './styles';
 import actions from './actions';
 import { makeSelectActiveCluster } from './selectors';
 import { makeSelectClusters } from '../ClustersPage/selectors';
-
-const styles = (theme) => ({
-  formControl: {
-    margin: theme.spacing.unit,
-    minWidth: 120,
-  },
-});
 
 const SelectCluster = (props) => {
   const { classes, clusters, activeCluster, changeCluster } = props;
 
   return (
-    <FormControl className={classes.formControl}>
-      <InputLabel shrink htmlFor="cluster_name-id">
-        Cluster
-      </InputLabel>
+    <FormControl variant="outlined" className={classes.formControl}>
+      <InputLabel htmlFor="cluster_name-id">Cluster</InputLabel>
       <Select
-        native
         value={activeCluster}
         onChange={(evt) => {
           changeCluster(evt.target.value);
         }}
+        input={
+          <OutlinedInput
+            labelWidth={180}
+            name="cluster name"
+            id="cluster_name-id"
+          />
+        }
       >
-        <option value="">None</option>
+        <MenuItem value="">
+          <em>None</em>
+        </MenuItem>
         {clusters.toList().map((c) => (
-          <option key={c.get('id')} value={c.get('id')}>
+          <MenuItem key={c.get('id')} value={c.get('id')}>
             {c.get('name')}
-          </option>
+          </MenuItem>
         ))}
       </Select>
     </FormControl>
