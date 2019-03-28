@@ -8,7 +8,6 @@ const styles = (theme) => ({
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
     }),
-    background: '#fff',
   },
   menuButton: {
     marginLeft: 12,
