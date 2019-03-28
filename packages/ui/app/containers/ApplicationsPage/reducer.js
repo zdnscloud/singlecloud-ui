@@ -15,6 +15,7 @@ import {
   CREATE_APPLICATION_SUCCESS,
   CREATE_APPLICATION_FAILURE,
   UPDATE_CREATE_FORM,
+  CHANGE_NAMESPACE,
 } from './constants';
 
 const defaultFormData = {
@@ -41,7 +42,12 @@ function applicationsPageReducer(state = initialState, { type, payload }) {
       return state
         .set('tableList', fromJS([]))
         .set('clusterID', payload.cluster_id)
-        .set('namespaceID', payload.namespace_id);
+        .set('namespaceID', 'default');
+
+    case CHANGE_NAMESPACE:
+      return state
+        .set('tableList', fromJS([]))
+        .set('namespaceID', payload.namespaceID);
 
     case LOAD_APPLICATIONS_REQUEST:
       return state;

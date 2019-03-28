@@ -9,6 +9,7 @@ import {
   LOAD_APPLICATIONS,
   CREATE_APPLICATION,
   REMOVE_APPLICATION,
+  CHANGE_NAMESPACE,
 } from './constants';
 import {
   loadApplicationsRequest,
@@ -29,8 +30,10 @@ import {
 } from './selectors';
 
 import { loadConfigMaps } from '../ConfigMapsPage/saga';
+import { loadNamespaces } from '../NamespacesPage/saga';
 
 export function* initialize() {
+  yield* loadNamespaces();
   yield* loadApplications();
 }
 
@@ -41,7 +44,7 @@ export function* loadApplications() {
     yield put(loadApplicationsRequest());
     const data = yield call(
       request,
-      `${url}/${clusterID}/namespaces/${namespaceID}/applications`
+      `${url}/${clusterID}/namespaces/${namespaceID}/deployments`
     );
     yield put(loadApplicationsSuccess(clusterID, namespaceID, data));
   } catch (e) {
@@ -69,7 +72,7 @@ export function* createApplication() {
     );
     const data = yield call(
       request,
-      `${url}/${clusterID}/namespaces/${namespaceID}/applications`,
+      `${url}/${clusterID}/namespaces/${namespaceID}/deployments`,
       {
         method: 'POST',
         headers: {
@@ -80,7 +83,7 @@ export function* createApplication() {
     );
     yield put(createApplicationSuccess(data));
     yield put(
-      push(`/clusters/${clusterID}/namespaces/${namespaceID}/applications`)
+      push(`/clusters/${clusterID}/applications`)
     );
   } catch (e) {
     yield put(createApplicationFailure(e));
@@ -95,7 +98,7 @@ export function* removeApplication({ payload }) {
     yield put(removeApplicationRequest());
     const resp = yield call(
       request,
-      `${url}/${clusterID}/namespaces/${namespaceID}/applications/${id}`,
+      `${url}/${clusterID}/namespaces/${namespaceID}/deployments/${id}`,
       {
         method: 'DELETE',
       }
@@ -114,4 +117,5 @@ export default function* applicationsPageSaga() {
   yield takeLatest(LOAD_APPLICATIONS, loadApplications);
   yield takeLatest(CREATE_APPLICATION, createApplication);
   yield takeLatest(REMOVE_APPLICATION, removeApplication);
+  yield takeLatest(CHANGE_NAMESPACE, loadApplications);
 }

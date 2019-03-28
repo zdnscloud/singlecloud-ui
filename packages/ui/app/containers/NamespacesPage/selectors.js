@@ -22,7 +22,8 @@ export const makeSelectNamespaces = () =>
   createSelector(
     selectNamespacesPageDomain,
     makeSelectClusterID(),
-    (substate, clusterID) => substate.getIn(['namespaces', clusterID])
+    (substate, clusterID) =>
+      substate.getIn(['namespaces', clusterID]) || substate.clear()
   );
 
 export const makeSelectTableList = () =>
