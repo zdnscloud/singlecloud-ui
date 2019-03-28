@@ -89,14 +89,12 @@ export class CreateApplication extends React.PureComponent {
             <div>
               <TextField
                 className={classNames(classes.margin, classes.textField)}
-                variant="outlined"
                 label="name"
                 value={formData.get('name')}
                 onChange={(evt) => updateForm('name', evt.target.value)}
               />
               <TextField
                 className={classNames(classes.margin, classes.textField)}
-                variant="outlined"
                 type="number"
                 label="replicas"
                 value={formData.get('replicas')}
@@ -104,7 +102,7 @@ export class CreateApplication extends React.PureComponent {
                   updateForm('replicas', Number(evt.target.value))
                 }
               />
-              <GridList cellHeight="auto" cols={3}>
+              <GridList cellHeight="auto" cols={1}>
                 {formData.get('containers').map((item, index) => (
                   <GridListTile key={index}>
                     <ContainerForm
@@ -184,13 +182,6 @@ export class CreateApplication extends React.PureComponent {
                       ['advancedOptions', 'exposedServiceType'],
                       evt.target.value
                     )
-                  }
-                  input={
-                    <OutlinedInput
-                      labelWidth={180}
-                      name="Exposed Service Type"
-                      id="exposed-service-type"
-                    />
                   }
                 >
                   <MenuItem value="clusterip">Cluster IP</MenuItem>
