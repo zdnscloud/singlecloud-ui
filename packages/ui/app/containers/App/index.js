@@ -55,6 +55,8 @@ import * as actions from './actions';
 import { makeSelectActiveCluster, makeSelectMenus } from './selectors';
 import { makeSelectClusters } from '../ClustersPage/selectors';
 
+import GlobalStyle from '../../global-styles';
+
 const switchRoutes = (
   <Switch>
     {appRoutes.map((prop, key) => (
@@ -133,6 +135,7 @@ class App extends Component {
             </div>
             <Footer />
           </div>
+          <GlobalStyle />
         </div>
       </MuiThemeProvider>
     );
