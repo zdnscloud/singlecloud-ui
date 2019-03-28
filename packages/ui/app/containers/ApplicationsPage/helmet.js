@@ -5,7 +5,7 @@ import { injectIntl } from 'react-intl';
 
 import messages from './messages';
 
-function DeploymentsPageHelmet(props) {
+function ApplicationsPageHelmet(props) {
   const { intl } = props;
   return (
     <Helmet>
@@ -18,8 +18,8 @@ function DeploymentsPageHelmet(props) {
   );
 }
 
-DeploymentsPageHelmet.propTypes = {
+ApplicationsPageHelmet.propTypes = {
   intl: PropTypes.object.isRequired,
 };
 
-export default injectIntl(DeploymentsPageHelmet);
+export default injectIntl(ApplicationsPageHelmet);

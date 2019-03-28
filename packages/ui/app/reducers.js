@@ -17,6 +17,7 @@ import podsPageReducer from 'containers/PodsPage/reducer';
 import configMapsPageReducer from 'containers/ConfigMapsPage/reducer';
 import servicesPageReducer from 'containers/ServicesPage/reducer';
 import ingressesPageReducer from 'containers/IngressesPage/reducer';
+import applicationsPageReducer from 'containers/ApplicationsPage/reducer';
 
 /**
  * Merges the main reducer with the router state and dynamically injected reducers
@@ -35,6 +36,7 @@ export default function createReducer(injectedReducers = {}) {
     servicesPage: servicesPageReducer,
     ingressesPage: ingressesPageReducer,
     podsPage: podsPageReducer,
+    applicationsPage: applicationsPageReducer,
     ...injectedReducers,
   });
 

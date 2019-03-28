@@ -1,19 +1,19 @@
 /*
  *
- * DeploymentsPage reducer
+ * ApplicationsPage reducer
  *
  */
 
 import { fromJS } from 'immutable';
 import {
   INIT_ACTION,
-  LOAD_DEPLOYMENTS_REQUEST,
-  LOAD_DEPLOYMENTS_SUCCESS,
-  LOAD_DEPLOYMENTS_FAILURE,
+  LOAD_APPLICATIONS_REQUEST,
+  LOAD_APPLICATIONS_SUCCESS,
+  LOAD_APPLICATIONS_FAILURE,
   INIT_CREATE_FORM,
-  CREATE_DEPLOYMENT_REQUEST,
-  CREATE_DEPLOYMENT_SUCCESS,
-  CREATE_DEPLOYMENT_FAILURE,
+  CREATE_APPLICATION_REQUEST,
+  CREATE_APPLICATION_SUCCESS,
+  CREATE_APPLICATION_FAILURE,
   UPDATE_CREATE_FORM,
 } from './constants';
 
@@ -28,14 +28,14 @@ const defaultFormData = {
 };
 
 export const initialState = fromJS({
-  deployments: {},
+  applications: {},
   tableList: [],
   createFormData: defaultFormData,
   clusterID: null,
   namespaceID: null,
 });
 
-function deploymentsPageReducer(state = initialState, { type, payload }) {
+function applicationsPageReducer(state = initialState, { type, payload }) {
   switch (type) {
     case INIT_ACTION:
       return state
@@ -43,12 +43,12 @@ function deploymentsPageReducer(state = initialState, { type, payload }) {
         .set('clusterID', payload.cluster_id)
         .set('namespaceID', payload.namespace_id);
 
-    case LOAD_DEPLOYMENTS_REQUEST:
+    case LOAD_APPLICATIONS_REQUEST:
       return state;
 
-    case LOAD_DEPLOYMENTS_SUCCESS: {
+    case LOAD_APPLICATIONS_SUCCESS: {
       const { clusterID, namespaceID, data } = payload;
-      const deployments = data.data.reduce(
+      const applications = data.data.reduce(
         (meno, item) => ({
           ...meno,
           [item.id]: item,
@@ -56,23 +56,23 @@ function deploymentsPageReducer(state = initialState, { type, payload }) {
         {}
       );
       let newState = state.mergeIn(
-        ['deployments', clusterID, namespaceID],
-        fromJS(deployments)
+        ['applications', clusterID, namespaceID],
+        fromJS(applications)
       );
       const list = data.data.map((item) => item.id);
 
-      // load deployments is async
+      // load applications is async
       if (
         state.get('clusterID') === clusterID &&
         state.get('namespaceID') === namespaceID
       )
         newState = newState.set('tableList', fromJS(list));
 
-      return newState.set('loadDeploymentsErrors', null);
+      return newState.set('loadApplicationsErrors', null);
     }
 
-    case LOAD_DEPLOYMENTS_FAILURE:
-      return state.set('loadDeploymentsErrors', payload.errors);
+    case LOAD_APPLICATIONS_FAILURE:
+      return state.set('loadApplicationsErrors', payload.errors);
 
     case INIT_CREATE_FORM:
       return state
@@ -80,13 +80,13 @@ function deploymentsPageReducer(state = initialState, { type, payload }) {
         .set('clusterID', payload.cluster_id)
         .set('namespaceID', payload.namespace_id);
 
-    case CREATE_DEPLOYMENT_REQUEST:
+    case CREATE_APPLICATION_REQUEST:
       return state;
 
-    case CREATE_DEPLOYMENT_SUCCESS:
+    case CREATE_APPLICATION_SUCCESS:
       return state;
 
-    case CREATE_DEPLOYMENT_FAILURE:
+    case CREATE_APPLICATION_FAILURE:
       return state;
 
     case UPDATE_CREATE_FORM: {
@@ -132,4 +132,4 @@ function deploymentsPageReducer(state = initialState, { type, payload }) {
   }
 }
 
-export default deploymentsPageReducer;
+export default applicationsPageReducer;

@@ -1,6 +1,6 @@
 /**
  *
- * DeploymentsPage
+ * ApplicationsPage
  *
  */
 
@@ -17,22 +17,22 @@ import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
 import { SimpleTable } from '@gsmlg/com';
 
-import { makeSelectDeployments, makeSelectTableList } from './selectors';
+import { makeSelectApplications, makeSelectTableList } from './selectors';
 import * as actions from './actions';
 import messages from './messages';
 import styles from './styles';
 import schema from './tableSchema';
 
 /* eslint-disable react/prefer-stateless-function */
-export class DeploymentsTable extends React.PureComponent {
+export class ApplicationsTable extends React.PureComponent {
   static propTypes = {
     classes: PropTypes.object.isRequired,
     tableList: PropTypes.object.isRequired,
-    deployments: PropTypes.object,
+    applications: PropTypes.object,
   };
 
   render() {
-    const { classes, tableList, deployments, removeDeployment } = this.props;
+    const { classes, tableList, applications, removeApplication } = this.props;
     const mergedSchema = schema.concat([
       {
         id: 'actions',
@@ -54,7 +54,7 @@ export class DeploymentsTable extends React.PureComponent {
               variant="outlined"
               size="small"
               className={classes.button}
-              onClick={(evt) => removeDeployment(props.data.get('id'))}
+              onClick={(evt) => removeApplication(props.data.get('id'))}
             >
               Delete this
             </Button>
@@ -68,7 +68,7 @@ export class DeploymentsTable extends React.PureComponent {
         <SimpleTable
           className={classes.table}
           schema={mergedSchema}
-          data={tableList.map((id) => deployments.get(id))}
+          data={tableList.map((id) => applications.get(id))}
         />
       </Paper>
     );
@@ -76,7 +76,7 @@ export class DeploymentsTable extends React.PureComponent {
 }
 
 const mapStateToProps = createStructuredSelector({
-  deployments: makeSelectDeployments(),
+  applications: makeSelectApplications(),
   tableList: makeSelectTableList(),
 });
 
@@ -96,4 +96,4 @@ const withConnect = connect(
 export default compose(
   withConnect,
   withStyles(styles)
-)(DeploymentsTable);
+)(ApplicationsTable);

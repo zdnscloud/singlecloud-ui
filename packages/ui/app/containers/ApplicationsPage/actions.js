@@ -1,25 +1,26 @@
 /*
  *
- * DeploymentsPage actions
+ * ApplicationsPage actions
  *
  */
 
 import {
   INIT_ACTION,
-  LOAD_DEPLOYMENTS,
-  LOAD_DEPLOYMENTS_REQUEST,
-  LOAD_DEPLOYMENTS_SUCCESS,
-  LOAD_DEPLOYMENTS_FAILURE,
+  LOAD_APPLICATIONS,
+  LOAD_APPLICATIONS_REQUEST,
+  LOAD_APPLICATIONS_SUCCESS,
+  LOAD_APPLICATIONS_FAILURE,
   INIT_CREATE_FORM,
-  CREATE_DEPLOYMENT,
-  CREATE_DEPLOYMENT_REQUEST,
-  CREATE_DEPLOYMENT_SUCCESS,
-  CREATE_DEPLOYMENT_FAILURE,
+  CREATE_APPLICATION,
+  CREATE_APPLICATION_REQUEST,
+  CREATE_APPLICATION_SUCCESS,
+  CREATE_APPLICATION_FAILURE,
   UPDATE_CREATE_FORM,
-  REMOVE_DEPLOYMENT,
-  REMOVE_DEPLOYMENT_REQUEST,
-  REMOVE_DEPLOYMENT_SUCCESS,
-  REMOVE_DEPLOYMENT_FAILURE,
+  REMOVE_APPLICATION,
+  REMOVE_APPLICATION_REQUEST,
+  REMOVE_APPLICATION_SUCCESS,
+  REMOVE_APPLICATION_FAILURE,
+  CHANGE_NAMESPACE,
 } from './constants';
 
 export function initAction({ params }) {
@@ -29,18 +30,18 @@ export function initAction({ params }) {
   };
 }
 
-export const loadDeployments = () => ({
-  type: LOAD_DEPLOYMENTS,
+export const loadApplications = () => ({
+  type: LOAD_APPLICATIONS,
   payload: {},
 });
 
-export const loadDeploymentsRequest = () => ({
-  type: LOAD_DEPLOYMENTS_REQUEST,
+export const loadApplicationsRequest = () => ({
+  type: LOAD_APPLICATIONS_REQUEST,
   payload: {},
 });
 
-export const loadDeploymentsSuccess = (clusterID, namespaceID, data) => ({
-  type: LOAD_DEPLOYMENTS_SUCCESS,
+export const loadApplicationsSuccess = (clusterID, namespaceID, data) => ({
+  type: LOAD_APPLICATIONS_SUCCESS,
   payload: {
     clusterID,
     namespaceID,
@@ -48,8 +49,8 @@ export const loadDeploymentsSuccess = (clusterID, namespaceID, data) => ({
   },
 });
 
-export const loadDeploymentsFailure = (errors) => ({
-  type: LOAD_DEPLOYMENTS_FAILURE,
+export const loadApplicationsFailure = (errors) => ({
+  type: LOAD_APPLICATIONS_FAILURE,
   payload: { errors },
 });
 
@@ -58,23 +59,23 @@ export const initCreateForm = ({ params }) => ({
   payload: { ...params },
 });
 
-export const createDeployment = () => ({
-  type: CREATE_DEPLOYMENT,
+export const createApplication = () => ({
+  type: CREATE_APPLICATION,
   payload: {},
 });
 
-export const createDeploymentRequest = () => ({
-  type: CREATE_DEPLOYMENT_REQUEST,
+export const createApplicationRequest = () => ({
+  type: CREATE_APPLICATION_REQUEST,
   payload: {},
 });
 
-export const createDeploymentSuccess = (data) => ({
-  type: CREATE_DEPLOYMENT_SUCCESS,
+export const createApplicationSuccess = (data) => ({
+  type: CREATE_APPLICATION_SUCCESS,
   payload: { data },
 });
 
-export const createDeploymentFailure = (errors) => ({
-  type: CREATE_DEPLOYMENT_FAILURE,
+export const createApplicationFailure = (errors) => ({
+  type: CREATE_APPLICATION_FAILURE,
   payload: { errors },
 });
 
@@ -88,22 +89,27 @@ export function updateForm(name, value) {
   };
 }
 
-export const removeDeployment = (id) => ({
-  type: REMOVE_DEPLOYMENT,
+export const removeApplication = (id) => ({
+  type: REMOVE_APPLICATION,
   payload: { id },
 });
 
-export const removeDeploymentRequest = () => ({
-  type: REMOVE_DEPLOYMENT_REQUEST,
+export const removeApplicationRequest = () => ({
+  type: REMOVE_APPLICATION_REQUEST,
   payload: {},
 });
 
-export const removeDeploymentSuccess = (clusterID, id) => ({
-  type: REMOVE_DEPLOYMENT_SUCCESS,
+export const removeApplicationSuccess = (clusterID, id) => ({
+  type: REMOVE_APPLICATION_SUCCESS,
   payload: { clusterID, id },
 });
 
-export const removeDeploymentFailure = (errors) => ({
-  type: REMOVE_DEPLOYMENT_FAILURE,
+export const removeApplicationFailure = (errors) => ({
+  type: REMOVE_APPLICATION_FAILURE,
   payload: { errors },
+});
+
+export const changeNamespace = (namespaceID) => ({
+  type: CHANGE_NAMESPACE,
+  payload: { namespaceID },
 });

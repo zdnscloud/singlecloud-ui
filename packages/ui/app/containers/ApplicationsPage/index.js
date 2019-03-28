@@ -33,6 +33,7 @@ import messages from './messages';
 import ApplicationsPageHelmet from './helmet';
 import styles from './styles';
 import ApplicationsTable from './ApplicationsTable';
+import SelectNamespace from './SelectNamespace';
 
 /* eslint-disable react/prefer-stateless-function */
 export class ApplicationsPage extends React.PureComponent {
@@ -54,6 +55,9 @@ export class ApplicationsPage extends React.PureComponent {
       <div className={classes.root}>
         <ApplicationsPageHelmet />
         <CssBaseline />
+        <div>
+          <SelectNamespace />
+        </div>
         <div className={classes.content}>
           <GridContainer>
             <GridItem xs={12} sm={12} md={12}>
@@ -65,7 +69,7 @@ export class ApplicationsPage extends React.PureComponent {
                       <Fab
                         size="small"
                         color="primary"
-                        aria-label="create deployment"
+                        aria-label="create application"
                         className={classes.menuButton}
                       >
                         <AddIcon />
@@ -100,7 +104,7 @@ const withConnect = connect(
   mapDispatchToProps
 );
 
-const withSaga = injectSaga({ key: 'deploymentsPage', saga });
+const withSaga = injectSaga({ key: 'applicationsPage', saga });
 
 export default compose(
   withSaga,

@@ -1,11 +1,11 @@
 /**
  *
- * Asynchronously loads the component for CreateDeployment
+ * Asynchronously loads the component for CreateApplication
  *
  */
 
 import loadable from '@loadable/component';
 
 export default loadable(() =>
-  import(/* webpackChunkName: "CreateDeploymentPage" */ './CreateDeployment')
+  import(/* webpackChunkName: "CreateApplicationPage" */ './CreateApplication')
 );
