@@ -1,5 +1,6 @@
 import { createSelector } from 'reselect';
 import { initialState } from './reducer';
+import { makeSelectClusterID as sid } from '../App/selectors';
 
 /**
  * Direct selector to the namespacesPage state domain
@@ -12,11 +13,7 @@ const selectNamespacesPageDomain = (state) =>
  * Other specific selectors
  */
 
-export const makeSelectClusterID = () =>
-  createSelector(
-    selectNamespacesPageDomain,
-    (substate) => substate.get('clusterID')
-  );
+export const makeSelectClusterID = sid;
 
 export const makeSelectNamespaces = () =>
   createSelector(

@@ -53,7 +53,7 @@ import image from 'assets/img/sidebar-3.jpg';
 import SelectCluster from './SelectCluster';
 import appRoutes from './routes';
 import * as actions from './actions';
-import { makeSelectActiveCluster, makeSelectMenus } from './selectors';
+import { makeSelectActiveCluster, makeSelectMenus, makeSelectClusterID } from './selectors';
 import { makeSelectClusters } from '../ClustersPage/selectors';
 import GlobalStyle from '../../global-styles';
 
@@ -105,6 +105,7 @@ class App extends PureComponent {
     const {
       classes,
       clusters,
+      clusterID,
       activeCluster,
       changeCluster,
       menus,
@@ -129,7 +130,7 @@ class App extends PureComponent {
               <SelectCluster
                 clusters={clusters}
                 changeCluster={changeCluster}
-                activeCluster={activeCluster}
+                activeCluster={clusterID}
               />
             }
           />
@@ -148,6 +149,7 @@ const mapStateToProps = createStructuredSelector({
   clusters: makeSelectClusters(),
   activeCluster: makeSelectActiveCluster(),
   menus: makeSelectMenus(),
+  clusterID: makeSelectClusterID(),
 });
 
 const mapDispatchToProps = (dispatch) =>
