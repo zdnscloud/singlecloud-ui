@@ -6,9 +6,9 @@
 
 import { INIT_ACTION, CHANGE_CLUSTER } from './constants';
 
-export const initAction = ({ params }) => ({
+export const initAction = () => ({
   type: INIT_ACTION,
-  payload: { ...params },
+  payload: {},
 });
 
 export const changeCluster = (cluster) => ({
