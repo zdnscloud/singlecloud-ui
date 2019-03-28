@@ -1,0 +1,27 @@
+/*
+ *
+ * DeploymentsPage constants
+ *
+ */
+const prefix = 'app/DeploymentsPage';
+
+export const INIT_ACTION = `${prefix}/INIT_ACTION`;
+
+export const LOAD_DEPLOYMENTS = `${prefix}/LOAD_DEPLOYMENTS`;
+export const LOAD_DEPLOYMENTS_REQUEST = `${prefix}/LOAD_DEPLOYMENTS_REQUEST`;
+export const LOAD_DEPLOYMENTS_SUCCESS = `${prefix}/LOAD_DEPLOYMENTS_SUCCESS`;
+export const LOAD_DEPLOYMENTS_FAILURE = `${prefix}/LOAD_DEPLOYMENTS_FAILURE`;
+
+export const INIT_CREATE_FORM = `${prefix}/INIT_CREATE_FORM`;
+
+export const CREATE_DEPLOYMENT = `${prefix}/CREATE_DEPLOYMENT`;
+export const CREATE_DEPLOYMENT_REQUEST = `${prefix}/CREATE_DEPLOYMENT_REQUEST`;
+export const CREATE_DEPLOYMENT_SUCCESS = `${prefix}/CREATE_DEPLOYMENT_SUCCESS`;
+export const CREATE_DEPLOYMENT_FAILURE = `${prefix}/CREATE_DEPLOYMENT_FAILURE`;
+
+export const UPDATE_CREATE_FORM = `${prefix}/UPDATE_CREATE_FORM`;
+
+export const REMOVE_DEPLOYMENT = `${prefix}/REMOVE_DEPLOYMENT`;
+export const REMOVE_DEPLOYMENT_REQUEST = `${prefix}/REMOVE_DEPLOYMENT_REQUEST`;
+export const REMOVE_DEPLOYMENT_SUCCESS = `${prefix}/REMOVE_DEPLOYMENT_SUCCESS`;
+export const REMOVE_DEPLOYMENT_FAILURE = `${prefix}/REMOVE_DEPLOYMENT_FAILURE`;

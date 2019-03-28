@@ -1,6 +1,6 @@
 /**
  *
- * ClustersPage
+ * ApplicationsPage
  *
  */
 
@@ -12,9 +12,12 @@ import { createStructuredSelector } from 'reselect';
 import { bindActionCreators, compose } from 'redux';
 
 import { withStyles } from '@material-ui/core/styles';
+import { Link } from 'react-router-dom';
 import Menubar from 'components/Menubar';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Typography from '@material-ui/core/Typography';
+import Fab from '@material-ui/core/Fab';
+import AddIcon from '@material-ui/icons/Add';
 import GridItem from 'components/Grid/GridItem';
 import GridContainer from 'components/Grid/GridContainer';
 import Card from 'components/Card/Card';
@@ -22,22 +25,26 @@ import CardHeader from 'components/Card/CardHeader';
 import CardBody from 'components/Card/CardBody';
 
 import injectSaga from 'utils/injectSaga';
+import makeSelectApplicationsPage from './selectors';
+import reducer from './reducer';
 import * as actions from './actions';
 import saga from './saga';
 import messages from './messages';
+import ApplicationsPageHelmet from './helmet';
 import styles from './styles';
-import ClustersList from './clusters';
-import ClustersPageHelmet from './helmet';
+import ApplicationsTable from './ApplicationsTable';
 
 /* eslint-disable react/prefer-stateless-function */
-export class ClustersPage extends React.PureComponent {
+export class ApplicationsPage extends React.PureComponent {
   static propTypes = {
     initAction: PropTypes.func,
     classes: PropTypes.object.isRequired,
+    match: PropTypes.object,
+    location: PropTypes.object,
   };
 
   componentWillMount() {
-    this.props.initAction();
+    this.props.initAction(this.props.match);
   }
 
   render() {
@@ -45,7 +52,7 @@ export class ClustersPage extends React.PureComponent {
 
     return (
       <div className={classes.root}>
-        <ClustersPageHelmet />
+        <ApplicationsPageHelmet />
         <CssBaseline />
         <div className={classes.content}>
           <GridContainer>
@@ -53,11 +60,21 @@ export class ClustersPage extends React.PureComponent {
               <Card>
                 <CardHeader color="primary">
                   <h4 className={classes.cardTitleWhite}>
-                    <FormattedMessage {...messages.clusters} />
+                    <FormattedMessage {...messages.applications} />
+                    <Link to={`${this.props.location.pathname}/create`}>
+                      <Fab
+                        size="small"
+                        color="primary"
+                        aria-label="create deployment"
+                        className={classes.menuButton}
+                      >
+                        <AddIcon />
+                      </Fab>
+                    </Link>
                   </h4>
                 </CardHeader>
                 <CardBody>
-                  <ClustersList />
+                  <ApplicationsTable location={this.props.location} />
                 </CardBody>
               </Card>
             </GridItem>
@@ -83,10 +100,10 @@ const withConnect = connect(
   mapDispatchToProps
 );
 
-const withSaga = injectSaga({ key: 'clustersPage', saga });
+const withSaga = injectSaga({ key: 'deploymentsPage', saga });
 
 export default compose(
   withSaga,
   withConnect,
   withStyles(styles)
-)(ClustersPage);
+)(ApplicationsPage);

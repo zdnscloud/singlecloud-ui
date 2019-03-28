@@ -17,11 +17,11 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import Typography from '@material-ui/core/Typography';
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
-import GridItem from "components/Grid/GridItem";
-import GridContainer from "components/Grid/GridContainer";
-import Card from "components/Card/Card";
-import CardHeader from "components/Card/CardHeader";
-import CardBody from "components/Card/CardBody";
+import GridItem from 'components/Grid/GridItem';
+import GridContainer from 'components/Grid/GridContainer';
+import Card from 'components/Card/Card';
+import CardHeader from 'components/Card/CardHeader';
+import CardBody from 'components/Card/CardBody';
 
 import injectSaga from 'utils/injectSaga';
 import * as actions from './actions';
@@ -53,7 +53,7 @@ export class NamespacesPage extends React.PureComponent {
         <NamespacesPageHelmet />
         <CssBaseline />
         <div className={classes.content}>
-          <Typography component="div" className={''}>
+          <Typography component="div" className="">
             <GridContainer>
               <GridItem xs={12} sm={12} md={12}>
                 <Card>
