@@ -21,6 +21,9 @@ import Menubar from 'components/Menubar';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
+import Card from '@material-ui/core/Card';
+import CardHeader from '@material-ui/core/CardHeader';
+import CardContent from '@material-ui/core/CardContent';
 
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
@@ -97,15 +100,22 @@ export class TerminalPage extends React.PureComponent {
         <TerminalPageHelmet />
         <CssBaseline />
         <div className={classes.content}>
-          <Typography variant="h4" gutterBottom component="h2">
-            <FormattedMessage {...messages.header} />
-          </Typography>
-          <Paper
-            ref={(el) => {
-              this.termEl = el;
-            }}
-            className={classes.tableContainer}
-          />
+          <Card>
+            <CardHeader 
+              title={
+                <Typography variant="h4" gutterBottom component="h2">
+                  <FormattedMessage {...messages.header} />
+                </Typography>} 
+            />  
+            <CardContent>
+              <Paper
+                ref={(el) => {
+                  this.termEl = el;
+                }}
+                className={classes.tableContainer}
+              />
+            </CardContent>
+          </Card>
         </div>
       </div>
     );
