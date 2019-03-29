@@ -29,7 +29,7 @@ const Sidebar = ({ ...props }) => {
           [` ${classes[color]}`]: activeRoute(prop.path),
         });
         const whiteFontClasses = classNames({
-          [` ${classes.whiteFont}`]: activeRoute(prop.path),
+          [` ${classes[color]}`]: activeRoute(prop.path),
         });
         return (
           <NavLink

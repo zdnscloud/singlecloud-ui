@@ -30,6 +30,7 @@ import FormGroup from '@material-ui/core/FormGroup';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
+import FormLabel from '@material-ui/core/FormLabel';
 import Switch from '@material-ui/core/Switch';
 import Select from '@material-ui/core/Select';
 import GridList from '@material-ui/core/GridList';
@@ -197,22 +198,20 @@ export class CreateApplication extends React.PureComponent {
                 );
                 const idx = svcs.findIndex((svc) => svc === current);
                 return (
-                  <Paper className={classes.separateLine}>
+                  <Paper className={classNames(classes.separateLine, classes.padding10)}>
                     <Grid>
-                      <TextField
-                        disabled
-                        id={`showInfo-${port.get('protocol')}`}
-                        label="Protocol"
-                        className={classNames(classes.margin, classes.textField)}
-                        value={port.get('protocol')}
-                      />
-                      <TextField
-                        disabled
-                        id={`showInfo-${port.get('protocol')}`}
-                        label="Port"
-                        className={classNames(classes.margin, classes.textField)}
-                        value={port.get('port')}
-                      />
+                      {
+                        port.get('name') ?
+                          (<FormLabel className={classNames(classes.marginRight10, classes.textField)}>
+                            Name: {port.get('name')}
+                          </FormLabel>) : null
+                      }
+                      <FormLabel className={classNames(classes.marginRight10, classes.textField)}>
+                        Protocol: {port.get('protocol')}
+                      </FormLabel>
+                      <FormLabel className={classNames(classes.marginRight10, classes.textField)}>
+                        Port: {port.get('port')}
+                      </FormLabel>
                     </Grid>
                     <Grid>
                       <FormControlLabel

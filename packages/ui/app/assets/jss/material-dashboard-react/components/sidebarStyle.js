@@ -87,7 +87,7 @@ const sidebarStyle = theme => ({
     textDecoration: "none",
     backgroundColor: "transparent",
     "&,&:hover": {
-      color: whiteColor
+      color: blackColor
     }
   },
   logoLinkRTL: {
@@ -124,7 +124,7 @@ const sidebarStyle = theme => ({
       height: "100%",
       content: '""',
       display: "block",
-      background: blackColor,
+      background: "#f5f5f5",
       opacity: ".8"
     }
   },
@@ -142,7 +142,7 @@ const sidebarStyle = theme => ({
     display: "block",
     textDecoration: "none",
     "&:hover,&:focus,&:visited,&": {
-      color: whiteColor
+      color: blackColor
     }
   },
   itemLink: {
@@ -177,7 +177,7 @@ const sidebarStyle = theme => ({
     margin: "0",
     lineHeight: "30px",
     fontSize: "14px",
-    color: whiteColor
+    color: blackColor
   },
   itemTextRTL: {
     textAlign: "right"
