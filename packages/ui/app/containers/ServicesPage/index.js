@@ -46,7 +46,7 @@ export class ServicesPage extends React.PureComponent {
       <div className={classes.root}>
         <ServicesPageHelmet />
         <CssBaseline />
-        <Menubar headerText={<FormattedMessage {...messages.header} />} />
+        <Menubar headerContent={<FormattedMessage {...messages.header} />} />
         <div className={classes.content}>
           <div className={classes.appBarSpacer} />
           <Typography variant="h4" gutterBottom component="h2">

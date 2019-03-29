@@ -45,7 +45,6 @@ export class EventsPage extends React.PureComponent {
       <div className={classes.root}>
         <EventsPageHelmet />
         <CssBaseline />
-        <Menubar headerText={<FormattedMessage {...messages.header} />} />
         <div className={classes.content}>
           <div className={classes.appBarSpacer} />
           <Typography component="div" className={classes.chartContainer}>

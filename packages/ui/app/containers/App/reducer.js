@@ -5,10 +5,11 @@
  */
 
 import { fromJS } from 'immutable';
-import { INIT_ACTION, CHANGE_CLUSTER } from './constants';
+import { INIT_ACTION, CHANGE_CLUSTER, TOGGLE_EVENTS_VIEW } from './constants';
 
 export const initialState = fromJS({
   activeCluster: '',
+  showEvents: false,
 });
 
 function appReducer(state = initialState, { type, payload }) {
@@ -18,6 +19,9 @@ function appReducer(state = initialState, { type, payload }) {
 
     case CHANGE_CLUSTER:
       return state.set('activeCluster', payload.cluster);
+
+    case TOGGLE_EVENTS_VIEW:
+      return state.set('showEvents', payload.showEvents);
 
     default:
       return state;

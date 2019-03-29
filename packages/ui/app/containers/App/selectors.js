@@ -46,3 +46,9 @@ export const makeSelectMenus = () =>
       return menus;
     }
   );
+
+export const makeSelectShowEvents = () =>
+  createSelector(
+    selectApp,
+    (appState) => appState.get('showEvents')
+  );

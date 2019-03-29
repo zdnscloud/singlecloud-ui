@@ -24,6 +24,13 @@ import 'perfect-scrollbar/css/perfect-scrollbar.css';
 // @material-ui/core components
 import withStyles from '@material-ui/core/styles/withStyles';
 import CssBaseline from '@material-ui/core/CssBaseline';
+import Fab from '@material-ui/core/Fab';
+import IconButton from '@material-ui/core/IconButton';
+import EventIcon from '@material-ui/icons/Event';
+import ExpansionPanel from '@material-ui/core/ExpansionPanel';
+import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
+import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
+import Typography from '@material-ui/core/Typography';
 // core components
 import Navbar from 'components/Navbars/Navbar';
 import Footer from 'components/Footer/Footer';
@@ -53,9 +60,10 @@ import image from 'assets/img/sidebar-3.jpg';
 import SelectCluster from './SelectCluster';
 import appRoutes from './routes';
 import * as actions from './actions';
-import { makeSelectActiveCluster, makeSelectMenus, makeSelectClusterID } from './selectors';
+import { makeSelectActiveCluster, makeSelectMenus, makeSelectClusterID, makeSelectShowEvents } from './selectors';
 import { makeSelectClusters } from '../ClustersPage/selectors';
 import GlobalStyle from '../../global-styles';
+import EventsTable from '../EventsPage/EventsTable';
 
 const switchRoutes = (
   <Switch>
@@ -106,9 +114,11 @@ class App extends PureComponent {
       classes,
       clusters,
       clusterID,
+      menus,
+      showEvents,
       activeCluster,
       changeCluster,
-      menus,
+      toggleEventsView,
       ...rest
     } = this.props;
 
@@ -126,15 +136,30 @@ class App extends PureComponent {
             {...rest}
           />
           <Menubar
-            headerText={
-              <SelectCluster
-                clusters={clusters}
-                changeCluster={changeCluster}
-                activeCluster={clusterID}
-              />
+            headerContent={
+              <Fragment>
+                <SelectCluster
+                  clusters={clusters}
+                  changeCluster={changeCluster}
+                  activeCluster={clusterID}
+                />
+                {clusterID && (
+                  <IconButton onClick={(evt) => toggleEventsView(!showEvents)}>
+                    <EventIcon />
+                  </IconButton>
+                )}
+              </Fragment>
             }
           />
           <div className={classes.mainPanel} data-ref="mainPanel">
+            <ExpansionPanel
+              square
+              expanded={showEvents}
+            >
+              <ExpansionPanelDetails>
+                {showEvents && <EventsTable />}
+              </ExpansionPanelDetails>
+            </ExpansionPanel>
             <div className={classes.content}>{switchRoutes}</div>
             <Footer />
           </div>
@@ -150,6 +175,7 @@ const mapStateToProps = createStructuredSelector({
   activeCluster: makeSelectActiveCluster(),
   menus: makeSelectMenus(),
   clusterID: makeSelectClusterID(),
+  showEvents: makeSelectShowEvents(),
 });
 
 const mapDispatchToProps = (dispatch) =>

@@ -13,3 +13,5 @@ const prefix = 'app/App';
 export const INIT_ACTION = `${prefix}/INIT_ACTION`;
 
 export const CHANGE_CLUSTER = `${prefix}/CHANGE_CLUSTER`;
+
+export const TOGGLE_EVENTS_VIEW = `${prefix}/TOGGLE_EVENTS_VIEW`;
