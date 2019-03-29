@@ -1,6 +1,6 @@
 /**
  *
- * ClustersPage
+ * ClusterDetailPage
  *
  */
 
@@ -26,11 +26,12 @@ import * as actions from './actions';
 import saga from './saga';
 import messages from './messages';
 import styles from './styles';
-import ClustersTable from './ClustersTable';
-import ClustersPageHelmet from './helmet';
+import ClusterDetailPageHelmet from './helmet';
+import { makeSelectCurrentCluster } from '../ClustersPage/selectors';
+import ClusterDetail from './ClusterDetail';
 
 /* eslint-disable react/prefer-stateless-function */
-export class ClustersPage extends React.PureComponent {
+export class ClusterDetailPage extends React.PureComponent {
   static propTypes = {
     initAction: PropTypes.func,
     classes: PropTypes.object.isRequired,
@@ -41,23 +42,26 @@ export class ClustersPage extends React.PureComponent {
   }
 
   render() {
-    const { classes } = this.props;
+    const { classes, cluster } = this.props;
 
     return (
       <div className={classes.root}>
-        <ClustersPageHelmet />
+        <ClusterDetailPageHelmet />
         <CssBaseline />
         <div className={classes.content}>
           <GridContainer>
             <GridItem xs={12} sm={12} md={12}>
               <Card>
-                <CardHeader color="customBlue">
+                <CardHeader color="primary">
                   <h4 className={classes.cardTitleWhite}>
-                    <FormattedMessage {...messages.clusters} />
+                    <FormattedMessage
+                      {...messages.clusterDetail}
+                      values={cluster.toJS()}
+                    />
                   </h4>
                 </CardHeader>
                 <CardBody>
-                  <ClustersTable />
+                  <ClusterDetail cluster={cluster} />
                 </CardBody>
               </Card>
             </GridItem>
@@ -68,7 +72,9 @@ export class ClustersPage extends React.PureComponent {
   }
 }
 
-const mapStateToProps = createStructuredSelector({});
+const mapStateToProps = createStructuredSelector({
+  cluster: makeSelectCurrentCluster(),
+});
 
 const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
@@ -83,10 +89,10 @@ const withConnect = connect(
   mapDispatchToProps
 );
 
-const withSaga = injectSaga({ key: 'clustersPage', saga });
+const withSaga = injectSaga({ key: 'clusterDetailPage', saga });
 
 export default compose(
   withSaga,
   withConnect,
   withStyles(styles)
-)(ClustersPage);
+)(ClusterDetailPage);

@@ -13,13 +13,16 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import CloudIcon from '@material-ui/icons/Cloud';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faServer } from '@fortawesome/free-solid-svg-icons';
+
 
 // import { FormattedMessage } from 'react-intl';
 // import messages from './messages';
 import styles from './styles';
 
 function Menubar(props) {
-  const { classes, headerText } = props;
+  const { classes, headerContent } = props;
 
   return (
     <AppBar position="absolute" color="default" className={classes.appBar}>
@@ -29,17 +32,9 @@ function Menubar(props) {
           aria-label="single cloud"
           className={classes.menuButton}
         >
-          <CloudIcon />
+          <FontAwesomeIcon icon={faServer} />
         </IconButton>
-        <Typography
-          component="div"
-          variant="h6"
-          color="inherit"
-          noWrap
-          className={classes.title}
-        >
-          {headerText}
-        </Typography>
+        {headerContent}
       </Toolbar>
     </AppBar>
   );
@@ -47,7 +42,7 @@ function Menubar(props) {
 
 Menubar.propTypes = {
   classes: PropTypes.object.isRequired,
-  headerText: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+  headerContent: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
 };
 
 export default withStyles(styles)(Menubar);

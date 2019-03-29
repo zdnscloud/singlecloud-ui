@@ -62,7 +62,6 @@ export class TerminalPage extends React.PureComponent {
     term.open(findDOMNode(this.termEl)); // eslint-disable-line
     term.focus();
     term.fit();
-    term.write('\x1b[31mWelcome to Terminal!\x1b[m\r\n');
 
     socket.onopen = () => {
       socket.send(JSON.stringify({ cols: term.cols, rows: term.rows }));
@@ -97,9 +96,7 @@ export class TerminalPage extends React.PureComponent {
       <div className={classes.root}>
         <TerminalPageHelmet />
         <CssBaseline />
-        <Menubar headerText={<FormattedMessage {...messages.header} />} />
         <div className={classes.content}>
-          <div className={classes.appBarSpacer} />
           <Typography variant="h4" gutterBottom component="h2">
             <FormattedMessage {...messages.header} />
           </Typography>

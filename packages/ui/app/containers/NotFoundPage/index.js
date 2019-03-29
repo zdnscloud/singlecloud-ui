@@ -30,7 +30,7 @@ class NotFound extends React.PureComponent {
 
     return (
       <div className={classes.root}>
-        <Menubar headerText={<FormattedMessage {...messages.header} />} />
+        <Menubar headerContent={<FormattedMessage {...messages.header} />} />
         <div className={classes.content}>
           <div className={classes.appBarSpacer} />
           <h1>404</h1>
