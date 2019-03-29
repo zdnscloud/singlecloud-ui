@@ -1,5 +1,6 @@
 import { createSelector } from 'reselect';
 import { initialState } from './reducer';
+import { makeSelectClusterID } from '../App/selectors';
 
 /**
  * Direct selector to the clustersPage state domain
@@ -15,6 +16,13 @@ export const makeSelectClusters = () =>
   createSelector(
     selectClustersPageDomain,
     (substate) => substate.get('clusters')
+  );
+
+export const makeSelectCurrentCluster = () =>
+  createSelector(
+    selectClustersPageDomain,
+    makeSelectClusterID(),
+    (substate, id) => substate.getIn(['clusters', id])
   );
 
 export const makeSelectTableList = () =>
