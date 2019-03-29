@@ -35,7 +35,7 @@ const SelectCluster = (props) => {
         }
       >
         <MenuItem value="">
-          <em>None</em>
+          <em>Global</em>
         </MenuItem>
         {clusters.toList().map((c) => (
           <MenuItem key={c.get('id')} value={c.get('id')}>

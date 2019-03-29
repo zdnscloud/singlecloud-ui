@@ -10,6 +10,7 @@ import Language from '@material-ui/icons/Language';
 
 import HomePage from 'containers/HomePage/Loadable';
 import ClustersPage from 'containers/ClustersPage/Loadable';
+import ClusterDetailPage from 'containers/ClusterDetailPage/Loadable';
 import NodesPage from 'containers/NodesPage/Loadable';
 import NamespacesPage from 'containers/NamespacesPage/Loadable';
 import DeploymentsPage from 'containers/DeploymentsPage/Loadable';
@@ -36,6 +37,12 @@ const appRoutes = [
     name: 'Clusters',
     icon: Dashboard,
     component: ClustersPage,
+  },
+  {
+    path: '/clusters/:cluster_id',
+    name: 'Cluster Detail',
+    icon: Dashboard,
+    component: ClusterDetailPage,
   },
   {
     path: '/clusters/:cluster_id/nodes',
