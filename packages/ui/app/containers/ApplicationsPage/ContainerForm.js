@@ -18,6 +18,8 @@ import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
+import DeleteIcon from '@material-ui/icons/Delete';
+import Fab from '@material-ui/core/Fab';
 
 class ContainerForm extends React.PureComponent {
   componentDidMount() {
@@ -32,7 +34,7 @@ class ContainerForm extends React.PureComponent {
     return (
       <Fragment>
         <Grid container spacing={24}>
-          <Grid item xs={8}>
+          <Grid item xs={12}>
             <Paper className={classes.separateLine}>
               <Button
                 variant="contained"
@@ -108,80 +110,89 @@ class ContainerForm extends React.PureComponent {
                 />
               </Grid>
               <Grid item xs={12}>
-                <GridList cellHeight="auto" cols={1}>
-                  {item.get('exposedPorts').map((port, idx) => (
-                    <GridListTile key={idx} className={classes.separateLineWrap}>
-                      <TextField
-                        className={classNames(classes.margin, classes.textField)}
-                        variant="standard"
-                        label="Name"
-                        value={port.get('name')}
-                        onChange={(evt) => {
-                          updateForm(
-                            ['containers', index, 'exposedPorts', idx, 'name'],
-                            evt.target.value
-                          );
-                        }}
-                      />
-                      <FormControl variant="outlined" className={classes.formControl}>
-                        <InputLabel htmlFor={`exposed-port-protocol-${idx}`}>
-                          Protocol
-                        </InputLabel>
-                        <Select
-                          value={port.get('protocol')}
-                          onChange={(evt) =>
-                            updateForm(
-                              ['containers', index, 'exposedPorts', idx, 'protocol'],
-                              evt.target.value
-                            )
-                          }
-                        >
-                          <MenuItem value="tcp">TCP</MenuItem>
-                          <MenuItem value="udp">UDP</MenuItem>
-                        </Select>
-                      </FormControl>
-                      <TextField
-                        className={classNames(classes.margin, classes.textField)}
-                        variant="standard"
-                        type="number"
-                        label="Port"
-                        value={port.get('port')}
+                {item.get('exposedPorts').map((port, idx) => (
+                  <Grid xs={10} className={classes.separateLineWrap} key={idx}>
+                    <TextField
+                      className={classNames(classes.margin, classes.textField)}
+                      variant="standard"
+                      label="Name"
+                      value={port.get('name')}
+                      onChange={(evt) => {
+                        updateForm(
+                          ['containers', index, 'exposedPorts', idx, 'name'],
+                          evt.target.value
+                        );
+                      }}
+                    />
+                    <FormControl className={classes.formControl}>
+                      <InputLabel htmlFor={`exposed-port-protocol-${idx}`}>
+                        Protocol
+                      </InputLabel>
+                      <Select
+                        value={port.get('protocol')}
                         onChange={(evt) =>
                           updateForm(
-                            ['containers', index, 'exposedPorts', idx, 'port'],
-                            Number(evt.target.value)
+                            [
+                              'containers',
+                              index,
+                              'exposedPorts',
+                              idx,
+                              'protocol',
+                            ],
+                            evt.target.value
                           )
                         }
-                      />
-                      <Button
-                        variant="contained"
-                        color="secondary"
-                        className={classNames(classes.margin, classes.button)}
-                        onClick={(evt) => {
-                          updateForm(['containers', index, 'exposedPorts', idx], null);
+                        inputProps={{
+                          id: `exposed-port-protocol-${idx}`,
                         }}
                       >
-                        remove this port
-                      </Button>
-                    </GridListTile>
-                  ))}
-                  <GridListTile>
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      className={classNames(classes.margin, classes.button)}
-                      onClick={() => {
-                        const { size } = item.get('exposedPorts');
+                        <MenuItem value="tcp">TCP</MenuItem>
+                        <MenuItem value="udp">UDP</MenuItem>
+                      </Select>
+                    </FormControl>
+                    <TextField
+                      className={classNames(classes.margin, classes.textField)}
+                      variant="standard"
+                      type="number"
+                      label="Port"
+                      value={port.get('port')}
+                      onChange={(evt) =>
                         updateForm(
-                          ['containers', index, 'exposedPorts', size, 'protocol'],
-                          'tcp'
+                          ['containers', index, 'exposedPorts', idx, 'port'],
+                          Number(evt.target.value)
+                        )
+                      }
+                    />
+                    <Fab
+                      aria-label="Delete"
+                      style={{ marginRight: '5%' }}
+                      onClick={(evt) => {
+                        updateForm(
+                          ['containers', index, 'exposedPorts', idx],
+                          null
                         );
                       }}
                     >
-                      ADD exposed PORT
-                    </Button>
-                  </GridListTile>
-                </GridList>
+                      <DeleteIcon />
+                    </Fab>
+                  </Grid>
+                ))}
+                <Grid item xs={10}>
+                  <Button
+                    variant="contained"
+                    color="gray"
+                    className={classNames(classes.margin, classes.button)}
+                    onClick={() => {
+                      const { size } = item.get('exposedPorts');
+                      updateForm(
+                        ['containers', index, 'exposedPorts', size, 'protocol'],
+                        'tcp'
+                      );
+                    }}
+                  >
+                    ADD exposed PORT
+                  </Button>
+                </Grid>
               </Grid>
             </Paper>
           </Grid>

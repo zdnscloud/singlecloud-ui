@@ -74,7 +74,7 @@ const styles = (theme) => ({
   appContainer: {},
   advanceContainer: {},
   actionContainer: {
-    textAlign: 'center',
+    textAlign: 'right',
   },
   h5: {
     marginBottom: theme.spacing.unit * 2,
@@ -166,11 +166,13 @@ const styles = (theme) => ({
   },
   separateLineWrap: {
     marginTop: '8px',
-    background: '#EEE',
+    marginRight: '5px',
+    background: '#eee',
   },
   separateLine: {
     marginTop: '8px',
     boxShadow: '1px 0px 2px #ccc',
+    border: '1px solid #ccc',
   },
   removeBtn: {
     float: 'right',
