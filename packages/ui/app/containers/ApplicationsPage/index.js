@@ -62,13 +62,13 @@ export class ApplicationsPage extends React.PureComponent {
           <GridContainer>
             <GridItem xs={12} sm={12} md={12}>
               <Card>
-                <CardHeader color="primary">
+                <CardHeader color="customBlue">
                   <h4 className={classes.cardTitleWhite}>
                     <FormattedMessage {...messages.applications} />
-                    <Link to={`${this.props.location.pathname}/create`}>
+                    <Link to={`${this.props.location.pathname}/create`} className={classes.createBtnLink}>
                       <Fab
                         size="small"
-                        color="primary"
+                        color="default"
                         aria-label="create application"
                         className={classes.menuButton}
                       >

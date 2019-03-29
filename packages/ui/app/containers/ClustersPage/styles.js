@@ -105,6 +105,9 @@ const styles = (theme) => ({
       lineHeight: '1',
     },
   },
+  cardListTitle: {
+    background: '#386fba',
+  },
 });
 
 export default styles;
