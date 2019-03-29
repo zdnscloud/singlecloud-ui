@@ -57,12 +57,12 @@ export class NamespacesPage extends React.PureComponent {
             <GridContainer>
               <GridItem xs={12} sm={12} md={12}>
                 <Card>
-                  <CardHeader color="primary">
+                  <CardHeader color="customBlue">
                     <h4 className={classes.cardTitleWhite}>
                       <FormattedMessage {...messages.namespaces} />
                       <Fab
                         size="small"
-                        color="primary"
+                        color="default"
                         aria-label="create cluster"
                         className={classes.menuButton}
                         onClick={openCreateNamespace}

@@ -22,6 +22,7 @@ const defaultFormData = {
   name: '',
   replicas: '',
   containers: [],
+  namespaceID: null,
   advancedOptions: {
     exposedServiceType: '',
     exposedServices: [],

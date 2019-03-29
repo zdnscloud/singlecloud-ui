@@ -17,6 +17,12 @@ import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
 import { SimpleTable } from '@gsmlg/com';
 
+import Fab from '@material-ui/core/Fab';
+import AddIcon from '@material-ui/icons/Add';
+import EditIcon from '@material-ui/icons/Edit';
+import IconButton from '@material-ui/core/IconButton';
+import DeleteIcon from '@material-ui/icons/Delete';
+
 import { makeSelectApplications, makeSelectTableList } from './selectors';
 import * as actions from './actions';
 import messages from './messages';
@@ -33,31 +39,23 @@ export class ApplicationsTable extends React.PureComponent {
 
   render() {
     const { classes, tableList, applications, removeApplication } = this.props;
-    const mergedSchema = schema.concat([
+    console.log(schema);
+    let mergedSchema = schema.concat([
       {
         id: 'actions',
         label: 'Actions',
         component: (props) => (
           <Fragment>
-            <Button
-              variant="outlined"
-              component={Link}
-              to={`${this.props.location.pathname}/${props.data.get(
-                'id'
-              )}/pods`}
-              size="small"
-              className={classes.button}
-            >
-              Show Pods
-            </Button>
-            <Button
-              variant="outlined"
-              size="small"
-              className={classes.button}
+
+            <IconButton aria-label="Edit">
+              <EditIcon />
+            </IconButton>
+            <IconButton 
+              aria-label="Delete" 
               onClick={(evt) => removeApplication(props.data.get('id'))}
             >
-              Delete this
-            </Button>
+              <DeleteIcon />
+            </IconButton>
           </Fragment>
         ),
       },

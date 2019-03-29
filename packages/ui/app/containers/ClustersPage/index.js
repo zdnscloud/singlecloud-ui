@@ -51,7 +51,7 @@ export class ClustersPage extends React.PureComponent {
           <GridContainer>
             <GridItem xs={12} sm={12} md={12}>
               <Card>
-                <CardHeader color="primary">
+                <CardHeader color="customBlue">
                   <h4 className={classes.cardTitleWhite}>
                     <FormattedMessage {...messages.clusters} />
                   </h4>
