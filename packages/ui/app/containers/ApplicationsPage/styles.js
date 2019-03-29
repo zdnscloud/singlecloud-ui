@@ -94,7 +94,7 @@ const styles = (theme) => ({
     marginTop: theme.spacing.unit * 2,
   },
   addContainerWrap: {
-    minHeight: '200px',
+    minHeight: '75px',
   },
   addContainerButton: {
     alignSelf: 'center',
@@ -163,6 +163,17 @@ const styles = (theme) => ({
       fontWeight: '400',
       lineHeight: '1',
     },
+  },
+  separateLineWrap: {
+    marginTop: '8px',
+    background: '#EEE',
+  },
+  separateLine: {
+    marginTop: '8px',
+    boxShadow: '1px 0px 2px #ccc',
+  },
+  removeBtn: {
+    float: 'right',
   },
 });
 
