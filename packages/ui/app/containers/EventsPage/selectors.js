@@ -1,3 +1,4 @@
+import { fromJS } from 'immutable';
 import { createSelector } from 'reselect';
 import { initialState } from './reducer';
 
@@ -21,7 +22,7 @@ export const makeSelectEvents = () =>
   createSelector(
     selectEventsPageDomain,
     makeSelectClusterID(),
-    (substate, clusterID) => substate.getIn(['events', clusterID])
+    (substate, clusterID) => substate.getIn(['events', clusterID]) || fromJS([])
   );
 
 /**

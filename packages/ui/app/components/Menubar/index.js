@@ -22,7 +22,7 @@ import { faServer } from '@fortawesome/free-solid-svg-icons';
 import styles from './styles';
 
 function Menubar(props) {
-  const { classes, headerText } = props;
+  const { classes, headerContent } = props;
 
   return (
     <AppBar position="absolute" color="default" className={classes.appBar}>
@@ -34,15 +34,7 @@ function Menubar(props) {
         >
           <FontAwesomeIcon icon={faServer} />
         </IconButton>
-        <Typography
-          component="div"
-          variant="h6"
-          color="inherit"
-          noWrap
-          className={classes.title}
-        >
-          {headerText}
-        </Typography>
+        {headerContent}
       </Toolbar>
     </AppBar>
   );
@@ -50,7 +42,7 @@ function Menubar(props) {
 
 Menubar.propTypes = {
   classes: PropTypes.object.isRequired,
-  headerText: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+  headerContent: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
 };
 
 export default withStyles(styles)(Menubar);
