@@ -13,6 +13,9 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import CloudIcon from '@material-ui/icons/Cloud';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faServer } from '@fortawesome/free-solid-svg-icons';
+
 
 // import { FormattedMessage } from 'react-intl';
 // import messages from './messages';
@@ -29,7 +32,7 @@ function Menubar(props) {
           aria-label="single cloud"
           className={classes.menuButton}
         >
-          <CloudIcon />
+          <FontAwesomeIcon icon={faServer} />
         </IconButton>
         <Typography
           component="div"

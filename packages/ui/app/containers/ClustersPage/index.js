@@ -26,7 +26,7 @@ import * as actions from './actions';
 import saga from './saga';
 import messages from './messages';
 import styles from './styles';
-import ClustersList from './clusters';
+import ClustersTable from './ClustersTable';
 import ClustersPageHelmet from './helmet';
 
 /* eslint-disable react/prefer-stateless-function */
@@ -57,7 +57,7 @@ export class ClustersPage extends React.PureComponent {
                   </h4>
                 </CardHeader>
                 <CardBody>
-                  <ClustersList />
+                  <ClustersTable />
                 </CardBody>
               </Card>
             </GridItem>
