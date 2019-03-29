@@ -4,6 +4,7 @@ const styles = (theme) => ({
   root: {
     display: 'flex',
     flexDirection: 'column',
+    fontSize: '14px',
   },
   toolbar: {
     paddingRight: 24, // keep right padding when drawer closed
@@ -84,6 +85,12 @@ const styles = (theme) => ({
   },
   textField: {
     flexBasis: 200,
+  },
+  padding10: {
+    padding: '10px',
+  },
+  marginRight10: {
+    marginRight: '10px',
   },
   formControl: {
     margin: theme.spacing.unit,
