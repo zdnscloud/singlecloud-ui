@@ -30,7 +30,7 @@ class CreateNamespaceDialog extends React.Component {
         aria-labelledby="form-dialog-title"
       >
         <DialogTitle id="form-dialog-title">Create a Namespace</DialogTitle>
-        <DialogContent>
+        <DialogContent style={{ minWidth: '500px' }}>
           <DialogContentText>add a namespace</DialogContentText>
           <TextField
             autoFocus
