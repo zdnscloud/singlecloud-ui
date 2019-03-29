@@ -102,73 +102,68 @@ export class CreateApplication extends React.PureComponent {
                   updateForm('replicas', Number(evt.target.value))
                 }
               />
-              <GridList cellHeight="auto" cols={1}>
-                {formData.get('containers').map((item, index) => (
-                  <GridListTile key={index}>
-                    <ContainerForm
-                      classes={classes}
-                      index={index}
-                      item={item}
-                      configMaps={configMaps.toList()}
-                      updateForm={updateForm}
-                    />
-                  </GridListTile>
-                ))}
-                <GridListTile className={classes.addContainerWrap}>
-                  <Fab
-                    color="primary"
-                    aria-label="add Container"
-                    className={classes.addContainerButton}
-                    onClick={(evt) => {
-                      const { size } = formData.get('containers');
-                      updateForm(
-                        ['containers', size],
-                        fromJS({
-                          name: '',
-                          image: '',
-                          command: '',
-                          args: '',
-                          config_name: '',
-                          mount_path: '',
-                          exposedPorts: [],
-                        })
-                      );
-                    }}
-                  >
-                    <AddIcon />
-                  </Fab>
-                </GridListTile>
-              </GridList>
             </div>
+            {formData.get('containers').map((item, index) => (
+              <ContainerForm
+                classes={classes}
+                index={index}
+                item={item}
+                configMaps={configMaps.toList()}
+                updateForm={updateForm}
+                key={index}
+              />
+            ))}
+            <Fab
+              color="primary"
+              aria-label="add Container"
+              className={classes.addContainerButton}
+              style={{ marginTop: '5px' }}
+              onClick={(evt) => {
+                const { size } = formData.get('containers');
+                updateForm(
+                  ['containers', size],
+                  fromJS({
+                    name: '',
+                    image: '',
+                    command: '',
+                    args: '',
+                    config_name: '',
+                    mount_path: '',
+                    exposedPorts: [],
+                  })
+                );
+              }}
+            >
+              <AddIcon />
+            </Fab>
           </Typography>
           <Typography component="div" className={classes.advanceContainer}>
-            <FormGroup>
-              <FormControlLabel
-                control={
-                  <Switch
-                    classes={{
-                      switchBase: classes.iOSSwitchBase,
-                      bar: classes.iOSBar,
-                      icon: classes.iOSIcon,
-                      iconChecked: classes.iOSIconChecked,
-                      checked: classes.iOSChecked,
-                    }}
-                    disableRipple
-                    checked={formData.get('enableAdvancedOptions')}
-                    onChange={(evt) => {
-                      updateForm(
-                        'enableAdvancedOptions',
-                        !formData.get('enableAdvancedOptions')
-                      );
-                    }}
-                    value="advancedOptions"
-                  />
-                }
-                label="Advanced Options"
-              />
-            </FormGroup>
+            <FormControlLabel
+              style={{ marginLeft: '-8px' }}
+              control={
+                <Switch
+                  classes={{
+                    switchBase: classes.iOSSwitchBase,
+                    bar: classes.iOSBar,
+                    icon: classes.iOSIcon,
+                    iconChecked: classes.iOSIconChecked,
+                    checked: classes.iOSChecked,
+                  }}
+                  disableRipple
+                  checked={formData.get('enableAdvancedOptions')}
+                  onChange={(evt) => {
+                    updateForm(
+                      'enableAdvancedOptions',
+                      !formData.get('enableAdvancedOptions')
+                    );
+                  }}
+                  value="advancedOptions"
+                />
+              }
+              label="Advanced Options"
+            />
             <Collapse in={formData.get('enableAdvancedOptions')}>
-              <FormControl variant="outlined" className={classes.formControl}>
+              <FormControl className={classes.formControl}>
                 <InputLabel htmlFor="exposed-service-type">
                   Exposed Service Type
                 </InputLabel>
