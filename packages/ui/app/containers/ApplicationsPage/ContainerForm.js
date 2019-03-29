@@ -16,31 +16,10 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
-
-import withStyles from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 
-const styles = {
-  separateLineWrap: {
-    margin: '8px',
-    background: '#EEE',
-    width: '90% !important',
-  },
-  separateLine: {
-    marginTop: '8px',
-    boxShadow: '1px 0px 2px #ccc',
-  },
-  removeBtn: {
-    float: 'right',
-  },
-};
-
 class ContainerForm extends React.PureComponent {
-  state = {
-    labelWidth: 0,
-  };
-
   componentDidMount() {
     this.setState({
       labelWidth: findDOMNode(this.InputLabelRef).offsetWidth, // eslint-disable-line
@@ -212,4 +191,4 @@ class ContainerForm extends React.PureComponent {
   }
 }
 
-export default withStyles(styles)(ContainerForm);
+export default ContainerForm;
