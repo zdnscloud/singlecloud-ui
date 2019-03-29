@@ -38,6 +38,8 @@ import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 import Collapse from '@material-ui/core/Collapse';
 import Checkbox from '@material-ui/core/Checkbox';
+import Grid from '@material-ui/core/Grid';
+import Paper from '@material-ui/core/Paper';
 
 import injectSaga from 'utils/injectSaga';
 import { makeSelectCreateFormData, makeSelectFormPorts } from './selectors';
@@ -195,115 +197,129 @@ export class CreateApplication extends React.PureComponent {
                 );
                 const idx = svcs.findIndex((svc) => svc === current);
                 return (
-                  <div>
-                    <label>{`${port}`}</label>
-                    <FormControlLabel
-                      control={
-                        <Checkbox
-                          checked={!!current}
-                          onChange={(evt) => {
-                            if (current) {
-                              updateForm(
-                                ['advancedOptions', 'exposedServices', idx],
-                                null
-                              );
-                            } else {
+                  <Paper className={classes.separateLine}>
+                    <Grid>
+                      <TextField
+                        disabled
+                        id={`showInfo-${port.get('protocol')}`}
+                        label="Protocol"
+                        className={classNames(classes.margin, classes.textField)}
+                        value={port.get('protocol')}
+                      />
+                      <TextField
+                        disabled
+                        id={`showInfo-${port.get('protocol')}`}
+                        label="Port"
+                        className={classNames(classes.margin, classes.textField)}
+                        value={port.get('port')}
+                      />
+                    </Grid>
+                    <Grid>
+                      <FormControlLabel
+                        control={
+                          <Checkbox
+                            checked={!!current}
+                            onChange={(evt) => {
+                              if (current) {
+                                updateForm(
+                                  ['advancedOptions', 'exposedServices', idx],
+                                  null
+                                );
+                              } else {
+                                updateForm(
+                                  [
+                                    'advancedOptions',
+                                    'exposedServices',
+                                    svcs.size,
+                                  ],
+                                  port
+                                );
+                              }
+                            }}
+                            value
+                            color="primary"
+                          />
+                        }
+                        label="Auto Create Service"
+                      />
+                      <TextField
+                        className={classNames(classes.margin, classes.textField)}
+                        type="number"
+                        label="Servce Port"
+                        disabled={!current}
+                        value={(current && current.get('servicePort')) || ''}
+                        onChange={(evt) => {
+                          updateForm(
+                            [
+                              'advancedOptions',
+                              'exposedServices',
+                              idx,
+                              'servicePort',
+                            ],
+                            Number(evt.target.value)
+                          );
+                        }}
+                      />
+                      <FormControlLabel
+                        control={
+                          <Checkbox
+                            disabled={!current}
+                            checked={current && current.get('autoCreateIngress')}
+                            onChange={(evt) => {
                               updateForm(
                                 [
                                   'advancedOptions',
                                   'exposedServices',
-                                  svcs.size,
+                                  idx,
+                                  'autoCreateIngress',
                                 ],
-                                port
+                                !current.get('autoCreateIngress')
                               );
-                            }
-                          }}
-                          value
-                          color="primary"
-                        />
-                      }
-                      label="Auto Create Service"
-                    />
-                    <TextField
-                      className={classNames(classes.margin, classes.textField)}
-                      variant="outlined"
-                      type="number"
-                      label="Servce Port"
-                      disabled={!current}
-                      value={(current && current.get('servicePort')) || ''}
-                      onChange={(evt) => {
-                        updateForm(
-                          [
-                            'advancedOptions',
-                            'exposedServices',
-                            idx,
-                            'servicePort',
-                          ],
-                          Number(evt.target.value)
-                        );
-                      }}
-                    />
-                    <FormControlLabel
-                      control={
-                        <Checkbox
-                          disabled={!current}
-                          checked={current && current.get('autoCreateIngress')}
-                          onChange={(evt) => {
-                            updateForm(
-                              [
-                                'advancedOptions',
-                                'exposedServices',
-                                idx,
-                                'autoCreateIngress',
-                              ],
-                              !current.get('autoCreateIngress')
-                            );
-                          }}
-                          value
-                          color="primary"
-                        />
-                      }
-                      label="Auto Create Ingress"
-                    />
-                    <TextField
-                      className={classNames(classes.margin, classes.textField)}
-                      variant="outlined"
-                      label="Ingress Domain Name"
-                      disabled={!current || !current.get('autoCreateIngress')}
-                      value={
-                        (current && current.get('ingressDomainName')) || ''
-                      }
-                      onChange={(evt) => {
-                        updateForm(
-                          [
-                            'advancedOptions',
-                            'exposedServices',
-                            idx,
-                            'ingressDomainName',
-                          ],
-                          evt.target.value
-                        );
-                      }}
-                    />
-                    <TextField
-                      className={classNames(classes.margin, classes.textField)}
-                      variant="outlined"
-                      label="Ingress Path"
-                      disabled={!current || !current.get('autoCreateIngress')}
-                      value={(current && current.get('ingressPath')) || ''}
-                      onChange={(evt) => {
-                        updateForm(
-                          [
-                            'advancedOptions',
-                            'exposedServices',
-                            idx,
-                            'ingressPath',
-                          ],
-                          evt.target.value
-                        );
-                      }}
-                    />
-                  </div>
+                            }}
+                            value
+                            color="primary"
+                          />
+                        }
+                        label="Auto Create Ingress"
+                      />
+                      <TextField
+                        className={classNames(classes.margin, classes.textField)}
+                        label="Ingress Domain Name"
+                        disabled={!current || !current.get('autoCreateIngress')}
+                        value={
+                          (current && current.get('ingressDomainName')) || ''
+                        }
+                        onChange={(evt) => {
+                          updateForm(
+                            [
+                              'advancedOptions',
+                              'exposedServices',
+                              idx,
+                              'ingressDomainName',
+                            ],
+                            evt.target.value
+                          );
+                        }}
+                      />
+                      <TextField
+                        className={classNames(classes.margin, classes.textField)}
+                        label="Ingress Path"
+                        disabled={!current || !current.get('autoCreateIngress')}
+                        value={(current && current.get('ingressPath')) || ''}
+                        onChange={(evt) => {
+                          updateForm(
+                            [
+                              'advancedOptions',
+                              'exposedServices',
+                              idx,
+                              'ingressPath',
+                            ],
+                            evt.target.value
+                          );
+                        }}
+                      />
+                    </Grid>
+                  </Paper>
                 );
               })}
             </Collapse>

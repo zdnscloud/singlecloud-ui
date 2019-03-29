@@ -51,6 +51,24 @@ class ContainerForm extends React.PureComponent {
                 <TextField
                   className={classNames(classes.margin, classes.textField)}
                   variant="standard"
+                  label="container name"
+                  value={item.get('name')}
+                  onChange={(evt) =>
+                    updateForm(['containers', index, 'name'], evt.target.value)
+                  }
+                />
+                <TextField
+                  className={classNames(classes.margin, classes.textField)}
+                  variant="standard"
+                  label="container image"
+                  value={item.get('image')}
+                  onChange={(evt) =>
+                    updateForm(['containers', index, 'image'], evt.target.value)
+                  }
+                />
+                <TextField
+                  className={classNames(classes.margin, classes.textField)}
+                  variant="standard"
                   label="command"
                   value={item.get('command')}
                   onChange={(evt) =>
