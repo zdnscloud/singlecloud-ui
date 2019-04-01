@@ -30,7 +30,14 @@ const appStyle = theme => ({
   },
   container,
   map: {
-  }
+  },
+  eventPage: {
+    position: "fixed",
+    top: '65px',
+    right: 0,
+    zIndex: 1200,
+    maxHeight: 'calc(100% - 65px)',
+  },
 });
 
 export default appStyle;

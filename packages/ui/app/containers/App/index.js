@@ -140,13 +140,15 @@ class App extends PureComponent {
             {...rest}
           />
           <Menubar
-            headerContent={
+            headerLeftContent={
+              <SelectCluster
+                clusters={clusters}
+                changeCluster={changeCluster}
+                activeCluster={clusterID}
+              />
+            }
+            headerRightContent={
               <Fragment>
-                <SelectCluster
-                  clusters={clusters}
-                  changeCluster={changeCluster}
-                  activeCluster={clusterID}
-                />
                 {clusterID && (
                   <IconButton onClick={(evt) => toggleEventsView(!showEvents)}>
                     <EventIcon />
@@ -156,11 +158,13 @@ class App extends PureComponent {
             }
           />
           <div className={classes.mainPanel} data-ref="mainPanel">
-            <ExpansionPanel square expanded={showEvents}>
-              <ExpansionPanelDetails>
-                {showEvents && <EventsTable />}
-              </ExpansionPanelDetails>
-            </ExpansionPanel>
+            <div className={classes.eventPage}>
+              <ExpansionPanel square expanded={showEvents}>
+                <ExpansionPanelDetails>
+                  {showEvents && <EventsTable />}
+                </ExpansionPanelDetails>
+              </ExpansionPanel>
+            </div>
             <div className={classes.content}>{switchRoutes}</div>
             <Footer />
           </div>
