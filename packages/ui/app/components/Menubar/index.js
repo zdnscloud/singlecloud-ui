@@ -21,19 +21,24 @@ import { faServer } from '@fortawesome/free-solid-svg-icons';
 import styles from './styles';
 
 function Menubar(props) {
-  const { classes, headerContent } = props;
+  const { classes, headerLeftContent, headerRightContent } = props;
 
   return (
     <AppBar position="absolute" color="default" className={classes.appBar}>
       <Toolbar disableGutters className={classes.toolbar}>
-        <IconButton
-          color="inherit"
-          aria-label="single cloud"
-          className={classes.menuButton}
-        >
-          <FontAwesomeIcon icon={faServer} />
-        </IconButton>
-        {headerContent}
+        <div className={classes.toolbarLeft}>
+          <IconButton
+            color="inherit"
+            aria-label="single cloud"
+            className={classes.menuButton}
+          >
+            <FontAwesomeIcon icon={faServer} />
+          </IconButton>
+          { headerLeftContent }
+        </div>
+        <div className={classes.toolbarRight}>
+          { headerRightContent}
+        </div>
       </Toolbar>
     </AppBar>
   );
