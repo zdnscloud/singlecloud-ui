@@ -13,7 +13,7 @@ import {
  */
 
 export const selectPodsPageDomain = (state) =>
-  state.get('applicationDetail', initialState);
+  state.get('applicationDetailPage', initialState);
 
 /**
  * Other specific selectors
