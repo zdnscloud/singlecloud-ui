@@ -36,7 +36,9 @@ const appStyle = theme => ({
     top: '65px',
     right: 0,
     zIndex: 1200,
-    maxHeight: 'calc(100% - 65px)',
+    maxHeight: 'calc(60% - 65px)',
+    minWidth: '50%',
+    overflow: 'auto',
   },
 });
 
