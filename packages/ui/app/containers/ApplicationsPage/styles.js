@@ -188,7 +188,7 @@ const styles = (theme) => ({
     position: 'absolute',
     top: '3px',
     right: '10px',
-  }
+  },
 });
 
 export default styles;

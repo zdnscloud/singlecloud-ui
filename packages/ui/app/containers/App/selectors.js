@@ -1,12 +1,15 @@
 import { createSelector } from 'reselect';
-import { createMatchSelector, getLocation } from 'connected-react-router/immutable';
+import {
+  createMatchSelector,
+  getLocation,
+} from 'connected-react-router/immutable';
 
 const selectRouter = (state) => state.get('router');
 
 export const makeSelectLocation = () =>
   createSelector(
     selectRouter,
-    (routerState) => routerState.get('location').toJS()
+    (routerState) => routerState.get('location')
   );
 
 export const makeSelectClusterID = () =>
@@ -15,6 +18,17 @@ export const makeSelectClusterID = () =>
     (match) => {
       if (match && match.params) {
         return match.params.cluster_id;
+      }
+      return '';
+    }
+  );
+
+export const makeSelectNamespaceID = () =>
+  createSelector(
+    createMatchSelector('/clusters/:cluster_id/namespaces/:namespace_id'),
+    (match) => {
+      if (match && match.params) {
+        return match.params.namespace_id;
       }
       return '';
     }

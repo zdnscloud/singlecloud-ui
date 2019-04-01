@@ -40,18 +40,17 @@ export class ApplicationsTable extends React.PureComponent {
   render() {
     const { classes, tableList, applications, removeApplication } = this.props;
     console.log(schema);
-    let mergedSchema = schema.concat([
+    const mergedSchema = schema.concat([
       {
         id: 'actions',
         label: 'Actions',
         component: (props) => (
           <Fragment>
-
             <IconButton aria-label="Edit">
               <EditIcon />
             </IconButton>
-            <IconButton 
-              aria-label="Delete" 
+            <IconButton
+              aria-label="Delete"
               onClick={(evt) => removeApplication(props.data.get('id'))}
             >
               <DeleteIcon />

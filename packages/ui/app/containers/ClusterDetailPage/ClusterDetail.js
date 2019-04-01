@@ -24,37 +24,37 @@ import TableRow from '@material-ui/core/TableRow';
 // react plugin for creating charts
 // import ChartistGraph from "react-chartist";
 // @material-ui/core
-import Icon from "@material-ui/core/Icon";
+import Icon from '@material-ui/core/Icon';
 import teal from '@material-ui/core/colors/teal';
 // @material-ui/icons
-import Store from "@material-ui/icons/Store";
-import Warning from "@material-ui/icons/Warning";
-import DateRange from "@material-ui/icons/DateRange";
-import LocalOffer from "@material-ui/icons/LocalOffer";
-import Update from "@material-ui/icons/Update";
-import ArrowUpward from "@material-ui/icons/ArrowUpward";
-import AccessTime from "@material-ui/icons/AccessTime";
-import Accessibility from "@material-ui/icons/Accessibility";
-import BugReport from "@material-ui/icons/BugReport";
-import Code from "@material-ui/icons/Code";
-import Cloud from "@material-ui/icons/Cloud";
+import Store from '@material-ui/icons/Store';
+import Warning from '@material-ui/icons/Warning';
+import DateRange from '@material-ui/icons/DateRange';
+import LocalOffer from '@material-ui/icons/LocalOffer';
+import Update from '@material-ui/icons/Update';
+import ArrowUpward from '@material-ui/icons/ArrowUpward';
+import AccessTime from '@material-ui/icons/AccessTime';
+import Accessibility from '@material-ui/icons/Accessibility';
+import BugReport from '@material-ui/icons/BugReport';
+import Code from '@material-ui/icons/Code';
+import Cloud from '@material-ui/icons/Cloud';
 import red from '@material-ui/core/colors/red';
 // core components
-import GridItem from "components/Grid/GridItem";
-import GridContainer from "components/Grid/GridContainer";
-import Tasks from "components/Tasks/Tasks";
-import CustomTabs from "components/CustomTabs/CustomTabs";
-import Danger from "components/Typography/Danger";
-import Card from "components/Card/Card";
-import CardHeader from "components/Card/CardHeader";
-import CardIcon from "components/Card/CardIcon";
-import CardBody from "components/Card/CardBody";
-import CardFooter from "components/Card/CardFooter";
+import GridItem from 'components/Grid/GridItem';
+import GridContainer from 'components/Grid/GridContainer';
+import Tasks from 'components/Tasks/Tasks';
+import CustomTabs from 'components/CustomTabs/CustomTabs';
+import Danger from 'components/Typography/Danger';
+import Card from 'components/Card/Card';
+import CardHeader from 'components/Card/CardHeader';
+import CardIcon from 'components/Card/CardIcon';
+import CardBody from 'components/Card/CardBody';
+import CardFooter from 'components/Card/CardFooter';
 import Gauge from 'components/Charts/Gauge';
 
+import styles from 'assets/jss/material-dashboard-react/views/dashboardStyle';
 import * as actions from './actions';
 import messages from './messages';
-import styles from "assets/jss/material-dashboard-react/views/dashboardStyle";
 
 /* eslint-disable react/prefer-stateless-function */
 export class ClusterDetail extends React.PureComponent {
@@ -79,8 +79,7 @@ export class ClusterDetail extends React.PureComponent {
                 <p className={classes.cardCategory}>Name</p>
                 <h3 className={classes.cardTitle}>{cluster.get('name')}</h3>
               </CardHeader>
-              <CardFooter stats>
-              </CardFooter>
+              <CardFooter stats />
             </Card>
           </GridItem>
           <GridItem xs={12} sm={6} md={3}>
@@ -95,8 +94,7 @@ export class ClusterDetail extends React.PureComponent {
                 </h3>
               </CardHeader>
               <CardFooter stats>
-                <div className={classes.stats}>
-                </div>
+                <div className={classes.stats} />
               </CardFooter>
             </Card>
           </GridItem>
@@ -108,13 +106,10 @@ export class ClusterDetail extends React.PureComponent {
                 </CardIcon>
                 <p className={classes.cardCategory}>Nodes</p>
                 <h3 className={classes.cardTitle}>
-                  <small>
-                    {cluster.get('nodeCount')}
-                  </small>
+                  <small>{cluster.get('nodeCount')}</small>
                 </h3>
               </CardHeader>
-              <CardFooter stats>
-              </CardFooter>
+              <CardFooter stats />
             </Card>
           </GridItem>
           <GridItem xs={12} sm={6} md={3}>
@@ -126,14 +121,15 @@ export class ClusterDetail extends React.PureComponent {
                 <p className={classes.cardCategory}>Created</p>
                 <h3 className={classes.cardTitle}>
                   <small>
-                    {moment(cluster.get('creationTimestamp')).format('YYYY-MM-DD')}
+                    {moment(cluster.get('creationTimestamp')).format(
+                      'YYYY-MM-DD'
+                    )}
                   </small>
                 </h3>
               </CardHeader>
-              <CardFooter stats>
-              </CardFooter>
+              <CardFooter stats />
             </Card>
-          </GridItem>          
+          </GridItem>
         </GridContainer>
 
         <GridContainer>
@@ -147,16 +143,14 @@ export class ClusterDetail extends React.PureComponent {
                   color={teal.A400}
                   backgroundColor={teal['400']}
                   valueFormatter={(v) => `${v}%`}
-                  valueLabelStyle={{fill: '#edebeb', fontSize: '42px'}}
-                  minMaxLabelStyle={{fill: '#edebeb'}}
+                  valueLabelStyle={{ fill: '#edebeb', fontSize: '42px' }}
+                  minMaxLabelStyle={{ fill: '#edebeb' }}
                 />
               </CardHeader>
               <CardBody>
                 <h4 className={classes.cardTitle}>CPU</h4>
                 <p className={classes.cardCategory}>
-                  <span className={classes.successText}>
-                    55%
-                  </span>
+                  <span className={classes.successText}>55%</span>
                 </p>
               </CardBody>
               <CardFooter chart>
@@ -176,15 +170,13 @@ export class ClusterDetail extends React.PureComponent {
                   color={teal.A400}
                   backgroundColor={teal['400']}
                   valueFormatter={(v) => `${v}%`}
-                  valueLabelStyle={{fill: '#edebeb', fontSize: '42px'}}
-                  minMaxLabelStyle={{fill: '#edebeb'}}
+                  valueLabelStyle={{ fill: '#edebeb', fontSize: '42px' }}
+                  minMaxLabelStyle={{ fill: '#edebeb' }}
                 />
               </CardHeader>
               <CardBody>
                 <h4 className={classes.cardTitle}>Memory</h4>
-                <p className={classes.cardCategory}>
-                  20%
-                </p>
+                <p className={classes.cardCategory}>20%</p>
               </CardBody>
               <CardFooter chart>
                 <div className={classes.stats}>
@@ -203,15 +195,13 @@ export class ClusterDetail extends React.PureComponent {
                   color={teal.A400}
                   backgroundColor={teal['400']}
                   valueFormatter={(v) => `${v}%`}
-                  valueLabelStyle={{fill: '#edebeb', fontSize: '42px'}}
-                  minMaxLabelStyle={{fill: '#edebeb'}}
+                  valueLabelStyle={{ fill: '#edebeb', fontSize: '42px' }}
+                  minMaxLabelStyle={{ fill: '#edebeb' }}
                 />
               </CardHeader>
               <CardBody>
                 <h4 className={classes.cardTitle}>Pods</h4>
-                <p className={classes.cardCategory}>
-                  33 / 360
-                </p>
+                <p className={classes.cardCategory}>33 / 360</p>
               </CardBody>
               <CardFooter chart>
                 <div className={classes.stats}>
@@ -220,14 +210,13 @@ export class ClusterDetail extends React.PureComponent {
               </CardFooter>
             </Card>
           </GridItem>
-        </GridContainer>        
+        </GridContainer>
       </div>
     );
   }
 }
 
-const mapStateToProps = createStructuredSelector({
-});
+const mapStateToProps = createStructuredSelector({});
 
 const mapDispatchToProps = (dispatch) =>
   bindActionCreators(

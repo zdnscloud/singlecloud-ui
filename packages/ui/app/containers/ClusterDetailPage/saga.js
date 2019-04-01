@@ -9,7 +9,7 @@ export const url = '/apis/zcloud.cn/v1/clusterDetail';
 
 export function* initialize() {
   const clusterID = yield select(makeSelectClusterID());
-  yield* loadCluster({ payload: { id: clusterID }});
+  yield* loadCluster({ payload: { id: clusterID } });
 }
 
 // Individual exports for testing

@@ -39,11 +39,14 @@ class ContainerForm extends React.PureComponent {
               <Button
                 variant="contained"
                 color="secondary"
-                className={classNames(classes.margin, classes.button, classes.removeBtn)}
+                className={classNames(
+                  classes.margin,
+                  classes.button,
+                  classes.removeBtn
+                )}
                 onClick={(evt) => {
                   updateForm(['containers', index], null);
                 }}
-
               >
                 remove this
               </Button>
@@ -123,7 +126,10 @@ class ContainerForm extends React.PureComponent {
                   label="mount_path"
                   value={item.get('mount_path')}
                   onChange={(evt) =>
-                    updateForm(['containers', index, 'mount_path'], evt.target.value)
+                    updateForm(
+                      ['containers', index, 'mount_path'],
+                      evt.target.value
+                    )
                   }
                 />
               </Grid>

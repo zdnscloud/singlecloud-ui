@@ -16,7 +16,6 @@ import CloudIcon from '@material-ui/icons/Cloud';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faServer } from '@fortawesome/free-solid-svg-icons';
 
-
 // import { FormattedMessage } from 'react-intl';
 // import messages from './messages';
 import styles from './styles';

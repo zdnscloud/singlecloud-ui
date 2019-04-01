@@ -18,6 +18,11 @@ function appReducer(state = initialState, { type, payload }) {
       return state;
 
     case CHANGE_CLUSTER:
+      if (payload.cluster === '') {
+        return state
+          .set('showEvents', false)
+          .set('activeCluster', payload.cluster);
+      }
       return state.set('activeCluster', payload.cluster);
 
     case TOGGLE_EVENTS_VIEW:

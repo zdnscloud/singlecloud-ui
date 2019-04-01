@@ -6,23 +6,20 @@ import { loadClusters } from '../ClustersPage/saga';
 import { initAction as initEvents } from '../EventsPage/actions';
 import { makeSelectClusterID } from './selectors';
 
-import {
-  INIT_ACTION,
-  CHANGE_CLUSTER,
-} from './constants';
+import { INIT_ACTION, CHANGE_CLUSTER } from './constants';
 
 export function* initialize() {
   yield* loadClusters();
   const id = yield select(makeSelectClusterID());
   if (id) {
-    yield put(initEvents({params: {cluster_id: id}}));
+    yield put(initEvents({ params: { cluster_id: id } }));
   }
 }
 
 export function* changeCluster({ payload }) {
   const id = payload.cluster;
-  yield put(initEvents({params: {cluster_id: id}}));
-  yield put(push('/clusters/' + id));
+  yield put(initEvents({ params: { cluster_id: id } }));
+  yield put(push(`/clusters/${id}`));
 }
 
 // Individual exports for testing

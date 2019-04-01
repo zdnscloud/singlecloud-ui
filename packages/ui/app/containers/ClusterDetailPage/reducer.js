@@ -50,7 +50,10 @@ function clusterDetailPageReducer(state = initialState, { type, payload }) {
       return state;
 
     case LOAD_CLUSTER_SUCCESS:
-      return state.setIn(['clusterDetail', payload.data.id], fromJS(payload.data));
+      return state.setIn(
+        ['clusterDetail', payload.data.id],
+        fromJS(payload.data)
+      );
 
     case LOAD_CLUSTER_FAILURE:
       return state;
