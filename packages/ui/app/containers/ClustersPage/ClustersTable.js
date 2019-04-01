@@ -41,25 +41,44 @@ export class ClustersTable extends React.PureComponent {
 
   render() {
     const { classes, tableList, clusters } = this.props;
-    const mergedSchema = schema.concat([
-      {
-        id: 'actions',
-        label: 'Actions',
-        component: (props) => (
-          <Fragment>
-            <IconButton
-              variant="outlined"
-              component={Link}
-              to={`/clusters/${props.data.get('id')}/console`}
-              size="small"
-              className={classes.button}
-            >
-              <FontAwesomeIcon icon={faTerminal} />
-            </IconButton>
-          </Fragment>
-        ),
-      },
-    ]);
+    const mergedSchema = schema
+      .concat([
+        {
+          id: 'actions',
+          label: 'Actions',
+          component: (props) => (
+            <Fragment>
+              <IconButton
+                variant="outlined"
+                component={Link}
+                to={`/clusters/${props.data.get('id')}/console`}
+                size="small"
+                className={classes.button}
+              >
+                <FontAwesomeIcon icon={faTerminal} />
+              </IconButton>
+            </Fragment>
+          ),
+        },
+      ])
+      .map((sch) => {
+        if (sch.id === 'name') {
+          return {
+            ...sch,
+            component: (props) => (
+              <Button
+                variant="outlined"
+                color="primary"
+                component={Link}
+                to={`/clusters/${props.data.get('id')}`}
+              >
+                {props.data.get('name')}
+              </Button>
+            ),
+          };
+        }
+        return sch;
+      });
 
     return (
       <Paper className={classes.tableWrapper}>

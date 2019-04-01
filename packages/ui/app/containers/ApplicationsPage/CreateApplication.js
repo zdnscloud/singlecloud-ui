@@ -58,6 +58,7 @@ import configMapsSaga from '../ConfigMapsPage/saga';
 import { initAction } from '../ConfigMapsPage/actions';
 import { makeSelectConfigMaps } from '../ConfigMapsPage/selectors';
 import { makeSelectNamespaces } from '../NamespacesPage/selectors';
+import SelectNamespace from './SelectNamespace';
 
 /* eslint-disable react/prefer-stateless-function */
 export class CreateApplication extends React.PureComponent {
@@ -71,7 +72,19 @@ export class CreateApplication extends React.PureComponent {
 
   componentWillMount() {
     this.props.initCreateForm(this.props.match);
-    this.props.initConfigMaps(this.props.match);
+  }
+
+  componentDidUpdate(prevProps) {
+    const { clusterID, namespaces, namespaceID, history } = this.props;
+    const {
+      clusterID: prevClusterID,
+      namespaces: prevNamespaces,
+      namespaceID: prevNamespaceID,
+      history: prevHistory,
+    } = prevProps;
+    if (namespaceID !== prevNamespaceID) {
+      this.props.initCreateForm(this.props.match);
+    }
   }
 
   render() {
@@ -90,23 +103,7 @@ export class CreateApplication extends React.PureComponent {
         <ApplicationsHelmet />
         <CssBaseline />
         <div className={classes.content}>
-          <FormControl className={classes.formControl}>
-            <InputLabel htmlFor="namespaceCreID">Namespace</InputLabel>
-            <Select
-              value={formData.get('namespaceID')}
-              onChange={(evt) => updateForm('namespaceID', evt.target.value)}
-              inputProps={{
-                name: 'namespaceID',
-                id: 'namespaceCreID',
-              }}
-            >
-              {namespaces.toList().map((c) => (
-                <MenuItem key={c.get('id')} value={c.get('id')}>
-                  {c.get('name')}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
+          <SelectNamespace />
           <Card>
             <CardContent>
               <Typography variant="h4" gutterBottom component="h2">
@@ -140,7 +137,7 @@ export class CreateApplication extends React.PureComponent {
                     key={index}
                   />
                 ))}
-                <Fab
+                <Button
                   color="primary"
                   aria-label="add Container"
                   className={classes.addContainerButton}
@@ -162,7 +159,8 @@ export class CreateApplication extends React.PureComponent {
                   }}
                 >
                   <AddIcon />
-                </Fab>
+                  add container
+                </Button>
               </Typography>
               <Typography component="div" className={classes.advanceContainer}>
                 <FormControlLabel

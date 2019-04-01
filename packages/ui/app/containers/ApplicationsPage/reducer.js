@@ -68,12 +68,7 @@ function applicationsPageReducer(state = initialState, { type, payload }) {
       );
       const list = data.data.map((item) => item.id);
 
-      // load applications is async
-      if (
-        state.get('clusterID') === clusterID &&
-        state.get('namespaceID') === namespaceID
-      )
-        newState = newState.set('tableList', fromJS(list));
+      newState = newState.set('tableList', fromJS(list));
 
       return newState.set('loadApplicationsErrors', null);
     }

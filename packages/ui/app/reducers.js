@@ -12,12 +12,12 @@ import clustersPageReducer from 'containers/ClustersPage/reducer';
 import nodesPageReducer from 'containers/NodesPage/reducer';
 import eventsPageReducer from 'containers/EventsPage/reducer';
 import namespacesPageReducer from 'containers/NamespacesPage/reducer';
-import deploymentsPageReducer from 'containers/DeploymentsPage/reducer';
 import podsPageReducer from 'containers/PodsPage/reducer';
 import configMapsPageReducer from 'containers/ConfigMapsPage/reducer';
 import servicesPageReducer from 'containers/ServicesPage/reducer';
 import ingressesPageReducer from 'containers/IngressesPage/reducer';
 import applicationsPageReducer from 'containers/ApplicationsPage/reducer';
+import applicationDetailPagePageReducer from 'containers/ApplicationDetailPage/reducer';
 
 /**
  * Merges the main reducer with the router state and dynamically injected reducers
@@ -31,12 +31,11 @@ export default function createReducer(injectedReducers = {}) {
     nodesPage: nodesPageReducer,
     eventsPage: eventsPageReducer,
     namespacesPage: namespacesPageReducer,
-    deploymentsPage: deploymentsPageReducer,
     configMapsPage: configMapsPageReducer,
     servicesPage: servicesPageReducer,
     ingressesPage: ingressesPageReducer,
-    podsPage: podsPageReducer,
     applicationsPage: applicationsPageReducer,
+    applicationDetailPage: applicationDetailPagePageReducer,
     ...injectedReducers,
   });
 

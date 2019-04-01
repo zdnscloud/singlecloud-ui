@@ -23,6 +23,11 @@ import EditIcon from '@material-ui/icons/Edit';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
 
+import {
+  makeSelectClusterID,
+  makeSelectNamespaceID,
+  makeSelectLocation,
+} from '../App/selectors';
 import { makeSelectApplications, makeSelectTableList } from './selectors';
 import * as actions from './actions';
 import messages from './messages';
@@ -38,27 +43,52 @@ export class ApplicationsTable extends React.PureComponent {
   };
 
   render() {
-    const { classes, tableList, applications, removeApplication } = this.props;
-    console.log(schema);
-    const mergedSchema = schema.concat([
-      {
-        id: 'actions',
-        label: 'Actions',
-        component: (props) => (
-          <Fragment>
-            <IconButton aria-label="Edit">
-              <EditIcon />
-            </IconButton>
-            <IconButton
-              aria-label="Delete"
-              onClick={(evt) => removeApplication(props.data.get('id'))}
-            >
-              <DeleteIcon />
-            </IconButton>
-          </Fragment>
-        ),
-      },
-    ]);
+    const {
+      classes,
+      location,
+      tableList,
+      applications,
+      removeApplication,
+    } = this.props;
+    const pathname = location.get('pathname');
+    const mergedSchema = schema
+      .concat([
+        {
+          id: 'actions',
+          label: 'Actions',
+          component: (props) => (
+            <Fragment>
+              <IconButton aria-label="Edit">
+                <EditIcon />
+              </IconButton>
+              <IconButton
+                aria-label="Delete"
+                onClick={(evt) => removeApplication(props.data.get('id'))}
+              >
+                <DeleteIcon />
+              </IconButton>
+            </Fragment>
+          ),
+        },
+      ])
+      .map((sch) => {
+        if (sch.id === 'name') {
+          return {
+            ...sch,
+            component: (props) => (
+              <Button
+                variant="outlined"
+                color="primary"
+                component={Link}
+                to={`${pathname}/${props.data.get('id')}`}
+              >
+                {props.data.get('name')}
+              </Button>
+            ),
+          };
+        }
+        return sch;
+      });
 
     return (
       <Paper className={classes.tableWrapper}>
@@ -73,6 +103,7 @@ export class ApplicationsTable extends React.PureComponent {
 }
 
 const mapStateToProps = createStructuredSelector({
+  location: makeSelectLocation(),
   applications: makeSelectApplications(),
   tableList: makeSelectTableList(),
 });
