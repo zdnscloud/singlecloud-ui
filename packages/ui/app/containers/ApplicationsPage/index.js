@@ -25,6 +25,8 @@ import CardHeader from 'components/Card/CardHeader';
 import CardBody from 'components/Card/CardBody';
 
 import injectSaga from 'utils/injectSaga';
+import { makeSelectClusterID, makeSelectNamespaceID } from '../App/selectors';
+import { makeSelectNamespaces } from '../NamespacesPage/selectors';
 import makeSelectApplicationsPage from './selectors';
 import reducer from './reducer';
 import * as actions from './actions';
@@ -45,7 +47,33 @@ export class ApplicationsPage extends React.PureComponent {
   };
 
   componentWillMount() {
+    const { clusterID, namespaces, namespaceID, history } = this.props;
+    if (!namespaceID) {
+      const ns = namespaces.get('default') || namespaces.fisrt();
+      history.replace(
+        `/clusters/${clusterID}/namespaces/${ns.get('id')}/applications`
+      );
+    }
     this.props.initAction(this.props.match);
+  }
+
+  componentDidUpdate(prevProps) {
+    const { clusterID, namespaces, namespaceID, history } = this.props;
+    const {
+      clusterID: prevClusterID,
+      namespaces: prevNamespaces,
+      namespaceID: prevNamespaceID,
+      history: prevHistory,
+    } = prevProps;
+    if (!namespaceID) {
+      const ns = namespaces.get('default') || namespaces.fisrt();
+      history.replace(
+        `/clusters/${clusterID}/namespaces/${ns.get('id')}/applications`
+      );
+    }
+    if (namespaceID !== prevNamespaceID) {
+      this.props.initAction(this.props.match);
+    }
   }
 
   render() {
@@ -65,7 +93,10 @@ export class ApplicationsPage extends React.PureComponent {
                 <CardHeader color="customBlue">
                   <h4 className={classes.cardTitleWhite}>
                     <FormattedMessage {...messages.applications} />
-                    <Link to={`${this.props.location.pathname}/create`} className={classes.createBtnLink}>
+                    <Link
+                      to={`${this.props.location.pathname}/create`}
+                      className={classes.createBtnLink}
+                    >
                       <Fab
                         size="small"
                         color="default"
@@ -89,7 +120,11 @@ export class ApplicationsPage extends React.PureComponent {
   }
 }
 
-const mapStateToProps = createStructuredSelector({});
+const mapStateToProps = createStructuredSelector({
+  clusterID: makeSelectClusterID(),
+  namespaceID: makeSelectNamespaceID(),
+  namespaces: makeSelectNamespaces(),
+});
 
 const mapDispatchToProps = (dispatch) =>
   bindActionCreators(

@@ -89,19 +89,12 @@ export class CreateApplication extends React.PureComponent {
       <div className={classes.root}>
         <ApplicationsHelmet />
         <CssBaseline />
-        <div className={classes.content}>    
+        <div className={classes.content}>
           <FormControl className={classes.formControl}>
-            <InputLabel htmlFor="namespaceCreID">
-              Namespace
-            </InputLabel>
+            <InputLabel htmlFor="namespaceCreID">Namespace</InputLabel>
             <Select
               value={formData.get('namespaceID')}
-              onChange={(evt) =>
-                updateForm(
-                  'namespaceID',
-                  evt.target.value
-                )
-              }
+              onChange={(evt) => updateForm('namespaceID', evt.target.value)}
               inputProps={{
                 name: 'namespaceID',
                 id: 'namespaceCreID',
@@ -229,18 +222,37 @@ export class CreateApplication extends React.PureComponent {
                     );
                     const idx = svcs.findIndex((svc) => svc === current);
                     return (
-                      <Paper className={classNames(classes.separateLine, classes.padding10)}>
+                      <Paper
+                        className={classNames(
+                          classes.separateLine,
+                          classes.padding10
+                        )}
+                      >
                         <Grid>
-                          {
-                            port.get('name') ?
-                              (<FormLabel className={classNames(classes.marginRight10, classes.textField)}>
-                                Name: {port.get('name')}
-                              </FormLabel>) : null
-                          }
-                          <FormLabel className={classNames(classes.marginRight10, classes.textField)}>
+                          {port.get('name') ? (
+                            <FormLabel
+                              className={classNames(
+                                classes.marginRight10,
+                                classes.textField
+                              )}
+                            >
+                              Name: {port.get('name')}
+                            </FormLabel>
+                          ) : null}
+                          <FormLabel
+                            className={classNames(
+                              classes.marginRight10,
+                              classes.textField
+                            )}
+                          >
                             Protocol: {port.get('protocol')}
                           </FormLabel>
-                          <FormLabel className={classNames(classes.marginRight10, classes.textField)}>
+                          <FormLabel
+                            className={classNames(
+                              classes.marginRight10,
+                              classes.textField
+                            )}
+                          >
                             Port: {port.get('port')}
                           </FormLabel>
                         </Grid>
@@ -252,7 +264,11 @@ export class CreateApplication extends React.PureComponent {
                                 onChange={(evt) => {
                                   if (current) {
                                     updateForm(
-                                      ['advancedOptions', 'exposedServices', idx],
+                                      [
+                                        'advancedOptions',
+                                        'exposedServices',
+                                        idx,
+                                      ],
                                       null
                                     );
                                   } else {
@@ -273,11 +289,16 @@ export class CreateApplication extends React.PureComponent {
                             label="Auto Create Service"
                           />
                           <TextField
-                            className={classNames(classes.margin, classes.textField)}
+                            className={classNames(
+                              classes.margin,
+                              classes.textField
+                            )}
                             type="number"
                             label="Servce Port"
                             disabled={!current}
-                            value={(current && current.get('servicePort')) || ''}
+                            value={
+                              (current && current.get('servicePort')) || ''
+                            }
                             onChange={(evt) => {
                               updateForm(
                                 [
@@ -294,7 +315,9 @@ export class CreateApplication extends React.PureComponent {
                             control={
                               <Checkbox
                                 disabled={!current}
-                                checked={current && current.get('autoCreateIngress')}
+                                checked={
+                                  current && current.get('autoCreateIngress')
+                                }
                                 onChange={(evt) => {
                                   updateForm(
                                     [
@@ -313,11 +336,17 @@ export class CreateApplication extends React.PureComponent {
                             label="Auto Create Ingress"
                           />
                           <TextField
-                            className={classNames(classes.margin, classes.textField)}
+                            className={classNames(
+                              classes.margin,
+                              classes.textField
+                            )}
                             label="Ingress Domain Name"
-                            disabled={!current || !current.get('autoCreateIngress')}
+                            disabled={
+                              !current || !current.get('autoCreateIngress')
+                            }
                             value={
-                              (current && current.get('ingressDomainName')) || ''
+                              (current && current.get('ingressDomainName')) ||
+                              ''
                             }
                             onChange={(evt) => {
                               updateForm(
@@ -332,10 +361,17 @@ export class CreateApplication extends React.PureComponent {
                             }}
                           />
                           <TextField
-                            className={classNames(classes.margin, classes.textField)}
+                            className={classNames(
+                              classes.margin,
+                              classes.textField
+                            )}
                             label="Ingress Path"
-                            disabled={!current || !current.get('autoCreateIngress')}
-                            value={(current && current.get('ingressPath')) || ''}
+                            disabled={
+                              !current || !current.get('autoCreateIngress')
+                            }
+                            value={
+                              (current && current.get('ingressPath')) || ''
+                            }
                             onChange={(evt) => {
                               updateForm(
                                 [

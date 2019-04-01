@@ -27,12 +27,6 @@ import CreateApplication from 'containers/ApplicationsPage/CreateLoadable';
 
 const appRoutes = [
   {
-    path: '/',
-    name: 'Home',
-    icon: Dashboard,
-    component: HomePage,
-  },
-  {
     path: '/clusters',
     name: 'Clusters',
     icon: Dashboard,
@@ -113,6 +107,12 @@ const appRoutes = [
   },
   {
     path: '/clusters/:cluster_id/applications',
+    name: 'Applications',
+    icon: Dashboard,
+    component: ApplicationsPage,
+  },
+  {
+    path: '/clusters/:cluster_id/namespaces/:namespace_id/applications',
     name: 'Applications',
     icon: Dashboard,
     component: ApplicationsPage,

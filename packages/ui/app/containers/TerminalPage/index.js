@@ -101,12 +101,13 @@ export class TerminalPage extends React.PureComponent {
         <CssBaseline />
         <div className={classes.content}>
           <Card>
-            <CardHeader 
+            <CardHeader
               title={
                 <Typography variant="h4" gutterBottom component="h2">
                   <FormattedMessage {...messages.header} />
-                </Typography>} 
-            />  
+                </Typography>
+              }
+            />
             <CardContent>
               <Paper
                 ref={(el) => {

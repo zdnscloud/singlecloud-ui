@@ -35,7 +35,7 @@ import Checkbox from '@material-ui/core/Checkbox';
 
 import styles from './styles';
 import * as actions from './actions';
-import { makeSelectNamespaceID } from './selectors';
+import { makeSelectNamespaceID } from '../App/selectors';
 import { makeSelectNamespaces } from '../NamespacesPage/selectors';
 
 const SelectNamespace = (props) => {
@@ -91,4 +91,7 @@ const withConnect = connect(
   mapDispatchToProps
 );
 
-export default compose(withConnect, withStyles(styles))(SelectNamespace);
+export default compose(
+  withConnect,
+  withStyles(styles)
+)(SelectNamespace);

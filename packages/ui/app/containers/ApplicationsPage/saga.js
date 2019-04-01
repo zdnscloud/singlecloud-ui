@@ -82,9 +82,7 @@ export function* createApplication() {
       }
     );
     yield put(createApplicationSuccess(data));
-    yield put(
-      push(`/clusters/${clusterID}/applications`)
-    );
+    yield put(push(`/clusters/${clusterID}/applications`));
   } catch (e) {
     yield put(createApplicationFailure(e));
   }
@@ -110,6 +108,18 @@ export function* removeApplication({ payload }) {
   }
 }
 
+export function* changeNamespace({ payload }) {
+  try {
+    const clusterID = yield select(makeSelectClusterID());
+    const { namespaceID } = payload;
+    yield put(
+      push(`/clusters/${clusterID}/namespaces/${namespaceID}/applications`)
+    );
+  } catch (e) {
+    console.error(e);
+  }
+}
+
 // Individual exports for testing
 export default function* applicationsPageSaga() {
   // See example in containers/HomePage/saga.js
@@ -117,5 +127,5 @@ export default function* applicationsPageSaga() {
   yield takeLatest(LOAD_APPLICATIONS, loadApplications);
   yield takeLatest(CREATE_APPLICATION, createApplication);
   yield takeLatest(REMOVE_APPLICATION, removeApplication);
-  yield takeLatest(CHANGE_NAMESPACE, loadApplications);
+  yield takeLatest(CHANGE_NAMESPACE, changeNamespace);
 }

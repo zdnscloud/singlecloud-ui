@@ -14,7 +14,7 @@ import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import { bindActionCreators, compose } from 'redux';
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route, Redirect } from 'react-router-dom';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import { withRouter } from 'react-router';
 
@@ -32,10 +32,8 @@ import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import Typography from '@material-ui/core/Typography';
 // core components
-import Navbar from 'components/Navbars/Navbar';
 import Footer from 'components/Footer/Footer';
 import Sidebar from 'components/Sidebar/Sidebar';
-import FixedPlugin from 'components/FixedPlugin/FixedPlugin';
 import Menubar from 'components/Menubar';
 
 import HomePage from 'containers/HomePage/Loadable';
@@ -60,13 +58,19 @@ import image from 'assets/img/sidebar-3.jpg';
 import SelectCluster from './SelectCluster';
 import appRoutes from './routes';
 import * as actions from './actions';
-import { makeSelectActiveCluster, makeSelectMenus, makeSelectClusterID, makeSelectShowEvents } from './selectors';
+import {
+  makeSelectActiveCluster,
+  makeSelectMenus,
+  makeSelectClusterID,
+  makeSelectShowEvents,
+} from './selectors';
 import { makeSelectClusters } from '../ClustersPage/selectors';
 import GlobalStyle from '../../global-styles';
 import EventsTable from '../EventsPage/EventsTable';
 
 const switchRoutes = (
   <Switch>
+    <Redirect exact from="/" to="/clusters" />
     {appRoutes.map((prop, key) => (
       <Route exact path={prop.path} component={prop.component} key={key} />
     ))}
@@ -152,10 +156,7 @@ class App extends PureComponent {
             }
           />
           <div className={classes.mainPanel} data-ref="mainPanel">
-            <ExpansionPanel
-              square
-              expanded={showEvents}
-            >
+            <ExpansionPanel square expanded={showEvents}>
               <ExpansionPanelDetails>
                 {showEvents && <EventsTable />}
               </ExpansionPanelDetails>

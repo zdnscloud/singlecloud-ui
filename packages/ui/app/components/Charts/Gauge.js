@@ -8,13 +8,11 @@ export default class GuageChart extends PureComponent {
   };
 
   render() {
-    const props = this.props
+    const { props } = this;
     return (
       <div>
-				<Gauge
-          {...props}
-        />
-			</div>
+        <Gauge {...props} />
+      </div>
     );
   }
 }
