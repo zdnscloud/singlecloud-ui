@@ -17,6 +17,9 @@ import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
 import { SimpleTable } from '@gsmlg/com';
 
+import IconButton from '@material-ui/core/IconButton';
+import DeleteIcon from '@material-ui/icons/Delete';
+
 import { makeSelectNamespaces, makeSelectTableList } from './selectors';
 import * as actions from './actions';
 import messages from './messages';
@@ -84,16 +87,12 @@ export class NamespacesTable extends React.PureComponent {
             {/* > */}
             {/*   Show Ingresses */}
             {/* </Button> */}
-            <Button
-              variant="outlined"
-              size="small"
-              className={classes.button}
-              onClick={(evt) => {
-                removeNamespace(props.data.get('id'));
-              }}
+            <IconButton
+              aria-label="Delete"
+              onClick={(evt) => removeNamespace(props.data.get('id'))}
             >
-              Delete this namespace
-            </Button>
+              <DeleteIcon />
+            </IconButton>
           </Fragment>
         ),
       },
