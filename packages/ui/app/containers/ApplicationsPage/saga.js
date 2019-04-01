@@ -2,10 +2,16 @@ import { takeLatest, call, put, select } from 'redux-saga/effects';
 import request from 'utils/request';
 import { push } from 'connected-react-router';
 
+import {
+  makeSelectClusterID,
+  makeSelectNamespaceID,
+  makeSelectLocation,
+} from '../App/selectors';
 import { url } from '../ClustersPage/saga';
 
 import {
   INIT_ACTION,
+  INIT_CREATE_FORM,
   LOAD_APPLICATIONS,
   CREATE_APPLICATION,
   REMOVE_APPLICATION,
@@ -22,12 +28,7 @@ import {
   removeApplicationSuccess,
   removeApplicationFailure,
 } from './actions';
-import {
-  makeSelectCreateFormData,
-  makeSelectClusterID,
-  makeSelectFormPorts,
-  makeSelectNamespaceID,
-} from './selectors';
+import { makeSelectCreateFormData, makeSelectFormPorts } from './selectors';
 
 import { loadConfigMaps } from '../ConfigMapsPage/saga';
 import { loadNamespaces } from '../NamespacesPage/saga';
@@ -35,6 +36,11 @@ import { loadNamespaces } from '../NamespacesPage/saga';
 export function* initialize() {
   yield* loadNamespaces();
   yield* loadApplications();
+}
+
+export function* initCreateion() {
+  yield* loadNamespaces();
+  yield* loadConfigMaps();
 }
 
 export function* loadApplications() {
@@ -82,6 +88,15 @@ export function* createApplication() {
       }
     );
     yield put(createApplicationSuccess(data));
+    const location = yield select(makeSelectLocation());
+    const suffix = location
+      .get('pathname')
+      .split('/')
+      .slice(5)
+      .join('/');
+    yield put(
+      push(`/clusters/${clusterID}/namespaces/${namespaceID}/${suffix}`)
+    );
     yield put(push(`/clusters/${clusterID}/applications`));
   } catch (e) {
     yield put(createApplicationFailure(e));
@@ -110,10 +125,16 @@ export function* removeApplication({ payload }) {
 
 export function* changeNamespace({ payload }) {
   try {
+    const location = yield select(makeSelectLocation());
     const clusterID = yield select(makeSelectClusterID());
     const { namespaceID } = payload;
+    const suffix = location
+      .get('pathname')
+      .split('/')
+      .slice(5)
+      .join('/');
     yield put(
-      push(`/clusters/${clusterID}/namespaces/${namespaceID}/applications`)
+      push(`/clusters/${clusterID}/namespaces/${namespaceID}/${suffix}`)
     );
   } catch (e) {
     console.error(e);
@@ -124,6 +145,7 @@ export function* changeNamespace({ payload }) {
 export default function* applicationsPageSaga() {
   // See example in containers/HomePage/saga.js
   yield takeLatest(INIT_ACTION, initialize);
+  yield takeLatest(INIT_CREATE_FORM, initCreateion);
   yield takeLatest(LOAD_APPLICATIONS, loadApplications);
   yield takeLatest(CREATE_APPLICATION, createApplication);
   yield takeLatest(REMOVE_APPLICATION, removeApplication);

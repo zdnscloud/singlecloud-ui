@@ -11,7 +11,7 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 
 import styles from './selectClusterStyles';
-import actions from './actions';
+import * as actions from './actions';
 import { makeSelectActiveCluster } from './selectors';
 import { makeSelectClusters } from '../ClustersPage/selectors';
 

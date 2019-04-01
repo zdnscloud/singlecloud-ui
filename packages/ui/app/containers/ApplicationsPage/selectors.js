@@ -1,7 +1,11 @@
 import { Map } from 'immutable';
 import { createSelector } from 'reselect';
 import { initialState } from './reducer';
-import { makeSelectClusterID as sid } from '../App/selectors';
+import {
+  makeSelectClusterID,
+  makeSelectNamespaceID,
+  makeSelectLocation,
+} from '../App/selectors';
 
 /**
  * Direct selector to the applicationsPage state domain
@@ -13,13 +17,6 @@ export const selectApplicationsPageDomain = (state) =>
 /**
  * Other specific selectors
  */
-export const makeSelectClusterID = sid;
-
-export const makeSelectNamespaceID = () =>
-  createSelector(
-    selectApplicationsPageDomain,
-    (substate) => substate.get('namespaceID')
-  );
 
 export const makeSelectApplications = () =>
   createSelector(
