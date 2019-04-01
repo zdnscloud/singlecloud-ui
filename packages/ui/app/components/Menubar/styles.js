@@ -1,6 +1,8 @@
 const styles = (theme) => ({
   toolbar: {
     paddingRight: 24, // keep right padding when drawer closed
+    display: 'flex',
+    justifyContent: 'space-between',
   },
   appBar: {
     zIndex: theme.zIndex.drawer + 1,
@@ -8,9 +10,14 @@ const styles = (theme) => ({
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
     }),
+    '@media (min-width: 960px)': {
+      width: 'calc(100% - 260px)',
+      left: '260px',
+    },
     position: 'fixed',
     top: 0,
-    left: '260px',
+    left: 0,
+    width: '100%',
   },
   menuButton: {
     marginLeft: 12,
@@ -23,6 +30,12 @@ const styles = (theme) => ({
     flexGrow: 1,
   },
   appBarSpacer: theme.mixins.toolbar,
+  toolbarLeft: {
+    display: 'flex',
+  },
+  toolbarRight: {
+    display: 'flex',
+  },
 });
 
 export default styles;
