@@ -49,7 +49,9 @@ export class ApplicationsPage extends React.PureComponent {
   componentWillMount() {
     const { clusterID, namespaces, namespaceID, history } = this.props;
     if (!namespaceID) {
-      const ns = namespaces.get('default') || namespaces.fisrt();
+      const ns =
+        namespaces.get('default') ||
+        namespaces.get(namespaces.keySeq().first());
       history.replace(
         `/clusters/${clusterID}/namespaces/${ns.get('id')}/applications`
       );
@@ -66,7 +68,9 @@ export class ApplicationsPage extends React.PureComponent {
       history: prevHistory,
     } = prevProps;
     if (!namespaceID) {
-      const ns = namespaces.get('default') || namespaces.fisrt();
+      const ns =
+        namespaces.get('default') ||
+        namespaces.get(namespaces.keySeq().first());
       history.replace(
         `/clusters/${clusterID}/namespaces/${ns.get('id')}/applications`
       );
