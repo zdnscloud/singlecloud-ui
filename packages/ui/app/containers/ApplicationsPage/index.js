@@ -52,9 +52,10 @@ export class ApplicationsPage extends React.PureComponent {
       const ns =
         namespaces.get('default') ||
         namespaces.get(namespaces.keySeq().first());
-      history.replace(
-        `/clusters/${clusterID}/namespaces/${ns.get('id')}/applications`
-      );
+      if (ns)
+        history.replace(
+          `/clusters/${clusterID}/namespaces/${ns.get('id')}/applications`
+        );
     }
     this.props.initAction(this.props.match);
   }
@@ -71,9 +72,10 @@ export class ApplicationsPage extends React.PureComponent {
       const ns =
         namespaces.get('default') ||
         namespaces.get(namespaces.keySeq().first());
-      history.replace(
-        `/clusters/${clusterID}/namespaces/${ns.get('id')}/applications`
-      );
+      if (ns)
+        history.replace(
+          `/clusters/${clusterID}/namespaces/${ns.get('id')}/applications`
+        );
     }
     if (namespaceID !== prevNamespaceID) {
       this.props.initAction(this.props.match);
