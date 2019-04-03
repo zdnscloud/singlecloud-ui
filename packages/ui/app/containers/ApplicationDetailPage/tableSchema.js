@@ -22,7 +22,7 @@ const tableSchema = schema
         component(props) {
           return props.data
             .get('containers')
-            .map((ctn) => <Chip label={ctn.get('name')} />);
+            .map((ctn) => <Chip label={`${ctn.get('name')}  ${ctn.get('image')}`} />);
         },
       };
     }

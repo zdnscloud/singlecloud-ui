@@ -36,21 +36,6 @@ import Footer from 'components/Footer/Footer';
 import Sidebar from 'components/Sidebar/Sidebar';
 import Menubar from 'components/Menubar';
 
-import HomePage from 'containers/HomePage/Loadable';
-import NotFoundPage from 'containers/NotFoundPage/Loadable';
-import ClustersPage from 'containers/ClustersPage/Loadable';
-import NodesPage from 'containers/NodesPage/Loadable';
-import NamespacesPage from 'containers/NamespacesPage/Loadable';
-import DeploymentsPage from 'containers/DeploymentsPage/Loadable';
-import CreateDeployment from 'containers/DeploymentsPage/CreateLoadable';
-import PodsPage from 'containers/PodsPage/Loadable';
-import TerminalPage from 'containers/TerminalPage/Loadable';
-import EventsPage from 'containers/EventsPage/Loadable';
-import ConfigMapsPage from 'containers/ConfigMapsPage/Loadable';
-import ServicesPage from 'containers/ServicesPage/Loadable';
-import IngressesPage from 'containers/IngressesPage/Loadable';
-import CreateConfigMap from 'containers/ConfigMapsPage/CreateLoadable';
-
 import dashboardStyle from 'assets/jss/material-dashboard-react/layouts/dashboardStyle';
 import logo from 'images/favicon.png';
 import image from 'assets/img/sidebar-3.jpg';

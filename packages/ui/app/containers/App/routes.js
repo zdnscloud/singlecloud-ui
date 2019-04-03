@@ -13,8 +13,6 @@ import ClustersPage from 'containers/ClustersPage/Loadable';
 import ClusterDetailPage from 'containers/ClusterDetailPage/Loadable';
 import NodesPage from 'containers/NodesPage/Loadable';
 import NamespacesPage from 'containers/NamespacesPage/Loadable';
-import DeploymentsPage from 'containers/DeploymentsPage/Loadable';
-import CreateDeployment from 'containers/DeploymentsPage/CreateLoadable';
 import PodsPage from 'containers/PodsPage/Loadable';
 import TerminalPage from 'containers/TerminalPage/Loadable';
 import EventsPage from 'containers/EventsPage/Loadable';
@@ -62,25 +60,6 @@ const appRoutes = [
     name: 'namespaces',
     icon: Dashboard,
     component: NamespacesPage,
-  },
-  {
-    path: '/clusters/:cluster_id/namespaces/:namespace_id/deployments',
-    name: 'deployments',
-    icon: Dashboard,
-    component: DeploymentsPage,
-  },
-  {
-    path: '/clusters/:cluster_id/namespaces/:namespace_id/deployments/create',
-    name: 'create deployments',
-    icon: Dashboard,
-    component: CreateDeployment,
-  },
-  {
-    path:
-      '/clusters/:cluster_id/namespaces/:namespace_id/deployments/:deployment_id/pods',
-    name: 'pods',
-    icon: Dashboard,
-    component: PodsPage,
   },
   {
     path: '/clusters/:cluster_id/namespaces/:namespace_id/configmaps',
