@@ -50,6 +50,7 @@ export const makeSelectMenus = () =>
       const menus = [{ name: 'clusters', path: '/clusters' }];
       if (cluster !== '') {
         return menus.concat([
+          { name: 'nodes', path: `/clusters/${cluster}/nodes` },
           { name: 'namespaces', path: `/clusters/${cluster}/namespaces` },
           { name: 'applications', path: `/clusters/${cluster}/applications` },
           { name: 'storage', path: `/clusters/${cluster}/storage` },

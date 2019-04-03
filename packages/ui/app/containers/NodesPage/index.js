@@ -15,6 +15,11 @@ import { withStyles } from '@material-ui/core/styles';
 import Menubar from 'components/Menubar';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Typography from '@material-ui/core/Typography';
+import GridItem from 'components/Grid/GridItem';
+import GridContainer from 'components/Grid/GridContainer';
+import Card from 'components/Card/Card';
+import CardHeader from 'components/Card/CardHeader';
+import CardBody from 'components/Card/CardBody';
 
 import injectSaga from 'utils/injectSaga';
 import * as actions from './actions';
@@ -43,15 +48,21 @@ export class NodesPage extends React.PureComponent {
       <div className={classes.root}>
         <NodesPageHelmet />
         <CssBaseline />
-        <Menubar headerContent={<FormattedMessage {...messages.header} />} />
         <div className={classes.content}>
-          <div className={classes.appBarSpacer} />
-          <Typography variant="h4" gutterBottom component="h2">
-            <FormattedMessage {...messages.nodes} />
-          </Typography>
-          <Typography component="div" className={classes.chartContainer}>
-            <NodesTable />
-          </Typography>
+          <GridContainer>
+            <GridItem xs={12} sm={12} md={12}>
+              <Card>
+                <CardHeader color="customBlue">
+                  <h4 className={classes.cardTitleWhite}>
+                    <FormattedMessage {...messages.nodes} />
+                  </h4>
+                </CardHeader>
+                <CardBody>
+                  <NodesTable />
+                </CardBody>
+              </Card>
+            </GridItem>
+          </GridContainer>
         </div>
       </div>
     );
