@@ -19,20 +19,13 @@ const SelectCluster = (props) => {
   const { classes, clusters, activeCluster, changeCluster } = props;
 
   return (
-    <FormControl variant="outlined" className={classes.formControl}>
+    <FormControl className={classes.formControl}>
       <InputLabel htmlFor="cluster_name-id">Cluster</InputLabel>
       <Select
         value={activeCluster}
         onChange={(evt) => {
           changeCluster(evt.target.value);
         }}
-        input={
-          <OutlinedInput
-            labelWidth={40}
-            name="cluster name"
-            id="cluster_name-id"
-          />
-        }
       >
         <MenuItem value="">
           <em>Global</em>

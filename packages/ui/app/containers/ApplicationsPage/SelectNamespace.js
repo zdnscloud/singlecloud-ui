@@ -42,20 +42,13 @@ const SelectNamespace = (props) => {
   const { classes, namespaces, namespaceID, changeNamespace } = props;
 
   return (
-    <FormControl variant="outlined" className={classes.formControl}>
+    <FormControl className={classes.formControl}>
       <InputLabel htmlFor="namespace_name-id">Namespace</InputLabel>
       <Select
         value={namespaceID}
         onChange={(evt) => {
           changeNamespace(evt.target.value);
         }}
-        input={
-          <OutlinedInput
-            labelWidth={100}
-            name="namespace"
-            id="namespace_name-id"
-          />
-        }
       >
         {namespaces.toList().map((c) => (
           <MenuItem key={c.get('id')} value={c.get('id')}>
