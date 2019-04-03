@@ -20,7 +20,6 @@ import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 
 import injectSaga from 'utils/injectSaga';
-import makeSelectPodsPage from './selectors';
 import reducer from './reducer';
 import * as actions from './actions';
 import saga from './saga';
@@ -66,9 +65,7 @@ export class PodsPage extends React.PureComponent {
   }
 }
 
-const mapStateToProps = createStructuredSelector({
-  podsPage: makeSelectPodsPage(),
-});
+const mapStateToProps = createStructuredSelector({});
 
 const mapDispatchToProps = (dispatch) =>
   bindActionCreators(

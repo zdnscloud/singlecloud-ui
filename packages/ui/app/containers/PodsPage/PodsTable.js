@@ -16,6 +16,9 @@ import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
 import { SimpleTable } from '@gsmlg/com';
+import EditIcon from '@material-ui/icons/Edit';
+import IconButton from '@material-ui/core/IconButton';
+import DeleteIcon from '@material-ui/icons/Delete';
 
 import { makeSelectPods, makeSelectTableList } from './selectors';
 import * as actions from './actions';
@@ -49,7 +52,7 @@ export class PodsTable extends React.PureComponent {
                   openLogView(props.data.get('id'), ctn.get('name'))
                 }
               >
-                Show Container({ctn.get('name')}) Log
+                Container({ctn.get('name')}) Log
               </Button>
             ))}
           </Fragment>
@@ -60,14 +63,14 @@ export class PodsTable extends React.PureComponent {
         label: 'Actions',
         component: (props) => (
           <Fragment>
-            <Button
-              variant="outlined"
+            <IconButton
+              aria-label="Delete"
               size="small"
               className={classes.button}
               onClick={(evt) => removePod(props.data.get('id'))}
             >
-              Delete this
-            </Button>
+              <DeleteIcon />
+            </IconButton>
           </Fragment>
         ),
       },

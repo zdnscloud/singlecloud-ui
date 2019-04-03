@@ -38,7 +38,9 @@ class LogViewDialog extends React.Component {
           socket = new SockJS(url);
           const logSource = Observable.create((ob) => {
             observer = ob;
-            socket.onmessage = (e) => ob.next(e.data);
+            socket.onmessage = (e) => {
+              ob.next(e.data);
+            };
           });
           logSource
             .pipe(
@@ -49,13 +51,19 @@ class LogViewDialog extends React.Component {
                 return [tt, l];
               })
             )
-            .pipe(scan((acc, val) => acc.concat([val]).slice(-2000), []))
-            .pipe(throttleTime(500))
+            .pipe(
+              scan((acc, val) => {
+                const newAcc = acc.concat([val]);
+                if (newAcc.length > 2000) return newAcc.slice(-2000);
+                return newAcc;
+              }, [])
+            )
+            .pipe(throttleTime(1000 / 60))
             .subscribe((l) => {
               setLogs(l);
             });
           socket.onclose = (e) => {
-            setLogs(logs.concat([[new Date(), 'Pull log timeout!!!']]));
+            observer.next(`${new Date().toISOString()} Pull log timeout!!!`);
             if (observer) observer.complete();
             observer = null;
           };

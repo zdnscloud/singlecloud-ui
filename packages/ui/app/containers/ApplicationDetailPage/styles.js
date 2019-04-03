@@ -195,6 +195,9 @@ const styles = (theme) => ({
     top: '3px',
     right: '10px',
   },
+  button: {
+    whiteSpace: 'nowrap',
+  },
 });
 
 export default styles;

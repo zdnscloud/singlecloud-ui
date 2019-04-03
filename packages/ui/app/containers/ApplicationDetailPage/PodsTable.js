@@ -1,6 +1,6 @@
 /**
  *
- * PodsPage
+ * Pods Table
  *
  */
 
@@ -16,6 +16,13 @@ import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
 import { SimpleTable } from '@gsmlg/com';
+import Fab from '@material-ui/core/Fab';
+import EditIcon from '@material-ui/icons/Edit';
+import IconButton from '@material-ui/core/IconButton';
+import DeleteIcon from '@material-ui/icons/Delete';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTerminal } from '@fortawesome/free-solid-svg-icons';
+import Chip from '@material-ui/core/Chip';
 
 import { makeSelectPods, makeSelectTableList } from './selectors';
 import * as actions from './actions';
@@ -40,17 +47,19 @@ export class PodsTable extends React.PureComponent {
         component: (props) => (
           <Fragment>
             {props.data.get('containers').map((ctn) => (
-              <Button
+              <Fab
                 key={ctn.get('name')}
-                variant="outlined"
-                size="small"
+                variant="extended"
+                aria-label="View Log"
                 className={classes.button}
+                size="small"
                 onClick={(evt) =>
                   openLogView(props.data.get('id'), ctn.get('name'))
                 }
               >
-                Show Container({ctn.get('name')}) Log
-              </Button>
+                <FontAwesomeIcon icon={faTerminal} />
+                {ctn.get('name')}
+              </Fab>
             ))}
           </Fragment>
         ),
@@ -60,14 +69,13 @@ export class PodsTable extends React.PureComponent {
         label: 'Actions',
         component: (props) => (
           <Fragment>
-            <Button
-              variant="outlined"
-              size="small"
+            <IconButton
+              aria-label="Delete"
               className={classes.button}
               onClick={(evt) => removePod(props.data.get('id'))}
             >
-              Delete this
-            </Button>
+              <DeleteIcon />
+            </IconButton>
           </Fragment>
         ),
       },
