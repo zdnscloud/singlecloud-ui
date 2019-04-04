@@ -1,23 +1,24 @@
-import React from 'react';
+import React from "react";
 // nodejs library that concatenates classes
-import classNames from 'classnames';
+import classNames from "classnames";
 // nodejs library to set properties for components
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 
 // material-ui components
-import withStyles from '@material-ui/core/styles/withStyles';
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
+import withStyles from "@material-ui/core/styles/withStyles";
+import Tabs from "@material-ui/core/Tabs";
+import Tab from "@material-ui/core/Tab";
+import Icon from "@material-ui/core/Icon";
 // core components
-import Card from 'components/Card/Card';
-import CardBody from 'components/Card/CardBody';
-import CardHeader from 'components/Card/CardHeader';
+import Card from "components/Card/Card";
+import CardBody from "components/Card/CardBody";
+import CardHeader from "components/Card/CardHeader";
 
-import customTabsStyle from 'assets/jss/material-dashboard-react/components/customTabsStyle';
+import customTabsStyle from "assets/jss/material-kit-react/components/customTabsStyle";
 
 class CustomTabs extends React.Component {
   state = {
-    value: 0,
+    value: 0
   };
 
   handleChange = (event, value) => {
@@ -31,11 +32,11 @@ class CustomTabs extends React.Component {
       plainTabs,
       tabs,
       title,
-      rtlActive,
+      rtlActive
     } = this.props;
     const cardTitle = classNames({
       [classes.cardTitle]: true,
-      [classes.cardTitleRTL]: rtlActive,
+      [classes.cardTitleRTL]: rtlActive
     });
     return (
       <Card plain={plainTabs}>
@@ -48,17 +49,19 @@ class CustomTabs extends React.Component {
             onChange={this.handleChange}
             classes={{
               root: classes.tabsRoot,
-              indicator: classes.displayNone,
-              scrollButtons: classes.displayNone,
+              indicator: classes.displayNone
             }}
-            variant="scrollable"
-            scrollButtons="auto"
           >
             {tabs.map((prop, key) => {
-              let icon = {};
+              var icon = {};
               if (prop.tabIcon) {
                 icon = {
-                  icon: <prop.tabIcon />,
+                  icon:
+                    typeof prop.tabIcon === "string" ? (
+                      <Icon>{prop.tabIcon}</Icon>
+                    ) : (
+                      <prop.tabIcon />
+                    )
                 };
               }
               return (
@@ -68,7 +71,7 @@ class CustomTabs extends React.Component {
                     labelContainer: classes.tabLabelContainer,
                     label: classes.tabLabel,
                     selected: classes.tabSelected,
-                    wrapper: classes.tabWrapper,
+                    wrapper: classes.tabWrapper
                   }}
                   key={key}
                   label={prop.tabName}
@@ -94,22 +97,23 @@ class CustomTabs extends React.Component {
 CustomTabs.propTypes = {
   classes: PropTypes.object.isRequired,
   headerColor: PropTypes.oneOf([
-    'warning',
-    'success',
-    'danger',
-    'info',
-    'primary',
+    "warning",
+    "success",
+    "danger",
+    "info",
+    "primary",
+    "rose"
   ]),
   title: PropTypes.string,
   tabs: PropTypes.arrayOf(
     PropTypes.shape({
       tabName: PropTypes.string.isRequired,
       tabIcon: PropTypes.func,
-      tabContent: PropTypes.node.isRequired,
+      tabContent: PropTypes.node.isRequired
     })
   ),
   rtlActive: PropTypes.bool,
-  plainTabs: PropTypes.bool,
+  plainTabs: PropTypes.bool
 };
 
 export default withStyles(customTabsStyle)(CustomTabs);
