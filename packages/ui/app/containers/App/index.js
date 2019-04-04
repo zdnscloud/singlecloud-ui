@@ -18,49 +18,14 @@ import { Switch, Route, Redirect } from 'react-router-dom';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import { withRouter } from 'react-router';
 
+import LoginPage from 'containers/LoginPage/Loadable';
+
 // creates a beautiful scrollbar
-import PerfectScrollbar from 'perfect-scrollbar';
-import 'perfect-scrollbar/css/perfect-scrollbar.css';
-// @material-ui/core components
-import withStyles from '@material-ui/core/styles/withStyles';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import Fab from '@material-ui/core/Fab';
-import IconButton from '@material-ui/core/IconButton';
-import EventIcon from '@material-ui/icons/Event';
-import ExpansionPanel from '@material-ui/core/ExpansionPanel';
-import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
-import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
-import Typography from '@material-ui/core/Typography';
-// core components
-import Footer from 'components/Footer/Footer';
-import Sidebar from 'components/Sidebar/Sidebar';
-import Menubar from 'components/Menubar';
-
-import dashboardStyle from 'assets/jss/material-dashboard-react/layouts/dashboardStyle';
-import logo from 'images/favicon.png';
-import image from 'assets/img/sidebar-3.jpg';
-
-import SelectCluster from './SelectCluster';
-import appRoutes from './routes';
 import * as actions from './actions';
 import {
-  makeSelectActiveCluster,
-  makeSelectMenus,
-  makeSelectClusterID,
-  makeSelectShowEvents,
 } from './selectors';
-import { makeSelectClusters } from '../ClustersPage/selectors';
 import GlobalStyle from '../../global-styles';
-import EventsTable from '../EventsPage/EventsTable';
-
-const switchRoutes = (
-  <Switch>
-    <Redirect exact from="/" to="/clusters" />
-    {appRoutes.map((prop, key) => (
-      <Route exact path={prop.path} component={prop.component} key={key} />
-    ))}
-  </Switch>
-);
+import Dashboard from './Dashboard';
 
 const theme = createMuiTheme({
   typography: {
@@ -72,7 +37,7 @@ const theme = createMuiTheme({
 });
 
 class App extends PureComponent {
-  state = { image, hasError: false };
+  state = { hasError: false };
 
   static getDerivedStateFromError(error) {
     // Update state so the next render will show the fallback UI.
@@ -86,7 +51,7 @@ class App extends PureComponent {
   }
 
   componentWillMount() {
-    this.props.initAction();
+    // this.props.initAction();
   }
 
   render() {
@@ -101,71 +66,28 @@ class App extends PureComponent {
     }
     const {
       classes,
-      clusters,
-      clusterID,
-      menus,
-      showEvents,
-      activeCluster,
-      changeCluster,
-      toggleEventsView,
-      ...rest
+      isLogin,
     } = this.props;
 
     return (
       <MuiThemeProvider theme={theme}>
-        <div className={classes.wrapper}>
-          <Sidebar
-            routes={menus}
-            logoText="Single Cloud"
-            logo={logo}
-            image={this.state.image}
-            handleDrawerToggle={this.handleDrawerToggle}
-            open={this.state.mobileOpen}
-            color={this.state.color}
-            {...rest}
-          />
-          <Menubar
-            headerLeftContent={
-              <SelectCluster
-                clusters={clusters}
-                changeCluster={changeCluster}
-                activeCluster={clusterID}
-              />
-            }
-            headerRightContent={
-              <Fragment>
-                {clusterID && (
-                  <IconButton onClick={(evt) => toggleEventsView(!showEvents)}>
-                    <EventIcon />
-                  </IconButton>
-                )}
-              </Fragment>
-            }
-          />
-          <div className={classes.mainPanel} data-ref="mainPanel">
-            <div className={classes.eventPage}>
-              <ExpansionPanel square expanded={showEvents}>
-                <ExpansionPanelDetails>
-                  {showEvents && <EventsTable />}
-                </ExpansionPanelDetails>
-              </ExpansionPanel>
-            </div>
-            <div className={classes.content}>{switchRoutes}</div>
-            <Footer />
-          </div>
+        <Fragment>
+          <Switch>
+            <Route path="/login" component={LoginPage} exact />
+            <Route render={(props) => isLogin ? (
+              <Dashboard />
+            ) : (
+              <Redirect to={{pathname: "/login", state: { from: props.location }}} />
+            )} />
+          </Switch>
           <GlobalStyle />
-        </div>
+        </Fragment>
       </MuiThemeProvider>
     );
   }
 }
 
 const mapStateToProps = createStructuredSelector({
-  clusters: makeSelectClusters(),
-  activeCluster: makeSelectActiveCluster(),
-  menus: makeSelectMenus(),
-  clusterID: makeSelectClusterID(),
-  showEvents: makeSelectShowEvents(),
 });
 
 const mapDispatchToProps = (dispatch) =>
@@ -182,7 +104,5 @@ const withConnect = connect(
 );
 
 export default compose(
-  withRouter,
   withConnect,
-  withStyles(dashboardStyle)
 )(App);

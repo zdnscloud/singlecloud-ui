@@ -32,14 +32,12 @@ import CustomInput from "components/CustomInput/CustomInput";
 
 import loginPageStyle from "assets/jss/material-kit-react/views/loginPage";
 
-import image from "assets/img/bg7.jpg";
+import image from 'images/login-bg.jpg';
 
-import injectReducer from 'utils/injectReducer';
-import makeSelectLoginPage from './selectors';
-import reducer from './reducer';
 import * as actions from './actions';
 import messages from './messages';
 import LoginPageHelmet from './helmet';
+import LoginForm from './LoginForm';
 
 /* eslint-disable react/prefer-stateless-function */
 export class LoginPage extends React.PureComponent {
@@ -63,13 +61,6 @@ export class LoginPage extends React.PureComponent {
     return (
       <div>
         <LoginPageHelmet />
-        <Header
-          absolute
-          color="transparent"
-          brand="Material Kit React"
-          rightLinks={<HeaderLinks />}
-          {...rest}
-        />
         <div
           className={classes.pageHeader}
           style={{
@@ -82,100 +73,13 @@ export class LoginPage extends React.PureComponent {
             <GridContainer justify="center">
               <GridItem xs={12} sm={12} md={4}>
                 <Card className={classes[this.state.cardAnimaton]}>
-                  <form className={classes.form}>
-                    <CardHeader color="primary" className={classes.cardHeader}>
-                      <h4>Login</h4>
-                      <div className={classes.socialLine}>
-                        <Button
-                          justIcon
-                          href="#pablo"
-                          target="_blank"
-                          color="transparent"
-                          onClick={e => e.preventDefault()}
-                        >
-                          <i className={"fab fa-twitter"} />
-                        </Button>
-                        <Button
-                          justIcon
-                          href="#pablo"
-                          target="_blank"
-                          color="transparent"
-                          onClick={e => e.preventDefault()}
-                        >
-                          <i className={"fab fa-facebook"} />
-                        </Button>
-                        <Button
-                          justIcon
-                          href="#pablo"
-                          target="_blank"
-                          color="transparent"
-                          onClick={e => e.preventDefault()}
-                        >
-                          <i className={"fab fa-google-plus-g"} />
-                        </Button>
-                      </div>
-                    </CardHeader>
-                    <p className={classes.divider}>Or Be Classical</p>
-                    <CardBody>
-                      <CustomInput
-                        labelText="First Name..."
-                        id="first"
-                        formControlProps={{
-                          fullWidth: true
-                        }}
-                        inputProps={{
-                          type: "text",
-                          endAdornment: (
-                            <InputAdornment position="end">
-                              <People className={classes.inputIconsColor} />
-                            </InputAdornment>
-                          )
-                        }}
-                      />
-                      <CustomInput
-                        labelText="Email..."
-                        id="email"
-                        formControlProps={{
-                          fullWidth: true
-                        }}
-                        inputProps={{
-                          type: "email",
-                          endAdornment: (
-                            <InputAdornment position="end">
-                              <Email className={classes.inputIconsColor} />
-                            </InputAdornment>
-                          )
-                        }}
-                      />
-                      <CustomInput
-                        labelText="Password"
-                        id="pass"
-                        formControlProps={{
-                          fullWidth: true
-                        }}
-                        inputProps={{
-                          type: "password",
-                          endAdornment: (
-                            <InputAdornment position="end">
-                              <Icon className={classes.inputIconsColor}>
-                                lock_outline
-                              </Icon>
-                            </InputAdornment>
-                          )
-                        }}
-                      />
-                    </CardBody>
-                    <CardFooter className={classes.cardFooter}>
-                      <Button simple color="primary" size="lg">
-                        Get started
-                      </Button>
-                    </CardFooter>
-                  </form>
+                  <LoginForm
+                    onSubmit={(...data) => console.log('data: ', data)}
+                  />
                 </Card>
               </GridItem>
             </GridContainer>
           </div>
-          <Footer whiteFont />
         </div>
       </div>
     );
@@ -183,7 +87,6 @@ export class LoginPage extends React.PureComponent {
 }
 
 const mapStateToProps = createStructuredSelector({
-  loginPage: makeSelectLoginPage(),
 });
 
 const mapDispatchToProps = (dispatch) =>
@@ -199,10 +102,7 @@ const withConnect = connect(
   mapDispatchToProps
 );
 
-const withReducer = injectReducer({ key: 'loginPage', reducer });
-
 export default compose(
   withStyles(loginPageStyle),
-  withReducer,
   withConnect
 )(LoginPage);
