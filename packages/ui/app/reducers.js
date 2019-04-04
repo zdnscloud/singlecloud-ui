@@ -4,6 +4,7 @@
 
 import { combineReducers } from 'redux-immutable';
 import { connectRouter } from 'connected-react-router/immutable';
+import { reducer as formReducer } from 'redux-form/immutable';
 
 import history from 'utils/history';
 import languageProviderReducer from 'containers/LanguageProvider/reducer';
@@ -26,6 +27,7 @@ export default function createReducer(injectedReducers = {}) {
   const rootReducer = combineReducers({
     language: languageProviderReducer,
     router: connectRouter(history),
+    form: formReducer,
     app: appReducer,
     clustersPage: clustersPageReducer,
     nodesPage: nodesPageReducer,
