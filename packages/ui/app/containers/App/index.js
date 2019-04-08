@@ -22,8 +22,7 @@ import LoginPage from 'containers/LoginPage/Loadable';
 
 // creates a beautiful scrollbar
 import * as actions from './actions';
-import {
-} from './selectors';
+import {} from './selectors';
 import GlobalStyle from '../../global-styles';
 import Dashboard from './Dashboard';
 
@@ -64,21 +63,24 @@ class App extends PureComponent {
         </div>
       );
     }
-    const {
-      classes,
-      isLogin,
-    } = this.props;
+    const { classes, isLogin } = this.props;
 
     return (
       <MuiThemeProvider theme={theme}>
         <Fragment>
           <Switch>
+            <Route
+              render={(props) =>
+                isLogin ? (
+                  <Dashboard {...props} />
+                ) : (
+                  <Redirect
+                    to={{ pathname: '/login', state: { from: props.location } }}
+                  />
+                )
+              }
+            />
             <Route path="/login" component={LoginPage} exact />
-            <Route render={(props) => isLogin ? (
-              <Dashboard />
-            ) : (
-              <Redirect to={{pathname: "/login", state: { from: props.location }}} />
-            )} />
           </Switch>
           <GlobalStyle />
         </Fragment>
@@ -87,8 +89,7 @@ class App extends PureComponent {
   }
 }
 
-const mapStateToProps = createStructuredSelector({
-});
+const mapStateToProps = createStructuredSelector({});
 
 const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
@@ -103,6 +104,4 @@ const withConnect = connect(
   mapDispatchToProps
 );
 
-export default compose(
-  withConnect,
-)(App);
+export default compose(withConnect)(App);

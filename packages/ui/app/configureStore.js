@@ -10,8 +10,26 @@ import { createEpicMiddleware } from 'redux-observable';
 import createReducer from './reducers';
 import createEpic from './epics';
 import appSaga from './containers/App/saga';
+import { ajax } from 'rxjs/ajax';
 
-const epicMiddleware = createEpicMiddleware();
+const epicMiddleware = createEpicMiddleware({
+  dependencies: {
+    ajax: (opt) => {
+      if (typeof opt === 'string') {
+        return ajax(opt);
+      }
+      return ajax({
+        ...opt,
+        body: JSON.stringify(opt.body),
+        headers: {
+          'Content-Type': 'application/json',
+          ...(opt.headers || {}),
+        },
+      })
+    },
+    getJSON: ajax.getJSON,
+  },
+});
 const sagaMiddleware = createSagaMiddleware();
 
 export default function configureStore(initialState = {}, history) {

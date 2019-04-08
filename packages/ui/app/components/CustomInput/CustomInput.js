@@ -1,48 +1,49 @@
-import React from "react";
+import React from 'react';
 // nodejs library to set properties for components
-import PropTypes from "prop-types";
+import PropTypes from 'prop-types';
 // nodejs library that concatenates classes
-import classNames from "classnames";
+import classNames from 'classnames';
 // @material-ui/core components
-import withStyles from "@material-ui/core/styles/withStyles";
-import FormControl from "@material-ui/core/FormControl";
-import InputLabel from "@material-ui/core/InputLabel";
-import Input from "@material-ui/core/Input";
+import withStyles from '@material-ui/core/styles/withStyles';
+import FormControl from '@material-ui/core/FormControl';
+import InputLabel from '@material-ui/core/InputLabel';
+import Input from '@material-ui/core/Input';
+import FormHelperText from '@material-ui/core/FormHelperText';
 
-import customInputStyle from "assets/jss/material-kit-react/components/customInputStyle";
+import customInputStyle from 'assets/jss/material-kit-react/components/customInputStyle';
 
 function CustomInput({ ...props }) {
   const {
     classes,
     formControlProps,
-    labelText,
     id,
+    labelText,
     labelProps,
     inputProps,
-    error,
     white,
     inputRootCustomClasses,
-    success
+    success,
+    meta: { touched, invalid, error },
   } = props;
 
   const labelClasses = classNames({
-    [" " + classes.labelRootError]: error,
-    [" " + classes.labelRootSuccess]: success && !error
+    [` ${classes.labelRootError}`]: touched && error,
+    [` ${classes.labelRootSuccess}`]: success && !(touched && error),
   });
   const underlineClasses = classNames({
-    [classes.underlineError]: error,
-    [classes.underlineSuccess]: success && !error,
+    [classes.underlineError]: touched && error,
+    [classes.underlineSuccess]: success && !(touched && error),
     [classes.underline]: true,
-    [classes.whiteUnderline]: white
+    [classes.whiteUnderline]: white,
   });
   const marginTop = classNames({
-    [inputRootCustomClasses]: inputRootCustomClasses !== undefined
+    [inputRootCustomClasses]: inputRootCustomClasses !== undefined,
   });
   const inputClasses = classNames({
     [classes.input]: true,
-    [classes.whiteInput]: white
+    [classes.whiteInput]: white,
   });
-  var formControlClasses;
+  let formControlClasses;
   if (formControlProps !== undefined) {
     formControlClasses = classNames(
       formControlProps.className,
@@ -52,11 +53,12 @@ function CustomInput({ ...props }) {
     formControlClasses = classes.formControl;
   }
   return (
-    <FormControl {...formControlProps} className={formControlClasses}>
+    <FormControl className={formControlClasses} error={touched && error} {...formControlProps}>
       {labelText !== undefined ? (
         <InputLabel
-          className={classes.labelRoot + " " + labelClasses}
+          className={`${classes.labelRoot} ${labelClasses}`}
           htmlFor={id}
+          error={touched && error}
           {...labelProps}
         >
           {labelText}
@@ -67,11 +69,12 @@ function CustomInput({ ...props }) {
           input: inputClasses,
           root: marginTop,
           disabled: classes.disabled,
-          underline: underlineClasses
+          underline: underlineClasses,
         }}
         id={id}
         {...inputProps}
       />
+      {touched && error ? <FormHelperText>{touched && error}</FormHelperText> : null}
     </FormControl>
   );
 }
@@ -84,9 +87,8 @@ CustomInput.propTypes = {
   inputProps: PropTypes.object,
   formControlProps: PropTypes.object,
   inputRootCustomClasses: PropTypes.string,
-  error: PropTypes.bool,
   success: PropTypes.bool,
-  white: PropTypes.bool
+  white: PropTypes.bool,
 };
 
 export default withStyles(customInputStyle)(CustomInput);

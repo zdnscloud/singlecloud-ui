@@ -1,5 +1,4 @@
 import { Observable, interval } from 'rxjs';
-import { ajax } from 'rxjs/ajax';
 import {
   mergeMap,
   map,
@@ -9,23 +8,26 @@ import {
   scan,
   throttleTime,
   throttle,
+  catchError,
 } from 'rxjs/operators';
 import { ofType, combineEpics } from 'redux-observable';
 
-import {
-  LOGIN,
-  LOGOUT,
-} from './index';
+import * as constants from './constants';
+import * as actions from './actions';
 
-export const loginEpic = (action$) =>
+export const loginEpic = (action$, state$, { ajax }) =>
   action$.pipe(
-    ofType(LOGIN),
-    mergeMap(({ payload }) => {
+    ofType(constants.LOGIN),
+    mergeMap(({ payload }) => (
       ajax({
-        url: '/login',
+        url: `/apis/zcloud.cn/v1/users/${payload.username}?action=login`,
         method: 'POST',
-      })
-    })
+        body: payload,
+      }).pipe(
+        map(actions.loginSuccess),
+        catchError(actions.loginFailure)
+      )
+    ))
   );
 
 export default combineEpics(

@@ -16,10 +16,11 @@ const schema = [
   'labels',
 ];
 
-const tableSchema = schema.map((id) => ({
-  id,
-  label: ucfirst(id),
-}))
+const tableSchema = schema
+  .map((id) => ({
+    id,
+    label: ucfirst(id),
+  }))
   .map((item) => {
     if (item.id === 'labels') {
       return {
@@ -27,7 +28,8 @@ const tableSchema = schema.map((id) => ({
         component(props) {
           return props.data
             .get('labels')
-            .map((val, key) => <Chip label={`${key}=${val}`} />).toList();
+            .map((val, key) => <Chip label={`${key}=${val}`} />)
+            .toList();
         },
       };
     }
