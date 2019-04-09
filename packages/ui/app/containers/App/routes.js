@@ -24,6 +24,8 @@ import ApplicationsPage from 'containers/ApplicationsPage/Loadable';
 import CreateApplication from 'containers/ApplicationsPage/CreateLoadable';
 import ApplicationDetailPage from 'containers/ApplicationDetailPage/Loadable';
 
+import UsersPage from 'containers/UsersPage/Loadable';
+
 const appRoutes = [
   {
     path: '/clusters',
@@ -108,6 +110,12 @@ const appRoutes = [
     name: 'Application Detail',
     icon: Dashboard,
     component: ApplicationDetailPage,
+  },
+  {
+    path: '/users',
+    name: 'users',
+    icon: Dashboard,
+    component: UsersPage,
   },
 ];
 

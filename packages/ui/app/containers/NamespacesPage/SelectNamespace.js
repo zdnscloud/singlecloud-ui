@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { PureComponent, Fragment } from 'react';
 import { findDOMNode } from 'react-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -33,38 +33,52 @@ import AddIcon from '@material-ui/icons/Add';
 import Collapse from '@material-ui/core/Collapse';
 import Checkbox from '@material-ui/core/Checkbox';
 
+import injectSaga from 'utils/injectSaga';
+import saga from './saga';
 import styles from './styles';
 import * as actions from './actions';
 import { makeSelectClusterID } from '../App/selectors';
 import { makeSelectNamespaces, makeSelectCurrentNamespace } from './selectors';
 
-const SelectNamespace = (props) => {
-  const { classes, namespaces, namespaceID, changeNamespace, clusterID } = props;
+class SelectNamespace extends PureComponent {
+  static propTypes = {
+    classes: PropTypes.object.isRequired,
+    namespaces: PropTypes.object.isRequired,
+    changeNamespace: PropTypes.func.isRequired,
+  };
 
-  return (
-    <FormControl className={classes.formControl}>
-      <InputLabel htmlFor="namespace_name-id">Namespace</InputLabel>
-      <Select
-        value={namespaceID}
-        onChange={(evt) => {
-          changeNamespace(evt.target.value, clusterID);
-        }}
-      >
-        {namespaces.toList().map((c) => (
-          <MenuItem key={c.get('id')} value={c.get('id')}>
-            {c.get('name')}
-          </MenuItem>
-        ))}
-      </Select>
-    </FormControl>
-  );
-};
+  componentWillMount() {
+    this.props.initAction();
+  }
 
-SelectNamespace.propTypes = {
-  classes: PropTypes.object.isRequired,
-  namespaces: PropTypes.object.isRequired,
-  changeNamespace: PropTypes.func.isRequired,
-};
+  componentDidUpdate(prevProps) {
+    if (prevProps.clusterID !== this.props.clusterID) {
+      this.props.initAction();
+    }
+  }
+
+  render() {
+    const { classes, namespaces, namespaceID, changeNamespace, clusterID } = this.props;
+
+    return (
+      <FormControl className={classes.formControl}>
+        <InputLabel htmlFor="namespace_name-id">Namespace</InputLabel>
+        <Select
+          value={namespaceID}
+          onChange={(evt) => {
+            changeNamespace(evt.target.value, clusterID);
+          }}
+        >
+          {namespaces.toList().map((c) => (
+            <MenuItem key={c.get('id')} value={c.get('id')}>
+              {c.get('name')}
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
+    );
+  }
+}
 
 const mapStateToProps = createStructuredSelector({
   namespaces: makeSelectNamespaces(),
@@ -85,7 +99,10 @@ const withConnect = connect(
   mapDispatchToProps
 );
 
+const withSaga = injectSaga({ key: 'namespacesPage', saga });
+
 export default compose(
   withConnect,
+  withSaga,
   withStyles(styles)
 )(SelectNamespace);

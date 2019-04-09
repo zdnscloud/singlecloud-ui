@@ -24,6 +24,8 @@ import CardHeader from 'components/Card/CardHeader';
 import CardBody from 'components/Card/CardBody';
 
 import injectSaga from 'utils/injectSaga';
+
+import { makeSelectClusterID } from '../App/selectors';
 import * as actions from './actions';
 import saga from './saga';
 import messages from './messages';
@@ -41,9 +43,15 @@ export class NamespacesPage extends React.PureComponent {
     location: PropTypes.object,
   };
 
-  componentWillMount() {
-    this.props.initAction(this.props.match);
-  }
+  // componentWillMount() {
+  //   this.props.initAction();
+  // }
+
+  // componentDidUpdate(prevProps) {
+  //   if (prevProps.clusterID !== this.props.clusterID) {
+  //     this.props.initAction();
+  //   }
+  // }
 
   render() {
     const { classes, openCreateNamespace } = this.props;
@@ -73,7 +81,7 @@ export class NamespacesPage extends React.PureComponent {
                     </h4>
                   </CardHeader>
                   <CardBody>
-                    <NamespacesTable location={this.props.location} />
+                    <NamespacesTable />
                   </CardBody>
                 </Card>
               </GridItem>
@@ -85,7 +93,9 @@ export class NamespacesPage extends React.PureComponent {
   }
 }
 
-const mapStateToProps = createStructuredSelector({});
+const mapStateToProps = createStructuredSelector({
+  clusterID: makeSelectClusterID(),
+});
 
 const mapDispatchToProps = (dispatch) =>
   bindActionCreators(

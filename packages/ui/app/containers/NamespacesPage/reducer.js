@@ -29,7 +29,6 @@ export const initialState = fromJS({
   namespaces: {},
   tableList: [],
   selectedIDs: [],
-  clusterID: null,
   createIsOpen: false,
   createFormData: {},
   loadNamespacesErrors: null,
@@ -39,10 +38,7 @@ export const initialState = fromJS({
 function namespacesPageReducer(state = initialState, { type, payload }) {
   switch (type) {
     case INIT_ACTION:
-      return state
-        .set('clusterID', payload.cluster_id)
-        .setIn(['namespaces', payload.cluster_id], fromJS({}))
-        .set('tableList', fromJS([]));
+      return state.set('tableList', fromJS([]));
 
     case LOAD_NAMESPACES_REQUEST:
       return state;
@@ -62,8 +58,7 @@ function namespacesPageReducer(state = initialState, { type, payload }) {
       );
       const list = data.data.map((item) => item.id);
       // load namespaces is async
-      if (state.get('clusterID') === clusterID)
-        newState = newState.set('tableList', fromJS(list));
+      newState = newState.set('tableList', fromJS(list));
       return newState.set('loadNamespacesErrors', null);
     }
 

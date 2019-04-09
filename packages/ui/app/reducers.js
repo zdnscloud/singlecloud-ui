@@ -20,6 +20,8 @@ import ingressesPageReducer from 'containers/IngressesPage/reducer';
 import applicationsPageReducer from 'containers/ApplicationsPage/reducer';
 import applicationDetailPagePageReducer from 'containers/ApplicationDetailPage/reducer';
 
+import usersPageReducer from 'containers/UsersPage/reducer';
+
 import roleReducer, { prefix as rolePrefix } from 'ducks/role';
 
 /**
@@ -32,6 +34,7 @@ export default function createReducer(injectedReducers = {}) {
     form: formReducer,
     app: appReducer,
     [rolePrefix]: roleReducer,
+    usersPage: usersPageReducer,
     clustersPage: clustersPageReducer,
     nodesPage: nodesPageReducer,
     eventsPage: eventsPageReducer,

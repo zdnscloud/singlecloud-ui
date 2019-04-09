@@ -71,7 +71,7 @@ class App extends PureComponent {
         <Fragment>
           <Switch>
             <Route path="/login" component={LoginPage} exact />
-            <Route path="/clusters" component={Dashboard} />
+            <Route component={Dashboard} />
           </Switch>
           <GlobalStyle />
         </Fragment>
