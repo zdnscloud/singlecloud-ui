@@ -101,7 +101,7 @@ export class LoginPage extends React.PureComponent {
             <GridContainer justify="center">
               <GridItem xs={12} sm={12} md={4}>
                 <Card className={classes[this.state.cardAnimaton]}>
-                  <LoginForm onSubmit={submit} />
+                  <LoginForm onSubmit={submit} classes={classes} />
                 </Card>
               </GridItem>
             </GridContainer>

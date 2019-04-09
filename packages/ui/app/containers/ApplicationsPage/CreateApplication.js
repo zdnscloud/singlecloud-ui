@@ -103,7 +103,6 @@ export class CreateApplication extends React.PureComponent {
         <ApplicationsHelmet />
         <CssBaseline />
         <div className={classes.content}>
-          <SelectNamespace />
           <Card>
             <CardContent>
               <Typography variant="h4" gutterBottom component="h2">

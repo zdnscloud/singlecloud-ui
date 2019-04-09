@@ -1,6 +1,8 @@
 import React from 'react';
+import { compose } from 'redux';
 import { Field, reduxForm } from 'redux-form/immutable';
 
+import withStyles from '@material-ui/core/styles/withStyles';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import Icon from '@material-ui/core/Icon';
 // @material-ui/icons
@@ -18,6 +20,8 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormHelperText from '@material-ui/core/FormHelperText';
+
+import loginPageStyle from 'assets/jss/material-kit-react/views/loginPage';
 
 const validate = (values) => {
   const errors = {};
@@ -91,8 +95,7 @@ const PasswordField = ({
 );
 
 const LoginForm = (props) => {
-  const { handleSubmit, pristine, reset, submitting } = props;
-  const classes = {};
+  const { handleSubmit, pristine, reset, submitting, classes } = props;
   return (
     <form className={classes.form} onSubmit={handleSubmit}>
       <CardHeader color="primary" className={classes.cardHeader}>
@@ -121,7 +124,9 @@ const LoginForm = (props) => {
   );
 };
 
-export default reduxForm({
+const withForm = reduxForm({
   form: 'loginForm', // a unique identifier for this form
   validate,
-})(LoginForm);
+});
+
+export default compose(withForm)(LoginForm);

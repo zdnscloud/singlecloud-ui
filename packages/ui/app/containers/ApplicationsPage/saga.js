@@ -15,7 +15,6 @@ import {
   LOAD_APPLICATIONS,
   CREATE_APPLICATION,
   REMOVE_APPLICATION,
-  CHANGE_NAMESPACE,
 } from './constants';
 import {
   loadApplicationsRequest,
@@ -123,24 +122,6 @@ export function* removeApplication({ payload }) {
   }
 }
 
-export function* changeNamespace({ payload }) {
-  try {
-    const location = yield select(makeSelectLocation());
-    const clusterID = yield select(makeSelectClusterID());
-    const { namespaceID } = payload;
-    const suffix = location
-      .get('pathname')
-      .split('/')
-      .slice(5)
-      .join('/');
-    yield put(
-      push(`/clusters/${clusterID}/namespaces/${namespaceID}/${suffix}`)
-    );
-  } catch (e) {
-    console.error(e);
-  }
-}
-
 // Individual exports for testing
 export default function* applicationsPageSaga() {
   // See example in containers/HomePage/saga.js
@@ -149,5 +130,4 @@ export default function* applicationsPageSaga() {
   yield takeLatest(LOAD_APPLICATIONS, loadApplications);
   yield takeLatest(CREATE_APPLICATION, createApplication);
   yield takeLatest(REMOVE_APPLICATION, removeApplication);
-  yield takeLatest(CHANGE_NAMESPACE, changeNamespace);
 }

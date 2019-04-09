@@ -3,6 +3,8 @@ import {
   createMatchSelector,
   getLocation,
 } from 'connected-react-router/immutable';
+import { makeSelectRole } from 'ducks/role/selectors';
+import { makeSelectCurrentNamespace } from '../NamespacesPage/selectors';
 
 const selectRouter = (state) => state.get('router');
 
@@ -46,13 +48,14 @@ export const makeSelectMenus = () =>
   createSelector(
     selectApp,
     makeSelectClusterID(),
-    (appState, cluster) => {
+    makeSelectCurrentNamespace(),
+    (appState, cluster, namespace) => {
       const menus = [{ name: 'clusters', path: '/clusters' }];
       if (cluster !== '') {
         return menus.concat([
           { name: 'nodes', path: `/clusters/${cluster}/nodes` },
           { name: 'namespaces', path: `/clusters/${cluster}/namespaces` },
-          { name: 'applications', path: `/clusters/${cluster}/applications` },
+          { name: 'applications', path: `/clusters/${cluster}/namespaces/${namespace}/applications` },
           { name: 'storage', path: `/clusters/${cluster}/storage` },
           { name: 'network', path: `/clusters/${cluster}/network` },
           { name: 'topology', path: `/clusters/${cluster}/topology` },
@@ -66,4 +69,16 @@ export const makeSelectShowEvents = () =>
   createSelector(
     selectApp,
     (appState) => appState.get('showEvents')
+  );
+
+export const makeSelectUserMenus = () =>
+  createSelector(
+    selectApp,
+    (appState) => {
+      return [
+        { name: 'profile', path: '/role' },
+        { name: 'list', path: '/users' },
+        { name: 'logout', path: '/role/logout' },
+      ];
+    }
   );

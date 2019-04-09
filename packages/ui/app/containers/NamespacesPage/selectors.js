@@ -1,6 +1,6 @@
 import { createSelector } from 'reselect';
 import { initialState } from './reducer';
-import { makeSelectClusterID as sid } from '../App/selectors';
+import { makeSelectClusterID, makeSelectNamespaceID } from '../App/selectors';
 
 /**
  * Direct selector to the namespacesPage state domain
@@ -12,8 +12,6 @@ const selectNamespacesPageDomain = (state) =>
 /**
  * Other specific selectors
  */
-
-export const makeSelectClusterID = sid;
 
 export const makeSelectNamespaces = () =>
   createSelector(
@@ -39,6 +37,15 @@ export const makeSelectCreateFormData = () =>
   createSelector(
     selectNamespacesPageDomain,
     (substate) => substate.get('createFormData')
+  );
+
+export const makeSelectCurrentNamespace = () =>
+  createSelector(
+    selectNamespacesPageDomain,
+    makeSelectClusterID(),
+    makeSelectNamespaceID(),
+    (substate, clusterID, nid) =>
+      substate.getIn(['selectedNamespace', clusterID]) || nid || 'default'
   );
 
 /**

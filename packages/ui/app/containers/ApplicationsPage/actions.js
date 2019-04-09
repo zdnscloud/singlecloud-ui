@@ -20,7 +20,6 @@ import {
   REMOVE_APPLICATION_REQUEST,
   REMOVE_APPLICATION_SUCCESS,
   REMOVE_APPLICATION_FAILURE,
-  CHANGE_NAMESPACE,
 } from './constants';
 
 export function initAction({ params }) {
@@ -107,9 +106,4 @@ export const removeApplicationSuccess = (clusterID, id) => ({
 export const removeApplicationFailure = (errors) => ({
   type: REMOVE_APPLICATION_FAILURE,
   payload: { errors },
-});
-
-export const changeNamespace = (namespaceID) => ({
-  type: CHANGE_NAMESPACE,
-  payload: { namespaceID },
 });

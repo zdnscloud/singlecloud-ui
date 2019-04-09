@@ -22,6 +22,7 @@ import {
   REMOVE_NAMESPACE_REQUEST,
   REMOVE_NAMESPACE_SUCCESS,
   REMOVE_NAMESPACE_FAILURE,
+  CHANGE_NAMESPACE,
 } from './constants';
 
 export const initialState = fromJS({
@@ -32,6 +33,7 @@ export const initialState = fromJS({
   createIsOpen: false,
   createFormData: {},
   loadNamespacesErrors: null,
+  selectedNamespace: {},
 });
 
 function namespacesPageReducer(state = initialState, { type, payload }) {
@@ -107,6 +109,9 @@ function namespacesPageReducer(state = initialState, { type, payload }) {
 
     case REMOVE_NAMESPACE_FAILURE:
       return state;
+
+    case CHANGE_NAMESPACE:
+      return state.setIn(['selectedNamespace', payload.clusterID], payload.namespaceID);
 
     default:
       return state;

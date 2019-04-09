@@ -22,7 +22,7 @@ export const makeSelectCurrentCluster = () =>
   createSelector(
     selectClustersPageDomain,
     makeSelectClusterID(),
-    (substate, id) => substate.getIn(['clusters', id])
+    (substate, id) => substate.getIn(['clusters', id]) || substate.clear()
   );
 
 export const makeSelectTableList = () =>

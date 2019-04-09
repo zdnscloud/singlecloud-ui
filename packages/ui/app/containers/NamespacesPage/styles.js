@@ -109,6 +109,14 @@ const styles = (theme) => ({
       lineHeight: '1',
     },
   },
+  formControl: {
+    margin: theme.spacing.unit,
+    flexBasis: 200,
+    minWidth: 194,
+  },
+  selectEmpty: {
+    marginTop: theme.spacing.unit * 2,
+  },
 });
 
 export default styles;

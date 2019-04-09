@@ -21,6 +21,7 @@ import { withRouter } from 'react-router';
 import LoginPage from 'containers/LoginPage/Loadable';
 
 // creates a beautiful scrollbar
+import { makeSelectLocation } from './selectors';
 import * as actions from './actions';
 import {} from './selectors';
 import GlobalStyle from '../../global-styles';
@@ -80,6 +81,7 @@ class App extends PureComponent {
 }
 
 const mapStateToProps = createStructuredSelector({
+  location: makeSelectLocation(),
 });
 
 const mapDispatchToProps = (dispatch) =>
@@ -97,5 +99,4 @@ const withConnect = connect(
 
 export default compose(
   withConnect,
-  withRouter
 )(App);
