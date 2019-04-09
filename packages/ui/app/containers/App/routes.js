@@ -104,8 +104,7 @@ const appRoutes = [
     component: CreateApplication,
   },
   {
-    path:
-      '/clusters/:cluster_id/namespaces/:namespace_id/applications/:deployment_id',
+    path: '/clusters/:cluster_id/namespaces/:namespace_id/applications/:deployment_id',
     name: 'Application Detail',
     icon: Dashboard,
     component: ApplicationDetailPage,

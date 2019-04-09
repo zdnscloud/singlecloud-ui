@@ -11,6 +11,9 @@ import { FormattedMessage } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import { bindActionCreators, compose } from 'redux';
 import { SubmissionError } from 'redux-form';
+import { withRouter } from 'react-router';
+import sha1 from 'crypto-js/sha1';
+import encHex from 'crypto-js/enc-hex';
 
 import withStyles from '@material-ui/core/styles/withStyles';
 import InputAdornment from '@material-ui/core/InputAdornment';
@@ -35,6 +38,7 @@ import loginPageStyle from 'assets/jss/material-kit-react/views/loginPage';
 
 import image from 'images/login-bg.jpg';
 import * as roleActions from 'ducks/role/actions';
+import { makeSelectIsLogin } from 'ducks/role/selectors';
 
 import messages from './messages';
 import LoginPageHelmet from './helmet';
@@ -48,6 +52,20 @@ export class LoginPage extends React.PureComponent {
     cardAnimaton: 'cardHidden',
   };
 
+  componentWillMount() {
+    const { isLogin, history } = this.props;
+    if (isLogin) {
+      history.replace('/clusters');
+    }
+  }
+
+  componentWillUpdate(nextProps) {
+    const { isLogin, history } = nextProps;
+    if (isLogin) {
+      history.replace('/clusters');
+    }
+  }
+
   componentDidMount() {
     // we add a hidden class to the card and after 700 ms we delete it and the transition appears
     setTimeout(() => {
@@ -59,11 +77,13 @@ export class LoginPage extends React.PureComponent {
     const { classes, login, ...rest } = this.props;
     async function submit(formValues) {
       try {
+        const password = sha1(formValues.get('password')).toString(encHex);
+        const user = formValues.get('username');
         await new Promise((resolve, reject) => {
-          login(formValues, { resolve, reject });
+          login({ user, password }, { resolve, reject });
         });
-      } catch (errors) {
-        throw new SubmissionError(errors);
+      } catch (error) {
+        throw new SubmissionError(error);
       }
     }
     return (
@@ -92,7 +112,9 @@ export class LoginPage extends React.PureComponent {
   }
 }
 
-const mapStateToProps = createStructuredSelector({});
+const mapStateToProps = createStructuredSelector({
+  isLogin: makeSelectIsLogin(),
+});
 
 const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
@@ -108,6 +130,7 @@ const withConnect = connect(
 );
 
 export default compose(
-  withStyles(loginPageStyle),
-  withConnect
+  withConnect,
+  withRouter,
+  withStyles(loginPageStyle)
 )(LoginPage);

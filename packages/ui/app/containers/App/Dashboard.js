@@ -15,6 +15,7 @@ import { FormattedMessage } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import { bindActionCreators, compose } from 'redux';
 import { Switch, Route, Redirect } from 'react-router-dom';
+import { withRouter } from 'react-router';
 
 // creates a beautiful scrollbar
 import PerfectScrollbar from 'perfect-scrollbar';
@@ -34,6 +35,8 @@ import Footer from 'components/Footer/Footer';
 import Sidebar from 'components/Sidebar/Sidebar';
 import Menubar from 'components/Menubar';
 
+import { makeSelectIsLogin } from 'ducks/role/selectors';
+
 import dashboardStyle from 'assets/jss/material-dashboard-react/layouts/dashboardStyle';
 import logo from 'images/favicon.png';
 import image from 'assets/img/sidebar-3.jpg';
@@ -51,20 +54,22 @@ import { makeSelectClusters } from '../ClustersPage/selectors';
 import GlobalStyle from '../../global-styles';
 import EventsTable from '../EventsPage/EventsTable';
 
-const switchRoutes = (
-  <Switch>
-    <Redirect exact from="/" to="/clusters" />
-    {appRoutes.map((prop, key) => (
-      <Route exact path={prop.path} component={prop.component} key={key} />
-    ))}
-  </Switch>
-);
-
 class App extends PureComponent {
   state = { image, hasError: false };
 
   componentWillMount() {
+    const { isLogin, history } = this.props;
+    if (!isLogin) {
+      history.push('/login');
+    }
     this.props.initAction();
+  }
+
+  componentWillUpdate(nextProps) {
+    const { isLogin, history } = nextProps;
+    if (!isLogin) {
+      history.push('/login');
+    }
   }
 
   render() {
@@ -120,14 +125,28 @@ class App extends PureComponent {
           }
         />
         <div className={classes.mainPanel} data-ref="mainPanel">
-          <div className={classes.eventPage}>
-            <ExpansionPanel square expanded={showEvents}>
-              <ExpansionPanelDetails>
-                {showEvents && <EventsTable />}
-              </ExpansionPanelDetails>
-            </ExpansionPanel>
+          {clusterID && (
+            <div className={classes.eventPage}>
+              <ExpansionPanel square expanded={showEvents}>
+                <ExpansionPanelDetails>
+                  {showEvents && <EventsTable />}
+                </ExpansionPanelDetails>
+              </ExpansionPanel>
+            </div>
+          )}
+          <div className={classes.content}>
+            <Switch>
+              {appRoutes.map((r, key) => (
+                <Route
+                  exact
+                  key={key}
+                  path={r.path}
+                  component={r.component}
+                />
+              ))}
+              <Redirect to="/clusters" />
+            </Switch>
           </div>
-          <div className={classes.content}>{switchRoutes}</div>
           <Footer />
         </div>
         <GlobalStyle />
@@ -142,6 +161,7 @@ const mapStateToProps = createStructuredSelector({
   menus: makeSelectMenus(),
   clusterID: makeSelectClusterID(),
   showEvents: makeSelectShowEvents(),
+  isLogin: makeSelectIsLogin(),
 });
 
 const mapDispatchToProps = (dispatch) =>
@@ -159,5 +179,6 @@ const withConnect = connect(
 
 export default compose(
   withConnect,
+  withRouter,
   withStyles(dashboardStyle)
 )(App);

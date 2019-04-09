@@ -1,3 +1,5 @@
+import authProvider from 'utils/authProvider';
+
 /**
  * Parses the JSON returned by a network request
  *
@@ -38,8 +40,10 @@ function checkStatus(response) {
  * @return {object}           The response data
  */
 export default function request(url, options = {}) {
+  const auth = authProvider();
   const headers = Object.assign(
     {
+      ...auth,
       Accept: 'application/json',
     },
     options.headers

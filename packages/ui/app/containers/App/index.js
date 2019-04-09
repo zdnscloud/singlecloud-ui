@@ -63,24 +63,14 @@ class App extends PureComponent {
         </div>
       );
     }
-    const { classes, isLogin } = this.props;
+    const { classes } = this.props;
 
     return (
       <MuiThemeProvider theme={theme}>
         <Fragment>
           <Switch>
-            <Route
-              render={(props) =>
-                isLogin ? (
-                  <Dashboard {...props} />
-                ) : (
-                  <Redirect
-                    to={{ pathname: '/login', state: { from: props.location } }}
-                  />
-                )
-              }
-            />
             <Route path="/login" component={LoginPage} exact />
+            <Route path="/clusters" component={Dashboard} />
           </Switch>
           <GlobalStyle />
         </Fragment>
@@ -89,7 +79,8 @@ class App extends PureComponent {
   }
 }
 
-const mapStateToProps = createStructuredSelector({});
+const mapStateToProps = createStructuredSelector({
+});
 
 const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
@@ -104,4 +95,7 @@ const withConnect = connect(
   mapDispatchToProps
 );
 
-export default compose(withConnect)(App);
+export default compose(
+  withConnect,
+  withRouter
+)(App);
