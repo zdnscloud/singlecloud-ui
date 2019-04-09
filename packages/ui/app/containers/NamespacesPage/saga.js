@@ -14,7 +14,6 @@ import {
   LOAD_NAMESPACE,
   CREATE_NAMESPACE,
   REMOVE_NAMESPACE,
-  CHANGE_NAMESPACE,
 } from './constants';
 import {
   loadNamespacesRequest,
@@ -97,24 +96,6 @@ export function* removeNamespace({ payload }) {
   }
 }
 
-export function* changeNamespace({ payload }) {
-  try {
-    const location = yield select(makeSelectLocation());
-    const clusterID = yield select(makeSelectClusterID());
-    const namespaceID = yield select(makeSelectNamespaceID());
-    const suffix = location
-      .get('pathname')
-      .split('/')
-      .slice(5)
-      .join('/');
-    yield put(
-      push(`/clusters/${clusterID}/namespaces/${namespaceID}/${suffix}`)
-    );
-  } catch (e) {
-    console.error(e);
-  }
-}
-
 // Individual exports for testing
 export default function* namespacesPageSaga() {
   // See example in containers/HomePage/saga.js
@@ -123,5 +104,4 @@ export default function* namespacesPageSaga() {
   yield takeLatest(LOAD_NAMESPACE, loadNamespace);
   yield takeLatest(CREATE_NAMESPACE, createNamespace);
   yield takeLatest(REMOVE_NAMESPACE, removeNamespace);
-  yield takeLatest(CHANGE_NAMESPACE, changeNamespace);
 }

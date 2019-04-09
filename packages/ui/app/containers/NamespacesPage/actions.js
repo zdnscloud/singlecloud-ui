@@ -28,10 +28,10 @@ import {
   CHANGE_NAMESPACE,
 } from './constants';
 
-export function initAction({ params }) {
+export function initAction() {
   return {
     type: INIT_ACTION,
-    payload: { ...params },
+    payload: {},
   };
 }
 

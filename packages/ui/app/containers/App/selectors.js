@@ -61,7 +61,9 @@ export const makeSelectMenus = () =>
           { name: 'topology', path: `/clusters/${cluster}/topology` },
         ]);
       }
-      return menus;
+      return menus.concat([
+        { name: 'users', path: `/users` },
+      ]);
     }
   );
 
