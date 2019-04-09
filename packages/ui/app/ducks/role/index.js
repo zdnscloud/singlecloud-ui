@@ -31,7 +31,10 @@ export const roleReducer = (
     case constants.LOGIN_SUCCESS: {
       const token = getByKey(payload, ['response', 'token']);
       const jwt = parseJWT(token);
-      return state.set('token', token).set('jwt', jwt);
+      return state
+        .set('token', token)
+        .set('jwt', jwt)
+        .setIn(['role', 'user'], getByKey(jwt, ['payload', 'user']));
     }
 
     default:

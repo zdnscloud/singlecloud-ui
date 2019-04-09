@@ -1,6 +1,6 @@
 /**
  *
- * App.js
+ * AppMenubar
  *
  * This component is the skeleton around the actual pages, and should only
  * contain code that should be seen on all pages. (e.g. navigation bar)
@@ -16,6 +16,7 @@ import { createStructuredSelector } from 'reselect';
 import { bindActionCreators, compose } from 'redux';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import { withRouter } from 'react-router';
+import { Link } from 'react-router-dom';
 
 // creates a beautiful scrollbar
 import PerfectScrollbar from 'perfect-scrollbar';
@@ -26,116 +27,107 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import Fab from '@material-ui/core/Fab';
 import IconButton from '@material-ui/core/IconButton';
 import EventIcon from '@material-ui/icons/Event';
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import ExpansionPanel from '@material-ui/core/ExpansionPanel';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import Typography from '@material-ui/core/Typography';
+import MenuItem from '@material-ui/core/MenuItem';
+import Menu from '@material-ui/core/Menu';
+import Divider from '@material-ui/core/Divider';
 // core components
 import Footer from 'components/Footer/Footer';
 import Sidebar from 'components/Sidebar/Sidebar';
 import Menubar from 'components/Menubar';
 
-import { makeSelectIsLogin } from 'ducks/role/selectors';
+import { makeSelectRole } from 'ducks/role/selectors';
 
 import dashboardStyle from 'assets/jss/material-dashboard-react/layouts/dashboardStyle';
-import logo from 'images/favicon.png';
-import image from 'assets/img/sidebar-3.jpg';
 
-import AppMenubar from './AppMenubar';
 import SelectCluster from './SelectCluster';
-import appRoutes from './routes';
+import SelectNamespace from '../NamespacesPage/SelectNamespace';
 import * as actions from './actions';
 import {
   makeSelectActiveCluster,
-  makeSelectMenus,
   makeSelectClusterID,
   makeSelectShowEvents,
   makeSelectLocation,
+  makeSelectUserMenus,
 } from './selectors';
 import { makeSelectClusters } from '../ClustersPage/selectors';
-import GlobalStyle from '../../global-styles';
-import EventsTable from '../EventsPage/EventsTable';
 
-class App extends PureComponent {
-  state = { image, hasError: false };
+class AppMenubar extends PureComponent {
+  static defaultProps = {
+    clusters: PropTypes.object,
+  };
 
-  componentWillMount() {
-    const { isLogin, history } = this.props;
-    if (!isLogin) {
-      history.push('/login');
-    }
-    this.props.initAction();
+  state = {
+    userEl: null,
+  };
+
+  openUserMenu(evt) {
+    this.setState({ userEl: evt.currentTarget });
   }
 
-  componentWillUpdate(nextProps) {
-    const { isLogin, history } = nextProps;
-    if (!isLogin) {
-      history.push('/login');
-    }
+  closeUserMenu(evt) {
+    this.setState({ userEl: null });
   }
 
   render() {
-    if (this.state.hasError) {
-      // You can render any custom fallback UI
-      return (
-        <div>
-          <h1>Something went wrong.</h1>
-          <pre>{`${this.state.error}`}</pre>
-        </div>
-      );
-    }
     const {
       classes,
       clusters,
       clusterID,
-      menus,
       showEvents,
       activeCluster,
       changeCluster,
       toggleEventsView,
-      ...rest
+      role,
+      userMenus,
     } = this.props;
+    const { userEl } = this.state;
 
     return (
-      <div className={classes.wrapper}>
-        <Sidebar
-          routes={menus}
-          logoText="Single Cloud"
-          logo={logo}
-          image={this.state.image}
-          handleDrawerToggle={this.handleDrawerToggle}
-          open={this.state.mobileOpen}
-          color={this.state.color}
-          {...rest}
-        />
-        <AppMenubar />
-        <div className={classes.mainPanel} data-ref="mainPanel">
-          {clusterID && (
-            <div className={classes.eventPage}>
-              <ExpansionPanel square expanded={showEvents}>
-                <ExpansionPanelDetails>
-                  {showEvents && <EventsTable />}
-                </ExpansionPanelDetails>
-              </ExpansionPanel>
-            </div>
-          )}
-          <div className={classes.content}>
-            <Switch>
-              {appRoutes.map((route, key) => (
-                <Route
-                  exact
-                  key={key}
-                  path={route.path}
-                  component={route.component}
-                />
+      <Menubar
+        headerLeftContent={
+          <Fragment>
+            <SelectCluster
+              clusters={clusters}
+              changeCluster={changeCluster}
+              activeCluster={clusterID}
+            />
+            {clusterID && (
+              <SelectNamespace />
+            )}
+          </Fragment>
+        }
+        headerRightContent={
+          <Fragment>
+            {clusterID && (
+              <IconButton onClick={(evt) => toggleEventsView(!showEvents)}>
+                <EventIcon />
+              </IconButton>
+            )}
+            <IconButton onClick={(evt) => this.openUserMenu(evt)}>
+              <AccountCircleIcon />
+            </IconButton>
+            <Menu
+              id="user-menu"
+              anchorEl={userEl}
+              open={Boolean(userEl)}
+              onClose={(evt) => this.closeUserMenu(evt)}
+            >
+              <MenuItem disabled>{role.get('user')}</MenuItem>
+              <Divider />
+              {userMenus.map((m, index) => (
+                <MenuItem key={m.name} component={Link} to={m.path}>
+                  {m.name}
+                </MenuItem>
               ))}
-              <Redirect to="/clusters" />
-            </Switch>
-          </div>
-          <Footer />
-        </div>
-        <GlobalStyle />
-      </div>
+            </Menu>
+          </Fragment>
+        }
+      />
     );
   }
 }
@@ -143,11 +135,11 @@ class App extends PureComponent {
 const mapStateToProps = createStructuredSelector({
   clusters: makeSelectClusters(),
   activeCluster: makeSelectActiveCluster(),
-  menus: makeSelectMenus(),
   clusterID: makeSelectClusterID(),
   showEvents: makeSelectShowEvents(),
-  isLogin: makeSelectIsLogin(),
   currentLocation: makeSelectLocation(),
+  role: makeSelectRole(),
+  userMenus: makeSelectUserMenus(),
 });
 
 const mapDispatchToProps = (dispatch) =>
@@ -166,4 +158,4 @@ const withConnect = connect(
 export default compose(
   withConnect,
   withStyles(dashboardStyle)
-)(App);
+)(AppMenubar);

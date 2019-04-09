@@ -3,6 +3,7 @@ import request from 'utils/request';
 import { push } from 'connected-react-router';
 
 import { loadClusters } from '../ClustersPage/saga';
+import { loadNamespaces } from '../NamespacesPage/saga';
 import { initAction as initEvents } from '../EventsPage/actions';
 import { makeSelectClusterID } from './selectors';
 
@@ -20,6 +21,9 @@ export function* changeCluster({ payload }) {
   const id = payload.cluster;
   yield put(initEvents({ params: { cluster_id: id } }));
   yield put(push(`/clusters/${id}`));
+  if (id) {
+    yield* loadNamespaces();
+  }
 }
 
 // Individual exports for testing

@@ -61,7 +61,6 @@ export class ClusterDetail extends React.PureComponent {
   static propTypes = {
     classes: PropTypes.object.isRequired,
     tableList: PropTypes.object.isRequired,
-    clusterDetail: PropTypes.object.isRequired,
   };
 
   render() {
@@ -137,7 +136,7 @@ export class ClusterDetail extends React.PureComponent {
             <Card chart>
               <CardHeader color="success">
                 <Gauge
-                  value={20}
+                  value={12}
                   width={270}
                   height={157}
                   color={teal.A400}
@@ -150,7 +149,7 @@ export class ClusterDetail extends React.PureComponent {
               <CardBody>
                 <h4 className={classes.cardTitle}>CPU</h4>
                 <p className={classes.cardCategory}>
-                  <span className={classes.successText}>55%</span>
+                  <span className={classes.successText}>12%</span>
                 </p>
               </CardBody>
               <CardFooter chart>
@@ -164,7 +163,7 @@ export class ClusterDetail extends React.PureComponent {
             <Card chart>
               <CardHeader color="warning">
                 <Gauge
-                  value={20}
+                  value={34}
                   width={270}
                   height={157}
                   color={teal.A400}
@@ -176,7 +175,7 @@ export class ClusterDetail extends React.PureComponent {
               </CardHeader>
               <CardBody>
                 <h4 className={classes.cardTitle}>Memory</h4>
-                <p className={classes.cardCategory}>20%</p>
+                <p className={classes.cardCategory}>34%</p>
               </CardBody>
               <CardFooter chart>
                 <div className={classes.stats}>
@@ -189,7 +188,7 @@ export class ClusterDetail extends React.PureComponent {
             <Card chart>
               <CardHeader color="danger">
                 <Gauge
-                  value={20}
+                  value={22}
                   width={270}
                   height={157}
                   color={teal.A400}
@@ -201,7 +200,7 @@ export class ClusterDetail extends React.PureComponent {
               </CardHeader>
               <CardBody>
                 <h4 className={classes.cardTitle}>Pods</h4>
-                <p className={classes.cardCategory}>33 / 360</p>
+                <p className={classes.cardCategory}>79 / 330</p>
               </CardBody>
               <CardFooter chart>
                 <div className={classes.stats}>

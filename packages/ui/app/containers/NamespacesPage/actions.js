@@ -25,6 +25,7 @@ import {
   REMOVE_NAMESPACE_REQUEST,
   REMOVE_NAMESPACE_SUCCESS,
   REMOVE_NAMESPACE_FAILURE,
+  CHANGE_NAMESPACE,
 } from './constants';
 
 export function initAction({ params }) {
@@ -127,4 +128,9 @@ export const removeNamespaceSuccess = (clusterID, id) => ({
 export const removeNamespaceFailure = (errors) => ({
   type: REMOVE_NAMESPACE_FAILURE,
   payload: { errors },
+});
+
+export const changeNamespace = (namespaceID, clusterID) => ({
+  type: CHANGE_NAMESPACE,
+  payload: { namespaceID, clusterID },
 });
