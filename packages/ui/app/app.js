@@ -26,19 +26,16 @@ import LanguageProvider from 'containers/LanguageProvider';
 import '!file-loader?name=[name].[ext]!./images/favicon.png';
 /* eslint-enable import/no-unresolved, import/extensions */
 
-import configureStore from './configureStore';
+import store, { storePromise } from './store';
 
 // Import i18n messages
 import { translationMessages } from './i18n';
 
-// Create redux store with history
-const initialState = {};
-const store = configureStore(initialState, history);
 const MOUNT_NODE = document.getElementById('app');
 
 const render = (messages) => {
   ReactDOM.render(
-    <Provider store={store}>
+    <Provider store={store.instance}>
       <LanguageProvider messages={messages}>
         <ConnectedRouter history={history}>
           <App />
@@ -61,21 +58,25 @@ if (module.hot) {
 
 // Chunked polyfill for browsers without Intl support
 if (!window.Intl) {
-  new Promise((resolve) => {
-    resolve(import(/* webpackChunkName: "intl" */ 'intl'));
-  })
-    .then(() =>
-      Promise.all([
-        import(/* webpackChunkName: "intl.zh" */ 'intl/locale-data/jsonp/zh.js'),
-        import(/* webpackChunkName: "intl.en" */ 'intl/locale-data/jsonp/en.js'),
-      ])
-    )
-    .then(() => render(translationMessages))
-    .catch((err) => {
-      throw err;
-    });
+  storePromise.then(() => {
+    new Promise((resolve) => {
+      resolve(import(/* webpackChunkName: "intl" */ 'intl'));
+    })
+      .then(() =>
+        Promise.all([
+          import(/* webpackChunkName: "intl.zh" */ 'intl/locale-data/jsonp/zh.js'),
+          import(/* webpackChunkName: "intl.en" */ 'intl/locale-data/jsonp/en.js'),
+        ])
+      )
+      .then(() => render(translationMessages))
+      .catch((err) => {
+        throw err;
+      });
+  });
 } else {
-  render(translationMessages);
+  storePromise.then(() => {
+    render(translationMessages);
+  });
 }
 
 // Install ServiceWorker and AppCache in the end since

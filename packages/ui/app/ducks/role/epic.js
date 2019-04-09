@@ -1,4 +1,4 @@
-import { Observable, interval } from 'rxjs';
+import { Observable, interval, of } from 'rxjs';
 import {
   mergeMap,
   map,
@@ -18,14 +18,20 @@ import * as actions from './actions';
 export const loginEpic = (action$, state$, { ajax }) =>
   action$.pipe(
     ofType(constants.LOGIN),
-    mergeMap(({ payload }) => (
+    mergeMap(({ payload, meta: { resolve, reject } }) => (
       ajax({
-        url: `/apis/zcloud.cn/v1/users/${payload.username}?action=login`,
+        url: `/apis/zcloud.cn/v1/users/${payload.user}?action=login`,
         method: 'POST',
         body: payload,
       }).pipe(
-        map(actions.loginSuccess),
-        catchError(actions.loginFailure)
+        map((resp) => {
+          resolve(resp);
+          return actions.loginSuccess(resp);
+        }),
+        catchError((error) => {
+          reject(error);
+          return of(actions.loginFailure(error));
+        })
       )
     ))
   );

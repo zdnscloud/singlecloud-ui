@@ -7,16 +7,28 @@ import { fromJS } from 'immutable';
 import { routerMiddleware } from 'connected-react-router/immutable';
 import createSagaMiddleware from 'redux-saga';
 import { createEpicMiddleware } from 'redux-observable';
+import { ajax } from 'rxjs/ajax';
+import { BehaviorSubject } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
+import authProvider from 'utils/authProvider';
+
 import createReducer from './reducers';
 import createEpic from './epics';
 import appSaga from './containers/App/saga';
-import { ajax } from 'rxjs/ajax';
 
 const epicMiddleware = createEpicMiddleware({
   dependencies: {
-    ajax: (opt) => {
+    ajax: (arg) => {
+      const auth = authProvider();
+      let opt = arg;
       if (typeof opt === 'string') {
-        return ajax(opt);
+        opt = {
+          url: arg,
+          headers: {
+            ...auth,
+            'Content-Type': 'application/json',
+          },
+        };
       }
       return ajax({
         ...opt,
@@ -25,7 +37,7 @@ const epicMiddleware = createEpicMiddleware({
           'Content-Type': 'application/json',
           ...(opt.headers || {}),
         },
-      })
+      });
     },
     getJSON: ajax.getJSON,
   },
@@ -68,13 +80,25 @@ export default function configureStore(initialState = {}, history) {
   store.injectedEpics = {}; // Epic registry
 
   store.runSaga(appSaga);
-  store.runEpic(createEpic(store.injectedEpics));
+
+  const epic$ = new BehaviorSubject(createEpic(store.injectedEpics));
+  // Every time a new epic is given to epic$ it
+  // will unsubscribe from the previous one then
+  // call and subscribe to the new one because of
+  // how switchMap works
+  const hotReloadingEpic = (...args) =>
+    epic$.pipe(switchMap((epic) => epic(...args)));
+  store.runEpic(hotReloadingEpic);
 
   // Make reducers hot reloadable, see http://mxs.is/googmo
   /* istanbul ignore next */
   if (module.hot) {
     module.hot.accept('./reducers', () => {
       store.replaceReducer(createReducer(store.injectedReducers));
+    });
+    module.hot.accept('./epics', () => {
+      const nextRootEpic = createEpic(store.injectedEpics);
+      epic$.next(nextRootEpic);
     });
   }
 

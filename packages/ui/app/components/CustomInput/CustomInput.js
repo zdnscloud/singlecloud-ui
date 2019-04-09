@@ -26,13 +26,14 @@ function CustomInput({ ...props }) {
     meta: { touched, invalid, error },
   } = props;
 
+  const touchedError = !!(touched && error);
   const labelClasses = classNames({
-    [` ${classes.labelRootError}`]: touched && error,
-    [` ${classes.labelRootSuccess}`]: success && !(touched && error),
+    [` ${classes.labelRootError}`]: touchedError,
+    [` ${classes.labelRootSuccess}`]: success && !touchedError,
   });
   const underlineClasses = classNames({
-    [classes.underlineError]: touched && error,
-    [classes.underlineSuccess]: success && !(touched && error),
+    [classes.underlineError]: touchedError,
+    [classes.underlineSuccess]: success && !touchedError,
     [classes.underline]: true,
     [classes.whiteUnderline]: white,
   });
@@ -53,12 +54,12 @@ function CustomInput({ ...props }) {
     formControlClasses = classes.formControl;
   }
   return (
-    <FormControl className={formControlClasses} error={touched && error} {...formControlProps}>
+    <FormControl className={formControlClasses} error={touchedError} {...formControlProps}>
       {labelText !== undefined ? (
         <InputLabel
           className={`${classes.labelRoot} ${labelClasses}`}
           htmlFor={id}
-          error={touched && error}
+          error={touchedError}
           {...labelProps}
         >
           {labelText}
@@ -74,7 +75,7 @@ function CustomInput({ ...props }) {
         id={id}
         {...inputProps}
       />
-      {touched && error ? <FormHelperText>{touched && error}</FormHelperText> : null}
+      {touchedError ? <FormHelperText>{error}</FormHelperText> : null}
     </FormControl>
   );
 }

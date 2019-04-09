@@ -1,4 +1,4 @@
-const prefix = 'ducks/role';
+export const prefix = 'role';
 /*
   constants
 */
