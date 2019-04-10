@@ -52,6 +52,7 @@ import CardHeader from 'components/Card/CardHeader';
 import CardFooter from 'components/Card/CardFooter';
 
 import * as actions from 'ducks/users/actions';
+import { makeSelectClusters } from 'containers/ClustersPage/selectors';
 
 import messages from './messages';
 import ApplicationsHelmet from './helmet';
@@ -85,6 +86,7 @@ export class CreateUserPage extends React.PureComponent {
   render() {
     const {
       classes,
+      clusters,
       createUser,
       submitForm,
     } = this.props;
@@ -113,7 +115,7 @@ export class CreateUserPage extends React.PureComponent {
               </h4>
             </CardHeader>
             <CardBody>
-              <CreateUserForm classes={classes} onSubmit={doSubmit} />
+              <CreateUserForm clusters={clusters} classes={classes} onSubmit={doSubmit} />
             </CardBody>
             <CardFooter className={classes.cardFooter}>
               <Button
@@ -133,6 +135,7 @@ export class CreateUserPage extends React.PureComponent {
 }
 
 const mapStateToProps = createStructuredSelector({
+  clusters: makeSelectClusters(),
 });
 
 const mapDispatchToProps = (dispatch) =>
