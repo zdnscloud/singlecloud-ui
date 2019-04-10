@@ -26,7 +26,7 @@ import GridContainer from 'components/Grid/GridContainer';
 import InputField from 'components/Field/InputField';
 
 const UserForm = (props) => {
-  const { handleSubmit, pristine, reset, submitting, error, classes } = props;
+  const { clusters, handleSubmit, pristine, reset, submitting, error, classes } = props;
 
   return (
     <form className={getByKey(classes, 'form')} onSubmit={handleSubmit}>
@@ -54,6 +54,12 @@ const UserForm = (props) => {
           />
         </GridItem>
         <GridItem xs={12} sm={12} md={12} className={classes.formLine}>
+          {clusters.toList().map((c) => {
+            const name = c.get('name');
+            return (
+              <Button>{name}</Button>
+            )
+          })}
         </GridItem>
       </GridContainer>
     </form>
