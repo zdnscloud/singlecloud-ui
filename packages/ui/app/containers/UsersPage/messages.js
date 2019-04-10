@@ -29,14 +29,6 @@ export default defineMessages({
     id: `${scope}.tableTitleName`,
     defaultMessage: 'Name',
   },
-  tableTitleNodeCount: {
-    id: `${scope}.tableTitleNodeCount`,
-    defaultMessage: 'NodeCount',
-  },
-  tableTitleVersion: {
-    id: `${scope}.tableTitleVersion`,
-    defaultMessage: 'Version',
-  },
   tableTitleCreationTimestamp: {
     id: `${scope}.tableTitleCreationTimestamp`,
     defaultMessage: 'CreationTimestamp',
@@ -44,5 +36,9 @@ export default defineMessages({
   tableTitleLinks: {
     id: `${scope}.tableTitleLinks`,
     defaultMessage: 'Links',
+  },
+  createUser: {
+    id: `${scope}.createUser`,
+    defaultMessage: 'Create User',
   },
 });

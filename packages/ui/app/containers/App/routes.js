@@ -24,7 +24,7 @@ import ApplicationsPage from 'containers/ApplicationsPage/Loadable';
 import CreateApplication from 'containers/ApplicationsPage/CreateLoadable';
 import ApplicationDetailPage from 'containers/ApplicationDetailPage/Loadable';
 
-import UsersPage from 'containers/UsersPage/Loadable';
+import UsersPage, { CreateUserPage } from 'containers/UsersPage/Loadable';
 
 const appRoutes = [
   {
@@ -116,6 +116,12 @@ const appRoutes = [
     name: 'users',
     icon: Dashboard,
     component: UsersPage,
+  },
+  {
+    path: '/users/create',
+    name: 'Create User',
+    icon: Dashboard,
+    component: CreateUserPage,
   },
 ];
 

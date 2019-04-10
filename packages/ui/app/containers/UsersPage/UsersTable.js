@@ -25,8 +25,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTerminal } from '@fortawesome/free-solid-svg-icons';
 import IconButton from '@material-ui/core/IconButton';
 
-import { makeSelectUsers, makeSelectTableList } from './selectors';
-import * as actions from './actions';
+import { makeSelectUsers, makeSelectUsersList } from 'ducks/users/selectors';
+import * as actions from 'ducks/users/actions';
+
 import messages from './messages';
 import styles from './styles';
 import schema from './tableSchema';
@@ -40,7 +41,7 @@ export class UsersTable extends React.PureComponent {
   };
 
   render() {
-    const { classes, tableList, users } = this.props;
+    const { classes, usersList, users } = this.props;
     const mergedSchema = schema.slice();
 
     return (
@@ -48,7 +49,7 @@ export class UsersTable extends React.PureComponent {
         <SimpleTable
           className={classes.table}
           schema={mergedSchema}
-          data={tableList.map((id) => users.get(id))}
+          data={usersList}
         />
       </Paper>
     );
@@ -57,7 +58,7 @@ export class UsersTable extends React.PureComponent {
 
 const mapStateToProps = createStructuredSelector({
   users: makeSelectUsers(),
-  tableList: makeSelectTableList(),
+  usersList: makeSelectUsersList(),
 });
 
 const mapDispatchToProps = (dispatch) =>

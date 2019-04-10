@@ -32,6 +32,9 @@ const styles = (theme) => ({
   menuButton: {
     marginLeft: 12,
     marginRight: 36,
+    position: 'absolute',
+    right: 0,
+    top: 6,
   },
   menuButtonHidden: {
     display: 'none',
@@ -107,6 +110,15 @@ const styles = (theme) => ({
   },
   cardListTitle: {
     background: '#386fba',
+  },
+  formLine: {
+    height: 80,
+  },
+  nameControl: {
+    width: 300,
+  },
+  passwordControl: {
+    width: 300,
   },
 });
 

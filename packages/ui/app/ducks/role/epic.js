@@ -36,6 +36,4 @@ export const loginEpic = (action$, state$, { ajax }) =>
     ))
   );
 
-export default combineEpics(
-  loginEpic
-);
+export default combineEpics(loginEpic);

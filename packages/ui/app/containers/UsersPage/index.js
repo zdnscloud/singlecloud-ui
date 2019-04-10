@@ -10,20 +10,24 @@ import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import { bindActionCreators, compose } from 'redux';
+import { Link } from 'react-router-dom';
 
 import { withStyles } from '@material-ui/core/styles';
-import Menubar from 'components/Menubar';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Typography from '@material-ui/core/Typography';
+import Fab from '@material-ui/core/Fab';
+import AddIcon from '@material-ui/icons/Add';
+
+import Menubar from 'components/Menubar';
 import GridItem from 'components/Grid/GridItem';
 import GridContainer from 'components/Grid/GridContainer';
 import Card from 'components/Card/Card';
 import CardHeader from 'components/Card/CardHeader';
 import CardBody from 'components/Card/CardBody';
 
-import injectSaga from 'utils/injectSaga';
-import * as actions from './actions';
-import saga from './saga';
+import * as actions from 'ducks/users/actions';
+
+import { makeSelectLocation } from '../App/selectors';
 import messages from './messages';
 import styles from './styles';
 import UsersTable from './UsersTable';
@@ -32,16 +36,15 @@ import UsersPageHelmet from './helmet';
 /* eslint-disable react/prefer-stateless-function */
 export class UsersPage extends React.PureComponent {
   static propTypes = {
-    initAction: PropTypes.func,
     classes: PropTypes.object.isRequired,
   };
 
   componentWillMount() {
-    this.props.initAction();
+    this.props.loadUsers();
   }
 
   render() {
-    const { classes } = this.props;
+    const { classes, location, createUser } = this.props;
 
     return (
       <div className={classes.root}>
@@ -54,6 +57,19 @@ export class UsersPage extends React.PureComponent {
                 <CardHeader color="customBlue">
                   <h4 className={classes.cardTitleWhite}>
                     <FormattedMessage {...messages.users} />
+                    <Link
+                      to={`${location.get('pathname')}/create`}
+                      className={classes.createBtnLink}
+                    >
+                      <Fab
+                        size="small"
+                        color="default"
+                        aria-label="create user"
+                        className={classes.menuButton}
+                      >
+                        <AddIcon />
+                      </Fab>
+                    </Link>
                   </h4>
                 </CardHeader>
                 <CardBody>
@@ -68,7 +84,9 @@ export class UsersPage extends React.PureComponent {
   }
 }
 
-const mapStateToProps = createStructuredSelector({});
+const mapStateToProps = createStructuredSelector({
+  location: makeSelectLocation(),
+});
 
 const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
@@ -83,10 +101,7 @@ const withConnect = connect(
   mapDispatchToProps
 );
 
-const withSaga = injectSaga({ key: 'usersPage', saga });
-
 export default compose(
-  withSaga,
   withConnect,
   withStyles(styles)
 )(UsersPage);
