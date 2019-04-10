@@ -16,12 +16,7 @@ import sha1 from 'crypto-js/sha1';
 import encHex from 'crypto-js/enc-hex';
 
 import withStyles from '@material-ui/core/styles/withStyles';
-import InputAdornment from '@material-ui/core/InputAdornment';
-import Icon from '@material-ui/core/Icon';
-// @material-ui/icons
-import Email from '@material-ui/icons/Email';
-import People from '@material-ui/icons/People';
-// core components
+
 import Header from 'components/Header/Header';
 import HeaderLinks from 'components/Header/HeaderLinks';
 import Footer from 'components/Footer/Footer';
@@ -83,7 +78,7 @@ export class LoginPage extends React.PureComponent {
           login({ user, password }, { resolve, reject });
         });
       } catch (error) {
-        throw new SubmissionError(error);
+        throw new SubmissionError({ _error: error });
       }
     }
     return (

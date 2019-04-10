@@ -34,12 +34,33 @@ const epicMiddleware = createEpicMiddleware({
         ...opt,
         body: JSON.stringify(opt.body),
         headers: {
+          ...auth,
           'Content-Type': 'application/json',
           ...(opt.headers || {}),
         },
       });
     },
-    getJSON: ajax.getJSON,
+    getJSON: (arg) => {
+      const auth = authProvider();
+      let opt = arg;
+      if (typeof opt === 'string') {
+        opt = {
+          url: arg,
+          headers: {
+            ...auth,
+            'Content-Type': 'application/json',
+          },
+        };
+      }
+      return ajax.getJSON({
+        ...opt,
+        headers: {
+          ...auth,
+          'Content-Type': 'application/json',
+          ...(opt.headers || {}),
+        },
+      });
+    },
   },
 });
 const sagaMiddleware = createSagaMiddleware();

@@ -20,9 +20,8 @@ import ingressesPageReducer from 'containers/IngressesPage/reducer';
 import applicationsPageReducer from 'containers/ApplicationsPage/reducer';
 import applicationDetailPagePageReducer from 'containers/ApplicationDetailPage/reducer';
 
-import usersPageReducer from 'containers/UsersPage/reducer';
-
 import roleReducer, { prefix as rolePrefix } from 'ducks/role';
+import usersReducer, { prefix as usersPrefix } from 'ducks/users';
 
 /**
  * Merges the main reducer with the router state and dynamically injected reducers
@@ -34,7 +33,7 @@ export default function createReducer(injectedReducers = {}) {
     form: formReducer,
     app: appReducer,
     [rolePrefix]: roleReducer,
-    usersPage: usersPageReducer,
+    [usersPrefix]: usersReducer,
     clustersPage: clustersPageReducer,
     nodesPage: nodesPageReducer,
     eventsPage: eventsPageReducer,

@@ -1,19 +1,11 @@
 import React from 'react';
 import { compose } from 'redux';
 import { Field, reduxForm } from 'redux-form/immutable';
+import getByKey from '@gsmlg/utils/getByKey';
 
 import withStyles from '@material-ui/core/styles/withStyles';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import Icon from '@material-ui/core/Icon';
-// @material-ui/icons
-import Email from '@material-ui/icons/Email';
-import People from '@material-ui/icons/People';
-import Button from 'components/CustomButtons/Button';
-import Card from 'components/Card/Card';
-import CardBody from 'components/Card/CardBody';
-import CardHeader from 'components/Card/CardHeader';
-import CardFooter from 'components/Card/CardFooter';
-import CustomInput from 'components/CustomInput/CustomInput';
 import TextField from '@material-ui/core/TextField';
 import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
@@ -21,7 +13,15 @@ import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormHelperText from '@material-ui/core/FormHelperText';
 
-import loginPageStyle from 'assets/jss/material-kit-react/views/loginPage';
+import People from '@material-ui/icons/People';
+
+import Button from 'components/CustomButtons/Button';
+import Card from 'components/Card/Card';
+import CardBody from 'components/Card/CardBody';
+import CardHeader from 'components/Card/CardHeader';
+import CardFooter from 'components/Card/CardFooter';
+import CustomInput from 'components/CustomInput/CustomInput';
+import Danger from 'components/Typography/Danger';
 
 const validate = (values) => {
   const errors = {};
@@ -95,7 +95,8 @@ const PasswordField = ({
 );
 
 const LoginForm = (props) => {
-  const { handleSubmit, pristine, reset, submitting, classes } = props;
+  const { handleSubmit, pristine, reset, submitting, error, classes } = props;
+
   return (
     <form className={classes.form} onSubmit={handleSubmit}>
       <CardHeader color="primary" className={classes.cardHeader}>
@@ -115,6 +116,13 @@ const LoginForm = (props) => {
           classes={classes}
         />
       </CardBody>
+      {error ? (
+        <CardBody className={classes.cardHeader}>
+          <Danger error={error}>
+            {getByKey(error, ['response', 'message'])}
+          </Danger>
+        </CardBody>
+      ) : null}
       <CardFooter className={classes.cardFooter}>
         <Button simple color="primary" size="lg" type="submit">
           Sign In

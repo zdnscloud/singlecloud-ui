@@ -52,7 +52,7 @@ export class SimpleTable extends React.PureComponent {
           </TableRow>
         </TableHead>
         <TableBody>
-          {data.map((rowData, id) => (
+          {data.filter((d) => !!d).map((rowData, id) => (
             <TableRow key={id}>
               {schema.map((column) => {
                 const CustomComponent = this.getKey(column, 'component');
