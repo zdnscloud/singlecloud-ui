@@ -1,4 +1,4 @@
-import { takeLatest, call, put, select } from 'redux-saga/effects';
+import { takeLatest, call, put, select, all } from 'redux-saga/effects';
 import request from 'utils/request';
 
 import {
@@ -7,6 +7,7 @@ import {
   makeSelectLocation,
 } from '../App/selectors';
 import { url } from '../ClustersPage/saga';
+import { makeSelectClusters } from '../ClustersPage/selectors';
 
 import {
   INIT_ACTION,
@@ -37,6 +38,24 @@ import {
 
 export function* initialize() {
   yield* loadNamespaces();
+}
+
+export function* loadAllNamespaces() {
+  const cl = yield select(makeSelectClusters());
+  const clusters = cl.toList().toJS();
+  function* task(id) {
+    try {
+      const clusterID = id;
+      yield put(loadNamespacesRequest());
+      const data = yield call(request, `${url}/${clusterID}/namespaces`);
+      yield put(loadNamespacesSuccess(clusterID, data));
+    } catch (e) {
+      yield put(loadNamespacesFailure(e));
+    }
+  }
+  for (let c of clusters) {
+    yield* task(c.id);
+  }
 }
 
 export function* loadNamespaces() {

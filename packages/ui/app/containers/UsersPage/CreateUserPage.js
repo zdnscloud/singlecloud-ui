@@ -125,7 +125,7 @@ export class CreateUserPage extends React.PureComponent {
               <Button
                 variant="contained"
                 color="primary"
-                size="lg"
+                size="large"
                 onClick={submitForm}
               >
                 Create

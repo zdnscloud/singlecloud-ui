@@ -3,7 +3,7 @@ import request from 'utils/request';
 import { push } from 'connected-react-router';
 
 import { loadClusters } from '../ClustersPage/saga';
-import { loadNamespaces } from '../NamespacesPage/saga';
+import { loadAllNamespaces } from '../NamespacesPage/saga';
 import { initAction as initEvents } from '../EventsPage/actions';
 import {
   makeSelectClusterID,
@@ -17,6 +17,7 @@ import { CHANGE_NAMESPACE } from '../NamespacesPage/constants';
 
 export function* initialize() {
   yield* loadClusters();
+  yield* loadAllNamespaces();
   const id = yield select(makeSelectClusterID());
   if (id) {
     yield put(initEvents({ params: { cluster_id: id } }));

@@ -16,9 +16,10 @@ const CustomCheckbox = ({
   namespace,
   onChange,
   onBlur,
+  value: val,
   ...rest
 }) => {
-  const value = rest.value || [];
+  const value = val || [];
   const iv = { cluster, namespace };
   const idx = _.findIndex(value, (v) => _.isEqual(v, iv));
 
