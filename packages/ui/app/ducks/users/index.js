@@ -62,7 +62,9 @@ export const usersReducer = (
     case c.REMOVE_USER:
       return state;
     case c.REMOVE_USER_SUCCESS:
-      return state;
+      return state
+        .deleteIn(['users', meta.id])
+        .update('usersList', (l) => l.filterNot((id) => id === meta.id));
     case c.REMOVE_USER_FAILURE:
       return state;
 

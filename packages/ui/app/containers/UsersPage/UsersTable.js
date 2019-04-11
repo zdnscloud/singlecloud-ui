@@ -20,10 +20,11 @@ import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
+import IconButton from '@material-ui/core/IconButton';
+import DeleteIcon from '@material-ui/icons/Delete';
 import { SimpleTable } from '@gsmlg/com';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTerminal } from '@fortawesome/free-solid-svg-icons';
-import IconButton from '@material-ui/core/IconButton';
 
 import { makeSelectUsers, makeSelectUsersList } from 'ducks/users/selectors';
 import * as actions from 'ducks/users/actions';
@@ -41,8 +42,23 @@ export class UsersTable extends React.PureComponent {
   };
 
   render() {
-    const { classes, usersList, users } = this.props;
-    const mergedSchema = schema.slice();
+    const { classes, usersList, removeUser } = this.props;
+    const mergedSchema = schema.concat([
+      {
+        id: 'actions',
+        label: 'Actions',
+        component: (props) => (
+          <Fragment>
+            <IconButton
+              aria-label="Delete"
+              onClick={(evt) => removeUser(props.data.get('id'))}
+            >
+              <DeleteIcon />
+            </IconButton>
+          </Fragment>
+        ),
+      },
+    ]);
 
     return (
       <Paper className={classes.tableWrapper}>

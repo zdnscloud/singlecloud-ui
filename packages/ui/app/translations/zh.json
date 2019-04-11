@@ -60,5 +60,13 @@
   "app.containers.ServicesPage.services": "Services",
   "app.containers.TerminalPage.header": "This is the TerminalPage container!",
   "app.containers.TerminalPage.pageDesc": "Description of TerminalPage",
-  "app.containers.TerminalPage.pageTitle": "TerminalPage"
+  "app.containers.TerminalPage.pageTitle": "TerminalPage",
+  "app.containers.UsersPage.createUser": "Create User",
+  "app.containers.UsersPage.header": "This is the UsersPage header!",
+  "app.containers.UsersPage.pageDesc": "This is the UsersPage description!",
+  "app.containers.UsersPage.pageTitle": "This is the UsersPage title!",
+  "app.containers.UsersPage.tableTitleCreationTimestamp": "CreationTimestamp",
+  "app.containers.UsersPage.tableTitleLinks": "Links",
+  "app.containers.UsersPage.tableTitleName": "Name",
+  "app.containers.UsersPage.users": "Users"
 }

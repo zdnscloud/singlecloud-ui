@@ -28,9 +28,11 @@ export default store;
 
 if (window) {
   window.onunload = () => {
-    const state = store.getState().toJS();
-    const data = JSON.stringify(state);
-    // TODO: encrypt data
-    localforage.setItem('persistentState', data);
+    try {
+      const state = store.getState().toJS();
+      const data = JSON.stringify(state);
+      // TODO: encrypt data
+      localforage.setItem('persistentState', data);
+    } catch (e) {}
   };
 }

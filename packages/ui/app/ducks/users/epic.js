@@ -20,29 +20,29 @@ import * as a from './actions';
 export const loadUsersEpic = (action$, state$, { ajax }) =>
   action$.pipe(
     ofType(c.LOAD_USERS),
-    mergeMap(() => (
+    mergeMap(() =>
       ajax('/apis/zcloud.cn/v1/users').pipe(
         map((resp) => a.loadUsersSuccess(resp)),
         catchError((error) => of(a.loadUsersFailure(error)))
       )
-    ))
+    )
   );
 
 export const loadUserEpic = (action$, state$, { ajax }) =>
   action$.pipe(
     ofType(c.LOAD_USER),
-    mergeMap(({ payload }) => (
+    mergeMap(({ payload }) =>
       ajax(`/apis/zcloud.cn/v1/users/${payload.id}`).pipe(
         map((resp) => a.loadUserSuccess(resp)),
         catchError((error) => of(a.loadUserFailure(error)))
       )
-    ))
+    )
   );
 
 export const createUserEpic = (action$, state$, { ajax }) =>
   action$.pipe(
     ofType(c.CREATE_USER),
-    mergeMap(({ payload, meta: { resolve, reject } }) => (
+    mergeMap(({ payload, meta: { resolve, reject } }) =>
       ajax({
         url: `/apis/zcloud.cn/v1/users`,
         method: 'POST',
@@ -57,7 +57,7 @@ export const createUserEpic = (action$, state$, { ajax }) =>
           return of(a.createUserFailure(error));
         })
       )
-    ))
+    )
   );
 
 export const afterCreateEpic = (action$) =>
@@ -69,7 +69,7 @@ export const afterCreateEpic = (action$) =>
 export const updateUserEpic = (action$, state$, { ajax }) =>
   action$.pipe(
     ofType(c.UPDATE_USER),
-    mergeMap(({ payload, meta: { resolve, reject } }) => (
+    mergeMap(({ payload, meta: { resolve, reject } }) =>
       ajax({
         url: `/apis/zcloud.cn/v1/users`,
         method: 'PUT',
@@ -84,28 +84,21 @@ export const updateUserEpic = (action$, state$, { ajax }) =>
           return of(a.updateUserFailure(error));
         })
       )
-    ))
+    )
   );
 
 export const removeUserEpic = (action$, state$, { ajax }) =>
   action$.pipe(
     ofType(c.REMOVE_USER),
-    mergeMap(({ payload, meta: { resolve, reject } }) => (
+    mergeMap(({ payload }) =>
       ajax({
-        url: `/apis/zcloud.cn/v1/users`,
+        url: `/apis/zcloud.cn/v1/users/${payload}`,
         method: 'DELETE',
-        body: payload,
       }).pipe(
-        map((resp) => {
-          resolve(resp);
-          return a.removeUserSuccess(resp);
-        }),
-        catchError((error) => {
-          reject(error);
-          return of(a.removeUserFailure(error));
-        })
+        map((resp) => a.removeUserSuccess(resp, payload)),
+        catchError((error) => of(a.removeUserFailure(error, payload)))
       )
-    ))
+    )
   );
 
 export default combineEpics(

@@ -65,17 +65,19 @@ export const updateUserFailure = () => ({
   payload: {},
 });
 
-export const removeUser = () => ({
+export const removeUser = (id) => ({
   type: c.REMOVE_USER,
-  payload: {},
+  payload: id,
 });
 
-export const removeUserSuccess = () => ({
+export const removeUserSuccess = (resp, id) => ({
   type: c.REMOVE_USER_SUCCESS,
-  payload: {},
+  payload: resp,
+  meta: { id },
 });
 
-export const removeUserFailure = () => ({
+export const removeUserFailure = (error, id) => ({
   type: c.REMOVE_USER_FAILURE,
-  payload: {},
+  payload: error,
+  meta: { id },
 });
