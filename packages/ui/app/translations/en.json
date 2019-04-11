@@ -60,5 +60,13 @@
   "app.containers.ServicesPage.services": "",
   "app.containers.TerminalPage.header": "",
   "app.containers.TerminalPage.pageDesc": "",
-  "app.containers.TerminalPage.pageTitle": ""
+  "app.containers.TerminalPage.pageTitle": "",
+  "app.containers.UsersPage.createUser": "",
+  "app.containers.UsersPage.header": "",
+  "app.containers.UsersPage.pageDesc": "",
+  "app.containers.UsersPage.pageTitle": "",
+  "app.containers.UsersPage.tableTitleCreationTimestamp": "",
+  "app.containers.UsersPage.tableTitleLinks": "",
+  "app.containers.UsersPage.tableTitleName": "",
+  "app.containers.UsersPage.users": ""
 }
