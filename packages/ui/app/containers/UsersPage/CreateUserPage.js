@@ -9,10 +9,10 @@ import { findDOMNode } from 'react-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
-import { createStructuredSelector } from 'reselect';
+import { createStructuredSelector, createSelector } from 'reselect';
 import { bindActionCreators, compose } from 'redux';
 import { fromJS } from 'immutable';
-import { reduxForm } from 'redux-form/immutable';
+import { reduxForm, getFormValues } from 'redux-form/immutable';
 import { SubmissionError, submit } from 'redux-form';
 import sha1 from 'crypto-js/sha1';
 import encHex from 'crypto-js/enc-hex';
@@ -52,7 +52,7 @@ import CardHeader from 'components/Card/CardHeader';
 import CardFooter from 'components/Card/CardFooter';
 
 import * as actions from 'ducks/users/actions';
-import { makeSelectClusters } from 'containers/ClustersPage/selectors';
+import { makeSelectClusters, makeSelectClustersAndNamespaces } from 'containers/ClustersPage/selectors';
 
 import messages from './messages';
 import ApplicationsHelmet from './helmet';
@@ -115,7 +115,11 @@ export class CreateUserPage extends React.PureComponent {
               </h4>
             </CardHeader>
             <CardBody>
-              <CreateUserForm clusters={clusters} classes={classes} onSubmit={doSubmit} />
+              <CreateUserForm
+                classes={classes}
+                clusters={clusters}
+                onSubmit={doSubmit}
+              />
             </CardBody>
             <CardFooter className={classes.cardFooter}>
               <Button
@@ -135,7 +139,11 @@ export class CreateUserPage extends React.PureComponent {
 }
 
 const mapStateToProps = createStructuredSelector({
-  clusters: makeSelectClusters(),
+  clusters: makeSelectClustersAndNamespaces(),
+  values: createSelector(
+    getFormValues(formName),
+    (v) => (v)
+  ),
 });
 
 const mapDispatchToProps = (dispatch) =>

@@ -25,6 +25,7 @@ import Danger from 'components/Typography/Danger';
 import GridItem from 'components/Grid/GridItem';
 import GridContainer from 'components/Grid/GridContainer';
 import InputField from 'components/Field/InputField';
+import AuthField from 'components/Field/AuthField';
 
 class UserForm extends PureComponent {
   state = {};
@@ -57,25 +58,8 @@ class UserForm extends PureComponent {
               classes={classes}
             />
           </GridItem>
-          <GridItem xs={12} sm={12} md={12} className={classes.formLine}>
-            {clusters.toList().map((c) => {
-              const name = c.get('name');
-              return (
-                <FormGroup row>
-                  <FormControlLabel
-                    control={
-                      <Checkbox
-                        checked={false}
-                        onChange={(e) => {}}
-                        value={`${name}._all`}
-                      />
-                    }
-                    label={`${name} all`}
-                  />
-                  <Button>show namespaces</Button>
-                </FormGroup>
-              );
-            })}
+          <GridItem xs={12} sm={12} md={12} className={classes.formAuthLine}>
+            <AuthField name="projects" clusters={clusters} />
           </GridItem>
         </GridContainer>
       </form>

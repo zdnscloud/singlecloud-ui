@@ -9,6 +9,9 @@ import { makeSelectClusterID } from '../App/selectors';
 const selectClustersPageDomain = (state) =>
   state.get('clustersPage', initialState);
 
+const selectNamespacesPageDomain = (state) =>
+  state.get('namespacesPage', initialState);
+
 /**
  * Other specific selectors
  */
@@ -29,6 +32,14 @@ export const makeSelectTableList = () =>
   createSelector(
     selectClustersPageDomain,
     (substate) => substate.get('tableList')
+  );
+
+export const makeSelectClustersAndNamespaces = () =>
+  createSelector(
+    selectClustersPageDomain,
+    selectNamespacesPageDomain,
+    (cstate, nsstate) =>
+      cstate.get('clusters').map((c) => c.set('namespaces', nsstate.getIn(['namespaces', c.get('id')], c.clear())))
   );
 
 /**

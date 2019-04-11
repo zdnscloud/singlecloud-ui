@@ -114,6 +114,7 @@ const styles = (theme) => ({
   formLine: {
     height: 80,
   },
+  formAuthLine: {},
   nameControl: {
     width: 300,
   },

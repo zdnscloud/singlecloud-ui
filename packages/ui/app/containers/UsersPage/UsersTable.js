@@ -37,8 +37,7 @@ import schema from './tableSchema';
 export class UsersTable extends React.PureComponent {
   static propTypes = {
     classes: PropTypes.object.isRequired,
-    tableList: PropTypes.object.isRequired,
-    users: PropTypes.object.isRequired,
+    usersList: PropTypes.object.isRequired,
   };
 
   render() {

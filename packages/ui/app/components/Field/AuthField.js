@@ -1,5 +1,6 @@
+import _ from 'lodash';
 import React, { Fragment } from 'react';
-import { Field, FieldArray } from 'redux-form/immutable';
+import { Field } from 'redux-form/immutable';
 
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormControl from '@material-ui/core/FormControl';
@@ -9,50 +10,102 @@ import FormGroup from '@material-ui/core/FormGroup';
 import Checkbox from '@material-ui/core/Checkbox';
 import Button from 'components/CustomButtons/Button';
 
+const CustomCheckbox = ({
+  label,
+  cluster,
+  namespace,
+  onChange,
+  onBlur,
+  ...rest
+}) => {
+  const value = rest.value || [];
+  const iv = { cluster, namespace };
+  const idx = _.findIndex(value, (v) => _.isEqual(v, iv));
+
+  return (
+    <FormControlLabel
+      control={
+        <Checkbox
+          {...rest}
+          checked={idx >= 0}
+          onChange={(evt) => {
+            const { checked } = evt.target;
+            const newValue = value.slice();
+            const i = _.findIndex(newValue, (v) => _.isEqual(v, iv));
+            if (checked && i < 0) {
+              newValue.push(iv);
+            }
+            if (!checked && i >= 0) {
+              newValue.splice(i, 1);
+            }
+
+            onBlur(newValue);
+            onChange(newValue);
+          }}
+        />
+      }
+      label={label}
+    />      
+  );
+}
+
 const renderClusters = ({
   label,
   input,
-  classes,
   meta,
-  inputProps,
-  fields,
   clusters,
   ...custom
-}) => (
-  <Fragment>
-    {clusters.toList().map((c) => {
-      const name = c.get('name');
-      return (
-        <Fragment>
-          <FormGroup row>
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={false}
-                  onChange={(e) => {}}
-                  value={`${name}._all`}
-                />
-              }
-              label={`${name} all`}
-            />
-            <Button>show namespaces</Button>
-          </FormGroup>
-        </Fragment>
-      );
-    })}
-  </Fragment>
-);
-
-const AuthField = (props) => {
-  const { component, clusters, ...rest } = props;
-
+}) => {
+  let j = 0;
   return (
-    <FieldArray
-      {...rest}
-      clusters={clusters}
-      component={renderClusters}
-    />
-  );
+    <Fragment>
+      {clusters.toList().map((c) => {
+        const name = c.get('name');
+        const ns = c.get('namespaces');
+        const i = j;
+        const { value, ...ipt } = input;
+        j += 1;
+        return (
+          <Fragment key={i}>
+            <FormGroup row>
+              <CustomCheckbox
+                {...ipt}
+                label={`${name} all`}
+                value={value}
+                cluster={name}
+                namespace="_all"
+              />
+            </FormGroup>
+            {ns.size > 0 ? (
+              <FormGroup row>
+                {ns.toList().map((n) => {
+                  const nname = n.get('name');
+                  const ii = j;
+                  j += 1;
+                  return (
+                    <CustomCheckbox
+                      key={ii}
+                      {...ipt}
+                      label={`${name} ${n.get('name')}`}
+                      value={value}
+                      cluster={name}
+                      namespace={nname}
+                    />
+                  );
+                })}
+              </FormGroup>
+            ) : null}
+          </Fragment>
+        );
+      })}
+    </Fragment>
+  )
 };
 
-export default InputField;
+const AuthField = (props) => {
+  const { component, ...rest } = props;
+
+  return <Field {...rest} component={renderClusters} />;
+};
+
+export default AuthField;
