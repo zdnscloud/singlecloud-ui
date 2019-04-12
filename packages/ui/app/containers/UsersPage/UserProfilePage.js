@@ -44,6 +44,7 @@ import Fab from '@material-ui/core/Fab';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
+import KeyIcon from '@material-ui/icons/VpnKey';
 import Collapse from '@material-ui/core/Collapse';
 import Checkbox from '@material-ui/core/Checkbox';
 import Grid from '@material-ui/core/Grid';
@@ -104,7 +105,7 @@ export class UserProfilePage extends React.PureComponent {
               <h4 className={classes.cardTitleWhite}>
                 <FormattedMessage {...messages.userProfile} />
                 <Link
-                  to={`/users/${user.get('id')}/edit`}
+                  to={`/users/${user.get('id')}/passwd`}
                   className={classes.createBtnLink}
                 >
                   <Fab
@@ -113,7 +114,7 @@ export class UserProfilePage extends React.PureComponent {
                     aria-label="create user"
                     className={classes.menuButton}
                   >
-                    <EditIcon />
+                    <KeyIcon />
                   </Fab>
                 </Link>
               </h4>

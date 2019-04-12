@@ -58,14 +58,6 @@ export class UsersTable extends React.PureComponent {
                 <EditIcon />
               </IconButton>
             </Link>
-            <Link
-              to={`/users/${props.data.get('id')}/passwd`}
-              className={classes.createBtnLink}
-            >
-              <IconButton aria-label="Setup Password">
-                <KeyIcon />
-              </IconButton>
-            </Link>
             <IconButton
               aria-label="Delete"
               onClick={(evt) => removeUser(props.data.get('id'))}
