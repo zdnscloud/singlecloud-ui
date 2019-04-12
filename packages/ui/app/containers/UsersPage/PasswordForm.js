@@ -44,7 +44,7 @@ class PasswordForm extends PureComponent {
     return (
       <form className={getByKey(classes, 'form')} onSubmit={handleSubmit}>
         <GridContainer>
-          {!isAdmin ? (
+          {!isAdmin || true ? (
             <GridItem xs={12} sm={12} md={12} className={classes.formLine}>
               <InputField
                 label="Old Password"

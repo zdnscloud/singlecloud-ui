@@ -14,7 +14,7 @@ import { bindActionCreators, compose } from 'redux';
 import { fromJS } from 'immutable';
 import { reduxForm, getFormValues } from 'redux-form/immutable';
 import { SubmissionError, submit } from 'redux-form';
-import sha1 from 'crypto-js/sha1';
+import SHA1 from 'crypto-js/sha1';
 import encHex from 'crypto-js/enc-hex';
 
 import classNames from 'classnames';
@@ -72,11 +72,17 @@ export class PasswordSetupPage extends React.PureComponent {
     } = this.props;
     async function doSubmit(formValues) {
       try {
-        const data = formValues.toJS();
+        const hash = (str) => SHA1(str).toString(encHex);
+        const data = {
+          id: uid,
+          oldPassword: hash(formValues.get('oldPassword')),
+          newPassword: hash(formValues.get('newPassword')),
+        };
         await new Promise((resolve, reject) => {
-          resetPassword({ ...data, id: uid }, { resolve, reject });
+          resetPassword(data, { resolve, reject });
         });
       } catch (error) {
+        console.error(error);
         throw new SubmissionError({ _error: error });
       }
     }
