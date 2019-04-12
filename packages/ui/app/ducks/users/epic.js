@@ -32,7 +32,7 @@ export const loadUserEpic = (action$, state$, { ajax }) =>
   action$.pipe(
     ofType(c.LOAD_USER),
     mergeMap(({ payload }) =>
-      ajax(`/apis/zcloud.cn/v1/users/${payload.id}`).pipe(
+      ajax(`/apis/zcloud.cn/v1/users/${payload}`).pipe(
         map((resp) => a.loadUserSuccess(resp)),
         catchError((error) => of(a.loadUserFailure(error)))
       )
@@ -63,7 +63,7 @@ export const createUserEpic = (action$, state$, { ajax }) =>
 export const afterCreateEpic = (action$) =>
   action$.pipe(
     ofType(c.CREATE_USER_SUCCESS),
-    mergeMap(() => timer(3000).pipe(mapTo(push('/users'))))
+    mergeMap(() => timer(1000).pipe(mapTo(push('/users'))))
   );
 
 export const updateUserEpic = (action$, state$, { ajax }) =>
@@ -71,7 +71,7 @@ export const updateUserEpic = (action$, state$, { ajax }) =>
     ofType(c.UPDATE_USER),
     mergeMap(({ payload, meta: { resolve, reject } }) =>
       ajax({
-        url: `/apis/zcloud.cn/v1/users`,
+        url: `/apis/zcloud.cn/v1/users/${payload.id}`,
         method: 'PUT',
         body: payload,
       }).pipe(
@@ -85,6 +85,12 @@ export const updateUserEpic = (action$, state$, { ajax }) =>
         })
       )
     )
+  );
+
+export const afterUpdateEpic = (action$) =>
+  action$.pipe(
+    ofType(c.UPDATE_USER_SUCCESS),
+    mergeMap(() => timer(1000).pipe(mapTo(push('/users'))))
   );
 
 export const removeUserEpic = (action$, state$, { ajax }) =>
@@ -107,5 +113,6 @@ export default combineEpics(
   createUserEpic,
   afterCreateEpic,
   updateUserEpic,
+  afterUpdateEpic,
   removeUserEpic
 );

@@ -24,7 +24,7 @@ import ApplicationsPage from 'containers/ApplicationsPage/Loadable';
 import CreateApplication from 'containers/ApplicationsPage/CreateLoadable';
 import ApplicationDetailPage from 'containers/ApplicationDetailPage/Loadable';
 
-import UsersPage, { CreateUserPage } from 'containers/UsersPage/Loadable';
+import UsersPage, { CreateUserPage, EditUserPage } from 'containers/UsersPage/Loadable';
 
 const appRoutes = [
   {
@@ -122,6 +122,12 @@ const appRoutes = [
     name: 'Create User',
     icon: Dashboard,
     component: CreateUserPage,
+  },
+  {
+    path: '/users/:user_id/edit',
+    name: 'Edit User',
+    icon: Dashboard,
+    component: EditUserPage,
   },
 ];
 

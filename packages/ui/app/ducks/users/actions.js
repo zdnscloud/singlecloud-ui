@@ -19,19 +19,20 @@ export const loadUsersFailure = (error) => ({
   error: true,
 });
 
-export const loadUser = () => ({
+export const loadUser = (id) => ({
   type: c.LOAD_USER,
-  payload: {},
+  payload: id,
 });
 
-export const loadUserSuccess = () => ({
+export const loadUserSuccess = (resp) => ({
   type: c.LOAD_USER_SUCCESS,
-  payload: {},
+  payload: resp,
 });
 
-export const loadUserFailure = () => ({
+export const loadUserFailure = (error) => ({
   type: c.LOAD_USER_FAILURE,
-  payload: {},
+  payload: error,
+  error: true,
 });
 
 export const createUser = (data, meta) => ({
@@ -50,19 +51,21 @@ export const createUserFailure = () => ({
   payload: {},
 });
 
-export const updateUser = () => ({
+export const updateUser = (data, meta) => ({
   type: c.UPDATE_USER,
-  payload: {},
+  payload: data,
+  meta,
 });
 
-export const updateUserSuccess = () => ({
+export const updateUserSuccess = (resp) => ({
   type: c.UPDATE_USER_SUCCESS,
-  payload: {},
+  payload: resp,
 });
 
-export const updateUserFailure = () => ({
+export const updateUserFailure = (error) => ({
   type: c.UPDATE_USER_FAILURE,
-  payload: {},
+  payload: error,
+  error: true,
 });
 
 export const removeUser = (id) => ({

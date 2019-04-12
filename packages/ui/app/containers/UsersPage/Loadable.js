@@ -13,3 +13,7 @@ export default loadable(() =>
 export const CreateUserPage = loadable(() =>
   import(/* webpackChunkName: "CreateUsersPage" */ './CreateUserPage')
 );
+
+export const EditUserPage = loadable(() =>
+  import(/* webpackChunkName: "EditUsersPage" */ './EditUserPage')
+);

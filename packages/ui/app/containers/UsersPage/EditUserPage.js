@@ -1,6 +1,6 @@
 /**
  *
- * Create User
+ * Edit User
  *
  */
 
@@ -52,6 +52,8 @@ import CardHeader from 'components/Card/CardHeader';
 import CardFooter from 'components/Card/CardFooter';
 
 import * as actions from 'ducks/users/actions';
+import { makeSelectEditingUser } from 'ducks/users/selectors';
+import { makeSelectLocation } from 'containers/App/selectors';
 import { makeSelectClustersAndNamespaces } from 'containers/ClustersPage/selectors';
 
 import messages from './messages';
@@ -59,44 +61,42 @@ import UsersHelmet from './helmet';
 import styles from './styles';
 import UserForm from './UserForm';
 
-export const formName = 'createUserForm';
+export const formName = 'editUserForm';
 
 const validate = (values) => {
   const errors = {};
-  const requiredFields = ['name', 'password'];
-  requiredFields.forEach((field) => {
-    if (!values.get(field)) {
-      errors[field] = 'Required';
-    }
-  });
   return errors;
 };
 
-const CreateUserForm = reduxForm({
+const EditUserForm = reduxForm({
   form: formName,
   validate,
 })(UserForm);
 
 /* eslint-disable react/prefer-stateless-function */
-export class CreateUserPage extends React.PureComponent {
+export class EditUserPage extends React.PureComponent {
   static propTypes = {
     classes: PropTypes.object.isRequired,
   };
+
+  componentWillMount() {
+    this.props.loadUser();
+  }
 
   render() {
     const {
       classes,
       clusters,
-      createUser,
+      updateUser,
       submitForm,
+      user,
     } = this.props;
     async function doSubmit(formValues) {
       try {
         const data = formValues.toJS();
-        const password = sha1(formValues.get('password')).toString(encHex);
         const name = formValues.get('name');
         await new Promise((resolve, reject) => {
-          createUser({ ...data, password }, { resolve, reject });
+          updateUser({ ...data }, { resolve, reject });
         });
       } catch (error) {
         throw new SubmissionError({ _error: error });
@@ -111,14 +111,16 @@ export class CreateUserPage extends React.PureComponent {
           <Card>
             <CardHeader color="primary">
               <h4 className={classes.cardTitleWhite}>
-                <FormattedMessage {...messages.createUser} />
+                <FormattedMessage {...messages.editUser} />
               </h4>
             </CardHeader>
             <CardBody>
-              <CreateUserForm
+              <EditUserForm
+                edit
                 classes={classes}
                 clusters={clusters}
                 onSubmit={doSubmit}
+                initialValues={user}
               />
             </CardBody>
             <CardFooter className={classes.cardFooter}>
@@ -128,7 +130,7 @@ export class CreateUserPage extends React.PureComponent {
                 size="large"
                 onClick={submitForm}
               >
-                Create
+                Update
               </Button>
             </CardFooter>
           </Card>
@@ -140,6 +142,8 @@ export class CreateUserPage extends React.PureComponent {
 
 const mapStateToProps = createStructuredSelector({
   clusters: makeSelectClustersAndNamespaces(),
+  location: makeSelectLocation(),
+  user: makeSelectEditingUser(),
   values: createSelector(
     getFormValues(formName),
     (v) => (v)
@@ -163,4 +167,4 @@ const withConnect = connect(
 export default compose(
   withConnect,
   withStyles(styles)
-)(CreateUserPage);
+)(EditUserPage);

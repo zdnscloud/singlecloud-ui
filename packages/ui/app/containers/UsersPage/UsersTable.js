@@ -22,6 +22,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
+import EditIcon from '@material-ui/icons/Edit';
 import { SimpleTable } from '@gsmlg/com';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTerminal } from '@fortawesome/free-solid-svg-icons';
@@ -48,6 +49,14 @@ export class UsersTable extends React.PureComponent {
         label: 'Actions',
         component: (props) => (
           <Fragment>
+            <Link
+              to={`/users/${props.data.get('id')}/edit`}
+              className={classes.createBtnLink}
+            >
+              <IconButton aria-label="Edit User">
+                <EditIcon />
+              </IconButton>
+            </Link>
             <IconButton
               aria-label="Delete"
               onClick={(evt) => removeUser(props.data.get('id'))}

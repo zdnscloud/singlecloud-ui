@@ -41,4 +41,8 @@ export default defineMessages({
     id: `${scope}.createUser`,
     defaultMessage: 'Create User',
   },
+  editUser: {
+    id: `${scope}.editUser`,
+    defaultMessage: 'Edit User',
+  },
 });

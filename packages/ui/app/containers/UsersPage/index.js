@@ -54,7 +54,7 @@ export class UsersPage extends React.PureComponent {
           <GridContainer>
             <GridItem xs={12} sm={12} md={12}>
               <Card>
-                <CardHeader color="customBlue">
+                <CardHeader color="primary">
                   <h4 className={classes.cardTitleWhite}>
                     <FormattedMessage {...messages.users} />
                     <Link

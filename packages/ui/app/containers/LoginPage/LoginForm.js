@@ -99,7 +99,7 @@ const LoginForm = (props) => {
 
   return (
     <form className={classes.form} onSubmit={handleSubmit}>
-      <CardHeader color="customBlue" className={classes.cardHeader}>
+      <CardHeader color="primary" className={classes.cardHeader}>
         <h4>Login</h4>
       </CardHeader>
       <CardBody>

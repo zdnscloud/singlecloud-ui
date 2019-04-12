@@ -37,8 +37,10 @@ export const usersReducer = (
 
     case c.LOAD_USER:
       return state;
-    case c.LOAD_USER_SUCCESS:
-      return state;
+    case c.LOAD_USER_SUCCESS: {
+      const user = payload.response;
+      return state.setIn(['users', user.id], fromJS(user));
+    }
     case c.LOAD_USER_FAILURE:
       return state;
 

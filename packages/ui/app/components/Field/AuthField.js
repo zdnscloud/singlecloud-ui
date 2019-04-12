@@ -1,6 +1,7 @@
 import _ from 'lodash';
 import React, { Fragment } from 'react';
 import { Field } from 'redux-form/immutable';
+import { Map, List } from 'immutable';
 
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormControl from '@material-ui/core/FormControl';
@@ -19,28 +20,26 @@ const CustomCheckbox = ({
   value: val,
   ...rest
 }) => {
-  const value = val || [];
-  const iv = { cluster, namespace };
-  const idx = _.findIndex(value, (v) => _.isEqual(v, iv));
+  const value = val || List([]);
+  const iv = Map({ cluster, namespace });
 
   return (
     <FormControlLabel
       control={
         <Checkbox
           {...rest}
-          checked={idx >= 0}
+          checked={value.includes(iv)}
           onChange={(evt) => {
             const { checked } = evt.target;
-            const newValue = value.slice();
-            const i = _.findIndex(newValue, (v) => _.isEqual(v, iv));
+            let newValue = value;
+            const i = newValue.indexOf(iv);
             if (checked && i < 0) {
-              newValue.push(iv);
+              newValue = newValue.push(iv);
             }
             if (!checked && i >= 0) {
-              newValue.splice(i, 1);
+              newValue = newValue.delete(i);
             }
 
-            onBlur(newValue);
             onChange(newValue);
           }}
         />
@@ -57,15 +56,12 @@ const renderClusters = ({
   clusters,
   ...custom
 }) => {
-  let j = 0;
   return (
     <Fragment>
-      {clusters.toList().map((c) => {
+      {clusters.toList().map((c, i) => {
         const name = c.get('name');
         const ns = c.get('namespaces');
-        const i = j;
         const { value, ...ipt } = input;
-        j += 1;
         return (
           <Fragment key={i}>
             <FormGroup row>
@@ -79,15 +75,13 @@ const renderClusters = ({
             </FormGroup>
             {ns.size > 0 ? (
               <FormGroup row>
-                {ns.toList().map((n) => {
+                {ns.toList().map((n, ii) => {
                   const nname = n.get('name');
-                  const ii = j;
-                  j += 1;
                   return (
                     <CustomCheckbox
                       key={ii}
                       {...ipt}
-                      label={`${name} ${n.get('name')}`}
+                      label={`${name} ${nname}`}
                       value={value}
                       cluster={name}
                       namespace={nname}

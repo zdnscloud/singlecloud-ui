@@ -31,7 +31,16 @@ class UserForm extends PureComponent {
   state = {};
 
   render() {
-    const { clusters, handleSubmit, pristine, reset, submitting, error, classes } = this.props;
+    const {
+      clusters,
+      handleSubmit,
+      pristine,
+      reset,
+      submitting,
+      error,
+      classes,
+      edit,
+    } = this.props;
 
     return (
       <form className={getByKey(classes, 'form')} onSubmit={handleSubmit}>
@@ -43,21 +52,23 @@ class UserForm extends PureComponent {
               formControlProps={{
                 className: classes.nameControl,
               }}
-              inputProps={{ type: 'text', autoComplete: 'off' }}
+              inputProps={{ type: 'text', autoComplete: 'off', disabled: edit }}
               classes={classes}
             />
           </GridItem>
-          <GridItem xs={12} sm={12} md={12} className={classes.formLine}>
-            <InputField
-              label="Password"
-              name="password"
-              formControlProps={{
-                className: classes.passwordControl,
-              }}
-              inputProps={{ type: 'password', autoComplete: 'off' }}
-              classes={classes}
-            />
-          </GridItem>
+          {!edit ? (
+            <GridItem xs={12} sm={12} md={12} className={classes.formLine}>
+              <InputField
+                label="Password"
+                name="password"
+                formControlProps={{
+                  className: classes.passwordControl,
+                }}
+                inputProps={{ type: 'password', autoComplete: 'off' }}
+                classes={classes}
+              />
+            </GridItem>
+          ) : null}
           <GridItem xs={12} sm={12} md={12} className={classes.formAuthLine}>
             <AuthField name="projects" clusters={clusters} />
           </GridItem>
