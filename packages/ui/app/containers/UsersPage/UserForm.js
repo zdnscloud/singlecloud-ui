@@ -40,7 +40,10 @@ class UserForm extends PureComponent {
       error,
       classes,
       edit,
+      profile,
+      initialValues,
     } = this.props;
+    const isAdmin = initialValues.get('id') === 'admin';
 
     return (
       <form className={getByKey(classes, 'form')} onSubmit={handleSubmit}>
@@ -52,11 +55,11 @@ class UserForm extends PureComponent {
               formControlProps={{
                 className: classes.nameControl,
               }}
-              inputProps={{ type: 'text', autoComplete: 'off', disabled: edit }}
+              inputProps={{ type: 'text', autoComplete: 'off', disabled: (edit || profile)}}
               classes={classes}
             />
           </GridItem>
-          {!edit ? (
+          {!(edit || profile) ? (
             <GridItem xs={12} sm={12} md={12} className={classes.formLine}>
               <InputField
                 label="Password"
@@ -69,9 +72,11 @@ class UserForm extends PureComponent {
               />
             </GridItem>
           ) : null}
-          <GridItem xs={12} sm={12} md={12} className={classes.formAuthLine}>
-            <AuthField name="projects" clusters={clusters} />
-          </GridItem>
+          {isAdmin ? null : (
+            <GridItem xs={12} sm={12} md={12} className={classes.formAuthLine}>
+              <AuthField name="projects" clusters={clusters} readOnly={profile} />
+            </GridItem>
+          )}
         </GridContainer>
       </form>
     );

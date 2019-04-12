@@ -12,12 +12,12 @@ import {
 } from 'rxjs/operators';
 import { ofType, combineEpics } from 'redux-observable';
 
-import * as constants from './constants';
-import * as actions from './actions';
+import * as c from './constants';
+import * as a from './actions';
 
 export const loginEpic = (action$, state$, { ajax }) =>
   action$.pipe(
-    ofType(constants.LOGIN),
+    ofType(c.LOGIN),
     mergeMap(({ payload, meta: { resolve, reject } }) => (
       ajax({
         url: `/apis/zcloud.cn/v1/users/${payload.user}?action=login`,
@@ -26,11 +26,11 @@ export const loginEpic = (action$, state$, { ajax }) =>
       }).pipe(
         map((resp) => {
           resolve(resp);
-          return actions.loginSuccess(resp);
+          return a.loginSuccess(resp);
         }),
         catchError((error) => {
           reject(error);
-          return of(actions.loginFailure(error));
+          return of(a.loginFailure(error));
         })
       )
     ))

@@ -45,4 +45,8 @@ export default defineMessages({
     id: `${scope}.editUser`,
     defaultMessage: 'Edit User',
   },
+  userProfile: {
+    id: `${scope}.userProfile`,
+    defaultMessage: 'User Profile',
+  },
 });

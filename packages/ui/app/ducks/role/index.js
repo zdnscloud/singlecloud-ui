@@ -7,12 +7,12 @@ import { fromJS } from 'immutable';
 import getByKey from '@gsmlg/utils/getByKey';
 import parseJWT from '@gsmlg/utils/parseJWT';
 
-import * as constants from './constants';
-import * as actions from './actions';
+import * as c from './constants';
+import * as a from './actions';
 
-const { prefix } = constants;
+const { prefix } = c;
 
-export { constants, actions, prefix };
+export { prefix };
 
 export const initialState = fromJS({
   role: {},
@@ -25,10 +25,10 @@ export const roleReducer = (
   { type, payload, error, meta }
 ) => {
   switch (type) {
-    case constants.LOGIN:
+    case c.LOGIN:
       return state;
 
-    case constants.LOGIN_SUCCESS: {
+    case c.LOGIN_SUCCESS: {
       const token = getByKey(payload, ['response', 'token']);
       const jwt = parseJWT(token);
       return state
@@ -36,6 +36,9 @@ export const roleReducer = (
         .set('jwt', jwt)
         .setIn(['role', 'user'], getByKey(jwt, ['payload', 'user']));
     }
+
+    case c.LOGOUT:
+      return initialState;
 
     default:
       return state;

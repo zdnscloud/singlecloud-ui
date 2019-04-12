@@ -41,6 +41,7 @@ import Sidebar from 'components/Sidebar/Sidebar';
 import Menubar from 'components/Menubar';
 
 import { makeSelectRole } from 'ducks/role/selectors';
+import * as roleActions from 'ducks/role/actions';
 
 import dashboardStyle from 'assets/jss/material-dashboard-react/layouts/dashboardStyle';
 
@@ -84,6 +85,7 @@ class AppMenubar extends PureComponent {
       toggleEventsView,
       role,
       userMenus,
+      logout,
     } = this.props;
     const { userEl } = this.state;
 
@@ -124,6 +126,10 @@ class AppMenubar extends PureComponent {
                   {m.name}
                 </MenuItem>
               ))}
+              <Divider />
+              <MenuItem onClick={logout}>
+                Logout
+              </MenuItem>
             </Menu>
           </Fragment>
         }
@@ -146,6 +152,7 @@ const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
       ...actions,
+      logout: roleActions.logout,
     },
     dispatch
   );

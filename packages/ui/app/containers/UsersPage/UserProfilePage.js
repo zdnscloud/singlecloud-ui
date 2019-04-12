@@ -1,6 +1,6 @@
 /**
  *
- * Edit User
+ * User Profile
  *
  */
 
@@ -61,20 +61,20 @@ import UsersHelmet from './helmet';
 import styles from './styles';
 import UserForm from './UserForm';
 
-export const formName = 'editUserForm';
+export const formName = 'userProfileForm';
 
 const validate = (values) => {
   const errors = {};
   return errors;
 };
 
-const EditUserForm = reduxForm({
+const UserProfileForm = reduxForm({
   form: formName,
   validate,
 })(UserForm);
 
 /* eslint-disable react/prefer-stateless-function */
-export class EditUserPage extends React.PureComponent {
+export class UserProfilePage extends React.PureComponent {
   static propTypes = {
     classes: PropTypes.object.isRequired,
   };
@@ -91,18 +91,6 @@ export class EditUserPage extends React.PureComponent {
       submitForm,
       user,
     } = this.props;
-    async function doSubmit(formValues) {
-      try {
-        const data = formValues.toJS();
-        const name = formValues.get('name');
-        await new Promise((resolve, reject) => {
-          updateUser({ ...data }, { resolve, reject });
-        });
-      } catch (error) {
-        throw new SubmissionError({ _error: error });
-      }
-    }
-
     return (
       <div className={classes.root}>
         <UsersHelmet />
@@ -111,28 +99,17 @@ export class EditUserPage extends React.PureComponent {
           <Card>
             <CardHeader color="primary">
               <h4 className={classes.cardTitleWhite}>
-                <FormattedMessage {...messages.editUser} />
+                <FormattedMessage {...messages.userProfile} />
               </h4>
             </CardHeader>
             <CardBody>
-              <EditUserForm
-                edit
+              <UserProfileForm
+                profile
                 classes={classes}
                 clusters={clusters}
-                onSubmit={doSubmit}
                 initialValues={user}
               />
             </CardBody>
-            <CardFooter className={classes.cardFooter}>
-              <Button
-                variant="contained"
-                color="primary"
-                size="large"
-                onClick={submitForm}
-              >
-                Update
-              </Button>
-            </CardFooter>
           </Card>
         </div>
       </div>
@@ -143,19 +120,14 @@ export class EditUserPage extends React.PureComponent {
 const mapStateToProps = createStructuredSelector({
   clusters: makeSelectClustersAndNamespaces(),
   location: makeSelectLocation(),
-  uid: makeSelectUID(),
   user: makeSelectEditingUser(),
-  values: createSelector(
-    getFormValues(formName),
-    (v) => (v)
-  ),
+  uid: makeSelectUID(),
 });
 
 const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
       ...actions,
-      submitForm: () => submit(formName),
     },
     dispatch
   );
@@ -168,4 +140,4 @@ const withConnect = connect(
 export default compose(
   withConnect,
   withStyles(styles)
-)(EditUserPage);
+)(UserProfilePage);

@@ -17,6 +17,7 @@ const CustomCheckbox = ({
   namespace,
   onChange,
   onBlur,
+  readOnly,
   value: val,
   ...rest
 }) => {
@@ -30,6 +31,9 @@ const CustomCheckbox = ({
           {...rest}
           checked={value.includes(iv)}
           onChange={(evt) => {
+            if (readOnly) {
+              return evt.preventDefault();
+            }
             const { checked } = evt.target;
             let newValue = value;
             const i = newValue.indexOf(iv);
@@ -67,6 +71,7 @@ const renderClusters = ({
             <FormGroup row>
               <CustomCheckbox
                 {...ipt}
+                {...custom}
                 label={`${name} all`}
                 value={value}
                 cluster={name}
@@ -81,6 +86,7 @@ const renderClusters = ({
                     <CustomCheckbox
                       key={ii}
                       {...ipt}
+                      {...custom}
                       label={`${name} ${nname}`}
                       value={value}
                       cluster={name}

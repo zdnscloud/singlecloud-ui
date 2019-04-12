@@ -17,3 +17,7 @@ export const CreateUserPage = loadable(() =>
 export const EditUserPage = loadable(() =>
   import(/* webpackChunkName: "EditUsersPage" */ './EditUserPage')
 );
+
+export const UserProfilePage = loadable(() =>
+  import(/* webpackChunkName: "UserProfilePage" */ './UserProfilePage')
+);

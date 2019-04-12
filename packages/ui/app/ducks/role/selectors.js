@@ -43,6 +43,12 @@ export const makeSelectIsLogin = () =>
     }
   );
 
+export const makeSelectIsAdmin = () =>
+  createSelector(
+    selectRoleDomain,
+    (substate) => substate.getIn(['role', 'user']) === 'admin'
+  );
+
 /**
  * Default selector used by LoginPage
  */

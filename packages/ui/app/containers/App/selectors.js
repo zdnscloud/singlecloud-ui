@@ -3,7 +3,7 @@ import {
   createMatchSelector,
   getLocation,
 } from 'connected-react-router/immutable';
-import { makeSelectRole } from 'ducks/role/selectors';
+import { makeSelectRole, makeSelectIsAdmin } from 'ducks/role/selectors';
 import { makeSelectCurrentNamespace } from '../NamespacesPage/selectors';
 
 const selectRouter = (state) => state.get('router');
@@ -49,7 +49,8 @@ export const makeSelectMenus = () =>
     selectApp,
     makeSelectClusterID(),
     makeSelectCurrentNamespace(),
-    (appState, cluster, namespace) => {
+    makeSelectIsAdmin(),
+    (appState, cluster, namespace, isAdmin) => {
       const menus = [{ name: 'clusters', path: '/clusters' }];
       if (cluster !== '') {
         return menus.concat([
@@ -61,9 +62,9 @@ export const makeSelectMenus = () =>
           { name: 'topology', path: `/clusters/${cluster}/topology` },
         ]);
       }
-      return menus.concat([
+      return menus.concat(isAdmin ? [
         { name: 'users', path: `/users` },
-      ]);
+      ] : []);
     }
   );
 
@@ -76,11 +77,12 @@ export const makeSelectShowEvents = () =>
 export const makeSelectUserMenus = () =>
   createSelector(
     selectApp,
-    (appState) => {
+    makeSelectIsAdmin(),
+    makeSelectRole(),
+    (appState, isAdmin, role) => {
       return [
-        { name: 'profile', path: '/role' },
-        { name: 'list', path: '/users' },
-        { name: 'logout', path: '/role/logout' },
-      ];
+        { name: 'profile', path: `/users/${role.get('user')}/profile` },
+        isAdmin ? { name: 'list', path: '/users' } : null,
+      ].filter((n) => !!n);
     }
   );
