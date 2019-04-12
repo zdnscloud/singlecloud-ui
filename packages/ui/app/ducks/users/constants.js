@@ -21,3 +21,7 @@ export const UPDATE_USER_FAILURE = `${prefix}/UPDATE_USER_FAILURE`;
 export const REMOVE_USER = `${prefix}/REMOVE_USER`;
 export const REMOVE_USER_SUCCESS = `${prefix}/REMOVE_USER_SUCCESS`;
 export const REMOVE_USER_FAILURE = `${prefix}/REMOVE_USER_FAILURE`;
+
+export const RESET_PASSWORD = `${prefix}/RESET_PASSWORD`;
+export const RESET_PASSWORD_SUCCESS = `${prefix}/RESET_PASSWORD_SUCCESS`;
+export const RESET_PASSWORD_FAILURE = `${prefix}/RESET_PASSWORD_FAILURE`;

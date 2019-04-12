@@ -1,6 +1,6 @@
 /**
  *
- * Create User
+ * Password Setup
  *
  */
 
@@ -28,51 +28,53 @@ import CardHeader from 'components/Card/CardHeader';
 import CardFooter from 'components/Card/CardFooter';
 
 import * as actions from 'ducks/users/actions';
+import { makeSelectEditingUser, makeSelectUID } from 'ducks/users/selectors';
+import { makeSelectRole, makeSelectIsAdmin } from 'ducks/role/selectors';
+import { makeSelectLocation } from 'containers/App/selectors';
 import { makeSelectClustersAndNamespaces } from 'containers/ClustersPage/selectors';
 
 import messages from './messages';
 import UsersHelmet from './helmet';
 import styles from './styles';
-import UserForm from './UserForm';
+import PasswordForm from './PasswordForm';
 
-export const formName = 'createUserForm';
+export const formName = 'passwordSetupForm';
 
 const validate = (values) => {
   const errors = {};
-  const requiredFields = ['name', 'password'];
-  requiredFields.forEach((field) => {
-    if (!values.get(field)) {
-      errors[field] = 'Required';
-    }
-  });
   return errors;
 };
 
-const CreateUserForm = reduxForm({
+const PasswordSetupForm = reduxForm({
   form: formName,
   validate,
-})(UserForm);
+})(PasswordForm);
 
 /* eslint-disable react/prefer-stateless-function */
-export class CreateUserPage extends React.PureComponent {
+export class PasswordSetupPage extends React.PureComponent {
   static propTypes = {
     classes: PropTypes.object.isRequired,
   };
+
+  componentWillMount() {
+    this.props.loadUser(this.props.uid);
+  }
 
   render() {
     const {
       classes,
       clusters,
-      createUser,
+      resetPassword,
       submitForm,
+      user,
+      uid,
+      isAdmin,
     } = this.props;
     async function doSubmit(formValues) {
       try {
         const data = formValues.toJS();
-        const password = sha1(formValues.get('password')).toString(encHex);
-        const name = formValues.get('name');
         await new Promise((resolve, reject) => {
-          createUser({ ...data, password }, { resolve, reject });
+          resetPassword({ ...data, id: uid }, { resolve, reject });
         });
       } catch (error) {
         throw new SubmissionError({ _error: error });
@@ -87,15 +89,15 @@ export class CreateUserPage extends React.PureComponent {
           <Card>
             <CardHeader color="primary">
               <h4 className={classes.cardTitleWhite}>
-                <FormattedMessage {...messages.createUser} />
+                <FormattedMessage {...messages.passwordSetup} />
               </h4>
             </CardHeader>
             <CardBody>
-              <CreateUserForm
+              <PasswordSetupForm
                 classes={classes}
                 clusters={clusters}
                 onSubmit={doSubmit}
-                initialValues={fromJS({name: '', password: '', projects: []})}
+                isAdmin={isAdmin}
               />
             </CardBody>
             <CardFooter className={classes.cardFooter}>
@@ -105,7 +107,7 @@ export class CreateUserPage extends React.PureComponent {
                 size="large"
                 onClick={submitForm}
               >
-                Create
+                Change Password
               </Button>
             </CardFooter>
           </Card>
@@ -117,10 +119,10 @@ export class CreateUserPage extends React.PureComponent {
 
 const mapStateToProps = createStructuredSelector({
   clusters: makeSelectClustersAndNamespaces(),
-  values: createSelector(
-    getFormValues(formName),
-    (v) => (v)
-  ),
+  location: makeSelectLocation(),
+  isAdmin: makeSelectIsAdmin(),
+  uid: makeSelectUID(),
+  user: makeSelectEditingUser(),
 });
 
 const mapDispatchToProps = (dispatch) =>
@@ -140,4 +142,4 @@ const withConnect = connect(
 export default compose(
   withConnect,
   withStyles(styles)
-)(CreateUserPage);
+)(PasswordSetupPage);

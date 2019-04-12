@@ -23,6 +23,7 @@ import TableRow from '@material-ui/core/TableRow';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
+import KeyIcon from '@material-ui/icons/VpnKey';
 import { SimpleTable } from '@gsmlg/com';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTerminal } from '@fortawesome/free-solid-svg-icons';
@@ -55,6 +56,14 @@ export class UsersTable extends React.PureComponent {
             >
               <IconButton aria-label="Edit User">
                 <EditIcon />
+              </IconButton>
+            </Link>
+            <Link
+              to={`/users/${props.data.get('id')}/passwd`}
+              className={classes.createBtnLink}
+            >
+              <IconButton aria-label="Setup Password">
+                <KeyIcon />
               </IconButton>
             </Link>
             <IconButton

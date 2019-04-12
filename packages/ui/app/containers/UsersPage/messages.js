@@ -49,4 +49,8 @@ export default defineMessages({
     id: `${scope}.userProfile`,
     defaultMessage: 'User Profile',
   },
+  passwordSetup: {
+    id: `${scope}.passwordSetup`,
+    defaultMessage: 'Password Setup',
+  },
 });

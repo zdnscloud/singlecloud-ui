@@ -28,6 +28,7 @@ import UsersPage, {
   CreateUserPage,
   EditUserPage,
   UserProfilePage,
+  PasswordSetupPage,
 } from 'containers/UsersPage/Loadable';
 
 const appRoutes = [
@@ -138,6 +139,12 @@ const appRoutes = [
     name: 'User Profile',
     icon: Dashboard,
     component: UserProfilePage,
+  },
+  {
+    path: '/users/:user_id/passwd',
+    name: 'Password Setup',
+    icon: Dashboard,
+    component: PasswordSetupPage,
   },
 ];
 

@@ -21,3 +21,7 @@ export const EditUserPage = loadable(() =>
 export const UserProfilePage = loadable(() =>
   import(/* webpackChunkName: "UserProfilePage" */ './UserProfilePage')
 );
+
+export const PasswordSetupPage = loadable(() =>
+  import(/* webpackChunkName: "PasswordSetupPage" */ './PasswordSetupPage')
+);

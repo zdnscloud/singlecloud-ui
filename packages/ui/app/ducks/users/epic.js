@@ -107,6 +107,33 @@ export const removeUserEpic = (action$, state$, { ajax }) =>
     )
   );
 
+export const resetPasswordEpic = (action$, state$, { ajax }) =>
+  action$.pipe(
+    ofType(c.RESET_PASSWORD),
+    mergeMap(({ payload: { id, ...data }, meta: { resolve, reject } }) =>
+      ajax({
+        url: `/apis/zcloud.cn/v1/users/${id}?action=resetPassword`,
+        method: 'post',
+        body: data,
+      }).pipe(
+        map((resp) => {
+          resolve(resp);
+          return a.resetPasswordSuccess(resp, id);
+        }),
+        catchError((error) => {
+          reject(error);
+          return of(a.resetPasswordFailure(error, id));
+        })
+      )
+    )
+  );
+
+export const afterPasswordEpic = (action$) =>
+  action$.pipe(
+    ofType(c.RESET_PASSWORD_SUCCESS),
+    mergeMap(({ payload }) => timer(1000).pipe(mapTo(push(`/users/${payload.id}/profile`))))
+  );
+
 export default combineEpics(
   loadUsersEpic,
   loadUserEpic,
@@ -114,5 +141,7 @@ export default combineEpics(
   afterCreateEpic,
   updateUserEpic,
   afterUpdateEpic,
-  removeUserEpic
+  removeUserEpic,
+  resetPasswordEpic,
+  afterPasswordEpic
 );

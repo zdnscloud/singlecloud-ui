@@ -84,3 +84,20 @@ export const removeUserFailure = (error, id) => ({
   payload: error,
   meta: { id },
 });
+
+export const resetPassword = (data, meta) => ({
+  type: c.RESET_PASSWORD,
+  payload: data,
+  meta,
+});
+
+export const resetPasswordSuccess = (resp, id) => ({
+  type: c.RESET_PASSWORD_SUCCESS,
+  payload: { ...resp, id },
+});
+
+export const resetPasswordFailure = (error, id) => ({
+  type: c.RESET_PASSWORD_FAILURE,
+  payload: { ...error, id },
+  error: true,
+});

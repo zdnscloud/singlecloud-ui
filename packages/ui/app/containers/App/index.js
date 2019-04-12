@@ -18,6 +18,8 @@ import { Switch, Route, Redirect } from 'react-router-dom';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import { withRouter } from 'react-router';
 
+import blue from '@material-ui/core/colors/blue';
+
 import LoginPage from 'containers/LoginPage/Loadable';
 
 // creates a beautiful scrollbar
@@ -33,6 +35,7 @@ const theme = createMuiTheme({
   },
   palette: {
     type: 'light',
+    primary: blue,
   },
 });
 

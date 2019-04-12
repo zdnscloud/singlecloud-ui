@@ -13,6 +13,7 @@
  * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
  */
+import blue from '@material-ui/core/colors/blue';
 
 // ##############################
 // // // Variables - Styles that are used on more than one component
@@ -69,7 +70,7 @@ const defaultFont = {
   lineHeight: "1.5em"
 };
 
-const primaryColor = "#9c27b0";
+const primaryColor = blue[800];
 const warningColor = "#ff9800";
 const dangerColor = "#f44336";
 const successColor = "#4caf50";
@@ -213,5 +214,5 @@ export {
   title,
   cardTitle,
   cardLink,
-  cardSubtitle
+  cardSubtitle,
 };

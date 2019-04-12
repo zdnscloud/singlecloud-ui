@@ -16,6 +16,7 @@ import { reduxForm, getFormValues } from 'redux-form/immutable';
 import { SubmissionError, submit } from 'redux-form';
 import sha1 from 'crypto-js/sha1';
 import encHex from 'crypto-js/enc-hex';
+import { Link } from 'react-router-dom';
 
 import classNames from 'classnames';
 import { withStyles } from '@material-ui/core/styles';
@@ -40,7 +41,9 @@ import Select from '@material-ui/core/Select';
 import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
 import Fab from '@material-ui/core/Fab';
-import AddIcon from '@material-ui/icons/Add';
+import IconButton from '@material-ui/core/IconButton';
+import DeleteIcon from '@material-ui/icons/Delete';
+import EditIcon from '@material-ui/icons/Edit';
 import Collapse from '@material-ui/core/Collapse';
 import Checkbox from '@material-ui/core/Checkbox';
 import Grid from '@material-ui/core/Grid';
@@ -100,6 +103,19 @@ export class UserProfilePage extends React.PureComponent {
             <CardHeader color="primary">
               <h4 className={classes.cardTitleWhite}>
                 <FormattedMessage {...messages.userProfile} />
+                <Link
+                  to={`/users/${user.get('id')}/edit`}
+                  className={classes.createBtnLink}
+                >
+                  <Fab
+                    size="small"
+                    color="default"
+                    aria-label="create user"
+                    className={classes.menuButton}
+                  >
+                    <EditIcon />
+                  </Fab>
+                </Link>
               </h4>
             </CardHeader>
             <CardBody>
