@@ -4,7 +4,7 @@ import {
   getLocation,
 } from 'connected-react-router/immutable';
 import { makeSelectRole, makeSelectIsAdmin } from 'ducks/role/selectors';
-import { makeSelectCurrentNamespace } from '../NamespacesPage/selectors';
+import { makeSelectCurrentNamespaceID } from '../NamespacesPage/selectors';
 
 const selectRouter = (state) => state.get('router');
 
@@ -48,7 +48,7 @@ export const makeSelectMenus = () =>
   createSelector(
     selectApp,
     makeSelectClusterID(),
-    makeSelectCurrentNamespace(),
+    makeSelectCurrentNamespaceID(),
     makeSelectIsAdmin(),
     (appState, cluster, namespace, isAdmin) => {
       const menus = [{ name: 'clusters', path: '/clusters' }];
@@ -59,7 +59,7 @@ export const makeSelectMenus = () =>
           { name: 'applications', path: `/clusters/${cluster}/namespaces/${namespace}/applications` },
           { name: 'storage', path: `/clusters/${cluster}/storage` },
           { name: 'network', path: `/clusters/${cluster}/network` },
-          { name: 'topology', path: `/clusters/${cluster}/topology` },
+          { name: 'topology', path: `/clusters/${cluster}/namespaces/${namespace}/topology` },
         ]);
       }
       return menus.concat(isAdmin ? [

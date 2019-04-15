@@ -38,7 +38,7 @@ import saga from './saga';
 import styles from './styles';
 import * as actions from './actions';
 import { makeSelectClusterID } from '../App/selectors';
-import { makeSelectNamespaces, makeSelectCurrentNamespace } from './selectors';
+import { makeSelectNamespaces, makeSelectCurrentNamespaceID } from './selectors';
 
 class SelectNamespace extends PureComponent {
   static propTypes = {
@@ -82,7 +82,7 @@ class SelectNamespace extends PureComponent {
 
 const mapStateToProps = createStructuredSelector({
   namespaces: makeSelectNamespaces(),
-  namespaceID: makeSelectCurrentNamespace(),
+  namespaceID: makeSelectCurrentNamespaceID(),
   clusterID: makeSelectClusterID(),
 });
 

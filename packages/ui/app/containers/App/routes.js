@@ -23,6 +23,7 @@ import CreateConfigMap from 'containers/ConfigMapsPage/CreateLoadable';
 import ApplicationsPage from 'containers/ApplicationsPage/Loadable';
 import CreateApplication from 'containers/ApplicationsPage/CreateLoadable';
 import ApplicationDetailPage from 'containers/ApplicationDetailPage/Loadable';
+import TopologyPage from 'containers/TopologyPage/Loadable';
 
 import UsersPage, {
   CreateUserPage,
@@ -115,6 +116,12 @@ const appRoutes = [
     name: 'Application Detail',
     icon: Dashboard,
     component: ApplicationDetailPage,
+  },
+  {
+    path: '/clusters/:cluster_id/namespaces/:namespace_id/topology',
+    name: 'Topology',
+    icon: Dashboard,
+    component: TopologyPage,
   },
   {
     path: '/users',
