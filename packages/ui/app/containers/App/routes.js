@@ -13,7 +13,6 @@ import ClustersPage from 'containers/ClustersPage/Loadable';
 import ClusterDetailPage from 'containers/ClusterDetailPage/Loadable';
 import NodesPage from 'containers/NodesPage/Loadable';
 import NamespacesPage from 'containers/NamespacesPage/Loadable';
-import PodsPage from 'containers/PodsPage/Loadable';
 import TerminalPage from 'containers/TerminalPage/Loadable';
 import EventsPage from 'containers/EventsPage/Loadable';
 import ConfigMapsPage from 'containers/ConfigMapsPage/Loadable';
@@ -23,6 +22,7 @@ import CreateConfigMap from 'containers/ConfigMapsPage/CreateLoadable';
 import ApplicationsPage from 'containers/ApplicationsPage/Loadable';
 import CreateApplication from 'containers/ApplicationsPage/CreateLoadable';
 import ApplicationDetailPage from 'containers/ApplicationDetailPage/Loadable';
+import TopologyPage from 'containers/TopologyPage/Loadable';
 
 import UsersPage, {
   CreateUserPage,
@@ -115,6 +115,12 @@ const appRoutes = [
     name: 'Application Detail',
     icon: Dashboard,
     component: ApplicationDetailPage,
+  },
+  {
+    path: '/clusters/:cluster_id/namespaces/:namespace_id/topology',
+    name: 'Topology',
+    icon: Dashboard,
+    component: TopologyPage,
   },
   {
     path: '/users',

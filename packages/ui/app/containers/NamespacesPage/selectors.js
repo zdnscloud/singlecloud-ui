@@ -39,13 +39,21 @@ export const makeSelectCreateFormData = () =>
     (substate) => substate.get('createFormData')
   );
 
-export const makeSelectCurrentNamespace = () =>
+export const makeSelectCurrentNamespaceID = () =>
   createSelector(
     selectNamespacesPageDomain,
     makeSelectClusterID(),
     makeSelectNamespaceID(),
     (substate, clusterID, nid) =>
       substate.getIn(['selectedNamespace', clusterID]) || nid || 'default'
+  );
+
+export const makeSelectCurrentNamespace = () =>
+  createSelector(
+    selectNamespacesPageDomain,
+    makeSelectClusterID(),
+    makeSelectCurrentNamespaceID(),
+    (substate, clusterID, nid) => substate.getIn(['namespaces', clusterID, nid])
   );
 
 /**

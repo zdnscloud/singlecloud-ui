@@ -60,7 +60,7 @@ import messages from './messages';
 export class ClusterDetail extends React.PureComponent {
   static propTypes = {
     classes: PropTypes.object.isRequired,
-    tableList: PropTypes.object.isRequired,
+    cluster: PropTypes.object.isRequired,
   };
 
   render() {

@@ -7,12 +7,13 @@ import { combineEpics } from 'redux-observable';
 import eventsPageEpic from 'containers/EventsPage/epic';
 import roleEpic from 'ducks/role/epic';
 import usersEpic from 'ducks/users/epic';
+import serviceLinksEpic from 'ducks/serviceLinks/epic';
 
 /**
  * Merges the main reducer with the router state and dynamically injected reducers
  */
 export default function createEpic(injectedEpics = {}) {
-  const rootEpic = combineEpics(eventsPageEpic, roleEpic, usersEpic);
+  const rootEpic = combineEpics(eventsPageEpic, roleEpic, usersEpic, serviceLinksEpic);
 
   return rootEpic;
 }

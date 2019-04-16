@@ -10,7 +10,7 @@ import {
   makeSelectNamespaceID,
   makeSelectLocation,
 } from './selectors';
-import { makeSelectCurrentNamespace } from '../NamespacesPage/selectors';
+import { makeSelectCurrentNamespaceID } from '../NamespacesPage/selectors';
 
 import { INIT_ACTION, CHANGE_CLUSTER } from './constants';
 import { CHANGE_NAMESPACE } from '../NamespacesPage/constants';
@@ -35,7 +35,7 @@ export function* changeNamespace({ payload }) {
     const location = yield select(makeSelectLocation());
     const clusterID = yield select(makeSelectClusterID());
     const namespaceID = yield select(makeSelectNamespaceID());
-    const ns = yield select(makeSelectCurrentNamespace());
+    const ns = yield select(makeSelectCurrentNamespaceID());
     if (namespaceID) {
       const suffix = location
         .get('pathname')
