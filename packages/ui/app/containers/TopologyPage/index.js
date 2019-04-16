@@ -16,8 +16,14 @@ import { Link } from 'react-router-dom';
 import Menubar from 'components/Menubar';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Typography from '@material-ui/core/Typography';
-import Fab from '@material-ui/core/Fab';
-import AddIcon from '@material-ui/icons/Add';
+import Paper from '@material-ui/core/Paper';
+
+import GridItem from 'components/Grid/GridItem';
+import GridContainer from 'components/Grid/GridContainer';
+import Table from 'components/Table/Table';
+import Card from 'components/Card/Card';
+import CardHeader from 'components/Card/CardHeader';
+import CardBody from 'components/Card/CardBody';
 
 import * as actions from 'ducks/serviceLinks/actions';
 
@@ -26,6 +32,7 @@ import { makeSelectCurrentNamespace } from '../NamespacesPage/selectors';
 import messages from './messages';
 import TopologyPageHelmet from './helmet';
 import styles from './styles';
+import Charts from './Charts';
 
 /* eslint-disable react/prefer-stateless-function */
 export class TopologyPage extends React.PureComponent {
@@ -36,6 +43,20 @@ export class TopologyPage extends React.PureComponent {
 
   componentWillMount() {
     this.load();
+  }
+
+  componentWillUpdate(nextProps) {
+    const {
+      clusterID: nextClusterID,
+      namespaceID: nextNamespaceID,
+    } = nextProps;
+    const {
+      clusterID,
+      namespaceID,
+    } = this.props;
+    if (clusterID !== nextClusterID || namespaceID !== nextNamespaceID) {
+      this.load();
+    }
   }
 
   load() {
@@ -63,13 +84,9 @@ export class TopologyPage extends React.PureComponent {
       <div className={classes.root}>
         <TopologyPageHelmet />
         <CssBaseline />
-        <div className={classes.content}>
-          <Typography variant="h4" gutterBottom component="h2">
-            <FormattedMessage {...messages.topology} />
-          </Typography>
-          <Typography component="div">
-          </Typography>
-        </div>
+        <Paper className={classes.content}>
+          <Charts />
+        </Paper>
       </div>
     );
   }

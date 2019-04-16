@@ -28,15 +28,21 @@ export const serviceLinksReducer = (
   switch (type) {
     case c.LOAD_OUTER_SERVICES:
       return state;
-    case c.LOAD_OUTER_SERVICES_SUCCESS:
-      return state.setIn(['outerServices', meta.clusterID, meta.namespaceID], payload.response.data);
+    case c.LOAD_OUTER_SERVICES_SUCCESS: {
+      const { clusterID, namespaceID } = meta;
+      const { data } = payload.response;
+      return state.setIn(['outerServices', clusterID, namespaceID], fromJS(data));
+    }
     case c.LOAD_OUTER_SERVICES_FAILURE:
       return state;
 
     case c.LOAD_INNER_SERVICES:
       return state;
-    case c.LOAD_INNER_SERVICES_SUCCESS:
-      return state.setIn(['innerServices', meta.clusterID, meta.namespaceID], payload.response.data);
+    case c.LOAD_INNER_SERVICES_SUCCESS: {
+      const { clusterID, namespaceID } = meta;
+      const { data } = payload.response;
+      return state.setIn(['innerServices', clusterID, namespaceID], fromJS(data));
+    }
     case c.LOAD_INNER_SERVICES_FAILURE:
       return state;
 
