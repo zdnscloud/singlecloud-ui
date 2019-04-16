@@ -13,7 +13,6 @@ import ClustersPage from 'containers/ClustersPage/Loadable';
 import ClusterDetailPage from 'containers/ClusterDetailPage/Loadable';
 import NodesPage from 'containers/NodesPage/Loadable';
 import NamespacesPage from 'containers/NamespacesPage/Loadable';
-import PodsPage from 'containers/PodsPage/Loadable';
 import TerminalPage from 'containers/TerminalPage/Loadable';
 import EventsPage from 'containers/EventsPage/Loadable';
 import ConfigMapsPage from 'containers/ConfigMapsPage/Loadable';
