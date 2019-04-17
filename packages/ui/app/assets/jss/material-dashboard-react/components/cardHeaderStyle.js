@@ -20,7 +20,7 @@ const cardHeaderStyle = {
       margin: '0 15px',
       padding: '0',
       position: 'relative',
-      color: whiteColor
+      color: whiteColor,
     },
     '&:first-child': {
       borderRadius: 'calc(.25rem - 1px) calc(.25rem - 1px) 0 0'
@@ -51,7 +51,7 @@ const cardHeaderStyle = {
     },
     '&$cardHeaderStats$cardHeaderIcon': {
       textAlign: 'right'
-    }
+    },
   },
   cardHeaderPlain: {
     marginLeft: '0px !important',

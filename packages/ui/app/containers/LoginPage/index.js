@@ -45,6 +45,8 @@ export class LoginPage extends React.PureComponent {
 
   state = {
     cardAnimaton: 'cardHidden',
+    px: 380,
+    py: 190,
   };
 
   componentWillMount() {
@@ -64,8 +66,21 @@ export class LoginPage extends React.PureComponent {
   componentDidMount() {
     // we add a hidden class to the card and after 700 ms we delete it and the transition appears
     setTimeout(() => {
-      this.setState({ cardAnimaton: '' });
+      this.setState({ cardAnimaton: 'cardShown' });
     }, 700);
+  }
+
+  trackMouse(evt) {
+    // image w 870 h 515
+    const w = window.screen.width;
+    const h = window.screen.height;
+    const x = Math.abs(evt.screenX) % (w - 870);
+    const y = Math.abs(evt.screenY) % (h - 515);
+    let t = null;
+    this.setState({ px: x, py: y }, () => {
+      clearTimeout(t);
+      t = setTimeout(() => this.setState({ px: 380, py: 190 }), 5000);
+    });
   }
 
   render() {
@@ -82,7 +97,7 @@ export class LoginPage extends React.PureComponent {
       }
     }
     return (
-      <div>
+      <div onMouseMove={(evt) => this.trackMouse(evt)}>
         <LoginPageHelmet />
         <div
           className={classes.pageHeader}
@@ -92,6 +107,12 @@ export class LoginPage extends React.PureComponent {
             backgroundPosition: 'top center',
           }}
         >
+          <div
+            className={classes.pageSecondBg}
+            style={{
+              backgroundPosition: `${this.state.px}px ${this.state.py}px`,
+            }}
+          />
           <div className={classes.container}>
             <GridContainer justify="center">
               <GridItem xs={12} sm={12} md={4}>

@@ -22,6 +22,10 @@ import CardHeader from 'components/Card/CardHeader';
 import CardFooter from 'components/Card/CardFooter';
 import CustomInput from 'components/CustomInput/CustomInput';
 import Danger from 'components/Typography/Danger';
+import UserIcon from 'components/Icons/User';
+import PasswordIcon from 'components/Icons/Password';
+
+import loginLogo from 'images/login-logo.png';
 
 const validate = (values) => {
   const errors = {};
@@ -55,7 +59,7 @@ const UsernameField = ({
       autoComplete: 'username',
       endAdornment: (
         <InputAdornment position="end">
-          <People className={classes.inputIconsColor} />
+          <UserIcon />
         </InputAdornment>
       ),
       ...inputProps,
@@ -85,7 +89,7 @@ const PasswordField = ({
       autoComplete: 'current-password',
       endAdornment: (
         <InputAdornment position="end">
-          <Icon className={classes.inputIconsColor}>lock_outline</Icon>
+          <PasswordIcon />
         </InputAdornment>
       ),
       ...inputProps,
@@ -99,8 +103,21 @@ const LoginForm = (props) => {
 
   return (
     <form className={classes.form} onSubmit={handleSubmit}>
-      <CardHeader color="primary" className={classes.cardHeader}>
-        <h4>Login</h4>
+      <CardHeader
+        className={classes.cardHeader}
+          style={{
+            margin: 0,
+            padding: 0,
+          }}
+      >
+        <h4
+          style={{
+            backgroundImage: `url(${loginLogo})`,
+            backgroundPosition: 'top center',
+            backgroundRepeat: 'no-repeat',
+            height: 85,
+          }}
+        />
       </CardHeader>
       <CardBody>
         <Field
