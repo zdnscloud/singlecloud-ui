@@ -79,10 +79,10 @@ export default class InnerServiceTree extends React.Component {
             size={[sizeWidth, sizeHeight]}
             separation={(a, b) => (a.parent === b.parent ? 1 : 0.5) / a.depth}
           >
-            {(data) => (
+            {(d) => (
               <Group top={origin.y} left={origin.x}>
                 <Links
-                  links={data.links()}
+                  links={d.links()}
                   linkType={linkType}
                   layout={layout}
                   orientation={orientation}
@@ -90,7 +90,7 @@ export default class InnerServiceTree extends React.Component {
                 />
 
                 <Nodes
-                  nodes={data.descendants()}
+                  nodes={d.descendants()}
                   layout={layout}
                   Orientation={orientation}
                   onNodeClick={(node) => {

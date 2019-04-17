@@ -27,8 +27,6 @@ export const makeSelectOuterServices = () =>
 export const makeSelectInnerServices = () =>
   createSelector(
     selectServiceLinsDomain,
-    makeSelectClusterID,
-    makeSelectNamespaceID,
     (substate) => substate.get('innerServices')
   );
 

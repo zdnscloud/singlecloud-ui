@@ -45,11 +45,11 @@ export class TopologyPage extends React.PureComponent {
     this.load();
   }
 
-  componentWillUpdate(nextProps) {
+  componentDidUpdate(prevProps) {
     const {
       clusterID: nextClusterID,
       namespaceID: nextNamespaceID,
-    } = nextProps;
+    } = prevProps;
     const {
       clusterID,
       namespaceID,

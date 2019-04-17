@@ -31,7 +31,7 @@ export const serviceLinksReducer = (
     case c.LOAD_OUTER_SERVICES_SUCCESS: {
       const { clusterID, namespaceID } = meta;
       const { data } = payload.response;
-      return state.setIn(['outerServices', clusterID, namespaceID], fromJS(data));
+      return state.updateIn(['outerServices', clusterID, namespaceID], () => fromJS(data));
     }
     case c.LOAD_OUTER_SERVICES_FAILURE:
       return state;
@@ -41,7 +41,7 @@ export const serviceLinksReducer = (
     case c.LOAD_INNER_SERVICES_SUCCESS: {
       const { clusterID, namespaceID } = meta;
       const { data } = payload.response;
-      return state.setIn(['innerServices', clusterID, namespaceID], fromJS(data));
+      return state.updateIn(['innerServices', clusterID, namespaceID], () => fromJS(data));
     }
     case c.LOAD_INNER_SERVICES_FAILURE:
       return state;

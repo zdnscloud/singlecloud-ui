@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react';
 import { Group } from '@vx/group';
 import NodeGroup from 'react-move/NodeGroup';
+import getByKey from '@gsmlg/utils/getByKey';
 
 import Node from './Node';
 import { findCollapsedParent, getTopLeft } from './utils';
@@ -40,9 +41,11 @@ function Nodes({ nodes, layout, orientation, onNodeClick }) {
       }}
       leave={(node) => {
         const collapsedParent = findCollapsedParent(node.parent);
+        const x0 = getByKey(collapsedParent, ['data', 'x0']);
+        const y0 = getByKey(collapsedParent, ['data', 'y0']);
         const collapsedParentPrevPos = {
-          x: collapsedParent.data.x0,
-          y: collapsedParent.data.y0,
+          x: x0,
+          y: y0,
         };
         const topLeft = getTopLeft(collapsedParentPrevPos, layout, orientation);
         return {
@@ -52,9 +55,9 @@ function Nodes({ nodes, layout, orientation, onNodeClick }) {
         };
       }}
     >
-      {(nodes) => (
+      {(groupOfNodes) => (
         <Group>
-          {nodes.map(({ key, data: node, state }) => {
+          {groupOfNodes.map(({ key, data: node, state }) => {
             const width = 40;
             const height = 20;
             return (

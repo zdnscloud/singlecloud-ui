@@ -55,7 +55,32 @@ export class Charts extends React.PureComponent {
     outerServices: PropTypes.object.isRequired,
   };
 
+  state = { reload: false };
+
+  componentWillReceiveProps(nextProps) {
+    const { nextOuterServices, nextInnerServices } = nextProps;
+    const { outerServices, innerServices } = this.props;
+    if (
+      nextOuterServices !== outerServices || nextInnerServices !== innerServices
+    ) {
+      const os = outerServices.toJS() || [];
+      const is = innerServices.toJS() || [];
+      this.reload();
+    }
+  }
+
+  reload() {
+    this.setState((state, props) => ({
+      reload: true,
+    }), () => {
+      setTimeout(() => {
+        this.setState({reload: false})
+      }, 1000/8);
+    });
+  }
+
   render() {
+    if (this.state.reload === true) return null;
     const { classes, outerServices, innerServices } = this.props;
     const os = outerServices.toJS() || [];
     const is = innerServices.toJS() || [];
@@ -63,15 +88,15 @@ export class Charts extends React.PureComponent {
     return (
       <Fragment>
         <GridContainer>
-          {os.map((s) => (
-            <GridItem xs={12} sm={6} md={6} key={s.name}>
+          {os.map((s, i) => (
+            <GridItem xs={12} sm={6} md={6} key={i}>
               <Card>
                 <CardHeader color="info" stats icon>
                   <CardIcon color="info">
                     <BubbleChartIcon />
                   </CardIcon>
                   <p className={classes.cardCategory}>Outer Service Name</p>
-                  <h3 className={classes.cardTitle}>{s.name}</h3>
+                  <h3 className={classes.cardTitle}>{s.port === 0 ? s.domain : s.port}</h3>
                 </CardHeader>
                 <CardBody>
                   <OuterServiceTree
@@ -86,8 +111,8 @@ export class Charts extends React.PureComponent {
           ))}
         </GridContainer>
         <GridContainer>
-          {is.map((s) => (
-            <GridItem xs={12} sm={6} md={6} key={s.name}>
+          {is.map((s, i) => (
+            <GridItem xs={12} sm={6} md={6} key={i}>
               <Card>
                 <CardHeader color="info" stats icon>
                   <CardIcon color="info">
