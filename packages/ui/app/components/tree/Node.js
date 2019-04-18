@@ -1,10 +1,13 @@
 import React, { Fragment } from 'react';
 import { Group } from '@vx/group';
 
+const separator = '$';
+
 function Node({ node, onClick }) {
-  const name = node.data.name;
-  const nameLen = name.length;
-  const width = nameLen * 12;
+  const n = (node.data.name || '').split(separator);
+  const name = n[1];
+  const nameLen = n[0].length;
+  const width = 40;
   const height = 40;
 
   return (
@@ -14,12 +17,13 @@ function Node({ node, onClick }) {
         width={width}
         y={-height / 2}
         x={-width / 2}
-        fill="#272b4d"
-        stroke={node.data.children ? '#03c0dc' : '#26deb0'}
-        strokeWidth={1}
-        strokeDasharray={!node.data.children ? '2,2' : '0'}
-        strokeOpacity={!node.data.children ? 0.6 : 1}
-        rx={!node.data.children ? 10 : 0}
+        fill="none"
+        fillOpacity={0.5}
+        stroke={'#f00'}
+        strokeWidth={3}
+        strokeDasharray={'2,2'}
+        strokeOpacity={1}
+        rx={0}
         onClick={onClick}
       />
       <text
@@ -28,11 +32,9 @@ function Node({ node, onClick }) {
         fontFamily="Arial"
         textAnchor="middle"
         style={{ pointerEvents: 'none' }}
-        fill={
-          node.depth === 0 ? '#f1248e' : node.children ? 'white' : '#26deb0'
-        }
+        fill={'blue'}
       >
-        {node.data.name}
+        {name}
       </text>
     </Fragment>
   );

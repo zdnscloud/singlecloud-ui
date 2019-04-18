@@ -47,14 +47,20 @@ export class TopologyPage extends React.PureComponent {
 
   componentDidUpdate(prevProps) {
     const {
-      clusterID: nextClusterID,
-      namespaceID: nextNamespaceID,
+      clusterID: prevClusterID,
+      namespaceID: prevNamespaceID,
+      namespace: prevNamespace,
     } = prevProps;
     const {
       clusterID,
       namespaceID,
+      namespace,
     } = this.props;
-    if (clusterID !== nextClusterID || namespaceID !== nextNamespaceID) {
+    if (
+      clusterID !== prevClusterID ||
+      namespaceID !== prevNamespaceID ||
+      namespace !== prevNamespace
+    ) {
       this.load();
     }
   }
@@ -67,14 +73,16 @@ export class TopologyPage extends React.PureComponent {
       loadOuterServices,
       loadInnerServices,
     } = this.props;
-    const ourl = namespace
-      .getIn(['links', 'outerservices'])
-      .replace(/^\w+:\/\/([^/]+)/, '');
-    const iurl = namespace
-      .getIn(['links', 'innerservices'])
-      .replace(/^\w+:\/\/([^/]+)/, '');
-    loadOuterServices(ourl, clusterID, namespaceID);
-    loadInnerServices(iurl, clusterID, namespaceID);
+    if (namespace) {
+      const ourl = namespace
+        .getIn(['links', 'outerservices'])
+        .replace(/^\w+:\/\/([^/]+)/, '');
+      const iurl = namespace
+        .getIn(['links', 'innerservices'])
+        .replace(/^\w+:\/\/([^/]+)/, '');
+      loadOuterServices(ourl, clusterID, namespaceID);
+      loadInnerServices(iurl, clusterID, namespaceID);
+    }
   }
 
   render() {

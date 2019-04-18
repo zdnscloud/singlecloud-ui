@@ -56,6 +56,7 @@ export class Charts extends React.PureComponent {
   };
 
   state = { reload: false };
+  t = null;
 
   componentWillReceiveProps(nextProps) {
     const { nextOuterServices, nextInnerServices } = nextProps;
@@ -69,11 +70,14 @@ export class Charts extends React.PureComponent {
     }
   }
 
+  componentWillUnmount() {
+    clearTimeout(this.t);
+    this.t = null;
+  }
+
   reload() {
-    this.setState((state, props) => ({
-      reload: true,
-    }), () => {
-      setTimeout(() => {
+    this.setState((state, props) => ({ reload: true }), () => {
+      this.t = setTimeout(() => {
         this.setState({reload: false})
       }, 1000/8);
     });
@@ -96,7 +100,7 @@ export class Charts extends React.PureComponent {
                     <BubbleChartIcon />
                   </CardIcon>
                   <p className={classes.cardCategory}>Outer Service Name</p>
-                  <h3 className={classes.cardTitle}>{s.port === 0 ? s.domain : s.port}</h3>
+                  <h3 className={classes.cardTitle}>{s.name}</h3>
                 </CardHeader>
                 <CardBody>
                   <OuterServiceTree
@@ -107,7 +111,7 @@ export class Charts extends React.PureComponent {
                 </CardBody>
                 <CardFooter stats />
               </Card>
-            </GridItem>            
+            </GridItem>
           ))}
         </GridContainer>
         <GridContainer>

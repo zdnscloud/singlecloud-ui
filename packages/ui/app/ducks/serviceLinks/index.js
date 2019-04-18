@@ -22,6 +22,8 @@ export const initialState = fromJS({
 
 const c = constants;
 
+export const separator = '$';
+
 export const serviceLinksReducer = (
   state = initialState,
   { type, payload, error, meta }
@@ -33,19 +35,31 @@ export const serviceLinksReducer = (
       const { clusterID, namespaceID } = meta;
       const { data } = payload.response;
       const resData = data && data.map((d) => {
-        const name = d.port === 0 ? `http$${d.domain}` : `udp$${d.port}`;
-        const services = {};
+        const name = d.port === 0 ?
+          `http${separator}${d.domain}` :
+          `udp${separator}${d.port}`;
+        const paths = [];
         _.each(d.services, (s, p) => {
-          services[p] = s;
+          paths.push({
+            name: `path${separator}${p}`,
+            services: [{
+              ...s,
+              name: `svc${separator}${s.name}`,
+              workloads: s.workloads && s.workloads.map((w) => ({
+                ...w,
+                name: `deploy${separator}${w.name}`,
+                pods: w.pods && w.pods.map((p) => ({
+                  ...p,
+                  name: `pod${separator}${p.name}`,
+                })),
+              })),
+            }]
+          });
         });
 
-        return {
-          ...d,
-          name,
-          services,
-        };
+        return {...d, name, paths };
       });
-      return state.setIn(['outerServices', clusterID, namespaceID], fromJS(data));
+      return state.setIn(['outerServices', clusterID, namespaceID], fromJS(resData));
     }
     case c.LOAD_OUTER_SERVICES_FAILURE:
       return state;
@@ -57,13 +71,13 @@ export const serviceLinksReducer = (
       const { data } = payload.response;
       const resData = data && data.map((d) => ({
         ...d,
-        name: `svc$${d.name}`,
+        name: `svc${separator}${d.name}`,
         workloads: d.workloads && d.workloads.map((w) => ({
           ...w,
-          name: `deploy$${w.name}`,
+          name: `deploy${separator}${w.name}`,
           pods: w.pods && w.pods.map((p) => ({
             ...p,
-            name: `pod$${p.name}`,
+            name: `pod${separator}${p.name}`,
           })),
         })),
       }));

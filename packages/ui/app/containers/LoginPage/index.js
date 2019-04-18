@@ -48,6 +48,8 @@ export class LoginPage extends React.PureComponent {
     py: 190,
   };
 
+  t = null;
+
   componentWillMount() {
     const { isLogin, history } = this.props;
     if (isLogin) {
@@ -69,17 +71,27 @@ export class LoginPage extends React.PureComponent {
     }, 700);
   }
 
+  componentWillUnmount() {
+    this.untrackMounse();
+  }
+
   trackMouse(evt) {
     // image w 870 h 515
     const w = window.screen.width;
     const h = window.screen.height;
     const x = Math.abs(evt.screenX) % (w - 870);
     const y = Math.abs(evt.screenY) % (h - 515);
-    let t = null;
     this.setState({ px: x, py: y }, () => {
-      clearTimeout(t);
-      t = setTimeout(() => this.setState({ px: 380, py: 190 }), 5000);
+      this.untrackMounse();
+      this.t = setTimeout(() => this.setState({ px: 380, py: 190 }), 5000);
     });
+  }
+
+  untrackMounse() {
+    if (this.t) {
+      clearTimeout(this.t);
+      this.t = null;
+    }
   }
 
   render() {

@@ -5,16 +5,16 @@ import { LinearGradient } from '@vx/gradient';
 import { hierarchy } from 'd3-hierarchy';
 import _ from 'lodash';
 
-// import Links from './Links';
 import Links from './LinksMove';
-
-// import Nodes from './Nodes';
 import Nodes from './NodesMove';
 
 export default class OuterServiceTree extends React.Component {
   state = {
-    layout: 'polar',
-    orientation: 'vertical',
+    // cartesian, polar
+    layout: 'cartesian',
+    // vertical, horizontal
+    orientation: 'horizontal',
+    // diagonal step curve line elbow
     linkType: 'diagonal',
     stepPercent: 0.5,
   };
@@ -61,49 +61,45 @@ export default class OuterServiceTree extends React.Component {
       }
     }
 
-    data.name = data.port === 0 ? data.domain : data.port;
-    const services = [];
-    _.each(data.services, (val, key) => services.push({ name: key === '' ? '/' : key, services: [val]}));
-    data.services = services;
-    const root = hierarchy(data, (d) => d.services || d.workloads || d.pods);
+    const root = hierarchy(data, (d) => d.paths || d.services || d.workloads || d.pods);
 
     return (
       <div>
         <svg width={width} height={height}>
           <LinearGradient id="lg" from="#fdfba3" to="#fefefe" />
-          <rect width={width} height={height} rx={0} fill="#80cbc4" />
-          <Tree
-            top={margin.top}
-            left={margin.left}
-            root={root}
-            size={[sizeWidth, sizeHeight]}
-            separation={(a, b) => (a.parent === b.parent ? 1 : 0.5) / a.depth}
-          >
-            {(data) => (
-              <Group top={origin.y} left={origin.x}>
-                <Links
-                  links={data.links()}
-                  linkType={linkType}
-                  layout={layout}
-                  orientation={orientation}
-                  stepPercent={stepPercent}
-                />
+          <rect width={width} height={height} rx={0} fill="#000" fillOpacity={0} />
+          <Group top={margin.top} left={margin.left}>
+            <Tree
+              root={root}
+              size={[sizeWidth, sizeHeight]}
+              separation={(a, b) => (a.parent === b.parent ? 1 : 0.5) / a.depth}
+            >
+              {(data) => (
+                <Group top={origin.y} left={origin.x}>
+                  <Links
+                    links={data.links()}
+                    linkType={linkType}
+                    layout={layout}
+                    orientation={orientation}
+                    stepPercent={stepPercent}
+                  />
 
-                <Nodes
-                  nodes={data.descendants()}
-                  layout={layout}
-                  Orientation={orientation}
-                  onNodeClick={(node) => {
-                    node.data.x0 = node.x;
-                    node.data.y0 = node.y;
-                    node.data.isExpanded = !node.data.isExpanded;
-                    console.log('click node: ', node);
-                    this.forceUpdate();
-                  }}
-                />
-              </Group>
-            )}
-          </Tree>
+                  <Nodes
+                    nodes={data.descendants()}
+                    layout={layout}
+                    Orientation={orientation}
+                    onNodeClick={(node) => {
+                      node.data.x0 = node.x;
+                      node.data.y0 = node.y;
+                      node.data.isExpanded = !node.data.isExpanded;
+                      console.log('click node: ', node);
+                      this.forceUpdate();
+                    }}
+                  />
+                </Group>
+              )}
+            </Tree>
+          </Group>
         </svg>
       </div>
     );
