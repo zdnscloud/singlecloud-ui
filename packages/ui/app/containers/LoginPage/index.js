@@ -29,12 +29,11 @@ import CardHeader from 'components/Card/CardHeader';
 import CardFooter from 'components/Card/CardFooter';
 import CustomInput from 'components/CustomInput/CustomInput';
 
-import loginPageStyle from 'assets/jss/material-kit-react/views/loginPage';
 
-import image from 'images/login-bg.jpg';
 import * as roleActions from 'ducks/role/actions';
 import { makeSelectIsLogin } from 'ducks/role/selectors';
 
+import styles from './styles';
 import messages from './messages';
 import LoginPageHelmet from './helmet';
 import LoginForm from './LoginForm';
@@ -99,14 +98,7 @@ export class LoginPage extends React.PureComponent {
     return (
       <div onMouseMove={(evt) => this.trackMouse(evt)}>
         <LoginPageHelmet />
-        <div
-          className={classes.pageHeader}
-          style={{
-            backgroundImage: `url(${image})`,
-            backgroundSize: 'cover',
-            backgroundPosition: 'top center',
-          }}
-        >
+        <div className={classes.pageHeader}>
           <div
             className={classes.pageSecondBg}
             style={{
@@ -148,5 +140,5 @@ const withConnect = connect(
 export default compose(
   withConnect,
   withRouter,
-  withStyles(loginPageStyle)
+  withStyles(styles)
 )(LoginPage);

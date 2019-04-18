@@ -2,6 +2,7 @@ import React from 'react';
 import { compose } from 'redux';
 import { Field, reduxForm } from 'redux-form/immutable';
 import getByKey from '@gsmlg/utils/getByKey';
+import classNames from 'classnames';
 
 import withStyles from '@material-ui/core/styles/withStyles';
 import InputAdornment from '@material-ui/core/InputAdornment';
@@ -41,13 +42,14 @@ const validate = (values) => {
 const UsernameField = ({
   label,
   input,
-  classes,
   meta,
   inputProps,
+  cns,
   ...custom
 }) => (
   <CustomInput
     id="login-username"
+    classes={{ input: cns.input }}
     labelText={label}
     meta={meta}
     formControlProps={{
@@ -59,7 +61,13 @@ const UsernameField = ({
       autoComplete: 'username',
       endAdornment: (
         <InputAdornment position="end">
-          <UserIcon />
+          <UserIcon
+            className={classNames({
+              [cns.inputIconsColor]: true,
+              [cns.inputIconsError]: !!(meta.touched && meta.error),
+              [cns.inputIconsSuccess]: custom.success && !(meta.touched && meta.error),
+            })}
+          />
         </InputAdornment>
       ),
       ...inputProps,
@@ -71,13 +79,14 @@ const UsernameField = ({
 const PasswordField = ({
   label,
   input,
-  classes,
   meta,
   inputProps,
+  cns,
   ...custom
 }) => (
   <CustomInput
     id="login-password"
+    classes={{ input: cns.input }}
     labelText={label}
     meta={meta}
     formControlProps={{
@@ -89,7 +98,13 @@ const PasswordField = ({
       autoComplete: 'current-password',
       endAdornment: (
         <InputAdornment position="end">
-          <PasswordIcon />
+          <PasswordIcon
+            className={classNames({
+              [cns.inputIconsColor]: true,
+              [cns.inputIconsError]: !!(meta.touched && meta.error),
+              [cns.inputIconsSuccess]: custom.success && !(meta.touched && meta.error),
+            })}
+          />
         </InputAdornment>
       ),
       ...inputProps,
@@ -103,13 +118,7 @@ const LoginForm = (props) => {
 
   return (
     <form className={classes.form} onSubmit={handleSubmit}>
-      <CardHeader
-        className={classes.cardHeader}
-          style={{
-            margin: 0,
-            padding: 0,
-          }}
-      >
+      <CardHeader className={classes.cardHeader}>
         <h4
           style={{
             backgroundImage: `url(${loginLogo})`,
@@ -124,24 +133,30 @@ const LoginForm = (props) => {
           name="username"
           component={UsernameField}
           label="Username"
-          classes={classes}
+          cns={classes}
         />
         <Field
           name="password"
           component={PasswordField}
           label="Password"
-          classes={classes}
+          cns={classes}
         />
       </CardBody>
       {error ? (
-        <CardBody className={classes.cardHeader}>
+        <CardBody className={classes.cardFooter}>
           <Danger error={error}>
             {getByKey(error, ['response', 'message'])}
           </Danger>
         </CardBody>
       ) : null}
       <CardFooter className={classes.cardFooter}>
-        <Button simple color="primary" size="lg" type="submit">
+        <Button
+          simple
+          fullWidth
+          type="submit"
+          size="lg"
+          className={classes.submitButton}
+        >
           Sign In
         </Button>
       </CardFooter>

@@ -10,7 +10,7 @@ import InputLabel from '@material-ui/core/InputLabel';
 import Input from '@material-ui/core/Input';
 import FormHelperText from '@material-ui/core/FormHelperText';
 
-import customInputStyle from 'assets/jss/material-kit-react/components/customInputStyle';
+import customInputStyle from './styles';
 
 function CustomInput({ ...props }) {
   const {
