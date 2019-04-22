@@ -49,12 +49,7 @@ export class ConfigMapsTable extends React.PureComponent {
   state = { openID: null, openIndex: null };
 
   render() {
-    const {
-      classes,
-      data,
-      configMaps,
-      removeConfigMap,
-    } = this.props;
+    const { classes, data, configMaps, removeConfigMap } = this.props;
 
     const mergedSchema = schema.concat([
       {
@@ -68,7 +63,12 @@ export class ConfigMapsTable extends React.PureComponent {
                 variant="outlined"
                 size="small"
                 className={classes.button}
-                onClick={(evt) => this.setState({ openID: props.data.get('id'), openIndex: idx })}
+                onClick={(evt) =>
+                  this.setState({
+                    openID: props.data.get('id'),
+                    openIndex: idx,
+                  })
+                }
               >
                 show `{conf.get('name')}` Config
               </Button>

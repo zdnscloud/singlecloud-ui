@@ -44,13 +44,20 @@ const renderData = ({ meta, input }) => {
         <AttachmentIcon />
         File Content
       </Button>
-      <Dialog open={open} onClose={() => { setOpen(false); }}>
+      <Dialog
+        open={open}
+        onClose={() => {
+          setOpen(false);
+        }}
+      >
         <AceEditor
           focus
           mode="yaml"
           theme="github"
           value={input.value}
-          onChange={(val, evt) => { input.onChange(val); }}
+          onChange={(val, evt) => {
+            input.onChange(val);
+          }}
         />
       </Dialog>
     </Fragment>

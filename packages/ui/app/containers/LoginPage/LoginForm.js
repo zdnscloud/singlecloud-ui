@@ -39,14 +39,7 @@ const validate = (values) => {
   return errors;
 };
 
-const UsernameField = ({
-  label,
-  input,
-  meta,
-  inputProps,
-  cns,
-  ...custom
-}) => (
+const UsernameField = ({ label, input, meta, inputProps, cns, ...custom }) => (
   <CustomInput
     id="login-username"
     classes={{ input: cns.input }}
@@ -65,7 +58,8 @@ const UsernameField = ({
             className={classNames({
               [cns.inputIconsColor]: true,
               [cns.inputIconsError]: !!(meta.touched && meta.error),
-              [cns.inputIconsSuccess]: custom.success && !(meta.touched && meta.error),
+              [cns.inputIconsSuccess]:
+                custom.success && !(meta.touched && meta.error),
             })}
           />
         </InputAdornment>
@@ -76,14 +70,7 @@ const UsernameField = ({
   />
 );
 
-const PasswordField = ({
-  label,
-  input,
-  meta,
-  inputProps,
-  cns,
-  ...custom
-}) => (
+const PasswordField = ({ label, input, meta, inputProps, cns, ...custom }) => (
   <CustomInput
     id="login-password"
     classes={{ input: cns.input }}
@@ -102,7 +89,8 @@ const PasswordField = ({
             className={classNames({
               [cns.inputIconsColor]: true,
               [cns.inputIconsError]: !!(meta.touched && meta.error),
-              [cns.inputIconsSuccess]: custom.success && !(meta.touched && meta.error),
+              [cns.inputIconsSuccess]:
+                custom.success && !(meta.touched && meta.error),
             })}
           />
         </InputAdornment>

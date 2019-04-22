@@ -15,7 +15,9 @@ import NodesPage from 'containers/NodesPage/Loadable';
 import NamespacesPage from 'containers/NamespacesPage/Loadable';
 import TerminalPage from 'containers/TerminalPage/Loadable';
 import EventsPage from 'containers/EventsPage/Loadable';
-import ConfigMapsPage, { CreateConfigMapPage } from 'containers/ConfigMapsPage/Loadable';
+import ConfigMapsPage, {
+  CreateConfigMapPage,
+} from 'containers/ConfigMapsPage/Loadable';
 import ServicesPage from 'containers/ServicesPage/Loadable';
 import IngressesPage from 'containers/IngressesPage/Loadable';
 import ApplicationsPage from 'containers/ApplicationsPage/Loadable';
@@ -110,7 +112,8 @@ const appRoutes = [
     component: CreateApplication,
   },
   {
-    path: '/clusters/:cluster_id/namespaces/:namespace_id/applications/:deployment_id',
+    path:
+      '/clusters/:cluster_id/namespaces/:namespace_id/applications/:deployment_id',
     name: 'Application Detail',
     icon: Dashboard,
     component: ApplicationDetailPage,

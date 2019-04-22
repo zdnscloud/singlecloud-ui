@@ -60,13 +60,7 @@ export class EditUserPage extends React.PureComponent {
   }
 
   render() {
-    const {
-      classes,
-      clusters,
-      updateUser,
-      submitForm,
-      user,
-    } = this.props;
+    const { classes, clusters, updateUser, submitForm, user } = this.props;
     async function doSubmit(formValues) {
       try {
         const data = formValues.toJS();
@@ -123,7 +117,7 @@ const mapStateToProps = createStructuredSelector({
   user: makeSelectEditingUser(),
   values: createSelector(
     getFormValues(formName),
-    (v) => (v)
+    (v) => v
   ),
 });
 

@@ -56,13 +56,15 @@ export class Charts extends React.PureComponent {
   };
 
   state = { reload: false };
+
   t = null;
 
   componentWillReceiveProps(nextProps) {
     const { nextOuterServices, nextInnerServices } = nextProps;
     const { outerServices, innerServices } = this.props;
     if (
-      nextOuterServices !== outerServices || nextInnerServices !== innerServices
+      nextOuterServices !== outerServices ||
+      nextInnerServices !== innerServices
     ) {
       const os = outerServices.toJS() || [];
       const is = innerServices.toJS() || [];
@@ -76,11 +78,14 @@ export class Charts extends React.PureComponent {
   }
 
   reload() {
-    this.setState((state, props) => ({ reload: true }), () => {
-      this.t = setTimeout(() => {
-        this.setState({reload: false})
-      }, 1000/8);
-    });
+    this.setState(
+      (state, props) => ({ reload: true }),
+      () => {
+        this.t = setTimeout(() => {
+          this.setState({ reload: false });
+        }, 1000 / 8);
+      }
+    );
   }
 
   render() {
@@ -103,11 +108,7 @@ export class Charts extends React.PureComponent {
                   <h3 className={classes.cardTitle}>{s.name}</h3>
                 </CardHeader>
                 <CardBody>
-                  <OuterServiceTree
-                    width={498}
-                    height={388}
-                    data={s}                    
-                  />
+                  <OuterServiceTree width={498} height={388} data={s} />
                 </CardBody>
                 <CardFooter stats />
               </Card>
@@ -126,11 +127,7 @@ export class Charts extends React.PureComponent {
                   <h3 className={classes.cardTitle}>{s.name}</h3>
                 </CardHeader>
                 <CardBody>
-                  <InnerServiceTree
-                    width={498}
-                    height={388}
-                    data={s}
-                  />
+                  <InnerServiceTree width={498} height={388} data={s} />
                 </CardBody>
                 <CardFooter stats />
               </Card>

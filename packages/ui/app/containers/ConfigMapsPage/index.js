@@ -43,12 +43,7 @@ export class ConfigMapsPage extends React.PureComponent {
   };
 
   componentWillMount() {
-    const {
-      clusterID,
-      namespaceID,
-      url,
-      loadConfigMaps,
-    } = this.props;
+    const { clusterID, namespaceID, url, loadConfigMaps } = this.props;
     loadConfigMaps({ url, clusterID, namespaceID });
   }
 

@@ -28,7 +28,7 @@ const tableSchema = schema
         component(props) {
           return props.data
             .get('labels')
-            .map((val, key) => <Chip label={`${key}=${val}`} />)
+            .map((val, key) => <Chip key={key} label={`${key}=${val}`} />)
             .toList();
         },
       };

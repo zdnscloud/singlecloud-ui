@@ -29,7 +29,6 @@ import CardHeader from 'components/Card/CardHeader';
 import CardFooter from 'components/Card/CardFooter';
 import CustomInput from 'components/CustomInput/CustomInput';
 
-
 import * as roleActions from 'ducks/role/actions';
 import { makeSelectIsLogin } from 'ducks/role/selectors';
 

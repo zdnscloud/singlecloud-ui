@@ -38,7 +38,10 @@ import saga from './saga';
 import styles from './styles';
 import * as actions from './actions';
 import { makeSelectClusterID } from '../App/selectors';
-import { makeSelectNamespaces, makeSelectCurrentNamespaceID } from './selectors';
+import {
+  makeSelectNamespaces,
+  makeSelectCurrentNamespaceID,
+} from './selectors';
 
 class SelectNamespace extends PureComponent {
   static propTypes = {
@@ -58,7 +61,13 @@ class SelectNamespace extends PureComponent {
   }
 
   render() {
-    const { classes, namespaces, namespaceID, changeNamespace, clusterID } = this.props;
+    const {
+      classes,
+      namespaces,
+      namespaceID,
+      changeNamespace,
+      clusterID,
+    } = this.props;
 
     return (
       <FormControl className={classes.formControl}>

@@ -55,7 +55,11 @@ class UserForm extends PureComponent {
               formControlProps={{
                 className: classes.nameControl,
               }}
-              inputProps={{ type: 'text', autoComplete: 'off', disabled: (edit || profile)}}
+              inputProps={{
+                type: 'text',
+                autoComplete: 'off',
+                disabled: edit || profile,
+              }}
               classes={classes}
             />
           </GridItem>
@@ -74,13 +78,17 @@ class UserForm extends PureComponent {
           ) : null}
           {isAdmin ? null : (
             <GridItem xs={12} sm={12} md={12} className={classes.formAuthLine}>
-              <AuthField name="projects" clusters={clusters} readOnly={profile} />
+              <AuthField
+                name="projects"
+                clusters={clusters}
+                readOnly={profile}
+              />
             </GridItem>
           )}
         </GridContainer>
       </form>
     );
   }
-};
+}
 
 export default UserForm;

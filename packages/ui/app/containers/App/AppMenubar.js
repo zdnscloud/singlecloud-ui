@@ -14,9 +14,8 @@ import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import { bindActionCreators, compose } from 'redux';
-import { Switch, Route, Redirect } from 'react-router-dom';
+import { Switch, Route, Redirect, Link } from 'react-router-dom';
 import { withRouter } from 'react-router';
-import { Link } from 'react-router-dom';
 
 // creates a beautiful scrollbar
 import PerfectScrollbar from 'perfect-scrollbar';
@@ -43,10 +42,9 @@ import Menubar from 'components/Menubar';
 import { makeSelectRole } from 'ducks/role/selectors';
 import * as roleActions from 'ducks/role/actions';
 
-import dashboardStyle from 'assets/jss/material-dashboard-react/layouts/dashboardStyle';
-
 import SelectCluster from './SelectCluster';
 import SelectNamespace from '../NamespacesPage/SelectNamespace';
+import dashboardStyle from './dashboardStyles';
 import * as actions from './actions';
 import {
   makeSelectActiveCluster,
@@ -58,7 +56,7 @@ import {
 import { makeSelectClusters } from '../ClustersPage/selectors';
 
 class AppMenubar extends PureComponent {
-  static defaultProps = {
+  static propTypes = {
     clusters: PropTypes.object,
   };
 
@@ -98,19 +96,23 @@ class AppMenubar extends PureComponent {
               changeCluster={changeCluster}
               activeCluster={clusterID}
             />
-            {clusterID && (
-              <SelectNamespace />
-            )}
+            {clusterID && <SelectNamespace />}
           </Fragment>
         }
         headerRightContent={
           <Fragment>
             {clusterID && (
-              <IconButton onClick={(evt) => toggleEventsView(!showEvents)}>
+              <IconButton
+                color="inherit"
+                onClick={(evt) => toggleEventsView(!showEvents)}
+              >
                 <EventIcon />
               </IconButton>
             )}
-            <IconButton onClick={(evt) => this.openUserMenu(evt)}>
+            <IconButton
+              color="inherit"
+              onClick={(evt) => this.openUserMenu(evt)}
+            >
               <AccountCircleIcon />
             </IconButton>
             <Menu
@@ -127,9 +129,7 @@ class AppMenubar extends PureComponent {
                 </MenuItem>
               ))}
               <Divider />
-              <MenuItem onClick={logout}>
-                Logout
-              </MenuItem>
+              <MenuItem onClick={logout}>Logout</MenuItem>
             </Menu>
           </Fragment>
         }

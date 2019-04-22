@@ -5,7 +5,7 @@ import {
   primaryColor,
   dangerColor,
   successColor,
-} from "assets/jss/material-kit-react";
+} from 'assets/jss/material-kit-react';
 
 const signupPageStyle = (theme) => ({
   container: {

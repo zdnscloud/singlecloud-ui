@@ -51,11 +51,7 @@ export class TopologyPage extends React.PureComponent {
       namespaceID: prevNamespaceID,
       namespace: prevNamespace,
     } = prevProps;
-    const {
-      clusterID,
-      namespaceID,
-      namespace,
-    } = this.props;
+    const { clusterID, namespaceID, namespace } = this.props;
     if (
       clusterID !== prevClusterID ||
       namespaceID !== prevNamespaceID ||

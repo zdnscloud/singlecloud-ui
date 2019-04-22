@@ -18,7 +18,7 @@ const selectNamespacesPageDomain = (state) =>
 export const makeSelectClusters = () =>
   createSelector(
     selectClustersPageDomain,
-    (substate) => substate.get('clusters')
+    (substate) => substate.get('clusters') || substate.clear()
   );
 
 export const makeSelectCurrentCluster = () =>
@@ -39,7 +39,14 @@ export const makeSelectClustersAndNamespaces = () =>
     selectClustersPageDomain,
     selectNamespacesPageDomain,
     (cstate, nsstate) =>
-      cstate.get('clusters').map((c) => c.set('namespaces', nsstate.getIn(['namespaces', c.get('id')], c.clear())))
+      cstate
+        .get('clusters')
+        .map((c) =>
+          c.set(
+            'namespaces',
+            nsstate.getIn(['namespaces', c.get('id')], c.clear())
+          )
+        )
   );
 
 /**
