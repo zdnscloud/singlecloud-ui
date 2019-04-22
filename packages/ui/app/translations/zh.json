@@ -24,6 +24,7 @@
   "app.containers.ClustersPage.tableTitleNodeCount": "节点数量",
   "app.containers.ClustersPage.tableTitleVersion": "Version",
   "app.containers.ConfigMapsPage.configMaps": "ConfigMaps",
+  "app.containers.ConfigMapsPage.createConfigMap": "Create Config Map",
   "app.containers.ConfigMapsPage.header": "This is the ConfigMapsPage container!",
   "app.containers.ConfigMapsPage.pageDesc": "Description of ConfigMapsPage",
   "app.containers.ConfigMapsPage.pageTitle": "ConfigMapsPage",

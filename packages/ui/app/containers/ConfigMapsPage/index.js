@@ -18,12 +18,19 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import Typography from '@material-ui/core/Typography';
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
+import GridItem from 'components/Grid/GridItem';
+import GridContainer from 'components/Grid/GridContainer';
+import Card from 'components/Card/Card';
+import CardHeader from 'components/Card/CardHeader';
+import CardBody from 'components/Card/CardBody';
 
-import injectSaga from 'utils/injectSaga';
-import makeSelectConfigMapsPage from './selectors';
-import reducer from './reducer';
-import * as actions from './actions';
-import saga from './saga';
+import {
+  makeSelectClusterID,
+  makeSelectNamespaceID,
+} from 'containers/App/selectors';
+import * as actions from 'ducks/configMaps/actions';
+import { makeSelectURL } from 'ducks/configMaps/selectors';
+
 import messages from './messages';
 import ConfigMapsPageHelmet from './helmet';
 import styles from './styles';
@@ -32,14 +39,17 @@ import ConfigMapsTable from './ConfigMapsTable';
 /* eslint-disable react/prefer-stateless-function */
 export class ConfigMapsPage extends React.PureComponent {
   static propTypes = {
-    initAction: PropTypes.func,
     classes: PropTypes.object.isRequired,
-    match: PropTypes.object,
-    location: PropTypes.object,
   };
 
   componentWillMount() {
-    this.props.initAction(this.props.match);
+    const {
+      clusterID,
+      namespaceID,
+      url,
+      loadConfigMaps,
+    } = this.props;
+    loadConfigMaps({ url, clusterID, namespaceID });
   }
 
   render() {
@@ -49,28 +59,34 @@ export class ConfigMapsPage extends React.PureComponent {
       <div className={classes.root}>
         <ConfigMapsPageHelmet />
         <CssBaseline />
-        <Menubar headerContent={<FormattedMessage {...messages.header} />} />
         <div className={classes.content}>
-          <div className={classes.appBarSpacer} />
-          <Typography variant="h4" gutterBottom component="h2">
-            <FormattedMessage {...messages.configMaps} />
-          </Typography>
-          <Typography component="div" className={classes.chartContainer}>
-            <div>
-              <Link to={`${this.props.location.pathname}/create`}>
-                <Fab
-                  color="primary"
-                  aria-label="create configMap"
-                  className={classes.menuButton}
-                >
-                  <AddIcon />
-                </Fab>
-              </Link>
-            </div>
-          </Typography>
-          <Typography component="div">
-            <ConfigMapsTable />
-          </Typography>
+          <GridContainer>
+            <GridItem xs={12} sm={12} md={12}>
+              <Card>
+                <CardHeader color="primary">
+                  <h4 className={classes.cardTitleWhite}>
+                    <FormattedMessage {...messages.configMaps} />
+                    <Link
+                      to={`${this.props.location.pathname}/create`}
+                      className={classes.createBtnLink}
+                    >
+                      <Fab
+                        size="small"
+                        color="default"
+                        aria-label="create configMap"
+                        className={classes.menuButton}
+                      >
+                        <AddIcon />
+                      </Fab>
+                    </Link>
+                  </h4>
+                </CardHeader>
+                <CardBody>
+                  <ConfigMapsTable />
+                </CardBody>
+              </Card>
+            </GridItem>
+          </GridContainer>
         </div>
       </div>
     );
@@ -78,7 +94,9 @@ export class ConfigMapsPage extends React.PureComponent {
 }
 
 const mapStateToProps = createStructuredSelector({
-  configMapsPage: makeSelectConfigMapsPage(),
+  clusterID: makeSelectClusterID(),
+  namespaceID: makeSelectNamespaceID(),
+  url: makeSelectURL(),
 });
 
 const mapDispatchToProps = (dispatch) =>
@@ -94,10 +112,7 @@ const withConnect = connect(
   mapDispatchToProps
 );
 
-const withSaga = injectSaga({ key: 'configMapsPage', saga });
-
 export default compose(
-  withSaga,
   withConnect,
   withStyles(styles)
 )(ConfigMapsPage);

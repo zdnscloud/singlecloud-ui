@@ -55,10 +55,13 @@ export const makeSelectMenus = () =>
       if (cluster !== '') {
         return menus.concat([
           { name: 'nodes', path: `/clusters/${cluster}/nodes` },
+          { name: 'network', path: `/clusters/${cluster}/network` },
+          { name: 'storage', path: `/clusters/${cluster}/storage` },
           { name: 'namespaces', path: `/clusters/${cluster}/namespaces` },
           { name: 'applications', path: `/clusters/${cluster}/namespaces/${namespace}/applications` },
-          { name: 'storage', path: `/clusters/${cluster}/storage` },
-          { name: 'network', path: `/clusters/${cluster}/network` },
+          { name: 'ingresses', path: `/clusters/${cluster}/namespaces/${namespace}/ingresses` },
+          { name: 'services', path: `/clusters/${cluster}/namespaces/${namespace}/services` },
+          { name: 'configmaps', path: `/clusters/${cluster}/namespaces/${namespace}/configmaps` },
           { name: 'topology', path: `/clusters/${cluster}/namespaces/${namespace}/topology` },
         ]);
       }

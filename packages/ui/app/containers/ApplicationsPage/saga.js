@@ -29,7 +29,6 @@ import {
 } from './actions';
 import { makeSelectCreateFormData, makeSelectFormPorts } from './selectors';
 
-import { loadConfigMaps } from '../ConfigMapsPage/saga';
 import { loadNamespaces } from '../NamespacesPage/saga';
 
 export function* initialize() {
@@ -39,7 +38,6 @@ export function* initialize() {
 
 export function* initCreateion() {
   yield* loadNamespaces();
-  yield* loadConfigMaps();
 }
 
 export function* loadApplications() {

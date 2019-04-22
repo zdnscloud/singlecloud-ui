@@ -15,10 +15,9 @@ import NodesPage from 'containers/NodesPage/Loadable';
 import NamespacesPage from 'containers/NamespacesPage/Loadable';
 import TerminalPage from 'containers/TerminalPage/Loadable';
 import EventsPage from 'containers/EventsPage/Loadable';
-import ConfigMapsPage from 'containers/ConfigMapsPage/Loadable';
+import ConfigMapsPage, { CreateConfigMapPage } from 'containers/ConfigMapsPage/Loadable';
 import ServicesPage from 'containers/ServicesPage/Loadable';
 import IngressesPage from 'containers/IngressesPage/Loadable';
-import CreateConfigMap from 'containers/ConfigMapsPage/CreateLoadable';
 import ApplicationsPage from 'containers/ApplicationsPage/Loadable';
 import CreateApplication from 'containers/ApplicationsPage/CreateLoadable';
 import ApplicationDetailPage from 'containers/ApplicationDetailPage/Loadable';
@@ -90,7 +89,7 @@ const appRoutes = [
     path: '/clusters/:cluster_id/namespaces/:namespace_id/configmaps/create',
     name: 'create configmap',
     icon: Dashboard,
-    component: CreateConfigMap,
+    component: CreateConfigMapPage,
   },
   {
     path: '/clusters/:cluster_id/applications',

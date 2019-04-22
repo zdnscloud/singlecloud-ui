@@ -17,6 +17,11 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import Typography from '@material-ui/core/Typography';
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
+import GridItem from 'components/Grid/GridItem';
+import GridContainer from 'components/Grid/GridContainer';
+import Card from 'components/Card/Card';
+import CardHeader from 'components/Card/CardHeader';
+import CardBody from 'components/Card/CardBody';
 
 import injectSaga from 'utils/injectSaga';
 import * as actions from './actions';
@@ -46,15 +51,21 @@ export class ServicesPage extends React.PureComponent {
       <div className={classes.root}>
         <ServicesPageHelmet />
         <CssBaseline />
-        <Menubar headerContent={<FormattedMessage {...messages.header} />} />
         <div className={classes.content}>
-          <div className={classes.appBarSpacer} />
-          <Typography variant="h4" gutterBottom component="h2">
-            <FormattedMessage {...messages.services} />
-          </Typography>
-          <Typography component="div" className={classes.chartContainer}>
-            <ServicesTable location={this.props.location} />
-          </Typography>
+          <GridContainer>
+            <GridItem xs={12} sm={12} md={12}>
+              <Card>
+                <CardHeader color="primary">
+                  <h4 className={classes.cardTitleWhite}>
+                    <FormattedMessage {...messages.services} />
+                  </h4>
+                </CardHeader>
+                <CardBody>
+                  <ServicesTable location={this.props.location} />
+                </CardBody>
+              </Card>
+            </GridItem>
+          </GridContainer>
         </div>
       </div>
     );

@@ -29,4 +29,8 @@ export default defineMessages({
     id: `${scope}.tableTitleName`,
     defaultMessage: 'Name',
   },
+  createConfigMap: {
+    id: `${scope}.createConfigMap`,
+    defaultMessage: 'Create Config Map',
+  },
 });

@@ -16,6 +16,8 @@ import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
 import { SimpleTable } from '@gsmlg/com';
+import IconButton from '@material-ui/core/IconButton';
+import DeleteIcon from '@material-ui/icons/Delete';
 
 import { makeSelectServices, makeSelectTableList } from './selectors';
 import * as actions from './actions';
@@ -40,16 +42,14 @@ export class ServicesTable extends React.PureComponent {
         label: 'Actions',
         component: (props) => (
           <Fragment>
-            <Button
-              variant="outlined"
-              size="small"
-              className={classes.button}
+            <IconButton
+              aria-label="Delete"
               onClick={(evt) => {
                 removeService(props.data.get('id'));
               }}
             >
-              Delete this services
-            </Button>
+              <DeleteIcon />
+            </IconButton>
           </Fragment>
         ),
       },

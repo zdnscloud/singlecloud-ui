@@ -54,7 +54,11 @@ function CustomInput({ ...props }) {
     formControlClasses = classes.formControl;
   }
   return (
-    <FormControl {...formControlProps} className={formControlClasses} error={touchedError}>
+    <FormControl
+      {...formControlProps}
+      className={formControlClasses}
+      error={touchedError}
+    >
       {labelText !== undefined ? (
         <InputLabel
           className={`${classes.labelRoot} ${labelClasses}`}

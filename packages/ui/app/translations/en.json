@@ -24,6 +24,7 @@
   "app.containers.ClustersPage.tableTitleNodeCount": "",
   "app.containers.ClustersPage.tableTitleVersion": "",
   "app.containers.ConfigMapsPage.configMaps": "",
+  "app.containers.ConfigMapsPage.createConfigMap": "",
   "app.containers.ConfigMapsPage.header": "",
   "app.containers.ConfigMapsPage.pageDesc": "",
   "app.containers.ConfigMapsPage.pageTitle": "",
