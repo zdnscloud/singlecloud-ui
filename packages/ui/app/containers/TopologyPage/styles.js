@@ -30,8 +30,7 @@ const styles = (theme) => ({
     padding: theme.spacing.unit * 3,
     overflow: 'auto',
   },
-  chartContainer: {
-  },
+  chartContainer: {},
   h5: {
     marginBottom: theme.spacing.unit * 2,
   },

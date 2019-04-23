@@ -17,8 +17,18 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import Typography from '@material-ui/core/Typography';
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
+import GridItem from 'components/Grid/GridItem';
+import GridContainer from 'components/Grid/GridContainer';
+import Card from 'components/Card/Card';
+import CardHeader from 'components/Card/CardHeader';
+import CardBody from 'components/Card/CardBody';
 
+import {
+  makeSelectClusterID,
+  makeSelectNamespaceID,
+} from 'containers/App/selectors';
 import injectSaga from 'utils/injectSaga';
+
 import * as actions from './actions';
 import saga from './saga';
 import messages from './messages';
@@ -36,7 +46,19 @@ export class IngressesPage extends React.PureComponent {
   };
 
   componentWillMount() {
+    const { clusterID, namespaceID, url, loadConfigMaps } = this.props;
     this.props.initAction(this.props.match);
+  }
+
+  componentDidUpdate(prevProps) {
+    const {
+      clusterID: prevClusterID,
+      namespaceID: prevNamespaceID,
+    } = prevProps;
+    const { clusterID, namespaceID, url, loadConfigMaps } = this.props;
+    if (prevClusterID !== clusterID || prevNamespaceID !== namespaceID) {
+      this.props.initAction(this.props.match);
+    }
   }
 
   render() {
@@ -46,22 +68,31 @@ export class IngressesPage extends React.PureComponent {
       <div className={classes.root}>
         <IngressesPageHelmet />
         <CssBaseline />
-        <Menubar headerContent={<FormattedMessage {...messages.header} />} />
         <div className={classes.content}>
-          <div className={classes.appBarSpacer} />
-          <Typography variant="h4" gutterBottom component="h2">
-            <FormattedMessage {...messages.ingresses} />
-          </Typography>
-          <Typography component="div" className={classes.chartContainer}>
-            <IngressesTable location={this.props.location} />
-          </Typography>
+          <GridContainer>
+            <GridItem xs={12} sm={12} md={12}>
+              <Card>
+                <CardHeader color="primary">
+                  <h4 className={classes.cardTitleWhite}>
+                    <FormattedMessage {...messages.ingresses} />
+                  </h4>
+                </CardHeader>
+                <CardBody>
+                  <IngressesTable location={this.props.location} />
+                </CardBody>
+              </Card>
+            </GridItem>
+          </GridContainer>
         </div>
       </div>
     );
   }
 }
 
-const mapStateToProps = createStructuredSelector({});
+const mapStateToProps = createStructuredSelector({
+  clusterID: makeSelectClusterID(),
+  namespaceID: makeSelectNamespaceID(),
+});
 
 const mapDispatchToProps = (dispatch) =>
   bindActionCreators(

@@ -60,12 +60,7 @@ export class CreateUserPage extends React.PureComponent {
   };
 
   render() {
-    const {
-      classes,
-      clusters,
-      createUser,
-      submitForm,
-    } = this.props;
+    const { classes, clusters, createUser, submitForm } = this.props;
     async function doSubmit(formValues) {
       try {
         const data = formValues.toJS();
@@ -95,7 +90,7 @@ export class CreateUserPage extends React.PureComponent {
                 classes={classes}
                 clusters={clusters}
                 onSubmit={doSubmit}
-                initialValues={fromJS({name: '', password: '', projects: []})}
+                initialValues={fromJS({ name: '', password: '', projects: [] })}
               />
             </CardBody>
             <CardFooter className={classes.cardFooter}>
@@ -119,7 +114,7 @@ const mapStateToProps = createStructuredSelector({
   clusters: makeSelectClustersAndNamespaces(),
   values: createSelector(
     getFormValues(formName),
-    (v) => (v)
+    (v) => v
   ),
 });
 

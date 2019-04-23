@@ -53,7 +53,8 @@ export const makeSelectCurrentNamespace = () =>
     selectNamespacesPageDomain,
     makeSelectClusterID(),
     makeSelectCurrentNamespaceID(),
-    (substate, clusterID, nid) => substate.getIn(['namespaces', clusterID, nid])
+    (substate, clusterID, nid) =>
+      substate.getIn(['namespaces', clusterID, nid]) || substate.clear()
   );
 
 /**

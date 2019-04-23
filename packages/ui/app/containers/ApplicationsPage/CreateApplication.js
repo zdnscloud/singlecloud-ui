@@ -45,7 +45,10 @@ import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
 
+import { loadConfigMaps } from 'ducks/configMaps/actions';
+import { makeSelectConfigMaps } from 'ducks/configMaps/selectors';
 import injectSaga from 'utils/injectSaga';
+
 import { makeSelectCreateFormData, makeSelectFormPorts } from './selectors';
 import reducer from './reducer';
 import * as actions from './actions';
@@ -54,9 +57,6 @@ import messages from './messages';
 import ApplicationsHelmet from './helmet';
 import styles from './styles';
 import ContainerForm from './ContainerForm';
-import configMapsSaga from '../ConfigMapsPage/saga';
-import { initAction } from '../ConfigMapsPage/actions';
-import { makeSelectConfigMaps } from '../ConfigMapsPage/selectors';
 import { makeSelectNamespaces } from '../NamespacesPage/selectors';
 import SelectNamespace from './SelectNamespace';
 
@@ -72,6 +72,7 @@ export class CreateApplication extends React.PureComponent {
 
   componentWillMount() {
     this.props.initCreateForm(this.props.match);
+    this.props.loadConfigMaps();
   }
 
   componentDidUpdate(prevProps) {
@@ -84,6 +85,7 @@ export class CreateApplication extends React.PureComponent {
     } = prevProps;
     if (namespaceID !== prevNamespaceID) {
       this.props.initCreateForm(this.props.match);
+      this.props.loadConfigMaps();
     }
   }
 
@@ -416,7 +418,7 @@ const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
       ...actions,
-      initConfigMaps: initAction,
+      loadConfigMaps,
     },
     dispatch
   );
@@ -427,13 +429,8 @@ const withConnect = connect(
 );
 
 const withSaga = injectSaga({ key: 'applicationsPage', saga });
-const withConigMapsSaga = injectSaga({
-  key: 'configMapsPage',
-  saga: configMapsSaga,
-});
 
 export default compose(
-  withConigMapsSaga,
   withSaga,
   withConnect,
   withStyles(styles)

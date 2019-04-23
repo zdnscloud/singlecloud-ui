@@ -55,16 +55,32 @@ export const makeSelectMenus = () =>
       if (cluster !== '') {
         return menus.concat([
           { name: 'nodes', path: `/clusters/${cluster}/nodes` },
-          { name: 'namespaces', path: `/clusters/${cluster}/namespaces` },
-          { name: 'applications', path: `/clusters/${cluster}/namespaces/${namespace}/applications` },
-          { name: 'storage', path: `/clusters/${cluster}/storage` },
           { name: 'network', path: `/clusters/${cluster}/network` },
-          { name: 'topology', path: `/clusters/${cluster}/namespaces/${namespace}/topology` },
+          { name: 'storage', path: `/clusters/${cluster}/storage` },
+          { name: 'namespaces', path: `/clusters/${cluster}/namespaces` },
+          {
+            name: 'applications',
+            path: `/clusters/${cluster}/namespaces/${namespace}/applications`,
+          },
+          {
+            name: 'ingresses',
+            path: `/clusters/${cluster}/namespaces/${namespace}/ingresses`,
+          },
+          {
+            name: 'services',
+            path: `/clusters/${cluster}/namespaces/${namespace}/services`,
+          },
+          {
+            name: 'configmaps',
+            path: `/clusters/${cluster}/namespaces/${namespace}/configmaps`,
+          },
+          {
+            name: 'topology',
+            path: `/clusters/${cluster}/namespaces/${namespace}/topology`,
+          },
         ]);
       }
-      return menus.concat(isAdmin ? [
-        { name: 'users', path: `/users` },
-      ] : []);
+      return menus.concat(isAdmin ? [{ name: 'users', path: `/users` }] : []);
     }
   );
 
@@ -79,10 +95,9 @@ export const makeSelectUserMenus = () =>
     selectApp,
     makeSelectIsAdmin(),
     makeSelectRole(),
-    (appState, isAdmin, role) => {
-      return [
+    (appState, isAdmin, role) =>
+      [
         { name: 'profile', path: `/users/${role.get('user')}/profile` },
         isAdmin ? { name: 'list', path: '/users' } : null,
-      ].filter((n) => !!n);
-    }
+      ].filter((n) => !!n)
   );

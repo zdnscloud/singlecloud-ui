@@ -35,10 +35,13 @@ import Checkbox from '@material-ui/core/Checkbox';
 
 import injectSaga from 'utils/injectSaga';
 import saga from './saga';
-import styles from './styles';
+import styles from '../App/selectClusterStyles';
 import * as actions from './actions';
 import { makeSelectClusterID } from '../App/selectors';
-import { makeSelectNamespaces, makeSelectCurrentNamespaceID } from './selectors';
+import {
+  makeSelectNamespaces,
+  makeSelectCurrentNamespaceID,
+} from './selectors';
 
 class SelectNamespace extends PureComponent {
   static propTypes = {
@@ -58,12 +61,30 @@ class SelectNamespace extends PureComponent {
   }
 
   render() {
-    const { classes, namespaces, namespaceID, changeNamespace, clusterID } = this.props;
+    const {
+      classes,
+      namespaces,
+      namespaceID,
+      changeNamespace,
+      clusterID,
+    } = this.props;
 
     return (
       <FormControl className={classes.formControl}>
-        <InputLabel htmlFor="namespace_name-id">Namespace</InputLabel>
+        <InputLabel
+          classes={{
+            root: classes.inputLabelRoot,
+          }}
+          htmlFor="namespace_name-id"
+        >
+          Namespace
+        </InputLabel>
         <Select
+          className={classes.select}
+          classes={{
+            root: classes.selectRoot,
+            icon: classes.selectIcon,
+          }}
           value={namespaceID}
           onChange={(evt) => {
             changeNamespace(evt.target.value, clusterID);

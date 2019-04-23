@@ -88,13 +88,7 @@ export class UserProfilePage extends React.PureComponent {
   }
 
   render() {
-    const {
-      classes,
-      clusters,
-      updateUser,
-      submitForm,
-      user,
-    } = this.props;
+    const { classes, clusters, updateUser, submitForm, user } = this.props;
     return (
       <div className={classes.root}>
         <UsersHelmet />

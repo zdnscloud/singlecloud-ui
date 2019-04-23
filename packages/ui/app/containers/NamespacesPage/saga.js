@@ -31,10 +31,7 @@ import {
   removeNamespaceSuccess,
   removeNamespaceFailure,
 } from './actions';
-import {
-  makeSelectCreateFormData,
-  makeSelectNamespaces,
-} from './selectors';
+import { makeSelectCreateFormData, makeSelectNamespaces } from './selectors';
 
 export function* initialize() {
   yield* loadNamespaces();
@@ -53,7 +50,7 @@ export function* loadAllNamespaces() {
       yield put(loadNamespacesFailure(e));
     }
   }
-  for (let c of clusters) {
+  for (const c of clusters) {
     yield* task(c.id);
   }
 }

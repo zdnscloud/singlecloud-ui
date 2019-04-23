@@ -18,14 +18,10 @@ import { Switch, Route, Redirect } from 'react-router-dom';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import { withRouter } from 'react-router';
 
-import blue from '@material-ui/core/colors/blue';
-
 import LoginPage from 'containers/LoginPage/Loadable';
 
-// creates a beautiful scrollbar
 import { makeSelectLocation } from './selectors';
 import * as actions from './actions';
-import {} from './selectors';
 import GlobalStyle from '../../global-styles';
 import Dashboard from './Dashboard';
 
@@ -35,7 +31,14 @@ const theme = createMuiTheme({
   },
   palette: {
     type: 'light',
-    primary: blue,
+    primary: {
+      main: '#072C47',
+      light: '#072C47',
+    },
+    secondary: {
+      main: '#1A435F',
+      light: '#1A435F',
+    },
   },
 });
 
@@ -100,6 +103,4 @@ const withConnect = connect(
   mapDispatchToProps
 );
 
-export default compose(
-  withConnect,
-)(App);
+export default compose(withConnect)(App);

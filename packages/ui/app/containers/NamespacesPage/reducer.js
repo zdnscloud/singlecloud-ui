@@ -106,7 +106,10 @@ function namespacesPageReducer(state = initialState, { type, payload }) {
       return state;
 
     case CHANGE_NAMESPACE:
-      return state.setIn(['selectedNamespace', payload.clusterID], payload.namespaceID);
+      return state.setIn(
+        ['selectedNamespace', payload.clusterID],
+        payload.namespaceID
+      );
 
     default:
       return state;

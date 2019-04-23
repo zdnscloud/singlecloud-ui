@@ -6,14 +6,14 @@ const schema = [
   'name',
   'address',
   'role',
-  'cpu',
-  'memory',
-  'operatingSystem',
-  'operatingSystemImage',
-  'pod',
-  'dockerVersion',
-  'creationTimestamp',
+  // 'cpu',
+  // 'memory',
+  // 'operatingSystem',
+  // 'operatingSystemImage',
+  // 'pod',
+  // 'dockerVersion',
   'labels',
+  'creationTimestamp',
 ];
 
 const tableSchema = schema
@@ -28,7 +28,7 @@ const tableSchema = schema
         component(props) {
           return props.data
             .get('labels')
-            .map((val, key) => <Chip label={`${key}=${val}`} />)
+            .map((val, key) => <Chip key={key} label={`${key}=${val}`} />)
             .toList();
         },
       };

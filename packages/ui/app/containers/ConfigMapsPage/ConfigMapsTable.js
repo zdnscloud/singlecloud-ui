@@ -4,7 +4,7 @@
  *
  */
 
-import React, { Fragment } from 'react';
+import React, { Fragment, useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
@@ -21,13 +21,20 @@ import Dialog from '@material-ui/core/Dialog';
 import AceEditor from 'react-ace';
 import 'brace/mode/yaml';
 import 'brace/theme/github';
+import IconButton from '@material-ui/core/IconButton';
+import DeleteIcon from '@material-ui/icons/Delete';
 
 import {
+  makeSelectClusterID,
+  makeSelectNamespaceID,
+} from 'containers/App/selectors';
+import * as actions from 'ducks/configMaps/actions';
+import {
+  makeSelectURL,
   makeSelectConfigMaps,
-  makeSelectTableList,
-  makeSelectOpening,
-} from './selectors';
-import * as actions from './actions';
+  makeSelectConfigMapsList,
+} from 'ducks/configMaps/selectors';
+
 import messages from './messages';
 import styles from './styles';
 import schema from './tableSchema';
@@ -36,32 +43,32 @@ import schema from './tableSchema';
 export class ConfigMapsTable extends React.PureComponent {
   static propTypes = {
     classes: PropTypes.object.isRequired,
-    tableList: PropTypes.object.isRequired,
     configMaps: PropTypes.object,
   };
 
+  state = { openID: null, openIndex: null };
+
   render() {
-    const {
-      classes,
-      tableList,
-      configMaps,
-      opening,
-      removeConfigMap,
-      showConfigMapData,
-      hideConfigMapData,
-    } = this.props;
+    const { classes, data, configMaps, removeConfigMap } = this.props;
+
     const mergedSchema = schema.concat([
       {
         id: 'configs',
         label: 'Configs',
         component: (props) => (
           <Fragment>
-            {props.data.get('configs').map((conf, idx) => (
+            {(props.data.get('configs') || []).map((conf, idx) => (
               <Button
+                key={idx}
                 variant="outlined"
                 size="small"
                 className={classes.button}
-                onClick={(evt) => showConfigMapData(props.data.get('id'), idx)}
+                onClick={(evt) =>
+                  this.setState({
+                    openID: props.data.get('id'),
+                    openIndex: idx,
+                  })
+                }
               >
                 show `{conf.get('name')}` Config
               </Button>
@@ -74,14 +81,14 @@ export class ConfigMapsTable extends React.PureComponent {
         label: 'Actions',
         component: (props) => (
           <Fragment>
-            <Button
+            <IconButton
               variant="outlined"
               size="small"
               className={classes.button}
               onClick={(evt) => removeConfigMap(props.data.get('id'))}
             >
-              Delete this
-            </Button>
+              <DeleteIcon />
+            </IconButton>
           </Fragment>
         ),
       },
@@ -90,10 +97,8 @@ export class ConfigMapsTable extends React.PureComponent {
     return (
       <Paper className={classes.tableWrapper}>
         <Dialog
-          open={opening != null}
-          onClose={() => {
-            hideConfigMapData();
-          }}
+          open={this.state.openID != null}
+          onClose={() => this.setState({ openID: null, openIndex: null })}
           aria-labelledby="form-dialog-title"
         >
           <AceEditor
@@ -101,9 +106,9 @@ export class ConfigMapsTable extends React.PureComponent {
             mode="yaml"
             theme="github"
             value={configMaps.getIn([
-              getByKey(opening, 'id'),
+              this.state.openID,
               'configs',
-              getByKey(opening, 'index'),
+              this.state.openIndex,
               'data',
             ])}
             readOnly
@@ -112,7 +117,7 @@ export class ConfigMapsTable extends React.PureComponent {
         <SimpleTable
           className={classes.table}
           schema={mergedSchema}
-          data={tableList.map((id) => configMaps.get(id))}
+          data={data}
         />
       </Paper>
     );
@@ -120,9 +125,10 @@ export class ConfigMapsTable extends React.PureComponent {
 }
 
 const mapStateToProps = createStructuredSelector({
+  clusterID: makeSelectClusterID(),
+  namespaceID: makeSelectNamespaceID(),
   configMaps: makeSelectConfigMaps(),
-  tableList: makeSelectTableList(),
-  opening: makeSelectOpening(),
+  data: makeSelectConfigMapsList(),
 });
 
 const mapDispatchToProps = (dispatch) =>

@@ -37,9 +37,9 @@ import Menubar from 'components/Menubar';
 
 import { makeSelectIsLogin } from 'ducks/role/selectors';
 
-import dashboardStyle from 'assets/jss/material-dashboard-react/layouts/dashboardStyle';
 import logo from 'images/favicon.png';
 import image from 'assets/img/sidebar-3.jpg';
+import dashboardStyle from './dashboardStyles';
 
 import AppMenubar from './AppMenubar';
 import SelectCluster from './SelectCluster';
@@ -98,6 +98,7 @@ class App extends PureComponent {
 
     return (
       <div className={classes.wrapper}>
+        <AppMenubar />
         <Sidebar
           routes={menus}
           logoText="Single Cloud"
@@ -105,10 +106,9 @@ class App extends PureComponent {
           image={this.state.image}
           handleDrawerToggle={this.handleDrawerToggle}
           open={this.state.mobileOpen}
-          color={this.state.color}
+          color="zcloud"
           {...rest}
         />
-        <AppMenubar />
         <div className={classes.mainPanel} data-ref="mainPanel">
           {clusterID && (
             <div className={classes.eventPage}>

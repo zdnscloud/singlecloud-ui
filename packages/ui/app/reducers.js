@@ -13,7 +13,6 @@ import clustersPageReducer from 'containers/ClustersPage/reducer';
 import nodesPageReducer from 'containers/NodesPage/reducer';
 import eventsPageReducer from 'containers/EventsPage/reducer';
 import namespacesPageReducer from 'containers/NamespacesPage/reducer';
-import configMapsPageReducer from 'containers/ConfigMapsPage/reducer';
 import servicesPageReducer from 'containers/ServicesPage/reducer';
 import ingressesPageReducer from 'containers/IngressesPage/reducer';
 import applicationsPageReducer from 'containers/ApplicationsPage/reducer';
@@ -21,7 +20,12 @@ import applicationDetailPagePageReducer from 'containers/ApplicationDetailPage/r
 
 import roleReducer, { prefix as rolePrefix } from 'ducks/role';
 import usersReducer, { prefix as usersPrefix } from 'ducks/users';
-import serviceLinksReducer, { prefix as serviceLinksPrefix } from 'ducks/serviceLinks';
+import serviceLinksReducer, {
+  prefix as serviceLinksPrefix,
+} from 'ducks/serviceLinks';
+import configMapsReducer, {
+  prefix as configMapsPrefix,
+} from 'ducks/configMaps';
 
 /**
  * Merges the main reducer with the router state and dynamically injected reducers
@@ -35,11 +39,11 @@ export default function createReducer(injectedReducers = {}) {
     [rolePrefix]: roleReducer,
     [usersPrefix]: usersReducer,
     [serviceLinksPrefix]: serviceLinksReducer,
+    [configMapsPrefix]: configMapsReducer,
     clustersPage: clustersPageReducer,
     nodesPage: nodesPageReducer,
     eventsPage: eventsPageReducer,
     namespacesPage: namespacesPageReducer,
-    configMapsPage: configMapsPageReducer,
     servicesPage: servicesPageReducer,
     ingressesPage: ingressesPageReducer,
     applicationsPage: applicationsPageReducer,

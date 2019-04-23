@@ -14,7 +14,7 @@ import Icon from '@material-ui/core/Icon';
 // import AdminNavbarLinks from 'components/Navbars/AdminNavbarLinks';
 // import RTLNavbarLinks from 'components/Navbars/RTLNavbarLinks';
 
-import sidebarStyle from 'assets/jss/material-dashboard-react/components/sidebarStyle';
+import styles from './styles';
 
 const Sidebar = ({ ...props }) => {
   // verifies if routeName is the one active (in browser input)
@@ -41,7 +41,7 @@ const Sidebar = ({ ...props }) => {
             <ListItem button className={classes.itemLink + listItemClasses}>
               <ListItemText
                 primary={prop.name}
-                className={classNames(classes.itemText, whiteFontClasses)}
+                className={classNames(classes.itemText)}
                 disableTypography
               />
             </ListItem>
@@ -61,13 +61,14 @@ const Sidebar = ({ ...props }) => {
     </div>
   );
   return (
-    <div>
+    <div className={classes.root}>
       <Hidden mdUp implementation="css">
         <Drawer
           variant="temporary"
           anchor="right"
           open={props.open}
           classes={{
+            root: classes.root,
             paper: classNames(classes.drawerPaper),
           }}
           onClose={props.handleDrawerToggle}
@@ -91,6 +92,7 @@ const Sidebar = ({ ...props }) => {
           variant="permanent"
           open
           classes={{
+            root: classes.root,
             paper: classNames(classes.drawerPaper),
           }}
         >
@@ -112,4 +114,4 @@ Sidebar.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(sidebarStyle)(Sidebar);
+export default withStyles(styles)(Sidebar);

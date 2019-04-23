@@ -72,6 +72,6 @@ class PasswordForm extends PureComponent {
       </form>
     );
   }
-};
+}
 
 export default PasswordForm;

@@ -65,17 +65,17 @@ export default class InnerServiceTree extends React.Component {
     //   wl.children = wl.pods;
     //   return [...wls, wl];
     // }, []);
-    const root = hierarchy(data, (d) => d.workloads || d.pods);
+    const root = hierarchy(data, (d) => d.children);
 
     return (
       <div>
         <svg width={width} height={height}>
           <LinearGradient id="lg" from="#fdfba3" to="#fefefe" />
           <rect width={width} height={height} rx={0} fill="#f3c" fillOpacity={0} />
-          <Group top={margin.top} left={margin.left}>
+          <Group top={margin.top*2} left={margin.left*2}>
             <Tree
               root={root}
-              size={[sizeWidth, sizeHeight]}
+              size={[sizeWidth-margin.left*2, sizeHeight-margin.top*2]}
               separation={(a, b) => (a.parent === b.parent ? 1 : 0.5) / a.depth}
             >
               {(d) => (

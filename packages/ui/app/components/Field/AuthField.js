@@ -49,7 +49,7 @@ const CustomCheckbox = ({
         />
       }
       label={label}
-    />      
+    />
   );
 }
 
