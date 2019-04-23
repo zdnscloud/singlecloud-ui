@@ -43,6 +43,8 @@ import {
 
 import messages from './messages';
 
+const separator = '$';
+
 /* eslint-disable react/prefer-stateless-function */
 export class Charts extends React.PureComponent {
   static propTypes = {
@@ -113,42 +115,58 @@ export class Charts extends React.PureComponent {
     return (
       <Fragment>
         <GridContainer>
-          {os.map((s, i) => (
-            <GridItem xs={12} sm={12} md={12} key={i}>
-              <Card>
-                <CardHeader color="info" stats icon>
-                  <CardIcon color="info">
-                    <BubbleChartIcon />
-                  </CardIcon>
-                  <p className={classes.cardCategory}>Outer Service Name</p>
-                  <h3 className={classes.cardTitle}>{s.name}</h3>
-                </CardHeader>
-                <CardBody ref={i === 0 ? this.ocardBodyRef : null}>
-                  <OuterServiceTree width={this.state.ocardWidth} height={388} data={s} />
-                </CardBody>
-                <CardFooter stats />
-              </Card>
-            </GridItem>
-          ))}
+          {os.map((s, i) => {
+            const [type, name] = s.name.split(separator);
+
+            return (
+              <GridItem xs={12} sm={12} md={12} key={i}>
+                <Card>
+                  <CardHeader color="info" stats icon>
+                    <CardIcon color="info">
+                      <BubbleChartIcon />
+                    </CardIcon>
+                    <p className={classes.cardCategory}>Outer Service Name</p>
+                    <h3 className={classes.cardTitle}>{name}</h3>
+                  </CardHeader>
+                  <CardBody ref={i === 0 ? this.ocardBodyRef : null}>
+                    <OuterServiceTree
+                      width={this.state.ocardWidth}
+                      height={288}
+                      data={s}
+                    />
+                  </CardBody>
+                  <CardFooter stats />
+                </Card>
+              </GridItem>
+            );
+          })}
         </GridContainer>
         <GridContainer>
-          {is.map((s, i) => (
-            <GridItem xs={12} sm={6} md={6} key={i}>
-              <Card>
-                <CardHeader color="info" stats icon>
-                  <CardIcon color="info">
-                    <BubbleChartIcon />
-                  </CardIcon>
-                  <p className={classes.cardCategory}>Inner Service Name</p>
-                  <h3 className={classes.cardTitle}>{s.name}</h3>
-                </CardHeader>
-                <CardBody ref={i === 0 ? this.icardBodyRef : null}>
-                  <InnerServiceTree width={this.state.icardWidth} height={388} data={s} />
-                </CardBody>
-                <CardFooter stats />
-              </Card>
-            </GridItem>
-          ))}
+          {is.map((s, i) => {
+            const [type, name] = s.name.split(separator);
+
+            return (
+              <GridItem xs={12} sm={6} md={6} key={i}>
+                <Card>
+                  <CardHeader color="info" stats icon>
+                    <CardIcon color="info">
+                      <BubbleChartIcon />
+                    </CardIcon>
+                    <p className={classes.cardCategory}>Inner Service Name</p>
+                    <h3 className={classes.cardTitle}>{name}</h3>
+                  </CardHeader>
+                  <CardBody ref={i === 0 ? this.icardBodyRef : null}>
+                    <InnerServiceTree
+                      width={this.state.icardWidth}
+                      height={288}
+                      data={s}
+                    />
+                  </CardBody>
+                  <CardFooter stats />
+                </Card>
+              </GridItem>
+            );
+          })}
         </GridContainer>
       </Fragment>
     );
