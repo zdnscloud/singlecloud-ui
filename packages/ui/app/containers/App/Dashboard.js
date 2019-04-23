@@ -106,7 +106,7 @@ class App extends PureComponent {
           image={this.state.image}
           handleDrawerToggle={this.handleDrawerToggle}
           open={this.state.mobileOpen}
-          color={this.state.color}
+          color="zcloud"
           {...rest}
         />
         <div className={classes.mainPanel} data-ref="mainPanel">

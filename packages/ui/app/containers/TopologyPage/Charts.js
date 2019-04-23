@@ -4,7 +4,8 @@
  *
  */
 
-import React, { Fragment } from 'react';
+import React, { createRef, Fragment } from 'react';
+import { findDOMNode } from 'react-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
@@ -16,15 +17,10 @@ import { Link } from 'react-router-dom';
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
-// react plugin for creating charts
-// import ChartistGraph from "react-chartist";
-// @material-ui/core
 import Icon from '@material-ui/core/Icon';
 import teal from '@material-ui/core/colors/teal';
-// @material-ui/icons
 import BubbleChartIcon from '@material-ui/icons/BubbleChart';
 import red from '@material-ui/core/colors/red';
-// core components
 import GridItem from 'components/Grid/GridItem';
 import GridContainer from 'components/Grid/GridContainer';
 import Tasks from 'components/Tasks/Tasks';
@@ -55,9 +51,29 @@ export class Charts extends React.PureComponent {
     outerServices: PropTypes.object.isRequired,
   };
 
-  state = { reload: false };
+  state = { reload: false, ocardWidth: 800, icardWidth: 400 };
 
   t = null;
+
+  ocardBodyRef = createRef();
+
+  icardBodyRef = createRef();
+
+  componentDidMount() {
+    let ow = 800;
+    let iw = 400;
+    if (this.ocardBodyRef.current) {
+      const ocd = findDOMNode(this.ocardBodyRef.current); // eslint-disable-line react/no-find-dom-node
+      const { width } = ocd.getBoundingClientRect();
+      ow = width;
+    }
+    if (this.ocardBodyRef.current) {
+      const icd = findDOMNode(this.icardBodyRef.current); // eslint-disable-line react/no-find-dom-node
+      const { width } = icd.getBoundingClientRect();
+      iw = width;
+    }
+    this.setState({ ocardWidth: ow - 40, icardWidth: iw - 40 });
+  }
 
   componentWillReceiveProps(nextProps) {
     const { nextOuterServices, nextInnerServices } = nextProps;
@@ -98,7 +114,7 @@ export class Charts extends React.PureComponent {
       <Fragment>
         <GridContainer>
           {os.map((s, i) => (
-            <GridItem xs={12} sm={6} md={6} key={i}>
+            <GridItem xs={12} sm={12} md={12} key={i}>
               <Card>
                 <CardHeader color="info" stats icon>
                   <CardIcon color="info">
@@ -107,8 +123,8 @@ export class Charts extends React.PureComponent {
                   <p className={classes.cardCategory}>Outer Service Name</p>
                   <h3 className={classes.cardTitle}>{s.name}</h3>
                 </CardHeader>
-                <CardBody>
-                  <OuterServiceTree width={498} height={388} data={s} />
+                <CardBody ref={i === 0 ? this.ocardBodyRef : null}>
+                  <OuterServiceTree width={this.state.ocardWidth} height={388} data={s} />
                 </CardBody>
                 <CardFooter stats />
               </Card>
@@ -126,8 +142,8 @@ export class Charts extends React.PureComponent {
                   <p className={classes.cardCategory}>Inner Service Name</p>
                   <h3 className={classes.cardTitle}>{s.name}</h3>
                 </CardHeader>
-                <CardBody>
-                  <InnerServiceTree width={498} height={388} data={s} />
+                <CardBody ref={i === 0 ? this.icardBodyRef : null}>
+                  <InnerServiceTree width={this.state.icardWidth} height={388} data={s} />
                 </CardBody>
                 <CardFooter stats />
               </Card>

@@ -42,13 +42,13 @@ export const serviceLinksReducer = (
         _.each(d.services, (s, p) => {
           paths.push({
             name: `path${separator}${p}`,
-            services: [{
+            children: [{
               ...s,
               name: `svc${separator}${s.name}`,
-              workloads: s.workloads && s.workloads.map((w) => ({
+              children: s.workloads && s.workloads.map((w) => ({
                 ...w,
                 name: `deploy${separator}${w.name}`,
-                pods: w.pods && w.pods.map((p) => ({
+                children: w.pods && w.pods.map((p) => ({
                   ...p,
                   name: `pod${separator}${p.name}`,
                 })),
@@ -57,7 +57,7 @@ export const serviceLinksReducer = (
           });
         });
 
-        return {...d, name, paths };
+        return {...d, name, children: paths };
       });
       return state.setIn(['outerServices', clusterID, namespaceID], fromJS(resData));
     }
@@ -72,10 +72,10 @@ export const serviceLinksReducer = (
       const resData = data && data.map((d) => ({
         ...d,
         name: `svc${separator}${d.name}`,
-        workloads: d.workloads && d.workloads.map((w) => ({
+        children: d.workloads && d.workloads.map((w) => ({
           ...w,
           name: `deploy${separator}${w.name}`,
-          pods: w.pods && w.pods.map((p) => ({
+          children: w.pods && w.pods.map((p) => ({
             ...p,
             name: `pod${separator}${p.name}`,
           })),

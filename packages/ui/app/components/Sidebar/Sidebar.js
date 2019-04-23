@@ -41,7 +41,7 @@ const Sidebar = ({ ...props }) => {
             <ListItem button className={classes.itemLink + listItemClasses}>
               <ListItemText
                 primary={prop.name}
-                className={classNames(classes.itemText, whiteFontClasses)}
+                className={classNames(classes.itemText)}
                 disableTypography
               />
             </ListItem>
@@ -68,6 +68,7 @@ const Sidebar = ({ ...props }) => {
           anchor="right"
           open={props.open}
           classes={{
+            root: classes.root,
             paper: classNames(classes.drawerPaper),
           }}
           onClose={props.handleDrawerToggle}
@@ -91,6 +92,7 @@ const Sidebar = ({ ...props }) => {
           variant="permanent"
           open
           classes={{
+            root: classes.root,
             paper: classNames(classes.drawerPaper),
           }}
         >

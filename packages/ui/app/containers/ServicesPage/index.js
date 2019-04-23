@@ -23,7 +23,12 @@ import Card from 'components/Card/Card';
 import CardHeader from 'components/Card/CardHeader';
 import CardBody from 'components/Card/CardBody';
 
+import {
+  makeSelectClusterID,
+  makeSelectNamespaceID,
+} from 'containers/App/selectors';
 import injectSaga from 'utils/injectSaga';
+
 import * as actions from './actions';
 import saga from './saga';
 import messages from './messages';
@@ -41,7 +46,19 @@ export class ServicesPage extends React.PureComponent {
   };
 
   componentWillMount() {
+    const { clusterID, namespaceID, url, loadConfigMaps } = this.props;
     this.props.initAction(this.props.match);
+  }
+
+  componentDidUpdate(prevProps) {
+    const {
+      clusterID: prevClusterID,
+      namespaceID: prevNamespaceID,
+    } = prevProps;
+    const { clusterID, namespaceID, url, loadConfigMaps } = this.props;
+    if (prevClusterID !== clusterID || prevNamespaceID !== namespaceID) {
+      this.props.initAction(this.props.match);
+    }
   }
 
   render() {
@@ -72,7 +89,10 @@ export class ServicesPage extends React.PureComponent {
   }
 }
 
-const mapStateToProps = createStructuredSelector({});
+const mapStateToProps = createStructuredSelector({
+  clusterID: makeSelectClusterID(),
+  namespaceID: makeSelectNamespaceID(),
+});
 
 const mapDispatchToProps = (dispatch) =>
   bindActionCreators(

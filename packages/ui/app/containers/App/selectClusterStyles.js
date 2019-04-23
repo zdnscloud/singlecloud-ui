@@ -8,18 +8,22 @@ const styles = (theme) => ({
   selectEmpty: {
     marginTop: theme.spacing.unit * 2,
   },
-  inputLabel: {
-    root: {
-      color: theme.palette.primary.contrastText,
-    },
+  inputLabelRoot: {
+    color: theme.palette.primary.contrastText,
   },
   select: {
-    root: {
-      color: theme.palette.primary.contrastText,
+    '&:before': {
+      borderBottom: `1px solid ${theme.palette.secondary.contrastText}`,
     },
-    icon: {
-      color: theme.palette.primary.contrastText,
+    '&:after': {
+      borderBottom: `2px solid ${theme.palette.primary.contrastText}`,
     },
+  },
+  selectRoot: {
+    color: theme.palette.primary.contrastText,
+  },
+  selectIcon: {
+    color: theme.palette.primary.contrastText,
   },
 });
 

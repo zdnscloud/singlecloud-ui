@@ -6,14 +6,14 @@ const schema = [
   'name',
   'address',
   'role',
-  'cpu',
-  'memory',
-  'operatingSystem',
-  'operatingSystemImage',
-  'pod',
-  'dockerVersion',
-  'creationTimestamp',
+  // 'cpu',
+  // 'memory',
+  // 'operatingSystem',
+  // 'operatingSystemImage',
+  // 'pod',
+  // 'dockerVersion',
   'labels',
+  'creationTimestamp',
 ];
 
 const tableSchema = schema
