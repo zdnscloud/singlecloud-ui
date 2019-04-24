@@ -15,7 +15,7 @@ const app = express();
 // If you need a backend, e.g. an API, add your custom backend-specific middleware here
 app.use(
   '/apis',
-  proxy({ target: 'http://localhost:8088', changeOrigin: true, ws: true })
+  proxy({ target: 'http://localhost:8088', changeOrigin: false, ws: true })
 );
 
 app.use(bodyParser.json());

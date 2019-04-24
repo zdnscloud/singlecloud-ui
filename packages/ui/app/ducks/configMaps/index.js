@@ -41,8 +41,9 @@ export const configMapsReducer = (
     case c.LOAD_CONFIG_MAP:
       return state;
     case c.LOAD_CONFIG_MAP_SUCCESS: {
+      const { clusterID, namespaceID } = meta;
       const configMap = payload.response;
-      return state.setIn(['configMaps', configMap.id], fromJS(configMap));
+      return state.setIn(['configMaps', clusterID, namespaceID, configMap.id], fromJS(configMap));
     }
     case c.LOAD_CONFIG_MAP_FAILURE:
       return state;
@@ -50,8 +51,9 @@ export const configMapsReducer = (
     case c.CREATE_CONFIG_MAP:
       return state;
     case c.CREATE_CONFIG_MAP_SUCCESS: {
+      const { clusterID, namespaceID } = meta;
       const data = payload.response;
-      return state.setIn(['configMaps', data.id], fromJS(data));
+      return state.setIn(['configMaps', clusterID, namespaceID, data.id], fromJS(data));
     }
 
     case c.CREATE_CONFIG_MAP_FAILURE:

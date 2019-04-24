@@ -41,7 +41,7 @@ export const makeSelectConfigMapsList = () =>
 export const makeSelectURL = () =>
   createSelector(
     makeSelectCurrentNamespace(),
-    (ns) => ns.getIn(['links', 'configmaps']).replace(/^https?:\/\/([^/]+)/, '')
+    (ns) => ns.getIn(['links', 'configmaps'])
   );
 
 /**
