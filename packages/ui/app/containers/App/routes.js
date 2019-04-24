@@ -15,6 +15,9 @@ import NodesPage from 'containers/NodesPage/Loadable';
 import NamespacesPage from 'containers/NamespacesPage/Loadable';
 import TerminalPage from 'containers/TerminalPage/Loadable';
 import EventsPage from 'containers/EventsPage/Loadable';
+import DeploymentsPage, {
+  CreateDeploymentPage,
+} from 'containers/DeploymentsPage/Loadable';
 import ConfigMapsPage, {
   CreateConfigMapPage,
 } from 'containers/ConfigMapsPage/Loadable';
