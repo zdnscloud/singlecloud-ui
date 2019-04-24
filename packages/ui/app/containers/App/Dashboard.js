@@ -37,8 +37,6 @@ import Menubar from 'components/Menubar';
 
 import { makeSelectIsLogin } from 'ducks/role/selectors';
 
-import logo from 'images/favicon.png';
-import image from 'assets/img/sidebar-3.jpg';
 import dashboardStyle from './dashboardStyles';
 
 import AppMenubar from './AppMenubar';
@@ -57,7 +55,7 @@ import GlobalStyle from '../../global-styles';
 import EventsTable from '../EventsPage/EventsTable';
 
 class App extends PureComponent {
-  state = { image, hasError: false };
+  state = { image: null, hasError: false };
 
   componentWillMount() {
     const { isLogin, history } = this.props;
@@ -101,9 +99,7 @@ class App extends PureComponent {
         <AppMenubar />
         <Sidebar
           routes={menus}
-          logoText="Single Cloud"
-          logo={logo}
-          image={this.state.image}
+          logoText="ZCloud"
           handleDrawerToggle={this.handleDrawerToggle}
           open={this.state.mobileOpen}
           color="zcloud"

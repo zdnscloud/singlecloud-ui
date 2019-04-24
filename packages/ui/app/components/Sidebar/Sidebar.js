@@ -50,16 +50,7 @@ const Sidebar = ({ ...props }) => {
       })}
     </List>
   );
-  const brand = (
-    <div className={classes.logo}>
-      <a href="https://www.zdns.cn" className={classNames(classes.logoLink)}>
-        <div className={classes.logoImage}>
-          <img src={logo} alt="logo" className={classes.img} />
-        </div>
-        {logoText}
-      </a>
-    </div>
-  );
+  const brand = <div className={classes.logo} />;
   return (
     <div className={classes.root}>
       <Hidden mdUp implementation="css">
@@ -78,12 +69,7 @@ const Sidebar = ({ ...props }) => {
         >
           {brand}
           <div className={classes.sidebarWrapper}>{links}</div>
-          {image !== undefined ? (
-            <div
-              className={classes.background}
-              /* style={{ backgroundImage: `url(${image})` }} */
-            />
-          ) : null}
+          <div className={classes.background} />
         </Drawer>
       </Hidden>
       <Hidden smDown implementation="css">
@@ -98,12 +84,7 @@ const Sidebar = ({ ...props }) => {
         >
           {brand}
           <div className={classes.sidebarWrapper}>{links}</div>
-          {image !== undefined ? (
-            <div
-              className={classes.background}
-              /* style={{ backgroundImage: `url(${image})` }} */
-            />
-          ) : null}
+          <div className={classes.background} />
         </Drawer>
       </Hidden>
     </div>

@@ -12,7 +12,7 @@ import {
   whiteColor,
   grayColor,
   blackColor,
-  hexToRgb
+  hexToRgb,
 } from 'assets/jss/material-dashboard-react';
 
 const sidebarStyle = (theme) => ({
@@ -32,7 +32,7 @@ const sidebarStyle = (theme) => ({
     [theme.breakpoints.up('md')]: {
       width: drawerWidth,
       position: 'fixed',
-      height: '100%'
+      height: '100%',
     },
     [theme.breakpoints.down('sm')]: {
       width: drawerWidth,
@@ -51,22 +51,22 @@ const sidebarStyle = (theme) => ({
       paddingRight: '0px',
       paddingLeft: '0',
       transform: `translate3d(${drawerWidth}px, 0, 0)`,
-      ...transition
-    }
+      ...transition,
+    },
   },
   drawerPaperRTL: {
     [theme.breakpoints.up('md')]: {
       left: 'auto !important',
-      right: '0 !important'
+      right: '0 !important',
     },
     [theme.breakpoints.down('sm')]: {
       left: '0  !important',
-      right: 'auto !important'
-    }
+      right: 'auto !important',
+    },
   },
   logo: {
     position: 'relative',
-    padding: '15px 15px',
+    height: '64px',
     zIndex: '4',
     '&:after': {
       content: '""',
@@ -76,8 +76,8 @@ const sidebarStyle = (theme) => ({
       height: '1px',
       right: '15px',
       width: 'calc(100% - 30px)',
-      backgroundColor: 'rgba(' + hexToRgb(grayColor[6]) + ', 0.3)'
-    }
+      backgroundColor: `rgba(${hexToRgb(grayColor[6])}, 0.3)`,
+    },
   },
   logoLink: {
     ...defaultFont,
@@ -91,25 +91,25 @@ const sidebarStyle = (theme) => ({
     textDecoration: 'none',
     backgroundColor: 'transparent',
     '&,&:hover': {
-      color: blackColor
-    }
+      color: blackColor,
+    },
   },
   logoLinkRTL: {
-    textAlign: 'right'
+    textAlign: 'right',
   },
   logoImage: {
     width: '30px',
     display: 'inline-block',
     maxHeight: '30px',
     marginLeft: '10px',
-    marginRight: '15px'
+    marginRight: '15px',
   },
   img: {
     width: '35px',
     top: '22px',
     position: 'absolute',
     verticalAlign: 'middle',
-    border: '0'
+    border: '0',
   },
   background: {
     position: 'absolute',
@@ -133,7 +133,7 @@ const sidebarStyle = (theme) => ({
       background: '#f5f5f5',
       backgroundColor: theme.palette.secondary.main,
       opacity: '.8',
-    }
+    },
   },
   list: {
     marginTop: '20px',
@@ -142,15 +142,15 @@ const sidebarStyle = (theme) => ({
     paddingBottom: '0',
     marginBottom: '0',
     listStyle: 'none',
-    position: 'unset'
+    position: 'unset',
   },
   item: {
     position: 'relative',
     display: 'block',
     textDecoration: 'none',
     '&:hover,&:focus,&:visited,&': {
-      color: blackColor
-    }
+      color: blackColor,
+    },
   },
   itemLink: {
     width: 'auto',
@@ -161,7 +161,7 @@ const sidebarStyle = (theme) => ({
     display: 'block',
     padding: '10px 15px',
     backgroundColor: 'transparent',
-    ...defaultFont
+    ...defaultFont,
   },
   itemIcon: {
     width: '24px',
@@ -172,12 +172,12 @@ const sidebarStyle = (theme) => ({
     marginRight: '15px',
     textAlign: 'center',
     verticalAlign: 'middle',
-    color: 'rgba(' + hexToRgb(whiteColor) + ', 0.8)'
+    color: `rgba(${hexToRgb(whiteColor)}, 0.8)`,
   },
   itemIconRTL: {
     marginRight: '3px',
     marginLeft: '15px',
-    float: 'right'
+    float: 'right',
   },
   itemText: {
     ...defaultFont,
@@ -211,90 +211,66 @@ const sidebarStyle = (theme) => ({
   },
   blue: {
     backgroundColor: infoColor[0],
-    boxShadow:
-      '0 12px 20px -10px rgba(' +
-      hexToRgb(infoColor[0]) +
-      ',.28), 0 4px 20px 0 rgba(' +
-      hexToRgb(blackColor) +
-      ',.12), 0 7px 8px -5px rgba(' +
-      hexToRgb(infoColor[0]) +
-      ',.2)',
+    boxShadow: `0 12px 20px -10px rgba(${hexToRgb(
+      infoColor[0]
+    )},.28), 0 4px 20px 0 rgba(${hexToRgb(
+      blackColor
+    )},.12), 0 7px 8px -5px rgba(${hexToRgb(infoColor[0])},.2)`,
     '&:hover': {
       backgroundColor: infoColor[0],
-      boxShadow:
-        '0 12px 20px -10px rgba(' +
-        hexToRgb(infoColor[0]) +
-        ',.28), 0 4px 20px 0 rgba(' +
-        hexToRgb(blackColor) +
-        ',.12), 0 7px 8px -5px rgba(' +
-        hexToRgb(infoColor[0]) +
-        ',.2)'
-    }
+      boxShadow: `0 12px 20px -10px rgba(${hexToRgb(
+        infoColor[0]
+      )},.28), 0 4px 20px 0 rgba(${
+        hexToRgb(blackColor)
+      },.12), 0 7px 8px -5px rgba(${hexToRgb(infoColor[0])},.2)`,
+    },
   },
   green: {
     backgroundColor: successColor[0],
-    boxShadow:
-      '0 12px 20px -10px rgba(' +
-      hexToRgb(successColor[0]) +
-      ',.28), 0 4px 20px 0 rgba(' +
-      hexToRgb(blackColor) +
-      ',.12), 0 7px 8px -5px rgba(' +
-      hexToRgb(successColor[0]) +
-      ',.2)',
+    boxShadow: `0 12px 20px -10px rgba(${hexToRgb(
+      successColor[0]
+    )},.28), 0 4px 20px 0 rgba(${hexToRgb(
+      blackColor
+    )},.12), 0 7px 8px -5px rgba(${hexToRgb(successColor[0])},.2)`,
     '&:hover': {
       backgroundColor: successColor[0],
-      boxShadow:
-        '0 12px 20px -10px rgba(' +
-        hexToRgb(successColor[0]) +
-        ',.28), 0 4px 20px 0 rgba(' +
-        hexToRgb(blackColor) +
-        ',.12), 0 7px 8px -5px rgba(' +
-        hexToRgb(successColor[0]) +
-        ',.2)'
-    }
+      boxShadow: `0 12px 20px -10px rgba(${hexToRgb(
+        successColor[0]
+      )},.28), 0 4px 20px 0 rgba(${hexToRgb(
+        blackColor
+      )},.12), 0 7px 8px -5px rgba(${hexToRgb(successColor[0])},.2)`,
+    },
   },
   orange: {
     backgroundColor: warningColor[0],
-    boxShadow:
-      '0 12px 20px -10px rgba(' +
-      hexToRgb(warningColor[0]) +
-      ',.28), 0 4px 20px 0 rgba(' +
-      hexToRgb(blackColor) +
-      ',.12), 0 7px 8px -5px rgba(' +
-      hexToRgb(warningColor[0]) +
-      ',.2)',
+    boxShadow: `0 12px 20px -10px rgba(${hexToRgb(
+      warningColor[0]
+    )},.28), 0 4px 20px 0 rgba(${hexToRgb(
+      blackColor
+    )},.12), 0 7px 8px -5px rgba(${hexToRgb(warningColor[0])},.2)`,
     '&:hover': {
       backgroundColor: warningColor[0],
-      boxShadow:
-        '0 12px 20px -10px rgba(' +
-        hexToRgb(warningColor[0]) +
-        ',.28), 0 4px 20px 0 rgba(' +
-        hexToRgb(blackColor) +
-        ',.12), 0 7px 8px -5px rgba(' +
-        hexToRgb(warningColor[0]) +
-        ',.2)'
-    }
+      boxShadow: `0 12px 20px -10px rgba(${hexToRgb(
+        warningColor[0]
+      )},.28), 0 4px 20px 0 rgba(${hexToRgb(
+        blackColor
+      )},.12), 0 7px 8px -5px rgba(${hexToRgb(warningColor[0])},.2)`,
+    },
   },
   red: {
     backgroundColor: dangerColor[0],
-    boxShadow:
-      '0 12px 20px -10px rgba(' +
-      hexToRgb(dangerColor[0]) +
-      ',.28), 0 4px 20px 0 rgba(' +
-      hexToRgb(blackColor) +
-      ',.12), 0 7px 8px -5px rgba(' +
-      hexToRgb(dangerColor[0]) +
-      ',.2)',
+    boxShadow: `0 12px 20px -10px rgba(${hexToRgb(
+      dangerColor[0]
+    )},.28), 0 4px 20px 0 rgba(${hexToRgb(
+      blackColor
+    )},.12), 0 7px 8px -5px rgba(${hexToRgb(dangerColor[0])},.2)`,
     '&:hover': {
       backgroundColor: dangerColor[0],
-      boxShadow:
-        '0 12px 20px -10px rgba(' +
-        hexToRgb(dangerColor[0]) +
-        ',.28), 0 4px 20px 0 rgba(' +
-        hexToRgb(blackColor) +
-        ',.12), 0 7px 8px -5px rgba(' +
-        hexToRgb(dangerColor[0]) +
-        ',.2)',
+      boxShadow: `0 12px 20px -10px rgba(${hexToRgb(
+        dangerColor[0]
+      )},.28), 0 4px 20px 0 rgba(${hexToRgb(
+        blackColor
+      )},.12), 0 7px 8px -5px rgba(${hexToRgb(dangerColor[0])},.2)`,
     },
   },
   sidebarWrapper: {
