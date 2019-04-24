@@ -81,11 +81,11 @@ export const updateConfigMapEpic = (action$, state$, { ajax }) =>
       }).pipe(
         map((resp) => {
           resolve(resp);
-          return a.updateConfigMapSuccess(resp);
+          return a.updateConfigMapSuccess(resp, { clusterID, namespaceID });
         }),
         catchError((error) => {
           reject(error);
-          return of(a.updateConfigMapFailure(error));
+          return of(a.updateConfigMapFailure(error, { clusterID, namespaceID }));
         })
       )
     )
@@ -100,13 +100,17 @@ export const afterUpdateEpic = (action$) =>
 export const removeConfigMapEpic = (action$, state$, { ajax }) =>
   action$.pipe(
     ofType(c.REMOVE_CONFIG_MAP),
-    mergeMap(({ payload }) =>
+    mergeMap(({ payload, meta: { url, clusterID, namespaceID } }) =>
       ajax({
-        url: `/apis/zcloud.cn/v1/configMaps/${payload}`,
+        url: `${url}`,
         method: 'DELETE',
       }).pipe(
-        map((resp) => a.removeConfigMapSuccess(resp, payload)),
-        catchError((error) => of(a.removeConfigMapFailure(error, payload)))
+        map((resp) => {
+          return a.removeConfigMapSuccess(resp, { id: payload, clusterID, namespaceID });
+        }),
+        catchError((error) => {
+          return of(a.removeConfigMapFailure(error, { id: payload, clusterID, namespaceID }));
+        })
       )
     )
   );

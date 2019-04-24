@@ -49,7 +49,14 @@ export class ConfigMapsTable extends React.PureComponent {
   state = { openID: null, openIndex: null };
 
   render() {
-    const { classes, data, configMaps, removeConfigMap } = this.props;
+    const {
+      classes,
+      data,
+      configMaps,
+      clusterID,
+      namespaceID,
+      removeConfigMap,
+    } = this.props;
 
     const mergedSchema = schema.concat([
       {
@@ -85,7 +92,11 @@ export class ConfigMapsTable extends React.PureComponent {
               variant="outlined"
               size="small"
               className={classes.button}
-              onClick={(evt) => removeConfigMap(props.data.get('id'))}
+              onClick={(evt) => removeConfigMap(props.data.get('id'), {
+                clusterID,
+                namespaceID,
+                url: props.data.getIn(['links', 'remove']),
+              })}
             >
               <DeleteIcon />
             </IconButton>

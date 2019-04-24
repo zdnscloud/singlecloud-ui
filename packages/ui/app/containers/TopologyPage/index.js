@@ -71,11 +71,9 @@ export class TopologyPage extends React.PureComponent {
     } = this.props;
     if (namespace && namespace.size > 0) {
       const ourl = namespace
-        .getIn(['links', 'outerservices'])
-        .replace(/^\w+:\/\/([^/]+)/, '');
+        .getIn(['links', 'outerservices']);
       const iurl = namespace
-        .getIn(['links', 'innerservices'])
-        .replace(/^\w+:\/\/([^/]+)/, '');
+        .getIn(['links', 'innerservices']);
       loadOuterServices(ourl, clusterID, namespaceID);
       loadInnerServices(iurl, clusterID, namespaceID);
     }

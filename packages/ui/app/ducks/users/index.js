@@ -56,8 +56,10 @@ export const usersReducer = (
 
     case c.UPDATE_USER:
       return state;
-    case c.UPDATE_USER_SUCCESS:
-      return state;
+    case c.UPDATE_USER_SUCCESS: {
+      const user = payload.response;
+      return state.setIn(['users', user.id], fromJS(user));
+    }
     case c.UPDATE_USER_FAILURE:
       return state;
 

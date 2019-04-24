@@ -74,19 +74,21 @@ export const updateConfigMapFailure = (error) => ({
   error: true,
 });
 
-export const removeConfigMap = (id) => ({
+export const removeConfigMap = (id, meta) => ({
   type: c.REMOVE_CONFIG_MAP,
   payload: id,
+  meta,
 });
 
-export const removeConfigMapSuccess = (resp, id) => ({
+export const removeConfigMapSuccess = (resp, meta) => ({
   type: c.REMOVE_CONFIG_MAP_SUCCESS,
   payload: resp,
-  meta: { id },
+  meta,
 });
 
-export const removeConfigMapFailure = (error, id) => ({
+export const removeConfigMapFailure = (error, meta) => ({
   type: c.REMOVE_CONFIG_MAP_FAILURE,
   payload: error,
-  meta: { id },
+  meta,
+  error: true,
 });
