@@ -26,6 +26,9 @@ import serviceLinksReducer, {
 import configMapsReducer, {
   prefix as configMapsPrefix,
 } from 'ducks/configMaps';
+import deploymentsReducer, {
+  prefix as deploymentsPrefix,
+} from 'ducks/deployments';
 
 /**
  * Merges the main reducer with the router state and dynamically injected reducers
@@ -40,6 +43,7 @@ export default function createReducer(injectedReducers = {}) {
     [usersPrefix]: usersReducer,
     [serviceLinksPrefix]: serviceLinksReducer,
     [configMapsPrefix]: configMapsReducer,
+    [deploymentsPrefix]: deploymentsReducer,
     clustersPage: clustersPageReducer,
     nodesPage: nodesPageReducer,
     eventsPage: eventsPageReducer,
