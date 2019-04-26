@@ -21,9 +21,7 @@ import Card from 'components/Card/Card';
 import CardHeader from 'components/Card/CardHeader';
 import CardBody from 'components/Card/CardBody';
 
-import injectSaga from 'utils/injectSaga';
 import * as actions from './actions';
-import saga from './saga';
 import messages from './messages';
 import styles from './styles';
 import ClustersTable from './ClustersTable';
@@ -83,10 +81,7 @@ const withConnect = connect(
   mapDispatchToProps
 );
 
-const withSaga = injectSaga({ key: 'clustersPage', saga });
-
 export default compose(
-  withSaga,
   withConnect,
   withStyles(styles)
 )(ClustersPage);

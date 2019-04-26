@@ -24,13 +24,10 @@ import Card from 'components/Card/Card';
 import CardHeader from 'components/Card/CardHeader';
 import CardBody from 'components/Card/CardBody';
 
-import injectSaga from 'utils/injectSaga';
 import { makeSelectClusterID, makeSelectNamespaceID } from '../App/selectors';
 import { makeSelectNamespaces } from '../NamespacesPage/selectors';
 import makeSelectApplicationsPage from './selectors';
-import reducer from './reducer';
 import * as actions from './actions';
-import saga from './saga';
 import messages from './messages';
 import ApplicationsPageHelmet from './helmet';
 import styles from './styles';
@@ -141,10 +138,7 @@ const withConnect = connect(
   mapDispatchToProps
 );
 
-const withSaga = injectSaga({ key: 'applicationsPage', saga });
-
 export default compose(
-  withSaga,
   withConnect,
   withStyles(styles)
 )(ApplicationsPage);

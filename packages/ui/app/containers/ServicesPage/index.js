@@ -27,10 +27,8 @@ import {
   makeSelectClusterID,
   makeSelectNamespaceID,
 } from 'containers/App/selectors';
-import injectSaga from 'utils/injectSaga';
 
 import * as actions from './actions';
-import saga from './saga';
 import messages from './messages';
 import styles from './styles';
 import ServicesTable from './ServicesTable';
@@ -107,10 +105,7 @@ const withConnect = connect(
   mapDispatchToProps
 );
 
-const withSaga = injectSaga({ key: 'servicesPage', saga });
-
 export default compose(
-  withSaga,
   withConnect,
   withStyles(styles)
 )(ServicesPage);

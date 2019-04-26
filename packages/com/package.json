@@ -24,6 +24,7 @@
     "react-dom": "^16.8.0"
   },
   "dependencies": {
+    "@babel/core": "7",
     "@babel/runtime": "^7.2.0",
     "@material-ui/system": "^4.0.0-alpha.0",
     "@material-ui/utils": "^4.0.0-alpha.2",
@@ -43,12 +44,12 @@
     "jss-global": "^3.0.0",
     "jss-nested": "^6.0.1",
     "jss-props-sort": "^6.0.0",
-    "jss-vendor-prefixer": "^7.0.0",
+    "jss-vendor-prefixer": "8",
     "normalize-scroll-left": "^0.1.2",
     "popper.js": "^1.14.1",
     "prop-types": "^15.7.2",
     "react-event-listener": "^0.6.6",
-    "react-transition-group": "^2.5.3",
+    "react-transition-group": "4",
     "warning": "^4.0.1"
   },
   "sideEffects": false,
