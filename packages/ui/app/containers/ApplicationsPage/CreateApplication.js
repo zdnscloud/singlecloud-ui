@@ -47,12 +47,9 @@ import CardContent from '@material-ui/core/CardContent';
 
 import { loadConfigMaps } from 'ducks/configMaps/actions';
 import { makeSelectConfigMaps } from 'ducks/configMaps/selectors';
-import injectSaga from 'utils/injectSaga';
 
 import { makeSelectCreateFormData, makeSelectFormPorts } from './selectors';
-import reducer from './reducer';
 import * as actions from './actions';
-import saga from './saga';
 import messages from './messages';
 import ApplicationsHelmet from './helmet';
 import styles from './styles';
@@ -428,10 +425,7 @@ const withConnect = connect(
   mapDispatchToProps
 );
 
-const withSaga = injectSaga({ key: 'applicationsPage', saga });
-
 export default compose(
-  withSaga,
   withConnect,
   withStyles(styles)
 )(CreateApplication);

@@ -14,7 +14,7 @@ import authProvider from 'utils/authProvider';
 
 import createReducer from './reducers';
 import createEpic from './epics';
-import appSaga from './containers/App/saga';
+import rootSaga from './rootSaga';
 
 const epicMiddleware = createEpicMiddleware({
   dependencies: {
@@ -100,7 +100,7 @@ export default function configureStore(initialState = {}, history) {
   store.injectedSagas = {}; // Saga registry
   store.injectedEpics = {}; // Epic registry
 
-  store.runSaga(appSaga);
+  store.runSaga(rootSaga);
 
   const epic$ = new BehaviorSubject(createEpic(store.injectedEpics));
   // Every time a new epic is given to epic$ it

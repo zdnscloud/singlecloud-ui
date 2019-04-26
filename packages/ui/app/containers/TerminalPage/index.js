@@ -25,12 +25,8 @@ import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
 
-import injectSaga from 'utils/injectSaga';
-import injectReducer from 'utils/injectReducer';
 import makeSelectTerminalPage from './selectors';
-import reducer from './reducer';
 import * as actions from './actions';
-import saga from './saga';
 import messages from './messages';
 import styles from './styles';
 import TerminalPageHelmet from './helmet';
@@ -140,12 +136,7 @@ const withConnect = connect(
   mapDispatchToProps
 );
 
-const withReducer = injectReducer({ key: 'terminalPage', reducer });
-const withSaga = injectSaga({ key: 'terminalPage', saga });
-
 export default compose(
-  withReducer,
-  withSaga,
   withConnect,
   withStyles(styles)
 )(TerminalPage);

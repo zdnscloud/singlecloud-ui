@@ -33,8 +33,6 @@ import AddIcon from '@material-ui/icons/Add';
 import Collapse from '@material-ui/core/Collapse';
 import Checkbox from '@material-ui/core/Checkbox';
 
-import injectSaga from 'utils/injectSaga';
-import saga from './saga';
 import styles from '../App/selectClusterStyles';
 import * as actions from './actions';
 import { makeSelectClusterID } from '../App/selectors';
@@ -120,10 +118,7 @@ const withConnect = connect(
   mapDispatchToProps
 );
 
-const withSaga = injectSaga({ key: 'namespacesPage', saga });
-
 export default compose(
   withConnect,
-  withSaga,
   withStyles(styles)
 )(SelectNamespace);

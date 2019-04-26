@@ -17,6 +17,7 @@ import servicesPageReducer from 'containers/ServicesPage/reducer';
 import ingressesPageReducer from 'containers/IngressesPage/reducer';
 import applicationsPageReducer from 'containers/ApplicationsPage/reducer';
 import applicationDetailPagePageReducer from 'containers/ApplicationDetailPage/reducer';
+import termialPageReducer from 'containers/TerminalPage/reducer';
 
 import roleReducer, { prefix as rolePrefix } from 'ducks/role';
 import usersReducer, { prefix as usersPrefix } from 'ducks/users';
@@ -52,6 +53,7 @@ export default function createReducer(injectedReducers = {}) {
     ingressesPage: ingressesPageReducer,
     applicationsPage: applicationsPageReducer,
     applicationDetailPage: applicationDetailPagePageReducer,
+    termialPage: termialPageReducer,
     ...injectedReducers,
   });
 
