@@ -65,6 +65,9 @@ export class ClusterDetail extends React.PureComponent {
 
   render() {
     const { classes, cluster } = this.props;
+    const cpuRatio = (cluster.get('cpuUsedRatio') * 100).toFixed(0);
+    const memoryRatio = (cluster.get('memoryUsedRatio') * 100).toFixed(0);
+    const podRatio = (cluster.get('podUsedRatio') * 100).toFixed(0);
 
     return (
       <div>
@@ -136,7 +139,7 @@ export class ClusterDetail extends React.PureComponent {
             <Card chart>
               <CardHeader color="success">
                 <Gauge
-                  value={12}
+                  value={cpuRatio}
                   width={270}
                   height={157}
                   color={teal.A400}
@@ -149,7 +152,7 @@ export class ClusterDetail extends React.PureComponent {
               <CardBody>
                 <h4 className={classes.cardTitle}>CPU</h4>
                 <p className={classes.cardCategory}>
-                  <span className={classes.successText}>12%</span>
+                  <span className={classes.successText}>{cpuRatio}%</span>
                 </p>
               </CardBody>
               <CardFooter chart>
@@ -163,7 +166,7 @@ export class ClusterDetail extends React.PureComponent {
             <Card chart>
               <CardHeader color="warning">
                 <Gauge
-                  value={34}
+                  value={memoryRatio}
                   width={270}
                   height={157}
                   color={teal.A400}
@@ -175,7 +178,7 @@ export class ClusterDetail extends React.PureComponent {
               </CardHeader>
               <CardBody>
                 <h4 className={classes.cardTitle}>Memory</h4>
-                <p className={classes.cardCategory}>34%</p>
+                <p className={classes.cardCategory}>{memoryRatio}%</p>
               </CardBody>
               <CardFooter chart>
                 <div className={classes.stats}>
@@ -188,7 +191,7 @@ export class ClusterDetail extends React.PureComponent {
             <Card chart>
               <CardHeader color="danger">
                 <Gauge
-                  value={22}
+                  value={podRatio}
                   width={270}
                   height={157}
                   color={teal.A400}
@@ -200,7 +203,7 @@ export class ClusterDetail extends React.PureComponent {
               </CardHeader>
               <CardBody>
                 <h4 className={classes.cardTitle}>Pods</h4>
-                <p className={classes.cardCategory}>79 / 330</p>
+                <p className={classes.cardCategory}>{Math.round(cluster.get('podUsedRatio') * cluster.get('pod'))} / {cluster.get('pod')}</p>
               </CardBody>
               <CardFooter chart>
                 <div className={classes.stats}>

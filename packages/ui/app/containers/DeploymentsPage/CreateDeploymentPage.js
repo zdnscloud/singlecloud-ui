@@ -1,6 +1,6 @@
 /**
  *
- * Create Application Page
+ * Create Deployment Page
  *
  */
 
@@ -12,6 +12,8 @@ import { FormattedMessage } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import { bindActionCreators, compose } from 'redux';
 import { fromJS } from 'immutable';
+import { reduxForm, getFormValues } from 'redux-form/immutable';
+import { SubmissionError, submit } from 'redux-form';
 
 import classNames from 'classnames';
 import { withStyles } from '@material-ui/core/styles';
@@ -41,59 +43,98 @@ import Collapse from '@material-ui/core/Collapse';
 import Checkbox from '@material-ui/core/Checkbox';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
-import Card from '@material-ui/core/Card';
-import CardHeader from '@material-ui/core/CardHeader';
-import CardContent from '@material-ui/core/CardContent';
 
-import { loadConfigMaps } from 'ducks/configMaps/actions';
-import { makeSelectConfigMaps } from 'ducks/configMaps/selectors';
-import injectSaga from 'utils/injectSaga';
+import Card from 'components/Card/Card';
+import CardBody from 'components/Card/CardBody';
+import CardHeader from 'components/Card/CardHeader';
+import CardFooter from 'components/Card/CardFooter';
+
+import {
+  makeSelectClusterID,
+  makeSelectNamespaceID,
+} from 'containers/App/selectors';
+import * as cActions from 'ducks/configMaps/actions';
+import {
+  makeSelectConfigMaps,
+} from 'ducks/configMaps/selectors';
+import {
+  makeSelectURL as makeSelectConfigMapURL,
+} from 'ducks/configMaps/selectors';
+import { makeSelectURL } from 'ducks/deployments/selectors';
+import * as actions from 'ducks/deployments/actions';
 
 import messages from './messages';
 import DeploymentsHelmet from './helmet';
 import styles from './styles';
-import ContainerForm from './ContainerForm';
-import { makeSelectNamespaces } from '../NamespacesPage/selectors';
+import DeploymentForm from './DeploymentForm';
+
+export const formName = 'createDeploymentForm';
+
+const validate = (values) => {
+  const errors = {};
+  const requiredFields = ['name'];
+  requiredFields.forEach((field) => {
+    if (!values.get(field)) {
+      errors[field] = 'Required';
+    }
+  });
+  return errors;
+};
+
+const CreateDeploymentForm = reduxForm({
+  form: formName,
+  validate,
+})(DeploymentForm);
 
 /* eslint-disable react/prefer-stateless-function */
-export class CreateApplication extends React.PureComponent {
+export class CreateDeployment extends React.PureComponent {
   static propTypes = {
-    initCreateForm: PropTypes.func,
     classes: PropTypes.object.isRequired,
-    match: PropTypes.object,
-    formData: PropTypes.object.isRequired,
-    updateForm: PropTypes.func.isRequired,
   };
 
   componentWillMount() {
-    // this.props.initCreateForm(this.props.match);
-    this.props.loadConfigMaps();
+    const { clusterID, namespaceID, configMapURL, loadConfigMaps } = this.props;
+    loadConfigMaps({ url: configMapURL, clusterID, namespaceID });
   }
 
   componentDidUpdate(prevProps) {
-    const { clusterID, namespaces, namespaceID, history } = this.props;
     const {
       clusterID: prevClusterID,
-      namespaces: prevNamespaces,
       namespaceID: prevNamespaceID,
-      history: prevHistory,
     } = prevProps;
-    if (namespaceID !== prevNamespaceID) {
-      // this.props.initCreateForm(this.props.match);
-      this.props.loadConfigMaps();
+    const { clusterID, namespaceID, configMapURL, loadConfigMaps } = this.props;
+    if (prevClusterID !== clusterID || prevNamespaceID !== namespaceID) {
+      loadConfigMaps({ url: configMapURL, clusterID, namespaceID });
     }
   }
 
   render() {
     const {
       classes,
-      formData,
-      formPorts,
+      createDeployment,
+      submitForm,
+      url,
+      clusterID,
+      namespaceID,
       configMaps,
-      updateForm,
-      namespaces,
-      createApplication,
+      values,
     } = this.props;
+    async function doSubmit(formValues) {
+      try {
+        const data = formValues.toJS();
+        await new Promise((resolve, reject) => {
+          createDeployment(data, {
+            resolve,
+            reject,
+            url,
+            clusterID,
+            namespaceID,
+          });
+        });
+      } catch (error) {
+        throw new SubmissionError({ _error: error });
+      }
+    }
 
     return (
       <div className={classes.root}>
@@ -101,300 +142,30 @@ export class CreateApplication extends React.PureComponent {
         <CssBaseline />
         <div className={classes.content}>
           <Card>
-            <CardContent>
-              <Typography variant="h4" gutterBottom component="h2">
-                <FormattedMessage {...messages.applications} />
-              </Typography>
-              <Typography component="div" className={classes.appContainer}>
-                <div>
-                  <TextField
-                    className={classNames(classes.margin, classes.textField)}
-                    label="name"
-                    value={formData.get('name')}
-                    onChange={(evt) => updateForm('name', evt.target.value)}
-                  />
-                  <TextField
-                    className={classNames(classes.margin, classes.textField)}
-                    type="number"
-                    label="replicas"
-                    value={formData.get('replicas')}
-                    onChange={(evt) =>
-                      updateForm('replicas', Number(evt.target.value))
-                    }
-                  />
-                </div>
-                {formData.get('containers').map((item, index) => (
-                  <ContainerForm
-                    classes={classes}
-                    index={index}
-                    item={item}
-                    configMaps={configMaps.toList()}
-                    updateForm={updateForm}
-                    key={index}
-                  />
-                ))}
-                <Button
-                  color="primary"
-                  aria-label="add Container"
-                  className={classes.addContainerButton}
-                  style={{ marginTop: '5px' }}
-                  onClick={(evt) => {
-                    const { size } = formData.get('containers');
-                    updateForm(
-                      ['containers', size],
-                      fromJS({
-                        name: '',
-                        image: '',
-                        command: '',
-                        args: '',
-                        config_name: '',
-                        mount_path: '',
-                        exposedPorts: [],
-                      })
-                    );
-                  }}
-                >
-                  <AddIcon />
-                  add container
-                </Button>
-              </Typography>
-              <Typography component="div" className={classes.advanceContainer}>
-                <FormControlLabel
-                  style={{ marginLeft: '-8px' }}
-                  control={
-                    <Switch
-                      classes={{
-                        switchBase: classes.iOSSwitchBase,
-                        bar: classes.iOSBar,
-                        icon: classes.iOSIcon,
-                        iconChecked: classes.iOSIconChecked,
-                        checked: classes.iOSChecked,
-                      }}
-                      disableRipple
-                      checked={formData.get('enableAdvancedOptions')}
-                      onChange={(evt) => {
-                        updateForm(
-                          'enableAdvancedOptions',
-                          !formData.get('enableAdvancedOptions')
-                        );
-                      }}
-                      value="advancedOptions"
-                    />
-                  }
-                  label="Advanced Options"
-                />
-                <Collapse in={formData.get('enableAdvancedOptions')}>
-                  <FormControl className={classes.formControl}>
-                    <InputLabel htmlFor="exposed-service-type">
-                      Exposed Service Type
-                    </InputLabel>
-                    <Select
-                      value={formData.getIn([
-                        'advancedOptions',
-                        'exposedServiceType',
-                      ])}
-                      onChange={(evt) =>
-                        updateForm(
-                          ['advancedOptions', 'exposedServiceType'],
-                          evt.target.value
-                        )
-                      }
-                    >
-                      <MenuItem value="clusterip">Cluster IP</MenuItem>
-                      <MenuItem value="nodeport">Node Port</MenuItem>
-                    </Select>
-                  </FormControl>
-                  {formPorts.map((port, index) => {
-                    const svcs = formData.getIn([
-                      'advancedOptions',
-                      'exposedServices',
-                    ]);
-                    const current = svcs.find(
-                      (svc) =>
-                        svc.get('port') === port.get('port') &&
-                        svc.get('protocol') === port.get('protocol')
-                    );
-                    const idx = svcs.findIndex((svc) => svc === current);
-                    return (
-                      <Paper
-                        className={classNames(
-                          classes.separateLine,
-                          classes.padding10
-                        )}
-                      >
-                        <Grid>
-                          {port.get('name') ? (
-                            <FormLabel
-                              className={classNames(
-                                classes.marginRight10,
-                                classes.textField
-                              )}
-                            >
-                              Name: {port.get('name')}
-                            </FormLabel>
-                          ) : null}
-                          <FormLabel
-                            className={classNames(
-                              classes.marginRight10,
-                              classes.textField
-                            )}
-                          >
-                            Protocol: {port.get('protocol')}
-                          </FormLabel>
-                          <FormLabel
-                            className={classNames(
-                              classes.marginRight10,
-                              classes.textField
-                            )}
-                          >
-                            Port: {port.get('port')}
-                          </FormLabel>
-                        </Grid>
-                        <Grid>
-                          <FormControlLabel
-                            control={
-                              <Checkbox
-                                checked={!!current}
-                                onChange={(evt) => {
-                                  if (current) {
-                                    updateForm(
-                                      [
-                                        'advancedOptions',
-                                        'exposedServices',
-                                        idx,
-                                      ],
-                                      null
-                                    );
-                                  } else {
-                                    updateForm(
-                                      [
-                                        'advancedOptions',
-                                        'exposedServices',
-                                        svcs.size,
-                                      ],
-                                      port
-                                    );
-                                  }
-                                }}
-                                value
-                                color="primary"
-                              />
-                            }
-                            label="Auto Create Service"
-                          />
-                          <TextField
-                            className={classNames(
-                              classes.margin,
-                              classes.textField
-                            )}
-                            type="number"
-                            label="Servce Port"
-                            disabled={!current}
-                            value={
-                              (current && current.get('servicePort')) || ''
-                            }
-                            onChange={(evt) => {
-                              updateForm(
-                                [
-                                  'advancedOptions',
-                                  'exposedServices',
-                                  idx,
-                                  'servicePort',
-                                ],
-                                Number(evt.target.value)
-                              );
-                            }}
-                          />
-                          <FormControlLabel
-                            control={
-                              <Checkbox
-                                disabled={!current}
-                                checked={
-                                  current && current.get('autoCreateIngress')
-                                }
-                                onChange={(evt) => {
-                                  updateForm(
-                                    [
-                                      'advancedOptions',
-                                      'exposedServices',
-                                      idx,
-                                      'autoCreateIngress',
-                                    ],
-                                    !current.get('autoCreateIngress')
-                                  );
-                                }}
-                                value
-                                color="primary"
-                              />
-                            }
-                            label="Auto Create Ingress"
-                          />
-                          <TextField
-                            className={classNames(
-                              classes.margin,
-                              classes.textField
-                            )}
-                            label="Ingress Domain Name"
-                            disabled={
-                              !current || !current.get('autoCreateIngress')
-                            }
-                            value={
-                              (current && current.get('ingressDomainName')) ||
-                              ''
-                            }
-                            onChange={(evt) => {
-                              updateForm(
-                                [
-                                  'advancedOptions',
-                                  'exposedServices',
-                                  idx,
-                                  'ingressDomainName',
-                                ],
-                                evt.target.value
-                              );
-                            }}
-                          />
-                          <TextField
-                            className={classNames(
-                              classes.margin,
-                              classes.textField
-                            )}
-                            label="Ingress Path"
-                            disabled={
-                              !current || !current.get('autoCreateIngress')
-                            }
-                            value={
-                              (current && current.get('ingressPath')) || ''
-                            }
-                            onChange={(evt) => {
-                              updateForm(
-                                [
-                                  'advancedOptions',
-                                  'exposedServices',
-                                  idx,
-                                  'ingressPath',
-                                ],
-                                evt.target.value
-                              );
-                            }}
-                          />
-                        </Grid>
-                      </Paper>
-                    );
-                  })}
-                </Collapse>
-              </Typography>
-              <Typography component="div" className={classes.actionContainer}>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  className={classNames(classes.margin, classes.button)}
-                  onClick={(evt) => createApplication()}
-                >
-                  Create
-                </Button>
-              </Typography>
-            </CardContent>
+            <CardHeader color="primary">
+              <h4 className={classes.cardTitleWhite}>
+                <FormattedMessage {...messages.createDeployment} />
+              </h4>
+            </CardHeader>
+            <CardBody>
+              <CreateDeploymentForm
+                classes={classes}
+                onSubmit={doSubmit}
+                configMaps={configMaps}
+                initialValues={fromJS({ replicas: 1 })}
+                formValues={values}
+              />
+            </CardBody>
+            <CardFooter className={classes.cardFooter}>
+              <Button
+                variant="contained"
+                color="primary"
+                size="large"
+                onClick={submitForm}
+              >
+                Save
+              </Button>
+            </CardFooter>
           </Card>
         </div>
       </div>
@@ -403,14 +174,20 @@ export class CreateApplication extends React.PureComponent {
 }
 
 const mapStateToProps = createStructuredSelector({
+  clusterID: makeSelectClusterID(),
+  namespaceID: makeSelectNamespaceID(),
+  configMapURL: makeSelectConfigMapURL(),
+  url: makeSelectURL(),
   configMaps: makeSelectConfigMaps(),
-  namespaces: makeSelectNamespaces(),
+  values: getFormValues(formName),
 });
 
 const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
-      loadConfigMaps,
+      ...actions,
+      loadConfigMaps: cActions.loadConfigMaps,
+      submitForm: () => submit(formName),
     },
     dispatch
   );
@@ -423,4 +200,4 @@ const withConnect = connect(
 export default compose(
   withConnect,
   withStyles(styles)
-)(CreateApplication);
+)(CreateDeployment);

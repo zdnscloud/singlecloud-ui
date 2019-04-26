@@ -3,7 +3,6 @@
  * DeploymentsPage
  *
  */
-
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -28,7 +27,10 @@ import {
   makeSelectNamespaceID,
   makeSelectLocation,
 } from 'containers/App/selectors';
-import { makeSelectDeployments, makeSelectDeploymentsList } from 'ducks/deployments/selectors';
+import {
+  makeSelectDeployments,
+  makeSelectDeploymentsList,
+} from 'ducks/deployments/selectors';
 import * as actions from 'ducks/deployments/actions';
 
 import messages from './messages';
@@ -47,6 +49,8 @@ export class DeploymentsTable extends React.PureComponent {
       location,
       data,
       deployments,
+      clusterID,
+      namespaceID,
       removeDeployment,
     } = this.props;
     const pathname = location.get('pathname');
@@ -57,12 +61,13 @@ export class DeploymentsTable extends React.PureComponent {
           label: 'Actions',
           component: (props) => (
             <Fragment>
-              <IconButton aria-label="Edit">
-                <EditIcon />
-              </IconButton>
               <IconButton
                 aria-label="Delete"
-                onClick={(evt) => removeDeployment(props.data.get('id'))}
+                onClick={(evt) => removeDeployment(props.data.get('id'), {
+                  clusterID,
+                  namespaceID,
+                  url: props.data.getIn(['links', 'remove']),
+                })}
               >
                 <DeleteIcon />
               </IconButton>
@@ -103,6 +108,8 @@ export class DeploymentsTable extends React.PureComponent {
 
 const mapStateToProps = createStructuredSelector({
   location: makeSelectLocation(),
+  clusterID: makeSelectClusterID(),
+  namespaceID: makeSelectNamespaceID(),
   deployments: makeSelectDeployments(),
   data: makeSelectDeploymentsList(),
 });

@@ -25,9 +25,12 @@ import CardHeader from 'components/Card/CardHeader';
 import CardBody from 'components/Card/CardBody';
 
 import injectSaga from 'utils/injectSaga';
-import { makeSelectClusterID, makeSelectNamespaceID } from 'containers/App/selectors';
-import { makeSelectNamespaces } from 'containers/NamespacesPage/selectors';
+import {
+  makeSelectClusterID,
+  makeSelectNamespaceID,
+} from 'containers/App/selectors';
 import * as actions from 'ducks/deployments/actions';
+import { makeSelectURL } from 'ducks/deployments/selectors';
 
 import messages from './messages';
 import DeploymentsPageHelmet from './helmet';
@@ -41,9 +44,19 @@ export class DeploymentsPage extends React.PureComponent {
   };
 
   componentWillMount() {
+    const { clusterID, namespaceID, url, loadDeployments } = this.props;
+    loadDeployments({ url, clusterID, namespaceID });
   }
 
   componentDidUpdate(prevProps) {
+    const {
+      clusterID: prevClusterID,
+      namespaceID: prevNamespaceID,
+    } = prevProps;
+    const { clusterID, namespaceID, url, loadDeployments } = this.props;
+    if (prevClusterID !== clusterID || prevNamespaceID !== namespaceID) {
+      loadDeployments({ url, clusterID, namespaceID });
+    }
   }
 
   render() {
@@ -59,7 +72,7 @@ export class DeploymentsPage extends React.PureComponent {
               <Card>
                 <CardHeader color="primary">
                   <h4 className={classes.cardTitleWhite}>
-                    <FormattedMessage {...messages.applications} />
+                    <FormattedMessage {...messages.deployments} />
                     <Link
                       to={`${this.props.location.pathname}/create`}
                       className={classes.createBtnLink}
@@ -67,7 +80,7 @@ export class DeploymentsPage extends React.PureComponent {
                       <Fab
                         size="small"
                         color="default"
-                        aria-label="create application"
+                        aria-label="create deployment"
                         className={classes.menuButton}
                       >
                         <AddIcon />
@@ -90,7 +103,7 @@ export class DeploymentsPage extends React.PureComponent {
 const mapStateToProps = createStructuredSelector({
   clusterID: makeSelectClusterID(),
   namespaceID: makeSelectNamespaceID(),
-  namespaces: makeSelectNamespaces(),
+  url: makeSelectURL(),
 });
 
 const mapDispatchToProps = (dispatch) =>
