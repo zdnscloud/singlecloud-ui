@@ -21,12 +21,16 @@ export default defineMessages({
     id: `${scope}.header`,
     defaultMessage: 'This is the DeploymentsPage container!',
   },
-  applications: {
-    id: `${scope}.applications`,
+  deployments: {
+    id: `${scope}.deployments`,
     defaultMessage: 'Deployments',
   },
   tableTitleName: {
     id: `${scope}.tableTitleName`,
     defaultMessage: 'Name',
+  },
+  createDeployment: {
+    id: `${scope}.createDeployment`,
+    defaultMessage: 'Create Deployment',
   },
 });

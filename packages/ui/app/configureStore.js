@@ -32,11 +32,11 @@ const epicMiddleware = createEpicMiddleware({
       }
       return ajax({
         ...opt,
-        body: JSON.stringify(opt.body),
+        body: JSON.stringify(opt && opt.body),
         headers: {
           ...auth,
           'Content-Type': 'application/json',
-          ...(opt.headers || {}),
+          ...(opt && opt.headers || {}),
         },
       });
     },

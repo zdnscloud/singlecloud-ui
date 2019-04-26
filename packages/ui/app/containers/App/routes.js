@@ -122,6 +122,18 @@ const appRoutes = [
     component: ApplicationDetailPage,
   },
   {
+    path: '/clusters/:cluster_id/namespaces/:namespace_id/deployments',
+    name: 'Deployments',
+    icon: Dashboard,
+    component: DeploymentsPage,
+  },
+  {
+    path: '/clusters/:cluster_id/namespaces/:namespace_id/deployments/create',
+    name: 'Create Deployment',
+    icon: Dashboard,
+    component: CreateDeploymentPage,
+  },
+  {
     path: '/clusters/:cluster_id/namespaces/:namespace_id/topology',
     name: 'Topology',
     icon: Dashboard,

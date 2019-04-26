@@ -78,6 +78,7 @@ function CustomInput({ ...props }) {
         }}
         id={id}
         {...inputProps}
+        inputProps={inputProps}
       />
       {touchedError ? <FormHelperText>{error}</FormHelperText> : null}
     </FormControl>
