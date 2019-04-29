@@ -1,8 +1,10 @@
 import React, { PureComponent, Fragment, useState } from 'react';
+import { fromJS, is } from 'immutable';
 import { compose } from 'redux';
 import { Field, FieldArray, reduxForm, FormSection } from 'redux-form/immutable';
 import getByKey from '@gsmlg/utils/getByKey';
 import AceEditor from 'react-ace';
+import classNames from 'classnames';
 
 import withStyles from '@material-ui/core/styles/withStyles';
 import InputAdornment from '@material-ui/core/InputAdornment';
@@ -37,6 +39,113 @@ import InputField from 'components/Field/InputField';
 import SelectField from 'components/Field/SelectField';
 import SwitchField from 'components/Field/SwitchField';
 import RadioField from 'components/Field/RadioField';
+
+const renderAdvanceServices = ({
+  input,
+  ports,
+  meta: { error, submitFailed },
+}) => {
+  const { onChange } = input;
+  let { value } = input;
+  if (!value) value = fromJS([]);
+
+  return (
+    <List component="ul">
+      {ports.map((port, i) => {
+        const idx = value.findIndex((v) => (
+          v.get('port') === port.get('port') && v.get('protocol') === port.get('protocol')
+        ));
+        const checked = idx !== -1;
+        if (checked) {
+          const it = value.get(idx);
+          if (it.get('name') !== port.get('name')) {
+            onChange(value.setIn([idx, 'name'], port.get('name')));
+          }
+        }
+
+        return (
+          <ListItem key={i}>
+            <ListItemText>
+              Expose:
+              {port.get('name') ? (
+                <Fragment>
+                  <InputLabel>
+                    Name: {port.get('name')}
+                  </InputLabel>
+                  &nbsp;&nbsp;
+                </Fragment>
+              ) : null}
+              <InputLabel>
+                Protocol: {port.get('protocol')}
+              </InputLabel>
+              &nbsp;&nbsp;
+              <InputLabel>
+                Port: {port.get('port')}
+              </InputLabel>
+              <br />
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={checked}
+                    onChange={(evt) => {
+                      if (checked) {
+                        onChange(value.delete(idx));
+                      } else {
+                        onChange(value.push(port));
+                      }
+                    }}
+                  />
+                }
+                label="Auto Create Service"
+              />
+
+              <TextField
+                type="number"
+                label="Servce Port"
+                disabled={!checked}
+                value={value.getIn([idx, 'servicePort'])}
+                onChange={(evt) => {
+                  const val = Number(evt.target.value);
+                  onChange(value.setIn([idx, 'servicePort'], val));
+                }}
+              />
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    disabled={!checked}
+                    checked={value.getIn([idx, 'autoCreateIngress'])}
+                    onChange={(evt) => {
+                      const ingress = value.getIn([idx, 'autoCreateIngress']);
+                      onChange(value.setIn([idx, 'autoCreateIngress'], !ingress));
+                    }}
+                  />
+                }
+                label="Auto Create Ingress"
+              />
+              <TextField
+                label="Ingress Domain Name"
+                disabled={!value.getIn([idx, 'autoCreateIngress'])}
+                value={value.getIn([idx, 'ingressDomainName'])}
+                onChange={(evt) => {
+                  const dn = value.getIn([idx, 'ingressDomainName']);
+                  onChange(value.setIn([idx, 'ingressDomainName'], evt.target.value));
+                }}
+              />
+              <TextField
+                label="Ingress Path"
+                disabled={!value.getIn([idx, 'autoCreateIngress'])}
+                value={value.getIn([idx, 'ingressPath'])}
+                onChange={(evt) => {
+                  onChange(value.setIn([idx, 'ingressPath'], evt.target.value));
+                }}
+              />
+            </ListItemText>
+          </ListItem>
+        );
+      })}
+    </List>
+  );
+};
 
 const renderPorts = ({
   fields,
@@ -75,7 +184,7 @@ const renderPorts = ({
             <InputField
               name={`${f}.port`}
               label="Port"
-              normalize={(...args) => { console.log(args); return 30; }}
+              normalize={(val) => Number(val)}
               inputProps={{
                 type: 'number',
               }}
@@ -153,7 +262,11 @@ const renderContainers = ({
                     />
                   </GridItem>
                   <GridItem xs={3} sm={3} md={3}>
-                    <InputField name={`${f}.mount_path`} label="Mount Path" fullWidth />
+                    <InputField
+                      name={`${f}.mount_path`}
+                      label="Mount Path"
+                      fullWidth
+                    />
                   </GridItem>
                 </GridContainer>
                 <GridContainer>
@@ -196,7 +309,28 @@ class DeploymentForm extends PureComponent {
       initialValues,
       configMaps,
     } = this.props;
-    console.log(this.props.formValues && this.props.formValues.toJS());
+    const getPorts = (formData) => {
+      if (formData && formData.get) {
+        const containers = formData.get('containers');
+        if (containers && containers.map) {
+          return containers.map((ctn) => {
+            if (ctn && ctn.get && ctn.get('exposedPorts')) {
+              return ctn.get('exposedPorts')
+                .filter((p) => typeof p.get('port') === 'number');
+            }
+            if (ctn && ctn.exposedPorts && ctn.exposedPorts.filter) {
+              return ctn.exposedPorts
+                .filter((p) => typeof p.port === 'number');
+            }
+            return fromJS([]);
+          }).flatten(true);
+        }
+        return fromJS([]);
+      }
+      return fromJS([]);
+    };
+    // console.log('formData: ', this.props.formValues && this.props.formValues.toJS());
+    const ports = getPorts(this.props.formValues);
 
     return (
       <form className={getByKey(classes, 'form')} onSubmit={handleSubmit}>
@@ -216,6 +350,7 @@ class DeploymentForm extends PureComponent {
                 <InputField
                   label="Replicas"
                   name="replicas"
+                  normalize={(val) => Number(val)}
                   fullWidth
                   inputProps={{
                     type: 'number',
@@ -254,7 +389,8 @@ class DeploymentForm extends PureComponent {
               <Field
                 name="exposedServices"
                 label="Exposed Services"
-                component={() => (<div />)}
+                ports={fromJS(ports.toJS())}
+                component={renderAdvanceServices}
               />
             </FormSection>
           </GridItem>
