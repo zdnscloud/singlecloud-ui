@@ -308,6 +308,7 @@ class DeploymentForm extends PureComponent {
       edit,
       initialValues,
       configMaps,
+      formValues,
     } = this.props;
     const getPorts = (formData) => {
       if (formData && formData.get) {
@@ -329,12 +330,18 @@ class DeploymentForm extends PureComponent {
       }
       return fromJS([]);
     };
-    // console.log('formData: ', this.props.formValues && this.props.formValues.toJS());
-    const ports = getPorts(this.props.formValues);
+    const ports = getPorts(formValues);
 
     return (
       <form className={getByKey(classes, 'form')} onSubmit={handleSubmit}>
         <GridContainer>
+          {error ? (
+            <GridItem xs={12} sm={12} md={12}>
+              <Danger>
+                {getByKey(error, ['response', 'message'])}
+              </Danger>
+            </GridItem>
+          ) : null}
           <GridItem xs={12} sm={12} md={12}>
             <GridContainer>
               <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
@@ -375,24 +382,28 @@ class DeploymentForm extends PureComponent {
               name="enableAdvancedOptions"
               label="Advanced Options"
             />
-            <br />
-            <br />
-            <FormSection name="advancedOptions">
-              <RadioField
-                name="exposedServiceType"
-                label="Exposed Service Type"
-                options={[
-                  { label: 'Cluster IP', value: 'clusterip' },
-                  { label: 'Node Port', value: 'nodeport' },
-                ]}
-              />
-              <Field
-                name="exposedServices"
-                label="Exposed Services"
-                ports={fromJS(ports.toJS())}
-                component={renderAdvanceServices}
-              />
-            </FormSection>
+            {formValues.get('enableAdvancedOptions') ? (
+              <Fragment>
+                <br />
+                <br />
+                <FormSection name="advancedOptions">
+                  <RadioField
+                    name="exposedServiceType"
+                    label="Exposed Service Type"
+                    options={[
+                      { label: 'Cluster IP', value: 'clusterip' },
+                      { label: 'Node Port', value: 'nodeport' },
+                    ]}
+                  />
+                  <Field
+                    name="exposedServices"
+                    label="Exposed Services"
+                    ports={fromJS(ports.toJS())}
+                    component={renderAdvanceServices}
+                  />
+                </FormSection>
+              </Fragment>
+            ) : null}
           </GridItem>
         </GridContainer>
       </form>
