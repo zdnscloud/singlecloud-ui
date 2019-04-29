@@ -12,10 +12,14 @@ import { FormattedMessage } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import { bindActionCreators, compose } from 'redux';
 import { fromJS } from 'immutable';
-import { reduxForm, getFormValues } from 'redux-form/immutable';
-import { SubmissionError, submit } from 'redux-form';
-
+import {
+  reduxForm,
+  getFormValues,
+  SubmissionError,
+  submit,
+} from 'redux-form/immutable';
 import classNames from 'classnames';
+
 import { withStyles } from '@material-ui/core/styles';
 import Menubar from 'components/Menubar';
 import CssBaseline from '@material-ui/core/CssBaseline';
