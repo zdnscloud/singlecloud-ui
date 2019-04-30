@@ -22,7 +22,7 @@ import blue from '@material-ui/core/colors/blue';
 const drawerWidth = 260;
 
 const transition = {
-  transition: "all 0.33s cubic-bezier(0.685, 0.0473, 0.346, 1)"
+  transition: 'all 0.33s cubic-bezier(0.685, 0.0473, 0.346, 1)',
 };
 
 const conatinerFluid = {
@@ -70,7 +70,7 @@ const defaultFont = {
   lineHeight: "1.5em"
 };
 
-const primaryColor = blue[800];
+const primaryColor = '#072C47';
 const warningColor = "#ff9800";
 const dangerColor = "#f44336";
 const successColor = "#4caf50";

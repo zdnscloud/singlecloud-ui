@@ -59,10 +59,6 @@ export const makeSelectMenus = () =>
           { name: 'storage', path: `/clusters/${cluster}/storage` },
           { name: 'namespaces', path: `/clusters/${cluster}/namespaces` },
           {
-            name: 'applications',
-            path: `/clusters/${cluster}/namespaces/${namespace}/applications`,
-          },
-          {
             name: 'deployments',
             path: `/clusters/${cluster}/namespaces/${namespace}/deployments`,
           },

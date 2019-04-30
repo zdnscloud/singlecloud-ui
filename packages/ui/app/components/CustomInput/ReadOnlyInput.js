@@ -12,7 +12,7 @@ import FormHelperText from '@material-ui/core/FormHelperText';
 
 import customInputStyle from './styles';
 
-function CustomInput({ ...props }) {
+function ReadOnlyInput({ ...props }) {
   const {
     classes,
     formControlProps,
@@ -22,18 +22,12 @@ function CustomInput({ ...props }) {
     inputProps,
     white,
     inputRootCustomClasses,
-    success,
-    meta: { touched, invalid, error },
+    value,
   } = props;
 
-  const touchedError = !!(touched && error);
-  const labelClasses = classNames({
-    [` ${classes.labelRootError}`]: touchedError,
-    [` ${classes.labelRootSuccess}`]: success && !touchedError,
-  });
+  const touchedError = false;
+  const labelClasses = classNames({});
   const underlineClasses = classNames({
-    [classes.underlineError]: touchedError,
-    [classes.underlineSuccess]: success && !touchedError,
     [classes.underline]: true,
     [classes.whiteUnderline]: white,
   });
@@ -57,13 +51,11 @@ function CustomInput({ ...props }) {
     <FormControl
       {...formControlProps}
       className={formControlClasses}
-      error={touchedError}
     >
       {labelText !== undefined ? (
         <InputLabel
           className={`${classes.labelRoot} ${labelClasses}`}
           htmlFor={id}
-          error={touchedError}
           {...labelProps}
         >
           {labelText}
@@ -77,23 +69,15 @@ function CustomInput({ ...props }) {
           underline: underlineClasses,
         }}
         id={id}
+        value={value}
+        disabled
         {...inputProps}
-        inputProps={{
-          min: inputProps.min,
-          max: inputProps.max,
-        }}
       />
-      {touchedError ? <FormHelperText>{error}</FormHelperText> : null}
     </FormControl>
   );
 }
 
-CustomInput.defaultProps = {
-  meta: {},
-  inputProps: {},
-};
-
-CustomInput.propTypes = {
+ReadOnlyInput.propTypes = {
   classes: PropTypes.object.isRequired,
   labelText: PropTypes.node,
   labelProps: PropTypes.object,
@@ -106,4 +90,4 @@ CustomInput.propTypes = {
   white: PropTypes.bool,
 };
 
-export default withStyles(customInputStyle)(CustomInput);
+export default withStyles(customInputStyle)(ReadOnlyInput);

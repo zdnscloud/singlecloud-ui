@@ -68,6 +68,9 @@ export class ClusterDetail extends React.PureComponent {
     const cpuRatio = (cluster.get('cpuUsedRatio') * 100).toFixed(0);
     const memoryRatio = (cluster.get('memoryUsedRatio') * 100).toFixed(0);
     const podRatio = (cluster.get('podUsedRatio') * 100).toFixed(0);
+    const cpu = `${cluster.get('cpuUsed')} / ${cluster.get('cpu')}`;
+    const memory = `${(cluster.get('memoryUsed') / (1024 ** 3)).toFixed(2)}GB / ${(cluster.get('memory') / (1024 ** 3)).toFixed()}GB`;
+    const pod = `${cluster.get('podUsed')} / ${cluster.get('pod')}`;
 
     return (
       <div>
@@ -152,7 +155,7 @@ export class ClusterDetail extends React.PureComponent {
               <CardBody>
                 <h4 className={classes.cardTitle}>CPU</h4>
                 <p className={classes.cardCategory}>
-                  <span className={classes.successText}>{cpuRatio}%</span>
+                  <span>{cpu}</span>
                 </p>
               </CardBody>
               <CardFooter chart>
@@ -178,7 +181,7 @@ export class ClusterDetail extends React.PureComponent {
               </CardHeader>
               <CardBody>
                 <h4 className={classes.cardTitle}>Memory</h4>
-                <p className={classes.cardCategory}>{memoryRatio}%</p>
+                <p className={classes.cardCategory}>{memory}</p>
               </CardBody>
               <CardFooter chart>
                 <div className={classes.stats}>
@@ -203,7 +206,9 @@ export class ClusterDetail extends React.PureComponent {
               </CardHeader>
               <CardBody>
                 <h4 className={classes.cardTitle}>Pods</h4>
-                <p className={classes.cardCategory}>{Math.round(cluster.get('podUsedRatio') * cluster.get('pod'))} / {cluster.get('pod')}</p>
+                <p className={classes.cardCategory}>
+                  {pod}
+                </p>
               </CardBody>
               <CardFooter chart>
                 <div className={classes.stats}>

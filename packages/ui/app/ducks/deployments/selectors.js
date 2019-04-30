@@ -44,6 +44,27 @@ export const makeSelectURL = () =>
     (ns) => ns.getIn(['links', 'deployments'])
   );
 
+export const makeSelectDeploymentID = () =>
+  createSelector(
+    createMatchSelector('/clusters/:cluster_id/namespaces/:namespace_id/deployments/:deployment_id'),
+    (match) => {
+      if (match && match.params) {
+        return match.params.deployment_id;
+      }
+      return '';
+    }
+  );
+
+export const makeSelectCurrentDeployment = () =>
+  createSelector(
+    selectDeploymentsDomain,
+    makeSelectClusterID(),
+    makeSelectNamespaceID(),
+    makeSelectDeploymentID(),
+    (substate, clusterID, namespaceID, deploymentID) =>
+      substate.getIn(['deployments', clusterID, namespaceID, deploymentID]) || substate.clear()
+  );
+
 /**
  * Default selector used by LoginPage
  */

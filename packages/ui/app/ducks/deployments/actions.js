@@ -22,19 +22,22 @@ export const loadDeploymentsFailure = (error, meta) => ({
   error: true,
 });
 
-export const loadDeployment = (id) => ({
+export const loadDeployment = (id, meta) => ({
   type: c.LOAD_DEPLOYMENT,
   payload: id,
+  meta,
 });
 
-export const loadDeploymentSuccess = (resp) => ({
+export const loadDeploymentSuccess = (resp, meta) => ({
   type: c.LOAD_DEPLOYMENT_SUCCESS,
   payload: resp,
+  meta,
 });
 
-export const loadDeploymentFailure = (error) => ({
+export const loadDeploymentFailure = (error, meta) => ({
   type: c.LOAD_DEPLOYMENT_FAILURE,
   payload: error,
+  meta,
   error: true,
 });
 

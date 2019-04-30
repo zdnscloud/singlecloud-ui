@@ -33,4 +33,12 @@ export default defineMessages({
     id: `${scope}.createDeployment`,
     defaultMessage: 'Create Deployment',
   },
+  pods: {
+    id: `${scope}.pods`,
+    defaultMessage: 'Pods',
+  },
+  deploymentDetail: {
+    id: `${scope}.deploymentDetail`,
+    defaultMessage: 'Deployment Detail',
+  },
 });
