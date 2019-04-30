@@ -21,7 +21,6 @@ const renderRadioGroup = ({
   ...custom
 }) => {
   const onChange = (...args) => {
-    console.log(args);
     input.onChange(...args);
   };
   return (

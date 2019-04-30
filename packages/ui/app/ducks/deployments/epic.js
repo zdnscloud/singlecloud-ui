@@ -36,9 +36,9 @@ export const loadDeploymentEpic = (action$, state$, { ajax }) =>
   action$.pipe(
     ofType(c.LOAD_DEPLOYMENT),
     mergeMap(({ payload, meta: { url, clusterID, namespaceID } }) =>
-      ajax(`${url}/${payload}`).pipe(
-        map((resp) => a.loadDeploymentSuccess(resp)),
-        catchError((error) => of(a.loadDeploymentFailure(error)))
+      ajax(`${url}`).pipe(
+        map((resp) => a.loadDeploymentSuccess(resp, { clusterID, namespaceID })),
+        catchError((error) => of(a.loadDeploymentFailure(error, { clusterID, namespaceID })))
       )
     )
   );

@@ -17,15 +17,13 @@ import TerminalPage from 'containers/TerminalPage/Loadable';
 import EventsPage from 'containers/EventsPage/Loadable';
 import DeploymentsPage, {
   CreateDeploymentPage,
+  DeploymentDetailPage,
 } from 'containers/DeploymentsPage/Loadable';
 import ConfigMapsPage, {
   CreateConfigMapPage,
 } from 'containers/ConfigMapsPage/Loadable';
 import ServicesPage from 'containers/ServicesPage/Loadable';
 import IngressesPage from 'containers/IngressesPage/Loadable';
-import ApplicationsPage from 'containers/ApplicationsPage/Loadable';
-import CreateApplication from 'containers/ApplicationsPage/CreateLoadable';
-import ApplicationDetailPage from 'containers/ApplicationDetailPage/Loadable';
 import TopologyPage from 'containers/TopologyPage/Loadable';
 
 import UsersPage, {
@@ -97,31 +95,6 @@ const appRoutes = [
     component: CreateConfigMapPage,
   },
   {
-    path: '/clusters/:cluster_id/applications',
-    name: 'Applications',
-    icon: Dashboard,
-    component: ApplicationsPage,
-  },
-  {
-    path: '/clusters/:cluster_id/namespaces/:namespace_id/applications',
-    name: 'Applications',
-    icon: Dashboard,
-    component: ApplicationsPage,
-  },
-  {
-    path: '/clusters/:cluster_id/namespaces/:namespace_id/applications/create',
-    name: 'Create Application',
-    icon: Dashboard,
-    component: CreateApplication,
-  },
-  {
-    path:
-      '/clusters/:cluster_id/namespaces/:namespace_id/applications/:deployment_id',
-    name: 'Application Detail',
-    icon: Dashboard,
-    component: ApplicationDetailPage,
-  },
-  {
     path: '/clusters/:cluster_id/namespaces/:namespace_id/deployments',
     name: 'Deployments',
     icon: Dashboard,
@@ -132,6 +105,12 @@ const appRoutes = [
     name: 'Create Deployment',
     icon: Dashboard,
     component: CreateDeploymentPage,
+  },
+  {
+    path: '/clusters/:cluster_id/namespaces/:namespace_id/deployments/:deployment_id',
+    name: 'Deployment Detail',
+    icon: Dashboard,
+    component: DeploymentDetailPage,
   },
   {
     path: '/clusters/:cluster_id/namespaces/:namespace_id/topology',

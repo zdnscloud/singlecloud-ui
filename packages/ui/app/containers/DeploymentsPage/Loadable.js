@@ -13,3 +13,7 @@ export default loadable(() =>
 export const CreateDeploymentPage = loadable(() =>
   import(/* webpackChunkName: "CreateDeploymentPage" */ './CreateDeploymentPage')
 );
+
+export const DeploymentDetailPage = loadable(() =>
+  import(/* webpackChunkName: "DeploymentDetailPage" */ './DeploymentDetailPage')
+);

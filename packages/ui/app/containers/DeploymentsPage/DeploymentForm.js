@@ -1,7 +1,13 @@
 import React, { PureComponent, Fragment, useState } from 'react';
 import { fromJS, is } from 'immutable';
 import { compose } from 'redux';
-import { Field, FieldArray, reduxForm, FormSection } from 'redux-form/immutable';
+import {
+  Field,
+  Fields,
+  FieldArray,
+  reduxForm,
+  FormSection,
+} from 'redux-form/immutable';
 import getByKey from '@gsmlg/utils/getByKey';
 import AceEditor from 'react-ace';
 import classNames from 'classnames';
@@ -20,11 +26,8 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import IconButton from '@material-ui/core/IconButton';
-import Dialog from '@material-ui/core/Dialog';
 import AddIcon from '@material-ui/icons/Add';
 import DeleteIcon from '@material-ui/icons/Delete';
-import AttachmentIcon from '@material-ui/icons/Attachment';
-import People from '@material-ui/icons/People';
 
 import Button from 'components/CustomButtons/Button';
 import Card from 'components/Card/Card';
@@ -39,6 +42,40 @@ import InputField from 'components/Field/InputField';
 import SelectField from 'components/Field/SelectField';
 import SwitchField from 'components/Field/SwitchField';
 import RadioField from 'components/Field/RadioField';
+
+const renderExposedMetric = ({
+  classes,
+  exposedMetric: { path, port },
+}) => {
+  return (
+    <GridContainer>
+      <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
+        <InputField
+          label="Exposed Metric Path"
+          fullWidth
+          inputProps={{ type: 'text', autoComplete: 'off' }}
+          classes={classes}
+          {...path.input}
+        />
+      </GridItem>
+      <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
+        <InputField
+          label="Exposed Metric Port"
+          normalize={(val) => Number(val)}
+          fullWidth
+          inputProps={{
+            type: 'number',
+            autoComplete: 'off',
+            min: 1,
+            max: 65535,
+          }}
+          classes={classes}
+          {...port.input}
+        />
+      </GridItem>
+    </GridContainer>
+  );
+};
 
 const renderAdvanceServices = ({
   input,
@@ -382,7 +419,7 @@ class DeploymentForm extends PureComponent {
               name="enableAdvancedOptions"
               label="Advanced Options"
             />
-            {formValues.get('enableAdvancedOptions') ? (
+            {formValues && formValues.get('enableAdvancedOptions') ? (
               <Fragment>
                 <br />
                 <br />
@@ -400,6 +437,11 @@ class DeploymentForm extends PureComponent {
                     label="Exposed Services"
                     ports={fromJS(ports.toJS())}
                     component={renderAdvanceServices}
+                  />
+                  <Fields
+                    names={['exposedMetric.path', 'exposedMetric.port']}
+                    component={renderExposedMetric}
+                    classes={classes}
                   />
                 </FormSection>
               </Fragment>
