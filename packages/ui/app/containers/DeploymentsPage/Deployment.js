@@ -21,8 +21,11 @@ import { Link } from 'react-router-dom';
 import Menubar from 'components/Menubar';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Typography from '@material-ui/core/Typography';
+import InputAdornment from '@material-ui/core/InputAdornment';
+import ButtonBase from '@material-ui/core/ButtonBase';
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
+import RemoveIcon from '@material-ui/icons/Remove';
 import GridItem from 'components/Grid/GridItem';
 import GridContainer from 'components/Grid/GridContainer';
 import Card from 'components/Card/Card';
@@ -34,6 +37,11 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 
 import * as cActions from 'ducks/configMaps/actions';
+import * as actions from 'ducks/deployments/actions';
+import {
+   makeSelectClusterID,
+   makeSelectNamespaceID,
+} from 'containers/App/selectors';
 import {
   makeSelectConfigMaps,
 } from 'ducks/configMaps/selectors';
@@ -49,7 +57,15 @@ export class Deployment extends React.PureComponent {
   };
 
   render() {
-    const { classes, deployment } = this.props;
+    const {
+      classes,
+      scaleDeployment,
+      deployment,
+      clusterID,
+      namespaceID,
+    } = this.props;
+    const replicas = deployment.get('replicas');
+    const updateUrl = deployment.getIn(['links', 'update']);
 
     return (
       <GridContainer>
@@ -78,6 +94,44 @@ export class Deployment extends React.PureComponent {
                         name="replicas"
                         fullWidth
                         value={deployment.get('replicas')}
+                        inputProps={{
+                          type: 'number',
+                          autoComplete: 'username',
+                          endAdornment: (
+                            <InputAdornment position="end">
+                              <ButtonBase
+                                disabled={replicas === 1}
+                                onClick={(evt) => {
+                                  scaleDeployment({
+                                    replicas: replicas - 1,
+                                  }, {
+                                    url: updateUrl,
+                                    deployment,
+                                    clusterID,
+                                    namespaceID,
+                                  });
+                                }}
+                              >
+                                <RemoveIcon />
+                              </ButtonBase>
+                              <ButtonBase
+                                disabled={replicas >= 50}
+                                onClick={(evt) => {
+                                  scaleDeployment({
+                                    replicas: replicas + 1,
+                                  }, {
+                                    url: updateUrl,
+                                    deployment,
+                                    clusterID,
+                                    namespaceID,
+                                  });
+                                }}
+                              >
+                                <AddIcon />
+                              </ButtonBase>
+                            </InputAdornment>
+                          ),
+                        }}
                       />
                     </GridItem>
                   </GridContainer>
@@ -94,18 +148,34 @@ export class Deployment extends React.PureComponent {
                             <ListItemText>
                               <GridContainer>
                                 <GridItem xs={3} sm={3} md={3}>
-                                  <CustomInput labelText="Name" fullWidth value={c.get('name')} />
+                                  <CustomInput
+                                    labelText="Name"
+                                    fullWidth
+                                    value={c.get('name')}
+                                  />
                                 </GridItem>
                                 <GridItem xs={3} sm={3} md={3}>
-                                  <CustomInput labelText="Image" fullWidth value={c.get('image')} />
+                                  <CustomInput
+                                    labelText="Image"
+                                    fullWidth
+                                    value={c.get('image')}
+                                  />
                                 </GridItem>
                               </GridContainer>
                               <GridContainer>
                                 <GridItem xs={3} sm={3} md={3}>
-                                  <CustomInput labelText="Command" fullWidth value={c.get('command')} />
+                                  <CustomInput
+                                    labelText="Command"
+                                    fullWidth
+                                    value={c.get('command')}
+                                  />
                                 </GridItem>
                                 <GridItem xs={3} sm={3} md={3}>
-                                  <CustomInput labelText="Args" fullWidth value={c.get('args')} />
+                                  <CustomInput
+                                    labelText="Args"
+                                    fullWidth
+                                    value={c.get('args')}
+                                  />
                                 </GridItem>
                               </GridContainer>
                               <GridContainer>
@@ -169,13 +239,17 @@ export class Deployment extends React.PureComponent {
     );
   }
 }
+
 const mapStateToProps = createStructuredSelector({
+  clusterID: makeSelectClusterID(),
+  namespaceID: makeSelectNamespaceID(),
   configMaps: makeSelectConfigMaps(),
 });
 
 const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
+      ...actions,
       loadConfigMaps: cActions.loadConfigMaps,
     },
     dispatch
@@ -187,5 +261,6 @@ const withConnect = connect(
 );
 
 export default compose(
+  withConnect,
   withStyles(styles)
 )(Deployment);

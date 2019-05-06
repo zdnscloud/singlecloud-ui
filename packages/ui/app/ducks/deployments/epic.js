@@ -115,6 +115,31 @@ export const removeDeploymentEpic = (action$, state$, { ajax }) =>
     )
   );
 
+export const scaleDeploymentEpic = (action$, state$, { ajax }) =>
+  action$.pipe(
+    ofType(c.SCALE_DEPLOYMENT),
+    mergeMap(({ payload, meta: { url, clusterID, namespaceID } }) =>
+      ajax({
+        url,
+        method: 'PUT',
+        body: payload,
+      }).pipe(
+        map((resp) => {
+          return a.scaleDeploymentSuccess(resp, { clusterID, namespaceID });
+        }),
+        catchError((error) => {
+          return of(a.scaleDeploymentFailure(error, { clusterID, namespaceID }));
+        })
+      )
+    )
+  );
+
+export const afterScaleEpic = (action$) =>
+  action$.pipe(
+    ofType(c.SCALE_DEPLOYMENT_SUCCESS),
+    mergeMap(({ payload, meta }) => timer(1000).pipe(mapTo({ type: 'Woooo', payload: null })))
+  );
+
 export default combineEpics(
   loadDeploymentsEpic,
   loadDeploymentEpic,
@@ -122,5 +147,7 @@ export default combineEpics(
   afterCreateEpic,
   updateDeploymentEpic,
   afterUpdateEpic,
+  scaleDeploymentEpic,
+  afterScaleEpic,
   removeDeploymentEpic
 );

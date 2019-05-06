@@ -17,6 +17,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import Typography from '@material-ui/core/Typography';
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
+import MinimizeIcon from '@material-ui/icons/Minimize';
 import GridItem from 'components/Grid/GridItem';
 import GridContainer from 'components/Grid/GridContainer';
 import Card from 'components/Card/Card';
@@ -50,22 +51,11 @@ export class DeploymentDetailPage extends React.PureComponent {
     location: PropTypes.object,
   };
 
+  timer = null;
+
   componentWillMount() {
-    const {
-      clusterID,
-      namespaceID,
-      deploymentID,
-      deployment,
-      podsUrl: url,
-      loadPods,
-      loadDeployment,
-    } = this.props;
-    loadDeployment(deploymentID, {
-      clusterID,
-      namespaceID,
-      url: deployment.getIn(['links', 'self'])
-    });
-    loadPods({ url, clusterID, namespaceID, deploymentID });
+    this.loadDeploymentAndPods();
+    this.timer = setInterval(() => this.loadDeploymentAndPods(), 4000);
   }
 
   componentDidUpdate(prevProps) {
@@ -86,8 +76,30 @@ export class DeploymentDetailPage extends React.PureComponent {
       prevNamespaceID !== namespaceID ||
       prevDeploymentID !== deploymentID
     ) {
-      loadPods({ url, clusterID, namespaceID, deploymentID });
+      this.loadDeploymentAndPods();
     }
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.timer);
+  }
+
+  loadDeploymentAndPods() {
+    const {
+      clusterID,
+      namespaceID,
+      deploymentID,
+      deployment,
+      podsUrl: url,
+      loadPods,
+      loadDeployment,
+    } = this.props;
+    loadDeployment(deploymentID, {
+      clusterID,
+      namespaceID,
+      url: deployment.getIn(['links', 'self']),
+    });
+    loadPods({ url, clusterID, namespaceID, deploymentID });
   }
 
   render() {

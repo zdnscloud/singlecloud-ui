@@ -57,8 +57,8 @@ export class PodsTable extends React.PureComponent {
                   openLogView(props.data.get('id'), ctn.get('name'))
                 }
               >
+                {ctn.get('image')}
                 <FontAwesomeIcon icon={faTerminal} />
-                {ctn.get('name')}
               </Fab>
             ))}
           </Fragment>

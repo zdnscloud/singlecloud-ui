@@ -75,6 +75,22 @@ export const deploymentsReducer = (
     case c.REMOVE_DEPLOYMENT_FAILURE:
       return state;
 
+    case c.SCALE_DEPLOYMENT:
+      return state;
+    case c.SCALE_DEPLOYMENT_SUCCESS: {
+      const { clusterID, namespaceID } = meta;
+      const data = payload.response;
+      return state.setIn([
+        'deployments',
+        clusterID,
+        namespaceID,
+        data.id,
+        'replicas',
+      ], data.replicas);
+    }
+    case c.SCALE_DEPLOYMENT_FAILURE:
+      return state;
+
     default:
       return state;
   }
