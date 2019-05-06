@@ -23,12 +23,18 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTerminal } from '@fortawesome/free-solid-svg-icons';
 import Chip from '@material-ui/core/Chip';
 
+import {
+  makeSelectClusterID,
+  makeSelectNamespaceID,
+} from 'containers/App/selectors';
+import { makeSelectDeploymentID } from 'ducks/deployments/selectors'
 import { makeSelectPods, makeSelectPodsList } from 'ducks/pods/selectors';
 import * as actions from 'ducks/pods/actions';
 
 import messages from './messages';
 import styles from './styles';
 import schema from './tableSchema';
+import LogViewDialog from './LogViewDialog';
 
 /* eslint-disable react/prefer-stateless-function */
 export class PodsTable extends React.PureComponent {
@@ -39,7 +45,16 @@ export class PodsTable extends React.PureComponent {
   };
 
   render() {
-    const { classes, data, pods, removePod, openLogView } = this.props;
+    const {
+      classes,
+      data,
+      pods,
+      clusterID,
+      namespaceID,
+      deploymentID,
+      removePod,
+      openPodLog,
+    } = this.props;
     const mergedSchema = schema.concat([
       {
         id: 'showLogs',
@@ -53,11 +68,18 @@ export class PodsTable extends React.PureComponent {
                 aria-label="View Log"
                 className={classes.button}
                 size="small"
-                onClick={(evt) =>
-                  openLogView(props.data.get('id'), ctn.get('name'))
-                }
+                onClick={(evt) => {
+                  openPodLog({
+                    podID: props.data.get('id'),
+                    containerID: ctn.get('name'),
+                  }, {
+                    clusterID,
+                    namespaceID,
+                    deploymentID,
+                  });
+                }}
               >
-                {ctn.get('image')}
+                {/* {ctn.get('image')} */}
                 <FontAwesomeIcon icon={faTerminal} />
               </Fab>
             ))}
@@ -72,7 +94,12 @@ export class PodsTable extends React.PureComponent {
             <IconButton
               aria-label="Delete"
               className={classes.button}
-              onClick={(evt) => removePod(props.data.get('id'))}
+              onClick={(evt) => {
+                const pod = props.data;
+                removePod(pod.get('id'), {
+                  url: pod.getIn(['links', 'remove']),
+                });
+              }}
             >
               <DeleteIcon />
             </IconButton>
@@ -83,6 +110,7 @@ export class PodsTable extends React.PureComponent {
 
     return (
       <Paper className={classes.tableWrapper}>
+        <LogViewDialog />
         <SimpleTable
           className={classes.table}
           schema={mergedSchema}
@@ -94,6 +122,9 @@ export class PodsTable extends React.PureComponent {
 }
 
 const mapStateToProps = createStructuredSelector({
+  clusterID: makeSelectClusterID(),
+  namespaceID: makeSelectNamespaceID(),
+  deploymentID: makeSelectDeploymentID(),
   pods: makeSelectPods(),
   data: makeSelectPodsList(),
 });

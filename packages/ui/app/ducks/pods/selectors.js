@@ -49,6 +49,37 @@ export const makeSelectURL = () =>
     (deploy) => deploy.getIn(['links', 'pods'])
   );
 
+export const makeSelectPodLog = () =>
+  createSelector(
+    selectPodsDomain,
+    (substate) => substate.get('openingPodLog')
+  );
+
+export const makeSelectPodLogIsOpening = () =>
+  createSelector(
+    selectPodsDomain,
+    (substate) => !!substate.get('openingPodLog')
+  );
+
+export const makeSelectOpeningLogs = () =>
+  createSelector(
+    selectPodsDomain,
+    (substate) => substate.get('openingLogs')
+  );
+
+export const makeSelectLogURL = () =>
+  createSelector(
+    selectPodsDomain,
+    makeSelectClusterID(),
+    makeSelectNamespaceID(),
+    (substate, clusterID, namespaceID) =>
+      `${window.location.protocol}//${window.location.hostname}:${
+         window.location.port
+       }/apis/ws.zcloud.cn/v1/clusters/${clusterID}/namespaces/${namespaceID}/pods/${
+         substate.getIn(['openingPodLog', 'podID'])
+       }/containers/${substate.getIn(['openingPodLog', 'containerName'])}/log`
+  );
+
 /**
  * Default selector used by LoginPage
  */

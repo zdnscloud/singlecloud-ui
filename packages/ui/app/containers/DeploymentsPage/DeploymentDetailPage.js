@@ -55,7 +55,11 @@ export class DeploymentDetailPage extends React.PureComponent {
 
   componentWillMount() {
     this.loadDeploymentAndPods();
-    this.timer = setInterval(() => this.loadDeploymentAndPods(), 4000);
+    this.timer = setInterval(() => {
+      if (this.timer) {
+        this.loadDeploymentAndPods();
+      }
+    }, 4000);
   }
 
   componentDidUpdate(prevProps) {
@@ -82,6 +86,7 @@ export class DeploymentDetailPage extends React.PureComponent {
 
   componentWillUnmount() {
     clearInterval(this.timer);
+    this.timer = null;
   }
 
   loadDeploymentAndPods() {
