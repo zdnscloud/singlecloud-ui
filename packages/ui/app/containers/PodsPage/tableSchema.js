@@ -3,6 +3,7 @@ import { ucfirst } from '@gsmlg/utils';
 import Chip from '@material-ui/core/Chip';
 
 const schema = [
+  'state',
   'name',
   'nodeName',
   'containers',
@@ -22,8 +23,8 @@ const tableSchema = schema
         component(props) {
           return props.data
             .get('containers')
-            .map((ctn) => (
-              <Chip label={`${ctn.get('name')}  ${ctn.get('image')}`} />
+            .map((ctn, i) => (
+              <Chip key={i} label={`${ctn.get('image')}`} />
             ));
         },
       };

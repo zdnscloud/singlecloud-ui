@@ -95,3 +95,22 @@ export const removeDeploymentFailure = (error, meta) => ({
   meta,
   error: true,
 });
+
+export const scaleDeployment = (scale, meta) => ({
+  type: c.SCALE_DEPLOYMENT,
+  payload: scale,
+  meta,
+});
+
+export const scaleDeploymentSuccess = (resp, meta) => ({
+  type: c.SCALE_DEPLOYMENT_SUCCESS,
+  payload: resp,
+  meta,
+});
+
+export const scaleDeploymentFailure = (error, meta) => ({
+  type: c.SCALE_DEPLOYMENT_FAILURE,
+  payload: error,
+  meta,
+  error: true,
+});
