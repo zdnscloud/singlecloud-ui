@@ -13,3 +13,7 @@ export const LOAD_POD_FAILURE = `${prefix}/LOAD_POD_FAILURE`;
 export const REMOVE_POD = `${prefix}/REMOVE_POD`;
 export const REMOVE_POD_SUCCESS = `${prefix}/REMOVE_POD_SUCCESS`;
 export const REMOVE_POD_FAILURE = `${prefix}/REMOVE_POD_FAILURE`;
+
+export const OPEN_POD_LOG = `${prefix}/OPEN_POD_LOG`;
+export const CLOSE_POD_LOG = `${prefix}/CLOSE_POD_LOG`;
+export const SET_OPENING_LOGS = `${prefix}/SET_OPENING_LOGS`;

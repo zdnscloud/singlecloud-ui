@@ -26,9 +26,13 @@ import CardHeader from 'components/Card/CardHeader';
 import CardBody from 'components/Card/CardBody';
 
 import * as actions from 'ducks/serviceLinks/actions';
+import request from 'utils/request';
+import {
+  makeSelectClusterID,
+  makeSelectNamespaceID,
+} from 'containers/App/selectors';
+import { makeSelectCurrentNamespace } from 'containers/NamespacesPage/selectors';
 
-import { makeSelectClusterID, makeSelectNamespaceID } from '../App/selectors';
-import { makeSelectCurrentNamespace } from '../NamespacesPage/selectors';
 import messages from './messages';
 import TopologyPageHelmet from './helmet';
 import styles from './styles';
@@ -70,12 +74,16 @@ export class TopologyPage extends React.PureComponent {
       loadInnerServices,
     } = this.props;
     if (namespace && namespace.size > 0) {
-      const ourl = namespace
-        .getIn(['links', 'outerservices']);
-      const iurl = namespace
-        .getIn(['links', 'innerservices']);
+      const ourl = `/apis/agent.zcloud.cn/v1/clusters/${clusterID}/namespaces/${namespaceID}/outerservices`;
+      const iurl = `/apis/agent.zcloud.cn/v1/clusters/${clusterID}/namespaces/${namespaceID}/innerservices`;
       loadOuterServices(ourl, clusterID, namespaceID);
       loadInnerServices(iurl, clusterID, namespaceID);
+      // request(`/apis/agent.zcloud.cn/v1/clusters/${clusterID}/podnetworks`);
+      // request(`/apis/agent.zcloud.cn/v1/clusters/${clusterID}/nodenetworks`);
+      // request(`/apis/agent.zcloud.cn/v1/clusters/${clusterID}/servicenetworks`);
+      request(`/apis/agent.zcloud.cn/v1/clusters/${clusterID}/storages`);
+      request(`/apis/agent.zcloud.cn/v1/clusters/${clusterID}/storages/nfs`);
+      request(`/apis/agent.zcloud.cn/v1/clusters/${clusterID}/storages/lvm`);
     }
   }
 

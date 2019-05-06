@@ -17,6 +17,8 @@ export { constants, actions, prefix };
 export const initialState = fromJS({
   pods: {},
   list: [],
+  openingPodLog: null,
+  openingLogs: [],
 });
 
 const c = constants;
@@ -54,6 +56,17 @@ export const podsReducer = (
       return state;
     case c.REMOVE_POD_FAILURE:
       return state;
+
+    case c.OPEN_POD_LOG: {
+      const { clusterID, namespaceID, deploymentID } = meta;
+      const { podID, containerName } = payload;
+      return state.set('openingPodLog', {});
+    }
+    case c.CLOSE_POD_LOG:
+      return state.set('openingPodLog', null);
+
+    case c.SET_OPENING_LOGS:
+      return state.set('openingLogs', payload);
 
     default:
       return state;

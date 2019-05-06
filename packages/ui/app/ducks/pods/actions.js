@@ -56,3 +56,19 @@ export const removePodFailure = (error, meta) => ({
   meta,
   error: true,
 });
+
+export const openPodLog = (pod, meta) => ({
+  type: c.OPEN_POD_LOG,
+  payload: pod,
+  meta,
+});
+
+export const closePodLog = () => ({
+  type: c.CLOSE_POD_LOG,
+  payload: {},
+});
+
+export const setOpeningLogs = (logs) => ({
+  type: c.SET_OPENING_LOGS,
+  payload: logs,
+});

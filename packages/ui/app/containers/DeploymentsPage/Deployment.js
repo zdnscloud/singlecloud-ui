@@ -39,8 +39,8 @@ import ListItemText from '@material-ui/core/ListItemText';
 import * as cActions from 'ducks/configMaps/actions';
 import * as actions from 'ducks/deployments/actions';
 import {
-   makeSelectClusterID,
-   makeSelectNamespaceID,
+  makeSelectClusterID,
+  makeSelectNamespaceID,
 } from 'containers/App/selectors';
 import {
   makeSelectConfigMaps,

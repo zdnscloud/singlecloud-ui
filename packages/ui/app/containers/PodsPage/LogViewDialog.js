@@ -19,7 +19,13 @@ import { map, scan, throttleTime } from 'rxjs/operators';
 //   makeSelectLogs,
 //   makeSelectLogsURL,
 // } from './selectors';
-// import * as actions from './actions';
+import {
+  makeSelectPodLogIsOpening,
+  makeSelectPodLog,
+  makeSelectOpeningLogs,
+  makeSelectLogURL,
+} from 'ducks/pods/selectors';
+import * as actions from 'ducks/pods/actions';
 import styles from './styles';
 
 let socket = null;
@@ -27,13 +33,20 @@ let observer = null;
 
 class LogViewDialog extends React.Component {
   render() {
-    const { isOpen, logs, url, closeLogView, setLogs, classes } = this.props;
+    const {
+      isOpen,
+      logs,
+      url,
+      closePodLog,
+      setOpeningLogs,
+      classes,
+    } = this.props;
     let t;
 
     return (
       <Dialog
         open={isOpen}
-        onClose={closeLogView}
+        onClose={closePodLog}
         onEnter={() => {
           socket = new SockJS(url);
           const logSource = Observable.create((ob) => {
@@ -60,7 +73,7 @@ class LogViewDialog extends React.Component {
             )
             .pipe(throttleTime(1000 / 60))
             .subscribe((l) => {
-              setLogs(l);
+              setOpeningLogs(l);
             });
           socket.onclose = (e) => {
             observer.next(`${new Date().toISOString()} Pull log timeout!!!`);
@@ -82,7 +95,7 @@ class LogViewDialog extends React.Component {
         <DialogContent>
           <div className={classes.logsWrapper}>
             <pre className={classes.logs}>
-              {logs.map((log, i) => (
+              {logs && logs.map((log, i) => (
                 <div key={i}>
                   <time className={classes.logTime}>
                     {log[0].toLocaleString()}
@@ -94,7 +107,7 @@ class LogViewDialog extends React.Component {
           </div>
         </DialogContent>
         <DialogActions>
-          <Button onClick={closeLogView} color="primary" variant="contained">
+          <Button onClick={closePodLog} color="primary" variant="contained">
             Close
           </Button>
         </DialogActions>
@@ -104,15 +117,16 @@ class LogViewDialog extends React.Component {
 }
 
 const mapStateToProps = createStructuredSelector({
-  // isOpen: makeSelectLogViewIsOpen(),
-  // logs: makeSelectLogs(),
-  // url: makeSelectLogsURL(),
+  isOpen: makeSelectPodLogIsOpening(),
+  podLog: makeSelectPodLog(),
+  url: makeSelectLogURL(),
+  logs: makeSelectOpeningLogs(),
 });
 
 const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
-      // ...actions,
+      ...actions,
     },
     dispatch
   );
