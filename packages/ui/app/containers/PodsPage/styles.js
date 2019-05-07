@@ -151,6 +151,24 @@ const styles = (theme) => ({
     top: '3px',
     right: '10px',
   },
+  logsWrapper: {
+    width: '70vw',
+    backgroundColor: 'black',
+    color: 'white',
+  },
+  logs: {
+    backgroundColor: 'black',
+    color: 'white',
+    width: 'fit-content',
+  },
+  logTime: {
+    color: 'green',
+  },
+  log: {
+    backgroundColor: 'black',
+    color: 'white',
+    marginLeft: '2em',
+  },
 });
 
 export default styles;

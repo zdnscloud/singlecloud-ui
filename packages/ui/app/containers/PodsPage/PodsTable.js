@@ -71,7 +71,7 @@ export class PodsTable extends React.PureComponent {
                 onClick={(evt) => {
                   openPodLog({
                     podID: props.data.get('id'),
-                    containerID: ctn.get('name'),
+                    containerName: ctn.get('name'),
                   }, {
                     clusterID,
                     namespaceID,

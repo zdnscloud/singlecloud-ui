@@ -60,10 +60,18 @@ export const podsReducer = (
     case c.OPEN_POD_LOG: {
       const { clusterID, namespaceID, deploymentID } = meta;
       const { podID, containerName } = payload;
-      return state.set('openingPodLog', {});
+      return state.set('openingPodLog', {
+        clusterID,
+        namespaceID,
+        deploymentID,
+        podID,
+        containerName,
+      });
     }
     case c.CLOSE_POD_LOG:
-      return state.set('openingPodLog', null);
+      return state
+        .set('openingPodLog', null)
+        .set('openingLogs', fromJS([]));
 
     case c.SET_OPENING_LOGS:
       return state.set('openingLogs', payload);
