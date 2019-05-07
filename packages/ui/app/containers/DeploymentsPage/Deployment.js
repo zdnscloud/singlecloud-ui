@@ -182,13 +182,14 @@ export class Deployment extends React.PureComponent {
                                 <GridItem xs={3} sm={3} md={3}>
                                   <CustomInput
                                     labelText="Config Name"
-                                    value={c.get('config_name')}
+                                    value={c.get('configName')}
+                                    fullWidth
                                   />
                                 </GridItem>
                                 <GridItem xs={3} sm={3} md={3}>
                                   <CustomInput
                                     labelText="Mount Path"
-                                    value={c.get('mount_path')}
+                                    value={c.get('mountPath')}
                                     fullWidth
                                   />
                                 </GridItem>
