@@ -98,11 +98,7 @@ class App extends PureComponent {
     return (
       <div className={classes.wrapper}>
         <AppMenubar />
-        <LeftMenu
-          routes={menus}
-          open={this.state.mobileOpen}
-          {...rest}
-        />
+        <LeftMenu />
         <div className={classes.mainPanel} data-ref="mainPanel">
           {clusterID && (
             <div className={classes.eventPage}>
