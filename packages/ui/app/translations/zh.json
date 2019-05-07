@@ -1,10 +1,5 @@
 {
   "app.components.Menubar.header": "This is the Menubar component!",
-  "app.containers.ApplicationsPage.applications": "Applications",
-  "app.containers.ApplicationsPage.header": "This is the ApplicationsPage container!",
-  "app.containers.ApplicationsPage.pageDesc": "Description of ApplicationsPage",
-  "app.containers.ApplicationsPage.pageTitle": "ApplicationsPage",
-  "app.containers.ApplicationsPage.tableTitleName": "Name",
   "app.containers.ClusterDetailPage.clusterDetail": "Cluster {name}",
   "app.containers.ClusterDetailPage.header": "This is the ClusterDetailPage header!",
   "app.containers.ClusterDetailPage.pageDesc": "This is the ClusterDetailPage description!",

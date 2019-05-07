@@ -240,6 +240,39 @@ const renderPorts = ({
   );
 };
 
+const renderEnvs = ({
+  fields,
+  meta: { error, submitFailed },
+}) => {
+
+  return (
+    <List component="ul">
+      <ListItem>
+        <ListItemText primary="ENV" />
+        <IconButton onClick={(evt) => fields.push({})}>
+          <AddIcon />
+        </IconButton>
+      </ListItem>
+      {fields.map((f, i) => (
+        <ListItem key={i}>
+          <ListItemText>
+            <InputField name={`${f}.name`} label="Name" />
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            <InputField name={`${f}.value`} label="Value" />
+          </ListItemText>
+          <IconButton
+            variant="contained"
+            color="secondary"
+            onClick={(evt) => fields.remove(i)}
+          >
+            <DeleteIcon />
+          </IconButton>
+        </ListItem>
+      ))}
+    </List>
+  );
+};
+
 const renderContainers = ({
   fields,
   meta: { error, submitFailed },
@@ -282,6 +315,14 @@ const renderContainers = ({
                   </GridItem>
                   <GridItem xs={3} sm={3} md={3}>
                     <InputField name={`${f}.args`} label="Args" fullWidth />
+                  </GridItem>
+                </GridContainer>
+                <GridContainer>
+                  <GridItem xs={6} sm={6} md={6}>
+                    <FieldArray
+                      name="env"
+                      component={renderEnvs}
+                    />
                   </GridItem>
                 </GridContainer>
                 <GridContainer>

@@ -1,10 +1,5 @@
 {
   "app.components.Menubar.header": "",
-  "app.containers.ApplicationsPage.applications": "",
-  "app.containers.ApplicationsPage.header": "",
-  "app.containers.ApplicationsPage.pageDesc": "",
-  "app.containers.ApplicationsPage.pageTitle": "",
-  "app.containers.ApplicationsPage.tableTitleName": "",
   "app.containers.ClusterDetailPage.clusterDetail": "",
   "app.containers.ClusterDetailPage.header": "",
   "app.containers.ClusterDetailPage.pageDesc": "",
