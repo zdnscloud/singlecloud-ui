@@ -5,7 +5,6 @@ import CustomInput from 'components/CustomInput/CustomInput';
 const Input = ({
   label,
   input,
-  classes,
   meta,
   inputProps,
   ...custom
