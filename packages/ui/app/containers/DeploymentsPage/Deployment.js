@@ -193,6 +193,32 @@ export class Deployment extends React.PureComponent {
                                   />
                                 </GridItem>
                               </GridContainer>
+                              {c.get('env') ? (
+                                <GridContainer>
+                                  <GridItem>
+                                    <List component="ul">
+                                      <ListItem>
+                                        <ListItemText primary="ENV" />
+                                      </ListItem>
+                                      {c.get('env').map((p, i) => (
+                                        <ListItem key={i}>
+                                          <ListItemText>
+                                            <CustomInput
+                                              labelText="Name"
+                                              value={p.get('name')}
+                                            />
+                                            &nbsp;&nbsp;&nbsp;&nbsp;
+                                            <CustomInput
+                                              labelText="Value"
+                                              value={p.get('value')}
+                                            />
+                                          </ListItemText>
+                                        </ListItem>
+                                      ))}
+                                    </List>
+                                  </GridItem>
+                                </GridContainer>
+                              ) : null}
                               {c.get('exposedPorts') ? (
                                 <GridContainer>
                                   <GridItem>
