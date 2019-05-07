@@ -81,9 +81,9 @@ export class TopologyPage extends React.PureComponent {
       // request(`/apis/agent.zcloud.cn/v1/clusters/${clusterID}/podnetworks`);
       // request(`/apis/agent.zcloud.cn/v1/clusters/${clusterID}/nodenetworks`);
       // request(`/apis/agent.zcloud.cn/v1/clusters/${clusterID}/servicenetworks`);
-      request(`/apis/agent.zcloud.cn/v1/clusters/${clusterID}/storages`);
-      request(`/apis/agent.zcloud.cn/v1/clusters/${clusterID}/storages/nfs`);
-      request(`/apis/agent.zcloud.cn/v1/clusters/${clusterID}/storages/lvm`);
+      // request(`/apis/agent.zcloud.cn/v1/clusters/${clusterID}/storages`);
+      // request(`/apis/agent.zcloud.cn/v1/clusters/${clusterID}/storages/nfs`);
+      // request(`/apis/agent.zcloud.cn/v1/clusters/${clusterID}/storages/lvm`);
     }
   }
 
