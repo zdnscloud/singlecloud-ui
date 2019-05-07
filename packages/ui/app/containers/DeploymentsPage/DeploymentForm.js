@@ -479,11 +479,32 @@ class DeploymentForm extends PureComponent {
                     ports={fromJS(ports.toJS())}
                     component={renderAdvanceServices}
                   />
-                  <Fields
-                    names={['exposedMetric.path', 'exposedMetric.port']}
-                    component={renderExposedMetric}
-                    classes={classes}
-                  />
+                  <GridContainer>
+                    <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
+                      <InputField
+                        label="Exposed Metric Path"
+                        fullWidth
+                        inputProps={{ type: 'text', autoComplete: 'off' }}
+                        classes={classes}
+                        name="exposedMetric.path"
+                      />
+                    </GridItem>
+                    <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
+                      <InputField
+                        label="Exposed Metric Port"
+                        normalize={(val) => Number(val)}
+                        fullWidth
+                        inputProps={{
+                          type: 'number',
+                          autoComplete: 'off',
+                          min: 1,
+                          max: 65535,
+                        }}
+                        classes={classes}
+                        name="exposedMetric.port"
+                      />
+                    </GridItem>
+                  </GridContainer>
                 </FormSection>
               </Fragment>
             ) : null}
