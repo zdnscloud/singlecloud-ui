@@ -185,6 +185,7 @@ const sidebarStyle = (theme) => ({
     lineHeight: '30px',
     fontSize: '14px',
     color: theme.palette.secondary.contrastText,
+    marginRight: '-30px',
   },
   'active itemText': {
     color: theme.palette.primary.contrastText,

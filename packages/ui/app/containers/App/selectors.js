@@ -101,3 +101,22 @@ export const makeSelectUserMenus = () =>
         isAdmin ? { name: 'list', path: '/users' } : null,
       ].filter((n) => !!n)
   );
+
+export const makeSelectLeftMenus = () =>
+  createSelector(
+    selectApp,
+    makeSelectClusterID(),
+    makeSelectCurrentNamespaceID(),
+    makeSelectIsAdmin(),
+    (appState, cluster, namespace, isAdmin) => {
+      const menus = [{ name: 'clusters', path: '/clusters' }];
+      if (cluster !== '') {
+        return menus.concat([
+          { name: 'clusterManagement', path: `/clusters/${cluster}/nodes` },
+          { name: 'AppManagement', path: `/clusters/${cluster}/network` },
+          { name: 'SystemManagement', path: `/clusters/${cluster}/storage` },
+        ]);
+      }
+      return menus.concat(isAdmin ? [{ name: 'users', path: `/users` }] : []);
+    }
+  );

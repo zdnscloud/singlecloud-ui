@@ -15,11 +15,14 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import Icon from '@material-ui/core/Icon';
+import ExpandLess from '@material-ui/icons/ExpandLess';
+import ExpandMore from '@material-ui/icons/ExpandMore';
 
 import * as actions from './actions';
 import {
   makeSelectActiveCluster,
   makeSelectMenus,
+  makeSelectLeftMenus,
   makeSelectClusterID,
   makeSelectShowEvents,
   makeSelectLocation,
@@ -29,12 +32,42 @@ import styles from './LeftMenuStyle';
 const LeftMenu = ({ ...props }) => {
   // verifies if routeName is the one active (in browser input)
   function activeRoute(routeName) {
-    return props.location.pathname.indexOf(routeName) > -1;
+    const pathname = props.location.get('pathname');
+    return pathname.indexOf(routeName) > -1;
   }
-  const { classes, color, logo, image, logoText, routes } = props;
+  const { classes, color, logo, image, logoText, menus } = props;
+  // const links = (
+  //   <List className={classes.list}>
+  //     {routes.map((prop, key) => {
+  //       const listItemClasses = classNames({
+  //         [` ${classes[color]}`]: activeRoute(prop.path),
+  //       });
+  //       const whiteFontClasses = classNames({
+  //         [` ${classes[color]}`]: activeRoute(prop.path),
+  //       });
+  //       return (
+  //         <NavLink
+  //           to={prop.path}
+  //           className={classes.item}
+  //           activeClassName="active"
+  //           key={key}
+  //         >
+  //           <ListItem button className={classes.itemLink + listItemClasses}>
+  //             <ListItemText
+  //               primary={prop.name}
+  //               className={classNames(classes.itemText)}
+  //               disableTypography
+  //             />
+  //             <ExpandLess />
+  //           </ListItem>
+  //         </NavLink>
+  //       );
+  //     })}
+  //   </List>
+  // );
   const links = (
     <List className={classes.list}>
-      {routes.map((prop, key) => {
+      {menus.map((prop, key) => {
         const listItemClasses = classNames({
           [` ${classes[color]}`]: activeRoute(prop.path),
         });
@@ -54,6 +87,7 @@ const LeftMenu = ({ ...props }) => {
                 className={classNames(classes.itemText)}
                 disableTypography
               />
+              <ExpandLess />
             </ListItem>
           </NavLink>
         );
@@ -107,9 +141,9 @@ LeftMenu.propTypes = {
 
 const mapStateToProps = createStructuredSelector({
   activeCluster: makeSelectActiveCluster(),
-  menus: makeSelectMenus(),
+  menus: makeSelectLeftMenus(),
   clusterID: makeSelectClusterID(),
-  currentLocation: makeSelectLocation(),
+  location: makeSelectLocation(),
 });
 
 const mapDispatchToProps = (dispatch) =>
