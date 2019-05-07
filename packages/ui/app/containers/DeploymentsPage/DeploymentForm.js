@@ -328,7 +328,7 @@ const renderContainers = ({
                 <GridContainer>
                   <GridItem xs={3} sm={3} md={3}>
                     <SelectField
-                      name={`${f}.config_name`}
+                      name={`${f}.configName`}
                       label="Config Name"
                       options={options}
                       formControlProps={{
@@ -341,7 +341,7 @@ const renderContainers = ({
                   </GridItem>
                   <GridItem xs={3} sm={3} md={3}>
                     <InputField
-                      name={`${f}.mount_path`}
+                      name={`${f}.mountPath`}
                       label="Mount Path"
                       fullWidth
                     />

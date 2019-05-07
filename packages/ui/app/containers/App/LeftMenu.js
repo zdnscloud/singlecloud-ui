@@ -1,7 +1,12 @@
 import React from 'react';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { FormattedMessage } from 'react-intl';
+import { createStructuredSelector } from 'reselect';
+import { bindActionCreators, compose } from 'redux';
 import { NavLink } from 'react-router-dom';
+
 // @material-ui/core components
 import withStyles from '@material-ui/core/styles/withStyles';
 import Drawer from '@material-ui/core/Drawer';
@@ -11,6 +16,14 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import Icon from '@material-ui/core/Icon';
 
+import * as actions from './actions';
+import {
+  makeSelectActiveCluster,
+  makeSelectMenus,
+  makeSelectClusterID,
+  makeSelectShowEvents,
+  makeSelectLocation,
+} from './selectors';
 import styles from './LeftMenuStyle';
 
 const LeftMenu = ({ ...props }) => {
@@ -92,4 +105,27 @@ LeftMenu.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(LeftMenu);
+const mapStateToProps = createStructuredSelector({
+  activeCluster: makeSelectActiveCluster(),
+  menus: makeSelectMenus(),
+  clusterID: makeSelectClusterID(),
+  currentLocation: makeSelectLocation(),
+});
+
+const mapDispatchToProps = (dispatch) =>
+  bindActionCreators(
+    {
+      ...actions,
+    },
+    dispatch
+  );
+
+const withConnect = connect(
+  mapStateToProps,
+  mapDispatchToProps
+);
+
+export default compose(
+  withStyles(styles),
+  withConnect,
+)(LeftMenu);

@@ -43,7 +43,11 @@ export const deploymentsReducer = (
     case c.LOAD_DEPLOYMENT_SUCCESS: {
       const { clusterID, namespaceID } = meta;
       const deployment = payload.response;
-      return state.setIn(['deployments', clusterID, namespaceID, deployment.id], fromJS(deployment));
+      // temporary add, may remove when support cancel load data
+      if (deployment && deployment.id) {
+        return state.setIn(['deployments', clusterID, namespaceID, deployment.id], fromJS(deployment));
+      }
+      return state;
     }
     case c.LOAD_DEPLOYMENT_FAILURE:
       return state;
