@@ -141,7 +141,7 @@ export class Deployment extends React.PureComponent {
                     <ListItem>
                       <ListItemText primary="Containers" />
                     </ListItem>
-                    {deployment.get('containers').map((c, i) => (
+                    {deployment && deployment.get('containers') && deployment.get('containers').map((c, i) => (
                       <Card key={i}>
                         <CardBody>
                           <ListItem key={i}>
