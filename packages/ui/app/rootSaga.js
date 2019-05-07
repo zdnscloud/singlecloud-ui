@@ -4,8 +4,6 @@ import appSaga from 'containers/App/saga';
 import serviceSaga from 'containers/ServicesPage/saga';
 import clusterSaga from 'containers/ClustersPage/saga';
 import clusterDetailSaga from 'containers/ClusterDetailPage/saga';
-import applicationSaga from 'containers/ApplicationsPage/saga';
-import applicationDetailSaga from 'containers/ApplicationDetailPage/saga';
 import ingressSaga from 'containers/IngressesPage/saga';
 import nodeSaga from 'containers/NodesPage/saga';
 import namespaceSaga from 'containers/NamespacesPage/saga';
@@ -16,8 +14,6 @@ export default function* rootSaga() {
     serviceSaga(),
     clusterSaga(),
     clusterDetailSaga(),
-    applicationSaga(),
-    applicationDetailSaga(),
     ingressSaga(),
     nodeSaga(),
     namespaceSaga(),
