@@ -320,7 +320,7 @@ const renderContainers = ({
                 <GridContainer>
                   <GridItem xs={6} sm={6} md={6}>
                     <FieldArray
-                      name="env"
+                      name={`${f}.env`}
                       component={renderEnvs}
                     />
                   </GridItem>

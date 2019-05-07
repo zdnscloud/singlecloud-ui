@@ -41,6 +41,7 @@ import dashboardStyle from './dashboardStyles';
 
 import AppMenubar from './AppMenubar';
 import SelectCluster from './SelectCluster';
+import LeftMenu from './LeftMenu';
 import appRoutes from './routes';
 import * as actions from './actions';
 import {
@@ -97,12 +98,9 @@ class App extends PureComponent {
     return (
       <div className={classes.wrapper}>
         <AppMenubar />
-        <Sidebar
+        <LeftMenu
           routes={menus}
-          logoText="ZCloud"
-          handleDrawerToggle={this.handleDrawerToggle}
           open={this.state.mobileOpen}
-          color="zcloud"
           {...rest}
         />
         <div className={classes.mainPanel} data-ref="mainPanel">
