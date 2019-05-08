@@ -283,6 +283,10 @@ const sidebarStyle = (theme) => ({
     overflowScrolling: 'touch',
     color: theme.palette.primary.contrastText,
   },
+  nested: {
+    padding: '10px 15px',
+    paddingLeft: '30px',
+  },
 });
 
 export default sidebarStyle;
