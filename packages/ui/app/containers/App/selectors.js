@@ -48,7 +48,7 @@ export const makeSelectMenus = () =>
   createSelector(
     selectApp,
     makeSelectClusterID(),
-    makeSelectCurrentNamespaceID(),
+    makeSelectNamespaceID(),
     makeSelectIsAdmin(),
     (appState, cluster, namespace, isAdmin) => {
       const menus = [{ name: 'clusters', path: '/clusters' }];
@@ -112,9 +112,26 @@ export const makeSelectLeftMenus = () =>
       const menus = [{ name: 'clusters', path: '/clusters' }];
       if (cluster !== '') {
         return menus.concat([
-          { name: 'clusterManagement', path: `/clusters/${cluster}/nodes` },
-          { name: 'AppManagement', path: `/clusters/${cluster}/network` },
-          { name: 'SystemManagement', path: `/clusters/${cluster}/storage` },
+          { name: 'clusterManagement', children: [
+            { name: 'Overview', path: `/clusters/${cluster}` },
+            { name: 'Namespaces', path: `/clusters/${cluster}/namespaces` },
+            { name: 'Nodes', path: `/clusters/${cluster}/nodes` },
+          ] },
+          { name: 'AppManagement', children: [
+            { name: 'Deployments', path: `/clusters/${cluster}/namespaces/${namespace}/deployments` },
+            { name: 'ConfigMaps', path: `/clusters/${cluster}/namespaces/${namespace}/configmaps` },
+            {
+              name: 'Ingresses',
+              path: `/clusters/${cluster}/namespaces/${namespace}/ingresses`,
+            },
+            {
+              name: 'Services',
+              path: `/clusters/${cluster}/namespaces/${namespace}/services`,
+            },
+          ] },
+          { name: 'SystemManagement', children: [
+            { name: 'ServiceLink', path: `/clusters/${cluster}/namespaces/${namespace}/topology` },
+          ] },
         ]);
       }
       return menus.concat(isAdmin ? [{ name: 'users', path: `/users` }] : []);
