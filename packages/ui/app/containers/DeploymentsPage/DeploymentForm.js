@@ -43,39 +43,6 @@ import SelectField from 'components/Field/SelectField';
 import SwitchField from 'components/Field/SwitchField';
 import RadioField from 'components/Field/RadioField';
 
-const renderExposedMetric = ({
-  classes,
-  exposedMetric: { path, port },
-}) => {
-  return (
-    <GridContainer>
-      <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
-        <InputField
-          label="Exposed Metric Path"
-          fullWidth
-          inputProps={{ type: 'text', autoComplete: 'off' }}
-          classes={classes}
-          {...path.input}
-        />
-      </GridItem>
-      <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
-        <InputField
-          label="Exposed Metric Port"
-          normalize={(val) => Number(val)}
-          fullWidth
-          inputProps={{
-            type: 'number',
-            autoComplete: 'off',
-            min: 1,
-            max: 65535,
-          }}
-          classes={classes}
-          {...port.input}
-        />
-      </GridItem>
-    </GridContainer>
-  );
-};
 
 const renderAdvanceServices = ({
   input,
@@ -99,6 +66,7 @@ const renderAdvanceServices = ({
             onChange(value.setIn([idx, 'name'], port.get('name')));
           }
         }
+        const isUDP = port.get('protocol') === 'udp';
 
         return (
           <ListItem key={i}>
@@ -159,23 +127,43 @@ const renderAdvanceServices = ({
                 }
                 label="Auto Create Ingress"
               />
-              <TextField
-                label="Ingress Domain Name"
-                disabled={!value.getIn([idx, 'autoCreateIngress'])}
-                value={value.getIn([idx, 'ingressDomainName'])}
-                onChange={(evt) => {
-                  const dn = value.getIn([idx, 'ingressDomainName']);
-                  onChange(value.setIn([idx, 'ingressDomainName'], evt.target.value));
-                }}
-              />
-              <TextField
-                label="Ingress Path"
-                disabled={!value.getIn([idx, 'autoCreateIngress'])}
-                value={value.getIn([idx, 'ingressPath'])}
-                onChange={(evt) => {
-                  onChange(value.setIn([idx, 'ingressPath'], evt.target.value));
-                }}
-              />
+              {isUDP ? (
+                <Fragment>
+                  <TextField
+                    label="Ingress Port"
+                    disabled={!value.getIn([idx, 'autoCreateIngress'])}
+                    value={value.getIn([idx, 'ingressPort'])}
+                    onChange={(evt) => {
+                      const dn = value.getIn([idx, 'ingressPort']);
+                      const portVal = Number(evt.target.value);
+                      onChange(value.setIn([idx, 'ingressPort'], portVal));
+                    }}
+                    inputProps={{
+                      type: 'number',
+                    }}
+                  />
+                </Fragment>
+              ) : (
+                <Fragment>
+                  <TextField
+                    label="Ingress Domain Name"
+                    disabled={!value.getIn([idx, 'autoCreateIngress'])}
+                    value={value.getIn([idx, 'ingressDomainName'])}
+                    onChange={(evt) => {
+                      const dn = value.getIn([idx, 'ingressDomainName']);
+                      onChange(value.setIn([idx, 'ingressDomainName'], evt.target.value));
+                    }}
+                  />
+                  <TextField
+                    label="Ingress Path"
+                    disabled={!value.getIn([idx, 'autoCreateIngress'])}
+                    value={value.getIn([idx, 'ingressPath'])}
+                    onChange={(evt) => {
+                      onChange(value.setIn([idx, 'ingressPath'], evt.target.value));
+                    }}
+                  />
+                </Fragment>
+              )}
             </ListItemText>
           </ListItem>
         );
