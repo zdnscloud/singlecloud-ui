@@ -3,7 +3,14 @@ import {
   createMatchSelector,
   getLocation,
 } from 'connected-react-router/immutable';
+
+import OverviewIcon from 'components/Icons/Overview';
+import ManagementIcon from 'components/Icons/Management';
+import ApplicationIcon from 'components/Icons/Application';
+import SystemIcon from 'components/Icons/System';
+
 import { makeSelectRole, makeSelectIsAdmin } from 'ducks/role/selectors';
+
 import { makeSelectCurrentNamespaceID } from '../NamespacesPage/selectors';
 
 const selectRouter = (state) => state.get('router');
@@ -109,31 +116,52 @@ export const makeSelectLeftMenus = () =>
     makeSelectCurrentNamespaceID(),
     makeSelectIsAdmin(),
     (appState, cluster, namespace, isAdmin) => {
-      const menus = [{ name: 'clusters', path: '/clusters' }];
+      const menus = [{ name: 'Global', path: '/clusters', icon: OverviewIcon }];
       if (cluster !== '') {
         return menus.concat([
-          { name: 'clusterManagement', children: [
-            { name: 'Overview', path: `/clusters/${cluster}` },
-            { name: 'Namespaces', path: `/clusters/${cluster}/namespaces` },
-            { name: 'Nodes', path: `/clusters/${cluster}/nodes` },
-          ] },
-          { name: 'AppManagement', children: [
-            { name: 'Deployments', path: `/clusters/${cluster}/namespaces/${namespace}/deployments` },
-            { name: 'ConfigMaps', path: `/clusters/${cluster}/namespaces/${namespace}/configmaps` },
-            {
-              name: 'Ingresses',
-              path: `/clusters/${cluster}/namespaces/${namespace}/ingresses`,
-            },
-            {
-              name: 'Services',
-              path: `/clusters/${cluster}/namespaces/${namespace}/services`,
-            },
-          ] },
-          { name: 'SystemManagement', children: [
-            { name: 'ServiceLink', path: `/clusters/${cluster}/namespaces/${namespace}/topology` },
-          ] },
+          {
+            name: 'clusterManagement',
+            children: [
+              { name: 'Overview', path: `/clusters/${cluster}` },
+              { name: 'Namespaces', path: `/clusters/${cluster}/namespaces` },
+              { name: 'Nodes', path: `/clusters/${cluster}/nodes` },
+            ],
+            icon: ManagementIcon,
+          },
+          {
+            name: 'AppManagement',
+            children: [
+              {
+                name: 'Deployments',
+                path: `/clusters/${cluster}/namespaces/${namespace}/deployments`,
+              },
+              {
+                name: 'ConfigMaps',
+                path: `/clusters/${cluster}/namespaces/${namespace}/configmaps`,
+              },
+              {
+                name: 'Ingresses',
+                path: `/clusters/${cluster}/namespaces/${namespace}/ingresses`,
+              },
+              {
+                name: 'Services',
+                path: `/clusters/${cluster}/namespaces/${namespace}/services`,
+              },
+            ],
+            icon: ApplicationIcon,
+          },
+          {
+            name: 'SystemManagement',
+            children: [
+              {
+                name: 'ServiceLink',
+                path: `/clusters/${cluster}/namespaces/${namespace}/topology`,
+              },
+            ],
+            icon: SystemIcon,
+          },
         ]);
       }
-      return menus.concat(isAdmin ? [{ name: 'users', path: `/users` }] : []);
+      return menus;
     }
   );

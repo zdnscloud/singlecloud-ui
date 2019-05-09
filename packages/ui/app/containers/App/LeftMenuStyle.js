@@ -64,6 +64,19 @@ const sidebarStyle = (theme) => ({
       right: 'auto !important',
     },
   },
+  secondMenuModal: {
+    top: '64px',
+    left: '260px',
+  },
+  secondMenuPaper: {
+    maxHeight: 'calc(100vh - 64px)',
+    width: '260px',
+  },
+  secondMenu: {
+    width: '260px',
+    height: 'calc(100vh - 64px)',
+    backgroundColor: theme.palette.primary.main,
+  },
   logo: {
     position: 'relative',
     height: '64px',
@@ -146,7 +159,6 @@ const sidebarStyle = (theme) => ({
   },
   item: {
     position: 'relative',
-    display: 'block',
     textDecoration: 'none',
     '&:hover,&:focus,&:visited,&': {
       color: blackColor,
@@ -155,10 +167,8 @@ const sidebarStyle = (theme) => ({
   itemLink: {
     width: 'auto',
     transition: 'all 300ms linear',
-    margin: '10px 15px 0',
     borderRadius: '3px',
     position: 'relative',
-    display: 'block',
     padding: '10px 15px',
     backgroundColor: 'transparent',
     ...defaultFont,
@@ -181,11 +191,8 @@ const sidebarStyle = (theme) => ({
   },
   itemText: {
     ...defaultFont,
-    margin: '0',
-    lineHeight: '30px',
     fontSize: '14px',
     color: theme.palette.secondary.contrastText,
-    marginRight: '-30px',
   },
   'active itemText': {
     color: theme.palette.primary.contrastText,
@@ -276,7 +283,7 @@ const sidebarStyle = (theme) => ({
   },
   sidebarWrapper: {
     position: 'relative',
-    height: 'calc(100vh - 75px)',
+    height: 'calc(100vh - 64px)',
     overflow: 'auto',
     width: '260px',
     zIndex: '4',

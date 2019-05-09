@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { createRef, Fragment, PureComponent } from 'react';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -11,8 +11,11 @@ import { NavLink } from 'react-router-dom';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Drawer from '@material-ui/core/Drawer';
 import Hidden from '@material-ui/core/Hidden';
+import Popover from '@material-ui/core/Popover';
+import Popper from '@material-ui/core/Popper';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import Collapse from '@material-ui/core/Collapse';
@@ -20,6 +23,7 @@ import IconButton from '@material-ui/core/IconButton';
 import Icon from '@material-ui/core/Icon';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
+import ChevronRight from '@material-ui/icons/ChevronRight';
 
 import * as actions from './actions';
 import {
@@ -32,32 +36,78 @@ import {
 } from './selectors';
 import styles from './LeftMenuStyle';
 
-const LeftMenu = ({ ...props }) => {
-  // verifies if routeName is the one active (in browser input)
-  function activeRoute(routeName) {
-    const pathname = props.location.get('pathname');
-    return pathname.indexOf(routeName) > -1;
-  }
-  const { classes, color, logo, image, logoText, menus } = props;
-  const links = (
-    <List className={classes.list}>
-      {menus.map((prop, key) => {
-        const listItemClasses = classNames({
-          [` ${classes[color]}`]: activeRoute(prop.path),
-        });
-        const whiteFontClasses = classNames({
-          [` ${classes[color]}`]: activeRoute(prop.path),
-        });
+class LeftMenu extends PureComponent {
 
-        if ( prop.path ) {
+  state = {
+    openingMenu: null,
+  };
+
+  menuRef = createRef();
+
+  render() {
+    const props = this.props;
+    // verifies if routeName is the one active (in browser input)
+    function activeRoute(routeName) {
+      const pathname = props.location.get('pathname');
+      return pathname.indexOf(routeName) > -1;
+    }
+    const { classes, color, logo, image, logoText, menus } = props;
+    const handleOpen = (name) => () => {
+      console.log(name);
+      this.setState({ openingMenu: name });
+    };
+    const handleClose = () => {
+      this.setState({ openingMenu: null });
+    };
+
+    const links = (
+      <List className={classes.list} onMouseLeave={handleClose}>
+        {menus.map((prop, key) => {
+          const listItemClasses = classNames({
+            [` ${classes[color]}`]: activeRoute(prop.path),
+          });
+          const whiteFontClasses = classNames({
+            [` ${classes[color]}`]: activeRoute(prop.path),
+          });
+
+          if (prop.path) {
+            return (
+              <NavLink
+                to={prop.path}
+                className={classes.item}
+                onMouseOver={handleOpen(prop.name)}
+                activeClassName="active"
+                key={key}
+              >
+                <ListItem button className={classes.itemLink + listItemClasses}>
+                  {prop.icon ? (
+                    <ListItemIcon>
+                      <prop.icon nativeColor={'#fff'} />
+                    </ListItemIcon>
+                  ): null}
+                  <ListItemText
+                    primary={prop.name}
+                    className={classNames(classes.itemText)}
+                    disableTypography
+                  />
+                </ListItem>
+              </NavLink>
+            );
+          }
+
           return (
-            <NavLink
-              to={prop.path}
-              className={classes.item}
-              activeClassName="active"
-              key={key}
-            >
-              <ListItem button className={classes.itemLink + listItemClasses}>
+            <Fragment key={key}>
+              <ListItem
+                button
+                className={classes.itemLink + listItemClasses}
+                onMouseOver={handleOpen(prop.name)}
+                /* onMouseLeave={handleClose} */
+              >
+                {prop.icon ? (
+                  <ListItemIcon>
+                    <prop.icon nativeColor={'#fff'} />
+                  </ListItemIcon>
+                ) : null}
                 <ListItemText
                   primary={prop.name}
                   className={classNames(classes.itemText)}
@@ -65,107 +115,64 @@ const LeftMenu = ({ ...props }) => {
                 />
                 {prop.children ? (
                   <ListItemSecondaryAction>
-                    <IconButton edge="end" aria-label="ExpandLess">
-                      <ExpandLess />
-                    </IconButton>
+                    <ChevronRight />
                   </ListItemSecondaryAction>
                 ) : null}
               </ListItem>
-            </NavLink>
-          );
-        }
-        const [open, setOpen] = React.useState(false);
-        const handleClick = () => {
-          setOpen(!open);
-        };
+              {prop.name === this.state.openingMenu && prop.children ? (
+                <Popover
+                  open={prop.name === this.state.openingMenu}
+                  onClose={handleClose}
+                  anchorEl={this.menuRef.current}
+                  anchorReference="none"
+                  ModalClasses={{ root: classes.secondMenuModal }}
+                  PaperProps={{ square: true, style: { maxHeight: '100vh' } }}
+                  transitionDuration={0}
+                  hideBackdrop
+                >
+                  <div className={classes.secondMenu} onMouseLeave={handleClose}>
+                    <List component="div" disablePadding>
+                      {prop.children.map((menu, idx) => {
+                        const itemClasses = classNames({
+                          [` ${classes[color]}`]: activeRoute(menu.path),
+                        });
 
-        return (
-          <Fragment>
-            <ListItem
-              button
-              className={classes.itemLink + listItemClasses}
-              onClick={handleClick}
-            >
-              <ListItemText
-                primary={prop.name}
-                className={classNames(classes.itemText)}
-                disableTypography
-              />
-              {prop.children ? (
-                <ListItemSecondaryAction>
-                  <IconButton
-                    edge="end"
-                    aria-label={open ? 'ExpandLess' : 'ExpandMore'}
-                    onClick={handleClick}
-                  >
-                    {open ? <ExpandLess /> : <ExpandMore />}
-                  </IconButton>
-                </ListItemSecondaryAction>
+                        return (
+                          <NavLink
+                            to={menu.path}
+                            className={classes.item}
+                            activeClassName="active"
+                            key={idx}
+                          >
+                            <ListItem
+                              button
+                              className={classNames(
+                                classes.itemLink,
+                                classes.nested,
+                                itemClasses
+                              )}
+                            >
+                              <ListItemText
+                                primary={menu.name}
+                                className={classNames(classes.itemText)}
+                                disableTypography
+                              />
+                            </ListItem>
+                          </NavLink>
+                        );
+                      })}
+                    </List>
+                  </div>
+                </Popover>
               ) : null}
-            </ListItem>
-            {prop.children ? (
-              <Collapse in={open} timeout="auto" unmountOnExit>
-                <List component="div" disablePadding>
-                  {prop.children.map((menu, idx) => {
-                    const itemClasses = classNames({
-                      [` ${classes[color]}`]: activeRoute(menu.path),
-                    });
-
-                    return (
-                      <NavLink
-                        to={menu.path}
-                        className={classes.item}
-                        activeClassName="active"
-                        key={idx}
-                      >
-                        <ListItem
-                          button
-                          className={classNames(
-                            classes.itemLink,
-                            classes.nested,
-                            itemClasses,
-                          )}
-                        >
-                          <ListItemText
-                            primary={menu.name}
-                            className={classNames(classes.itemText)}
-                            disableTypography
-                          />
-                        </ListItem>
-                      </NavLink>
-                    );
-                  })}
-                </List>
-              </Collapse>
-            ) : null}
-          </Fragment>
-        );
-      })}
-    </List>
-  );
-  const brand = <div className={classes.logo} />;
-  return (
-    <div className={classes.root}>
-      <Hidden mdUp implementation="css">
-        <Drawer
-          variant="temporary"
-          anchor="right"
-          open={props.open}
-          classes={{
-            root: classes.root,
-            paper: classNames(classes.drawerPaper),
-          }}
-          onClose={props.handleDrawerToggle}
-          ModalProps={{
-            keepMounted: true, // Better open performance on mobile.
-          }}
-        >
-          {brand}
-          <div className={classes.sidebarWrapper}>{links}</div>
-          <div className={classes.background} />
-        </Drawer>
-      </Hidden>
-      <Hidden smDown implementation="css">
+            </Fragment>
+          );
+        })}
+      </List>
+    );
+    const brand = <div className={classes.logo} />;
+    return (
+      <div className={classes.root}>
         <Drawer
           anchor="left"
           variant="permanent"
@@ -176,13 +183,18 @@ const LeftMenu = ({ ...props }) => {
           }}
         >
           {brand}
-          <div className={classes.sidebarWrapper}>{links}</div>
+          <div
+            className={classes.sidebarWrapper}
+            ref={this.menuRef}
+          >
+            {links}
+          </div>
           <div className={classes.background} />
         </Drawer>
-      </Hidden>
-    </div>
-  );
-};
+      </div>
+    );
+  }
+}
 
 LeftMenu.propTypes = {
   classes: PropTypes.object.isRequired,
