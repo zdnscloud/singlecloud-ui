@@ -38,6 +38,25 @@ const styles = (theme) => ({
   toolbarRight: {
     display: 'flex',
   },
+  menuButton: {
+    display: 'flex',
+    width: '60px',
+    position: 'relative',
+    padding: '15px 15px',
+    zIndex: '4',
+    flexGrow: 1,
+    flexDirection: 'column',
+    justifyContent: 'center',
+    '&:after': {
+      content: '""',
+      position: 'absolute',
+      bottom: '0',
+      height: '1px',
+      right: '15px',
+      width: 'calc(100% - 30px)',
+      backgroundColor: `rgba(10,10,10, 0.3)`,
+    },
+  },
   logo: {
     display: 'flex',
     width: '260px',

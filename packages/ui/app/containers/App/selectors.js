@@ -91,6 +91,12 @@ export const makeSelectMenus = () =>
     }
   );
 
+export const makeSelectShowMenuText = () =>
+  createSelector(
+    selectApp,
+    (appState) => appState.get('showMenuText')
+  );
+
 export const makeSelectShowEvents = () =>
   createSelector(
     selectApp,

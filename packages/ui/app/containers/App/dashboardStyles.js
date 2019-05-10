@@ -11,6 +11,9 @@ const appStyle = (theme) => ({
     height: '100vh',
     overflow: 'hidden',
   },
+  mainPanelShrink: {
+    width: 'calc(100% - 60px) !important',
+  },
   mainPanel: {
     [theme.breakpoints.up('md')]: {
       width: `calc(100% - ${drawerWidth}px)`,

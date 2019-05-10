@@ -14,6 +14,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import CloudIcon from '@material-ui/icons/Cloud';
+import MenuIcon from '@material-ui/icons/Menu';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faServer } from '@fortawesome/free-solid-svg-icons';
 import logo from 'images/page-logo.png';
@@ -23,21 +24,28 @@ import Brand from 'components/Brand/Brand';
 import styles from './styles';
 
 function Menubar(props) {
-  const { classes, headerLeftContent, headerRightContent } = props;
+  const {
+    classes,
+    headerLeftContent,
+    headerRightContent,
+    onClickMenuButton,
+  } = props;
 
   return (
     <AppBar position="absolute" color="default" className={classes.appBar}>
       <Toolbar disableGutters className={classes.toolbar}>
         <div className={classes.toolbarLeft}>
+          <div className={classes.menuButton}>
+            <IconButton
+              style={{ color: '#fff' }}
+              onClick={onClickMenuButton}
+            >
+              <MenuIcon color="inherit" />
+            </IconButton>
+          </div>
           <div className={classes.logo}>
             <img src={logo} alt="logo" className={classes.img} />
           </div>
-          <IconButton
-            aria-label="zcloud"
-            className={classes.menuButton}
-          >
-            <FontAwesomeIcon icon={faServer} />
-          </IconButton>
           { headerLeftContent }
         </div>
         <div className={classes.toolbarRight}>

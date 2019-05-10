@@ -33,6 +33,7 @@ import {
   makeSelectClusterID,
   makeSelectShowEvents,
   makeSelectLocation,
+  makeSelectShowMenuText,
 } from './selectors';
 import styles from './LeftMenuStyle';
 
@@ -51,9 +52,8 @@ class LeftMenu extends PureComponent {
       const pathname = props.location.get('pathname');
       return pathname.indexOf(routeName) > -1;
     }
-    const { classes, color, logo, image, logoText, menus } = props;
+    const { classes, color, logo, image, logoText, menus, showText } = props;
     const handleOpen = (name) => () => {
-      console.log(name);
       this.setState({ openingMenu: name });
     };
     const handleClose = () => {
@@ -66,16 +66,13 @@ class LeftMenu extends PureComponent {
           const listItemClasses = classNames({
             [` ${classes[color]}`]: activeRoute(prop.path),
           });
-          const whiteFontClasses = classNames({
-            [` ${classes[color]}`]: activeRoute(prop.path),
-          });
 
           if (prop.path) {
             return (
               <NavLink
                 to={prop.path}
                 className={classes.item}
-                onMouseOver={handleOpen(prop.name)}
+                onMouseEnter={handleOpen(prop.name)}
                 activeClassName="active"
                 key={key}
               >
@@ -85,11 +82,13 @@ class LeftMenu extends PureComponent {
                       <prop.icon nativeColor={'#fff'} />
                     </ListItemIcon>
                   ): null}
-                  <ListItemText
-                    primary={prop.name}
-                    className={classNames(classes.itemText)}
-                    disableTypography
-                  />
+                  {showText ? (
+                    <ListItemText
+                      primary={prop.name}
+                      className={classNames(classes.itemText)}
+                      disableTypography
+                    />
+                  ) : null}
                 </ListItem>
               </NavLink>
             );
@@ -100,7 +99,7 @@ class LeftMenu extends PureComponent {
               <ListItem
                 button
                 className={classes.itemLink + listItemClasses}
-                onMouseOver={handleOpen(prop.name)}
+                onMouseEnter={handleOpen(prop.name)}
                 /* onMouseLeave={handleClose} */
               >
                 {prop.icon ? (
@@ -108,11 +107,13 @@ class LeftMenu extends PureComponent {
                     <prop.icon nativeColor={'#fff'} />
                   </ListItemIcon>
                 ) : null}
-                <ListItemText
-                  primary={prop.name}
-                  className={classNames(classes.itemText)}
-                  disableTypography
-                />
+                {showText ? (
+                  <ListItemText
+                    primary={prop.name}
+                    className={classNames(classes.itemText)}
+                    disableTypography
+                  />
+                ) : null}
                 {prop.children ? (
                   <ListItemSecondaryAction>
                     <ChevronRight />
@@ -125,12 +126,19 @@ class LeftMenu extends PureComponent {
                   onClose={handleClose}
                   anchorEl={this.menuRef.current}
                   anchorReference="none"
-                  ModalClasses={{ root: classes.secondMenuModal }}
+                  ModalClasses={{
+                    root: classNames(classes.secondMenuModal, {
+                      [classes.menuShrinkModal]: !showText,
+                    }),
+                  }}
                   PaperProps={{ square: true, style: { maxHeight: '100vh' } }}
                   transitionDuration={0}
                   hideBackdrop
                 >
-                  <div className={classes.secondMenu} onMouseLeave={handleClose}>
+                  <div
+                    className={classNames(classes.secondMenu)}
+                    onMouseLeave={handleClose}
+                  >
                     <List component="div" disablePadding>
                       {prop.children.map((menu, idx) => {
                         const itemClasses = classNames({
@@ -179,12 +187,16 @@ class LeftMenu extends PureComponent {
           open
           classes={{
             root: classes.root,
-            paper: classNames(classes.drawerPaper),
+            paper: classNames(classes.drawerPaper, {
+              [classes.menuShrink]: !showText,
+            }),
           }}
         >
           {brand}
           <div
-            className={classes.sidebarWrapper}
+            className={classNames(classes.sidebarWrapper, {
+              [classes.menuShrink]: !showText,
+            })}
             ref={this.menuRef}
           >
             {links}
@@ -205,6 +217,7 @@ const mapStateToProps = createStructuredSelector({
   menus: makeSelectLeftMenus(),
   clusterID: makeSelectClusterID(),
   location: makeSelectLocation(),
+  showText: makeSelectShowMenuText(),
 });
 
 const mapDispatchToProps = (dispatch) =>

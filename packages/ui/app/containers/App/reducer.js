@@ -5,11 +5,17 @@
  */
 
 import { fromJS } from 'immutable';
-import { INIT_ACTION, CHANGE_CLUSTER, TOGGLE_EVENTS_VIEW } from './constants';
+import {
+  INIT_ACTION,
+  CHANGE_CLUSTER,
+  TOGGLE_EVENTS_VIEW,
+  TOGGLE_MENU_TEXT,
+} from './constants';
 
 export const initialState = fromJS({
   activeCluster: '',
   showEvents: false,
+  showMenuText: true,
 });
 
 function appReducer(state = initialState, { type, payload }) {
@@ -27,6 +33,9 @@ function appReducer(state = initialState, { type, payload }) {
 
     case TOGGLE_EVENTS_VIEW:
       return state.set('showEvents', payload.showEvents);
+
+    case TOGGLE_MENU_TEXT:
+      return state.set('showMenuText', payload);
 
     default:
       return state;
