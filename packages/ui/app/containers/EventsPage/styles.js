@@ -78,6 +78,44 @@ const styles = (theme) => ({
   h5: {
     marginBottom: theme.spacing.unit * 2,
   },
+  wrapper: {
+    minHeight: 'calc(100vh - 65px)',
+  },
+  item: {
+
+  },
+  itemAvatar: {},
+  itemText: {
+    paddingRight: 0,
+    display: 'flex',
+    flexDirection: 'column',
+  },
+  itemText1: {
+    display: 'flex',
+    flexDirection: 'row',
+  },
+  itemText2: {
+    display: 'flex',
+    flexDirection: 'row',
+  },
+  itemName: {
+    display: 'flex',
+    color: '#40B7E8',
+  },
+  itemReason: {
+    display: 'flex',
+    color: '#4A4A4A ',
+    alignSelf: 'flex-end',
+  },
+  itemMessage: {
+    display: 'flex',
+    color: '#4A4A4A',
+  },
+  itemTime: {
+    display: 'flex',
+    color: '#9B9B9B',
+    alignSelf: 'flex-end',
+  },
 });
 
 export default styles;

@@ -18,17 +18,17 @@ function eventsPageReducer(state = initialState, { type, payload }) {
     case INIT_ACTION:
       return state
         .set('clusterID', payload.cluster_id)
-        .setIn(['events', payload.cluster_id], fromJS([]));
+        .setIn(['events', payload.cluster_id], []);
 
     case ADD_EVENT:
       return state.updateIn(['events', state.get('clusterID')], (events) =>
-        events.push(fromJS(payload.event))
+        events.push(payload.event)
       );
 
     case SET_EVENTS:
       return state.setIn(
         ['events', state.get('clusterID')],
-        fromJS(payload.events)
+        payload.events
       );
 
     default:

@@ -55,7 +55,7 @@ import {
 } from './selectors';
 import { makeSelectClusters } from '../ClustersPage/selectors';
 import GlobalStyle from '../../global-styles';
-import EventsTable from '../EventsPage/EventsTable';
+import EventsList from '../EventsPage/EventsList';
 
 class App extends PureComponent {
   state = { image: null, hasError: false };
@@ -108,15 +108,6 @@ class App extends PureComponent {
           })}
           data-ref="mainPanel"
         >
-          {clusterID && (
-            <div className={classes.eventPage}>
-              <ExpansionPanel square expanded={showEvents}>
-                <ExpansionPanelDetails>
-                  {showEvents && <EventsTable />}
-                </ExpansionPanelDetails>
-              </ExpansionPanel>
-            </div>
-          )}
           <div className={classes.content}>
             <Switch>
               {appRoutes.map((route, key) => (
@@ -132,6 +123,11 @@ class App extends PureComponent {
           </div>
           <Footer />
         </div>
+        {clusterID && showEvents && (
+          <div className={classes.eventPage}>
+            <EventsList />
+          </div>
+        )}
         <GlobalStyle />
       </div>
     );

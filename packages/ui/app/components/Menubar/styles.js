@@ -17,6 +17,7 @@ const styles = (theme) => ({
     position: 'fixed',
     top: 0,
     left: 0,
+    height: '65px',
     width: '100%',
     backgroundColor: theme.palette.primary.main,
     color: theme.palette.primary.contrastText,
@@ -47,15 +48,6 @@ const styles = (theme) => ({
     flexGrow: 1,
     flexDirection: 'column',
     justifyContent: 'center',
-    '&:after': {
-      content: '""',
-      position: 'absolute',
-      bottom: '0',
-      height: '1px',
-      right: '15px',
-      width: 'calc(100% - 30px)',
-      backgroundColor: `rgba(10,10,10, 0.3)`,
-    },
   },
   logo: {
     display: 'flex',
@@ -66,16 +58,6 @@ const styles = (theme) => ({
     flexGrow: 1,
     flexDirection: 'column',
     justifyContent: 'center',
-    '&:after': {
-      content: '""',
-      position: 'absolute',
-      bottom: '0',
-
-      height: '1px',
-      right: '15px',
-      width: 'calc(100% - 30px)',
-      backgroundColor: `rgba(10,10,10, 0.3)`,
-    },
   },
   img: {
     position: 'absolute',

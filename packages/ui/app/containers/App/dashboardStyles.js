@@ -37,10 +37,11 @@ const appStyle = (theme) => ({
     position: 'fixed',
     top: '65px',
     right: 0,
-    zIndex: 1200,
-    maxHeight: 'calc(60% - 65px)',
-    minWidth: '50%',
+    zIndex: theme.zIndex.drawer,
+    height: 'calc(100vh - 65px)',
+    width: '310px',
     overflow: 'auto',
+    backgroundColor: '#fff',
   },
 });
 
