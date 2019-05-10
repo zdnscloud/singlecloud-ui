@@ -106,14 +106,6 @@ class AppMenubar extends PureComponent {
         }
         headerRightContent={
           <Fragment>
-            {clusterID && (
-              <IconButton
-                color="inherit"
-                onClick={(evt) => toggleEventsView(!showEvents)}
-              >
-                <EventIcon />
-              </IconButton>
-            )}
             <IconButton
               color="inherit"
               onClick={(evt) => this.openUserMenu(evt)}
@@ -136,6 +128,17 @@ class AppMenubar extends PureComponent {
               <Divider />
               <MenuItem onClick={logout}>Logout</MenuItem>
             </Menu>
+            {clusterID && (
+              <IconButton
+                color="inherit"
+                onClick={(evt) => toggleEventsView(!showEvents)}
+              >
+                <EventIcon />
+                <small>
+                  Cluster Events
+                </small>
+              </IconButton>
+            )}
           </Fragment>
         }
       />

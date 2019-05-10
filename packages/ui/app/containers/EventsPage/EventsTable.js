@@ -1,6 +1,6 @@
 /**
  *
- * EventsPage
+ * Events Table
  *
  */
 
