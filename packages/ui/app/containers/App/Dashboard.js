@@ -16,6 +16,7 @@ import { createStructuredSelector } from 'reselect';
 import { bindActionCreators, compose } from 'redux';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import { withRouter } from 'react-router';
+import classNames from 'classnames';
 
 // creates a beautiful scrollbar
 import PerfectScrollbar from 'perfect-scrollbar';
@@ -50,6 +51,7 @@ import {
   makeSelectClusterID,
   makeSelectShowEvents,
   makeSelectLocation,
+  makeSelectShowMenuText,
 } from './selectors';
 import { makeSelectClusters } from '../ClustersPage/selectors';
 import GlobalStyle from '../../global-styles';
@@ -92,6 +94,7 @@ class App extends PureComponent {
       activeCluster,
       changeCluster,
       toggleEventsView,
+      showMenuText,
       ...rest
     } = this.props;
 
@@ -99,7 +102,12 @@ class App extends PureComponent {
       <div className={classes.wrapper}>
         <AppMenubar />
         <LeftMenu />
-        <div className={classes.mainPanel} data-ref="mainPanel">
+        <div
+          className={classNames(classes.mainPanel, {
+            [classes.mainPanelShrink]: !showMenuText,
+          })}
+          data-ref="mainPanel"
+        >
           {clusterID && (
             <div className={classes.eventPage}>
               <ExpansionPanel square expanded={showEvents}>
@@ -138,6 +146,7 @@ const mapStateToProps = createStructuredSelector({
   showEvents: makeSelectShowEvents(),
   isLogin: makeSelectIsLogin(),
   currentLocation: makeSelectLocation(),
+  showMenuText: makeSelectShowMenuText(),
 });
 
 const mapDispatchToProps = (dispatch) =>

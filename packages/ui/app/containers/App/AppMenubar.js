@@ -26,6 +26,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import Fab from '@material-ui/core/Fab';
 import IconButton from '@material-ui/core/IconButton';
 import EventIcon from '@material-ui/icons/Event';
+import MenuIcon from '@material-ui/icons/Menu';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import ExpansionPanel from '@material-ui/core/ExpansionPanel';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
@@ -52,6 +53,7 @@ import {
   makeSelectShowEvents,
   makeSelectLocation,
   makeSelectUserMenus,
+  makeSelectShowMenuText,
 } from './selectors';
 import { makeSelectClusters } from '../ClustersPage/selectors';
 
@@ -84,11 +86,14 @@ class AppMenubar extends PureComponent {
       role,
       userMenus,
       logout,
+      showMenuText,
+      toggleMenuText,
     } = this.props;
     const { userEl } = this.state;
 
     return (
       <Menubar
+        onClickMenuButton={(evt) => toggleMenuText(!showMenuText)}
         headerLeftContent={
           <Fragment>
             <SelectCluster
@@ -146,6 +151,7 @@ const mapStateToProps = createStructuredSelector({
   currentLocation: makeSelectLocation(),
   role: makeSelectRole(),
   userMenus: makeSelectUserMenus(),
+  showMenuText: makeSelectShowMenuText(),
 });
 
 const mapDispatchToProps = (dispatch) =>

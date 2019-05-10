@@ -15,7 +15,7 @@ import {
   hexToRgb,
 } from 'assets/jss/material-dashboard-react';
 
-const sidebarStyle = (theme) => ({
+const leftMenuStyle = (theme) => ({
   root: {
     backgroundColor: theme.palette.secondary.main,
     color: theme.palette.primary.contrastText,
@@ -64,13 +64,15 @@ const sidebarStyle = (theme) => ({
       right: 'auto !important',
     },
   },
+  menuShrink: {
+    width: '60px !important',
+  },
+  menuShrinkModal: {
+    left: '60px !important',
+  },
   secondMenuModal: {
     top: '64px',
     left: '260px',
-  },
-  secondMenuPaper: {
-    maxHeight: 'calc(100vh - 64px)',
-    width: '260px',
   },
   secondMenu: {
     width: '260px',
@@ -296,4 +298,4 @@ const sidebarStyle = (theme) => ({
   },
 });
 
-export default sidebarStyle;
+export default leftMenuStyle;
