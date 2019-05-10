@@ -73,11 +73,13 @@ const leftMenuStyle = (theme) => ({
   secondMenuModal: {
     top: '64px',
     left: '260px',
+    zIndex: theme.zIndex.drawer,
     ...transition,
   },
   secondMenu: {
     width: '260px',
     height: 'calc(100vh - 64px)',
+    paddingTop: '15px',
     backgroundColor: theme.palette.primary.main,
   },
   logo: {
@@ -174,6 +176,7 @@ const leftMenuStyle = (theme) => ({
     position: 'relative',
     padding: '10px 15px',
     backgroundColor: 'transparent',
+    height: '60px',
     ...defaultFont,
   },
   itemIcon: {
@@ -297,6 +300,7 @@ const leftMenuStyle = (theme) => ({
   nested: {
     padding: '10px 15px',
     paddingLeft: '30px',
+    height: '50px',
   },
 });
 
