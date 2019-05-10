@@ -73,6 +73,7 @@ const leftMenuStyle = (theme) => ({
   secondMenuModal: {
     top: '64px',
     left: '260px',
+    ...transition,
   },
   secondMenu: {
     width: '260px',
@@ -291,6 +292,7 @@ const leftMenuStyle = (theme) => ({
     zIndex: '4',
     overflowScrolling: 'touch',
     color: theme.palette.primary.contrastText,
+    ...transition,
   },
   nested: {
     padding: '10px 15px',
