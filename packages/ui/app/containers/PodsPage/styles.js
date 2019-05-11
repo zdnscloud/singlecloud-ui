@@ -169,6 +169,9 @@ const styles = (theme) => ({
     color: 'white',
     marginLeft: '2em',
   },
+  tableWrapper: {
+    overflow: 'auto',
+  },
 });
 
 export default styles;
