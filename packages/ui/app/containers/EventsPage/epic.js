@@ -39,7 +39,7 @@ export const eventEpic = (action$) =>
         };
       })
         .pipe(scan((acc, event) => acc.concat([event]).slice(-200), []))
-        .pipe(debounceTime(2000))
+        .pipe(debounceTime(100))
         .pipe(map((events) => setEvents(events)))
     )
   );
