@@ -46,7 +46,6 @@ export class EventsList extends React.PureComponent {
 
     return (
       <Paper className={classes.wrapper}>
-        Events:
         <List>
           {events.map((evt, i) => {
             return (
