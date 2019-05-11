@@ -26,7 +26,6 @@ export function* initialize() {
 
 export function* changeCluster({ payload }) {
   const id = payload.cluster;
-  yield put(initEvents({ params: { cluster_id: id } }));
   yield put(push(`/clusters/${id}`));
 }
 
