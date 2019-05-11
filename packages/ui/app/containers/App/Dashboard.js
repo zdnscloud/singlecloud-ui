@@ -103,10 +103,12 @@ class App extends PureComponent {
         <AppMenubar />
         <LeftMenu />
         <div
-          className={classNames(classes.mainPanel, {
-            [classes.mainPanelShrink]: !showMenuText,
-          })}
+          className={classNames(classes.mainPanel)}
           data-ref="mainPanel"
+          style={{
+            marginRight: showEvents ? '310px' : null,
+            width: `calc(100% - ${(showEvents ? 310 : 0) + (showMenuText ? 260 : 60)}px)`,
+          }}
         >
           <div className={classes.content}>
             <Switch>
