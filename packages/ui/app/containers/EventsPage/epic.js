@@ -38,7 +38,7 @@ export const eventEpic = (action$) =>
           observer.complete();
         };
       })
-        .pipe(scan((acc, event) => acc.concat([event]).slice(-200), []))
+        .pipe(scan((acc, event) => acc.concat([event]).slice(-80), []))
         .pipe(debounceTime(100))
         .pipe(map((events) => setEvents(events)))
     )
