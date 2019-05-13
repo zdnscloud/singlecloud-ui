@@ -47,7 +47,7 @@ export class EventsList extends React.PureComponent {
     return (
       <Paper className={classes.wrapper}>
         <List>
-          {events.map((evt, i) => {
+          {events.reverse().map((evt, i) => {
             return (
               <ListItem className={classes.item} key={i}>
                 <ListItemAvatar className={classes.itemAvatar}>
