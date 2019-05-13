@@ -51,7 +51,7 @@ export class EventsList extends React.PureComponent {
       <Paper className={classes.wrapper}>
         <List>
           <ReactCSSTransitionGroup
-            transitionName="example"
+            transitionName="eventItem"
             transitionEnterTimeout={500}
             transitionLeaveTimeout={300}
           >

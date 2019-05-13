@@ -26,6 +26,24 @@ const GlobalStyle = createGlobalStyle`
   a[href] {
     cursor: pointer;
   }
+
+  .eventItem-enter {
+    opacity: 0.01;
+  }
+
+  .eventItem-enter.eventItem-enter-active {
+    opacity: 1;
+    transition: opacity 500ms ease-in;
+  }
+
+  .eventItem-leave {
+    opacity: 1;
+  }
+
+  .eventItem-leave.eventItem-leave-active {
+    opacity: 0.01;
+    transition: opacity 300ms ease-in;
+  }
 `;
 
 export default GlobalStyle;
