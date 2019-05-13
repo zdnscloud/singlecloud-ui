@@ -17,6 +17,5 @@ export function* initialize() {
 
 // Individual exports for testing
 export default function* clusterDetailPageSaga() {
-  // See example in containers/HomePage/saga.js
   yield takeLatest(INIT_ACTION, initialize);
 }
