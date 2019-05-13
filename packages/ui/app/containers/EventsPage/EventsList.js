@@ -11,6 +11,7 @@ import { FormattedMessage } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import { bindActionCreators, compose } from 'redux';
 
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import { Link } from 'react-router-dom';
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
@@ -31,58 +32,66 @@ import { makeSelectEvents } from './selectors';
 import * as actions from './actions';
 import messages from './messages';
 import styles from './styles';
-import schema from './tableSchema';
 
 /* eslint-disable react/prefer-stateless-function */
 export class EventsList extends React.PureComponent {
   static propTypes = {
     classes: PropTypes.object.isRequired,
-    events: PropTypes.object,
+    events: PropTypes.array,
   };
 
   render() {
     const { classes, events } = this.props;
-    const mergedSchema = schema.concat([]);
+    const rEvents = [];
+    for (let i = events.length - 1; i >= 0; i -= 1) {
+      rEvents.push(events[i]);
+    }
 
     return (
       <Paper className={classes.wrapper}>
         <List>
-          {events.reverse().map((evt, i) => {
-            return (
-              <ListItem className={classes.item} key={i}>
-                <ListItemAvatar className={classes.itemAvatar}>
-                  {evt.type === 'Warning' ? (
-                    <WarningIcon nativeColor="#FF7A22" />
-                  ) : (
-                    <NormalIcon nativeColor="#1A435F" />
-                  )}
-                </ListItemAvatar>
-                <ListItemText
-                  className={classes.itemText}
-                  primary={
-                    <Typography className={classes.itemText1} component="div">
-                      <Typography className={classes.itemName} component="div">
-                        {evt.name}
+          <ReactCSSTransitionGroup
+            transitionName="example"
+            transitionEnterTimeout={500}
+            transitionLeaveTimeout={300}
+          >
+            {rEvents.map((evt, i) => {
+              return (
+                <ListItem className={classes.item} key={evt.id}>
+                  <ListItemAvatar className={classes.itemAvatar}>
+                    {evt.type === 'Warning' ? (
+                      <WarningIcon nativeColor="#FF7A22" />
+                    ) : (
+                      <NormalIcon nativeColor="#1A435F" />
+                    )}
+                  </ListItemAvatar>
+                  <ListItemText
+                    className={classes.itemText}
+                    primary={
+                      <Typography className={classes.itemText1} component="div">
+                        <Typography className={classes.itemName} component="div">
+                          {evt.name}
+                        </Typography>
+                        <Typography className={classes.itemReason} component="div">
+                          {evt.reason}
+                        </Typography>
                       </Typography>
-                      <Typography className={classes.itemReason} component="div">
-                        {evt.reason}
+                    }
+                    secondary={
+                      <Typography className={classes.itemText2} component="div">
+                        <Typography className={classes.itemMessage} component="div">
+                          {evt.message}
+                        </Typography>
+                        <Typography className={classes.itemTime} component="div">
+                          {evt.time}
+                        </Typography>
                       </Typography>
-                    </Typography>
-                  }
-                  secondary={
-                    <Typography className={classes.itemText2} component="div">
-                      <Typography className={classes.itemMessage} component="div">
-                        {evt.message}
-                      </Typography>
-                      <Typography className={classes.itemTime} component="div">
-                        {evt.time}
-                      </Typography>
-                    </Typography>
-                  }
-                />
-              </ListItem>
-            );
-          })}
+                    }
+                  />
+                </ListItem>
+              );
+            })}
+          </ReactCSSTransitionGroup>
         </List>
       </Paper>
     );

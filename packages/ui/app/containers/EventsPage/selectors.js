@@ -22,7 +22,7 @@ export const makeSelectEvents = () =>
   createSelector(
     selectEventsPageDomain,
     makeSelectClusterID(),
-    (substate, clusterID) => substate.getIn(['events', clusterID]) || fromJS([])
+    (substate, clusterID) => substate.getIn(['events', clusterID]) || []
   );
 
 /**
