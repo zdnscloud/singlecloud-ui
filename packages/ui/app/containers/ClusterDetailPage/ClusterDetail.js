@@ -4,7 +4,8 @@
  *
  */
 
-import React from 'react';
+import React, { createRef } from 'react';
+import { findDOMNode } from 'react-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
@@ -26,19 +27,6 @@ import TableRow from '@material-ui/core/TableRow';
 // @material-ui/core
 import Icon from '@material-ui/core/Icon';
 import teal from '@material-ui/core/colors/teal';
-// @material-ui/icons
-import Store from '@material-ui/icons/Store';
-import Warning from '@material-ui/icons/Warning';
-import DateRange from '@material-ui/icons/DateRange';
-import LocalOffer from '@material-ui/icons/LocalOffer';
-import Update from '@material-ui/icons/Update';
-import ArrowUpward from '@material-ui/icons/ArrowUpward';
-import AccessTime from '@material-ui/icons/AccessTime';
-import Accessibility from '@material-ui/icons/Accessibility';
-import BugReport from '@material-ui/icons/BugReport';
-import Code from '@material-ui/icons/Code';
-import Cloud from '@material-ui/icons/Cloud';
-import red from '@material-ui/core/colors/red';
 // core components
 import GridItem from 'components/Grid/GridItem';
 import GridContainer from 'components/Grid/GridContainer';
@@ -51,10 +39,22 @@ import CardIcon from 'components/Card/CardIcon';
 import CardBody from 'components/Card/CardBody';
 import CardFooter from 'components/Card/CardFooter';
 import Gauge from 'components/Charts/Gauge';
+import NameIcon from 'components/Icons/Name';
+import VersionIcon from 'components/Icons/Version';
+import NodesIcon from 'components/Icons/Nodes';
+import TimeIcon from 'components/Icons/Time';
 
-import styles from 'assets/jss/material-dashboard-react/views/dashboardStyle';
+import {
+  makeSelectShowMenuText,
+  makeSelectShowEvents,
+} from 'containers/App/selectors';
+
+import styles from './dashboardStyle';
 import * as actions from './actions';
 import messages from './messages';
+
+const gaugeColor = '#FFFFFF';
+const gaugeBgColor = '#40A7E8';
 
 /* eslint-disable react/prefer-stateless-function */
 export class ClusterDetail extends React.PureComponent {
@@ -62,6 +62,44 @@ export class ClusterDetail extends React.PureComponent {
     classes: PropTypes.object.isRequired,
     cluster: PropTypes.object.isRequired,
   };
+
+  state = {
+    chartWidth: 270,
+  }
+
+  chartRef = createRef();
+
+  componentDidMount() {
+    this.setWidth();
+    window.onresize = () => this.setWidth();
+  }
+
+  componentDidUpdate(prevProps) {
+    const {
+      showMenuText,
+      showEvents,
+    } = this.props
+    if (
+      prevProps.showMenuText !== showMenuText ||
+      prevProps.showEvents !== showEvents
+    ) {
+      setTimeout(() => {
+        this.setWidth();
+      }, 300);
+    }
+  }
+
+  componenWillUnmount() {
+    window.onresize = null;
+  }
+
+  setWidth() {
+    const el = findDOMNode(this.chartRef.current);
+    const width = el.offsetWidth;
+    this.setState({
+      chartWidth: width - 30,
+    });
+  }
 
   render() {
     const { classes, cluster } = this.props;
@@ -77,51 +115,49 @@ export class ClusterDetail extends React.PureComponent {
         <GridContainer>
           <GridItem xs={12} sm={6} md={3}>
             <Card>
-              <CardHeader color="info" stats icon>
-                <CardIcon color="info">
-                  <Accessibility />
+              <CardHeader color="cyan" stats icon>
+                <CardIcon color="cyan">
+                  <NameIcon />
                 </CardIcon>
                 <p className={classes.cardCategory}>Name</p>
                 <h3 className={classes.cardTitle}>{cluster.get('name')}</h3>
               </CardHeader>
-              <CardFooter stats />
+              <CardFooter />
             </Card>
           </GridItem>
           <GridItem xs={12} sm={6} md={3}>
             <Card>
-              <CardHeader color="warning" stats icon>
-                <CardIcon color="warning">
-                  <Store />
+              <CardHeader color="cyan" stats icon>
+                <CardIcon color="cyan">
+                  <VersionIcon />
                 </CardIcon>
                 <p className={classes.cardCategory}>Version</p>
                 <h3 className={classes.cardTitle}>
                   <small>{cluster.get('version')}</small>
                 </h3>
               </CardHeader>
-              <CardFooter stats>
-                <div className={classes.stats} />
-              </CardFooter>
+              <CardFooter />
             </Card>
           </GridItem>
           <GridItem xs={12} sm={6} md={3}>
             <Card>
-              <CardHeader color="success" stats icon>
-                <CardIcon color="success">
-                  <Store />
+              <CardHeader color="cyan" stats icon>
+                <CardIcon color="cyan">
+                  <NodesIcon />
                 </CardIcon>
                 <p className={classes.cardCategory}>Nodes</p>
                 <h3 className={classes.cardTitle}>
                   <small>{cluster.get('nodeCount')}</small>
                 </h3>
               </CardHeader>
-              <CardFooter stats />
+              <CardFooter />
             </Card>
           </GridItem>
           <GridItem xs={12} sm={6} md={3}>
             <Card>
-              <CardHeader color="danger" stats icon>
-                <CardIcon color="danger">
-                  <Store />
+              <CardHeader color="cyan" stats icon>
+                <CardIcon color="cyan">
+                  <TimeIcon />
                 </CardIcon>
                 <p className={classes.cardCategory}>Created</p>
                 <h3 className={classes.cardTitle}>
@@ -132,7 +168,7 @@ export class ClusterDetail extends React.PureComponent {
                   </small>
                 </h3>
               </CardHeader>
-              <CardFooter stats />
+              <CardFooter />
             </Card>
           </GridItem>
         </GridContainer>
@@ -140,15 +176,15 @@ export class ClusterDetail extends React.PureComponent {
         <GridContainer>
           <GridItem xs={12} sm={12} md={4}>
             <Card chart>
-              <CardHeader color="success">
+              <CardHeader color="azure" ref={this.chartRef}>
                 <Gauge
                   value={cpuRatio}
-                  width={270}
-                  height={157}
-                  color={teal.A400}
-                  backgroundColor={teal['400']}
+                  width={this.state.chartWidth}
+                  height={this.state.chartWidth / 270 * 157}
+                  color={gaugeColor}
+                  backgroundColor={gaugeBgColor}
                   valueFormatter={(v) => `${v}%`}
-                  valueLabelStyle={{ fill: '#edebeb', fontSize: '42px' }}
+                  valueLabelStyle={{ fill: '#edebeb', fontSize: `${this.state.chartWidth / 270 * 42}px` }}
                   minMaxLabelStyle={{ fill: '#edebeb' }}
                 />
               </CardHeader>
@@ -158,24 +194,20 @@ export class ClusterDetail extends React.PureComponent {
                   <span>{cpu}</span>
                 </p>
               </CardBody>
-              <CardFooter chart>
-                <div className={classes.stats}>
-                  <AccessTime /> updated 4 minutes ago
-                </div>
-              </CardFooter>
+              <CardFooter />
             </Card>
           </GridItem>
           <GridItem xs={12} sm={12} md={4}>
             <Card chart>
-              <CardHeader color="warning">
+              <CardHeader color="azure">
                 <Gauge
                   value={memoryRatio}
-                  width={270}
-                  height={157}
-                  color={teal.A400}
-                  backgroundColor={teal['400']}
+                  width={this.state.chartWidth}
+                  height={this.state.chartWidth / 270 * 157}
+                  color={gaugeColor}
+                  backgroundColor={gaugeBgColor}
                   valueFormatter={(v) => `${v}%`}
-                  valueLabelStyle={{ fill: '#edebeb', fontSize: '42px' }}
+                  valueLabelStyle={{ fill: '#edebeb', fontSize: `${this.state.chartWidth / 270 * 42}px` }}
                   minMaxLabelStyle={{ fill: '#edebeb' }}
                 />
               </CardHeader>
@@ -183,24 +215,20 @@ export class ClusterDetail extends React.PureComponent {
                 <h4 className={classes.cardTitle}>Memory</h4>
                 <p className={classes.cardCategory}>{memory}</p>
               </CardBody>
-              <CardFooter chart>
-                <div className={classes.stats}>
-                  <AccessTime /> updated 4 minutes ago
-                </div>
-              </CardFooter>
+              <CardFooter />
             </Card>
           </GridItem>
           <GridItem xs={12} sm={12} md={4}>
             <Card chart>
-              <CardHeader color="danger">
+              <CardHeader color="azure">
                 <Gauge
                   value={podRatio}
-                  width={270}
-                  height={157}
-                  color={teal.A400}
-                  backgroundColor={teal['400']}
+                  width={this.state.chartWidth}
+                  height={this.state.chartWidth / 270 * 157}
+                  color={gaugeColor}
+                  backgroundColor={gaugeBgColor}
                   valueFormatter={(v) => `${v}%`}
-                  valueLabelStyle={{ fill: '#edebeb', fontSize: '42px' }}
+                  valueLabelStyle={{ fill: '#edebeb', fontSize: `${this.state.chartWidth / 270 * 42}px` }}
                   minMaxLabelStyle={{ fill: '#edebeb' }}
                 />
               </CardHeader>
@@ -210,11 +238,7 @@ export class ClusterDetail extends React.PureComponent {
                   {pod}
                 </p>
               </CardBody>
-              <CardFooter chart>
-                <div className={classes.stats}>
-                  <AccessTime /> updated 4 minutes ago
-                </div>
-              </CardFooter>
+              <CardFooter />
             </Card>
           </GridItem>
         </GridContainer>
@@ -223,7 +247,10 @@ export class ClusterDetail extends React.PureComponent {
   }
 }
 
-const mapStateToProps = createStructuredSelector({});
+const mapStateToProps = createStructuredSelector({
+  showMenuText: makeSelectShowMenuText(),
+  showEvents: makeSelectShowEvents(),
+});
 
 const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
