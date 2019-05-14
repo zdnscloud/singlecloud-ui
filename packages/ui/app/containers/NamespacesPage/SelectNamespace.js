@@ -33,6 +33,7 @@ import AddIcon from '@material-ui/icons/Add';
 import Collapse from '@material-ui/core/Collapse';
 import Checkbox from '@material-ui/core/Checkbox';
 
+import messages from './messages';
 import styles from '../App/selectClusterStyles';
 import * as actions from './actions';
 import { makeSelectClusterID } from '../App/selectors';
@@ -75,7 +76,7 @@ class SelectNamespace extends PureComponent {
           }}
           htmlFor="namespace_name-id"
         >
-          Namespace
+          <FormattedMessage {...messages.namespace} />
         </InputLabel>
         <Select
           className={classes.select}

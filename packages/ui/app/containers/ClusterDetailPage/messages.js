@@ -25,24 +25,32 @@ export default defineMessages({
     id: `${scope}.clusterDetail`,
     defaultMessage: 'Cluster {name}',
   },
-  tableTitleName: {
-    id: `${scope}.tableTitleName`,
+  clusterName: {
+    id: `${scope}.clusterName`,
     defaultMessage: 'Name',
   },
-  tableTitleNodeCount: {
-    id: `${scope}.tableTitleNodeCount`,
-    defaultMessage: 'NodeCount',
-  },
-  tableTitleVersion: {
-    id: `${scope}.tableTitleVersion`,
+  clusterVersion: {
+    id: `${scope}.clusterVersion`,
     defaultMessage: 'Version',
   },
-  tableTitleCreationTimestamp: {
-    id: `${scope}.tableTitleCreationTimestamp`,
-    defaultMessage: 'CreationTimestamp',
+  clusterNodes: {
+    id: `${scope}.clusterNodes`,
+    defaultMessage: 'Nodes',
   },
-  tableTitleLinks: {
-    id: `${scope}.tableTitleLinks`,
-    defaultMessage: 'Links',
+  clusterCreated: {
+    id: `${scope}.clusterCreated`,
+    defaultMessage: 'Created',
+  },
+  clusterCPU: {
+    id: `${scope}.clusterCPU`,
+    defaultMessage: 'CPU',
+  },
+  clusterMemory: {
+    id: `${scope}.clusterMemory`,
+    defaultMessage: 'Memory',
+  },
+  clusterPods: {
+    id: `${scope}.clusterPods`,
+    defaultMessage: 'Pods',
   },
 });

@@ -51,7 +51,10 @@ export class NamespacesTable extends React.PureComponent {
           </Fragment>
         ),
       },
-    ]);
+    ]).map((s) => ({
+      ...s,
+      label: <FormattedMessage {...messages[`tableTitle${s.label}`]} />
+    }));
 
     return (
       <Paper className={classes.tableWrapper}>

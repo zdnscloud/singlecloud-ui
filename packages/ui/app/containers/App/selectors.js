@@ -51,46 +51,6 @@ export const makeSelectActiveCluster = () =>
     (appState) => appState.get('activeCluster')
   );
 
-export const makeSelectMenus = () =>
-  createSelector(
-    selectApp,
-    makeSelectClusterID(),
-    makeSelectNamespaceID(),
-    makeSelectIsAdmin(),
-    (appState, cluster, namespace, isAdmin) => {
-      const menus = [{ name: 'clusters', path: '/clusters' }];
-      if (cluster !== '') {
-        return menus.concat([
-          { name: 'nodes', path: `/clusters/${cluster}/nodes` },
-          { name: 'network', path: `/clusters/${cluster}/network` },
-          { name: 'storage', path: `/clusters/${cluster}/storage` },
-          { name: 'namespaces', path: `/clusters/${cluster}/namespaces` },
-          {
-            name: 'deployments',
-            path: `/clusters/${cluster}/namespaces/${namespace}/deployments`,
-          },
-          {
-            name: 'ingresses',
-            path: `/clusters/${cluster}/namespaces/${namespace}/ingresses`,
-          },
-          {
-            name: 'services',
-            path: `/clusters/${cluster}/namespaces/${namespace}/services`,
-          },
-          {
-            name: 'configmaps',
-            path: `/clusters/${cluster}/namespaces/${namespace}/configmaps`,
-          },
-          {
-            name: 'topology',
-            path: `/clusters/${cluster}/namespaces/${namespace}/topology`,
-          },
-        ]);
-      }
-      return menus.concat(isAdmin ? [{ name: 'users', path: `/users` }] : []);
-    }
-  );
-
 export const makeSelectShowMenuText = () =>
   createSelector(
     selectApp,
@@ -126,7 +86,7 @@ export const makeSelectLeftMenus = () =>
       if (cluster !== '') {
         return menus.concat([
           {
-            name: 'clusterManagement',
+            name: 'ClusterManagement',
             children: [
               { name: 'Overview', path: `/clusters/${cluster}` },
               { name: 'Namespaces', path: `/clusters/${cluster}/namespaces` },

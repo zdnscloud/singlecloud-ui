@@ -1,5 +1,6 @@
 import React from 'react';
 import { compose } from 'redux';
+import { FormattedMessage } from 'react-intl';
 import { Field, reduxForm } from 'redux-form/immutable';
 import getByKey from '@gsmlg/utils/getByKey';
 import classNames from 'classnames';
@@ -27,6 +28,8 @@ import UserIcon from 'components/Icons/User';
 import PasswordIcon from 'components/Icons/Password';
 
 import loginLogo from 'images/login-logo.png';
+
+import messages from './messages';
 
 const validate = (values) => {
   const errors = {};
@@ -120,13 +123,13 @@ const LoginForm = (props) => {
         <Field
           name="username"
           component={UsernameField}
-          label="Username"
+          label={<FormattedMessage {...messages.username} />}
           cns={classes}
         />
         <Field
           name="password"
           component={PasswordField}
-          label="Password"
+          label={<FormattedMessage {...messages.password} />}
           cns={classes}
         />
       </CardBody>
@@ -145,7 +148,7 @@ const LoginForm = (props) => {
           size="lg"
           className={classes.submitButton}
         >
-          Sign In
+          <FormattedMessage {...messages.signIn} />
         </Button>
       </CardFooter>
     </form>

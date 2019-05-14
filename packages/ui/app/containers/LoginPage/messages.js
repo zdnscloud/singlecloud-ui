@@ -21,4 +21,16 @@ export default defineMessages({
     id: `${scope}.header`,
     defaultMessage: 'This is the LoginPage container!',
   },
+  username: {
+    id: `${scope}.username`,
+    defaultMessage: 'Username',
+  },
+  password: {
+    id: `${scope}.password`,
+    defaultMessage: 'Password',
+  },
+  signIn: {
+    id: `${scope}.signIn`,
+    defaultMessage: 'Sign In',
+  },
 });

@@ -66,19 +66,21 @@ export class ClustersTable extends React.PureComponent {
           return {
             ...sch,
             component: (props) => (
-              <Button
+              <Link
                 variant="outlined"
                 color="primary"
-                component={Link}
                 to={`/clusters/${props.data.get('id')}`}
               >
                 {props.data.get('name')}
-              </Button>
+              </Link>
             ),
           };
         }
         return sch;
-      });
+      }).map((s) => ({
+        ...s,
+        label: <FormattedMessage {...messages[`tableTitle${s.label}`]} />
+      }));
 
     return (
       <Paper className={classes.tableWrapper}>

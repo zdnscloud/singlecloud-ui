@@ -39,4 +39,24 @@ export default defineMessages({
     id: `${scope}.nodes`,
     defaultMessage: 'Nodes',
   },
+  tableTitleName: {
+    id: `${scope}.tableTitleName`,
+    defaultMessage: 'Name',
+  },
+  tableTitleAddress: {
+    id: `${scope}.tableTitleAddress`,
+    defaultMessage: 'Address',
+  },
+  tableTitleRole: {
+    id: `${scope}.tableTitleRole`,
+    defaultMessage: 'Role',
+  },
+  tableTitleLabels: {
+    id: `${scope}.tableTitleLabels`,
+    defaultMessage: 'Labels',
+  },
+  tableTitleCreationTimestamp: {
+    id: `${scope}.tableTitleCreationTimestamp`,
+    defaultMessage: 'CreationTimestamp',
+  },
 });

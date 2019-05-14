@@ -6,21 +6,7 @@
 
 import { defineMessages } from 'react-intl';
 
-import tableSchema from './tableSchema';
-
 export const scope = 'app.containers.NamespacesPage';
-
-// eslint-disable-next-line
-const table = tableSchema.reduce(
-  (schema, col) => ({
-    [`tableTitle${col.label}`]: {
-      id: `${scope}.tableTitle${col.label}`,
-      defaultMessage: col.label,
-    },
-    ...schema,
-  }),
-  {}
-);
 
 export default defineMessages({
   pageTitle: {
@@ -35,8 +21,44 @@ export default defineMessages({
     id: `${scope}.header`,
     defaultMessage: 'This is the NamespacesPage header!',
   },
+  namespace: {
+    id: `${scope}.namespace`,
+    defaultMessage: 'Namespace',
+  },
   namespaces: {
     id: `${scope}.namespaces`,
     defaultMessage: 'Namespaces',
+  },
+  tableTitleName: {
+    id: `${scope}.tableTitleName`,
+    defaultMessage: 'Name',
+  },
+  tableTitleCreationTimestamp: {
+    id: `${scope}.tableTitleCreationTimestamp`,
+    defaultMessage: 'CreationTimestamp',
+  },
+  tableTitleActions: {
+    id: `${scope}.tableTitleActions`,
+    defaultMessage: 'Actions',
+  },
+  dialogTitle: {
+    id: `${scope}.dialogTitle`,
+    defaultMessage: 'Create Namespace',
+  },
+  dialogContent: {
+    id: `${scope}.dialogContent`,
+    defaultMessage: 'ADD a Namespace',
+  },
+  dialogName: {
+    id: `${scope}.dialogName`,
+    defaultMessage: 'Name',
+  },
+  dialogCreate: {
+    id: `${scope}.dialogCreate`,
+    defaultMessage: 'Create',
+  },
+  dialogCancel: {
+    id: `${scope}.dialogCancel`,
+    defaultMessage: 'Cancel',
   },
 });

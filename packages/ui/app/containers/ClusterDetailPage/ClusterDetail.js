@@ -127,7 +127,9 @@ export class ClusterDetail extends React.PureComponent {
                 <CardIcon color="cyan">
                   <NameIcon />
                 </CardIcon>
-                <p className={classes.cardCategory}>Name</p>
+                <p className={classes.cardCategory}>
+                  <FormattedMessage {...messages.clusterName} />
+                </p>
                 <h3 className={classes.cardTitle}>{cluster.get('name')}</h3>
               </CardHeader>
               <CardFooter />
@@ -139,7 +141,9 @@ export class ClusterDetail extends React.PureComponent {
                 <CardIcon color="cyan">
                   <VersionIcon />
                 </CardIcon>
-                <p className={classes.cardCategory}>Version</p>
+                <p className={classes.cardCategory}>
+                  <FormattedMessage {...messages.clusterVersion} />
+                </p>
                 <h3 className={classes.cardTitle}>
                   <small>{cluster.get('version')}</small>
                 </h3>
@@ -153,7 +157,9 @@ export class ClusterDetail extends React.PureComponent {
                 <CardIcon color="cyan">
                   <NodesIcon />
                 </CardIcon>
-                <p className={classes.cardCategory}>Nodes</p>
+                <p className={classes.cardCategory}>
+                  <FormattedMessage {...messages.clusterNodes} />
+                </p>
                 <h3 className={classes.cardTitle}>
                   <small>{cluster.get('nodeCount')}</small>
                 </h3>
@@ -167,7 +173,9 @@ export class ClusterDetail extends React.PureComponent {
                 <CardIcon color="cyan">
                   <TimeIcon />
                 </CardIcon>
-                <p className={classes.cardCategory}>Created</p>
+                <p className={classes.cardCategory}>
+                  <FormattedMessage {...messages.clusterCreated} />
+                </p>
                 <h3 className={classes.cardTitle}>
                   <small>
                     {moment(cluster.get('creationTimestamp')).format(
@@ -201,7 +209,7 @@ export class ClusterDetail extends React.PureComponent {
               </CardHeader>
               <CardBody>
                 <h4 className={classes.cardTitle}>
-                  CPU
+                  <FormattedMessage {...messages.clusterCPU} />
                   <span className={classes.cardTitleValue}>{cpu}</span>
                 </h4>
                 <p className={classes.cardCategory} />
@@ -228,7 +236,7 @@ export class ClusterDetail extends React.PureComponent {
               </CardHeader>
               <CardBody>
                 <h4 className={classes.cardTitle}>
-                  Memory
+                  <FormattedMessage {...messages.clusterMemory} />
                   <span className={classes.cardTitleValue}>{memory}</span>
                 </h4>
                 <p className={classes.cardCategory} />
@@ -255,7 +263,7 @@ export class ClusterDetail extends React.PureComponent {
               </CardHeader>
               <CardBody>
                 <h4 className={classes.cardTitle}>
-                  Pods
+                  <FormattedMessage {...messages.clusterPods} />
                   <span className={classes.cardTitleValue}>{pod}</span>
                 </h4>
                 <p className={classes.cardCategory} />

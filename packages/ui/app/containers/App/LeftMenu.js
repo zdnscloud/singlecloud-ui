@@ -25,10 +25,10 @@ import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 import ChevronRight from '@material-ui/icons/ChevronRight';
 
+import messages from './messages';
 import * as actions from './actions';
 import {
   makeSelectActiveCluster,
-  makeSelectMenus,
   makeSelectLeftMenus,
   makeSelectClusterID,
   makeSelectShowEvents,
@@ -72,6 +72,8 @@ class LeftMenu extends PureComponent {
     const links = (
       <List className={classes.list} onMouseLeave={handleClose}>
         {menus.map((prop, key) => {
+          const msgName = messages[`leftMenu${prop.name}`];
+
           if (prop.path) {
             const listItemClasses = classNames({
               [` ${classes.activeMenu1}`]: activeRoute(prop.path),
@@ -93,7 +95,7 @@ class LeftMenu extends PureComponent {
                   ): null}
                   {showText ? (
                     <ListItemText
-                      primary={prop.name}
+                      primary={<FormattedMessage {...msgName} />}
                       className={classNames(classes.itemText)}
                       disableTypography
                     />
@@ -128,7 +130,7 @@ class LeftMenu extends PureComponent {
                 ) : null}
                 {showText ? (
                   <ListItemText
-                    primary={prop.name}
+                    primary={<FormattedMessage {...msgName} />}
                     className={classNames(classes.itemText)}
                     disableTypography
                   />
@@ -163,6 +165,7 @@ class LeftMenu extends PureComponent {
                         const itemClasses = classNames({
                           [` ${classes.activeMenu2}`]: activeRoute(menu.path),
                         });
+                        const msgSubName = messages[`leftMenu${menu.name}`];
 
                         return (
                           <NavLink
@@ -180,7 +183,7 @@ class LeftMenu extends PureComponent {
                               )}
                             >
                               <ListItemText
-                                primary={menu.name}
+                                primary={<FormattedMessage {...msgSubName} />}
                                 className={classNames(classes.itemText)}
                                 disableTypography
                               />

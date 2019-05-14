@@ -47,7 +47,6 @@ import appRoutes from './routes';
 import * as actions from './actions';
 import {
   makeSelectActiveCluster,
-  makeSelectMenus,
   makeSelectClusterID,
   makeSelectShowEvents,
   makeSelectLocation,
@@ -58,7 +57,7 @@ import GlobalStyle from '../../global-styles';
 import EventsList from '../EventsPage/EventsList';
 
 class App extends PureComponent {
-  state = { image: null, hasError: false };
+  state = { hasError: false };
 
   componentWillMount() {
     const { isLogin, history } = this.props;
@@ -139,7 +138,6 @@ class App extends PureComponent {
 const mapStateToProps = createStructuredSelector({
   clusters: makeSelectClusters(),
   activeCluster: makeSelectActiveCluster(),
-  menus: makeSelectMenus(),
   clusterID: makeSelectClusterID(),
   showEvents: makeSelectShowEvents(),
   isLogin: makeSelectIsLogin(),

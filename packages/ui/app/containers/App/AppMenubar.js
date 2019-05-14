@@ -46,6 +46,7 @@ import * as roleActions from 'ducks/role/actions';
 import SelectCluster from './SelectCluster';
 import SelectNamespace from '../NamespacesPage/SelectNamespace';
 import dashboardStyle from './dashboardStyles';
+import messages from './messages';
 import * as actions from './actions';
 import {
   makeSelectActiveCluster,
@@ -135,7 +136,7 @@ class AppMenubar extends PureComponent {
               >
                 <EventIcon />
                 <small>
-                  Cluster Events
+                  <FormattedMessage {...messages.clusterEvents} />
                 </small>
               </IconButton>
             )}

@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { bindActionCreators, compose } from 'redux';
@@ -10,6 +11,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 
+import messages from './messages';
 import styles from './selectClusterStyles';
 import * as actions from './actions';
 import { makeSelectActiveCluster } from './selectors';
@@ -26,7 +28,7 @@ const SelectCluster = (props) => {
         }}
         htmlFor="cluster_name-id"
       >
-        Cluster
+        <FormattedMessage {...messages.cluster} />
       </InputLabel>
       <Select
         className={classes.select}
@@ -40,7 +42,9 @@ const SelectCluster = (props) => {
         }}
       >
         <MenuItem value="">
-          <em>Global</em>
+          <em>
+            <FormattedMessage {...messages.global} />
+          </em>
         </MenuItem>
         {clusters.toList().map((c) => (
           <MenuItem key={c.get('id')} value={c.get('id')}>
