@@ -42,10 +42,7 @@ export class EventsList extends React.PureComponent {
 
   render() {
     const { classes, events } = this.props;
-    const rEvents = [];
-    for (let i = events.length - 1; i >= 0; i -= 1) {
-      rEvents.push(events[i]);
-    }
+    const rEvents = events.reverse();
 
     return (
       <Paper className={classes.wrapper}>
@@ -56,6 +53,7 @@ export class EventsList extends React.PureComponent {
             transitionLeaveTimeout={300}
           >
             {rEvents.map((evt, i) => {
+
               return (
                 <ListItem className={classes.item} key={evt.id}>
                   <ListItemAvatar className={classes.itemAvatar}>

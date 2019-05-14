@@ -65,7 +65,7 @@ export class ClusterDetail extends React.PureComponent {
 
   state = {
     chartWidth: 270,
-  }
+  };
 
   chartRef = createRef();
 
@@ -75,10 +75,7 @@ export class ClusterDetail extends React.PureComponent {
   }
 
   componentDidUpdate(prevProps) {
-    const {
-      showMenuText,
-      showEvents,
-    } = this.props
+    const { showMenuText, showEvents } = this.props;
     if (
       prevProps.showMenuText !== showMenuText ||
       prevProps.showEvents !== showEvents
@@ -107,7 +104,9 @@ export class ClusterDetail extends React.PureComponent {
     const memoryRatio = (cluster.get('memoryUsedRatio') * 100).toFixed(0);
     const podRatio = (cluster.get('podUsedRatio') * 100).toFixed(0);
     const cpu = `${cluster.get('cpuUsed')} / ${cluster.get('cpu')}`;
-    const memory = `${(cluster.get('memoryUsed') / (1024 ** 3)).toFixed(2)}GB / ${(cluster.get('memory') / (1024 ** 3)).toFixed()}GB`;
+    const memory = `${(cluster.get('memoryUsed') / 1024 ** 3).toFixed(
+      2
+    )}GB / ${(cluster.get('memory') / 1024 ** 3).toFixed()}GB`;
     const pod = `${cluster.get('podUsed')} / ${cluster.get('pod')}`;
 
     return (
@@ -180,19 +179,23 @@ export class ClusterDetail extends React.PureComponent {
                 <Gauge
                   value={cpuRatio}
                   width={this.state.chartWidth}
-                  height={this.state.chartWidth / 270 * 157}
+                  height={(this.state.chartWidth / 270) * 157}
                   color={gaugeColor}
                   backgroundColor={gaugeBgColor}
                   valueFormatter={(v) => `${v}%`}
-                  valueLabelStyle={{ fill: '#edebeb', fontSize: `${this.state.chartWidth / 270 * 42}px` }}
+                  valueLabelStyle={{
+                    fill: '#edebeb',
+                    fontSize: `${(this.state.chartWidth / 270) * 42}px`,
+                  }}
                   minMaxLabelStyle={{ fill: '#edebeb' }}
                 />
               </CardHeader>
               <CardBody>
-                <h4 className={classes.cardTitle}>CPU</h4>
-                <p className={classes.cardCategory}>
-                  <span>{cpu}</span>
-                </p>
+                <h4 className={classes.cardTitle}>
+                  CPU
+                  <span className={classes.cardTitleValue}>{cpu}</span>
+                </h4>
+                <p className={classes.cardCategory} />
               </CardBody>
               <CardFooter />
             </Card>
@@ -203,17 +206,23 @@ export class ClusterDetail extends React.PureComponent {
                 <Gauge
                   value={memoryRatio}
                   width={this.state.chartWidth}
-                  height={this.state.chartWidth / 270 * 157}
+                  height={(this.state.chartWidth / 270) * 157}
                   color={gaugeColor}
                   backgroundColor={gaugeBgColor}
                   valueFormatter={(v) => `${v}%`}
-                  valueLabelStyle={{ fill: '#edebeb', fontSize: `${this.state.chartWidth / 270 * 42}px` }}
+                  valueLabelStyle={{
+                    fill: '#edebeb',
+                    fontSize: `${(this.state.chartWidth / 270) * 42}px`,
+                  }}
                   minMaxLabelStyle={{ fill: '#edebeb' }}
                 />
               </CardHeader>
               <CardBody>
-                <h4 className={classes.cardTitle}>Memory</h4>
-                <p className={classes.cardCategory}>{memory}</p>
+                <h4 className={classes.cardTitle}>
+                  Memory
+                  <span className={classes.cardTitleValue}>{memory}</span>
+                </h4>
+                <p className={classes.cardCategory} />
               </CardBody>
               <CardFooter />
             </Card>
@@ -224,19 +233,23 @@ export class ClusterDetail extends React.PureComponent {
                 <Gauge
                   value={podRatio}
                   width={this.state.chartWidth}
-                  height={this.state.chartWidth / 270 * 157}
+                  height={(this.state.chartWidth / 270) * 157}
                   color={gaugeColor}
                   backgroundColor={gaugeBgColor}
                   valueFormatter={(v) => `${v}%`}
-                  valueLabelStyle={{ fill: '#edebeb', fontSize: `${this.state.chartWidth / 270 * 42}px` }}
+                  valueLabelStyle={{
+                    fill: '#edebeb',
+                    fontSize: `${(this.state.chartWidth / 270) * 42}px`,
+                  }}
                   minMaxLabelStyle={{ fill: '#edebeb' }}
                 />
               </CardHeader>
               <CardBody>
-                <h4 className={classes.cardTitle}>Pods</h4>
-                <p className={classes.cardCategory}>
-                  {pod}
-                </p>
+                <h4 className={classes.cardTitle}>
+                  Pods
+                  <span className={classes.cardTitleValue}>{pod}</span>
+                </h4>
+                <p className={classes.cardCategory} />
               </CardBody>
               <CardFooter />
             </Card>

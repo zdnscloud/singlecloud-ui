@@ -107,7 +107,7 @@ const styles = (theme) => ({
   },
   itemName: {
     color: '#40B7E8',
-    width: '170px',
+    width: '165px',
     height: '24px',
     overflow: 'hidden',
     textOverflow: 'ellipsis',
@@ -115,14 +115,14 @@ const styles = (theme) => ({
   itemReason: {
     color: '#4A4A4A ',
     alignSelf: 'flex-end',
-    width: '53px',
+    width: '58px',
     height: '24px',
     overflow: 'hidden',
     textOverflow: 'ellipsis',
   },
   itemMessage: {
     color: '#4A4A4A',
-    width: '170px',
+    width: '165px',
     height: '24px',
     overflow: 'hidden',
     textOverflow: 'ellipsis',
@@ -130,7 +130,7 @@ const styles = (theme) => ({
   itemTime: {
     color: '#9B9B9B',
     alignSelf: 'flex-end',
-    width: '53px',
+    width: '58px',
     height: '24px',
     overflow: 'hidden',
     textOverflow: 'ellipsis',
