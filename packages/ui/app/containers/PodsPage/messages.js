@@ -25,12 +25,40 @@ export default defineMessages({
     id: `${scope}.pods`,
     defaultMessage: 'Pods',
   },
+  tableTitleState: {
+    id: `${scope}.tableTitleState`,
+    defaultMessage: 'State',
+  },
   tableTitleName: {
     id: `${scope}.tableTitleName`,
     defaultMessage: 'Name',
   },
+  tableTitleNodeName: {
+    id: `${scope}.tableTitleNodeName`,
+    defaultMessage: 'NodeName',
+  },
+  tableTitleContainers: {
+    id: `${scope}.tableTitleContainers`,
+    defaultMessage: 'Containers',
+  },
+  tableTitleCreationTimestamp: {
+    id: `${scope}.tableTitleCreationTimestamp`,
+    defaultMessage: 'CreationTimestamp',
+  },
+  tableTitleLogs: {
+    id: `${scope}.tableTitleLogs`,
+    defaultMessage: 'Logs',
+  },
+  tableTitleActions: {
+    id: `${scope}.tableTitleActions`,
+    defaultMessage: 'Actions',
+  },
   viewLog: {
     id: `${scope}.viewLog`,
     defaultMessage: 'View Log',
+  },
+  logTitle: {
+    id: `${scope}.logTitle`,
+    defaultMessage: 'Container Log',
   },
 });

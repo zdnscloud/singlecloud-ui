@@ -7,7 +7,6 @@ const schema = [
   'name',
   'nodeName',
   'containers',
-  // 'status',
   'creationTimestamp',
 ];
 

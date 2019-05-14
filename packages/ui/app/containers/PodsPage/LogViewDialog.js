@@ -2,6 +2,7 @@ import React from 'react';
 import { bindActionCreators } from 'redux';
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
+import { FormattedMessage } from 'react-intl';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -14,11 +15,6 @@ import List from 'react-virtualized/dist/es/List';
 import { Observable } from 'rxjs';
 import { map, scan, throttleTime } from 'rxjs/operators';
 
-// import {
-//   makeSelectLogViewIsOpen,
-//   makeSelectLogs,
-//   makeSelectLogsURL,
-// } from './selectors';
 import {
   makeSelectPodLogIsOpening,
   makeSelectPodLog,
@@ -27,6 +23,7 @@ import {
 } from 'ducks/pods/selectors';
 import * as actions from 'ducks/pods/actions';
 import styles from './styles';
+import messages from './messages';
 
 let socket = null;
 let observer = null;
@@ -91,7 +88,9 @@ class LogViewDialog extends React.Component {
         aria-labelledby="form-dialog-title"
         maxWidth="lg"
       >
-        <DialogTitle id="form-dialog-title">Contianer Log</DialogTitle>
+        <DialogTitle id="form-dialog-title">
+          <FormattedMessage {...messages.logTitle} />
+        </DialogTitle>
         <DialogContent>
           <div className={classes.logsWrapper}>
             <pre className={classes.logs}>

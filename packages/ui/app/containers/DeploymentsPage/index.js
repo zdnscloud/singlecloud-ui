@@ -79,7 +79,7 @@ export class DeploymentsPage extends React.PureComponent {
                       <Fab
                         size="small"
                         color="default"
-                        aria-label="create deployment"
+                        aria-label={<FormattedMessage {...messages.createDeployment} />}
                         className={classes.menuButton}
                       >
                         <AddIcon />

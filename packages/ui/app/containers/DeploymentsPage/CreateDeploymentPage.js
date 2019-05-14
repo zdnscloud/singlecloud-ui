@@ -167,7 +167,7 @@ export class CreateDeployment extends React.PureComponent {
                 size="large"
                 onClick={submitForm}
               >
-                Save
+                <FormattedMessage {...messages.save} />
               </Button>
             </CardFooter>
           </Card>

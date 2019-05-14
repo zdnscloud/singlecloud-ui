@@ -13,9 +13,10 @@ const { resolve } = require('path');
 const app = express();
 
 // If you need a backend, e.g. an API, add your custom backend-specific middleware here
+const backend = process.env.BACKEND || 'localhost';
 app.use(
   '/apis',
-  proxy({ target: 'http://localhost:8088', changeOrigin: false, ws: true })
+  proxy({ target: `http://${backend}:8088`, changeOrigin: false, ws: true })
 );
 
 app.use(bodyParser.json());

@@ -1,6 +1,7 @@
 import React, { PureComponent, Fragment, useState } from 'react';
 import { fromJS, is } from 'immutable';
 import { compose } from 'redux';
+import { FormattedMessage } from 'react-intl';
 import {
   Field,
   Fields,
@@ -35,6 +36,7 @@ import CardBody from 'components/Card/CardBody';
 import CardHeader from 'components/Card/CardHeader';
 import CardFooter from 'components/Card/CardFooter';
 import CustomInput from 'components/CustomInput/CustomInput';
+import ReadOnlyInput from 'components/CustomInput/ReadOnlyInput';
 import Danger from 'components/Typography/Danger';
 import GridItem from 'components/Grid/GridItem';
 import GridContainer from 'components/Grid/GridContainer';
@@ -43,6 +45,7 @@ import SelectField from 'components/Field/SelectField';
 import SwitchField from 'components/Field/SwitchField';
 import RadioField from 'components/Field/RadioField';
 
+import messages from './messages';
 
 const renderAdvanceServices = ({
   input,
@@ -71,22 +74,24 @@ const renderAdvanceServices = ({
         return (
           <ListItem key={i}>
             <ListItemText>
-              Expose:
               {port.get('name') ? (
                 <Fragment>
-                  <InputLabel>
-                    Name: {port.get('name')}
-                  </InputLabel>
+                  <ReadOnlyInput
+                    labelText={<FormattedMessage {...messages.formPortName} />}
+                    value={port.get('name')}
+                  />
                   &nbsp;&nbsp;
                 </Fragment>
               ) : null}
-              <InputLabel>
-                Protocol: {port.get('protocol')}
-              </InputLabel>
+              <ReadOnlyInput
+                labelText={<FormattedMessage {...messages.formPortProtocol} />}
+                value={port.get('protocol')}
+              />
               &nbsp;&nbsp;
-              <InputLabel>
-                Port: {port.get('port')}
-              </InputLabel>
+              <ReadOnlyInput
+                labelText={<FormattedMessage {...messages.formPort} />}
+                value={port.get('port')}
+              />
               <br />
               <FormControlLabel
                 control={
@@ -101,12 +106,12 @@ const renderAdvanceServices = ({
                     }}
                   />
                 }
-                label="Auto Create Service"
+                label={<FormattedMessage {...messages.formAutoCreateService} />}
               />
-
+              &nbsp;&nbsp;
               <TextField
                 type="number"
-                label="Servce Port"
+                label={<FormattedMessage {...messages.formServicePort} />}
                 disabled={!checked}
                 value={value.getIn([idx, 'servicePort'])}
                 onChange={(evt) => {
@@ -114,6 +119,7 @@ const renderAdvanceServices = ({
                   onChange(value.setIn([idx, 'servicePort'], val));
                 }}
               />
+              &nbsp;&nbsp;
               <FormControlLabel
                 control={
                   <Checkbox
@@ -125,12 +131,13 @@ const renderAdvanceServices = ({
                     }}
                   />
                 }
-                label="Auto Create Ingress"
+                label={<FormattedMessage {...messages.formAutoCreateIngress} />}
               />
+              &nbsp;&nbsp;
               {isUDP ? (
                 <Fragment>
                   <TextField
-                    label="Ingress Port"
+                    label={<FormattedMessage {...messages.formIngressPort} />}
                     disabled={!value.getIn([idx, 'autoCreateIngress'])}
                     value={value.getIn([idx, 'ingressPort'])}
                     onChange={(evt) => {
@@ -146,7 +153,7 @@ const renderAdvanceServices = ({
               ) : (
                 <Fragment>
                   <TextField
-                    label="Ingress Domain Name"
+                    label={<FormattedMessage {...messages.formIngressDomain} />}
                     disabled={!value.getIn([idx, 'autoCreateIngress'])}
                     value={value.getIn([idx, 'ingressDomainName'])}
                     onChange={(evt) => {
@@ -154,8 +161,9 @@ const renderAdvanceServices = ({
                       onChange(value.setIn([idx, 'ingressDomainName'], evt.target.value));
                     }}
                   />
+                  &nbsp;&nbsp;
                   <TextField
-                    label="Ingress Path"
+                    label={<FormattedMessage {...messages.formIngressPath} />}
                     disabled={!value.getIn([idx, 'autoCreateIngress'])}
                     value={value.getIn([idx, 'ingressPath'])}
                     onChange={(evt) => {
@@ -184,7 +192,7 @@ const renderPorts = ({
   return (
     <List component="ul">
       <ListItem>
-        <ListItemText primary="Expose Port" />
+        <ListItemText primary={<FormattedMessage {...messages.formExposedPorts} />} />
         <IconButton onClick={(evt) => fields.push({ protocol: 'tcp' })}>
           <AddIcon />
         </IconButton>
@@ -192,11 +200,14 @@ const renderPorts = ({
       {fields.map((f, i) => (
         <ListItem key={i}>
           <ListItemText>
-            <InputField name={`${f}.name`} label="Name" />
+            <InputField
+              label={<FormattedMessage {...messages.formPortName} />}
+              name={`${f}.name`}
+            />
             &nbsp;&nbsp;&nbsp;&nbsp;
             <SelectField
               name={`${f}.protocol`}
-              label="Protocol"
+              label={<FormattedMessage {...messages.formPortProtocol} />}
               options={options}
               formControlProps={{
                 style: {
@@ -208,7 +219,7 @@ const renderPorts = ({
             &nbsp;&nbsp;&nbsp;&nbsp;
             <InputField
               name={`${f}.port`}
-              label="Port"
+              label={<FormattedMessage {...messages.formPort} />}
               normalize={(val) => Number(val)}
               inputProps={{
                 type: 'number',
@@ -236,7 +247,7 @@ const renderEnvs = ({
   return (
     <List component="ul">
       <ListItem>
-        <ListItemText primary="ENV" />
+        <ListItemText primary={<FormattedMessage {...messages.formENV} />} />
         <IconButton onClick={(evt) => fields.push({})}>
           <AddIcon />
         </IconButton>
@@ -244,9 +255,15 @@ const renderEnvs = ({
       {fields.map((f, i) => (
         <ListItem key={i}>
           <ListItemText>
-            <InputField name={`${f}.name`} label="Name" />
+            <InputField
+              name={`${f}.name`}
+              label={<FormattedMessage {...messages.formENVName} />}
+            />
             &nbsp;&nbsp;&nbsp;&nbsp;
-            <InputField name={`${f}.value`} label="Value" />
+            <InputField
+              name={`${f}.value`}
+              label={<FormattedMessage {...messages.formENVValue} />}
+            />
           </ListItemText>
           <IconButton
             variant="contained"
@@ -269,12 +286,15 @@ const renderContainers = ({
   const options = configMaps.toList().map((m) => ({
     label: m.get('name'),
     value: m.get('id'),
-  })).unshift({ label: 'None', value: '' });
+  })).unshift({
+    label: <FormattedMessage {...messages.formNone} />,
+    value: '',
+  });
 
   return (
     <List component="ul">
       <ListItem>
-        <ListItemText primary="Containers" />
+        <ListItemText primary={<FormattedMessage {...messages.formContainers} />} />
         <IconButton onClick={(evt) => fields.push({})}>
           <AddIcon />
         </IconButton>
@@ -291,18 +311,18 @@ const renderContainers = ({
               <ListItemText>
                 <GridContainer>
                   <GridItem xs={3} sm={3} md={3}>
-                    <InputField name={`${f}.name`} label="Name" fullWidth />
+                    <InputField name={`${f}.name`} label={<FormattedMessage {...messages.formContainerName} />} fullWidth />
                   </GridItem>
                   <GridItem xs={3} sm={3} md={3}>
-                    <InputField name={`${f}.image`} label="Image" fullWidth />
+                    <InputField name={`${f}.image`} label={<FormattedMessage {...messages.formImage} />} fullWidth />
                   </GridItem>
                 </GridContainer>
                 <GridContainer>
                   <GridItem xs={3} sm={3} md={3}>
-                    <InputField name={`${f}.command`} label="Command" fullWidth />
+                    <InputField name={`${f}.command`} label={<FormattedMessage {...messages.formCommand} />} fullWidth />
                   </GridItem>
                   <GridItem xs={3} sm={3} md={3}>
-                    <InputField name={`${f}.args`} label="Args" fullWidth />
+                    <InputField name={`${f}.args`} label={<FormattedMessage {...messages.formArgs} />} fullWidth />
                   </GridItem>
                 </GridContainer>
                 <GridContainer>
@@ -317,7 +337,7 @@ const renderContainers = ({
                   <GridItem xs={3} sm={3} md={3}>
                     <SelectField
                       name={`${f}.configName`}
-                      label="Config Name"
+                      label={<FormattedMessage {...messages.formConfigName} />}
                       options={options}
                       formControlProps={{
                         style: {
@@ -330,7 +350,7 @@ const renderContainers = ({
                   <GridItem xs={3} sm={3} md={3}>
                     <InputField
                       name={`${f}.mountPath`}
-                      label="Mount Path"
+                      label={<FormattedMessage {...messages.formMountPath} />}
                       fullWidth
                     />
                   </GridItem>
@@ -412,7 +432,7 @@ class DeploymentForm extends PureComponent {
             <GridContainer>
               <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
                 <InputField
-                  label="Name"
+                  label={<FormattedMessage {...messages.formName} />}
                   name="name"
                   fullWidth
                   inputProps={{ type: 'text', autoComplete: 'off' }}
@@ -421,7 +441,7 @@ class DeploymentForm extends PureComponent {
               </GridItem>
               <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
                 <InputField
-                  label="Replicas"
+                  label={<FormattedMessage {...messages.formReplicas} />}
                   name="replicas"
                   normalize={(val) => Number(val)}
                   fullWidth
@@ -446,7 +466,7 @@ class DeploymentForm extends PureComponent {
           <GridItem xs={12} sm={12} md={12}>
             <SwitchField
               name="enableAdvancedOptions"
-              label="Advanced Options"
+              label={<FormattedMessage {...messages.formAdvancedOptions} />}
             />
             {formValues && formValues.get('enableAdvancedOptions') ? (
               <Fragment>
@@ -455,7 +475,7 @@ class DeploymentForm extends PureComponent {
                 <FormSection name="advancedOptions">
                   <RadioField
                     name="exposedServiceType"
-                    label="Exposed Service Type"
+                    label={<FormattedMessage {...messages.formExposedServiceType} />}
                     options={[
                       { label: 'Cluster IP', value: 'clusterip' },
                       { label: 'Node Port', value: 'nodeport' },
@@ -470,7 +490,7 @@ class DeploymentForm extends PureComponent {
                   <GridContainer>
                     <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
                       <InputField
-                        label="Exposed Metric Path"
+                        label={<FormattedMessage {...messages.formExposedMetricPath} />}
                         fullWidth
                         inputProps={{ type: 'text', autoComplete: 'off' }}
                         classes={classes}
@@ -479,7 +499,7 @@ class DeploymentForm extends PureComponent {
                     </GridItem>
                     <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
                       <InputField
-                        label="Exposed Metric Port"
+                        label={<FormattedMessage {...messages.formExposedMeticPort} />}
                         normalize={(val) => Number(val)}
                         fullWidth
                         inputProps={{

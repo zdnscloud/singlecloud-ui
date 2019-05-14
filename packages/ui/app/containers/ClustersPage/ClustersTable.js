@@ -66,13 +66,13 @@ export class ClustersTable extends React.PureComponent {
           return {
             ...sch,
             component: (props) => (
-              <Link
-                variant="outlined"
+              <Button
                 color="primary"
                 to={`/clusters/${props.data.get('id')}`}
+                component={Link}
               >
                 {props.data.get('name')}
-              </Link>
+              </Button>
             ),
           };
         }

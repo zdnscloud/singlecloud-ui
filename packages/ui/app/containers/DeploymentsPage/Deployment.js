@@ -82,7 +82,7 @@ export class Deployment extends React.PureComponent {
                   <GridContainer>
                     <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
                       <CustomInput
-                        labelText="Name"
+                        labelText={<FormattedMessage {...messages.formName} />}
                         name="name"
                         fullWidth
                         value={deployment.get('name')}
@@ -90,13 +90,13 @@ export class Deployment extends React.PureComponent {
                     </GridItem>
                     <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
                       <CustomInput
-                        labelText="Replicas"
+                        labelText={<FormattedMessage {...messages.formReplicas} />}
                         name="replicas"
                         fullWidth
                         value={deployment.get('replicas')}
                         inputProps={{
                           type: 'number',
-                          autoComplete: 'username',
+                          autoComplete: 'off',
                           endAdornment: (
                             <InputAdornment position="end">
                               <ButtonBase
@@ -139,7 +139,7 @@ export class Deployment extends React.PureComponent {
                 <GridItem xs={12} sm={12} md={12}>
                   <List component="ul">
                     <ListItem>
-                      <ListItemText primary="Containers" />
+                      <ListItemText primary={<FormattedMessage {...messages.formContainers} />} />
                     </ListItem>
                     {deployment && deployment.get('containers') && deployment.get('containers').map((c, i) => (
                       <Card key={i}>
@@ -149,14 +149,14 @@ export class Deployment extends React.PureComponent {
                               <GridContainer>
                                 <GridItem xs={3} sm={3} md={3}>
                                   <CustomInput
-                                    labelText="Name"
+                                    labelText={<FormattedMessage {...messages.formContainerName} />}
                                     fullWidth
                                     value={c.get('name')}
                                   />
                                 </GridItem>
                                 <GridItem xs={3} sm={3} md={3}>
                                   <CustomInput
-                                    labelText="Image"
+                                    labelText={<FormattedMessage {...messages.formImage} />}
                                     fullWidth
                                     value={c.get('image')}
                                   />
@@ -165,14 +165,14 @@ export class Deployment extends React.PureComponent {
                               <GridContainer>
                                 <GridItem xs={3} sm={3} md={3}>
                                   <CustomInput
-                                    labelText="Command"
+                                    labelText={<FormattedMessage {...messages.formCommand} />}
                                     fullWidth
                                     value={c.get('command')}
                                   />
                                 </GridItem>
                                 <GridItem xs={3} sm={3} md={3}>
                                   <CustomInput
-                                    labelText="Args"
+                                    labelText={<FormattedMessage {...messages.formArgs} />}
                                     fullWidth
                                     value={c.get('args')}
                                   />
@@ -181,14 +181,14 @@ export class Deployment extends React.PureComponent {
                               <GridContainer>
                                 <GridItem xs={3} sm={3} md={3}>
                                   <CustomInput
-                                    labelText="Config Name"
+                                    labelText={<FormattedMessage {...messages.formConfigName} />}
                                     value={c.get('configName')}
                                     fullWidth
                                   />
                                 </GridItem>
                                 <GridItem xs={3} sm={3} md={3}>
                                   <CustomInput
-                                    labelText="Mount Path"
+                                    labelText={<FormattedMessage {...messages.formMountPath} />}
                                     value={c.get('mountPath')}
                                     fullWidth
                                   />
@@ -199,18 +199,18 @@ export class Deployment extends React.PureComponent {
                                   <GridItem>
                                     <List component="ul">
                                       <ListItem>
-                                        <ListItemText primary="ENV" />
+                                        <ListItemText primary={<FormattedMessage {...messages.formENV} />} />
                                       </ListItem>
                                       {c.get('env').map((p, i) => (
                                         <ListItem key={i}>
                                           <ListItemText>
                                             <CustomInput
-                                              labelText="Name"
+                                              labelText={<FormattedMessage {...messages.formENVName} />}
                                               value={p.get('name')}
                                             />
                                             &nbsp;&nbsp;&nbsp;&nbsp;
                                             <CustomInput
-                                              labelText="Value"
+                                              labelText={<FormattedMessage {...messages.formENVValue} />}
                                               value={p.get('value')}
                                             />
                                           </ListItemText>
@@ -225,23 +225,23 @@ export class Deployment extends React.PureComponent {
                                   <GridItem>
                                     <List component="ul">
                                       <ListItem>
-                                        <ListItemText primary="Expose Port" />
+                                        <ListItemText primary={<FormattedMessage {...messages.formExposedPorts} />} />
                                       </ListItem>
                                       {c.get('exposedPorts').map((p, i) => (
                                         <ListItem key={i}>
                                           <ListItemText>
                                             <CustomInput
-                                              labelText="Name"
+                                              labelText={<FormattedMessage {...messages.formPortName} />}
                                               value={p.get('name')}
                                             />
                                             &nbsp;&nbsp;&nbsp;&nbsp;
                                             <CustomInput
-                                              labelText="Protocol"
+                                              labelText={<FormattedMessage {...messages.formPortProtocol} />}
                                               value={p.get('protocol')}
                                             />
                                             &nbsp;&nbsp;&nbsp;&nbsp;
                                             <CustomInput
-                                              labelText="Port"
+                                              labelText={<FormattedMessage {...messages.formPort} />}
                                               value={p.get('port')}
                                             />
                                           </ListItemText>

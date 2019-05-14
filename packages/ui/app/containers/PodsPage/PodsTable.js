@@ -57,8 +57,8 @@ export class PodsTable extends React.PureComponent {
     } = this.props;
     const mergedSchema = schema.concat([
       {
-        id: 'showLogs',
-        label: 'ShowLogs',
+        id: 'logs',
+        label: 'Logs',
         component: (props) => (
           <Fragment>
             {props.data.get('containers').map((ctn) => (
@@ -106,7 +106,10 @@ export class PodsTable extends React.PureComponent {
           </Fragment>
         ),
       },
-    ]);
+    ]).map((s) => ({
+      ...s,
+      label: <FormattedMessage {...messages[`tableTitle${s.label}`]} />,
+    }));
 
     return (
       <Paper className={classes.tableWrapper}>

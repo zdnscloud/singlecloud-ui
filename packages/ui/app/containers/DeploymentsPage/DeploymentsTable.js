@@ -81,7 +81,6 @@ export class DeploymentsTable extends React.PureComponent {
             ...sch,
             component: (props) => (
               <Button
-                variant="outlined"
                 color="primary"
                 component={Link}
                 to={`${pathname}/${props.data.get('id')}`}
@@ -92,7 +91,10 @@ export class DeploymentsTable extends React.PureComponent {
           };
         }
         return sch;
-      });
+      }).map((s) => ({
+        ...s,
+        label: <FormattedMessage {...messages[`tableTitle${s.label}`]} />
+      }));
 
     return (
       <Paper className={classes.tableWrapper}>
