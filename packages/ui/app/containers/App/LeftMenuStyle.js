@@ -302,6 +302,49 @@ const leftMenuStyle = (theme) => ({
     paddingLeft: '30px',
     height: '50px',
   },
+  activeMenu1: {
+    backgroundColor: theme.palette.primary.main,
+    boxShadow: `0 12px 20px -10px rgba(${hexToRgb(
+      theme.palette.primary.main
+    )},.28), 0 4px 20px 0 rgba(${hexToRgb(
+      blackColor
+    )},.12), 0 7px 8px -5px rgba(${hexToRgb(theme.palette.primary.main)},.2)`,
+    '&:hover': {
+      backgroundColor: theme.palette.primary.main,
+      boxShadow: `0 12px 20px -10px rgba(${hexToRgb(
+        theme.palette.primary.main
+      )},.28), 0 4px 20px 0 rgba(${hexToRgb(
+        blackColor
+      )},.12), 0 7px 8px -5px rgba(${hexToRgb(theme.palette.primary.main)},.2)`,
+    },
+    '&:before': {
+      position: 'absolute',
+      zIndex: '1',
+      width: '4px',
+      height: '100%',
+      display: 'block',
+      left: '0',
+      top: '0',
+      content: '" "',
+      backgroundColor: '#1B9CCE',
+    },
+  },
+  activeMenu2: {
+    backgroundColor: '#1B9CCE',
+    boxShadow: `0 12px 20px -10px rgba(${hexToRgb(
+      '#1B9CCE'
+    )},.28), 0 4px 20px 0 rgba(${hexToRgb(
+      blackColor
+    )},.12), 0 7px 8px -5px rgba(${hexToRgb('#1B9CCE')},.2)`,
+    '&:hover': {
+      backgroundColor: '#1B9CCE',
+      boxShadow: `0 12px 20px -10px rgba(${hexToRgb(
+        '#1B9CCE'
+      )},.28), 0 4px 20px 0 rgba(${hexToRgb(
+        blackColor
+      )},.12), 0 7px 8px -5px rgba(${hexToRgb('#1B9CCE')},.2)`,
+    },
+  },
 });
 
 export default leftMenuStyle;

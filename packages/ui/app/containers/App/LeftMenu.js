@@ -46,13 +46,22 @@ class LeftMenu extends PureComponent {
   menuRef = createRef();
 
   render() {
-    const props = this.props;
+    const {
+      classes,
+      logo,
+      image,
+      logoText,
+      menus,
+      showText,
+      location,
+    } = this.props;
+
+    const color = 'orange';
     // verifies if routeName is the one active (in browser input)
-    function activeRoute(routeName) {
-      const pathname = props.location.get('pathname');
-      return pathname.indexOf(routeName) > -1;
-    }
-    const { classes, color, logo, image, logoText, menus, showText } = props;
+    const activeRoute = (routeName) => {
+      const pathname = location.get('pathname');
+      return pathname === routeName;
+    };
     const handleOpen = (name) => () => {
       this.setState({ openingMenu: name });
     };
@@ -63,11 +72,11 @@ class LeftMenu extends PureComponent {
     const links = (
       <List className={classes.list} onMouseLeave={handleClose}>
         {menus.map((prop, key) => {
-          const listItemClasses = classNames({
-            [` ${classes[color]}`]: activeRoute(prop.path),
-          });
-
           if (prop.path) {
+            const listItemClasses = classNames({
+              [` ${classes.activeMenu1}`]: activeRoute(prop.path),
+            });
+
             return (
               <NavLink
                 to={prop.path}
@@ -93,6 +102,16 @@ class LeftMenu extends PureComponent {
               </NavLink>
             );
           }
+
+          let active = false;
+          if (prop.children) {
+            prop.children.forEach((m) => {
+              if (activeRoute(m.path)) active = true;
+            });
+          }
+          const listItemClasses = classNames({
+            [` ${classes.activeMenu1}`]: active,
+          });
 
           return (
             <Fragment key={key}>
@@ -142,7 +161,7 @@ class LeftMenu extends PureComponent {
                     <List component="div" disablePadding>
                       {prop.children.map((menu, idx) => {
                         const itemClasses = classNames({
-                          [` ${classes[color]}`]: activeRoute(menu.path),
+                          [` ${classes.activeMenu2}`]: activeRoute(menu.path),
                         });
 
                         return (

@@ -85,8 +85,9 @@ export class ClusterDetail extends React.PureComponent {
         const now = new Date();
         const duration = now - start;
         if (duration > 1000) return;
-        this.setWidth();
-        requestAnimationFrame(run);
+        if (this.setWidth()) {
+          requestAnimationFrame(run);
+        }
       };
       run();
     }
@@ -98,10 +99,12 @@ export class ClusterDetail extends React.PureComponent {
 
   setWidth() {
     const el = findDOMNode(this.chartRef.current);
+    if (!el) return false;
     const width = el.offsetWidth;
     this.setState({
       chartWidth: width - 30,
     });
+    return true;
   }
 
   render() {
