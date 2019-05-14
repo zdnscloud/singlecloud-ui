@@ -80,9 +80,15 @@ export class ClusterDetail extends React.PureComponent {
       prevProps.showMenuText !== showMenuText ||
       prevProps.showEvents !== showEvents
     ) {
-      setTimeout(() => {
+      const start = new Date();
+      const run = () => {
+        const now = new Date();
+        const duration = now - start;
+        if (duration > 1000) return;
         this.setWidth();
-      }, 300);
+        requestAnimationFrame(run);
+      };
+      run();
     }
   }
 
