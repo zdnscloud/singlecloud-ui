@@ -81,4 +81,12 @@ export default defineMessages({
     id: `${scope}.leftMenuServiceLink`,
     defaultMessage: 'ServiceLink',
   },
+  leftMenuStorage: {
+    id: `${scope}.leftMenuStorage`,
+    defaultMessage: 'Storage',
+  },
+  leftMenuNetwork: {
+    id: `${scope}.leftMenuNetwork`,
+    defaultMessage: 'Network',
+  },
 });

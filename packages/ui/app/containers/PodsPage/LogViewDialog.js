@@ -99,7 +99,9 @@ class LogViewDialog extends React.Component {
                   <time className={classes.logTime}>
                     {log[0].toLocaleString()}
                   </time>
-                  <span className={classes.log}>{log[1]}</span>
+                  <span className={classes.log}>
+                    {log[1]}
+                  </span>
                 </div>
               ))}
             </pre>

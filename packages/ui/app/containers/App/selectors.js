@@ -123,6 +123,14 @@ export const makeSelectLeftMenus = () =>
                 name: 'ServiceLink',
                 path: `/clusters/${cluster}/namespaces/${namespace}/topology`,
               },
+              {
+                name: 'Storage',
+                path: `/clusters/${cluster}/storage`,
+              },
+              {
+                name: 'Network',
+                path: `/clusters/${cluster}/network`,
+              },
             ],
             icon: SystemIcon,
           },
