@@ -5,15 +5,14 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import ListItem from '@material-ui/core/ListItem';
 import List from '@material-ui/core/List';
 // core components
-import footerStyle from 'assets/jss/material-dashboard-react/components/footerStyle';
+import footerStyle from './footerStyle';
 
 function Footer({ ...props }) {
   const { classes } = props;
   return (
     <footer className={classes.footer}>
       <div className={classes.container}>
-        <div className={classes.left}>
-        </div>
+        <div className={classes.left} />
         <p className={classes.right}>
           <span>
             &copy; {1900 + new Date().getYear()}{' '}

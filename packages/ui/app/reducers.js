@@ -31,6 +31,9 @@ import deploymentsReducer, {
 import podsReducer, {
   prefix as podsPrefix,
 } from 'ducks/pods';
+import storagesReducer, {
+  prefix as storagesPrefix,
+} from 'ducks/storages';
 
 /**
  * Merges the main reducer with the router state and dynamically injected reducers
@@ -47,6 +50,7 @@ export default function createReducer(injectedReducers = {}) {
     [configMapsPrefix]: configMapsReducer,
     [deploymentsPrefix]: deploymentsReducer,
     [podsPrefix]: podsReducer,
+    [storagesPrefix]: storagesReducer,
     clustersPage: clustersPageReducer,
     nodesPage: nodesPageReducer,
     eventsPage: eventsPageReducer,

@@ -11,6 +11,7 @@ import serviceLinksEpic from 'ducks/serviceLinks/epic';
 import configMapsEpic from 'ducks/configMaps/epic';
 import deploymentsEpic from 'ducks/deployments/epic';
 import podsEpic from 'ducks/pods/epic';
+import storagesEpic from 'ducks/storages/epic';
 
 /**
  * Merges the main reducer with the router state and dynamically injected reducers
@@ -24,6 +25,7 @@ export default function createEpic(injectedEpics = {}) {
     configMapsEpic,
     deploymentsEpic,
     podsEpic,
+    storagesEpic,
   );
 
   return rootEpic;

@@ -39,6 +39,10 @@ const theme = createMuiTheme({
       main: '#1A435F',
       light: '#1A435F',
     },
+    highlight: {
+      main: '#1B9CCE',
+      secondary: '#1B9CCE',
+    },
   },
 });
 

@@ -25,6 +25,7 @@ import ConfigMapsPage, {
 import ServicesPage from 'containers/ServicesPage/Loadable';
 import IngressesPage from 'containers/IngressesPage/Loadable';
 import TopologyPage from 'containers/TopologyPage/Loadable';
+import StoragePage from 'containers/StoragePage/Loadable';
 
 import UsersPage, {
   CreateUserPage,
@@ -117,6 +118,12 @@ const appRoutes = [
     name: 'Topology',
     icon: Dashboard,
     component: TopologyPage,
+  },
+  {
+    path: '/clusters/:cluster_id/storage',
+    name: 'Storage',
+    icon: Dashboard,
+    component: StoragePage,
   },
   {
     path: '/users',
