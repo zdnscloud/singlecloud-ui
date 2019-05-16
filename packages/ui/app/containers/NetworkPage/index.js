@@ -1,0 +1,155 @@
+/**
+ *
+ * ConfigMapsPage
+ *
+ */
+
+import React from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { FormattedMessage } from 'react-intl';
+import { createStructuredSelector } from 'reselect';
+import { bindActionCreators, compose } from 'redux';
+
+import { withStyles } from '@material-ui/core/styles';
+import { Link } from 'react-router-dom';
+import Menubar from 'components/Menubar';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import Typography from '@material-ui/core/Typography';
+import Paper from '@material-ui/core/Paper';
+// import SwipeableViews from 'react-swipeable-views';
+import Tabs from '@material-ui/core/Tabs';
+import Tab from '@material-ui/core/Tab';
+
+import GridItem from 'components/Grid/GridItem';
+import GridContainer from 'components/Grid/GridContainer';
+import Table from 'components/Table/Table';
+import Card from 'components/Card/Card';
+import CardHeader from 'components/Card/CardHeader';
+import CardBody from 'components/Card/CardBody';
+import ReadOnlyInput from 'components/CustomInput/ReadOnlyInput';
+
+import * as actions from 'ducks/networks/actions';
+import { makeSelectClusterID } from 'containers/App/selectors';
+import {
+  makeSelectServiceNetworks,
+  makeSelectPodNetworks,
+  makeSelectCurrentServiceNetworks,
+  makeSelectCurrentPodNetworks,
+} from 'ducks/networks/selectors';
+
+import messages from './messages';
+import NetworkPageHelmet from './helmet';
+import styles from './styles';
+import Node from './Node';
+import ServiceTable from './ServiceTable';
+
+/* eslint-disable react/prefer-stateless-function */
+export class NetworkPage extends React.PureComponent {
+  static propTypes = {
+    initAction: PropTypes.func,
+    classes: PropTypes.object.isRequired,
+  };
+
+  state = { tab: 0 };
+
+  setTab = (evt, val) => this.setState({ tab: val });
+
+  componentWillMount() {
+    this.load();
+  }
+
+  componentDidUpdate(prevProps) {
+    const {
+      clusterID: prevClusterID,
+    } = prevProps;
+    const { clusterID, namespace } = this.props;
+    if (clusterID !== prevClusterID) {
+      this.load();
+    }
+  }
+
+  load() {
+    const {
+      clusterID,
+      loadPodNetworks,
+      loadServiceNetworks,
+    } = this.props;
+    const podurl = `/apis/agent.zcloud.cn/v1/clusters/${clusterID}/podnetworks`;
+    const serviceurl = `/apis/agent.zcloud.cn/v1/clusters/${clusterID}/servicenetworks`;
+    loadPodNetworks(podurl, clusterID);
+    loadServiceNetworks(serviceurl, clusterID);
+  }
+
+  render() {
+    const { classes, theme, services, pods } = this.props;
+
+    return (
+      <div className={classes.root}>
+        <NetworkPageHelmet />
+        <CssBaseline />
+        <Paper className={classes.content}>
+          <GridContainer>
+            <GridItem xs={12} sm={12} md={12}>
+              <Card>
+                <CardHeader color="primary" style={{ padding: 0 }}>
+                  <h4 className={classes.cardTitleWhite}>
+                    <Tabs
+                      value={this.state.tab}
+                      onChange={this.setTab}
+                      textColor="inherit"
+                      classes={{
+                        indicator: classes.indicator,
+                      }}
+                    >
+                      <Tab label={<FormattedMessage {...messages.serviceIP} />} />
+                      <Tab label={<FormattedMessage {...messages.podIP} />} />
+                    </Tabs>
+                  </h4>
+                </CardHeader>
+                <CardBody>
+                  {this.state.tab === 0 ? (
+                    <GridContainer>
+                      <GridItem xs={12} sm={12} md={12}>
+                        <ServiceTable data={services} />
+                      </GridItem>
+                    </GridContainer>
+                  ) : (
+                    <GridContainer>
+                      <GridItem xs={12} sm={12} md={12}>
+                      </GridItem>
+                    </GridContainer>
+                  )}
+                </CardBody>
+              </Card>
+            </GridItem>
+          </GridContainer>
+        </Paper>
+      </div>
+    );
+  }
+}
+
+const mapStateToProps = createStructuredSelector({
+  clusterID: makeSelectClusterID(),
+  services: makeSelectCurrentServiceNetworks(),
+  pods: makeSelectCurrentPodNetworks(),
+});
+
+const mapDispatchToProps = (dispatch) =>
+  bindActionCreators(
+    {
+      ...actions,
+    },
+    dispatch
+  );
+
+const withConnect = connect(
+  mapStateToProps,
+  mapDispatchToProps
+);
+
+export default compose(
+  withConnect,
+  withStyles(styles, { withTheme: true })
+)(NetworkPage);
