@@ -43,6 +43,7 @@ import NetworkPageHelmet from './helmet';
 import styles from './styles';
 import Node from './Node';
 import ServiceTable from './ServiceTable';
+import PodsList from './PodsList';
 
 /* eslint-disable react/prefer-stateless-function */
 export class NetworkPage extends React.PureComponent {
@@ -102,8 +103,8 @@ export class NetworkPage extends React.PureComponent {
                         indicator: classes.indicator,
                       }}
                     >
-                      <Tab label={<FormattedMessage {...messages.serviceIP} />} />
                       <Tab label={<FormattedMessage {...messages.podIP} />} />
+                      <Tab label={<FormattedMessage {...messages.serviceIP} />} />
                     </Tabs>
                   </h4>
                 </CardHeader>
@@ -111,12 +112,13 @@ export class NetworkPage extends React.PureComponent {
                   {this.state.tab === 0 ? (
                     <GridContainer>
                       <GridItem xs={12} sm={12} md={12}>
-                        <ServiceTable data={services} />
+                        <PodsList data={pods} />
                       </GridItem>
                     </GridContainer>
                   ) : (
                     <GridContainer>
                       <GridItem xs={12} sm={12} md={12}>
+                        <ServiceTable data={services} />
                       </GridItem>
                     </GridContainer>
                   )}

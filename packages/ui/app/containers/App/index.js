@@ -19,6 +19,7 @@ import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import { withRouter } from 'react-router';
 
 import LoginPage from 'containers/LoginPage/Loadable';
+import hexToRgb from '@gsmlg/utils/hexToRgb';
 
 import { makeSelectLocation } from './selectors';
 import * as actions from './actions';
@@ -34,14 +35,32 @@ const theme = createMuiTheme({
     primary: {
       main: '#072C47',
       light: '#072C47',
+      minor: '#1B9CCE',
     },
     secondary: {
       main: '#1A435F',
       light: '#1A435F',
+      minor: `rgba(${hexToRgb('#1B9CCE')}, 0.2)`,
     },
     highlight: {
       main: '#1B9CCE',
       secondary: '#1B9CCE',
+      minor: 'A2A2A2',
+    },
+    icons: {
+      a: '#7ED321',
+      b: '#E23939',
+      c: '#4A4A4A',
+      d: '#6CD6B1',
+      e: '#40B7E8',
+      f: '#FF7A22',
+    },
+    text: {
+      a: '#000000',
+      b: '#4A4A4A',
+      c: '#ffffff',
+      d: '#838383',
+      e: '#EE827C',
     },
   },
 });

@@ -41,4 +41,32 @@ export default defineMessages({
     id: `${scope}.tableTitleIp`,
     defaultMessage: 'IP',
   },
+  nodeName: {
+    id: `${scope}.nodeName`,
+    defaultMessage: 'Node Name',
+  },
+  podCIDR: {
+    id: `${scope}.podCIDR`,
+    defaultMessage: 'Pod CIDR',
+  },
+  total: {
+    id: `${scope}.total`,
+    defaultMessage: 'Total Addresses',
+  },
+  used: {
+    id: `${scope}.used`,
+    defaultMessage: 'Used Addresses',
+  },
+  unused: {
+    id: `${scope}.unused`,
+    defaultMessage: 'Unused Addresses',
+  },
+  activeIP: {
+    id: `${scope}.activeIP`,
+    defaultMessage: 'IP',
+  },
+  activePod: {
+    id: `${scope}.activePod`,
+    defaultMessage: 'Pod',
+  },
 });
