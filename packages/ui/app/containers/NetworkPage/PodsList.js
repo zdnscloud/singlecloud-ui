@@ -119,10 +119,12 @@ export class PodsList extends React.PureComponent {
                   <div className={classes.activeIP}>
                     <div className={classes.infoLine}>
                       <FormattedMessage {...messages.activeIP} />
+                      &nbsp;&nbsp;&nbsp;&nbsp;
                       {this.state.activeIP.ip}
                     </div>
                     <div className={classes.infoLine}>
                       <FormattedMessage {...messages.activePod} />
+                      &nbsp;&nbsp;&nbsp;&nbsp;
                       {this.state.activeIP.name}
                     </div>
                   </div>
