@@ -135,7 +135,7 @@ class AppMenubar extends PureComponent {
                 onClick={(evt) => toggleEventsView(!showEvents)}
               >
                 <EventIcon />
-                <small>
+                <small style={{ fontSize: '14px' }}>
                   <FormattedMessage {...messages.clusterEvents} />
                 </small>
               </IconButton>
