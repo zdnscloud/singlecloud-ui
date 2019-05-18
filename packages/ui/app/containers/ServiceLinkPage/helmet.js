@@ -5,7 +5,7 @@ import { injectIntl } from 'react-intl';
 
 import messages from './messages';
 
-function TopologyPageHelmet(props) {
+function ServiceLinkPageHelmet(props) {
   const { intl } = props;
   return (
     <Helmet>
@@ -18,8 +18,8 @@ function TopologyPageHelmet(props) {
   );
 }
 
-TopologyPageHelmet.propTypes = {
+ServiceLinkPageHelmet.propTypes = {
   intl: PropTypes.object.isRequired,
 };
 
-export default injectIntl(TopologyPageHelmet);
+export default injectIntl(ServiceLinkPageHelmet);

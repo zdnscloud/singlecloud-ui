@@ -172,6 +172,8 @@
   "app.containers.TerminalPage.pageDesc": "",
   "app.containers.TerminalPage.pageTitle": "",
   "app.containers.TopologyPage.header": "",
+  "app.containers.TopologyPage.innerServices": "",
+  "app.containers.TopologyPage.outerServices": "",
   "app.containers.TopologyPage.pageDesc": "",
   "app.containers.TopologyPage.pageTitle": "",
   "app.containers.TopologyPage.tableTitleName": "",

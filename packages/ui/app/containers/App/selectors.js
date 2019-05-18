@@ -121,7 +121,7 @@ export const makeSelectLeftMenus = () =>
             children: [
               {
                 name: 'ServiceLink',
-                path: `/clusters/${cluster}/namespaces/${namespace}/topology`,
+                path: `/clusters/${cluster}/namespaces/${namespace}/serviceLink`,
               },
               {
                 name: 'Storage',

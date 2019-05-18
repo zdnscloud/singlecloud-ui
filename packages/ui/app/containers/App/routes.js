@@ -24,7 +24,7 @@ import ConfigMapsPage, {
 } from 'containers/ConfigMapsPage/Loadable';
 import ServicesPage from 'containers/ServicesPage/Loadable';
 import IngressesPage from 'containers/IngressesPage/Loadable';
-import TopologyPage from 'containers/TopologyPage/Loadable';
+import ServiceLinkPage from 'containers/ServiceLinkPage/Loadable';
 import StoragePage from 'containers/StoragePage/Loadable';
 import NetworkPage from 'containers/NetworkPage/Loadable';
 
@@ -115,10 +115,10 @@ const appRoutes = [
     component: DeploymentDetailPage,
   },
   {
-    path: '/clusters/:cluster_id/namespaces/:namespace_id/topology',
-    name: 'Topology',
+    path: '/clusters/:cluster_id/namespaces/:namespace_id/serviceLink',
+    name: 'ServiceLink',
     icon: Dashboard,
-    component: TopologyPage,
+    component: ServiceLinkPage,
   },
   {
     path: '/clusters/:cluster_id/storage',

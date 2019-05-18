@@ -172,6 +172,8 @@
   "app.containers.TerminalPage.pageDesc": "终端",
   "app.containers.TerminalPage.pageTitle": "终端",
   "app.containers.TopologyPage.header": "服务链",
+  "app.containers.TopologyPage.innerServices": "Inner Services",
+  "app.containers.TopologyPage.outerServices": "Ouser Services",
   "app.containers.TopologyPage.pageDesc": "服务链",
   "app.containers.TopologyPage.pageTitle": "服务链",
   "app.containers.TopologyPage.tableTitleName": "服务链",

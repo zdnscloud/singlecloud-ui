@@ -1,6 +1,6 @@
 /**
  *
- * ConfigMapsPage
+ * Service Link Page
  *
  */
 
@@ -17,6 +17,8 @@ import Menubar from 'components/Menubar';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
+import Tabs from '@material-ui/core/Tabs';
+import Tab from '@material-ui/core/Tab';
 
 import GridItem from 'components/Grid/GridItem';
 import GridContainer from 'components/Grid/GridContainer';
@@ -34,16 +36,21 @@ import {
 import { makeSelectCurrentNamespace } from 'containers/NamespacesPage/selectors';
 
 import messages from './messages';
-import TopologyPageHelmet from './helmet';
+import ServiceLinkPageHelmet from './helmet';
 import styles from './styles';
-import Charts from './Charts';
+import InnerCharts from './InnerCharts';
+import OuterCharts from './OuterCharts';
 
 /* eslint-disable react/prefer-stateless-function */
-export class TopologyPage extends React.PureComponent {
+export class ServiceLinkPage extends React.PureComponent {
   static propTypes = {
     initAction: PropTypes.func,
     classes: PropTypes.object.isRequired,
   };
+
+  state = { tab: 0 };
+
+  setTab = (evt, val) => this.setState({ tab: val });
 
   componentWillMount() {
     this.load();
@@ -78,12 +85,6 @@ export class TopologyPage extends React.PureComponent {
       const iurl = `/apis/agent.zcloud.cn/v1/clusters/${clusterID}/namespaces/${namespaceID}/innerservices`;
       loadOuterServices(ourl, clusterID, namespaceID);
       loadInnerServices(iurl, clusterID, namespaceID);
-      // request(`/apis/agent.zcloud.cn/v1/clusters/${clusterID}/podnetworks`);
-      // request(`/apis/agent.zcloud.cn/v1/clusters/${clusterID}/nodenetworks`);
-      // request(`/apis/agent.zcloud.cn/v1/clusters/${clusterID}/servicenetworks`);
-      // request(`/apis/agent.zcloud.cn/v1/clusters/${clusterID}/storages`);
-      // request(`/apis/agent.zcloud.cn/v1/clusters/${clusterID}/storages/nfs`);
-      // request(`/apis/agent.zcloud.cn/v1/clusters/${clusterID}/storages/lvm`);
     }
   }
 
@@ -92,10 +93,49 @@ export class TopologyPage extends React.PureComponent {
 
     return (
       <div className={classes.root}>
-        <TopologyPageHelmet />
+        <ServiceLinkPageHelmet />
         <CssBaseline />
         <Paper className={classes.content}>
-          <Charts />
+          <GridContainer>
+            <GridItem xs={12} sm={12} md={12}>
+              <Card>
+                <CardHeader color="primary" style={{ padding: 0 }}>
+                  <h4 className={classes.cardTitleWhite}>
+                    <Tabs
+                      value={this.state.tab}
+                      onChange={this.setTab}
+                      textColor="inherit"
+                      classes={{
+                        indicator: classes.indicator,
+                      }}
+                    >
+                      <Tab
+                        label={<FormattedMessage {...messages.outerServices} />}
+                      />
+                      <Tab
+                        label={<FormattedMessage {...messages.innerServices} />}
+                      />
+                    </Tabs>
+                  </h4>
+                </CardHeader>
+                <CardBody>
+                  {this.state.tab === 0 ? (
+                    <GridContainer>
+                      <GridItem xs={12} sm={12} md={12}>
+                        <OuterCharts />
+                      </GridItem>
+                    </GridContainer>
+                  ) : (
+                    <GridContainer>
+                      <GridItem xs={12} sm={12} md={12}>
+                        <InnerCharts />
+                      </GridItem>
+                    </GridContainer>
+                  )}
+                </CardBody>
+              </Card>
+            </GridItem>
+          </GridContainer>
         </Paper>
       </div>
     );
@@ -124,4 +164,4 @@ const withConnect = connect(
 export default compose(
   withConnect,
   withStyles(styles)
-)(TopologyPage);
+)(ServiceLinkPage);
