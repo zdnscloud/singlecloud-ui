@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="68px" height="67px" viewBox="0 0 68 67" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.5 (67469) - http://www.bohemiancoding.com/sketch -->
+    <title>3333</title>
+    <desc>Created with Sketch.</desc>
+    <g id="test" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="icon" transform="translate(-413.000000, -642.000000)" fill-rule="nonzero">
+            <g id="3333" transform="translate(412.000000, 642.000000)">
+                <polygon id="多边形" fill="#1B9CCE" points="35.2892562 0.876033058 62.1041376 13.7893994 68.7268664 42.80547 50.1703927 66.0745521 20.4081197 66.0745521 1.85164599 42.80547 8.47437477 13.7893994"></polygon>
+                <g id="shuju_2" transform="translate(22.479339, 25.669421)" fill="#FFFFFF">
+                    <path d="M12.9243398,12.2613978 C5.89954641,12.2613978 0,7.88880541 0,9.48534936 L0,16.1344854 C0,17.7310293 5.37190083,19.0082645 12.3966942,19.0082645 C19.4214876,19.0082645 24.7933884,17.7310293 24.7933884,16.1344854 L24.7933884,9.48534936 C24.7933884,7.88880541 19.9491332,12.2613978 12.9243398,12.2613978 Z" id="形状"></path>
+                    <ellipse id="椭圆形" cx="12.3993839" cy="5.37190083" rx="12.3966942" ry="5.37190083"></ellipse>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

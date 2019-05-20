@@ -33,7 +33,7 @@ import CardFooter from 'components/Card/CardFooter';
 
 import InnerServiceTree from 'components/tree/InnerServiceTree';
 
-import styles from 'assets/jss/material-dashboard-react/views/dashboardStyle';
+import styles from './cardStyles';
 import * as actions from 'ducks/serviceLinks/actions';
 import { makeSelectCurrentInnerServices } from 'ducks/serviceLinks/selectors';
 
@@ -102,11 +102,13 @@ export class InnerCharts extends React.PureComponent {
             <GridItem xs={12} sm={6} md={6} key={i}>
               <Card>
                 <CardHeader color="info" stats icon>
-                  <CardIcon color="info">
-                    <BubbleChartIcon />
-                  </CardIcon>
-                  <p className={classes.cardCategory}>Inner Service Name</p>
-                  <h3 className={classes.cardTitle}>{name}</h3>
+                  <h3 className={classes.cardTitle}>
+                    <b>
+                      <FormattedMessage {...messages.innerServiceName} />
+                    </b>
+                    {'    '}
+                    {name}
+                  </h3>
                 </CardHeader>
                 <CardBody ref={i === 0 ? this.icardBodyRef : null}>
                   <InnerServiceTree

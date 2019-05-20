@@ -37,4 +37,12 @@ export default defineMessages({
     id: `${scope}.tableTitleName`,
     defaultMessage: 'Name',
   },
+  outerServiceName: {
+    id: `${scope}.outerServiceName`,
+    defaultMessage: 'Service Name',
+  },
+  innerServiceName: {
+    id: `${scope}.innerServiceName`,
+    defaultMessage: 'Service Name',
+  },
 });

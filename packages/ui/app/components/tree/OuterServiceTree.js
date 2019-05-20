@@ -2,7 +2,7 @@ import React from 'react';
 import { Group } from '@vx/group';
 import { Tree } from '@vx/hierarchy';
 import { LinearGradient } from '@vx/gradient';
-import { hierarchy } from 'd3-hierarchy';
+import { hierarchy, cluster } from 'd3-hierarchy';
 import _ from 'lodash';
 
 import Links from './LinksMove';
@@ -68,11 +68,12 @@ export default class OuterServiceTree extends React.Component {
         <svg width={width} height={height}>
           <LinearGradient id="lg" from="#fdfba3" to="#fefefe" />
           <rect width={width} height={height} rx={0} fill="#000" fillOpacity={0} />
-          <Group top={margin.top*2} left={margin.left*2}>
+          <Group top={margin.top*4} left={margin.left*4}>
             <Tree
               root={root}
               size={[sizeWidth - margin.left*2, sizeHeight - margin.top*2]}
               separation={(a, b) => (a.parent === b.parent ? 1 : 0.5) / a.depth}
+              nodeSize={[200, 150]}
             >
               {(data) => (
                 <Group top={origin.y} left={origin.x}>

@@ -9,12 +9,13 @@ import PodIcon from './icons/Pod';
 import DeploymentIcon from './icons/Deployment';
 import DaemonSetIcon from './icons/DaemonSet';
 import StatefulSetIcon from './icons/StatefulSet';
+import RunningPodIcon from './icons/RunningPod';
 
 const separator = '$';
 
 function Node({ node, onClick }) {
   const [type, name] = (node.data.name || '').split(separator);
-  const { kind } = node.data;
+  const { kind, state } = node.data;
   const width = 80;
   const height = 40;
   let color = '#40B7E8';
@@ -33,17 +34,17 @@ function Node({ node, onClick }) {
       Icon = ServiceIcon;
       break;
     case 'pod':
-      Icon = PodIcon;
+      if (state === 'Running') Icon = RunningPodIcon;
+      else Icon = PodIcon;
       break;
     case 'deploy':
-      if (kind === 'Deployment')
-        Icon = DeploymentIcon;
-      if (kind === 'DaemonSet')
-        Icon = DaemonSetIcon;
-      if (kind === 'StatefulSet')
-        Icon = StatefulSetIcon;
+      if (kind === 'Deployment') Icon = DeploymentIcon;
+      if (kind === 'DaemonSet') Icon = DaemonSetIcon;
+      if (kind === 'StatefulSet') Icon = StatefulSetIcon;
       break;
   }
+  const l = 20;
+  const lname = name.length > l ? `${name.slice(0, l)}...` : name;
 
   return (
     <Fragment>
@@ -62,18 +63,18 @@ function Node({ node, onClick }) {
       />
       <Icon
         fill={fcolor}
-        transform={`translate(${-width / 2 + 5}, ${-28/2}) scale(0.025)`}
+        transform={`translate(${-width / 6}, ${-height / 2}) scale(0.5)`}
       />
       <text
-        x={-6}
-        dy=".33em"
+        x={-lname.length * 2}
+        dy="2.1em"
         fontSize={12}
         fontFamily="Arial"
-        textAnchor="left"
+        textAnchor="center"
         style={{ pointerEvents: 'none' }}
         fill={fcolor}
       >
-        {type === 'path' ? name : type}
+        {lname}
       </text>
     </Fragment>
   );

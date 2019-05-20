@@ -54,6 +54,7 @@ export class ServiceLinkPage extends React.PureComponent {
 
   componentWillMount() {
     this.load();
+    // this.timer = setInterval(() => this.load(), 10000);
   }
 
   componentDidUpdate(prevProps) {
@@ -70,6 +71,10 @@ export class ServiceLinkPage extends React.PureComponent {
     ) {
       this.load();
     }
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.timer);
   }
 
   load() {

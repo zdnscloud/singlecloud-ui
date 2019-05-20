@@ -2,7 +2,7 @@ import React from 'react';
 import { Group } from '@vx/group';
 import { Tree } from '@vx/hierarchy';
 import { LinearGradient } from '@vx/gradient';
-import { hierarchy } from 'd3-hierarchy';
+import { hierarchy, cluster } from 'd3-hierarchy';
 
 // import Links from './Links';
 import Links from './LinksMove';
@@ -61,12 +61,14 @@ export default class extends React.Component {
     }
 
     const root = hierarchy(data, (d) => (d.isExpanded ? d.children : null));
+
     root.each(
       (node, i) =>
         (node.onClick = () => {
           console.log('clicked');
         })
     );
+    console.log(root);
 
     return (
       <div>
