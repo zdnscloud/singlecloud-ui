@@ -22,6 +22,7 @@ import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import Typography from '@material-ui/core/Typography';
 import ReadOnlyInput from 'components/CustomInput/ReadOnlyInput';
+import DownIcon from 'components/Icons/Down';
 
 import messages from './messages';
 import styles from './styles';
@@ -40,7 +41,7 @@ export class PodsList extends React.PureComponent {
 
     return (
       <Paper className={classes.tableWrapper}>
-        {data.map((n) => {
+        {data.map((n, idx) => {
           const podCIDR = n.get('podCIDR');
           const podIPs = n.get('podIPs');
           const [ip, mask] = podCIDR.split('/');
@@ -48,8 +49,10 @@ export class PodsList extends React.PureComponent {
           const used = podIPs && podIPs.size || 0;
 
           return (
-            <ExpansionPanel>
-              <ExpansionPanelSummary>
+            <ExpansionPanel key={idx}>
+              <ExpansionPanelSummary
+                expandIcon={<DownIcon nativeColor="#000" />}
+              >
                 <div className={classes.podNode}>
                   <div className={classes.c0}></div>
                   <div className={classes.c1}>
