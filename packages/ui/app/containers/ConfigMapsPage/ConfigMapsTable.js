@@ -91,7 +91,23 @@ export class ConfigMapsTable extends React.PureComponent {
     ]).map((s) => ({
       ...s,
       label: <FormattedMessage {...messages[`tableTitle${s.label}`]} />
-    }));
+    })).map((sch) => {
+      if (sch.id === 'name') {
+        return {
+          ...sch,
+          component: (props) => (
+            <Button
+              color="primary"
+              to={`/clusters/${clusterID}/namespaces/${namespaceID}/configmaps/${props.data.get('id')}`}
+              component={Link}
+            >
+              {props.data.get('name')}
+            </Button>
+          ),
+        };
+      }
+      return sch;
+    });
 
     return (
       <Paper className={classes.tableWrapper}>

@@ -69,4 +69,8 @@ export default defineMessages({
     id: `${scope}.formSetFile`,
     defaultMessage: 'Set File Content',
   },
+  showConfigMap: {
+    id: `${scope}.showConfigMap`,
+    defaultMessage: 'Show Config Map',
+  },
 });

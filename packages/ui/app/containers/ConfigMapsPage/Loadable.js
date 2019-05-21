@@ -13,3 +13,7 @@ export default loadable(() =>
 export const CreateConfigMapPage = loadable(() =>
   import(/* webpackChunkName: "CreateConfigMapPage" */ './CreateConfigMapPage')
 );
+
+export const ShowConfigMapPage = loadable(() =>
+  import(/* webpackChunkName: "ShowConfigMapPage" */ './ShowConfigMapPage')
+);

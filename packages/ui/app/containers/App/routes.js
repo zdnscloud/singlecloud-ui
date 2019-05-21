@@ -21,6 +21,7 @@ import DeploymentsPage, {
 } from 'containers/DeploymentsPage/Loadable';
 import ConfigMapsPage, {
   CreateConfigMapPage,
+  ShowConfigMapPage,
 } from 'containers/ConfigMapsPage/Loadable';
 import ServicesPage from 'containers/ServicesPage/Loadable';
 import IngressesPage from 'containers/IngressesPage/Loadable';
@@ -95,6 +96,12 @@ const appRoutes = [
     name: 'create configmap',
     icon: Dashboard,
     component: CreateConfigMapPage,
+  },
+  {
+    path: '/clusters/:cluster_id/namespaces/:namespace_id/configmaps/:configmap_id',
+    name: 'show configmap',
+    icon: Dashboard,
+    component: ShowConfigMapPage,
   },
   {
     path: '/clusters/:cluster_id/namespaces/:namespace_id/deployments',

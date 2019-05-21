@@ -44,6 +44,24 @@ export const makeSelectURL = () =>
     (ns) => ns.getIn(['links', 'configmaps'])
   );
 
+export const makeSelectConfigMapID = () =>
+  createSelector(
+    createMatchSelector('/clusters/:cluster_id/namespaces/:namespace_id/configmaps/:configmap_id'),
+    (match) => {
+      if (match && match.params) {
+        return match.params.configmap_id;
+      }
+      return '';
+    }
+  );
+
+export const makeSelectCurrentConfigMap = () =>
+  createSelector(
+    makeSelectConfigMaps(),
+    makeSelectConfigMapID(),
+    (maps, id) => maps.get(id)
+  );
+
 /**
  * Default selector used by LoginPage
  */
