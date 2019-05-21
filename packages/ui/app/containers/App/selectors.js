@@ -91,6 +91,7 @@ export const makeSelectLeftMenus = () =>
               { name: 'Overview', path: `/clusters/${cluster}` },
               { name: 'Namespaces', path: `/clusters/${cluster}/namespaces` },
               { name: 'Nodes', path: `/clusters/${cluster}/nodes` },
+              { name: 'ResourceQuota', path: `/clusters/${cluster}/resourceQuota` },
             ],
             icon: ManagementIcon,
           },
@@ -102,16 +103,28 @@ export const makeSelectLeftMenus = () =>
                 path: `/clusters/${cluster}/namespaces/${namespace}/deployments`,
               },
               {
+                name: 'StatefulSet',
+                path: `/clusters/${cluster}/namespaces/${namespace}/statefulSet`,
+              },
+              {
+                name: 'DaemonSet',
+                path: `/clusters/${cluster}/namespaces/${namespace}/daemonSet`,
+              },
+              {
+                name: 'CronJob',
+                path: `/clusters/${cluster}/namespaces/${namespace}/cronJob`,
+              },
+              {
+                name: 'Job',
+                path: `/clusters/${cluster}/namespaces/${namespace}/job`,
+              },
+              {
                 name: 'ConfigMaps',
                 path: `/clusters/${cluster}/namespaces/${namespace}/configmaps`,
               },
               {
-                name: 'Ingresses',
-                path: `/clusters/${cluster}/namespaces/${namespace}/ingresses`,
-              },
-              {
-                name: 'Services',
-                path: `/clusters/${cluster}/namespaces/${namespace}/services`,
+                name: 'Secrets',
+                path: `/clusters/${cluster}/namespaces/${namespace}/secrets`,
               },
             ],
             icon: ApplicationIcon,
@@ -120,16 +133,16 @@ export const makeSelectLeftMenus = () =>
             name: 'SystemManagement',
             children: [
               {
-                name: 'ServiceLink',
-                path: `/clusters/${cluster}/namespaces/${namespace}/serviceLink`,
-              },
-              {
                 name: 'Storage',
                 path: `/clusters/${cluster}/storage`,
               },
               {
                 name: 'Network',
                 path: `/clusters/${cluster}/network`,
+              },
+              {
+                name: 'ServiceLink',
+                path: `/clusters/${cluster}/namespaces/${namespace}/serviceLink`,
               },
             ],
             icon: SystemIcon,

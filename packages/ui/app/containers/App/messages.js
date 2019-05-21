@@ -53,6 +53,10 @@ export default defineMessages({
     id: `${scope}.leftMenuNodes`,
     defaultMessage: 'Nodes',
   },
+  leftMenuResourceQuota: {
+    id: `${scope}.leftMenuResourceQuota`,
+    defaultMessage: 'Resource Quota',
+  },
   leftMenuAppManagement: {
     id: `${scope}.leftMenuAppManagement`,
     defaultMessage: 'AppManagement',
@@ -61,17 +65,29 @@ export default defineMessages({
     id: `${scope}.leftMenuDeployments`,
     defaultMessage: 'Deployments',
   },
+  leftMenuStatefulSet: {
+    id: `${scope}.leftMenuStatefulSet`,
+    defaultMessage: 'StatefulSet',
+  },
+  leftMenuDaemonSet: {
+    id: `${scope}.leftMenuDaemonSet`,
+    defaultMessage: 'DaemonSet',
+  },
+  leftMenuCronJob: {
+    id: `${scope}.leftMenuCronJob`,
+    defaultMessage: 'CronJob',
+  },
+  leftMenuJob: {
+    id: `${scope}.leftMenuJob`,
+    defaultMessage: 'Job',
+  },
   leftMenuConfigMaps: {
     id: `${scope}.leftMenuConfigMaps`,
     defaultMessage: 'ConfigMaps',
   },
-  leftMenuIngresses: {
-    id: `${scope}.leftMenuIngresses`,
-    defaultMessage: 'Ingresses',
-  },
-  leftMenuServices: {
-    id: `${scope}.leftMenuServices`,
-    defaultMessage: 'Services',
+  leftMenuSecrets: {
+    id: `${scope}.leftMenuSecrets`,
+    defaultMessage: 'Secrets',
   },
   leftMenuSystemManagement: {
     id: `${scope}.leftMenuSystemManagement`,
