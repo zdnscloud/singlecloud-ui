@@ -21,8 +21,10 @@ import ExpansionPanel from '@material-ui/core/ExpansionPanel';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import Typography from '@material-ui/core/Typography';
+import IconButton from '@material-ui/core/IconButton';
 import ReadOnlyInput from 'components/CustomInput/ReadOnlyInput';
 import DownIcon from 'components/Icons/Down';
+import HostIcon from 'components/Icons/Host';
 
 import messages from './messages';
 import styles from './styles';
@@ -54,7 +56,11 @@ export class PodsList extends React.PureComponent {
                 expandIcon={<DownIcon nativeColor="#000" />}
               >
                 <div className={classes.podNode}>
-                  <div className={classes.c0}></div>
+                  <div className={classes.c0}>
+                    <IconButton>
+                      <HostIcon nativeColor="#fff" />
+                    </IconButton>
+                  </div>
                   <div className={classes.c1}>
                     <ReadOnlyInput
                       labelText={<FormattedMessage {...messages.nodeName} />}

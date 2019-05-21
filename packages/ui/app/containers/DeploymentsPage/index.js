@@ -17,7 +17,8 @@ import Menubar from 'components/Menubar';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Typography from '@material-ui/core/Typography';
 import Fab from '@material-ui/core/Fab';
-import AddIcon from '@material-ui/icons/Add';
+import IconButton from '@material-ui/core/IconButton';
+import AddIcon from 'components/Icons/Add';
 import GridItem from 'components/Grid/GridItem';
 import GridContainer from 'components/Grid/GridContainer';
 import Card from 'components/Card/Card';
@@ -76,14 +77,9 @@ export class DeploymentsPage extends React.PureComponent {
                       to={`${this.props.location.pathname}/create`}
                       className={classes.createBtnLink}
                     >
-                      <Fab
-                        size="small"
-                        color="default"
-                        aria-label={<FormattedMessage {...messages.createDeployment} />}
-                        className={classes.menuButton}
-                      >
-                        <AddIcon />
-                      </Fab>
+                      <IconButton>
+                        <AddIcon nativeColor="#fff" />
+                      </IconButton>
                     </Link>
                   </h4>
                 </CardHeader>

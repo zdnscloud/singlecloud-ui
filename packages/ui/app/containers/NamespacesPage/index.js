@@ -16,7 +16,8 @@ import Menubar from 'components/Menubar';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Typography from '@material-ui/core/Typography';
 import Fab from '@material-ui/core/Fab';
-import AddIcon from '@material-ui/icons/Add';
+import IconButton from '@material-ui/core/IconButton';
+import AddIcon from 'components/Icons/Add';
 import GridItem from 'components/Grid/GridItem';
 import GridContainer from 'components/Grid/GridContainer';
 import Card from 'components/Card/Card';
@@ -65,15 +66,13 @@ export class NamespacesPage extends React.PureComponent {
                   <CardHeader color="primary">
                     <h4 className={classes.cardTitleWhite}>
                       <FormattedMessage {...messages.namespaces} />
-                      <Fab
-                        size="small"
-                        color="default"
-                        aria-label="create cluster"
+                      <IconButton
+                        aria-label={<FormattedMessage {...messages.namespaces} />}
                         className={classes.menuButton}
                         onClick={openCreateNamespace}
                       >
-                        <AddIcon />
-                      </Fab>
+                        <AddIcon nativeColor="#fff" />
+                      </IconButton>
                       <CreateNamespaceDialog />
                     </h4>
                   </CardHeader>
