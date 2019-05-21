@@ -23,8 +23,7 @@ function Node({ node, onClick }) {
   let bgcolor = '#fff';
   let Icon = Fragment;
   switch (type) {
-    case 'http':
-    case 'port':
+    case 'ep':
       Icon = IngressIcon;
       break;
     case 'path':

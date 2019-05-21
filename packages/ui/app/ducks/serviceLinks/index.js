@@ -35,9 +35,7 @@ export const serviceLinksReducer = (
       const { clusterID, namespaceID } = meta;
       const { data } = payload.response;
       const resData = data && data.map((d) => {
-        const name = d.port === 0 ?
-          `http${separator}${d.domain}` :
-          `udp${separator}${d.port}`;
+        const name = `ep$${d.entryPoint}`;
         const paths = [];
         _.each(d.services, (s, p) => {
           paths.push({

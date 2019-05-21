@@ -117,7 +117,7 @@ export class InnerCharts extends React.PureComponent {
                     data={s}
                   />
                 </CardBody>
-                <CardFooter stats />
+                <CardFooter />
               </Card>
             </GridItem>
           );
