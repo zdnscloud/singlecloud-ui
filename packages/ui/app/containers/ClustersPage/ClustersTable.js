@@ -24,6 +24,7 @@ import { SimpleTable } from '@gsmlg/com';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTerminal } from '@fortawesome/free-solid-svg-icons';
 import IconButton from '@material-ui/core/IconButton';
+import ShellIcon from 'components/Icons/Shell';
 
 import { makeSelectClusters, makeSelectTableList } from './selectors';
 import * as actions from './actions';
@@ -55,7 +56,7 @@ export class ClustersTable extends React.PureComponent {
                 size="small"
                 className={classes.button}
               >
-                <FontAwesomeIcon icon={faTerminal} />
+                <ShellIcon />
               </IconButton>
             </Fragment>
           ),

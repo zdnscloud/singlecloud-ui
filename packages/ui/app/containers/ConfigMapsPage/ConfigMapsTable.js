@@ -61,27 +61,12 @@ export class ConfigMapsTable extends React.PureComponent {
     const mergedSchema = schema.concat([
       {
         id: 'configs',
-        label: 'Configs',
-        component: (props) => (
-          <Fragment>
-            {(props.data.get('configs') || []).map((conf, idx) => (
-              <Button
-                key={idx}
-                variant="outlined"
-                size="small"
-                className={classes.button}
-                onClick={(evt) =>
-                  this.setState({
-                    openID: props.data.get('id'),
-                    openIndex: idx,
-                  })
-                }
-              >
-                show `{conf.get('name')}` Config
-              </Button>
-            ))}
-          </Fragment>
-        ),
+        label: 'Count',
+        component: (props) => {
+          const configs = props.data.get('configs');
+          if (configs) return configs.size;
+          return 0;
+        },
       },
       {
         id: 'actions',
@@ -103,7 +88,10 @@ export class ConfigMapsTable extends React.PureComponent {
           </Fragment>
         ),
       },
-    ]);
+    ]).map((s) => ({
+      ...s,
+      label: <FormattedMessage {...messages[`tableTitle${s.label}`]} />
+    }));
 
     return (
       <Paper className={classes.tableWrapper}>

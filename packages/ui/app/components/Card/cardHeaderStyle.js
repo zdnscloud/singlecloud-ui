@@ -14,7 +14,7 @@ const blackColor = '#000';
 const cyanColor = '#6CD6B1';
 const azureColor = '#40B7E8';
 
-const cardHeaderStyle = {
+const cardHeaderStyle = (theme) => ({
   cardHeader: {
     padding: '0.75rem 1.25rem',
     marginBottom: '0',
@@ -119,6 +119,15 @@ const cardHeaderStyle = {
       ...primaryCardHeader,
     },
   },
+  secondaryCardHeader: {
+    color: whiteColor,
+    '&:not($cardHeaderIcon)': {
+      background: `linear-gradient(60deg, ${theme.palette.secondary.main}, ${theme.palette.secondary.main})`,
+      boxShadow: `0 4px 20px 0 rgba(${hexToRgb(
+        blackColor
+      )}, 0.14), 0 7px 10px -5px rgba(${hexToRgb(theme.palette.secondary.main)}, 0.4)`,
+    },
+  },
   customBlueCardHeader: {
     color: whiteColor,
     '&:not($cardHeaderIcon)': {
@@ -149,6 +158,6 @@ const cardHeaderStyle = {
       )}, 0.14), 0 7px 10px -5px rgba(${hexToRgb(azureColor)}, 0.4)`,
     },
   },
-};
+});
 
 export default cardHeaderStyle;

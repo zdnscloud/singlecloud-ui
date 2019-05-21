@@ -45,6 +45,7 @@ CardHeader.propTypes = {
     'danger',
     'info',
     'primary',
+    'secondary',
     'rose',
     'cyan',
     'azure',

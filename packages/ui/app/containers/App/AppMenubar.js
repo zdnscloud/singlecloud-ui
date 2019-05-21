@@ -39,6 +39,7 @@ import Footer from 'components/Footer/Footer';
 import Sidebar from 'components/Sidebar/Sidebar';
 import Menubar from 'components/Menubar';
 import DownIcon from 'components/Icons/Down';
+import ShellIcon from 'components/Icons/Shell';
 
 import { makeSelectRole } from 'ducks/role/selectors';
 import * as roleActions from 'ducks/role/actions';
@@ -107,6 +108,11 @@ class AppMenubar extends PureComponent {
         }
         headerRightContent={
           <Fragment>
+            {clusterID && (
+              <IconButton color="inherit">
+                <ShellIcon />
+              </IconButton>
+            )}
             <IconButton
               color="inherit"
               onClick={(evt) => this.openUserMenu(evt)}

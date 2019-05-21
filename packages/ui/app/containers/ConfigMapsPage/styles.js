@@ -116,6 +116,17 @@ const styles = (theme) => ({
     top: '3px',
     right: '10px',
   },
+  filesList: {
+    width: '500px',
+  },
+  fileContentButton: {
+    display: 'inline-block',
+    height: '79px',
+    paddingTop: '29px',
+  },
+  dialogCard: {
+    marginTop: 0,
+  },
 });
 
 export default styles;

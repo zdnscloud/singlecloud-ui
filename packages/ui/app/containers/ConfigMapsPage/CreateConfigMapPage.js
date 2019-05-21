@@ -140,7 +140,7 @@ export class CreateConfigMap extends React.PureComponent {
                 size="large"
                 onClick={submitForm}
               >
-                Create
+                <FormattedMessage {...messages.formCreate} />
               </Button>
             </CardFooter>
           </Card>
