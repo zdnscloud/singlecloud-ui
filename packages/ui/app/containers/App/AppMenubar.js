@@ -25,7 +25,6 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Fab from '@material-ui/core/Fab';
 import IconButton from '@material-ui/core/IconButton';
-import EventIcon from '@material-ui/icons/Event';
 import MenuIcon from '@material-ui/icons/Menu';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import ExpansionPanel from '@material-ui/core/ExpansionPanel';
@@ -39,6 +38,7 @@ import Divider from '@material-ui/core/Divider';
 import Footer from 'components/Footer/Footer';
 import Sidebar from 'components/Sidebar/Sidebar';
 import Menubar from 'components/Menubar';
+import DownIcon from 'components/Icons/Down';
 
 import { makeSelectRole } from 'ducks/role/selectors';
 import * as roleActions from 'ducks/role/actions';
@@ -134,7 +134,12 @@ class AppMenubar extends PureComponent {
                 color="inherit"
                 onClick={(evt) => toggleEventsView(!showEvents)}
               >
-                <EventIcon />
+                <DownIcon
+                  nativeColor="#fff"
+                  style={{
+                    transform: `rotate(${showEvents ? 180 : 0}deg)`,
+                  }}
+                />
                 <small style={{ fontSize: '14px' }}>
                   <FormattedMessage {...messages.clusterEvents} />
                 </small>

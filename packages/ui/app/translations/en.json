@@ -43,6 +43,7 @@
   "app.containers.ClustersPage.tableTitleCreationTimestamp": "",
   "app.containers.ClustersPage.tableTitleName": "",
   "app.containers.ClustersPage.tableTitleNodeCount": "",
+  "app.containers.ClustersPage.tableTitleStatus": "",
   "app.containers.ConfigMapsPage.configMaps": "",
   "app.containers.ConfigMapsPage.createConfigMap": "",
   "app.containers.ConfigMapsPage.header": "",

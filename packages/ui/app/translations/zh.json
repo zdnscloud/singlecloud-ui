@@ -43,6 +43,7 @@
   "app.containers.ClustersPage.tableTitleCreationTimestamp": "创建时间",
   "app.containers.ClustersPage.tableTitleName": "名称",
   "app.containers.ClustersPage.tableTitleNodeCount": "节点数量",
+  "app.containers.ClustersPage.tableTitleStatus": "Status",
   "app.containers.ConfigMapsPage.configMaps": "配置字典",
   "app.containers.ConfigMapsPage.createConfigMap": "新建配置字典",
   "app.containers.ConfigMapsPage.header": "配置字典",
