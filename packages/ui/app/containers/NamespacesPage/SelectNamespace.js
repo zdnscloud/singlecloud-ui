@@ -76,7 +76,7 @@ class SelectNamespace extends PureComponent {
           }}
           htmlFor="namespace_name-id"
         >
-          <FormattedMessage {...messages.namespace} />
+          {/* <FormattedMessage {...messages.namespace} /> */}
         </InputLabel>
         <Select
           className={classes.select}

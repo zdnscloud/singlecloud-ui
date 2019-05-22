@@ -28,7 +28,7 @@ const SelectCluster = (props) => {
         }}
         htmlFor="cluster_name-id"
       >
-        <FormattedMessage {...messages.cluster} />
+        {/* <FormattedMessage {...messages.cluster} /> */}
       </InputLabel>
       <Select
         className={classes.select}

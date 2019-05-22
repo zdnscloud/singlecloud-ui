@@ -127,6 +127,10 @@ const styles = (theme) => ({
   dialogCard: {
     marginTop: 0,
   },
+  fileNameLink: {
+    color: theme.palette.highlight.main,
+    cursor: 'pointer',
+  },
 });
 
 export default styles;

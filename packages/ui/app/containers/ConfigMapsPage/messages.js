@@ -73,4 +73,12 @@ export default defineMessages({
     id: `${scope}.showConfigMap`,
     defaultMessage: 'Show Config Map',
   },
+  formCloseFile: {
+    id: `${scope}.formCloseFile`,
+    defaultMessage: 'Close File Content',
+  },
+  formShowFile: {
+    id: `${scope}.formShowFile`,
+    defaultMessage: 'Show File Content',
+  },
 });

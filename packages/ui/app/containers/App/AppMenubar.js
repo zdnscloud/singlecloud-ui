@@ -40,6 +40,7 @@ import Sidebar from 'components/Sidebar/Sidebar';
 import Menubar from 'components/Menubar';
 import DownIcon from 'components/Icons/Down';
 import ShellIcon from 'components/Icons/Shell';
+import AccountIcon from 'components/Icons/Account';
 
 import { makeSelectRole } from 'ducks/role/selectors';
 import * as roleActions from 'ducks/role/actions';
@@ -117,7 +118,10 @@ class AppMenubar extends PureComponent {
               color="inherit"
               onClick={(evt) => this.openUserMenu(evt)}
             >
-              <AccountCircleIcon />
+              <AccountIcon />
+              <small style={{ fontSize: '14px' }}>
+                {role.get('user')}
+              </small>
             </IconButton>
             <Menu
               id="user-menu"
@@ -125,8 +129,6 @@ class AppMenubar extends PureComponent {
               open={Boolean(userEl)}
               onClose={(evt) => this.closeUserMenu(evt)}
             >
-              <MenuItem disabled>{role.get('user')}</MenuItem>
-              <Divider />
               {userMenus.map((m, index) => (
                 <MenuItem key={m.name} component={Link} to={m.path}>
                   {m.name}
@@ -146,9 +148,9 @@ class AppMenubar extends PureComponent {
                     transform: `rotate(${showEvents ? 180 : 0}deg)`,
                   }}
                 />
-                <small style={{ fontSize: '14px' }}>
-                  <FormattedMessage {...messages.clusterEvents} />
-                </small>
+                {/* <small style={{ fontSize: '14px' }}> */}
+                {/*   <FormattedMessage {...messages.clusterEvents} /> */}
+                {/* </small> */}
               </IconButton>
             )}
           </Fragment>

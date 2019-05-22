@@ -58,6 +58,11 @@ export class ShowConfigMap extends React.PureComponent {
     classes: PropTypes.object.isRequired,
   };
 
+  state = {
+    isOpen: false,
+    fileIndex: null,
+  };
+
   render() {
     const {
       classes,
@@ -90,14 +95,30 @@ export class ShowConfigMap extends React.PureComponent {
                 </GridItem>
                 <GridItem xs={12} sm={12} md={12}>
                   <GridContainer>
-                    {configMap.get('configs').map((cfg) => (
-                      <GridItem xs={3} sm={3} md={3}>
+                    {configMap.get('configs').map((cfg, idx) => (
+                      <GridItem
+                        xs={3}
+                        sm={3}
+                        md={3}
+                        key={`${idx}-${cfg.get('name')}`}
+                      >
                         <ReadOnlyInput
                           labelText={<FormattedMessage {...messages.formFileName} />}
                           value={cfg.get('name')}
                           fullWidth
                           formControlProps={{
                             className: classes.nameControl,
+                          }}
+                          classes={{
+                            disabled: classes.fileNameLink,
+                          }}
+                          inputProps={{
+                            onClick: (evt) => {
+                              this.setState({
+                                isOpen: true,
+                                fileIndex: idx,
+                              });
+                            },
                           }}
                         />
                       </GridItem>
@@ -107,6 +128,51 @@ export class ShowConfigMap extends React.PureComponent {
               </GridContainer>
             </CardBody>
           </Card>
+          <Dialog
+            maxWidth="lg"
+            fullWidth
+            open={this.state.isOpen}
+            onClose={() => {
+              this.setState({
+                isOpen: false,
+                fileIndex: null,
+              });
+            }}
+            PaperProps={{ style: { overflow: 'hidden' } }}
+          >
+            <Card className={classes.dialogCard}>
+              <CardHeader color="secondary" className={classes.dialogHeader}>
+                <h4 className={classes.cardTitleWhite}>
+                  <FormattedMessage {...messages.formShowFile} />
+                </h4>
+              </CardHeader>
+              <CardBody>
+                <AceEditor
+                  focus
+                  mode="yaml"
+                  theme="tomorrow_night"
+                  value={configMap.getIn(['configs', this.state.fileIndex, 'data'])}
+                  height="calc(100vh - 225px)"
+                  width="calc(100vw - 200px)"
+                  readOnly
+                />
+              </CardBody>
+              <CardFooter>
+                <Button
+                  variant="contained"
+                  color="secondary"
+                  onClick={() => {
+                    this.setState({
+                      isOpen: false,
+                      fileIndex: null,
+                    });
+                  }}
+                >
+                  <FormattedMessage {...messages.formCloseFile} />
+                </Button>
+              </CardFooter>
+            </Card>
+          </Dialog>
         </div>
       </div>
     );
