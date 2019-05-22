@@ -70,6 +70,9 @@ const styles = (theme) => ({
       lineHeight: '1',
     },
   },
+  indicator: {
+    backgroundColor: theme.palette.highlight.secondary,
+  },
 });
 
 export default styles;
