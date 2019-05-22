@@ -136,6 +136,23 @@ const renderAdvanceServices = ({
               &nbsp;&nbsp;
               {isUDP ? (
                 <Fragment>
+                  <SelectField
+                    disabled={!value.getIn([idx, 'autoCreateIngress'])}
+                    value={value.getIn([idx, 'ingressProtocol'])}
+                    onChange={(evt) => {
+                      const dn = value.getIn([idx, 'ingressProtocol']);
+                      const protocol = evt.target.value;
+                      onChange(value.setIn([idx, 'ingressProtocol'], protocol));
+                    }}
+                    label={<FormattedMessage {...messages.formPortProtocol} />}
+                    options={[{ label: 'UDP', value: 'UDP' }]}
+                    formControlProps={{
+                      style: {
+                        width: '146px',
+                      },
+                    }}
+                  />
+                  &nbsp;&nbsp;
                   <TextField
                     label={<FormattedMessage {...messages.formIngressPort} />}
                     disabled={!value.getIn([idx, 'autoCreateIngress'])}
@@ -152,6 +169,26 @@ const renderAdvanceServices = ({
                 </Fragment>
               ) : (
                 <Fragment>
+                  <SelectField
+                    disabled={!value.getIn([idx, 'autoCreateIngress'])}
+                    value={value.getIn([idx, 'ingressProtocol'])}
+                    onChange={(evt) => {
+                      const dn = value.getIn([idx, 'ingressProtocol']);
+                      const protocol = evt.target.value;
+                      onChange(value.setIn([idx, 'ingressProtocol'], protocol));
+                    }}
+                    label={<FormattedMessage {...messages.formPortProtocol} />}
+                    options={[
+                      { label: 'TCP', value: 'TCP' },
+                      { label: 'HTTP', value: 'HTTP' },
+                    ]}
+                    formControlProps={{
+                      style: {
+                        width: '146px',
+                      },
+                    }}
+                  />
+                  &nbsp;&nbsp;
                   <TextField
                     label={<FormattedMessage {...messages.formIngressDomain} />}
                     disabled={!value.getIn([idx, 'autoCreateIngress'])}

@@ -142,6 +142,7 @@ const styles = (theme) => ({
     flexWrap: 'wrap',
   },
   ipitem: {
+    cursor: 'pointer',
     boxSizing: 'border-box',
     width: '16px',
     height: '16px',
@@ -174,6 +175,7 @@ const styles = (theme) => ({
     display: 'flex',
     alignItems: 'center',
     marginBottom: '10px',
+    whiteSpace: 'nowrap',
   },
 });
 

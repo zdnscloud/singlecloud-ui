@@ -108,7 +108,7 @@ export class PodsList extends React.PureComponent {
 
                     return (
                       <div
-                        onMouseOver={mouseOver}
+                        onClick={mouseOver}
                         className={`${classes.ipitem} ${active ? 'active' : ''}`}
                       ></div>
                     );
