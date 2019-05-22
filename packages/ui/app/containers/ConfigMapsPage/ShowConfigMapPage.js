@@ -29,6 +29,7 @@ import AttachmentIcon from '@material-ui/icons/Attachment';
 import AceEditor from 'react-ace';
 import 'brace/mode/yaml';
 import 'brace/theme/github';
+import 'brace/theme/tomorrow_night';
 
 import GridItem from 'components/Grid/GridItem';
 import GridContainer from 'components/Grid/GridContainer';

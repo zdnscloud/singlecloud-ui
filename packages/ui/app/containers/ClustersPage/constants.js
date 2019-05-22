@@ -6,6 +6,7 @@
 const prefix = 'app/ClustersPage';
 
 export const INIT_ACTION = `${prefix}/INIT_ACTION`;
+export const UNMOUNT_ACTION = `${prefix}/UNMOUNT_ACTION`;
 
 export const LOAD_CLUSTERS = `${prefix}/LOAD_CLUSTERS`;
 export const LOAD_CLUSTERS_REQUEST = `${prefix}/LOAD_CLUSTERS_REQUEST`;

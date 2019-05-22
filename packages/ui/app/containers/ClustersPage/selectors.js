@@ -49,6 +49,12 @@ export const makeSelectClustersAndNamespaces = () =>
         )
   );
 
+export const makeSelectMount = () =>
+  createSelector(
+    selectClustersPageDomain,
+    (substate) => substate.get('mount')
+  );
+
 /**
  * Default selector used by ClustersPage
  */

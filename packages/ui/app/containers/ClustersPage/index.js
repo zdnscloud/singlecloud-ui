@@ -38,6 +38,10 @@ export class ClustersPage extends React.PureComponent {
     this.props.initAction();
   }
 
+  componentWillUnmount() {
+    this.props.unmountAction();
+  }
+
   render() {
     const { classes } = this.props;
 

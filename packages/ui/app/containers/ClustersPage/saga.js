@@ -10,16 +10,19 @@ import {
   loadClusterSuccess,
   loadClusterFailure,
 } from './actions';
-import { makeSelectClusters } from './selectors';
+import {
+  makeSelectClusters,
+  makeSelectMount,
+} from './selectors';
 
 export const url = '/apis/zcloud.cn/v1/clusters';
 
 export function* initialize() {
   yield* loadClusters();
   while (true) {
+    const mount = yield select(makeSelectMount());
+    if (mount === false) break;
     yield delay(3000);
-    const clusters = yield select(makeSelectClusters());
-    if (clusters.size > 0) break;
     yield* loadClusters();
   }
 }

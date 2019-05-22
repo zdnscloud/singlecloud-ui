@@ -1,6 +1,6 @@
 /**
  *
- * TerminalPage
+ * Terminal Dialog
  *
  */
 
@@ -37,7 +37,7 @@ import TerminalPageHelmet from './helmet';
 Terminal.applyAddon(fit);
 
 /* eslint-disable react/prefer-stateless-function */
-export class TerminalPage extends React.PureComponent {
+export class TerminalDialog extends React.PureComponent {
   static propTypes = {
     classes: PropTypes.object.isRequired,
     match: PropTypes.object.isRequired,
@@ -141,4 +141,4 @@ const withConnect = connect(
 export default compose(
   withConnect,
   withStyles(styles)
-)(TerminalPage);
+)(TerminalDialog);

@@ -7,6 +7,7 @@
 import { fromJS } from 'immutable';
 import {
   INIT_ACTION,
+  UNMOUNT_ACTION,
   LOAD_CLUSTERS_REQUEST,
   LOAD_CLUSTERS_SUCCESS,
   LOAD_CLUSTERS_FAILURE,
@@ -20,12 +21,16 @@ export const initialState = fromJS({
   tableList: [],
   selectedIDs: [],
   loadClustersErrors: null,
+  mount: false,
 });
 
 function clustersPageReducer(state = initialState, { type, payload }) {
   switch (type) {
     case INIT_ACTION:
-      return state;
+      return state.set('mount', true);
+
+    case UNMOUNT_ACTION:
+      return state.set('mount', false);
 
     case LOAD_CLUSTERS_REQUEST:
       return state;

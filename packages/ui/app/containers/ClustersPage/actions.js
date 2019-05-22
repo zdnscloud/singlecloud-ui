@@ -6,6 +6,7 @@
 
 import {
   INIT_ACTION,
+  UNMOUNT_ACTION,
   LOAD_CLUSTERS,
   LOAD_CLUSTERS_REQUEST,
   LOAD_CLUSTERS_SUCCESS,
@@ -19,6 +20,12 @@ import {
 export function initAction() {
   return {
     type: INIT_ACTION,
+  };
+}
+
+export function unmountAction() {
+  return {
+    type: UNMOUNT_ACTION,
   };
 }
 
