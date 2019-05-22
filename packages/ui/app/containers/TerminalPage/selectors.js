@@ -5,22 +5,26 @@ import { initialState } from './reducer';
  * Direct selector to the terminalPage state domain
  */
 
-const selectTerminalPageDomain = (state) =>
+export const selectTerminalPageDomain = (state) =>
   state.get('terminalPage', initialState);
 
 /**
  * Other specific selectors
  */
+export const makeSelectTermIsOpen = () =>
+  createSelector(
+    selectTerminalPageDomain,
+    (substate) => substate.get('termIsOpen')
+  );
 
 /**
  * Default selector used by TerminalPage
  */
 
-const makeSelectTerminalPage = () =>
+export const makeSelectTerminalPage = () =>
   createSelector(
     selectTerminalPageDomain,
     (substate) => substate.toJS()
   );
 
 export default makeSelectTerminalPage;
-export { selectTerminalPageDomain };

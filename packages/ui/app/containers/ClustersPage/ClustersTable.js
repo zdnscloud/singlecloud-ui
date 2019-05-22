@@ -25,6 +25,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTerminal } from '@fortawesome/free-solid-svg-icons';
 import IconButton from '@material-ui/core/IconButton';
 import ShellIcon from 'components/Icons/Shell';
+import { openTerminal } from 'containers/TerminalPage/actions';
 
 import { makeSelectClusters, makeSelectTableList } from './selectors';
 import * as actions from './actions';
@@ -41,7 +42,12 @@ export class ClustersTable extends React.PureComponent {
   };
 
   render() {
-    const { classes, tableList, clusters } = this.props;
+    const {
+      classes,
+      tableList,
+      clusters,
+      openTerminal,
+    } = this.props;
     const mergedSchema = schema
       .concat([
         {
@@ -51,10 +57,11 @@ export class ClustersTable extends React.PureComponent {
             <Fragment>
               <IconButton
                 variant="outlined"
-                component={Link}
-                to={`/clusters/${props.data.get('id')}/console`}
                 size="small"
                 className={classes.button}
+                onClick={(evt) => {
+                  openTerminal(props.data.get('id'));
+                }}
               >
                 <ShellIcon />
               </IconButton>
@@ -104,6 +111,7 @@ const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
       ...actions,
+      openTerminal,
     },
     dispatch
   );

@@ -35,7 +35,11 @@ import Typography from '@material-ui/core/Typography';
 import Footer from 'components/Footer/Footer';
 import Sidebar from 'components/Sidebar/Sidebar';
 import Menubar from 'components/Menubar';
+import TerminalDialog from 'containers/TerminalPage/TerminalDialog';
+import GlobalStyle from 'global-styles';
 
+import { makeSelectClusters } from 'containers/ClustersPage/selectors';
+import EventsList from 'containers/EventsPage/EventsList';
 import { makeSelectIsLogin } from 'ducks/role/selectors';
 
 import dashboardStyle from './dashboardStyles';
@@ -52,9 +56,6 @@ import {
   makeSelectLocation,
   makeSelectShowMenuText,
 } from './selectors';
-import { makeSelectClusters } from '../ClustersPage/selectors';
-import GlobalStyle from '../../global-styles';
-import EventsList from '../EventsPage/EventsList';
 
 class App extends PureComponent {
   state = { hasError: false };
@@ -124,6 +125,7 @@ class App extends PureComponent {
           </div>
           <Footer />
         </div>
+        <TerminalDialog />
         {clusterID && showEvents && (
           <div className={classes.eventPage}>
             <EventsList />
