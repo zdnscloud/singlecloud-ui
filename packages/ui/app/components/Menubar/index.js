@@ -14,11 +14,9 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import CloudIcon from '@material-ui/icons/Cloud';
-import MenuIcon from '@material-ui/icons/Menu';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faServer } from '@fortawesome/free-solid-svg-icons';
 import logo from 'images/page-logo.png';
 
+import MenuIcon from 'components/Icons/Menu';
 import Brand from 'components/Brand/Brand';
 
 import styles from './styles';

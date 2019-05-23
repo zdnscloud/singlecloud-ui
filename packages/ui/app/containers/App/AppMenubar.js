@@ -128,6 +128,14 @@ class AppMenubar extends PureComponent {
             <Menu
               id="user-menu"
               anchorEl={userEl}
+              anchorOrigin={{
+                vertical: 'bottom',
+                horizontal: 'center',
+              }}
+              transformOrigin={{
+                vertical: 'top',
+                horizontal: 'center',
+              }}
               open={Boolean(userEl)}
               onClose={(evt) => this.closeUserMenu(evt)}
             >
@@ -150,9 +158,6 @@ class AppMenubar extends PureComponent {
                     transform: `rotate(${showEvents ? 180 : 0}deg)`,
                   }}
                 />
-                {/* <small style={{ fontSize: '14px' }}> */}
-                {/*   <FormattedMessage {...messages.clusterEvents} /> */}
-                {/* </small> */}
               </IconButton>
             )}
           </Fragment>

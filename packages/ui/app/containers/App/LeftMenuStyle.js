@@ -1,5 +1,4 @@
 import {
-  drawerWidth,
   transition,
   boxShadow,
   defaultFont,
@@ -15,6 +14,8 @@ import {
   hexToRgb,
 } from 'assets/jss/material-dashboard-react';
 
+const drawerWidth = 232;
+
 const leftMenuStyle = (theme) => ({
   root: {
     backgroundColor: theme.palette.secondary.main,
@@ -27,6 +28,7 @@ const leftMenuStyle = (theme) => ({
     bottom: '0',
     left: '0',
     zIndex: '1',
+    ...transition,
     ...boxShadow,
     width: drawerWidth,
     [theme.breakpoints.up('md')]: {
@@ -72,12 +74,12 @@ const leftMenuStyle = (theme) => ({
   },
   secondMenuModal: {
     top: '64px',
-    left: '260px',
+    left: '232px',
     zIndex: theme.zIndex.drawer,
     ...transition,
   },
   secondMenu: {
-    width: '260px',
+    width: '232px',
     height: 'calc(100vh - 64px)',
     paddingTop: '15px',
     backgroundColor: theme.palette.primary.main,
@@ -291,7 +293,7 @@ const leftMenuStyle = (theme) => ({
     position: 'relative',
     height: 'calc(100vh - 64px)',
     overflow: 'auto',
-    width: '260px',
+    width: '232px',
     zIndex: '4',
     overflowScrolling: 'touch',
     color: theme.palette.primary.contrastText,

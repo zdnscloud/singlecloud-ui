@@ -23,7 +23,7 @@ import IconButton from '@material-ui/core/IconButton';
 import Icon from '@material-ui/core/Icon';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
-import ChevronRight from '@material-ui/icons/ChevronRight';
+import ChevronRight from 'components/Icons/ChevronRight';
 
 import messages from './messages';
 import * as actions from './actions';
@@ -133,11 +133,19 @@ class LeftMenu extends PureComponent {
                     primary={<FormattedMessage {...msgName} />}
                     className={classNames(classes.itemText)}
                     disableTypography
+                    style={{
+                      opacity: active ? 1 : 0.5,
+                    }}
                   />
                 ) : null}
                 {prop.children ? (
                   <ListItemSecondaryAction>
-                    <ChevronRight />
+                    <ChevronRight
+                      style={{
+                        transform: 'scale(0.7)',
+                        opacity: active ? 1 : 0.5,
+                      }}
+                    />
                   </ListItemSecondaryAction>
                 ) : null}
               </ListItem>

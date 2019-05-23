@@ -107,7 +107,7 @@ class App extends PureComponent {
           data-ref="mainPanel"
           style={{
             marginRight: showEvents ? '310px' : null,
-            width: `calc(100% - ${(showEvents ? 310 : 0) + (showMenuText ? 260 : 60)}px)`,
+            width: `calc(100% - ${(showEvents ? 310 : 0) + (showMenuText ? 232 : 60)}px)`,
           }}
         >
           <div className={classes.content}>
