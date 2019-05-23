@@ -121,7 +121,7 @@ export class StoragePage extends React.PureComponent {
                     <GridItem xs={2} sm={2} md={2}>
                       <ReadOnlyInput
                         labelText={<FormattedMessage {...messages.size} />}
-                        value={totalSize}
+                        value={totalSize + ''}
                         inputProps={{
                           endAdornment: (<span className={classes.text}>G</span>),
                         }}
@@ -130,7 +130,7 @@ export class StoragePage extends React.PureComponent {
                     <GridItem xs={2} sm={2} md={2}>
                       <ReadOnlyInput
                         labelText={<FormattedMessage {...messages.freesize} />}
-                        value={freeSize}
+                        value={freeSize + ''}
                         inputProps={{
                           endAdornment: (<span className={classes.text}>G</span>),
                         }}
@@ -139,7 +139,7 @@ export class StoragePage extends React.PureComponent {
                     <GridItem xs={2} sm={2} md={2}>
                       <ReadOnlyInput
                         labelText={<FormattedMessage {...messages.usedsize} />}
-                        value={usedSize}
+                        value={usedSize + ''}
                         inputProps={{
                           endAdornment: (<span className={classes.text}>G</span>),
                         }}

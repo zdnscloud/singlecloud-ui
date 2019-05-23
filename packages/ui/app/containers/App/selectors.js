@@ -70,8 +70,10 @@ export const makeSelectUserMenus = () =>
     makeSelectRole(),
     (appState, isAdmin, role) =>
       [
-        { name: 'profile', path: `/users/${role.get('user')}/profile` },
-        isAdmin ? { name: 'list', path: '/users' } : null,
+        { name: 'Edit', path: `/users/${role.get('user')}/edit` },
+        { name: 'Profile', path: `/users/${role.get('user')}/profile` },
+        { name: 'Passwd', path: `/users/${role.get('user')}/passwd` },
+        isAdmin ? { name: 'List', path: '/users' } : null,
       ].filter((n) => !!n)
   );
 

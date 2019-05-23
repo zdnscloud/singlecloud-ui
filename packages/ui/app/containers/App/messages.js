@@ -29,6 +29,26 @@ export default defineMessages({
     id: `${scope}.global`,
     defaultMessage: 'Global',
   },
+  userProfile: {
+    id: `${scope}.userProfile`,
+    defaultMessage: 'Profile',
+  },
+  userEdit: {
+    id: `${scope}.userEdit`,
+    defaultMessage: 'Edit',
+  },
+  userPasswd: {
+    id: `${scope}.userPasswd`,
+    defaultMessage: 'Passwd',
+  },
+  userList: {
+    id: `${scope}.userList`,
+    defaultMessage: 'List',
+  },
+  userLogout: {
+    id: `${scope}.logout`,
+    defaultMessage: 'Logout',
+  },
   clusterEvents: {
     id: `${scope}.clusterEvents`,
     defaultMessage: 'Cluster Events',

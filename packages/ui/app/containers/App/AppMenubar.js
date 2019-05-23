@@ -141,11 +141,13 @@ class AppMenubar extends PureComponent {
             >
               {userMenus.map((m, index) => (
                 <MenuItem key={m.name} component={Link} to={m.path}>
-                  {m.name}
+                  <FormattedMessage {...messages[`user${m.name}`]} />
                 </MenuItem>
               ))}
               <Divider />
-              <MenuItem onClick={logout}>Logout</MenuItem>
+              <MenuItem onClick={logout}>
+                <FormattedMessage {...messages[`userLogout`]} />
+              </MenuItem>
             </Menu>
             {clusterID && (
               <IconButton
