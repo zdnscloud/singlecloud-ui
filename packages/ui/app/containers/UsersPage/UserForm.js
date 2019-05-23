@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import { compose } from 'redux';
+import { FormattedMessage } from 'react-intl';
 import { Field, reduxForm } from 'redux-form/immutable';
 import getByKey from '@gsmlg/utils/getByKey';
 
@@ -27,6 +28,8 @@ import GridContainer from 'components/Grid/GridContainer';
 import InputField from 'components/Field/InputField';
 import AuthField from 'components/Field/AuthField';
 
+import messages from './messages';
+
 class UserForm extends PureComponent {
   state = {};
 
@@ -50,7 +53,7 @@ class UserForm extends PureComponent {
         <GridContainer>
           <GridItem xs={12} sm={12} md={12} className={classes.formLine}>
             <InputField
-              label="Username"
+              label={<FormattedMessage {...messages.username} />}
               name="name"
               formControlProps={{
                 className: classes.nameControl,
@@ -66,7 +69,7 @@ class UserForm extends PureComponent {
           {!(edit || profile) ? (
             <GridItem xs={12} sm={12} md={12} className={classes.formLine}>
               <InputField
-                label="Password"
+                label={<FormattedMessage {...messages.password} />}
                 name="password"
                 formControlProps={{
                   className: classes.passwordControl,

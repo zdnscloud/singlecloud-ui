@@ -99,7 +99,7 @@ export class UserProfilePage extends React.PureComponent {
               <h4 className={classes.cardTitleWhite}>
                 <FormattedMessage {...messages.userProfile} />
                 <Link
-                  to={`/users/${user.get('id')}/passwd`}
+                  to={`/users/${user && user.get('id')}/passwd`}
                   className={classes.createBtnLink}
                 >
                   <Fab

@@ -33,9 +33,13 @@ export default defineMessages({
     id: `${scope}.tableTitleCreationTimestamp`,
     defaultMessage: 'CreationTimestamp',
   },
-  tableTitleLinks: {
-    id: `${scope}.tableTitleLinks`,
-    defaultMessage: 'Links',
+  tableTitleProjects: {
+    id: `${scope}.tableTitleProjects`,
+    defaultMessage: 'Projects',
+  },
+  tableTitleActions: {
+    id: `${scope}.tableTitleActions`,
+    defaultMessage: 'Actions',
   },
   createUser: {
     id: `${scope}.createUser`,
@@ -52,5 +56,33 @@ export default defineMessages({
   passwordSetup: {
     id: `${scope}.passwordSetup`,
     defaultMessage: 'Password Setup',
+  },
+  username: {
+    id: `${scope}.username`,
+    defaultMessage: 'username',
+  },
+  password: {
+    id: `${scope}.password`,
+    defaultMessage: 'password',
+  },
+  oldPassword: {
+    id: `${scope}.oldPassword`,
+    defaultMessage: 'oldPassword',
+  },
+  newPassword: {
+    id: `${scope}.newPassword`,
+    defaultMessage: 'newPassword',
+  },
+  updatePassword: {
+    id: `${scope}.updatePassword`,
+    defaultMessage: 'updatePassword',
+  },
+  clusterAllNamespaces: {
+    id: `${scope}.clusterAllNamespaces`,
+    defaultMessage: 'cluster {cluster}\'s all namespace',
+  },
+  clusterNamespace: {
+    id: `${scope}.clusterNamespace`,
+    defaultMessage: 'cluster {cluster}\'s namespace {namespace}',
   },
 });

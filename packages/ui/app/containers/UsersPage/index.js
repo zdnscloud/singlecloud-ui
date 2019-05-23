@@ -15,9 +15,9 @@ import { Link } from 'react-router-dom';
 import { withStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Typography from '@material-ui/core/Typography';
-import Fab from '@material-ui/core/Fab';
-import AddIcon from '@material-ui/icons/Add';
+import IconButton from '@material-ui/core/IconButton';
 
+import AddIcon from 'components/Icons/Add';
 import Menubar from 'components/Menubar';
 import GridItem from 'components/Grid/GridItem';
 import GridContainer from 'components/Grid/GridContainer';
@@ -61,14 +61,14 @@ export class UsersPage extends React.PureComponent {
                       to={`${location.get('pathname')}/create`}
                       className={classes.createBtnLink}
                     >
-                      <Fab
+                      <IconButton
                         size="small"
                         color="default"
                         aria-label="create user"
                         className={classes.menuButton}
                       >
-                        <AddIcon />
-                      </Fab>
+                        <AddIcon nativeColor="#fff" />
+                      </IconButton>
                     </Link>
                   </h4>
                 </CardHeader>

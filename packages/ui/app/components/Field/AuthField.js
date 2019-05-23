@@ -2,6 +2,7 @@ import _ from 'lodash';
 import React, { Fragment } from 'react';
 import { Field } from 'redux-form/immutable';
 import { Map, List } from 'immutable';
+import { FormattedMessage } from 'react-intl';
 
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormControl from '@material-ui/core/FormControl';
@@ -10,6 +11,8 @@ import FormHelperText from '@material-ui/core/FormHelperText';
 import FormGroup from '@material-ui/core/FormGroup';
 import Checkbox from '@material-ui/core/Checkbox';
 import Button from 'components/CustomButtons/Button';
+
+import messages from 'containers/UsersPage/messages';
 
 const CustomCheckbox = ({
   label,
@@ -72,7 +75,7 @@ const renderClusters = ({
               <CustomCheckbox
                 {...ipt}
                 {...custom}
-                label={`${name} all`}
+                label={<FormattedMessage {...messages.clusterAllNamespaces} values={{cluster: name}} />}
                 value={value}
                 cluster={name}
                 namespace="_all"
@@ -87,7 +90,7 @@ const renderClusters = ({
                       key={ii}
                       {...ipt}
                       {...custom}
-                      label={`${name} ${nname}`}
+                      label={<FormattedMessage {...messages.clusterNamespace} values={{cluster: name, namespace: nname}} />}
                       value={value}
                       cluster={name}
                       namespace={nname}

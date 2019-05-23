@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react';
 import { compose } from 'redux';
 import { Field, reduxForm } from 'redux-form/immutable';
 import getByKey from '@gsmlg/utils/getByKey';
+import { FormattedMessage } from 'react-intl';
 
 import withStyles from '@material-ui/core/styles/withStyles';
 import InputAdornment from '@material-ui/core/InputAdornment';
@@ -27,6 +28,8 @@ import GridContainer from 'components/Grid/GridContainer';
 import InputField from 'components/Field/InputField';
 import AuthField from 'components/Field/AuthField';
 
+import messages from './messages';
+
 class PasswordForm extends PureComponent {
   state = {};
 
@@ -47,7 +50,7 @@ class PasswordForm extends PureComponent {
           {!isAdmin || true ? (
             <GridItem xs={12} sm={12} md={12} className={classes.formLine}>
               <InputField
-                label="Old Password"
+                label={<FormattedMessage {...messages.oldPassword} />}
                 name="oldPassword"
                 formControlProps={{
                   className: classes.passwordControl,
@@ -59,7 +62,7 @@ class PasswordForm extends PureComponent {
           ) : null}
           <GridItem xs={12} sm={12} md={12} className={classes.formLine}>
             <InputField
-              label="New Password"
+              label={<FormattedMessage {...messages.newPassword} />}
               name="newPassword"
               formControlProps={{
                 className: classes.passwordControl,

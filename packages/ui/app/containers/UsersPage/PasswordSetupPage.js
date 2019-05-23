@@ -113,7 +113,7 @@ export class PasswordSetupPage extends React.PureComponent {
                 size="large"
                 onClick={submitForm}
               >
-                Change Password
+                <FormattedMessage {...messages.updatePassword} />
               </Button>
             </CardFooter>
           </Card>
