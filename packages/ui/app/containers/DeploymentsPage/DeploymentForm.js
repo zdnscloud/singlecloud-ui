@@ -60,13 +60,13 @@ const renderAdvanceServices = ({
     <List component="ul">
       {ports.map((port, i) => {
         const idx = value.findIndex((v) => (
-          v.get('port') === port.get('port') && v.get('protocol') === port.get('protocol')
+          v.get('containerPortName') === port.get('name')
         ));
         const checked = idx !== -1;
         if (checked) {
           const it = value.get(idx);
-          if (it.get('name') !== port.get('name')) {
-            onChange(value.setIn([idx, 'name'], port.get('name')));
+          if (it.get('containerPortName') !== port.get('name')) {
+            onChange(value.setIn([idx, 'containerPortName'], port.get('name')));
           }
         }
         const isUDP = port.get('protocol') === 'udp';
@@ -101,7 +101,7 @@ const renderAdvanceServices = ({
                       if (checked) {
                         onChange(value.delete(idx));
                       } else {
-                        onChange(value.push(port));
+                        onChange(value.push(port.set('containerPortName', port.get('name'))));
                       }
                     }}
                   />
@@ -189,24 +189,41 @@ const renderAdvanceServices = ({
                     }}
                   />
                   &nbsp;&nbsp;
-                  <TextField
-                    label={<FormattedMessage {...messages.formIngressDomain} />}
-                    disabled={!value.getIn([idx, 'autoCreateIngress'])}
-                    value={value.getIn([idx, 'ingressDomainName'])}
-                    onChange={(evt) => {
-                      const dn = value.getIn([idx, 'ingressDomainName']);
-                      onChange(value.setIn([idx, 'ingressDomainName'], evt.target.value));
-                    }}
-                  />
-                  &nbsp;&nbsp;
-                  <TextField
-                    label={<FormattedMessage {...messages.formIngressPath} />}
-                    disabled={!value.getIn([idx, 'autoCreateIngress'])}
-                    value={value.getIn([idx, 'ingressPath'])}
-                    onChange={(evt) => {
-                      onChange(value.setIn([idx, 'ingressPath'], evt.target.value));
-                    }}
-                  />
+                  {value.getIn([idx, 'ingressProtocol']) === 'TCP' ? (
+                    <TextField
+                      label={<FormattedMessage {...messages.formIngressPort} />}
+                      disabled={!value.getIn([idx, 'autoCreateIngress'])}
+                      value={value.getIn([idx, 'ingressPort'])}
+                      onChange={(evt) => {
+                        const dn = value.getIn([idx, 'ingressPort']);
+                        const portVal = Number(evt.target.value);
+                        onChange(value.setIn([idx, 'ingressPort'], portVal));
+                      }}
+                      inputProps={{
+                        type: 'number',
+                      }}
+                    />
+                  ) : (
+                    <Fragment>
+                      <TextField
+                        label={<FormattedMessage {...messages.formIngressDomain} />}
+                        disabled={!value.getIn([idx, 'autoCreateIngress'])}
+                        value={value.getIn([idx, 'ingressHost'])}
+                        onChange={(evt) => {
+                          onChange(value.setIn([idx, 'ingressHost'], evt.target.value));
+                        }}
+                      />
+                      &nbsp;&nbsp;
+                      <TextField
+                        label={<FormattedMessage {...messages.formIngressPath} />}
+                        disabled={!value.getIn([idx, 'autoCreateIngress'])}
+                        value={value.getIn([idx, 'ingressPath'])}
+                        onChange={(evt) => {
+                          onChange(value.setIn([idx, 'ingressPath'], evt.target.value));
+                        }}
+                      />
+                    </Fragment>
+                  )}
                 </Fragment>
               )}
             </ListItemText>
