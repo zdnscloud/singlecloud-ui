@@ -32,37 +32,23 @@ export const loadPodsEpic = (action$, state$, { ajax }) =>
     )
   );
 
-export const loadPodEpic = (action$, state$, { ajax }) =>
+// sts
+export const loadSTSPodsEpic = (action$, state$, { ajax }) =>
   action$.pipe(
-    ofType(c.LOAD_POD),
-    mergeMap(({ payload, meta: { url, clusterID, namespaceID, deploymentID } }) =>
-      ajax(`${url}/${payload}`).pipe(
-        map((resp) => a.loadPodSuccess(resp)),
-        catchError((error) => of(a.loadPodFailure(error)))
-      )
-    )
-  );
-
-export const removePodEpic = (action$, state$, { ajax }) =>
-  action$.pipe(
-    ofType(c.REMOVE_POD),
-    mergeMap(({ payload, meta: { url, clusterID, namespaceID, deploymentID } }) =>
-      ajax({
-        url: `${url}`,
-        method: 'DELETE',
-      }).pipe(
-        map((resp) => {
-          return a.removePodSuccess(resp, { id: payload, clusterID, namespaceID, deploymentID });
-        }),
-        catchError((error) => {
-          return of(a.removePodFailure(error, { id: payload, clusterID, namespaceID, deploymentID }));
-        })
+    ofType(c.LOAD_PODS),
+    mergeMap(({ meta: { url, clusterID, namespaceID, statefulSetID } }) =>
+      ajax(url).pipe(
+        map((resp) =>
+          a.loadSTSPodsSuccess(resp, { clusterID, namespaceID, statefulSetID })
+        ),
+        catchError((error) =>
+          of(a.loadSTSPodsFailure(error, { clusterID, namespaceID, statefulSetID }))
+        )
       )
     )
   );
 
 export default combineEpics(
   loadPodsEpic,
-  loadPodEpic,
-  removePodEpic
+  loadSTSPodsEpic,
 );

@@ -27,8 +27,12 @@ import {
   makeSelectClusterID,
   makeSelectNamespaceID,
 } from 'containers/App/selectors';
-import { makeSelectDeploymentID } from 'ducks/deployments/selectors'
-import { makeSelectPods, makeSelectPodsList } from 'ducks/pods/selectors';
+import {
+  makeSelectPods,
+  makeSelectPodsList,
+  makeSelectSTSPods,
+  makeSelectSTSPodsList,
+} from 'ducks/pods/selectors';
 import * as actions from 'ducks/pods/actions';
 
 import messages from './messages';
@@ -47,11 +51,11 @@ export class PodsTable extends React.PureComponent {
   render() {
     const {
       classes,
-      data,
-      pods,
       clusterID,
       namespaceID,
-      deploymentID,
+      parentType,
+      deployPodList,
+      stsPodList,
       removePod,
       openPodLog,
     } = this.props;
@@ -75,7 +79,6 @@ export class PodsTable extends React.PureComponent {
                   }, {
                     clusterID,
                     namespaceID,
-                    deploymentID,
                   });
                 }}
               >
@@ -110,6 +113,14 @@ export class PodsTable extends React.PureComponent {
       ...s,
       label: <FormattedMessage {...messages[`tableTitle${s.label}`]} />,
     }));
+    let data = [];
+    switch(parentType) {
+      case 'sts':
+        data = stsPodList;
+        break;
+      default:
+        data = deployPodList;
+    }
 
     return (
       <Paper className={classes.tableWrapper}>
@@ -127,9 +138,8 @@ export class PodsTable extends React.PureComponent {
 const mapStateToProps = createStructuredSelector({
   clusterID: makeSelectClusterID(),
   namespaceID: makeSelectNamespaceID(),
-  deploymentID: makeSelectDeploymentID(),
-  pods: makeSelectPods(),
-  data: makeSelectPodsList(),
+  deployPodList: makeSelectPodsList(),
+  stsPodList: makeSelectSTSPodsList(),
 });
 
 const mapDispatchToProps = (dispatch) =>

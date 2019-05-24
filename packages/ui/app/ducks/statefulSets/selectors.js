@@ -41,7 +41,7 @@ export const makeSelectStatefulSetsList = () =>
 export const makeSelectURL = () =>
   createSelector(
     makeSelectCurrentNamespace(),
-    (ns) => ns.getIn(['links', 'statefulSets'])
+    (ns) => ns.getIn(['links', 'statefulsets'])
   );
 
 export const makeSelectStatefulSetID = () =>

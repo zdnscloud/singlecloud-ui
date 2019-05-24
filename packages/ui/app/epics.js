@@ -10,6 +10,7 @@ import usersEpic from 'ducks/users/epic';
 import serviceLinksEpic from 'ducks/serviceLinks/epic';
 import configMapsEpic from 'ducks/configMaps/epic';
 import deploymentsEpic from 'ducks/deployments/epic';
+import statefulSetsEpic from 'ducks/statefulSets/epic';
 import podsEpic from 'ducks/pods/epic';
 import storagesEpic from 'ducks/storages/epic';
 import networksEpic from 'ducks/networks/epic';
@@ -22,12 +23,13 @@ export default function createEpic(injectedEpics = {}) {
     eventsPageEpic,
     roleEpic,
     usersEpic,
-    serviceLinksEpic,
     configMapsEpic,
     deploymentsEpic,
+    statefulSetsEpic,
     podsEpic,
+    serviceLinksEpic,
     storagesEpic,
-    networksEpic,
+    networksEpic
   );
 
   return rootEpic;

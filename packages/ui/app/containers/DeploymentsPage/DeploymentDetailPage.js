@@ -62,28 +62,6 @@ export class DeploymentDetailPage extends React.PureComponent {
     }, 4000);
   }
 
-  componentDidUpdate(prevProps) {
-    const {
-      clusterID: prevClusterID,
-      namespaceID: prevNamespaceID,
-      deploymentID: prevDeploymentID,
-    } = prevProps;
-    const {
-      clusterID,
-      namespaceID,
-      deploymentID,
-      podsUrl: url,
-      loadPods,
-    } = this.props;
-    if (
-      prevClusterID !== clusterID ||
-      prevNamespaceID !== namespaceID ||
-      prevDeploymentID !== deploymentID
-    ) {
-      this.loadDeploymentAndPods();
-    }
-  }
-
   componentWillUnmount() {
     clearInterval(this.timer);
     this.timer = null;

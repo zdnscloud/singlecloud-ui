@@ -40,23 +40,6 @@ export const podsReducer = (
     case c.LOAD_PODS_FAILURE:
       return state;
 
-    case c.LOAD_POD:
-      return state;
-    case c.LOAD_POD_SUCCESS: {
-      const { clusterID, namespaceID, deploymentID } = meta;
-      const pod = payload.response;
-      return state.setIn(['pods', clusterID, namespaceID, deploymentID, pod.id], fromJS(pod));
-    }
-    case c.LOAD_POD_FAILURE:
-      return state;
-
-    case c.REMOVE_POD:
-      return state;
-    case c.REMOVE_POD_SUCCESS:
-      return state;
-    case c.REMOVE_POD_FAILURE:
-      return state;
-
     case c.OPEN_POD_LOG: {
       const { clusterID, namespaceID, deploymentID } = meta;
       const { podID, containerName } = payload;
@@ -75,6 +58,19 @@ export const podsReducer = (
 
     case c.SET_OPENING_LOGS:
       return state.set('openingLogs', payload);
+
+    // sts
+    case c.LOAD_STS_PODS:
+      return state;
+    case c.LOAD_STS_PODS_SUCCESS: {
+      const { clusterID, namespaceID, statefulSetID } = meta;
+      const { data, list } = procCollectionData(payload);
+      return state
+        .setIn(['stsPods', clusterID, namespaceID, statefulSetID], fromJS(data))
+        .set('list', fromJS(list));
+    }
+    case c.LOAD_STS_PODS_FAILURE:
+      return state;
 
     default:
       return state;

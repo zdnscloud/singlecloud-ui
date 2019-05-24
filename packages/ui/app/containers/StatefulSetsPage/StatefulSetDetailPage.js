@@ -34,7 +34,7 @@ import {
 } from 'ducks/statefulSets/selectors';
 import * as podsActions from 'ducks/pods/actions';
 import * as actions from 'ducks/statefulSets/actions';
-import { makeSelectURL as makeSelectPodsURL } from 'ducks/pods/selectors';
+import { makeSelectSTSURL as makeSelectPodsURL } from 'ducks/pods/selectors';
 import PodsTable from 'containers/PodsPage/PodsTable';
 
 import StatefulSet from './StatefulSet';
@@ -60,28 +60,6 @@ export class StatefulSetDetailPage extends React.PureComponent {
         this.loadStatefulSetAndPods();
       }
     }, 4000);
-  }
-
-  componentDidUpdate(prevProps) {
-    const {
-      clusterID: prevClusterID,
-      namespaceID: prevNamespaceID,
-      statefulSetID: prevStatefulSetID,
-    } = prevProps;
-    const {
-      clusterID,
-      namespaceID,
-      statefulSetID,
-      podsUrl: url,
-      loadPods,
-    } = this.props;
-    if (
-      prevClusterID !== clusterID ||
-      prevNamespaceID !== namespaceID ||
-      prevStatefulSetID !== statefulSetID
-    ) {
-      this.loadStatefulSetAndPods();
-    }
   }
 
   componentWillUnmount() {
@@ -125,7 +103,7 @@ export class StatefulSetDetailPage extends React.PureComponent {
                   </h4>
                 </CardHeader>
                 <CardBody>
-                  <PodsTable />
+                  <PodsTable parentType="sts" />
                 </CardBody>
               </Card>
             </GridItem>

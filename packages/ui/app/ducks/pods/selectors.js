@@ -13,13 +13,16 @@ import {
   makeSelectDeploymentID,
   makeSelectCurrentDeployment,
 } from 'ducks/deployments/selectors';
+import {
+  makeSelectStatefulSetID,
+  makeSelectCurrentStatefulSet,
+} from 'ducks/statefulSets/selectors';
 
 import { prefix } from './constants';
 
 /**
  * Direct selector to the pods duck
  */
-
 const selectPodsDomain = (state) => state.get(prefix);
 
 /**
@@ -46,6 +49,30 @@ export const makeSelectPodsList = () =>
 export const makeSelectURL = () =>
   createSelector(
     makeSelectCurrentDeployment(),
+    (deploy) => deploy.getIn(['links', 'pods'])
+  );
+
+export const makeSelectSTSPods = () =>
+  createSelector(
+    selectPodsDomain,
+    makeSelectClusterID(),
+    makeSelectNamespaceID(),
+    makeSelectStatefulSetID(),
+    (substate, clusterID, namespaceID, statefulSetID) =>
+      substate.getIn(['stsPods', clusterID, namespaceID, statefulSetID]) || substate.clear()
+  );
+
+export const makeSelectSTSPodsList = () =>
+  createSelector(
+    selectPodsDomain,
+    makeSelectSTSPods(),
+    (substate, pods) =>
+      substate.get('list').map((id) => pods.get(id))
+  );
+
+export const makeSelectSTSURL = () =>
+  createSelector(
+    makeSelectCurrentStatefulSet(),
     (deploy) => deploy.getIn(['links', 'pods'])
   );
 
