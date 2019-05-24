@@ -19,6 +19,10 @@ import DeploymentsPage, {
   CreateDeploymentPage,
   DeploymentDetailPage,
 } from 'containers/DeploymentsPage/Loadable';
+import StatefulSetsPage, {
+  CreateStatefulSetPage,
+  StatefulSetDetailPage,
+} from 'containers/StatefulSetsPage/Loadable';
 import ConfigMapsPage, {
   CreateConfigMapPage,
   ShowConfigMapPage,
@@ -120,6 +124,24 @@ const appRoutes = [
     name: 'Deployment Detail',
     icon: Dashboard,
     component: DeploymentDetailPage,
+  },
+  {
+    path: '/clusters/:cluster_id/namespaces/:namespace_id/statefulSets',
+    name: 'StatefulSets',
+    icon: Dashboard,
+    component: StatefulSetsPage,
+  },
+  {
+    path: '/clusters/:cluster_id/namespaces/:namespace_id/statefulSets/create',
+    name: 'Create StatefulSet',
+    icon: Dashboard,
+    component: CreateStatefulSetPage,
+  },
+  {
+    path: '/clusters/:cluster_id/namespaces/:namespace_id/statefulSets/:stateful_set_id',
+    name: 'Stateful Detail',
+    icon: Dashboard,
+    component: StatefulSetDetailPage,
   },
   {
     path: '/clusters/:cluster_id/namespaces/:namespace_id/serviceLink',

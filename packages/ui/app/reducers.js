@@ -28,6 +28,9 @@ import configMapsReducer, {
 import deploymentsReducer, {
   prefix as deploymentsPrefix,
 } from 'ducks/deployments';
+import statefulSetsReducer, {
+  prefix as statefulSetsPrefix,
+} from 'ducks/statefulSets';
 import podsReducer, {
   prefix as podsPrefix,
 } from 'ducks/pods';
@@ -52,6 +55,7 @@ export default function createReducer(injectedReducers = {}) {
     [serviceLinksPrefix]: serviceLinksReducer,
     [configMapsPrefix]: configMapsReducer,
     [deploymentsPrefix]: deploymentsReducer,
+    [statefulSetsPrefix]: statefulSetsReducer,
     [podsPrefix]: podsReducer,
     [storagesPrefix]: storagesReducer,
     [networksPrefix]: networksReducer,

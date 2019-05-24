@@ -106,11 +106,11 @@ export const makeSelectLeftMenus = () =>
               },
               {
                 name: 'StatefulSet',
-                path: `/clusters/${cluster}/namespaces/${namespace}/statefulSet`,
+                path: `/clusters/${cluster}/namespaces/${namespace}/statefulSets`,
               },
               {
                 name: 'DaemonSet',
-                path: `/clusters/${cluster}/namespaces/${namespace}/daemonSet`,
+                path: `/clusters/${cluster}/namespaces/${namespace}/daemonSets`,
               },
               {
                 name: 'CronJob',

@@ -44,7 +44,6 @@ Terminal.applyAddon(fit);
 export class TerminalDialog extends React.PureComponent {
   static propTypes = {
     classes: PropTypes.object.isRequired,
-    match: PropTypes.object.isRequired,
   };
 
   termEl = createRef();
