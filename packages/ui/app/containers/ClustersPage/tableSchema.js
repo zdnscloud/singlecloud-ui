@@ -1,6 +1,6 @@
 import { ucfirst } from '@gsmlg/utils';
 
-const schema = ['name', 'nodeCount', 'status', 'creationTimestamp'];
+const schema = ['status', 'name', 'nodeCount', 'creationTimestamp'];
 
 const tableSchema = schema.map((id) => ({
   id,

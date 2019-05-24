@@ -23,7 +23,7 @@ export function* initialize() {
     const mount = yield select(makeSelectMount());
     if (mount === false) break;
     yield delay(3000);
-    yield* loadClusters();
+    // yield* loadClusters();
   }
 }
 

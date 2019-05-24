@@ -25,6 +25,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTerminal } from '@fortawesome/free-solid-svg-icons';
 import IconButton from '@material-ui/core/IconButton';
 import ShellIcon from 'components/Icons/Shell';
+import SuccessIcon from 'components/Icons/Success';
+import FailureIcon from 'components/Icons/Failure';
 import { openTerminal } from 'containers/TerminalPage/actions';
 
 import { makeSelectClusters, makeSelectTableList } from './selectors';
@@ -47,6 +49,7 @@ export class ClustersTable extends React.PureComponent {
       tableList,
       clusters,
       openTerminal,
+      theme,
     } = this.props;
     const mergedSchema = schema
       .concat([
@@ -69,6 +72,21 @@ export class ClustersTable extends React.PureComponent {
           ),
         },
       ])
+      .map((sch) => {
+        if (sch.id === 'status') {
+          return {
+            ...sch,
+            component: (props) => (
+              props.data.get('status') === 'Running' ? (
+                <SuccessIcon nativeColor={theme.palette.icons.a} />
+              ) : (
+                <FailureIcon nativeColor={theme.palette.icons.b} />
+              )
+            ),
+          };
+        }
+        return sch;
+      })
       .map((sch) => {
         if (sch.id === 'name') {
           return {
@@ -123,5 +141,5 @@ const withConnect = connect(
 
 export default compose(
   withConnect,
-  withStyles(styles)
+  withStyles(styles, { withTheme: true })
 )(ClustersTable);
