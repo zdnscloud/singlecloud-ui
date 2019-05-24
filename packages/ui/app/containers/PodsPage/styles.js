@@ -172,6 +172,9 @@ const styles = (theme) => ({
   tableWrapper: {
     overflow: 'auto',
   },
+  button: {
+    padding: '0 0 0 5px',
+  },
 });
 
 export default styles;

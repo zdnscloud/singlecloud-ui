@@ -9,10 +9,13 @@ import {
   INIT_ACTION,
   OPEN_TERMINAL,
   CLOSE_TERMINAL,
+  OPEN_CONTAINER_TERMINAL,
+  CLOSE_CONTAINER_TERMINAL,
 } from './constants';
 
 export const initialState = fromJS({
   termIsOpen: false,
+  containerTermIsOpen: false,
 });
 
 function terminalPageReducer(state = initialState, { type, payload, meta, error }) {
@@ -25,6 +28,12 @@ function terminalPageReducer(state = initialState, { type, payload, meta, error 
 
     case CLOSE_TERMINAL:
       return state.set('termIsOpen', false);
+
+    case OPEN_CONTAINER_TERMINAL:
+      return state.set('containerTermIsOpen', payload);
+
+    case CLOSE_CONTAINER_TERMINAL:
+      return state.set('containerTermIsOpen', false);
 
     default:
       return state;

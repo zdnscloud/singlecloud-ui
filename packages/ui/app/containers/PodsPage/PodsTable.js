@@ -18,15 +18,16 @@ import { SimpleTable } from '@gsmlg/com';
 import Fab from '@material-ui/core/Fab';
 import EditIcon from '@material-ui/icons/Edit';
 import IconButton from '@material-ui/core/IconButton';
-import DeleteIcon from '@material-ui/icons/Delete';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTerminal } from '@fortawesome/free-solid-svg-icons';
+import ShellIcon from 'components/Icons/Shell';
+import LogIcon from 'components/Icons/Log';
 import Chip from '@material-ui/core/Chip';
+import ContainerTerminalDialog from 'containers/TerminalPage/ContainerTerminalDialog';
 
 import {
   makeSelectClusterID,
   makeSelectNamespaceID,
 } from 'containers/App/selectors';
+import { openContainerTerminal } from 'containers/TerminalPage/actions';
 import {
   makeSelectPods,
   makeSelectPodsList,
@@ -58,58 +59,65 @@ export class PodsTable extends React.PureComponent {
       stsPodList,
       removePod,
       openPodLog,
+      openContainerTerminal,
     } = this.props;
-    const mergedSchema = schema.concat([
-      {
-        id: 'logs',
-        label: 'Logs',
-        component: (props) => (
-          <Fragment>
-            {props.data.get('containers').map((ctn) => (
-              <Fab
-                key={ctn.get('name')}
-                variant="extended"
-                aria-label="View Log"
-                className={classes.button}
-                size="small"
-                onClick={(evt) => {
-                  openPodLog({
-                    podID: props.data.get('id'),
-                    containerName: ctn.get('name'),
-                  }, {
-                    clusterID,
-                    namespaceID,
-                  });
-                }}
-              >
-                {/* {ctn.get('image')} */}
-                <FontAwesomeIcon icon={faTerminal} />
-              </Fab>
-            ))}
-          </Fragment>
-        ),
-      },
-      {
-        id: 'actions',
-        label: 'Actions',
-        component: (props) => (
-          <Fragment>
-            <IconButton
-              aria-label="Delete"
-              className={classes.button}
-              onClick={(evt) => {
-                const pod = props.data;
-                removePod(pod.get('id'), {
-                  url: pod.getIn(['links', 'remove']),
-                });
-              }}
-            >
-              <DeleteIcon />
-            </IconButton>
-          </Fragment>
-        ),
-      },
-    ]).map((s) => ({
+    const mergedSchema = schema.map((item) => {
+      if (item.id === 'containers') {
+        return {
+          ...item,
+          component(props) {
+            return props.data
+              .get('containers')
+              .map((ctn, i) => (
+                <Chip
+                  key={i}
+                  label={(
+                    <Fragment>
+                      {`${ctn.get('image')}    `}
+                      <IconButton
+                        aria-label="View Log"
+                        className={classes.button}
+                        size="small"
+                        edge="end"
+                        onClick={(evt) => {
+                          openPodLog({
+                            podID: props.data.get('id'),
+                            containerName: ctn.get('name'),
+                          }, {
+                            clusterID,
+                            namespaceID,
+                          });
+                        }}
+                      >
+                        <LogIcon />
+                      </IconButton>
+                      <IconButton
+                        aria-label="Terminal"
+                        className={classes.button}
+                        size="small"
+                        edge="end"
+                        onClick={(evt) => {
+                          openContainerTerminal({
+                            podID: props.data.get('id'),
+                            containerName: ctn.get('name'),
+                          }, {
+                            clusterID,
+                            namespaceID,
+                          })
+                        }}
+                      >
+                        <ShellIcon />
+                      </IconButton>
+                    </Fragment>
+                  )}
+                />
+              ));
+          },
+        };
+      }
+      return item;
+    })
+    .map((s) => ({
       ...s,
       label: <FormattedMessage {...messages[`tableTitle${s.label}`]} />,
     }));
@@ -125,6 +133,7 @@ export class PodsTable extends React.PureComponent {
     return (
       <Paper className={classes.tableWrapper}>
         <LogViewDialog />
+        <ContainerTerminalDialog />
         <SimpleTable
           className={classes.table}
           schema={mergedSchema}
@@ -146,6 +155,7 @@ const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
       ...actions,
+      openContainerTerminal,
     },
     dispatch
   );

@@ -17,6 +17,12 @@ export const makeSelectTermIsOpen = () =>
     (substate) => substate.get('termIsOpen')
   );
 
+export const makeSelectContainerTermIsOpen = () =>
+  createSelector(
+    selectTerminalPageDomain,
+    (substate) => substate.get('containerTermIsOpen')
+  );
+
 /**
  * Default selector used by TerminalPage
  */

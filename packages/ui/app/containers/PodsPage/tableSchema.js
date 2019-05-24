@@ -14,21 +14,6 @@ const tableSchema = schema
   .map((id) => ({
     id,
     label: ucfirst(id),
-  }))
-  .map((item) => {
-    if (item.id === 'containers') {
-      return {
-        ...item,
-        component(props) {
-          return props.data
-            .get('containers')
-            .map((ctn, i) => (
-              <Chip key={i} label={`${ctn.get('image')}`} />
-            ));
-        },
-      };
-    }
-    return item;
-  });
+  }));
 
 export default tableSchema;
