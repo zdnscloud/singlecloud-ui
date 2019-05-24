@@ -108,6 +108,7 @@ export class PodsList extends React.PureComponent {
 
                     return (
                       <div
+                        key={`index-${n}`}
                         onClick={mouseOver}
                         className={`${classes.ipitem} ${active ? 'active' : ''}`}
                       ></div>

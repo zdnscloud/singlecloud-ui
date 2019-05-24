@@ -148,8 +148,8 @@ export class StoragePage extends React.PureComponent {
                   </GridContainer>
                   {this.state.tab === 0 ? (
                     <GridContainer>
-                      {nodes && nodes.map((node) => (
-                        <GridItem xs={3} sm={3} md={3}>
+                      {nodes && nodes.map((node, i) => (
+                        <GridItem key={i} xs={3} sm={3} md={3}>
                           <Node node={node} />
                         </GridItem>
                       ))}
