@@ -101,7 +101,7 @@ export class OuterCharts extends React.PureComponent {
           return (
             <GridItem xs={12} sm={12} md={12} key={i}>
               <Card>
-                <CardHeader color="info" stats icon>
+                <CardHeader color="info" icon>
                   <h3 className={classes.cardTitle}>
                     <b>
                       <FormattedMessage {...messages.outerServiceName} />
@@ -117,7 +117,7 @@ export class OuterCharts extends React.PureComponent {
                     data={s}
                   />
                 </CardBody>
-                <CardFooter stats />
+                <CardFooter />
               </Card>
             </GridItem>
           );

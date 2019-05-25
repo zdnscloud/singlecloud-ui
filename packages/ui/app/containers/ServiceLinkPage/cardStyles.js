@@ -51,13 +51,14 @@ const cardStyles = {
   },
   cardTitle: {
     color: grayColor[2],
-    marginTop: "0px",
+    marginTop: "1em",
     minHeight: "auto",
     fontWeight: "300",
     fontFamily: "'Roboto', 'Helvetica', 'Arial', sans-serif",
     marginBottom: "3px",
     textDecoration: "none",
     textAlign: 'left',
+    textIndent: '2em',
     "& small": {
       color: grayColor[1],
       fontWeight: "400",

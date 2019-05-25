@@ -101,7 +101,7 @@ export class InnerCharts extends React.PureComponent {
           return (
             <GridItem xs={12} sm={6} md={6} key={i}>
               <Card>
-                <CardHeader color="info" stats icon>
+                <CardHeader color="info" icon>
                   <h3 className={classes.cardTitle}>
                     <b>
                       <FormattedMessage {...messages.innerServiceName} />
