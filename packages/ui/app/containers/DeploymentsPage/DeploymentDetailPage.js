@@ -57,7 +57,7 @@ export class DeploymentDetailPage extends React.PureComponent {
     this.loadDeploymentAndPods();
     this.timer = setInterval(() => {
       if (this.timer) {
-        // this.loadDeploymentAndPods();
+        this.loadDeploymentAndPods();
       }
     }, 4000);
   }
