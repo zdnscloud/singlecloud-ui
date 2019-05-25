@@ -71,6 +71,7 @@ export class PodsTable extends React.PureComponent {
               .map((ctn, i) => (
                 <Chip
                   key={i}
+                  variant="outlined"
                   label={(
                     <Fragment>
                       {`${ctn.get('image')}    `}
@@ -79,6 +80,7 @@ export class PodsTable extends React.PureComponent {
                         className={classes.button}
                         size="small"
                         edge="end"
+                        style={{ transform: 'scale(0.7)' }}
                         onClick={(evt) => {
                           openPodLog({
                             podID: props.data.get('id'),
@@ -96,6 +98,7 @@ export class PodsTable extends React.PureComponent {
                         className={classes.button}
                         size="small"
                         edge="end"
+                        style={{ transform: 'scale(0.7)' }}
                         onClick={(evt) => {
                           openContainerTerminal({
                             podID: props.data.get('id'),

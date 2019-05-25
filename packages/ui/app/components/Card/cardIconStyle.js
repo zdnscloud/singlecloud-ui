@@ -31,9 +31,9 @@ const cardIconStyle = {
   roseCardHeader,
   cyanCardHeader: {
     background: `linear-gradient(60deg, ${cyanColor}, ${cyanColor})`,
-    boxShadow: `0 4px 20px 0 rgba(${hexToRgb(
-      blackColor
-    )}, 0.14), 0 7px 10px -5px rgba(${hexToRgb(cyanColor)}, 0.4)`,
+    // boxShadow: `0 4px 20px 0 rgba(${hexToRgb(
+    //   blackColor
+    // )}, 0.14), 0 7px 10px -5px rgba(${hexToRgb(cyanColor)}, 0.4)`,
   },
 };
 
