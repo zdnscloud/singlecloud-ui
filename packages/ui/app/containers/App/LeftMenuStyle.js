@@ -82,7 +82,7 @@ const leftMenuStyle = (theme) => ({
     width: '232px',
     height: 'calc(100vh - 64px)',
     paddingTop: '15px',
-    backgroundColor: theme.palette.primary.main,
+    backgroundColor: '#2C5473',
   },
   logo: {
     position: 'relative',
@@ -306,18 +306,18 @@ const leftMenuStyle = (theme) => ({
   },
   activeMenu1: {
     backgroundColor: theme.palette.primary.main,
-    boxShadow: `0 12px 20px -10px rgba(${hexToRgb(
-      theme.palette.primary.main
-    )},.28), 0 4px 20px 0 rgba(${hexToRgb(
-      blackColor
-    )},.12), 0 7px 8px -5px rgba(${hexToRgb(theme.palette.primary.main)},.2)`,
+    // boxShadow: `0 12px 20px -10px rgba(${hexToRgb(
+    //   theme.palette.primary.main
+    // )},.28), 0 4px 20px 0 rgba(${hexToRgb(
+    //   blackColor
+    // )},.12), 0 7px 8px -5px rgba(${hexToRgb(theme.palette.primary.main)},.2)`,
     '&:hover': {
       backgroundColor: theme.palette.primary.main,
-      boxShadow: `0 12px 20px -10px rgba(${hexToRgb(
-        theme.palette.primary.main
-      )},.28), 0 4px 20px 0 rgba(${hexToRgb(
-        blackColor
-      )},.12), 0 7px 8px -5px rgba(${hexToRgb(theme.palette.primary.main)},.2)`,
+      // boxShadow: `0 12px 20px -10px rgba(${hexToRgb(
+      //   theme.palette.primary.main
+      // )},.28), 0 4px 20px 0 rgba(${hexToRgb(
+      //   blackColor
+      // )},.12), 0 7px 8px -5px rgba(${hexToRgb(theme.palette.primary.main)},.2)`,
     },
     '&:before': {
       position: 'absolute',
@@ -332,19 +332,19 @@ const leftMenuStyle = (theme) => ({
     },
   },
   activeMenu2: {
-    backgroundColor: '#1B9CCE',
-    boxShadow: `0 12px 20px -10px rgba(${hexToRgb(
-      '#1B9CCE'
-    )},.28), 0 4px 20px 0 rgba(${hexToRgb(
-      blackColor
-    )},.12), 0 7px 8px -5px rgba(${hexToRgb('#1B9CCE')},.2)`,
+    backgroundColor: '#2C5473',
+    // boxShadow: `0 12px 20px -10px rgba(${hexToRgb(
+    //   '#1B9CCE'
+    // )},.28), 0 4px 20px 0 rgba(${hexToRgb(
+    //   blackColor
+    // )},.12), 0 7px 8px -5px rgba(${hexToRgb('#1B9CCE')},.2)`,
     '&:hover': {
       backgroundColor: '#1B9CCE',
-      boxShadow: `0 12px 20px -10px rgba(${hexToRgb(
-        '#1B9CCE'
-      )},.28), 0 4px 20px 0 rgba(${hexToRgb(
-        blackColor
-      )},.12), 0 7px 8px -5px rgba(${hexToRgb('#1B9CCE')},.2)`,
+      // boxShadow: `0 12px 20px -10px rgba(${hexToRgb(
+      //   '#1B9CCE'
+      // )},.28), 0 4px 20px 0 rgba(${hexToRgb(
+      //   blackColor
+      // )},.12), 0 7px 8px -5px rgba(${hexToRgb('#1B9CCE')},.2)`,
     },
   },
 });

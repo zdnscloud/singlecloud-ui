@@ -81,7 +81,7 @@ const signupPageStyle = (theme) => ({
     marginLeft: '0px',
     marginRight: '0px',
     marginTop: '0px',
-    padding: '0px 0',
+    padding: '2.33em 0',
     marginBottom: '-15px',
     backgroundColor: 'rgb(255,255,255, 0)',
   },
@@ -110,6 +110,7 @@ const signupPageStyle = (theme) => ({
   },
   inputIconsColor: {
     color: '#fff !important',
+    transform: 'scale(0.7)',
   },
   inputIconsError: {
     color: `${dangerColor} !important`,
@@ -117,8 +118,20 @@ const signupPageStyle = (theme) => ({
   inputIconsSuccess: {
     color: `${successColor} !important`,
   },
+  inputIconUp: {
+    transform: 'translate(0, -2px) scale(0.7)',
+  },
   input: {
     color: '#eee',
+  },
+  inputUnderline: {
+    '&:after': {
+      borderColor: '#4f6e87',
+    },
+  },
+  submitButton: {
+    backgroundColor: '#1B9CCE !important',
+    padding: '0.7em 0',
   },
 });
 

@@ -27,7 +27,7 @@ import Danger from 'components/Typography/Danger';
 import UserIcon from 'components/Icons/User';
 import PasswordIcon from 'components/Icons/Password';
 
-import loginLogo from 'images/login-logo.png';
+import loginLogo from 'images/login-logo.jpg';
 
 import messages from './messages';
 
@@ -45,7 +45,7 @@ const validate = (values) => {
 const UsernameField = ({ label, input, meta, inputProps, cns, ...custom }) => (
   <CustomInput
     id="login-username"
-    classes={{ input: cns.input }}
+    classes={{ input: cns.input, underline: cns.inputUnderline }}
     labelText={label}
     meta={meta}
     formControlProps={{
@@ -76,7 +76,7 @@ const UsernameField = ({ label, input, meta, inputProps, cns, ...custom }) => (
 const PasswordField = ({ label, input, meta, inputProps, cns, ...custom }) => (
   <CustomInput
     id="login-password"
-    classes={{ input: cns.input }}
+    classes={{ input: cns.input, underline: cns.inputUnderline }}
     labelText={label}
     meta={meta}
     formControlProps={{
@@ -91,6 +91,7 @@ const PasswordField = ({ label, input, meta, inputProps, cns, ...custom }) => (
           <PasswordIcon
             className={classNames({
               [cns.inputIconsColor]: true,
+              [cns.inputIconUp]: true,
               [cns.inputIconsError]: !!(meta.touched && meta.error),
               [cns.inputIconsSuccess]:
                 custom.success && !(meta.touched && meta.error),
@@ -110,14 +111,14 @@ const LoginForm = (props) => {
   return (
     <form className={classes.form} onSubmit={handleSubmit}>
       <CardHeader className={classes.cardHeader}>
-        <h4
-          style={{
-            backgroundImage: `url(${loginLogo})`,
-            backgroundPosition: 'top center',
-            backgroundRepeat: 'no-repeat',
-            height: 85,
-          }}
-        />
+        <svg xmlns="http://www.w3.org/2000/svg" width="50" height="47">
+		      <g transform="scale(0.3)">
+			      <polygon fill="#209cce" points="115.95 156.57 0 156.57 51.16 108.87 165.9 108.87 115.95 156.57"/>
+			      <polygon fill="none" stroke="#209cc3" strokeWidth="1.42" points="52.29 107.56 1.41 154.97 117.85 44.91 166.62 0.53 52.29 107.56"/>
+			      <polygon fill="#6fc493" points="115.95 47.38 115.95 156.57 165.9 108.87 165.9 0.34 115.95 47.38"/>
+			      <polygon fill="#209cce" points="115.95 47.38 0 47.38 51.16 0.34 165.9 0.34 115.95 47.38"/>
+	        </g>
+        </svg>
       </CardHeader>
       <CardBody>
         <Field

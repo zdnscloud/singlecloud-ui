@@ -66,9 +66,9 @@ const container = {
 };
 
 const defaultFont = {
-  fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
-  fontWeight: '300',
-  lineHeight: '1.5em'
+  fontFamily: '"微软雅黑", "苹方", "Roboto", "Helvetica", "Arial", sans-serif',
+  // fontWeight: '300',
+  lineHeight: '1.5em',
 };
 // const primaryColor = [blue[900], blue[700], blue[500], blue[400]];
 const primaryColor = ['#072C47', '#072C47', '#072C47', '#072C47'];
@@ -107,12 +107,12 @@ const boxShadow = {
 };
 
 const primaryBoxShadow = {
-  boxShadow:
-    '0 4px 20px 0 rgba(' +
-    hexToRgb(blackColor) +
-    ',.14), 0 7px 10px -5px rgba(' +
-    hexToRgb(primaryColor[0]) +
-    ',.4)'
+  // boxShadow:
+  //   '0 4px 20px 0 rgba(' +
+  //   hexToRgb(blackColor) +
+  //   ',.14), 0 7px 10px -5px rgba(' +
+  //   hexToRgb(primaryColor[0]) +
+  //   ',.4)'
 };
 const infoBoxShadow = {
   boxShadow:

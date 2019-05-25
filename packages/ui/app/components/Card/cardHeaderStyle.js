@@ -22,7 +22,7 @@ const cardHeaderStyle = (theme) => ({
     background: 'transparent',
     zIndex: '3 !important',
     '&$cardHeaderPlain,&$cardHeaderIcon,&$cardHeaderStats,&$warningCardHeader,&$successCardHeader,&$dangerCardHeader,&$infoCardHeader,&$primaryCardHeader,&$roseCardHeader,&$customBlueCardHeader,&$cyanCardHeader,&$azureCardHeader': {
-      margin: '0 15px',
+      margin: '0',
       padding: '0',
       position: 'relative',
       color: whiteColor,
@@ -32,7 +32,7 @@ const cardHeaderStyle = (theme) => ({
     },
     '&$warningCardHeader,&$successCardHeader,&$dangerCardHeader,&$infoCardHeader,&$primaryCardHeader,&$roseCardHeader,&$customBlueCardHeader,&$cyanCardHeader,&$azureCardHeader': {
       '&:not($cardHeaderIcon)': {
-        borderRadius: '3px',
+        borderRadius: '3px 3px 0 0',
         marginTop: '-20px',
         padding: '15px',
       },
@@ -123,9 +123,9 @@ const cardHeaderStyle = (theme) => ({
     color: whiteColor,
     '&:not($cardHeaderIcon)': {
       background: `linear-gradient(60deg, ${theme.palette.secondary.main}, ${theme.palette.secondary.main})`,
-      boxShadow: `0 4px 20px 0 rgba(${hexToRgb(
-        blackColor
-      )}, 0.14), 0 7px 10px -5px rgba(${hexToRgb(theme.palette.secondary.main)}, 0.4)`,
+      // boxshadow: `0 4px 20px 0 rgba(${hextorgb(
+      //   blackcolor
+      // )}, 0.14), 0 7px 10px -5px rgba(${hexToRgb(theme.palette.secondary.main)}, 0.4)`,
     },
   },
   customBlueCardHeader: {
@@ -144,18 +144,18 @@ const cardHeaderStyle = (theme) => ({
     color: whiteColor,
     '&:not($cardHeaderIcon)': {
       background: `linear-gradient(60deg, ${cyanColor}, ${cyanColor})`,
-      boxShadow: `0 4px 20px 0 rgba(${hexToRgb(
-        blackColor
-      )}, 0.14), 0 7px 10px -5px rgba(${hexToRgb(cyanColor)}, 0.4)`,
+      // boxShadow: `0 4px 20px 0 rgba(${hexToRgb(
+      //   blackColor
+      // )}, 0.14), 0 7px 10px -5px rgba(${hexToRgb(cyanColor)}, 0.4)`,
     },
   },
   azureCardHeader: {
     color: whiteColor,
     '&:not($cardHeaderIcon)': {
       background: `linear-gradient(60deg, ${azureColor}, ${azureColor})`,
-      boxShadow: `0 4px 20px 0 rgba(${hexToRgb(
-        blackColor
-      )}, 0.14), 0 7px 10px -5px rgba(${hexToRgb(azureColor)}, 0.4)`,
+      // boxShadow: `0 4px 20px 0 rgba(${hexToRgb(
+      //   blackColor
+      // )}, 0.14), 0 7px 10px -5px rgba(${hexToRgb(azureColor)}, 0.4)`,
     },
   },
 });

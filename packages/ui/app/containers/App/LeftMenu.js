@@ -134,7 +134,7 @@ class LeftMenu extends PureComponent {
                     className={classNames(classes.itemText)}
                     disableTypography
                     style={{
-                      opacity: active ? 1 : 0.5,
+                      opacity: active ? 1 : 0.7,
                     }}
                   />
                 ) : null}
@@ -143,7 +143,7 @@ class LeftMenu extends PureComponent {
                     <ChevronRight
                       style={{
                         transform: 'scale(0.7)',
-                        opacity: active ? 1 : 0.5,
+                        opacity: active ? 1 : 0.7,
                       }}
                     />
                   </ListItemSecondaryAction>
