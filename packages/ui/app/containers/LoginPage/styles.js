@@ -81,7 +81,7 @@ const signupPageStyle = (theme) => ({
     marginLeft: '0px',
     marginRight: '0px',
     marginTop: '0px',
-    padding: '2.33em 0',
+    padding: '3rem 0 0 0',
     marginBottom: '-15px',
     backgroundColor: 'rgb(255,255,255, 0)',
   },
@@ -103,6 +103,7 @@ const signupPageStyle = (theme) => ({
   },
   cardFooter: {
     paddingTop: '0rem',
+    paddingBottom: '1rem',
     border: '0',
     borderRadius: '6px',
     justifyContent: 'center !important',
