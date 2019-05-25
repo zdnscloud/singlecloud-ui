@@ -160,7 +160,7 @@ class LeftMenu extends PureComponent {
                       [classes.menuShrinkModal]: !showText,
                     }),
                   }}
-                  PaperProps={{ square: true, style: { maxHeight: '100vh' } }}
+                  PaperProps={{ square: true, style: { maxHeight: '100vh', boxShadow: 'none' } }}
                   transitionDuration={0}
                   hideBackdrop
                 >

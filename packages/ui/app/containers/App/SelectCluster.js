@@ -22,20 +22,14 @@ const SelectCluster = (props) => {
 
   return (
     <FormControl className={classes.formControl}>
-      <InputLabel
-        classes={{
-          root: classes.inputLabelRoot,
-        }}
-        htmlFor="cluster_name-id"
-      >
-        {/* <FormattedMessage {...messages.cluster} /> */}
-      </InputLabel>
       <Select
         className={classes.select}
         classes={{
           root: classes.selectRoot,
           icon: classes.selectIcon,
         }}
+        displayEmpty
+        disableUnderline
         value={activeCluster}
         onChange={(evt) => {
           changeCluster(evt.target.value);

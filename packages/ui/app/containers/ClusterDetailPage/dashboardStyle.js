@@ -34,6 +34,10 @@ const dashboardStyle = {
       marginLeft: '3px',
     },
   },
+  cardHeader: {
+    marginLeft: '15px !important',
+    marginRight: '15px !important',
+  },
   cardCategory: {
     color: grayColor[0],
     margin: '0',

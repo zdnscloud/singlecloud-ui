@@ -123,7 +123,7 @@ export class ClusterDetail extends React.PureComponent {
         <GridContainer>
           <GridItem xs={12} sm={6} md={3}>
             <Card>
-              <CardHeader color="cyan" stats icon>
+              <CardHeader color="cyan" stats icon className={classes.cardHeader}>
                 <CardIcon color="cyan">
                   <NameIcon />
                 </CardIcon>
@@ -137,7 +137,7 @@ export class ClusterDetail extends React.PureComponent {
           </GridItem>
           <GridItem xs={12} sm={6} md={3}>
             <Card>
-              <CardHeader color="cyan" stats icon>
+              <CardHeader color="cyan" stats icon className={classes.cardHeader}>
                 <CardIcon color="cyan">
                   <VersionIcon />
                 </CardIcon>
@@ -153,7 +153,7 @@ export class ClusterDetail extends React.PureComponent {
           </GridItem>
           <GridItem xs={12} sm={6} md={3}>
             <Card>
-              <CardHeader color="cyan" stats icon>
+              <CardHeader color="cyan" stats icon className={classes.cardHeader}>
                 <CardIcon color="cyan">
                   <NodesIcon />
                 </CardIcon>
@@ -169,7 +169,7 @@ export class ClusterDetail extends React.PureComponent {
           </GridItem>
           <GridItem xs={12} sm={6} md={3}>
             <Card>
-              <CardHeader color="cyan" stats icon>
+              <CardHeader color="cyan" stats icon className={classes.cardHeader}>
                 <CardIcon color="cyan">
                   <TimeIcon />
                 </CardIcon>

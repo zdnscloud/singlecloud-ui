@@ -70,14 +70,6 @@ class SelectNamespace extends PureComponent {
 
     return (
       <FormControl className={classes.formControl}>
-        <InputLabel
-          classes={{
-            root: classes.inputLabelRoot,
-          }}
-          htmlFor="namespace_name-id"
-        >
-          {/* <FormattedMessage {...messages.namespace} /> */}
-        </InputLabel>
         <Select
           className={classes.select}
           classes={{
@@ -85,6 +77,7 @@ class SelectNamespace extends PureComponent {
             icon: classes.selectIcon,
           }}
           value={namespaceID}
+          disableUnderline
           onChange={(evt) => {
             changeNamespace(evt.target.value, clusterID);
           }}

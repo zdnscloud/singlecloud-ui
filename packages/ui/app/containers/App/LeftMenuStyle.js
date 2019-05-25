@@ -81,8 +81,7 @@ const leftMenuStyle = (theme) => ({
   secondMenu: {
     width: '232px',
     height: 'calc(100vh - 64px)',
-    paddingTop: '15px',
-    backgroundColor: '#2C5473',
+    backgroundColor: '#345471',
   },
   logo: {
     position: 'relative',
@@ -156,7 +155,7 @@ const leftMenuStyle = (theme) => ({
     },
   },
   list: {
-    marginTop: '20px',
+    marginTop: '0px',
     paddingLeft: '0',
     paddingTop: '0',
     paddingBottom: '0',
@@ -174,11 +173,11 @@ const leftMenuStyle = (theme) => ({
   itemLink: {
     width: 'auto',
     transition: 'all 300ms linear',
-    borderRadius: '3px',
+    borderRadius: '0px',
     position: 'relative',
     padding: '10px 15px',
     backgroundColor: 'transparent',
-    height: '60px',
+    height: '50px',
     ...defaultFont,
   },
   itemIcon: {
@@ -217,78 +216,6 @@ const leftMenuStyle = (theme) => ({
       ...primaryBoxShadow,
     },
   },
-  purple: {
-    backgroundColor: primaryColor[0],
-    ...primaryBoxShadow,
-    '&:hover': {
-      backgroundColor: primaryColor[0],
-      ...primaryBoxShadow,
-    },
-  },
-  blue: {
-    backgroundColor: infoColor[0],
-    boxShadow: `0 12px 20px -10px rgba(${hexToRgb(
-      infoColor[0]
-    )},.28), 0 4px 20px 0 rgba(${hexToRgb(
-      blackColor
-    )},.12), 0 7px 8px -5px rgba(${hexToRgb(infoColor[0])},.2)`,
-    '&:hover': {
-      backgroundColor: infoColor[0],
-      boxShadow: `0 12px 20px -10px rgba(${hexToRgb(
-        infoColor[0]
-      )},.28), 0 4px 20px 0 rgba(${
-        hexToRgb(blackColor)
-      },.12), 0 7px 8px -5px rgba(${hexToRgb(infoColor[0])},.2)`,
-    },
-  },
-  green: {
-    backgroundColor: successColor[0],
-    boxShadow: `0 12px 20px -10px rgba(${hexToRgb(
-      successColor[0]
-    )},.28), 0 4px 20px 0 rgba(${hexToRgb(
-      blackColor
-    )},.12), 0 7px 8px -5px rgba(${hexToRgb(successColor[0])},.2)`,
-    '&:hover': {
-      backgroundColor: successColor[0],
-      boxShadow: `0 12px 20px -10px rgba(${hexToRgb(
-        successColor[0]
-      )},.28), 0 4px 20px 0 rgba(${hexToRgb(
-        blackColor
-      )},.12), 0 7px 8px -5px rgba(${hexToRgb(successColor[0])},.2)`,
-    },
-  },
-  orange: {
-    backgroundColor: warningColor[0],
-    boxShadow: `0 12px 20px -10px rgba(${hexToRgb(
-      warningColor[0]
-    )},.28), 0 4px 20px 0 rgba(${hexToRgb(
-      blackColor
-    )},.12), 0 7px 8px -5px rgba(${hexToRgb(warningColor[0])},.2)`,
-    '&:hover': {
-      backgroundColor: warningColor[0],
-      boxShadow: `0 12px 20px -10px rgba(${hexToRgb(
-        warningColor[0]
-      )},.28), 0 4px 20px 0 rgba(${hexToRgb(
-        blackColor
-      )},.12), 0 7px 8px -5px rgba(${hexToRgb(warningColor[0])},.2)`,
-    },
-  },
-  red: {
-    backgroundColor: dangerColor[0],
-    boxShadow: `0 12px 20px -10px rgba(${hexToRgb(
-      dangerColor[0]
-    )},.28), 0 4px 20px 0 rgba(${hexToRgb(
-      blackColor
-    )},.12), 0 7px 8px -5px rgba(${hexToRgb(dangerColor[0])},.2)`,
-    '&:hover': {
-      backgroundColor: dangerColor[0],
-      boxShadow: `0 12px 20px -10px rgba(${hexToRgb(
-        dangerColor[0]
-      )},.28), 0 4px 20px 0 rgba(${hexToRgb(
-        blackColor
-      )},.12), 0 7px 8px -5px rgba(${hexToRgb(dangerColor[0])},.2)`,
-    },
-  },
   sidebarWrapper: {
     position: 'relative',
     height: 'calc(100vh - 64px)',
@@ -305,14 +232,14 @@ const leftMenuStyle = (theme) => ({
     height: '50px',
   },
   activeMenu1: {
-    backgroundColor: theme.palette.primary.main,
+    backgroundColor: '#345471',
     // boxShadow: `0 12px 20px -10px rgba(${hexToRgb(
     //   theme.palette.primary.main
     // )},.28), 0 4px 20px 0 rgba(${hexToRgb(
     //   blackColor
     // )},.12), 0 7px 8px -5px rgba(${hexToRgb(theme.palette.primary.main)},.2)`,
     '&:hover': {
-      backgroundColor: theme.palette.primary.main,
+      backgroundColor: '#345471',
       // boxShadow: `0 12px 20px -10px rgba(${hexToRgb(
       //   theme.palette.primary.main
       // )},.28), 0 4px 20px 0 rgba(${hexToRgb(
@@ -332,7 +259,7 @@ const leftMenuStyle = (theme) => ({
     },
   },
   activeMenu2: {
-    backgroundColor: '#2C5473',
+    backgroundColor: '#1B9CCE',
     // boxShadow: `0 12px 20px -10px rgba(${hexToRgb(
     //   '#1B9CCE'
     // )},.28), 0 4px 20px 0 rgba(${hexToRgb(
