@@ -77,7 +77,7 @@ export default class InnerServiceTree extends React.Component {
               root={root}
               size={[sizeWidth-margin.left*2, sizeHeight-margin.top*2]}
               separation={(a, b) => (a.parent === b.parent ? 1 : 0.5) / a.depth}
-              nodeSize={[300, 100]}
+              nodeSize={[150, 100]}
             >
               {(d) => (
                 <Group top={origin.y} left={origin.x}>
