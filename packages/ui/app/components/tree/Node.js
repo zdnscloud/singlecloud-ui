@@ -17,7 +17,7 @@ function Node({ node, onClick }) {
   const [type, name] = (node.data.name || '').split(separator);
   const { kind, state } = node.data;
   const width = 80;
-  const height = 40;
+  const height = 70;
   let color = '#40B7E8';
   let fcolor = '#40B7E8';
   let bgcolor = '#fff';
@@ -62,11 +62,11 @@ function Node({ node, onClick }) {
       />
       <Icon
         fill={fcolor}
-        transform={`translate(${-width / 6}, ${-height / 2}) scale(0.5)`}
+        transform={`translate(${-width / 3}, ${-height / 2.3}) scale(.8)`}
       />
       <text
         x={-lname.length * 2}
-        dy="2.1em"
+        dy="3.1em"
         fontSize={12}
         fontFamily="Arial"
         textAnchor="center"

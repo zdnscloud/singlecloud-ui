@@ -73,7 +73,7 @@ export default class OuterServiceTree extends React.Component {
               root={root}
               size={[sizeWidth - margin.left * 2, sizeHeight - margin.top * 2]}
               separation={(a, b) => (a.parent === b.parent ? 1 : 0.5) / a.depth}
-              nodeSize={[200, 150]}
+              nodeSize={[300, 100]}
             >
               {(data) => (
                 <Group top={origin.y} left={origin.x}>
