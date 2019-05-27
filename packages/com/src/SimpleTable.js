@@ -59,8 +59,13 @@ export class SimpleTable extends React.PureComponent {
                 return (
                   <TableCell key={this.getKey(column, 'id')}>
                     {(CustomComponent != null) ? (
-                      <CustomComponent data={rowData} column={column} />
-                    ): ('' + this.getKey(rowData, this.getKey(column, 'id')))}
+                      <CustomComponent
+                        data={rowData}
+                        column={column}
+                        id={this.getKey(column, 'id')}
+                        value={this.getKey(rowData, this.getKey(column, 'id'))}
+                      />
+                    ) : `${this.getKey(rowData, this.getKey(column, 'id'))}`}
                   </TableCell>
                 );
               })}

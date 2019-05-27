@@ -19,7 +19,7 @@ const signupPageStyle = (theme) => ({
     // zIndex: 0,
     backgroundImage: `url(${boxImage})`,
     backgroundRepeat: 'no-repeat',
-    transition: '3s all',
+    transition: '10s all',
     position: 'absolute',
     top: 0,
     bottom: 0,

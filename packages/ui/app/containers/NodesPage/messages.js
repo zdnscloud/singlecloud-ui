@@ -47,8 +47,8 @@ export default defineMessages({
     id: `${scope}.tableTitleAddress`,
     defaultMessage: 'Address',
   },
-  tableTitleRole: {
-    id: `${scope}.tableTitleRole`,
+  tableTitleRoles: {
+    id: `${scope}.tableTitleRoles`,
     defaultMessage: 'Role',
   },
   tableTitleLabels: {

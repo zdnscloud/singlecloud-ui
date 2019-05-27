@@ -39,37 +39,13 @@ const styles = (theme) => ({
   title: {
     flexGrow: 1,
   },
-  drawerPaper: {
-    position: 'relative',
-    whiteSpace: 'nowrap',
-    width: drawerWidth,
-    transition: theme.transitions.create('width', {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-  },
-  drawerPaperClose: {
-    overflowX: 'hidden',
-    transition: theme.transitions.create('width', {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
-    width: theme.spacing.unit * 7,
-    [theme.breakpoints.up('sm')]: {
-      width: theme.spacing.unit * 9,
-    },
-  },
-  appBarSpacer: theme.mixins.toolbar,
   content: {
     flexGrow: 1,
     padding: theme.spacing.unit * 3,
     overflow: 'auto',
   },
-  chartContainer: {
-    marginLeft: -22,
-  },
-  tableContainer: {
-    height: 320,
+  tableWrapper: {
+    overflow: 'auto',
   },
   h5: {
     marginBottom: theme.spacing.unit * 2,
@@ -91,7 +67,7 @@ const styles = (theme) => ({
     marginTop: '0px',
     minHeight: 'auto',
     fontWeight: '300',
-    fontFamily: "'Roboto', 'Helvetica', 'Arial', sans-serif",
+    fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
     marginBottom: '3px',
     textDecoration: 'none',
     '& small': {

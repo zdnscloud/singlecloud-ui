@@ -42,7 +42,7 @@ function Node({ node, onClick }) {
       if (kind === 'StatefulSet') Icon = StatefulSetIcon;
       break;
   }
-  const l = 20;
+  const l = 14;
   const lname = name.length > l ? `${name.slice(0, l)}...` : name;
 
   return (
@@ -70,6 +70,7 @@ function Node({ node, onClick }) {
         fontSize={12}
         fontFamily="Arial"
         textAnchor="center"
+        title={name}
         style={{ pointerEvents: 'none' }}
         fill={fcolor}
       >

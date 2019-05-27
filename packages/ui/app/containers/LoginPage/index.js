@@ -82,7 +82,7 @@ export class LoginPage extends React.PureComponent {
     const y = Math.abs(evt.screenY) % (h - 515);
     this.setState({ px: x, py: y }, () => {
       this.untrackMounse();
-      this.t = setTimeout(() => this.setState({ px: 380, py: 190 }), 5000);
+      this.t = setTimeout(() => this.setState({ px: 380, py: 190 }), 10000);
     });
   }
 

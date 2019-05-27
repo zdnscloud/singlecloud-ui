@@ -37,10 +37,10 @@ export class NodesTable extends React.PureComponent {
         <SimpleTable
           className={classes.table}
           schema={schema.map((sche) => ({
+            ...sche,
             label: (
               <FormattedMessage {...messages[`tableTitle${sche.label}`]} />
             ),
-            ...sche,
           }))}
           data={tableList.map((id) => nodes.get(id))}
         />
