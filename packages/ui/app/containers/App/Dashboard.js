@@ -97,6 +97,7 @@ class App extends PureComponent {
       showMenuText,
       ...rest
     } = this.props;
+    const hasEvents = clusterID && showEvents;
 
     return (
       <div className={classes.wrapper}>
@@ -106,8 +107,8 @@ class App extends PureComponent {
           className={classNames(classes.mainPanel)}
           data-ref="mainPanel"
           style={{
-            marginRight: showEvents ? '310px' : null,
-            width: `calc(100% - ${(showEvents ? 310 : 0) + (showMenuText ? 232 : 60)}px)`,
+            marginRight: hasEvents ? '310px' : null,
+            width: `calc(100% - ${(hasEvents ? 310 : 0) + (showMenuText ? 232 : 60)}px)`,
           }}
         >
           <div className={classes.content}>
@@ -126,7 +127,7 @@ class App extends PureComponent {
           <Footer />
         </div>
         <TerminalDialog />
-        {clusterID && showEvents && (
+        {hasEvents && (
           <div className={classes.eventPage}>
             <EventsList />
           </div>
