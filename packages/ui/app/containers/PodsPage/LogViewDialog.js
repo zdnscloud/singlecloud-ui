@@ -9,11 +9,19 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import IconButton from '@material-ui/core/IconButton';
+import CloseIcon from 'components/Icons/Close';
+import Card from 'components/Card/Card';
+import CardBody from 'components/Card/CardBody';
+import CardHeader from 'components/Card/CardHeader';
+import CardFooter from 'components/Card/CardFooter';
+import Paper from '@material-ui/core/Paper';
+
 import SockJS from 'sockjs-client';
 import { withStyles } from '@material-ui/core/styles';
 import List from 'react-virtualized/dist/es/List';
 import { Observable } from 'rxjs';
-import { map, scan, throttleTime } from 'rxjs/operators';
+import { map, scan, throttleTime, debounceTime } from 'rxjs/operators';
 
 import {
   makeSelectPodLogIsOpening,
@@ -68,7 +76,7 @@ class LogViewDialog extends React.Component {
                 return newAcc;
               }, [])
             )
-            .pipe(throttleTime(1000 / 60))
+            /* .pipe(throttleTime(1000 / 60)) */
             .subscribe((l) => {
               setOpeningLogs(l);
             });
@@ -87,31 +95,43 @@ class LogViewDialog extends React.Component {
         }}
         aria-labelledby="form-dialog-title"
         maxWidth="lg"
+        PaperProps={{ style: { overflow: 'hidden' } }}
       >
-        <DialogTitle id="form-dialog-title">
-          <FormattedMessage {...messages.logTitle} />
-        </DialogTitle>
-        <DialogContent>
-          <div className={classes.logsWrapper}>
-            <pre className={classes.logs}>
-              {logs && logs.map((log, i) => (
-                <div key={i}>
-                  <time className={classes.logTime}>
-                    {log[0].toLocaleString()}
-                  </time>
-                  <span className={classes.log}>
-                    {log[1]}
-                  </span>
-                </div>
-              ))}
-            </pre>
-          </div>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={closePodLog} color="primary" variant="contained">
-            Close
-          </Button>
-        </DialogActions>
+        <Card className={classes.dialogCard}>
+          <CardHeader color="secondary" className={classes.dialogHeader}>
+            <h4 className={classes.cardTitleWhite}>
+              <FormattedMessage {...messages.logTitle} />
+            </h4>
+            <IconButton onClick={closePodLog} style={{ padding: 0 }}>
+              <CloseIcon nativeColor="#fff" />
+            </IconButton>
+          </CardHeader>
+          <CardBody className={classes.dialogCardBody}>
+            <Paper
+              className={classes.dialogCardBodyPaper}
+            >
+              <div className={classes.logsWrapper}>
+                <pre className={classes.logs}>
+                  {logs && logs.map((log, i) => (
+                    <div key={i}>
+                      <time className={classes.logTime}>
+                        {log[0].toLocaleString()}
+                      </time>
+                      <span className={classes.log}>
+                        {log[1]}
+                      </span>
+                    </div>
+                  ))}
+                </pre>
+              </div>
+            </Paper>
+          </CardBody>
+          <CardFooter>
+            <Button onClick={closePodLog} color="primary" variant="contained">
+              <FormattedMessage {...messages.logClose} />
+            </Button>
+          </CardFooter>
+        </Card>
       </Dialog>
     );
   }

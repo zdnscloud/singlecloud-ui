@@ -61,4 +61,8 @@ export default defineMessages({
     id: `${scope}.logTitle`,
     defaultMessage: 'Container Log',
   },
+  logClose: {
+    id: `${scope}.logClose`,
+    defaultMessage: 'Close Log',
+  },
 });

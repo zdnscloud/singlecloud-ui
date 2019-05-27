@@ -133,6 +133,21 @@ const styles = (theme) => ({
       lineHeight: '1',
     },
   },
+  dialogCard: {
+    margin: 0,
+  },
+  dialogHeader: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  dialogCardBody: {
+    height: 'calc(100vh - 225px)',
+  },
+  dialogCardBodyPaper: {
+    display: 'flex',
+    height: '100%',
+  },
   separateLineWrap: {
     marginTop: '8px',
     marginRight: '5px',
@@ -155,6 +170,7 @@ const styles = (theme) => ({
     width: '70vw',
     backgroundColor: 'black',
     color: 'white',
+    overflow: 'auto',
   },
   logs: {
     backgroundColor: 'black',

@@ -59,7 +59,7 @@ export class DeploymentDetailPage extends React.PureComponent {
       if (this.timer) {
         this.loadDeploymentAndPods();
       }
-    }, 4000);
+    }, 3000);
   }
 
   componentWillUnmount() {

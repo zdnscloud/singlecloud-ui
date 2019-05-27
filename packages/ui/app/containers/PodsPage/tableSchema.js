@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 import { ucfirst } from '@gsmlg/utils';
-import Chip from '@material-ui/core/Chip';
+import TimeCell from 'components/Cells/TimeCell';
 
 const schema = [
   'state',
@@ -10,10 +10,17 @@ const schema = [
   'creationTimestamp',
 ];
 
-const tableSchema = schema
-  .map((id) => ({
-    id,
-    label: ucfirst(id),
-  }));
+const tableSchema = schema.map((id) => ({
+  id,
+  label: ucfirst(id),
+})).map((item) => {
+  if (item.id === 'creationTimestamp') {
+    return {
+      ...item,
+      component: TimeCell,
+    };
+  }
+  return item;
+});
 
 export default tableSchema;
