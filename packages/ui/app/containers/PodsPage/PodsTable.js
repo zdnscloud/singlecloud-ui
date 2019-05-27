@@ -45,7 +45,6 @@ import LogViewDialog from './LogViewDialog';
 export class PodsTable extends React.PureComponent {
   static propTypes = {
     classes: PropTypes.object.isRequired,
-    data: PropTypes.object.isRequired,
     pods: PropTypes.object,
   };
 

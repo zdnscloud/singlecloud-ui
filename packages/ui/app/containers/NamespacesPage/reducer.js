@@ -52,7 +52,7 @@ function namespacesPageReducer(state = initialState, { type, payload }) {
         }),
         {}
       );
-      let newState = state.mergeIn(
+      let newState = state.setIn(
         ['namespaces', clusterID],
         fromJS(namespaces)
       );

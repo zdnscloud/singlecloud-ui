@@ -45,7 +45,7 @@ function clustersPageReducer(state = initialState, { type, payload }) {
       return state
         .set('loadClustersErrors', null)
         .set('tableList', fromJS(list))
-        .mergeIn(['clusters'], fromJS(clusters));
+        .set('clusters', fromJS(clusters));
     }
 
     case LOAD_CLUSTERS_FAILURE:
