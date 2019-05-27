@@ -70,10 +70,9 @@ function Node({ node, onClick }) {
         fontSize={12}
         fontFamily="Arial"
         textAnchor="center"
-        title={name}
-        style={{ pointerEvents: 'none' }}
         fill={fcolor}
       >
+        <title>{name}</title>
         {lname}
       </text>
     </Fragment>
