@@ -157,7 +157,7 @@
   "app.containers.NodesPage.tableTitleCreationTimestamp": "创建时间",
   "app.containers.NodesPage.tableTitleLabels": "标签",
   "app.containers.NodesPage.tableTitleName": "名称",
-  "app.containers.NodesPage.tableTitleRoles": "Role",
+  "app.containers.NodesPage.tableTitleRoles": "角色",
   "app.containers.NotFoundPage.header": "请联系管理员",
   "app.containers.PodsPage.header": "Pods",
   "app.containers.PodsPage.logClose": "Close Log",
