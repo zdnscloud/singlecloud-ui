@@ -17,3 +17,8 @@ export const LOAD_CLUSTER = `${prefix}/LOAD_CLUSTER`;
 export const LOAD_CLUSTER_REQUEST = `${prefix}/LOAD_CLUSTER_REQUEST`;
 export const LOAD_CLUSTER_SUCCESS = `${prefix}/LOAD_CLUSTER_SUCCESS`;
 export const LOAD_CLUSTER_FAILURE = `${prefix}/LOAD_CLUSTER_FAILURE`;
+
+export const REMOVE_CLUSTER = `${prefix}/REMOVE_CLUSTER`;
+export const REMOVE_CLUSTER_REQUEST = `${prefix}/REMOVE_CLUSTER_REQUEST`;
+export const REMOVE_CLUSTER_SUCCESS = `${prefix}/REMOVE_CLUSTER_SUCCESS`;
+export const REMOVE_CLUSTER_FAILURE = `${prefix}/REMOVE_CLUSTER_FAILURE`;

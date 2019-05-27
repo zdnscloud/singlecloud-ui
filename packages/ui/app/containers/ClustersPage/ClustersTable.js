@@ -24,6 +24,7 @@ import { SimpleTable } from '@gsmlg/com';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTerminal } from '@fortawesome/free-solid-svg-icons';
 import IconButton from '@material-ui/core/IconButton';
+import DeleteIcon from '@material-ui/icons/Delete';
 import ShellIcon from 'components/Icons/Shell';
 import SuccessIcon from 'components/Icons/Success';
 import FailureIcon from 'components/Icons/Failure';
@@ -49,6 +50,7 @@ export class ClustersTable extends React.PureComponent {
       tableList,
       clusters,
       openTerminal,
+      removeCluster,
       theme,
     } = this.props;
     const mergedSchema = schema
@@ -68,6 +70,14 @@ export class ClustersTable extends React.PureComponent {
               >
                 <ShellIcon />
               </IconButton>
+
+              <IconButton
+                aria-label="Delete"
+                onClick={(evt) => removeCluster(props.data.get('id'))}
+              >
+                <DeleteIcon />
+              </IconButton>
+
             </Fragment>
           ),
         },

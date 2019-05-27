@@ -15,6 +15,10 @@ import {
   LOAD_CLUSTER_REQUEST,
   LOAD_CLUSTER_SUCCESS,
   LOAD_CLUSTER_FAILURE,
+  REMOVE_CLUSTER,
+  REMOVE_CLUSTER_REQUEST,
+  REMOVE_CLUSTER_SUCCESS,
+  REMOVE_CLUSTER_FAILURE,
 } from './constants';
 
 export function initAction() {
@@ -67,4 +71,21 @@ export const loadClusterSuccess = (data) => ({
 export const loadClusterFailure = (errors) => ({
   type: LOAD_CLUSTER_FAILURE,
   payload: { errors },
+});
+
+export const removeCluster = (id) => ({
+  type: REMOVE_CLUSTER,
+  payload: id,
+});
+export const removeClusterRequest = () => ({
+  type: REMOVE_CLUSTER_REQUEST,
+  payload: {},
+});
+export const removeClusterSuccess = () => ({
+  type: REMOVE_CLUSTER_SUCCESS,
+  payload: {},
+});
+export const removeClusterFailure = () => ({
+  type: REMOVE_CLUSTER_FAILURE,
+  payload: {},
 });

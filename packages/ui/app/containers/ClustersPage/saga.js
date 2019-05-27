@@ -1,7 +1,12 @@
 import { takeLatest, call, put, select, delay } from 'redux-saga/effects';
 import request from 'utils/request';
 
-import { INIT_ACTION, LOAD_CLUSTERS, LOAD_CLUSTER } from './constants';
+import {
+  INIT_ACTION,
+  LOAD_CLUSTERS,
+  LOAD_CLUSTER,
+  REMOVE_CLUSTER,
+} from './constants';
 import {
   loadClustersRequest,
   loadClustersSuccess,
@@ -9,6 +14,9 @@ import {
   loadClusterRequest,
   loadClusterSuccess,
   loadClusterFailure,
+  removeClusterRequest,
+  removeClusterSuccess,
+  removeClusterFailure,
 } from './actions';
 import {
   makeSelectClusters,
@@ -48,10 +56,24 @@ export function* loadCluster({ payload }) {
   }
 }
 
+export function* removeCluster({ payload }) {
+  try {
+    const clusterID = payload;
+    yield put(removeClusterRequest());
+    const data = yield call(request, `${url}/${clusterID}`, {
+      method: 'DELETE',
+    });
+    yield put(removeClusterSuccess(clusterID));
+  } catch (e) {
+    yield put(removeClusterFailure(e));
+  }
+}
+
 // Individual exports for testing
 export default function* clustersPageSaga() {
   // See example in containers/HomePage/saga.js
   yield takeLatest(INIT_ACTION, initialize);
   yield takeLatest(LOAD_CLUSTERS, loadClusters);
   yield takeLatest(LOAD_CLUSTER, loadCluster);
+  yield takeLatest(REMOVE_CLUSTER, removeCluster);
 }
