@@ -440,7 +440,7 @@ const renderContainers = ({
   });
 
   return (
-    <Card style={{ padding: 0 }}>
+    <Card style={{ padding: 0, marginBottom: 0 }}>
       <CardHeader color="primary">
         <h4 className={classes.cardTitleWhite}>
           <FormattedMessage {...messages.formContainers} />
@@ -594,7 +594,7 @@ class DeploymentForm extends PureComponent {
             </GridItem>
           ) : null}
           <GridItem xs={12} sm={12} md={12}>
-            <GridContainer>
+            <GridContainer style={{ margin: 0 }}>
               <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
                 <InputField
                   label={<FormattedMessage {...messages.formName} />}
@@ -632,7 +632,7 @@ class DeploymentForm extends PureComponent {
             />
           </GridItem>
           <GridItem xs={12} sm={12} md={12}>
-            <Card>
+            <Card style={{ marginTop: 0, marginBottom: 0 }}>
               <CardHeader color="primary">
                 <h4 className={classes.cardTitleWhite}>
                   <FormattedMessage {...messages.formServiceConfig} />

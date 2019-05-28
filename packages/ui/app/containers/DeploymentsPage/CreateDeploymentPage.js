@@ -149,7 +149,7 @@ export class CreateDeployment extends React.PureComponent {
                 <FormattedMessage {...messages.createDeployment} />
               </h4>
             </CardHeader>
-            <CardBody>
+            <CardBody style={{ paddingLeft: 0, paddingRight: 0 }}>
               <CreateDeploymentForm
                 classes={classes}
                 onSubmit={doSubmit}
