@@ -142,7 +142,7 @@ class LeftMenu extends PureComponent {
                   <ListItemSecondaryAction>
                     <ChevronRight
                       style={{
-                        transform: 'scale(0.7)',
+                        transform: 'scale(0.6)',
                         opacity: active ? 1 : 0.7,
                       }}
                     />
@@ -160,7 +160,13 @@ class LeftMenu extends PureComponent {
                       [classes.menuShrinkModal]: !showText,
                     }),
                   }}
-                  PaperProps={{ square: true, style: { maxHeight: '100vh', boxShadow: 'none' } }}
+                  PaperProps={{
+                    square: true,
+                    style: {
+                      maxHeight: '100vh',
+                      boxShadow: 'none',
+                    },
+                  }}
                   transitionDuration={0}
                   hideBackdrop
                 >
@@ -212,9 +218,9 @@ class LeftMenu extends PureComponent {
     return (
       <div className={classes.root}>
         <Drawer
+          open
           anchor="left"
           variant="permanent"
-          open
           classes={{
             root: classes.root,
             paper: classNames(classes.drawerPaper, {

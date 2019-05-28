@@ -57,6 +57,10 @@ export default defineMessages({
     id: `${scope}.save`,
     defaultMessage: 'Save',
   },
+  formAddContainer: {
+    id: `${scope}.formAddContainer`,
+    defaultMessage: 'AddContainer',
+  },
   formName: {
     id: `${scope}.formName`,
     defaultMessage: 'Name',
@@ -104,6 +108,26 @@ export default defineMessages({
   formNone: {
     id: `${scope}.formNone`,
     defaultMessage: 'None',
+  },
+  formVolumeTypeConfigMap: {
+    id: `${scope}.formVolumeTypeConfigMap`,
+    defaultMessage: 'Config Map',
+  },
+  formVolumeTypeSecret: {
+    id: `${scope}.formVolumeTypeSecret`,
+    defaultMessage: 'Secret',
+  },
+  formVolumeTypePersistentVolume: {
+    id: `${scope}.formVolumeTypePersistentVolume`,
+    defaultMessage: 'Persistent Volume',
+  },
+  formVolumeType: {
+    id: `${scope}.formVolumeType`,
+    defaultMessage: 'VolumeType',
+  },
+  formVolumeName: {
+    id: `${scope}.formVolumeName`,
+    defaultMessage: 'VolumeName',
   },
   formMountPath: {
     id: `${scope}.formMountPath`,
@@ -164,5 +188,13 @@ export default defineMessages({
   formExposedMeticPort: {
     id: `${scope}.formExposedMeticPort`,
     defaultMessage: 'ExposedMeticPort',
+  },
+  formVolumes: {
+    id: `${scope}.formVolumes`,
+    defaultMessage: 'Volumes',
+  },
+  formServiceConfig: {
+    id: `${scope}.formServiceConfig`,
+    defaultMessage: 'ServiceConfig',
   },
 });

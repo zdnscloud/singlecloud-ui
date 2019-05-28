@@ -26,11 +26,11 @@ import TextField from '@material-ui/core/TextField';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
+import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import AddIcon from '@material-ui/icons/Add';
 import DeleteIcon from '@material-ui/icons/Delete';
 
-import Button from 'components/CustomButtons/Button';
 import Card from 'components/Card/Card';
 import CardBody from 'components/Card/CardBody';
 import CardHeader from 'components/Card/CardHeader';
@@ -44,6 +44,8 @@ import InputField from 'components/Field/InputField';
 import SelectField from 'components/Field/SelectField';
 import SwitchField from 'components/Field/SwitchField';
 import RadioField from 'components/Field/RadioField';
+import PlusIcon from 'components/Icons/Plus';
+import MinusIcon from 'components/Icons/Minus';
 
 import messages from './messages';
 
@@ -74,122 +76,75 @@ const renderAdvanceServices = ({
         return (
           <ListItem key={i}>
             <ListItemText>
-              {port.get('name') ? (
-                <Fragment>
-                  <ReadOnlyInput
-                    labelText={<FormattedMessage {...messages.formPortName} />}
-                    value={port.get('name')}
-                  />
-                  &nbsp;&nbsp;
-                </Fragment>
-              ) : null}
-              <ReadOnlyInput
-                labelText={<FormattedMessage {...messages.formPortProtocol} />}
-                value={port.get('protocol')}
-              />
-              &nbsp;&nbsp;
-              <ReadOnlyInput
-                labelText={<FormattedMessage {...messages.formPort} />}
-                value={port.get('port')}
-              />
-              <br />
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={checked}
-                    onChange={(evt) => {
-                      if (checked) {
-                        onChange(value.delete(idx));
-                      } else {
-                        onChange(value.push(port.set('containerPortName', port.get('name'))));
-                      }
-                    }}
-                  />
-                }
-                label={<FormattedMessage {...messages.formAutoCreateService} />}
-              />
-              &nbsp;&nbsp;
-              <TextField
-                type="number"
-                label={<FormattedMessage {...messages.formServicePort} />}
-                disabled={!checked}
-                value={value.getIn([idx, 'servicePort'])}
-                onChange={(evt) => {
-                  const val = Number(evt.target.value);
-                  onChange(value.setIn([idx, 'servicePort'], val));
-                }}
-              />
-              &nbsp;&nbsp;
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    disabled={!checked}
-                    checked={value.getIn([idx, 'autoCreateIngress'])}
-                    onChange={(evt) => {
-                      const ingress = value.getIn([idx, 'autoCreateIngress']);
-                      onChange(value.setIn([idx, 'autoCreateIngress'], !ingress));
-                    }}
-                  />
-                }
-                label={<FormattedMessage {...messages.formAutoCreateIngress} />}
-              />
-              &nbsp;&nbsp;
-              {isUDP ? (
-                <Fragment>
-                  <SelectField
-                    disabled={!value.getIn([idx, 'autoCreateIngress'])}
-                    value={value.getIn([idx, 'ingressProtocol'])}
-                    onChange={(evt) => {
-                      const dn = value.getIn([idx, 'ingressProtocol']);
-                      const protocol = evt.target.value;
-                      onChange(value.setIn([idx, 'ingressProtocol'], protocol));
-                    }}
-                    label={<FormattedMessage {...messages.formPortProtocol} />}
-                    options={[{ label: 'UDP', value: 'UDP' }]}
-                    formControlProps={{
-                      style: {
-                        width: '146px',
-                      },
-                    }}
-                  />
-                  &nbsp;&nbsp;
-                  <TextField
-                    label={<FormattedMessage {...messages.formIngressPort} />}
-                    disabled={!value.getIn([idx, 'autoCreateIngress'])}
-                    value={value.getIn([idx, 'ingressPort'])}
-                    onChange={(evt) => {
-                      const dn = value.getIn([idx, 'ingressPort']);
-                      const portVal = Number(evt.target.value);
-                      onChange(value.setIn([idx, 'ingressPort'], portVal));
-                    }}
-                    inputProps={{
-                      type: 'number',
-                    }}
-                  />
-                </Fragment>
-              ) : (
-                <Fragment>
-                  <SelectField
-                    disabled={!value.getIn([idx, 'autoCreateIngress'])}
-                    value={value.getIn([idx, 'ingressProtocol'])}
-                    onChange={(evt) => {
-                      const dn = value.getIn([idx, 'ingressProtocol']);
-                      const protocol = evt.target.value;
-                      onChange(value.setIn([idx, 'ingressProtocol'], protocol));
-                    }}
-                    label={<FormattedMessage {...messages.formPortProtocol} />}
-                    options={[
-                      { label: 'TCP', value: 'TCP' },
-                      { label: 'HTTP', value: 'HTTP' },
-                    ]}
-                    formControlProps={{
-                      style: {
-                        width: '146px',
-                      },
-                    }}
-                  />
-                  &nbsp;&nbsp;
-                  {value.getIn([idx, 'ingressProtocol']) === 'TCP' ? (
+              <div>
+                <ReadOnlyInput
+                  labelText={<FormattedMessage {...messages.formPortName} />}
+                  value={port.get('name')}
+                />
+                &nbsp;&nbsp;
+                <ReadOnlyInput
+                  labelText={<FormattedMessage {...messages.formPortProtocol} />}
+                  value={port.get('protocol')}
+                />
+                &nbsp;&nbsp;
+                <ReadOnlyInput
+                  labelText={<FormattedMessage {...messages.formPort} />}
+                  value={port.get('port')}
+                />
+              </div>
+              <div style={{ display: 'flex', alignItems: 'flex-end' }}>
+                <Checkbox
+                  style={{ paddingBottom: 0 }}
+                  checked={checked}
+                  onChange={(evt) => {
+                    if (checked) {
+                      onChange(value.delete(idx));
+                    } else {
+                      onChange(value.push(port.set('containerPortName', port.get('name'))));
+                    }
+                  }}
+                />
+                &nbsp;&nbsp;
+                <TextField
+                  type="number"
+                  label={<FormattedMessage {...messages.formServicePort} />}
+                  disabled={!checked}
+                  value={value.getIn([idx, 'servicePort'])}
+                  onChange={(evt) => {
+                    const val = Number(evt.target.value);
+                    onChange(value.setIn([idx, 'servicePort'], val));
+                  }}
+                />
+                &nbsp;&nbsp;
+                <Checkbox
+                  style={{ paddingBottom: 0 }}
+                  disabled={!checked}
+                  checked={value.getIn([idx, 'autoCreateIngress'])}
+                  onChange={(evt) => {
+                    const ingress = value.getIn([idx, 'autoCreateIngress']);
+                    onChange(value.setIn([idx, 'autoCreateIngress'], !ingress));
+                  }}
+                />
+                &nbsp;&nbsp;
+                {isUDP ? (
+                  <Fragment>
+                    <SelectField
+                      disabled={!value.getIn([idx, 'autoCreateIngress'])}
+                      value={value.getIn([idx, 'ingressProtocol'])}
+                      onChange={(evt) => {
+                        const dn = value.getIn([idx, 'ingressProtocol']);
+                        const protocol = evt.target.value;
+                        onChange(value.setIn([idx, 'ingressProtocol'], protocol));
+                      }}
+                      label={<FormattedMessage {...messages.formPortProtocol} />}
+                      options={[{ label: 'UDP', value: 'UDP' }]}
+                      formControlProps={{
+                        style: {
+                          width: '146px',
+                        },
+                      }}
+                    />
+                    &nbsp;&nbsp;
                     <TextField
                       label={<FormattedMessage {...messages.formIngressPort} />}
                       disabled={!value.getIn([idx, 'autoCreateIngress'])}
@@ -203,29 +158,67 @@ const renderAdvanceServices = ({
                         type: 'number',
                       }}
                     />
-                  ) : (
-                    <Fragment>
+                  </Fragment>
+                ) : (
+                  <Fragment>
+                    <SelectField
+                      disabled={!value.getIn([idx, 'autoCreateIngress'])}
+                      value={value.getIn([idx, 'ingressProtocol'])}
+                      onChange={(evt) => {
+                        const dn = value.getIn([idx, 'ingressProtocol']);
+                        const protocol = evt.target.value;
+                        onChange(value.setIn([idx, 'ingressProtocol'], protocol));
+                      }}
+                      label={<FormattedMessage {...messages.formPortProtocol} />}
+                      options={[
+                        { label: 'TCP', value: 'TCP' },
+                        { label: 'HTTP', value: 'HTTP' },
+                      ]}
+                      formControlProps={{
+                        style: {
+                          width: '146px',
+                        },
+                      }}
+                    />
+                    &nbsp;&nbsp;
+                    {value.getIn([idx, 'ingressProtocol']) === 'TCP' ? (
                       <TextField
-                        label={<FormattedMessage {...messages.formIngressDomain} />}
+                        label={<FormattedMessage {...messages.formIngressPort} />}
                         disabled={!value.getIn([idx, 'autoCreateIngress'])}
-                        value={value.getIn([idx, 'ingressHost'])}
+                        value={value.getIn([idx, 'ingressPort'])}
                         onChange={(evt) => {
-                          onChange(value.setIn([idx, 'ingressHost'], evt.target.value));
+                          const dn = value.getIn([idx, 'ingressPort']);
+                          const portVal = Number(evt.target.value);
+                          onChange(value.setIn([idx, 'ingressPort'], portVal));
+                        }}
+                        inputProps={{
+                          type: 'number',
                         }}
                       />
-                      &nbsp;&nbsp;
-                      <TextField
-                        label={<FormattedMessage {...messages.formIngressPath} />}
-                        disabled={!value.getIn([idx, 'autoCreateIngress'])}
-                        value={value.getIn([idx, 'ingressPath'])}
-                        onChange={(evt) => {
-                          onChange(value.setIn([idx, 'ingressPath'], evt.target.value));
-                        }}
-                      />
-                    </Fragment>
-                  )}
-                </Fragment>
-              )}
+                    ) : (
+                      <Fragment>
+                        <TextField
+                          label={<FormattedMessage {...messages.formIngressDomain} />}
+                          disabled={!value.getIn([idx, 'autoCreateIngress'])}
+                          value={value.getIn([idx, 'ingressHost'])}
+                          onChange={(evt) => {
+                            onChange(value.setIn([idx, 'ingressHost'], evt.target.value));
+                          }}
+                        />
+                        &nbsp;&nbsp;
+                        <TextField
+                          label={<FormattedMessage {...messages.formIngressPath} />}
+                          disabled={!value.getIn([idx, 'autoCreateIngress'])}
+                          value={value.getIn([idx, 'ingressPath'])}
+                          onChange={(evt) => {
+                            onChange(value.setIn([idx, 'ingressPath'], evt.target.value));
+                          }}
+                        />
+                      </Fragment>
+                    )}
+                  </Fragment>
+                )}
+              </div>
             </ListItemText>
           </ListItem>
         );
@@ -246,10 +239,15 @@ const renderPorts = ({
   return (
     <List component="ul">
       <ListItem>
-        <ListItemText primary={<FormattedMessage {...messages.formExposedPorts} />} />
-        <IconButton onClick={(evt) => fields.push({ protocol: 'tcp' })}>
-          <AddIcon />
-        </IconButton>
+        <ListItemText>
+          <Button
+            color="secondary"
+            onClick={(evt) => fields.push({ protocol: 'tcp' })}
+          >
+            <FormattedMessage {...messages.formExposedPorts} />
+            <PlusIcon />
+          </Button>
+        </ListItemText>
       </ListItem>
       {fields.map((f, i) => (
         <ListItem key={i}>
@@ -282,13 +280,106 @@ const renderPorts = ({
           </ListItemText>
           <IconButton
             variant="contained"
-            color="secondary"
             onClick={(evt) => fields.remove(i)}
           >
-            <DeleteIcon />
+            <MinusIcon />
           </IconButton>
         </ListItem>
       ))}
+    </List>
+  );
+};
+
+const renderVolumes = ({
+  configMapsOptions,
+  containerIndex,
+  fields,
+  formValues,
+  meta: { error, submitFailed },
+}) => {
+
+  return (
+    <List component="ul">
+      <ListItem>
+        <ListItemText>
+          <Button color="secondary" onClick={(evt) => fields.push({})}>
+            <FormattedMessage {...messages.formVolumes} />
+            <PlusIcon />
+          </Button>
+        </ListItemText>
+      </ListItem>
+      {fields.map((f, i) => {
+        let names = [];
+        const type = formValues && formValues.getIn([
+          'containers',
+          containerIndex,
+          'volumes',
+          i,
+          'type',
+        ]);
+        switch(type) {
+          case 'configmap':
+            names = configMapsOptions;
+            break;
+          case 'secret':
+            break;
+          case 'persistentvolume':
+            break;
+        }
+        return (
+          <ListItem key={i}>
+            <ListItemText>
+              <SelectField
+                name={`${f}.type`}
+                label={<FormattedMessage {...messages.formVolumeType} />}
+                options={[
+                  {
+                    label: <FormattedMessage {...messages.formVolumeTypeConfigMap} />,
+                    value: 'configmap',
+                  },
+                  {
+                    label: <FormattedMessage {...messages.formVolumeTypeSecret} />,
+                    value: 'secret',
+                  },
+                  {
+                    label: <FormattedMessage {...messages.formVolumeTypePersistentVolume} />,
+                    value: 'persistentVolume',
+                  },
+                ]}
+                formControlProps={{
+                  style: {
+                    marginTop: 10,
+                    width: 146,
+                  },
+                }}
+              />
+              &nbsp;&nbsp;&nbsp;&nbsp;
+              <SelectField
+                name={`${f}.name`}
+                label={<FormattedMessage {...messages.formVolumeName} />}
+                options={names}
+                formControlProps={{
+                  style: {
+                    marginTop: 10,
+                    width: 146,
+                  },
+                }}
+              />
+              &nbsp;&nbsp;&nbsp;&nbsp;
+              <InputField
+                name={`${f}.mountPath`}
+                label={<FormattedMessage {...messages.formMountPath} />}
+              />
+            </ListItemText>
+            <IconButton
+              variant="contained"
+              onClick={(evt) => fields.remove(i)}
+            >
+              <MinusIcon />
+            </IconButton>
+          </ListItem>
+        );
+      })}
     </List>
   );
 };
@@ -301,10 +392,12 @@ const renderEnvs = ({
   return (
     <List component="ul">
       <ListItem>
-        <ListItemText primary={<FormattedMessage {...messages.formENV} />} />
-        <IconButton onClick={(evt) => fields.push({})}>
-          <AddIcon />
-        </IconButton>
+        <ListItemText>
+          <Button color="secondary" onClick={(evt) => fields.push({})}>
+            <FormattedMessage {...messages.formENV} />
+            <PlusIcon />
+          </Button>
+        </ListItemText>
       </ListItem>
       {fields.map((f, i) => (
         <ListItem key={i}>
@@ -321,10 +414,9 @@ const renderEnvs = ({
           </ListItemText>
           <IconButton
             variant="contained"
-            color="secondary"
             onClick={(evt) => fields.remove(i)}
           >
-            <DeleteIcon />
+            <MinusIcon />
           </IconButton>
         </ListItem>
       ))}
@@ -336,8 +428,10 @@ const renderContainers = ({
   fields,
   meta: { error, submitFailed },
   configMaps,
+  classes,
+  formValues,
 }) => {
-  const options = configMaps.toList().map((m) => ({
+  const configMapsOptions = configMaps.toList().map((m) => ({
     label: m.get('name'),
     value: m.get('id'),
   })).unshift({
@@ -346,90 +440,107 @@ const renderContainers = ({
   });
 
   return (
-    <List component="ul">
-      <ListItem>
-        <ListItemText primary={<FormattedMessage {...messages.formContainers} />} />
-        <IconButton onClick={(evt) => fields.push({})}>
-          <AddIcon />
-        </IconButton>
-      </ListItem>
-      {submitFailed && error && (
-        <ListItem>
-          <Danger>{error}</Danger>
-        </ListItem>
-      )}
-      {fields.map((f, i) => (
-        <Card key={i}>
-          <CardBody>
-            <ListItem key={i}>
-              <ListItemText>
-                <GridContainer>
-                  <GridItem xs={3} sm={3} md={3}>
-                    <InputField name={`${f}.name`} label={<FormattedMessage {...messages.formContainerName} />} fullWidth />
-                  </GridItem>
-                  <GridItem xs={3} sm={3} md={3}>
-                    <InputField name={`${f}.image`} label={<FormattedMessage {...messages.formImage} />} fullWidth />
-                  </GridItem>
-                </GridContainer>
-                <GridContainer>
-                  <GridItem xs={3} sm={3} md={3}>
-                    <InputField name={`${f}.command`} label={<FormattedMessage {...messages.formCommand} />} fullWidth />
-                  </GridItem>
-                  <GridItem xs={3} sm={3} md={3}>
-                    <InputField name={`${f}.args`} label={<FormattedMessage {...messages.formArgs} />} fullWidth />
-                  </GridItem>
-                </GridContainer>
-                <GridContainer>
-                  <GridItem xs={6} sm={6} md={6}>
-                    <FieldArray
-                      name={`${f}.env`}
-                      component={renderEnvs}
-                    />
-                  </GridItem>
-                </GridContainer>
-                <GridContainer>
-                  <GridItem xs={3} sm={3} md={3}>
-                    <SelectField
-                      name={`${f}.configName`}
-                      label={<FormattedMessage {...messages.formConfigName} />}
-                      options={options}
-                      formControlProps={{
-                        style: {
-                          marginTop: '10px',
-                          width: '100%',
-                        },
-                      }}
-                    />
-                  </GridItem>
-                  <GridItem xs={3} sm={3} md={3}>
-                    <InputField
-                      name={`${f}.mountPath`}
-                      label={<FormattedMessage {...messages.formMountPath} />}
-                      fullWidth
-                    />
-                  </GridItem>
-                </GridContainer>
-                <GridContainer>
-                  <GridItem>
-                    <FieldArray
-                      name={`${f}.exposedPorts`}
-                      component={renderPorts}
-                    />
-                  </GridItem>
-                </GridContainer>
-              </ListItemText>
-              <IconButton
-                variant="contained"
-                color="secondary"
-                onClick={(evt) => fields.remove(i)}
-              >
-                <DeleteIcon />
-              </IconButton>
+    <Card style={{ padding: 0 }}>
+      <CardHeader color="primary">
+        <h4 className={classes.cardTitleWhite}>
+          <FormattedMessage {...messages.formContainers} />
+        </h4>
+      </CardHeader>
+      <CardBody>
+        <List component="ul">
+          <ListItem>
+            <ListItemText>
+              <Button color="secondary" onClick={(evt) => fields.push({})}>
+                <FormattedMessage {...messages.formAddContainer} />
+                <PlusIcon />
+              </Button>
+            </ListItemText>
+          </ListItem>
+          {submitFailed && error && (
+            <ListItem>
+              <Danger>{error}</Danger>
             </ListItem>
-          </CardBody>
-        </Card>
-      ))}
-    </List>
+          )}
+          {fields.map((f, i) => (
+            <ListItem key={i}>
+              <Card key={i}>
+                <CardBody>
+                  <ListItemText>
+                    <GridContainer>
+                      <GridItem xs={3} sm={3} md={3}>
+                        <InputField
+                          name={`${f}.name`}
+                          label={<FormattedMessage {...messages.formContainerName} />}
+                          fullWidth
+                        />
+                      </GridItem>
+                      <GridItem xs={3} sm={3} md={3}>
+                        <InputField
+                          name={`${f}.image`}
+                          label={<FormattedMessage {...messages.formImage} />}
+                          fullWidth
+                        />
+                      </GridItem>
+                    </GridContainer>
+                    <GridContainer>
+                      <GridItem xs={3} sm={3} md={3}>
+                        <InputField
+                          name={`${f}.command`}
+                          label={<FormattedMessage {...messages.formCommand} />}
+                          fullWidth
+                        />
+                      </GridItem>
+                      <GridItem xs={3} sm={3} md={3}>
+                        <InputField
+                          name={`${f}.args`}
+                          label={<FormattedMessage {...messages.formArgs} />}
+                          fullWidth
+                        />
+                      </GridItem>
+                    </GridContainer>
+                    <GridContainer>
+                      <GridItem xs={6} sm={6} md={6}>
+                        <FieldArray
+                          name={`${f}.env`}
+                          component={renderEnvs}
+                        />
+                      </GridItem>
+                    </GridContainer>
+                    <GridContainer>
+                      <GridItem xs={8} sm={8} md={8}>
+                        <FieldArray
+                          name={`${f}.volumes`}
+                          component={renderVolumes}
+                          containerIndex={i}
+                          configMapsOptions={configMapsOptions}
+                          formValues={formValues}
+                        />
+                      </GridItem>
+                    </GridContainer>
+                    <GridContainer>
+                      <GridItem xs={8} sm={8} md={8}>
+                        <FieldArray
+                          name={`${f}.exposedPorts`}
+                          component={renderPorts}
+                        />
+                      </GridItem>
+                    </GridContainer>
+                  </ListItemText>
+                </CardBody>
+              </Card>
+              {fields.length > 1 ? (
+                <IconButton
+                  variant="contained"
+                  onClick={(evt) => fields.remove(i)}
+                >
+                  <MinusIcon />
+                </IconButton>
+              ) : null}
+            </ListItem>
+          ))}
+        </List>
+      </CardBody>
+    </Card>
   );
 };
 
@@ -449,19 +560,19 @@ class DeploymentForm extends PureComponent {
       initialValues,
       configMaps,
       formValues,
+      theme,
     } = this.props;
     const getPorts = (formData) => {
       if (formData && formData.get) {
         const containers = formData.get('containers');
         if (containers && containers.map) {
           return containers.map((ctn) => {
-            if (ctn && ctn.get && ctn.get('exposedPorts')) {
-              return ctn.get('exposedPorts')
-                .filter((p) => typeof p.get('port') === 'number');
-            }
-            if (ctn && ctn.exposedPorts && ctn.exposedPorts.filter) {
-              return ctn.exposedPorts
-                .filter((p) => typeof p.port === 'number');
+            const exposedPorts = ctn && ctn.get && ctn.get('exposedPorts');
+            if (exposedPorts) {
+              return ctn.get('exposedPorts').filter((p) => {
+                const port = p && (p.get && p.get('port') || p.port);
+                return typeof port === 'number';
+              });
             }
             return fromJS([]);
           }).flatten(true);
@@ -513,63 +624,88 @@ class DeploymentForm extends PureComponent {
           <GridItem xs={12} sm={12} md={12}>
             <FieldArray
               name="containers"
+              classes={classes}
               component={renderContainers}
               configMaps={configMaps}
+              theme={theme}
+              formValues={formValues}
             />
           </GridItem>
           <GridItem xs={12} sm={12} md={12}>
-            <SwitchField
-              name="enableAdvancedOptions"
-              label={<FormattedMessage {...messages.formAdvancedOptions} />}
-            />
-            {formValues && formValues.get('enableAdvancedOptions') ? (
-              <Fragment>
-                <br />
-                <br />
-                <FormSection name="advancedOptions">
-                  <RadioField
-                    name="exposedServiceType"
-                    label={<FormattedMessage {...messages.formExposedServiceType} />}
-                    options={[
-                      { label: 'Cluster IP', value: 'clusterip' },
-                      { label: 'Node Port', value: 'nodeport' },
-                    ]}
-                  />
-                  <Field
-                    name="exposedServices"
-                    label="Exposed Services"
-                    ports={fromJS(ports.toJS())}
-                    component={renderAdvanceServices}
-                  />
-                  <GridContainer>
-                    <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
-                      <InputField
-                        label={<FormattedMessage {...messages.formExposedMetricPath} />}
-                        fullWidth
-                        inputProps={{ type: 'text', autoComplete: 'off' }}
-                        classes={classes}
-                        name="exposedMetric.path"
+            <Card>
+              <CardHeader color="primary">
+                <h4 className={classes.cardTitleWhite}>
+                  <FormattedMessage {...messages.formServiceConfig} />
+                </h4>
+              </CardHeader>
+              <CardBody>
+                <GridContainer>
+                  <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
+                    <SwitchField
+                      name="enableAdvancedOptions"
+                      label={<FormattedMessage {...messages.formAdvancedOptions} />}
+                    />
+                  </GridItem>
+                </GridContainer>
+                {formValues && formValues.get('enableAdvancedOptions') ? (
+                  <Fragment>
+                    <FormSection name="advancedOptions">
+                      <GridContainer>
+                        <GridItem xs={12} sm={12} md={12} className={classes.formLine}>
+                          <RadioField
+                            name="exposedServiceType"
+                            label={<FormattedMessage {...messages.formExposedServiceType} />}
+                            classes={{
+                              formControl: classes.radioControl,
+                              formLabel: classes.radioLabel,
+                              group: classes.radioGroup,
+                            }}
+                            options={[
+                              { label: 'Cluster IP', value: 'clusterip' },
+                              { label: 'Node Port', value: 'nodeport' },
+                            ]}
+                            formControlComponent={'div'}
+                            formLabelComponent={'div'}
+                          />
+                        </GridItem>
+                      </GridContainer>
+                      <Field
+                        name="exposedServices"
+                        label="Exposed Services"
+                        ports={fromJS(ports.toJS())}
+                        component={renderAdvanceServices}
                       />
-                    </GridItem>
-                    <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
-                      <InputField
-                        label={<FormattedMessage {...messages.formExposedMeticPort} />}
-                        normalize={(val) => Number(val)}
-                        fullWidth
-                        inputProps={{
-                          type: 'number',
-                          autoComplete: 'off',
-                          min: 1,
-                          max: 65535,
-                        }}
-                        classes={classes}
-                        name="exposedMetric.port"
-                      />
-                    </GridItem>
-                  </GridContainer>
-                </FormSection>
-              </Fragment>
-            ) : null}
+                      <GridContainer>
+                        <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
+                          <InputField
+                            label={<FormattedMessage {...messages.formExposedMetricPath} />}
+                            fullWidth
+                            inputProps={{ type: 'text', autoComplete: 'off' }}
+                            classes={classes}
+                            name="exposedMetric.path"
+                          />
+                        </GridItem>
+                        <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
+                          <InputField
+                            label={<FormattedMessage {...messages.formExposedMeticPort} />}
+                            normalize={(val) => Number(val)}
+                            fullWidth
+                            inputProps={{
+                              type: 'number',
+                              autoComplete: 'off',
+                              min: 1,
+                              max: 65535,
+                            }}
+                            classes={classes}
+                            name="exposedMetric.port"
+                          />
+                        </GridItem>
+                      </GridContainer>
+                    </FormSection>
+                  </Fragment>
+                ) : null}
+              </CardBody>
+            </Card>
           </GridItem>
         </GridContainer>
       </form>

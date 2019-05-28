@@ -22,8 +22,6 @@ import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-// react plugin for creating charts
-// import ChartistGraph from "react-chartist";
 // @material-ui/core
 import Icon from '@material-ui/core/Icon';
 import teal from '@material-ui/core/colors/teal';

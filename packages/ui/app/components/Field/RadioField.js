@@ -18,14 +18,26 @@ const renderRadioGroup = ({
   meta,
   classes,
   options,
+  formControlProps,
+  formControlComponent,
+  formLabelProps,
+  formLabelComponent,
   ...custom
 }) => {
   const onChange = (...args) => {
     input.onChange(...args);
   };
   return (
-    <FormControl component="fieldset" className={classes.formControl}>
-      <FormLabel component="legend" className={classes.formLabel}>
+    <FormControl
+      component={formControlComponent}
+      className={classes.formControl}
+      {...formControlProps}
+    >
+      <FormLabel
+        component={formLabelComponent}
+        className={classes.formLabel}
+        {...formLabelProps}
+      >
         {label}
       </FormLabel>
       <RadioGroup
@@ -51,6 +63,10 @@ const renderRadioGroup = ({
 renderRadioGroup.defaultProps = {
   classes: {},
   options: [],
+  formControlProps: {},
+  formControlComponent: 'fieldset',
+  formLabelProps: {},
+  formLabelComponent: 'legend',
 };
 
 const RadioField = (props) => {

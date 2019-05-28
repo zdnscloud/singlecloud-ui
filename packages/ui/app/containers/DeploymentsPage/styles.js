@@ -151,6 +151,17 @@ const styles = (theme) => ({
     top: '3px',
     right: '10px',
   },
+  radioControl: {
+    flexDirection: 'row',
+  },
+  radioLabel: {
+    flexDirection: 'row',
+    lineHeight: 3,
+  },
+  radioGroup: {
+    flexDirection: 'row',
+    marginLeft: '2rem',
+  },
 });
 
 export default styles;

@@ -3,7 +3,6 @@
  * Create Deployment Page
  *
  */
-
 import React, { Fragment } from 'react';
 import { findDOMNode } from 'react-dom';
 import PropTypes from 'prop-types';
@@ -58,9 +57,7 @@ import {
   makeSelectNamespaceID,
 } from 'containers/App/selectors';
 import * as cActions from 'ducks/configMaps/actions';
-import {
-  makeSelectConfigMaps,
-} from 'ducks/configMaps/selectors';
+import { makeSelectConfigMaps } from 'ducks/configMaps/selectors';
 import {
   makeSelectURL as makeSelectConfigMapURL,
 } from 'ducks/configMaps/selectors';
@@ -122,6 +119,7 @@ export class CreateDeployment extends React.PureComponent {
       namespaceID,
       configMaps,
       values,
+      theme,
     } = this.props;
     async function doSubmit(formValues) {
       try {
@@ -156,8 +154,9 @@ export class CreateDeployment extends React.PureComponent {
                 classes={classes}
                 onSubmit={doSubmit}
                 configMaps={configMaps}
-                initialValues={fromJS({ replicas: 1 })}
+                initialValues={fromJS({ replicas: 1, containers: [{ name: '' }] })}
                 formValues={values}
+                theme={theme}
               />
             </CardBody>
             <CardFooter className={classes.cardFooter}>
@@ -203,5 +202,5 @@ const withConnect = connect(
 
 export default compose(
   withConnect,
-  withStyles(styles)
+  withStyles(styles, { withTheme: true })
 )(CreateDeployment);
