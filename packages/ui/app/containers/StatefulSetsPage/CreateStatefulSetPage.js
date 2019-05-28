@@ -151,12 +151,15 @@ export class CreateStatefulSet extends React.PureComponent {
                 <FormattedMessage {...messages.createStatefulSet} />
               </h4>
             </CardHeader>
-            <CardBody>
+            <CardBody style={{ paddingLeft: 0, paddingRight: 0 }}>
               <CreateStatefulSetForm
                 classes={classes}
                 onSubmit={doSubmit}
                 configMaps={configMaps}
-                initialValues={fromJS({ replicas: 1 })}
+                initialValues={fromJS({
+                  replicas: 1,
+                  containers: [{ name: '' }],
+                })}
                 formValues={values}
               />
             </CardBody>
