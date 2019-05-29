@@ -29,7 +29,7 @@ const leftMenuStyle = (theme) => ({
     left: '0',
     zIndex: '1',
     ...transition,
-    ...boxShadow,
+    // ...boxShadow,
     width: drawerWidth,
     [theme.breakpoints.up('md')]: {
       width: drawerWidth,
@@ -38,7 +38,7 @@ const leftMenuStyle = (theme) => ({
     },
     [theme.breakpoints.down('sm')]: {
       width: drawerWidth,
-      ...boxShadow,
+      // ...boxShadow,
       position: 'fixed',
       display: 'block',
       top: '0',
