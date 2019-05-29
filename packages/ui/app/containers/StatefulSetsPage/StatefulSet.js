@@ -3,7 +3,7 @@
  * StatefulSet
  *
  */
-import React from 'react';
+import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
@@ -15,6 +15,7 @@ import {
   SubmissionError,
   submit,
 } from 'redux-form/immutable';
+import { injectIntl } from 'react-intl';
 
 import { withStyles } from '@material-ui/core/styles';
 import { Link } from 'react-router-dom';
@@ -31,7 +32,7 @@ import GridContainer from 'components/Grid/GridContainer';
 import Card from 'components/Card/Card';
 import CardHeader from 'components/Card/CardHeader';
 import CardBody from 'components/Card/CardBody';
-import CustomInput from 'components/CustomInput/ReadOnlyInput';
+import ReadOnlyInput from 'components/CustomInput/ReadOnlyInput';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
@@ -63,9 +64,15 @@ export class StatefulSet extends React.PureComponent {
       statefulSet,
       clusterID,
       namespaceID,
+      intl,
     } = this.props;
     const replicas = statefulSet.get('replicas');
     const updateUrl = statefulSet.getIn(['links', 'update']);
+    const typeMap = {
+      configmap: intl.formatMessage(messages.formVolumeTypeConfigMap),
+      secret: intl.formatMessage(messages.formVolumeTypeSecret),
+      persistentVolume: intl.formatMessage(messages.formVolumeTypePersistentVolume),
+    };
 
     return (
       <GridContainer>
@@ -76,12 +83,12 @@ export class StatefulSet extends React.PureComponent {
                 <FormattedMessage {...messages.statefulSetDetail} />
               </h4>
             </CardHeader>
-            <CardBody>
+            <CardBody style={{ paddingLeft: 0, paddingRight: 0 }}>
               <GridContainer>
                 <GridItem xs={12} sm={12} md={12}>
-                  <GridContainer>
+                  <GridContainer style={{ paddingLeft: 30, paddingRight: 30 }}>
                     <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
-                      <CustomInput
+                      <ReadOnlyInput
                         labelText={<FormattedMessage {...messages.formName} />}
                         name="name"
                         fullWidth
@@ -89,7 +96,7 @@ export class StatefulSet extends React.PureComponent {
                       />
                     </GridItem>
                     <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
-                      <CustomInput
+                      <ReadOnlyInput
                         labelText={<FormattedMessage {...messages.formReplicas} />}
                         name="replicas"
                         fullWidth
@@ -137,10 +144,14 @@ export class StatefulSet extends React.PureComponent {
                   </GridContainer>
                 </GridItem>
                 <GridItem xs={12} sm={12} md={12}>
+                  <Card>
+                    <CardHeader color="primary">
+                      <h4 className={classes.cardTitleWhite}>
+                        <FormattedMessage {...messages.formContainers} />
+                      </h4>
+                    </CardHeader>
+                    <CardBody>
                   <List component="ul">
-                    <ListItem>
-                      <ListItemText primary={<FormattedMessage {...messages.formContainers} />} />
-                    </ListItem>
                     {statefulSet && statefulSet.get('containers') && statefulSet.get('containers').map((c, i) => (
                       <Card key={i}>
                         <CardBody>
@@ -148,14 +159,14 @@ export class StatefulSet extends React.PureComponent {
                             <ListItemText>
                               <GridContainer>
                                 <GridItem xs={3} sm={3} md={3}>
-                                  <CustomInput
+                                  <ReadOnlyInput
                                     labelText={<FormattedMessage {...messages.formContainerName} />}
                                     fullWidth
                                     value={c.get('name')}
                                   />
                                 </GridItem>
                                 <GridItem xs={3} sm={3} md={3}>
-                                  <CustomInput
+                                  <ReadOnlyInput
                                     labelText={<FormattedMessage {...messages.formImage} />}
                                     fullWidth
                                     value={c.get('image')}
@@ -164,33 +175,17 @@ export class StatefulSet extends React.PureComponent {
                               </GridContainer>
                               <GridContainer>
                                 <GridItem xs={3} sm={3} md={3}>
-                                  <CustomInput
+                                  <ReadOnlyInput
                                     labelText={<FormattedMessage {...messages.formCommand} />}
                                     fullWidth
                                     value={c.get('command')}
                                   />
                                 </GridItem>
                                 <GridItem xs={3} sm={3} md={3}>
-                                  <CustomInput
+                                  <ReadOnlyInput
                                     labelText={<FormattedMessage {...messages.formArgs} />}
                                     fullWidth
                                     value={c.get('args')}
-                                  />
-                                </GridItem>
-                              </GridContainer>
-                              <GridContainer>
-                                <GridItem xs={3} sm={3} md={3}>
-                                  <CustomInput
-                                    labelText={<FormattedMessage {...messages.formConfigName} />}
-                                    value={c.get('configName')}
-                                    fullWidth
-                                  />
-                                </GridItem>
-                                <GridItem xs={3} sm={3} md={3}>
-                                  <CustomInput
-                                    labelText={<FormattedMessage {...messages.formMountPath} />}
-                                    value={c.get('mountPath')}
-                                    fullWidth
                                   />
                                 </GridItem>
                               </GridContainer>
@@ -204,12 +199,12 @@ export class StatefulSet extends React.PureComponent {
                                       {c.get('env').map((p, i) => (
                                         <ListItem key={i}>
                                           <ListItemText>
-                                            <CustomInput
+                                            <ReadOnlyInput
                                               labelText={<FormattedMessage {...messages.formENVName} />}
                                               value={p.get('name')}
                                             />
                                             &nbsp;&nbsp;&nbsp;&nbsp;
-                                            <CustomInput
+                                            <ReadOnlyInput
                                               labelText={<FormattedMessage {...messages.formENVValue} />}
                                               value={p.get('value')}
                                             />
@@ -220,6 +215,37 @@ export class StatefulSet extends React.PureComponent {
                                   </GridItem>
                                 </GridContainer>
                               ) : null}
+                                  {c.get('volumes') ? (
+                                    <GridContainer>
+                                      <GridItem>
+                                        <List component="ul">
+                                          <ListItem>
+                                            <ListItemText primary={<FormattedMessage {...messages.formVolumes} />} />
+                                          </ListItem>
+                                          {c.get('volumes').map((p, i) => (
+                                            <ListItem key={i}>
+                                              <ListItemText>
+                                                <ReadOnlyInput
+l                                                 labelText={<FormattedMessage {...messages.formVolumeType} />}
+                                                  value={typeMap[p.get('type')]}
+                                                />
+                                                &nbsp;&nbsp;&nbsp;&nbsp;
+                                                <ReadOnlyInput
+l                                                 labelText={<FormattedMessage {...messages.formVolumeName} />}
+                                                  value={p.get('name')}
+                                                />
+                                                &nbsp;&nbsp;&nbsp;&nbsp;
+                                                <ReadOnlyInput
+                                                  labelText={<FormattedMessage {...messages.formMountPath} />}
+                                                  value={p.get('mountPath')}
+                                                />
+                                              </ListItemText>
+                                            </ListItem>
+                                          ))}
+                                        </List>
+                                      </GridItem>
+                                    </GridContainer>
+                                  ) : null}
                               {c.get('exposedPorts') ? (
                                 <GridContainer>
                                   <GridItem>
@@ -230,17 +256,17 @@ export class StatefulSet extends React.PureComponent {
                                       {c.get('exposedPorts').map((p, i) => (
                                         <ListItem key={i}>
                                           <ListItemText>
-                                            <CustomInput
+                                            <ReadOnlyInput
                                               labelText={<FormattedMessage {...messages.formPortName} />}
                                               value={p.get('name')}
                                             />
                                             &nbsp;&nbsp;&nbsp;&nbsp;
-                                            <CustomInput
+                                            <ReadOnlyInput
                                               labelText={<FormattedMessage {...messages.formPortProtocol} />}
                                               value={p.get('protocol')}
                                             />
                                             &nbsp;&nbsp;&nbsp;&nbsp;
-                                            <CustomInput
+                                            <ReadOnlyInput
                                               labelText={<FormattedMessage {...messages.formPort} />}
                                               value={p.get('port')}
                                             />
@@ -257,8 +283,100 @@ export class StatefulSet extends React.PureComponent {
                       </Card>
                     ))}
                   </List>
+                    </CardBody>
+                  </Card>
                 </GridItem>
               </GridContainer>
+
+              <GridContainer>
+                <GridItem xs={12} sm={12} md={12} className={classes.formLine}>
+                  <Card>
+                    <CardHeader color="primary">
+                      <h4 className={classes.cardTitleWhite}>
+                        <FormattedMessage {...messages.formServiceConfig} />
+                      </h4>
+                    </CardHeader>
+                    <CardBody>
+                      {statefulSet.get('advancedOptions') ? (
+                        <Fragment>
+                          <GridContainer>
+                            <GridItem xs={12} sm={12} md={12} className={classes.formLine}>
+                              <ReadOnlyInput
+                                labelText={<FormattedMessage {...messages.formExposedServiceType} />}
+                                value={{
+                                  clusterip: 'Cluster IP',
+                                  nodeport: 'Node Port',
+                                }[statefulSet.getIn(['advancedOptions', 'exposedServiceType'])]}
+                              />
+                            </GridItem>
+                          </GridContainer>
+                          <GridContainer>
+                            <GridItem xs={12} sm={12} md={12} className={classes.formLine}>
+                              <List component="ul">
+                                {statefulSet.getIn(['advancedOptions', 'exposedServices']) &&
+                                 statefulSet.getIn(['advancedOptions', 'exposedServices']).map((port, i) => (
+                                  <ListItem key={i}>
+                                    <ListItemText>
+                                      <ReadOnlyInput
+                                        labelText={<FormattedMessage {...messages.formPortName} />}
+                                        value={port.get('containerPortName')}
+                                      />
+                                      &nbsp;&nbsp;
+                                      <ReadOnlyInput
+                                        labelText={<FormattedMessage {...messages.formServicePort} />}
+                                        value={port.get('servicePort')}
+                                      />
+                                      {port.get('autoCreateIngress') ? (
+                                        <Fragment>
+                                          &nbsp;&nbsp;
+                                          <ReadOnlyInput
+                                            labelText={<FormattedMessage {...messages.formPortProtocol} />}
+                                            value={port.get('ingressProtocol')}
+                                          />
+                                          &nbsp;&nbsp;
+                                          <ReadOnlyInput
+                                            labelText={<FormattedMessage {...messages.formIngressPort} />}
+                                            value={port.get('ingressPort')}
+                                          />
+                                          &nbsp;&nbsp;
+                                          <ReadOnlyInput
+                                            labelText={<FormattedMessage {...messages.formIngressDomain} />}
+                                            value={port.get('ingressHost')}
+                                          />
+                                          &nbsp;&nbsp;
+                                          <ReadOnlyInput
+                                            labelText={<FormattedMessage {...messages.formIngressPath} />}
+                                            value={port.get('ingressPath')}
+                                          />
+                                        </Fragment>
+                                      ): null}
+                                    </ListItemText>
+                                  </ListItem>
+                                ))}
+                              </List>
+                            </GridItem>
+                          </GridContainer>
+                          <GridContainer>
+                            <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
+                              <ReadOnlyInput
+                                labelText={<FormattedMessage {...messages.formExposedMetricPath} />}
+                                value={statefulSet.getIn(['advancedOptions', 'exposedMetric', 'path'])}
+                              />
+                            </GridItem>
+                            <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
+                              <ReadOnlyInput
+                                labelText={<FormattedMessage {...messages.formExposedMeticPort} />}
+                                value={statefulSet.getIn(['advancedOptions', 'exposedMetric', 'path'])}
+                              />
+                            </GridItem>
+                          </GridContainer>
+                        </Fragment>
+                      ) : null}
+                    </CardBody>
+                  </Card>
+                </GridItem>
+              </GridContainer>
+
             </CardBody>
           </Card>
         </GridItem>
@@ -270,7 +388,6 @@ export class StatefulSet extends React.PureComponent {
 const mapStateToProps = createStructuredSelector({
   clusterID: makeSelectClusterID(),
   namespaceID: makeSelectNamespaceID(),
-  configMaps: makeSelectConfigMaps(),
 });
 
 const mapDispatchToProps = (dispatch) =>
@@ -288,6 +405,7 @@ const withConnect = connect(
 );
 
 export default compose(
+  injectIntl,
   withConnect,
   withStyles(styles)
 )(StatefulSet);

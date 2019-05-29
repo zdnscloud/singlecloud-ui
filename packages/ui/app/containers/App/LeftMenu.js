@@ -90,7 +90,7 @@ class LeftMenu extends PureComponent {
                 <ListItem button className={classes.itemLink + listItemClasses}>
                   {prop.icon ? (
                     <ListItemIcon>
-                      <prop.icon nativeColor={'#fff'} />
+                      <prop.icon nativeColor={'#fff'} style={{ transform: 'scale(0.8334)' }} />
                     </ListItemIcon>
                   ): null}
                   {showText ? (
@@ -125,7 +125,7 @@ class LeftMenu extends PureComponent {
               >
                 {prop.icon ? (
                   <ListItemIcon>
-                    <prop.icon nativeColor={'#fff'} />
+                    <prop.icon nativeColor={'#fff'} style={{ transform: 'scale(0.8334)' }} />
                   </ListItemIcon>
                 ) : null}
                 {showText ? (
