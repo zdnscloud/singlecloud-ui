@@ -278,6 +278,7 @@
   "app.containers.UsersPage.tableTitleName": "名称",
   "app.containers.UsersPage.tableTitleProjects": "权限",
   "app.containers.UsersPage.updatePassword": "保存",
+  "app.containers.UsersPage.updateUser": "Update User",
   "app.containers.UsersPage.userProfile": "属性",
   "app.containers.UsersPage.username": "用户名",
   "app.containers.UsersPage.users": "用户"
