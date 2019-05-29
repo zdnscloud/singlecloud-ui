@@ -375,8 +375,38 @@ l                                                 labelText={<FormattedMessage {
                     </CardBody>
                   </Card>
                 </GridItem>
+                <GridItem xs={12} sm={12} md={12}>
+                  <Card style={{ marginTop: 20, marginBottom: 0 }}>
+                    <CardHeader color="primary">
+                      <h4 className={classes.cardTitleWhite}>
+                        <FormattedMessage {...messages.formVolumeClaimTemplate} />
+                      </h4>
+                    </CardHeader>
+                    <CardBody>
+                      <GridContainer>
+                        <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
+                          <ReadOnlyInput
+                            labelText={<FormattedMessage {...messages.formVolumeClaimTemplateName} />}
+                            value={statefulSet.getIn(['volumeClaimTemplate', 'name'])}
+                          />
+                        </GridItem>
+                        <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
+                          <ReadOnlyInput
+                            labelText={<FormattedMessage {...messages.formVolumeClaimTemplateSize} />}
+                            value={statefulSet.getIn(['volumeClaimTemplate', 'size'])}
+                          />
+                        </GridItem>
+                        <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
+                          <ReadOnlyInput
+                            labelText={<FormattedMessage {...messages.formVolumeClaimTemplateStorageClassName} />}
+                            value={statefulSet.getIn(['volumeClaimTemplate', 'storageClassName'])}
+                          />
+                        </GridItem>
+                      </GridContainer>
+                    </CardBody>
+                  </Card>
+                </GridItem>
               </GridContainer>
-
             </CardBody>
           </Card>
         </GridItem>
