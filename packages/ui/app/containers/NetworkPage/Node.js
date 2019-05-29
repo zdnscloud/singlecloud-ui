@@ -19,8 +19,6 @@ import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 import { Pie } from '@vx/shape';
 import { Group } from '@vx/group';
-import { GradientPinkBlue } from '@vx/gradient';
-import { letterFrequency, browserUsage } from '@vx/mock-data';
 
 import messages from './messages';
 import styles from './styles';

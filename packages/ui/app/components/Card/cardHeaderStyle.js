@@ -12,7 +12,7 @@ import hexToRgb from '@gsmlg/utils/hexToRgb';
 
 const blackColor = '#000';
 const cyanColor = '#6CD6B1';
-const azureColor = '#40B7E8';
+const azureColor = 'transparent';
 
 const cardHeaderStyle = (theme) => ({
   cardHeader: {

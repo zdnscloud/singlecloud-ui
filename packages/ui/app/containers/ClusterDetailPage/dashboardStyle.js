@@ -86,6 +86,9 @@ const dashboardStyle = {
     float: 'right',
     color: '#40B7E8',
   },
+  cardHeaderLine: {
+    borderBottom: '1px #DFE0DF solid',
+  },
 };
 
 export default dashboardStyle;

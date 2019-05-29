@@ -41,6 +41,7 @@ import NameIcon from 'components/Icons/Name';
 import VersionIcon from 'components/Icons/Version';
 import NodesIcon from 'components/Icons/Nodes';
 import TimeIcon from 'components/Icons/Time';
+import CircleChart from 'components/Charts/Circle';
 
 import {
   makeSelectShowMenuText,
@@ -206,19 +207,10 @@ export class ClusterDetail extends React.PureComponent {
         <GridContainer>
           <GridItem xs={12} sm={12} md={4}>
             <Card chart>
-              <CardHeader color="azure" ref={this.chartRef}>
-                <Gauge
+              <CardHeader color="azure" className={classes.cardHeaderLine}>
+                <CircleChart
                   value={cpuRatio}
-                  width={this.state.chartWidth}
-                  height={(this.state.chartWidth / 270) * 157}
-                  color={gaugeColor}
-                  backgroundColor={gaugeBgColor}
-                  valueFormatter={(v) => `${v}%`}
-                  valueLabelStyle={{
-                    fill: '#edebeb',
-                    fontSize: `${(this.state.chartWidth / 270) * 42}px`,
-                  }}
-                  minMaxLabelStyle={{ fill: '#edebeb' }}
+                  total={100}
                 />
               </CardHeader>
               <CardBody>
@@ -233,19 +225,10 @@ export class ClusterDetail extends React.PureComponent {
           </GridItem>
           <GridItem xs={12} sm={12} md={4}>
             <Card chart>
-              <CardHeader color="azure">
-                <Gauge
+              <CardHeader color="azure" className={classes.cardHeaderLine}>
+                <CircleChart
                   value={memoryRatio}
-                  width={this.state.chartWidth}
-                  height={(this.state.chartWidth / 270) * 157}
-                  color={gaugeColor}
-                  backgroundColor={gaugeBgColor}
-                  valueFormatter={(v) => `${v}%`}
-                  valueLabelStyle={{
-                    fill: '#edebeb',
-                    fontSize: `${(this.state.chartWidth / 270) * 42}px`,
-                  }}
-                  minMaxLabelStyle={{ fill: '#edebeb' }}
+                  total={100}
                 />
               </CardHeader>
               <CardBody>
@@ -260,19 +243,10 @@ export class ClusterDetail extends React.PureComponent {
           </GridItem>
           <GridItem xs={12} sm={12} md={4}>
             <Card chart>
-              <CardHeader color="azure">
-                <Gauge
+              <CardHeader color="azure" className={classes.cardHeaderLine}>
+                <CircleChart
                   value={podRatio}
-                  width={this.state.chartWidth}
-                  height={(this.state.chartWidth / 270) * 157}
-                  color={gaugeColor}
-                  backgroundColor={gaugeBgColor}
-                  valueFormatter={(v) => `${v}%`}
-                  valueLabelStyle={{
-                    fill: '#edebeb',
-                    fontSize: `${(this.state.chartWidth / 270) * 42}px`,
-                  }}
-                  minMaxLabelStyle={{ fill: '#edebeb' }}
+                  total={100}
                 />
               </CardHeader>
               <CardBody>
