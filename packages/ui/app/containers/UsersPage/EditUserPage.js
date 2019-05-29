@@ -100,7 +100,7 @@ export class EditUserPage extends React.PureComponent {
                 size="large"
                 onClick={submitForm}
               >
-                Update
+                <FormattedMessage {...messages.updateUser} />
               </Button>
             </CardFooter>
           </Card>

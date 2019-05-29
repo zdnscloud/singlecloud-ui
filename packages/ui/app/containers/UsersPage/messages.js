@@ -85,4 +85,8 @@ export default defineMessages({
     id: `${scope}.clusterNamespace`,
     defaultMessage: 'cluster {cluster}\'s namespace {namespace}',
   },
+  updateUser: {
+    id: `${scope}.updateUser`,
+    defaultMessage: 'Update User',
+  },
 });
