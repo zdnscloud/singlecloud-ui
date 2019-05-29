@@ -50,7 +50,7 @@ export const makeSelectEditingUser = () =>
   createSelector(
     selectUsersDomain,
     makeSelectUID(),
-    (substate, uid) => substate.getIn(['users', uid])
+    (substate, uid) => substate.getIn(['users', uid]) || substate.clear()
   );
 
 /**
