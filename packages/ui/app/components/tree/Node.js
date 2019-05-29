@@ -5,11 +5,16 @@ import { Group } from '@vx/group';
 import IngressIcon from './icons/Ingress';
 import PathIcon from './icons/Path';
 import ServiceIcon from './icons/Service';
-import PodIcon from './icons/Pod';
 import DeploymentIcon from './icons/Deployment';
 import DaemonSetIcon from './icons/DaemonSet';
 import StatefulSetIcon from './icons/StatefulSet';
+import PodIcon from './icons/Pod';
 import RunningPodIcon from './icons/RunningPod';
+import FailurePodIcon from './icons/FailurePod';
+import CompletedPodIcon from './icons/CompletedPod';
+import PendingPodIcon from './icons/PendingPod';
+import SuccessPodIcon from './icons/SuccessPod';
+import UnknownPodIcon from './icons/UnknownPod';
 
 const separator = '$';
 
@@ -33,8 +38,28 @@ function Node({ node, onClick }) {
       Icon = ServiceIcon;
       break;
     case 'pod':
-      if (state === 'Running') Icon = RunningPodIcon;
-      else Icon = PodIcon;
+      switch(state) {
+        case 'Running':
+          Icon = RunningPodIcon;
+          break;
+        case 'Failure':
+          Icon = FailurePodIcon;
+          break;
+        case 'Completed':
+          Icon = CompletedPodIcon;
+          break;
+        case 'Pending':
+          Icon = PendingPodIcon;
+          break;
+        case 'Success':
+          Icon = SuccessPodIcon;
+          break;
+        case 'Unknown':
+          Icon = UnknownPodIcon;
+          break;
+        default:
+          Icon = PodIcon;
+      }
       break;
     case 'deploy':
       if (kind === 'Deployment') Icon = DeploymentIcon;
