@@ -42,7 +42,9 @@ function Node({ node, onClick }) {
         case 'Running':
           Icon = RunningPodIcon;
           break;
+        case 'Error':
         case 'Failure':
+        case 'CrashLoopBackOff':
           Icon = FailurePodIcon;
           break;
         case 'Completed':
@@ -58,7 +60,8 @@ function Node({ node, onClick }) {
           Icon = UnknownPodIcon;
           break;
         default:
-          Icon = PodIcon;
+          Icon = FailurePodIcon;
+          // Icon = PodIcon;
       }
       break;
     case 'deploy':
