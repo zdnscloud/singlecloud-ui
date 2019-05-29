@@ -30,7 +30,7 @@ const Circle = (props) => {
             data={data}
             pieValue={(d) => d.value}
             outerRadius={radius * 0.5}
-            innerRadius={radius * 0.38}
+            innerRadius={radius * 0.42}
             cornerRadius={0}
             padAngle={0}
             pieSort={(n) => true}
