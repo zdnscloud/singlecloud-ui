@@ -9,6 +9,7 @@ import {
 } from 'assets/jss/material-dashboard-react';
 import hexToRgb from '@gsmlg/utils/hexToRgb';
 
+const whiteColor = '#fff';
 const blackColor = '#000';
 const cyanColor = '#6CD6B1';
 
@@ -19,6 +20,14 @@ const cardIconStyle = {
       backgroundColor: grayColor[0],
       padding: '15px',
       marginTop: '-20px',
+      marginRight: '15px',
+      float: 'left',
+    },
+    '&$cyanInverseCardHeader': {
+      borderRadius: '3px',
+      // backgroundColor: grayColor[0],
+      padding: '15px',
+      marginTop: '0px',
       marginRight: '15px',
       float: 'left',
     },
@@ -34,6 +43,9 @@ const cardIconStyle = {
     // boxShadow: `0 4px 20px 0 rgba(${hexToRgb(
     //   blackColor
     // )}, 0.14), 0 7px 10px -5px rgba(${hexToRgb(cyanColor)}, 0.4)`,
+  },
+  cyanInverseCardHeader: {
+    background: `transparent`,
   },
 };
 

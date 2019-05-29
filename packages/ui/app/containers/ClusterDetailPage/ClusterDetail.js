@@ -121,8 +121,13 @@ export class ClusterDetail extends React.PureComponent {
         <GridContainer>
           <GridItem xs={12} sm={6} md={3}>
             <Card>
-              <CardHeader color="cyan" stats icon className={classes.cardHeader}>
-                <CardIcon color="cyan">
+              <CardHeader
+                color="cyanInverse"
+                stats
+                icon
+                className={classes.cardHeader}
+              >
+                <CardIcon color="cyanInverse">
                   <NameIcon />
                 </CardIcon>
                 <p className={classes.cardCategory}>
@@ -130,13 +135,17 @@ export class ClusterDetail extends React.PureComponent {
                 </p>
                 <h3 className={classes.cardTitle}>{cluster.get('name')}</h3>
               </CardHeader>
-              <CardFooter />
             </Card>
           </GridItem>
           <GridItem xs={12} sm={6} md={3}>
             <Card>
-              <CardHeader color="cyan" stats icon className={classes.cardHeader}>
-                <CardIcon color="cyan">
+              <CardHeader
+                color="cyanInverse"
+                stats
+                icon
+                className={classes.cardHeader}
+              >
+                <CardIcon color="cyanInverse">
                   <VersionIcon />
                 </CardIcon>
                 <p className={classes.cardCategory}>
@@ -146,13 +155,17 @@ export class ClusterDetail extends React.PureComponent {
                   <small>{cluster.get('version')}</small>
                 </h3>
               </CardHeader>
-              <CardFooter />
             </Card>
           </GridItem>
           <GridItem xs={12} sm={6} md={3}>
             <Card>
-              <CardHeader color="cyan" stats icon className={classes.cardHeader}>
-                <CardIcon color="cyan">
+              <CardHeader
+                color="cyanInverse"
+                stats
+                icon
+                className={classes.cardHeader}
+              >
+                <CardIcon color="cyanInverse">
                   <NodesIcon />
                 </CardIcon>
                 <p className={classes.cardCategory}>
@@ -162,13 +175,17 @@ export class ClusterDetail extends React.PureComponent {
                   <small>{cluster.get('nodeCount')}</small>
                 </h3>
               </CardHeader>
-              <CardFooter />
             </Card>
           </GridItem>
           <GridItem xs={12} sm={6} md={3}>
             <Card>
-              <CardHeader color="cyan" stats icon className={classes.cardHeader}>
-                <CardIcon color="cyan">
+              <CardHeader
+                color="cyanInverse"
+                stats
+                icon
+                className={classes.cardHeader}
+              >
+                <CardIcon color="cyanInverse">
                   <TimeIcon />
                 </CardIcon>
                 <p className={classes.cardCategory}>
@@ -182,7 +199,6 @@ export class ClusterDetail extends React.PureComponent {
                   </small>
                 </h3>
               </CardHeader>
-              <CardFooter />
             </Card>
           </GridItem>
         </GridContainer>

@@ -27,10 +27,16 @@ const cardHeaderStyle = (theme) => ({
       position: 'relative',
       color: whiteColor,
     },
+    '&$cyanInverseCardHeader': {
+      margin: '0',
+      padding: '0',
+      position: 'relative',
+      color: cyanColor,
+    },
     '&:first-child': {
       borderRadius: 'calc(.25rem - 1px) calc(.25rem - 1px) 0 0',
     },
-    '&$warningCardHeader,&$successCardHeader,&$dangerCardHeader,&$infoCardHeader,&$primaryCardHeader,&$roseCardHeader,&$customBlueCardHeader,&$cyanCardHeader,&$azureCardHeader': {
+    '&$warningCardHeader,&$successCardHeader,&$dangerCardHeader,&$infoCardHeader,&$primaryCardHeader,&$roseCardHeader,&$customBlueCardHeader,&$cyanCardHeader,&$azureCardHeader,&$cyanInverseCardHeader': {
       '&:not($cardHeaderIcon)': {
         borderRadius: '3px 3px 0 0',
         marginTop: '-20px',
@@ -156,6 +162,15 @@ const cardHeaderStyle = (theme) => ({
       // boxShadow: `0 4px 20px 0 rgba(${hexToRgb(
       //   blackColor
       // )}, 0.14), 0 7px 10px -5px rgba(${hexToRgb(azureColor)}, 0.4)`,
+    },
+  },
+  cyanInverseCardHeader: {
+    color: cyanColor,
+    '&:not($cardHeaderIcon)': {
+      background: `linear-gradient(60deg, ${whiteColor}, ${whiteColor})`,
+      // boxShadow: `0 4px 20px 0 rgba(${hexToRgb(
+      //   blackColor
+      // )}, 0.14), 0 7px 10px -5px rgba(${hexToRgb(whiteColor)}, 0.4)`,
     },
   },
 });

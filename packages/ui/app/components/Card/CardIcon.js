@@ -35,6 +35,7 @@ CardIcon.propTypes = {
     'primary',
     'rose',
     'cyan',
+    'cyanInverse',
   ]),
 };
 
