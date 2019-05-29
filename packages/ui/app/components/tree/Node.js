@@ -15,6 +15,7 @@ import CompletedPodIcon from './icons/CompletedPod';
 import PendingPodIcon from './icons/PendingPod';
 import SuccessPodIcon from './icons/SuccessPod';
 import UnknownPodIcon from './icons/UnknownPod';
+import TerminatingPodIcon from './icons/TerminatingPod';
 
 const separator = '$';
 
@@ -58,6 +59,9 @@ function Node({ node, onClick }) {
           break;
         case 'Unknown':
           Icon = UnknownPodIcon;
+          break;
+        case 'Terminating':
+          Icon = TerminatingPodIcon;
           break;
         default:
           Icon = FailurePodIcon;
