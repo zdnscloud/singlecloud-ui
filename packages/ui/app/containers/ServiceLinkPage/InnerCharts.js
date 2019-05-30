@@ -23,6 +23,8 @@ import BubbleChartIcon from '@material-ui/icons/BubbleChart';
 import red from '@material-ui/core/colors/red';
 import GridItem from 'components/Grid/GridItem';
 import GridContainer from 'components/Grid/GridContainer';
+import GridList from '@material-ui/core/GridList';
+import GridListTile from '@material-ui/core/GridListTile';
 import Tasks from 'components/Tasks/Tasks';
 import CustomTabs from 'components/CustomTabs/CustomTabs';
 import Card from 'components/Card/Card';
@@ -33,8 +35,8 @@ import CardFooter from 'components/Card/CardFooter';
 
 import InnerServiceTree from 'components/tree/InnerServiceTree';
 
-import styles from './cardStyles';
 import * as actions from 'ducks/serviceLinks/actions';
+import styles from './cardStyles';
 import { makeSelectCurrentInnerServices } from 'ducks/serviceLinks/selectors';
 
 import messages from './messages';
@@ -94,12 +96,19 @@ export class InnerCharts extends React.PureComponent {
     const is = innerServices.toJS() || [];
 
     return (
-      <GridContainer>
+      <GridContainer style={{ display: 'block' }}>
         {is.map((s, i) => {
           const [type, name] = s.name.split(separator);
+          const { children } = s;
+          const count = _.reduce(children, (n, c) => {
+            const m = _.reduce(c.children, (nn, cc) => {
+              return nn += 1;
+            }, 0);
+            return n + m;
+          }, 0);
 
           return (
-            <GridItem xs={12} sm={6} md={6} key={i}>
+            <GridItem xs={12} sm={6} md={6} key={i} style={{ float: i % 2 === 0 ? 'left' : 'right' }}>
               <Card>
                 <CardHeader color="info" icon>
                   <h3 className={classes.cardTitle}>
@@ -113,7 +122,7 @@ export class InnerCharts extends React.PureComponent {
                 <CardBody ref={i === 0 ? this.icardBodyRef : null}>
                   <InnerServiceTree
                     width={this.state.icardWidth}
-                    height={288}
+                    height={75 * count > 300 ? 75 * count : 300}
                     data={s}
                   />
                 </CardBody>

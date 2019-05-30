@@ -22,8 +22,8 @@ const separator = '$';
 function Node({ node, onClick }) {
   const [type, name] = (node.data.name || '').split(separator);
   const { kind, state } = node.data;
-  const width = 80;
-  const height = 70;
+  const width = 54
+  const height = 53;
   let color = '#40B7E8';
   let fcolor = '#40B7E8';
   let bgcolor = '#fff';
@@ -84,7 +84,7 @@ function Node({ node, onClick }) {
         width={width}
         y={-height / 2}
         x={-width / 2}
-        fill={bgcolor}
+        fill={'transparent'}
         fillOpacity={1}
         stroke={color}
         strokeWidth={0}
@@ -94,7 +94,7 @@ function Node({ node, onClick }) {
       />
       <Icon
         fill={fcolor}
-        transform={`translate(${-width / 3}, ${-height / 2.3}) scale(.8)`}
+        transform={`translate(${-width / 2}, ${-height / 2}) scale(.8)`}
       />
       <text
         x={-lname.length * 2}

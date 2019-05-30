@@ -76,6 +76,7 @@
     "@vx/mock-data": "^0.0.185",
     "@vx/scale": "^0.0.182",
     "@vx/shape": "^0.0.184",
+    "autoresponsive-react": "^1.1.31",
     "chalk": "^2.4.1",
     "compression": "1",
     "connected-react-router": "6",

@@ -12,6 +12,7 @@ import { FormattedMessage } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import { bindActionCreators, compose } from 'redux';
 import moment from 'moment';
+import _ from 'lodash';
 
 import { Link } from 'react-router-dom';
 import { withStyles } from '@material-ui/core/styles';
@@ -97,6 +98,17 @@ export class OuterCharts extends React.PureComponent {
       <GridContainer>
         {os.map((s, i) => {
           const [type, name] = s.name.split(separator);
+          const { children } = s;
+          const count = _.reduce(children, (n, c) => {
+            const m = _.reduce(c.children, (nn, cc) => {
+              return nn + _.reduce(cc.children, (nnn, ccc) => {
+                return nnn + _.reduce(ccc.children, (nnnn, cccc) => {
+                  return nnnn += 1;
+                }, 0);
+              }, 0);
+            }, 0);
+            return n + m;
+          }, 0);
 
           return (
             <GridItem xs={12} sm={12} md={12} key={i}>
@@ -113,7 +125,7 @@ export class OuterCharts extends React.PureComponent {
                 <CardBody ref={i === 0 ? this.ocardBodyRef : null}>
                   <OuterServiceTree
                     width={this.state.ocardWidth}
-                    height={288}
+                    height={75 * count > 300 ? 75 * count : 300}
                     data={s}
                   />
                 </CardBody>
