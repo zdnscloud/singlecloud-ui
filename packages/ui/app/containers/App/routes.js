@@ -12,7 +12,9 @@ import HomePage from 'containers/HomePage/Loadable';
 import ClustersPage from 'containers/ClustersPage/Loadable';
 import ClusterDetailPage from 'containers/ClusterDetailPage/Loadable';
 import NodesPage from 'containers/NodesPage/Loadable';
-import NamespacesPage from 'containers/NamespacesPage/Loadable';
+import NamespacesPage, {
+  CreateNamespacePage,
+} from 'containers/NamespacesPage/Loadable';
 import TerminalPage from 'containers/TerminalPage/Loadable';
 import EventsPage from 'containers/EventsPage/Loadable';
 import DeploymentsPage, {
@@ -76,6 +78,12 @@ const appRoutes = [
     name: 'namespaces',
     icon: Dashboard,
     component: NamespacesPage,
+  },
+  {
+    path: '/clusters/:cluster_id/namespaces/create',
+    name: 'namespaces',
+    icon: Dashboard,
+    component: CreateNamespacePage,
   },
   {
     path: '/clusters/:cluster_id/namespaces/:namespace_id/configmaps',

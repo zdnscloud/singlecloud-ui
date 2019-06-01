@@ -89,4 +89,8 @@ export default defineMessages({
     id: `${scope}.updateUser`,
     defaultMessage: 'Update User',
   },
+  createUserButton: {
+    id: `${scope}.createUserButton`,
+    defaultMessage: 'Craete User',
+  },
 });

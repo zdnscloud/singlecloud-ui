@@ -100,7 +100,7 @@ export class CreateUserPage extends React.PureComponent {
                 size="large"
                 onClick={submitForm}
               >
-                Create
+                <FormattedMessage {...messages.createUserButton} />
               </Button>
             </CardFooter>
           </Card>

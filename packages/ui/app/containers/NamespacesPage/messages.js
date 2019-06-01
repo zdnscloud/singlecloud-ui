@@ -41,24 +41,16 @@ export default defineMessages({
     id: `${scope}.tableTitleActions`,
     defaultMessage: 'Actions',
   },
-  dialogTitle: {
-    id: `${scope}.dialogTitle`,
+  createNamespace: {
+    id: `${scope}.createNamespace`,
     defaultMessage: 'Create Namespace',
   },
-  dialogContent: {
-    id: `${scope}.dialogContent`,
-    defaultMessage: 'ADD a Namespace',
-  },
-  dialogName: {
-    id: `${scope}.dialogName`,
+  formName: {
+    id: `${scope}.formName`,
     defaultMessage: 'Name',
   },
-  dialogCreate: {
-    id: `${scope}.dialogCreate`,
-    defaultMessage: 'Create',
-  },
-  dialogCancel: {
-    id: `${scope}.dialogCancel`,
-    defaultMessage: 'Cancel',
+  createNamespaceButton: {
+    id: `${scope}.createNamespaceButton`,
+    defaultMessage: 'Create Namespace',
   },
 });
