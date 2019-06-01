@@ -71,6 +71,13 @@ export class OuterCharts extends React.PureComponent {
     if (nextOuterServices !== outerServices) {
       this.reload();
     }
+    if (this.ocardBodyRef.current) {
+      let ow = this.state.ocardWidth;
+      const ocd = findDOMNode(this.ocardBodyRef.current); // eslint-disable-line react/no-find-dom-node
+      const { width } = ocd.getBoundingClientRect();
+      ow = width;
+      this.setState({ ocardWidth: ow - 40 });
+    }
   }
 
   componentWillUnmount() {
