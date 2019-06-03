@@ -26,6 +26,7 @@ import CardHeader from 'components/Card/CardHeader';
 import CardBody from 'components/Card/CardBody';
 
 import { makeSelectClusterID } from 'containers/App/selectors';
+import { makeSelectCurrentCluster } from 'containers/ClustersPage/selectors';
 
 import * as actions from './actions';
 import messages from './messages';
@@ -42,15 +43,9 @@ export class NamespacesPage extends React.PureComponent {
     location: PropTypes.object,
   };
 
-  // componentWillMount() {
-  //   this.props.initAction();
-  // }
-
-  // componentDidUpdate(prevProps) {
-  //   if (prevProps.clusterID !== this.props.clusterID) {
-  //     this.props.initAction();
-  //   }
-  // }
+  componentWillMount() {
+    this.props.initAction();
+  }
 
   render() {
     const { classes, clusterID } = this.props;
@@ -91,6 +86,7 @@ export class NamespacesPage extends React.PureComponent {
 }
 
 const mapStateToProps = createStructuredSelector({
+  cluster: makeSelectCurrentCluster(),
   clusterID: makeSelectClusterID(),
 });
 

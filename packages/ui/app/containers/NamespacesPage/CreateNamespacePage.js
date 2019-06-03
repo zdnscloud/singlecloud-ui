@@ -29,12 +29,11 @@ import CardBody from 'components/Card/CardBody';
 import CardFooter from 'components/Card/CardFooter';
 
 import { makeSelectClusterID } from 'containers/App/selectors';
+import { makeSelectCurrentCluster } from 'containers/ClustersPage/selectors';
+import * as actions from 'ducks/namespaces/actions';
 
-import { makeSelectCreateFormData } from './selectors';
-import * as actions from './actions';
 import messages from './messages';
 import styles from './styles';
-import NamespacesTable from './NamespacesTable';
 import NamespacesPageHelmet from './helmet';
 import NamespaceForm from './NamespaceForm';
 
@@ -68,15 +67,17 @@ export class CreateNamespacePage extends React.PureComponent {
   render() {
     const {
       classes,
-      formData,
+      cluster,
+      clusterID,
       submitForm,
       createNamespace,
     } = this.props;
+    const url = cluster.getIn(['links', 'namespaces']);
     async function doSubmit(formValues) {
       try {
         const name = formValues.get('name');
         await new Promise((resolve, reject) => {
-          createNamespace({ name }, { resolve, reject });
+          createNamespace({ name }, { resolve, reject, clusterID, url });
         });
       } catch (error) {
         throw new SubmissionError({ _error: error });
@@ -125,6 +126,7 @@ export class CreateNamespacePage extends React.PureComponent {
 
 const mapStateToProps = createStructuredSelector({
   clusterID: makeSelectClusterID(),
+  cluster: makeSelectCurrentCluster(),
 });
 
 const mapDispatchToProps = (dispatch) =>
