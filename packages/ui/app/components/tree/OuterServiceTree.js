@@ -68,12 +68,12 @@ export default class OuterServiceTree extends React.Component {
         <svg width={width} height={height}>
           <LinearGradient id="lg" from="#fdfba3" to="#fefefe" />
           <rect width={width} height={height} rx={0} fill="#000" fillOpacity={0} />
-          <Group top={height / 2} left={sizeWidth / 3}>
+          <Group top={height / 2} left={100}>
             <Tree
               root={root}
               size={[sizeWidth - margin.left * 2, sizeHeight - margin.top * 2]}
               separation={(a, b) => (a.parent === b.parent ? 1 : 0.5) / a.depth}
-              nodeSize={[300, 150]}
+              nodeSize={[300, 120]}
             >
               {(data) => (
                 <Group top={origin.y} left={origin.x}>

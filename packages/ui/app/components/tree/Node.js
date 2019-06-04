@@ -20,13 +20,13 @@ import TerminatingPodIcon from './icons/TerminatingPod';
 const separator = '$';
 
 function Node({ node, onClick }) {
-  const [type, name] = (node.data.name || '').split(separator);
+  const [type, idx, name] = (node.data.name || '').split(separator);
   const { kind, state } = node.data;
-  const width = 54
+  const width = 54;
   const height = 53;
-  let color = '#40B7E8';
-  let fcolor = '#40B7E8';
-  let bgcolor = '#fff';
+  const color = '#40B7E8';
+  const fcolor = '#40B7E8';
+  const bgcolor = '#fff';
   let Icon = Fragment;
   switch (type) {
     case 'ep':

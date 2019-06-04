@@ -99,13 +99,13 @@ export class InnerCharts extends React.PureComponent {
     return (
       <GridContainer style={{ display: 'block' }}>
         {is.map((s, i) => {
-          const [type, name] = s.name.split(separator);
+          const [type, idx, name] = s.name.split(separator);
           const { children } = s;
           const count = _.reduce(children, (n, c) => {
             const m = _.reduce(c.children, (nn, cc) => {
               return nn += 1;
             }, 0);
-            return n + m;
+            return n + (m < 4 ? 4 : m);
           }, 0);
 
           return (
