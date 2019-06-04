@@ -61,7 +61,7 @@ export class TerminalDialog extends React.PureComponent {
         disableEscapeKeyDown
         fullWidth
         maxWidth="lg"
-        open={open}
+        open={Boolean(open)}
         onEnter={() => {
           const term = new Terminal();
           // /apis/ws.zcloud.cn/v1//clusters/%s/namespaces/%s/pods/%s/containers/%s/shell

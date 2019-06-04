@@ -58,7 +58,7 @@ export class TerminalDialog extends React.PureComponent {
         disableEscapeKeyDown
         fullWidth
         maxWidth="lg"
-        open={open}
+        open={Boolean(open)}
         onEnter={() => {
           const term = new Terminal();
           const socket = new SockJS(
