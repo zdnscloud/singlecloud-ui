@@ -11,13 +11,14 @@ import namespacesEpic from 'ducks/namespaces/epic';
 import configMapsEpic from 'ducks/configMaps/epic';
 import deploymentsEpic from 'ducks/deployments/epic';
 import statefulSetsEpic from 'ducks/statefulSets/epic';
+import daemonSetsEpic from 'ducks/daemonSets/epic';
 import podsEpic from 'ducks/pods/epic';
 import serviceLinksEpic from 'ducks/serviceLinks/epic';
 import storagesEpic from 'ducks/storages/epic';
 import networksEpic from 'ducks/networks/epic';
 
 /**
- * Merges the main reducer with the router state and dynamically injected reducers
+ * Create root Epic
  */
 export default function createEpic(injectedEpics = {}) {
   const rootEpic = combineEpics(
@@ -28,6 +29,7 @@ export default function createEpic(injectedEpics = {}) {
     configMapsEpic,
     deploymentsEpic,
     statefulSetsEpic,
+    daemonSetsEpic,
     podsEpic,
     serviceLinksEpic,
     storagesEpic,
