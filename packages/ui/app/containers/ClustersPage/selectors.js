@@ -1,6 +1,8 @@
 import { createSelector } from 'reselect';
+import { makeSelectClusterID } from 'containers/App/selectors';
+import { selectNamespacesDomain } from 'ducks/namespaces/selectors';
+
 import { initialState } from './reducer';
-import { makeSelectClusterID } from '../App/selectors';
 
 /**
  * Direct selector to the clustersPage state domain
@@ -8,9 +10,6 @@ import { makeSelectClusterID } from '../App/selectors';
 
 const selectClustersPageDomain = (state) =>
   state.get('clustersPage', initialState);
-
-const selectNamespacesPageDomain = (state) =>
-  state.get('namespacesPage', initialState);
 
 /**
  * Other specific selectors
@@ -37,7 +36,7 @@ export const makeSelectTableList = () =>
 export const makeSelectClustersAndNamespaces = () =>
   createSelector(
     selectClustersPageDomain,
-    selectNamespacesPageDomain,
+    selectNamespacesDomain,
     (cstate, nsstate) =>
       cstate
         .get('clusters')

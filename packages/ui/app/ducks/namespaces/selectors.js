@@ -9,7 +9,7 @@ import { prefix } from './constants';
 /**
  * Direct selector to the namespaces duck
  */
-const selectNamespacesDomain = (state) => state.get(prefix);
+export const selectNamespacesDomain = (state) => state.get(prefix);
 
 /**
  * Other specific selectors
