@@ -50,6 +50,17 @@ export const namespacesReducer = (
     case c.CREATE_NAMESPACE_FAILURE:
       return state;
 
+    case c.REMOVE_NAMESPACE:
+      return state;
+    case c.REMOVE_NAMESPACE_SUCCESS: {
+      const { clusterID, id } = meta;
+      return state
+        .deleteIn(['namespaces', clusterID, id])
+        .update('list', (l) => l.filterNot((i) => i === id));
+    }
+    case c.REMOVE_NAMESPACE_FAILURE:
+      return state;
+
     case c.CHANGE_NAMESPACE:
       return state.setIn(
         ['selectedNamespace', payload.clusterID],

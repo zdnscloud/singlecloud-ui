@@ -3,7 +3,6 @@
  * NamespacesPage
  *
  */
-
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -13,11 +12,11 @@ import { bindActionCreators, compose } from 'redux';
 import { Link } from 'react-router-dom';
 
 import { withStyles } from '@material-ui/core/styles';
-import Menubar from 'components/Menubar';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Typography from '@material-ui/core/Typography';
 import Fab from '@material-ui/core/Fab';
 import IconButton from '@material-ui/core/IconButton';
+import Menubar from 'components/Menubar';
 import AddIcon from 'components/Icons/Add';
 import GridItem from 'components/Grid/GridItem';
 import GridContainer from 'components/Grid/GridContainer';
@@ -27,8 +26,8 @@ import CardBody from 'components/Card/CardBody';
 
 import { makeSelectClusterID } from 'containers/App/selectors';
 import { makeSelectCurrentCluster } from 'containers/ClustersPage/selectors';
+import * as actions from 'ducks/namespaces/actions';
 
-import * as actions from './actions';
 import messages from './messages';
 import styles from './styles';
 import NamespacesTable from './NamespacesTable';
@@ -44,7 +43,18 @@ export class NamespacesPage extends React.PureComponent {
   };
 
   componentWillMount() {
-    this.props.initAction();
+    // this.props.initAction();
+    this.load();
+  }
+
+  load() {
+    const {
+      cluster,
+      clusterID,
+      loadNamespaces,
+    } = this.props
+    const url = cluster.getIn(['links', 'namespaces']);
+    loadNamespaces(url, clusterID);
   }
 
   render() {

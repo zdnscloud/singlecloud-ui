@@ -2,22 +2,29 @@ import { takeLatest, call, put, select } from 'redux-saga/effects';
 import request from 'utils/request';
 import { push } from 'connected-react-router';
 
-import { loadClusters } from '../ClustersPage/saga';
-import { loadAllNamespaces } from '../NamespacesPage/saga';
-import { initAction as initEvents } from '../EventsPage/actions';
+import { loadClusters } from 'containers/ClustersPage/saga';
+import { makeSelectClusters } from 'containers/ClustersPage/selectors';
+import { initAction as initEvents } from 'containers/EventsPage/actions';
+import { loadNamespaces } from 'ducks/namespaces/actions';
+import { makeSelectCurrentNamespaceID } from 'ducks/namespaces/selectors';
+import { CHANGE_NAMESPACE } from 'ducks/namespaces/constants';
+
 import {
   makeSelectClusterID,
   makeSelectNamespaceID,
   makeSelectLocation,
 } from './selectors';
-import { makeSelectCurrentNamespaceID } from '../NamespacesPage/selectors';
-
 import { INIT_ACTION, CHANGE_CLUSTER } from './constants';
-import { CHANGE_NAMESPACE } from '../NamespacesPage/constants';
 
 export function* initialize() {
   yield* loadClusters();
-  yield* loadAllNamespaces();
+  const clusters = yield select(makeSelectClusters());
+  const cs = clusters.toList().toJS();
+  for (let i = 0; i < cs.length; i += 1) {
+    const c = cs[i];
+    const url = c.links.namespaces;
+    yield put(loadNamespaces(url, c.id));
+  }
   const id = yield select(makeSelectClusterID());
   if (id) {
     yield put(initEvents({ params: { cluster_id: id } }));

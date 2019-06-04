@@ -12,7 +12,6 @@ import appReducer from 'containers/App/reducer';
 import clustersPageReducer from 'containers/ClustersPage/reducer';
 import nodesPageReducer from 'containers/NodesPage/reducer';
 import eventsPageReducer from 'containers/EventsPage/reducer';
-import namespacesPageReducer from 'containers/NamespacesPage/reducer';
 import servicesPageReducer from 'containers/ServicesPage/reducer';
 import ingressesPageReducer from 'containers/IngressesPage/reducer';
 import terminalPageReducer from 'containers/TerminalPage/reducer';
@@ -66,7 +65,6 @@ export default function createReducer(injectedReducers = {}) {
     clustersPage: clustersPageReducer,
     nodesPage: nodesPageReducer,
     eventsPage: eventsPageReducer,
-    namespacesPage: namespacesPageReducer,
     servicesPage: servicesPageReducer,
     ingressesPage: ingressesPageReducer,
     terminalPage: terminalPageReducer,

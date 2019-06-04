@@ -45,6 +45,13 @@ class NamespaceForm extends PureComponent {
     return (
       <form className={getByKey(classes, 'form')} onSubmit={handleSubmit}>
         <GridContainer>
+          {error ? (
+            <GridItem xs={12} sm={12} md={12}>
+              <Danger>
+                {getByKey(error, ['response', 'message'])}
+              </Danger>
+            </GridItem>
+          ) : null}
           <GridItem xs={12} sm={12} md={12} className={classes.formLine}>
             <InputField
               label={<FormattedMessage {...messages.formName} />}

@@ -18,7 +18,7 @@ export const makeSelectNamespaces = () =>
   createSelector(
     selectNamespacesDomain,
     makeSelectClusterID(),
-    (substate, clusterID) => substate.getIn(['namespaces', clusterID])
+    (substate, clusterID) => substate.getIn(['namespaces', clusterID]) || substate.clear()
   );
 
 export const makeSelectNamespacesList = () =>

@@ -20,8 +20,13 @@ import { SimpleTable } from '@gsmlg/com';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
 
-import { makeSelectNamespaces, makeSelectTableList } from './selectors';
-import * as actions from './actions';
+import { makeSelectClusterID } from 'containers/App/selectors';
+import * as actions from 'ducks/namespaces/actions';
+import {
+  makeSelectNamespaces,
+  makeSelectNamespacesList,
+} from 'ducks/namespaces/selectors';
+
 import messages from './messages';
 import styles from './styles';
 import schema from './tableSchema';
@@ -30,12 +35,12 @@ import schema from './tableSchema';
 export class NamespacesTable extends React.PureComponent {
   static propTypes = {
     classes: PropTypes.object.isRequired,
-    tableList: PropTypes.object.isRequired,
+    data: PropTypes.object.isRequired,
     namespaces: PropTypes.object,
   };
 
   render() {
-    const { classes, tableList, namespaces, removeNamespace } = this.props;
+    const { classes, clusterID, data, namespaces, removeNamespace } = this.props;
     const mergedSchema = schema.concat([
       {
         id: 'actions',
@@ -44,7 +49,11 @@ export class NamespacesTable extends React.PureComponent {
           <Fragment>
             <IconButton
               aria-label="Delete"
-              onClick={(evt) => removeNamespace(props.data.get('id'))}
+              onClick={(evt) => {
+                const ns = props.data;
+                const url = ns.getIn(['links', 'remove']);
+                removeNamespace(ns.get('id'), { url, clusterID });
+              }}
             >
               <DeleteIcon />
             </IconButton>
@@ -61,7 +70,7 @@ export class NamespacesTable extends React.PureComponent {
         <SimpleTable
           className={classes.table}
           schema={mergedSchema}
-          data={tableList.map((id) => namespaces.get(id))}
+          data={data}
         />
       </Paper>
     );
@@ -69,8 +78,9 @@ export class NamespacesTable extends React.PureComponent {
 }
 
 const mapStateToProps = createStructuredSelector({
+  clusterID: makeSelectClusterID(),
   namespaces: makeSelectNamespaces(),
-  tableList: makeSelectTableList(),
+  data: makeSelectNamespacesList(),
 });
 
 const mapDispatchToProps = (dispatch) =>

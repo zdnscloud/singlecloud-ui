@@ -11,7 +11,7 @@ import SystemIcon from 'components/Icons/System';
 
 import { makeSelectRole, makeSelectIsAdmin } from 'ducks/role/selectors';
 
-import { makeSelectCurrentNamespaceID } from '../NamespacesPage/selectors';
+import { makeSelectCurrentNamespaceID } from 'ducks/namespaces/selectors';
 
 const selectRouter = (state) => state.get('router');
 

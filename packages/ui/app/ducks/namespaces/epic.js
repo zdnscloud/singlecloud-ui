@@ -77,5 +77,6 @@ export const removeNamespaceEpic = (action$, state$, { ajax }) =>
 export default combineEpics(
   loadNamespacesEpic,
   createNamespaceEpic,
-  afterCreateEpic
+  afterCreateEpic,
+  removeNamespaceEpic
 );

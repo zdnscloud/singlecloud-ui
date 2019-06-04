@@ -33,14 +33,16 @@ import AddIcon from '@material-ui/icons/Add';
 import Collapse from '@material-ui/core/Collapse';
 import Checkbox from '@material-ui/core/Checkbox';
 
-import messages from './messages';
-import styles from '../App/selectClusterStyles';
-import * as actions from './actions';
-import { makeSelectClusterID } from '../App/selectors';
+import { makeSelectClusterID } from 'containers/App/selectors';
+import { makeSelectCurrentCluster } from 'containers/ClustersPage/selectors';
+import * as actions from 'ducks/namespaces/actions';
 import {
   makeSelectNamespaces,
   makeSelectCurrentNamespaceID,
-} from './selectors';
+} from 'ducks/namespaces/selectors';
+
+import messages from './messages';
+import styles from '../App/selectClusterStyles';
 
 class SelectNamespace extends PureComponent {
   static propTypes = {
@@ -50,13 +52,23 @@ class SelectNamespace extends PureComponent {
   };
 
   componentWillMount() {
-    this.props.initAction();
+    this.load();
   }
 
   componentDidUpdate(prevProps) {
     if (prevProps.clusterID !== this.props.clusterID) {
-      this.props.initAction();
+      this.load();
     }
+  }
+
+  load() {
+    const {
+      cluster,
+      clusterID,
+      loadNamespaces,
+    } = this.props
+    const url = cluster.getIn(['links', 'namespaces']);
+    loadNamespaces(url, clusterID);
   }
 
   render() {
@@ -97,6 +109,7 @@ const mapStateToProps = createStructuredSelector({
   namespaces: makeSelectNamespaces(),
   namespaceID: makeSelectCurrentNamespaceID(),
   clusterID: makeSelectClusterID(),
+  cluster: makeSelectCurrentCluster(),
 });
 
 const mapDispatchToProps = (dispatch) =>
