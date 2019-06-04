@@ -17,6 +17,10 @@ import {
   makeSelectStatefulSetID,
   makeSelectCurrentStatefulSet,
 } from 'ducks/statefulSets/selectors';
+import {
+  makeSelectDaemonSetID,
+  makeSelectCurrentDaemonSet,
+} from 'ducks/daemonSets/selectors';
 
 import { prefix } from './constants';
 
@@ -28,6 +32,7 @@ const selectPodsDomain = (state) => state.get(prefix);
 /**
  * Other specific selectors
  */
+// deployment
 export const makeSelectPods = () =>
   createSelector(
     selectPodsDomain,
@@ -52,6 +57,7 @@ export const makeSelectURL = () =>
     (deploy) => deploy.getIn(['links', 'pods'])
   );
 
+// stateful set
 export const makeSelectSTSPods = () =>
   createSelector(
     selectPodsDomain,
@@ -67,15 +73,41 @@ export const makeSelectSTSPodsList = () =>
     selectPodsDomain,
     makeSelectSTSPods(),
     (substate, pods) =>
-      substate.get('list').map((id) => pods.get(id))
+      substate.get('stsList').map((id) => pods.get(id))
   );
 
 export const makeSelectSTSURL = () =>
   createSelector(
     makeSelectCurrentStatefulSet(),
-    (deploy) => deploy.getIn(['links', 'pods'])
+    (sts) => sts.getIn(['links', 'pods'])
   );
 
+// daemon set
+export const makeSelectDSPods = () =>
+  createSelector(
+    selectPodsDomain,
+    makeSelectClusterID(),
+    makeSelectNamespaceID(),
+    makeSelectDaemonSetID(),
+    (substate, clusterID, namespaceID, daemonSetID) =>
+      substate.getIn(['dsPods', clusterID, namespaceID, daemonSetID]) || substate.clear()
+  );
+
+export const makeSelectDSPodsList = () =>
+  createSelector(
+    selectPodsDomain,
+    makeSelectDSPods(),
+    (substate, pods) =>
+      substate.get('dsList').map((id) => pods.get(id))
+  );
+
+export const makeSelectDSURL = () =>
+  createSelector(
+    makeSelectCurrentDaemonSet(),
+    (ds) => ds.getIn(['links', 'pods'])
+  );
+
+// log
 export const makeSelectPodLog = () =>
   createSelector(
     selectPodsDomain,

@@ -57,3 +57,23 @@ export const loadSTSPodsFailure = (error, meta) => ({
   meta,
   error: true,
 });
+
+// ds
+export const loadDSPods = (meta) => ({
+  type: c.LOAD_DS_PODS,
+  payload: {},
+  meta,
+});
+
+export const loadDSPodsSuccess = (resp, meta) => ({
+  type: c.LOAD_DS_PODS_SUCCESS,
+  payload: resp,
+  meta,
+});
+
+export const loadDSPodsFailure = (error, meta) => ({
+  type: c.LOAD_DS_PODS_FAILURE,
+  payload: error,
+  meta,
+  error: true,
+});

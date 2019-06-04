@@ -25,6 +25,10 @@ import StatefulSetsPage, {
   CreateStatefulSetPage,
   StatefulSetDetailPage,
 } from 'containers/StatefulSetsPage/Loadable';
+import DaemonSetsPage, {
+  CreateDaemonSetPage,
+  DaemonSetDetailPage,
+} from 'containers/DaemonSetsPage/Loadable';
 import ConfigMapsPage, {
   CreateConfigMapPage,
   ShowConfigMapPage,
@@ -147,9 +151,27 @@ const appRoutes = [
   },
   {
     path: '/clusters/:cluster_id/namespaces/:namespace_id/statefulSets/:stateful_set_id',
-    name: 'Stateful Detail',
+    name: 'StatefulSet Detail',
     icon: Dashboard,
     component: StatefulSetDetailPage,
+  },
+  {
+    path: '/clusters/:cluster_id/namespaces/:namespace_id/daemonSets',
+    name: 'DaemonSets',
+    icon: Dashboard,
+    component: DaemonSetsPage,
+  },
+  {
+    path: '/clusters/:cluster_id/namespaces/:namespace_id/daemonSets/create',
+    name: 'Create DaemonSet',
+    icon: Dashboard,
+    component: CreateDaemonSetPage,
+  },
+  {
+    path: '/clusters/:cluster_id/namespaces/:namespace_id/daemonSets/:stateful_set_id',
+    name: 'DaemonSet Detail',
+    icon: Dashboard,
+    component: DaemonSetDetailPage,
   },
   {
     path: '/clusters/:cluster_id/namespaces/:namespace_id/serviceLink',

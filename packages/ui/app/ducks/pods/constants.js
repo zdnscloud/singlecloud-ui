@@ -13,3 +13,7 @@ export const SET_OPENING_LOGS = `${prefix}/SET_OPENING_LOGS`;
 export const LOAD_STS_PODS = `${prefix}/LOAD_STS_PODS`;
 export const LOAD_STS_PODS_SUCCESS = `${prefix}/LOAD_STS_PODS_SUCCESS`;
 export const LOAD_STS_PODS_FAILURE = `${prefix}/LOAD_STS_PODS_FAILURE`;
+
+export const LOAD_DS_PODS = `${prefix}/LOAD_DS_PODS`;
+export const LOAD_DS_PODS_SUCCESS = `${prefix}/LOAD_DS_PODS_SUCCESS`;
+export const LOAD_DS_PODS_FAILURE = `${prefix}/LOAD_DS_PODS_FAILURE`;

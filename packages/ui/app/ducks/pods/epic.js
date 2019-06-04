@@ -35,7 +35,7 @@ export const loadPodsEpic = (action$, state$, { ajax }) =>
 // sts
 export const loadSTSPodsEpic = (action$, state$, { ajax }) =>
   action$.pipe(
-    ofType(c.LOAD_PODS),
+    ofType(c.LOAD_STS_PODS),
     mergeMap(({ meta: { url, clusterID, namespaceID, statefulSetID } }) =>
       ajax(url).pipe(
         map((resp) =>
@@ -48,7 +48,24 @@ export const loadSTSPodsEpic = (action$, state$, { ajax }) =>
     )
   );
 
+// ds
+export const loadDSPodsEpic = (action$, state$, { ajax }) =>
+  action$.pipe(
+    ofType(c.LOAD_DS_PODS),
+    mergeMap(({ meta: { url, clusterID, namespaceID, daemonSetID } }) =>
+      ajax(url).pipe(
+        map((resp) =>
+          a.loadDSPodsSuccess(resp, { clusterID, namespaceID, daemonSetID })
+        ),
+        catchError((error) =>
+          of(a.loadDSPodsFailure(error, { clusterID, namespaceID, daemonSetID }))
+        )
+      )
+    )
+  );
+
 export default combineEpics(
   loadPodsEpic,
   loadSTSPodsEpic,
+  loadDSPodsEpic,
 );

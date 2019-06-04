@@ -1,0 +1,27 @@
+export const prefix = 'daemonSets';
+/*
+  constants
+*/
+export const LOAD_DAEMONSETS = `${prefix}/LOAD_DAEMONSETS`;
+export const LOAD_DAEMONSETS_SUCCESS = `${prefix}/LOAD_DAEMONSETS_SUCCESS`;
+export const LOAD_DAEMONSETS_FAILURE = `${prefix}/LOAD_DAEMONSETS_FAILURE`;
+
+export const LOAD_DAEMONSET = `${prefix}/LOAD_DAEMONSET`;
+export const LOAD_DAEMONSET_SUCCESS = `${prefix}/LOAD_DAEMONSET_SUCCESS`;
+export const LOAD_DAEMONSET_FAILURE = `${prefix}/LOAD_DAEMONSET_FAILURE`;
+
+export const CREATE_DAEMONSET = `${prefix}/CREATE_DAEMONSET`;
+export const CREATE_DAEMONSET_SUCCESS = `${prefix}/CREATE_DAEMONSET_SUCCESS`;
+export const CREATE_DAEMONSET_FAILURE = `${prefix}/CREATE_DAEMONSET_FAILURE`;
+
+export const UPDATE_DAEMONSET = `${prefix}/UPDATE_DAEMONSET`;
+export const UPDATE_DAEMONSET_SUCCESS = `${prefix}/UPDATE_DAEMONSET_SUCCESS`;
+export const UPDATE_DAEMONSET_FAILURE = `${prefix}/UPDATE_DAEMONSET_FAILURE`;
+
+export const REMOVE_DAEMONSET = `${prefix}/REMOVE_DAEMONSET`;
+export const REMOVE_DAEMONSET_SUCCESS = `${prefix}/REMOVE_DAEMONSET_SUCCESS`;
+export const REMOVE_DAEMONSET_FAILURE = `${prefix}/REMOVE_DAEMONSET_FAILURE`;
+
+export const SCALE_DAEMONSET = `${prefix}/SCALE_DAEMONSET`;
+export const SCALE_DAEMONSET_SUCCESS = `${prefix}/SCALE_DAEMONSET_SUCCESS`;
+export const SCALE_DAEMONSET_FAILURE = `${prefix}/SCALE_DAEMONSET_FAILURE`;
