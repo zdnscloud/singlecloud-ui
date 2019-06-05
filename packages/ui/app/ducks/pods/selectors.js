@@ -21,6 +21,10 @@ import {
   makeSelectDaemonSetID,
   makeSelectCurrentDaemonSet,
 } from 'ducks/daemonSets/selectors';
+import {
+  makeSelectCronJobID,
+  makeSelectCurrentCronJob,
+} from 'ducks/cronJobs/selectors';
 
 import { prefix } from './constants';
 
@@ -106,6 +110,56 @@ export const makeSelectDSURL = () =>
     makeSelectCurrentDaemonSet(),
     (ds) => ds.getIn(['links', 'pods'])
   );
+
+// cron job
+export const makeSelectCJPods = () =>
+  createSelector(
+    selectPodsDomain,
+    makeSelectClusterID(),
+    makeSelectNamespaceID(),
+    makeSelectCronJobID(),
+    (substate, clusterID, namespaceID, cronJobID) =>
+      substate.getIn(['cjPods', clusterID, namespaceID, cronJobID]) || substate.clear()
+  );
+
+export const makeSelectCJPodsList = () =>
+  createSelector(
+    selectPodsDomain,
+    makeSelectCJPods(),
+    (substate, pods) =>
+      substate.get('cjList').map((id) => pods.get(id))
+  );
+
+export const makeSelectCJURL = () =>
+  createSelector(
+    makeSelectCurrentCronJob(),
+    (cj) => cj.getIn(['links', 'pods'])
+  );
+
+// job
+// export const makeSelectDSPods = () =>
+//   createSelector(
+//     selectPodsDomain,
+//     makeSelectClusterID(),
+//     makeSelectNamespaceID(),
+//     makeSelectDaemonSetID(),
+//     (substate, clusterID, namespaceID, daemonSetID) =>
+//       substate.getIn(['dsPods', clusterID, namespaceID, daemonSetID]) || substate.clear()
+//   );
+
+// export const makeSelectDSPodsList = () =>
+//   createSelector(
+//     selectPodsDomain,
+//     makeSelectDSPods(),
+//     (substate, pods) =>
+//       substate.get('dsList').map((id) => pods.get(id))
+//   );
+
+// export const makeSelectDSURL = () =>
+//   createSelector(
+//     makeSelectCurrentDaemonSet(),
+//     (ds) => ds.getIn(['links', 'pods'])
+//   );
 
 // log
 export const makeSelectPodLog = () =>

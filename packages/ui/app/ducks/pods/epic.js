@@ -64,8 +64,42 @@ export const loadDSPodsEpic = (action$, state$, { ajax }) =>
     )
   );
 
+// cj
+export const loadCJPodsEpic = (action$, state$, { ajax }) =>
+  action$.pipe(
+    ofType(c.LOAD_CJ_PODS),
+    mergeMap(({ meta: { url, clusterID, namespaceID, cronJobID } }) =>
+      ajax(url).pipe(
+        map((resp) =>
+          a.loadCJPodsSuccess(resp, { clusterID, namespaceID, cronJobID })
+        ),
+        catchError((error) =>
+          of(a.loadCJPodsFailure(error, { clusterID, namespaceID, cronJobID }))
+        )
+      )
+    )
+  );
+
+// job
+export const loadJOBPodsEpic = (action$, state$, { ajax }) =>
+  action$.pipe(
+    ofType(c.LOAD_JOB_PODS),
+    mergeMap(({ meta: { url, clusterID, namespaceID, jobID } }) =>
+      ajax(url).pipe(
+        map((resp) =>
+          a.loadJOBPodsSuccess(resp, { clusterID, namespaceID, jobID })
+        ),
+        catchError((error) =>
+          of(a.loadJOBPodsFailure(error, { clusterID, namespaceID, jobID }))
+        )
+      )
+    )
+  );
+
 export default combineEpics(
   loadPodsEpic,
   loadSTSPodsEpic,
   loadDSPodsEpic,
+  loadCJPodsEpic,
+  loadJOBPodsEpic
 );

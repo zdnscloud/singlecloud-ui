@@ -23,6 +23,10 @@ export const initialState = fromJS({
   stsList: [],
   dsPods: {},
   dsList: [],
+  cjPods: {},
+  cjList: [],
+  jobPods: {},
+  jobList: [],
 });
 
 const c = constants;
@@ -33,12 +37,11 @@ export const podsReducer = (
 ) => {
   switch (type) {
     case c.OPEN_POD_LOG: {
-      const { clusterID, namespaceID, deploymentID } = meta;
+      const { clusterID, namespaceID } = meta;
       const { podID, containerName } = payload;
       return state.set('openingPodLog', {
         clusterID,
         namespaceID,
-        deploymentID,
         podID,
         containerName,
       });
@@ -88,6 +91,32 @@ export const podsReducer = (
         .set('dsList', fromJS(list));
     }
     case c.LOAD_DS_PODS_FAILURE:
+      return state;
+
+    // cj
+    case c.LOAD_CJ_PODS:
+      return state;
+    case c.LOAD_CJ_PODS_SUCCESS: {
+      const { clusterID, namespaceID, cronJobID } = meta;
+      const { data, list } = procCollectionData(payload);
+      return state
+        .setIn(['cjPods', clusterID, namespaceID, cronJobID], fromJS(data))
+        .set('cjList', fromJS(list));
+    }
+    case c.LOAD_CJ_PODS_FAILURE:
+      return state;
+
+    // job
+    case c.LOAD_JOB_PODS:
+      return state;
+    case c.LOAD_JOB_PODS_SUCCESS: {
+      const { clusterID, namespaceID, jobID } = meta;
+      const { data, list } = procCollectionData(payload);
+      return state
+        .setIn(['jobPods', clusterID, namespaceID, jobID], fromJS(data))
+        .set('jobList', fromJS(list));
+    }
+    case c.LOAD_JOB_PODS_FAILURE:
       return state;
 
     default:

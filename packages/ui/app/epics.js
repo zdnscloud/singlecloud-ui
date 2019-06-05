@@ -12,6 +12,7 @@ import configMapsEpic from 'ducks/configMaps/epic';
 import deploymentsEpic from 'ducks/deployments/epic';
 import statefulSetsEpic from 'ducks/statefulSets/epic';
 import daemonSetsEpic from 'ducks/daemonSets/epic';
+import cronJobsEpic from 'ducks/cronJobs/epic';
 import podsEpic from 'ducks/pods/epic';
 import serviceLinksEpic from 'ducks/serviceLinks/epic';
 import storagesEpic from 'ducks/storages/epic';
@@ -30,6 +31,7 @@ export default function createEpic(injectedEpics = {}) {
     deploymentsEpic,
     statefulSetsEpic,
     daemonSetsEpic,
+    cronJobsEpic,
     podsEpic,
     serviceLinksEpic,
     storagesEpic,

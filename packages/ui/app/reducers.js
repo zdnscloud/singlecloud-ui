@@ -33,6 +33,9 @@ import statefulSetsReducer, {
 import daemonSetsReducer, {
   prefix as daemonSetsPrefix,
 } from 'ducks/daemonSets';
+import cronJobsReducer, {
+  prefix as cronJobsPrefix,
+} from 'ducks/cronJobs';
 import podsReducer, {
   prefix as podsPrefix,
 } from 'ducks/pods';
@@ -62,6 +65,7 @@ export default function createReducer(injectedReducers = {}) {
     [deploymentsPrefix]: deploymentsReducer,
     [statefulSetsPrefix]: statefulSetsReducer,
     [daemonSetsPrefix]: daemonSetsReducer,
+    [cronJobsPrefix]: cronJobsReducer,
     [podsPrefix]: podsReducer,
     [storagesPrefix]: storagesReducer,
     [networksPrefix]: networksReducer,

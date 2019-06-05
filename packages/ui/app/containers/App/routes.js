@@ -29,6 +29,10 @@ import DaemonSetsPage, {
   CreateDaemonSetPage,
   DaemonSetDetailPage,
 } from 'containers/DaemonSetsPage/Loadable';
+import CronJobsPage, {
+  CreateCronJobPage,
+  CronJobDetailPage,
+} from 'containers/CronJobsPage/Loadable';
 import ConfigMapsPage, {
   CreateConfigMapPage,
   ShowConfigMapPage,
@@ -168,11 +172,31 @@ const appRoutes = [
     component: CreateDaemonSetPage,
   },
   {
-    path: '/clusters/:cluster_id/namespaces/:namespace_id/daemonSets/:stateful_set_id',
+    path: '/clusters/:cluster_id/namespaces/:namespace_id/daemonSets/:daemonset_set_id',
     name: 'DaemonSet Detail',
     icon: Dashboard,
     component: DaemonSetDetailPage,
   },
+  // cronjob
+  {
+    path: '/clusters/:cluster_id/namespaces/:namespace_id/cronJobs',
+    name: 'CronJobs',
+    icon: Dashboard,
+    component: CronJobsPage,
+  },
+  {
+    path: '/clusters/:cluster_id/namespaces/:namespace_id/cronJobs/create',
+    name: 'Create CronJob',
+    icon: Dashboard,
+    component: CreateCronJobPage,
+  },
+  {
+    path: '/clusters/:cluster_id/namespaces/:namespace_id/cronJobs/:cron_job_id',
+    name: 'CronJob Detail',
+    icon: Dashboard,
+    component: CronJobDetailPage,
+  },
+  // cronjob end
   {
     path: '/clusters/:cluster_id/namespaces/:namespace_id/serviceLink',
     name: 'ServiceLink',

@@ -77,3 +77,43 @@ export const loadDSPodsFailure = (error, meta) => ({
   meta,
   error: true,
 });
+
+// cj
+export const loadCJPods = (meta) => ({
+  type: c.LOAD_CJ_PODS,
+  payload: {},
+  meta,
+});
+
+export const loadCJPodsSuccess = (resp, meta) => ({
+  type: c.LOAD_CJ_PODS_SUCCESS,
+  payload: resp,
+  meta,
+});
+
+export const loadCJPodsFailure = (error, meta) => ({
+  type: c.LOAD_CJ_PODS_FAILURE,
+  payload: error,
+  meta,
+  error: true,
+});
+
+// job
+export const loadJOBPods = (meta) => ({
+  type: c.LOAD_JOB_PODS,
+  payload: {},
+  meta,
+});
+
+export const loadJOBPodsSuccess = (resp, meta) => ({
+  type: c.LOAD_JOB_PODS_SUCCESS,
+  payload: resp,
+  meta,
+});
+
+export const loadJOBPodsFailure = (error, meta) => ({
+  type: c.LOAD_JOB_PODS_FAILURE,
+  payload: error,
+  meta,
+  error: true,
+});

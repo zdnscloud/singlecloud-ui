@@ -114,11 +114,11 @@ export const makeSelectLeftMenus = () =>
               },
               {
                 name: 'CronJob',
-                path: `/clusters/${cluster}/namespaces/${namespace}/cronJob`,
+                path: `/clusters/${cluster}/namespaces/${namespace}/cronJobs`,
               },
               {
                 name: 'Job',
-                path: `/clusters/${cluster}/namespaces/${namespace}/job`,
+                path: `/clusters/${cluster}/namespaces/${namespace}/jobs`,
               },
               {
                 name: 'ConfigMaps',

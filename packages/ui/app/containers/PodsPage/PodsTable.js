@@ -29,12 +29,10 @@ import {
 } from 'containers/App/selectors';
 import { openContainerTerminal } from 'containers/TerminalPage/actions';
 import {
-  makeSelectPods,
   makeSelectPodsList,
-  makeSelectSTSPods,
   makeSelectSTSPodsList,
-  makeSelectDSPods,
   makeSelectDSPodsList,
+  makeSelectCJPodsList,
 } from 'ducks/pods/selectors';
 import * as actions from 'ducks/pods/actions';
 
@@ -59,6 +57,7 @@ export class PodsTable extends React.PureComponent {
       deployPodList,
       stsPodList,
       dsPodList,
+      cjPodList,
       removePod,
       openPodLog,
       openContainerTerminal,
@@ -134,6 +133,9 @@ export class PodsTable extends React.PureComponent {
       case 'ds':
         data = dsPodList;
         break;
+      case 'cj':
+        data = cjPodList;
+        break;
       default:
         data = deployPodList;
     }
@@ -158,6 +160,7 @@ const mapStateToProps = createStructuredSelector({
   deployPodList: makeSelectPodsList(),
   stsPodList: makeSelectSTSPodsList(),
   dsPodList: makeSelectDSPodsList(),
+  cjPodList: makeSelectCJPodsList(),
 });
 
 const mapDispatchToProps = (dispatch) =>
