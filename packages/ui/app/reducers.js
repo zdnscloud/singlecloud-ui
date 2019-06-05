@@ -24,6 +24,9 @@ import serviceLinksReducer, {
 import configMapsReducer, {
   prefix as configMapsPrefix,
 } from 'ducks/configMaps';
+import secretsReducer, {
+  prefix as secretsPrefix,
+} from 'ducks/secrets';
 import deploymentsReducer, {
   prefix as deploymentsPrefix,
 } from 'ducks/deployments';
@@ -65,6 +68,7 @@ export default function createReducer(injectedReducers = {}) {
     [usersPrefix]: usersReducer,
     [serviceLinksPrefix]: serviceLinksReducer,
     [configMapsPrefix]: configMapsReducer,
+    [secretsPrefix]: secretsReducer,
     [deploymentsPrefix]: deploymentsReducer,
     [statefulSetsPrefix]: statefulSetsReducer,
     [daemonSetsPrefix]: daemonSetsReducer,

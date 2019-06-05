@@ -41,6 +41,10 @@ import ConfigMapsPage, {
   CreateConfigMapPage,
   ShowConfigMapPage,
 } from 'containers/ConfigMapsPage/Loadable';
+import SecretsPage, {
+  CreateSecretPage,
+  ShowSecretPage,
+} from 'containers/SecretsPage/Loadable';
 import ServicesPage from 'containers/ServicesPage/Loadable';
 import IngressesPage from 'containers/IngressesPage/Loadable';
 import ServiceLinkPage from 'containers/ServiceLinkPage/Loadable';
@@ -98,12 +102,6 @@ const appRoutes = [
     component: CreateNamespacePage,
   },
   {
-    path: '/clusters/:cluster_id/namespaces/:namespace_id/configmaps',
-    name: 'configmap',
-    icon: Dashboard,
-    component: ConfigMapsPage,
-  },
-  {
     path: '/clusters/:cluster_id/namespaces/:namespace_id/services',
     name: 'services',
     icon: Dashboard,
@@ -114,6 +112,13 @@ const appRoutes = [
     name: 'ingresses',
     icon: Dashboard,
     component: IngressesPage,
+  },
+  // configmap
+  {
+    path: '/clusters/:cluster_id/namespaces/:namespace_id/configmaps',
+    name: 'configmap',
+    icon: Dashboard,
+    component: ConfigMapsPage,
   },
   {
     path: '/clusters/:cluster_id/namespaces/:namespace_id/configmaps/create',
@@ -127,6 +132,27 @@ const appRoutes = [
     icon: Dashboard,
     component: ShowConfigMapPage,
   },
+  // configmap end
+  // secret
+  {
+    path: '/clusters/:cluster_id/namespaces/:namespace_id/secrets',
+    name: 'secret',
+    icon: Dashboard,
+    component: SecretsPage,
+  },
+  {
+    path: '/clusters/:cluster_id/namespaces/:namespace_id/secrets/create',
+    name: 'create secret',
+    icon: Dashboard,
+    component: CreateSecretPage,
+  },
+  {
+    path: '/clusters/:cluster_id/namespaces/:namespace_id/secrets/:secret_id',
+    name: 'show secret',
+    icon: Dashboard,
+    component: ShowSecretPage,
+  },
+  // secret end
   {
     path: '/clusters/:cluster_id/namespaces/:namespace_id/deployments',
     name: 'Deployments',
@@ -163,6 +189,7 @@ const appRoutes = [
     icon: Dashboard,
     component: StatefulSetDetailPage,
   },
+  // daemonset
   {
     path: '/clusters/:cluster_id/namespaces/:namespace_id/daemonSets',
     name: 'DaemonSets',
@@ -181,6 +208,7 @@ const appRoutes = [
     icon: Dashboard,
     component: DaemonSetDetailPage,
   },
+  // daemonset end
   // cronjob
   {
     path: '/clusters/:cluster_id/namespaces/:namespace_id/cronJobs',

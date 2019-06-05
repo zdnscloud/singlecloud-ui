@@ -9,6 +9,7 @@ import roleEpic from 'ducks/role/epic';
 import usersEpic from 'ducks/users/epic';
 import namespacesEpic from 'ducks/namespaces/epic';
 import configMapsEpic from 'ducks/configMaps/epic';
+import secretsEpic from 'ducks/secrets/epic';
 import deploymentsEpic from 'ducks/deployments/epic';
 import statefulSetsEpic from 'ducks/statefulSets/epic';
 import daemonSetsEpic from 'ducks/daemonSets/epic';
@@ -29,6 +30,7 @@ export default function createEpic(injectedEpics = {}) {
     usersEpic,
     namespacesEpic,
     configMapsEpic,
+    secretsEpic,
     deploymentsEpic,
     statefulSetsEpic,
     daemonSetsEpic,
