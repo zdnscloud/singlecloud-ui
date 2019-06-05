@@ -63,6 +63,13 @@ const theme = createMuiTheme({
       e: '#EE827C',
     },
   },
+  overrides: {
+    MuiButton: {
+      root: {
+        textTransform: 'none',
+      },
+    },
+  },
 });
 
 class App extends PureComponent {
