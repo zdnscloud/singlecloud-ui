@@ -111,9 +111,11 @@ export class ShowConfigMap extends React.PureComponent {
                             className: classes.nameControl,
                           }}
                           classes={{
-                            disabled: classes.fileNameLink,
+                            input: classes.fileNameLink,
                           }}
                           inputProps={{
+                            disabled: false,
+                            readOnly: true,
                             onClick: (evt) => {
                               this.setState({
                                 isOpen: true,
