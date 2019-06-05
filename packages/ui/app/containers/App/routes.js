@@ -33,6 +33,10 @@ import CronJobsPage, {
   CreateCronJobPage,
   CronJobDetailPage,
 } from 'containers/CronJobsPage/Loadable';
+import JobsPage, {
+  CreateJobPage,
+  JobDetailPage,
+} from 'containers/JobsPage/Loadable';
 import ConfigMapsPage, {
   CreateConfigMapPage,
   ShowConfigMapPage,
@@ -197,6 +201,26 @@ const appRoutes = [
     component: CronJobDetailPage,
   },
   // cronjob end
+  // job
+  {
+    path: '/clusters/:cluster_id/namespaces/:namespace_id/jobs',
+    name: 'Jobs',
+    icon: Dashboard,
+    component: JobsPage,
+  },
+  {
+    path: '/clusters/:cluster_id/namespaces/:namespace_id/jobs/create',
+    name: 'Create Job',
+    icon: Dashboard,
+    component: CreateJobPage,
+  },
+  {
+    path: '/clusters/:cluster_id/namespaces/:namespace_id/jobs/:cron_job_id',
+    name: 'Job Detail',
+    icon: Dashboard,
+    component: JobDetailPage,
+  },
+  // job end
   {
     path: '/clusters/:cluster_id/namespaces/:namespace_id/serviceLink',
     name: 'ServiceLink',
