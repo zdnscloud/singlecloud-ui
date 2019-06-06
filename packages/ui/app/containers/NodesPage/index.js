@@ -21,7 +21,10 @@ import Card from 'components/Card/Card';
 import CardHeader from 'components/Card/CardHeader';
 import CardBody from 'components/Card/CardBody';
 
-import * as actions from './actions';
+import { makeSelectClusterID } from 'containers/App/selectors';
+import { makeSelectCurrentCluster } from 'containers/ClustersPage/selectors';
+import * as actions from 'ducks/nodes/actions';
+
 import messages from './messages';
 import styles from './styles';
 import NodesTable from './NodesTable';
@@ -36,7 +39,17 @@ export class NodesPage extends React.PureComponent {
   };
 
   componentWillMount() {
-    this.props.initAction(this.props.match);
+    this.load();
+  }
+
+  load() {
+    const {
+      cluster,
+      clusterID,
+      loadNodes,
+    } = this.props
+    const url = cluster.getIn(['links', 'nodes']);
+    loadNodes(url, clusterID);
   }
 
   render() {
@@ -67,7 +80,10 @@ export class NodesPage extends React.PureComponent {
   }
 }
 
-const mapStateToProps = createStructuredSelector({});
+const mapStateToProps = createStructuredSelector({
+  cluster: makeSelectCurrentCluster(),
+  clusterID: makeSelectClusterID(),
+});
 
 const mapDispatchToProps = (dispatch) =>
   bindActionCreators(

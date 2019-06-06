@@ -5,7 +5,6 @@ import serviceSaga from 'containers/ServicesPage/saga';
 import clusterSaga from 'containers/ClustersPage/saga';
 import clusterDetailSaga from 'containers/ClusterDetailPage/saga';
 import ingressSaga from 'containers/IngressesPage/saga';
-import nodeSaga from 'containers/NodesPage/saga';
 
 export default function* rootSaga() {
   yield all([
@@ -14,6 +13,5 @@ export default function* rootSaga() {
     clusterSaga(),
     clusterDetailSaga(),
     ingressSaga(),
-    nodeSaga(),
   ]);
 }

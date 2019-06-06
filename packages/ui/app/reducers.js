@@ -10,7 +10,6 @@ import history from 'utils/history';
 import languageProviderReducer from 'containers/LanguageProvider/reducer';
 import appReducer from 'containers/App/reducer';
 import clustersPageReducer from 'containers/ClustersPage/reducer';
-import nodesPageReducer from 'containers/NodesPage/reducer';
 import eventsPageReducer from 'containers/EventsPage/reducer';
 import servicesPageReducer from 'containers/ServicesPage/reducer';
 import ingressesPageReducer from 'containers/IngressesPage/reducer';
@@ -54,6 +53,9 @@ import networksReducer, {
 import namespacesReducer, {
   prefix as namespacesPrefix,
 } from 'ducks/namespaces';
+import nodesReducer, {
+  prefix as nodesPrefix,
+} from 'ducks/nodes';
 
 /**
  * Merges the main reducer with the router state and dynamically injected reducers
@@ -78,8 +80,8 @@ export default function createReducer(injectedReducers = {}) {
     [storagesPrefix]: storagesReducer,
     [networksPrefix]: networksReducer,
     [namespacesPrefix]: namespacesReducer,
+    [nodesPrefix]: nodesReducer,
     clustersPage: clustersPageReducer,
-    nodesPage: nodesPageReducer,
     eventsPage: eventsPageReducer,
     servicesPage: servicesPageReducer,
     ingressesPage: ingressesPageReducer,

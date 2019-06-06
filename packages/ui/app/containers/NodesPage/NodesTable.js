@@ -15,8 +15,11 @@ import { withStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import { SimpleTable } from '@gsmlg/com';
 
-import { makeSelectNodes, makeSelectTableList } from './selectors';
-import * as actions from './actions';
+import { makeSelectClusterID } from 'containers/App/selectors';
+import { makeSelectCurrentCluster } from 'containers/ClustersPage/selectors';
+import { makeSelectNodes, makeSelectNodesList } from 'ducks/nodes/selectors';
+import * as actions from 'ducks/nodes/actions';
+
 import messages from './messages';
 import styles from './styles';
 import schema from './tableSchema';
@@ -30,7 +33,7 @@ export class NodesTable extends React.PureComponent {
   };
 
   render() {
-    const { classes, tableList, nodes } = this.props;
+    const { classes, data, nodes } = this.props;
 
     return (
       <Paper className={classes.tableWrapper}>
@@ -42,7 +45,7 @@ export class NodesTable extends React.PureComponent {
               <FormattedMessage {...messages[`tableTitle${sche.label}`]} />
             ),
           }))}
-          data={tableList.map((id) => nodes.get(id))}
+          data={data}
         />
       </Paper>
     );
@@ -51,7 +54,7 @@ export class NodesTable extends React.PureComponent {
 
 const mapStateToProps = createStructuredSelector({
   nodes: makeSelectNodes(),
-  tableList: makeSelectTableList(),
+  data: makeSelectNodesList(),
 });
 
 const mapDispatchToProps = (dispatch) =>

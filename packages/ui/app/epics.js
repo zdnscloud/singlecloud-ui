@@ -8,6 +8,7 @@ import eventsPageEpic from 'containers/EventsPage/epic';
 import roleEpic from 'ducks/role/epic';
 import usersEpic from 'ducks/users/epic';
 import namespacesEpic from 'ducks/namespaces/epic';
+import nodesEpic from 'ducks/nodes/epic';
 import configMapsEpic from 'ducks/configMaps/epic';
 import secretsEpic from 'ducks/secrets/epic';
 import deploymentsEpic from 'ducks/deployments/epic';
@@ -29,6 +30,7 @@ export default function createEpic(injectedEpics = {}) {
     roleEpic,
     usersEpic,
     namespacesEpic,
+    nodesEpic,
     configMapsEpic,
     secretsEpic,
     deploymentsEpic,
