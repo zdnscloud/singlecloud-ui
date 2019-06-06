@@ -40,7 +40,7 @@ const styles = (theme) => ({
   },
   menuButton: {
     display: 'flex',
-    width: '83px',
+    width: 60,
     height: 24,
     position: 'relative',
     zIndex: '4',
