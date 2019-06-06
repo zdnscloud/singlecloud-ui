@@ -153,6 +153,7 @@ const appRoutes = [
     component: ShowSecretPage,
   },
   // secret end
+  // deployment
   {
     path: '/clusters/:cluster_id/namespaces/:namespace_id/deployments',
     name: 'Deployments',
@@ -171,6 +172,8 @@ const appRoutes = [
     icon: Dashboard,
     component: DeploymentDetailPage,
   },
+  // deployment end
+  // statefulset
   {
     path: '/clusters/:cluster_id/namespaces/:namespace_id/statefulSets',
     name: 'StatefulSets',
@@ -189,6 +192,7 @@ const appRoutes = [
     icon: Dashboard,
     component: StatefulSetDetailPage,
   },
+  // statefulset end
   // daemonset
   {
     path: '/clusters/:cluster_id/namespaces/:namespace_id/daemonSets',
