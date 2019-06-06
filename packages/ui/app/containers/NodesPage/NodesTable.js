@@ -28,7 +28,7 @@ import schema from './tableSchema';
 export class NodesTable extends React.PureComponent {
   static propTypes = {
     classes: PropTypes.object.isRequired,
-    tableList: PropTypes.object.isRequired,
+    data: PropTypes.object.isRequired,
     nodes: PropTypes.object,
   };
 
