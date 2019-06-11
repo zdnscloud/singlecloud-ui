@@ -33,7 +33,7 @@ import CloseIcon from 'components/Icons/Close';
 import {
   makeSelectClusterID,
   makeSelectNamespaceID,
-} from 'containers/App/selectors';
+} from 'ducks/app/selectors';
 
 import { makeSelectContainerTermIsOpen } from './selectors';
 import * as actions from './actions';

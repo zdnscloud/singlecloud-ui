@@ -55,7 +55,7 @@ import CardFooter from 'components/Card/CardFooter';
 import {
   makeSelectClusterID,
   makeSelectNamespaceID,
-} from 'containers/App/selectors';
+} from 'ducks/app/selectors';
 import * as cActions from 'ducks/configMaps/actions';
 import { makeSelectConfigMaps } from 'ducks/configMaps/selectors';
 import {

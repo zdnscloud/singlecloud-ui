@@ -8,13 +8,9 @@ import { reducer as formReducer } from 'redux-form/immutable';
 
 import history from 'utils/history';
 import languageProviderReducer from 'containers/LanguageProvider/reducer';
-import appReducer from 'containers/App/reducer';
-import clustersPageReducer from 'containers/ClustersPage/reducer';
-import eventsPageReducer from 'containers/EventsPage/reducer';
-import servicesPageReducer from 'containers/ServicesPage/reducer';
-import ingressesPageReducer from 'containers/IngressesPage/reducer';
 import terminalPageReducer from 'containers/TerminalPage/reducer';
 
+import appReducer from 'ducks/app';
 import roleReducer, { prefix as rolePrefix } from 'ducks/role';
 import usersReducer, { prefix as usersPrefix } from 'ducks/users';
 import serviceLinksReducer, {
@@ -56,6 +52,12 @@ import namespacesReducer, {
 import nodesReducer, {
   prefix as nodesPrefix,
 } from 'ducks/nodes';
+import clustersReducer, {
+  prefix as clustersPrefix,
+} from 'ducks/clusters';
+import eventsReducer, {
+  prefix as eventsPrefix,
+} from 'ducks/events';
 
 /**
  * Merges the main reducer with the router state and dynamically injected reducers
@@ -81,10 +83,8 @@ export default function createReducer(injectedReducers = {}) {
     [networksPrefix]: networksReducer,
     [namespacesPrefix]: namespacesReducer,
     [nodesPrefix]: nodesReducer,
-    clustersPage: clustersPageReducer,
-    eventsPage: eventsPageReducer,
-    servicesPage: servicesPageReducer,
-    ingressesPage: ingressesPageReducer,
+    [clustersPrefix]: clustersReducer,
+    [eventsPrefix]: eventsReducer,
     terminalPage: terminalPageReducer,
     ...injectedReducers,
   });

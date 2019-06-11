@@ -11,11 +11,12 @@ import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 
+import * as actions from 'ducks/app/actions';
+import { makeSelectActiveCluster } from 'ducks/app/selectors';
+import { makeSelectClusters } from 'ducks/clusters/selectors';
+
 import messages from './messages';
 import styles from './selectClusterStyles';
-import * as actions from './actions';
-import { makeSelectActiveCluster } from './selectors';
-import { makeSelectClusters } from '../ClustersPage/selectors';
 
 const SelectCluster = (props) => {
   const { classes, clusters, activeCluster, changeCluster } = props;

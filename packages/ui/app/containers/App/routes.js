@@ -45,8 +45,6 @@ import SecretsPage, {
   CreateSecretPage,
   ShowSecretPage,
 } from 'containers/SecretsPage/Loadable';
-import ServicesPage from 'containers/ServicesPage/Loadable';
-import IngressesPage from 'containers/IngressesPage/Loadable';
 import ServiceLinkPage from 'containers/ServiceLinkPage/Loadable';
 import StoragePage from 'containers/StoragePage/Loadable';
 import NetworkPage from 'containers/NetworkPage/Loadable';
@@ -100,18 +98,6 @@ const appRoutes = [
     name: 'namespaces',
     icon: Dashboard,
     component: CreateNamespacePage,
-  },
-  {
-    path: '/clusters/:cluster_id/namespaces/:namespace_id/services',
-    name: 'services',
-    icon: Dashboard,
-    component: ServicesPage,
-  },
-  {
-    path: '/clusters/:cluster_id/namespaces/:namespace_id/ingresses',
-    name: 'ingresses',
-    icon: Dashboard,
-    component: IngressesPage,
   },
   // configmap
   {

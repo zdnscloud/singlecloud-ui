@@ -25,9 +25,9 @@ import Card from 'components/Card/Card';
 import CardHeader from 'components/Card/CardHeader';
 import CardBody from 'components/Card/CardBody';
 
+import { makeSelectLocation } from 'ducks/app/selectors';
 import * as actions from 'ducks/users/actions';
 
-import { makeSelectLocation } from '../App/selectors';
 import messages from './messages';
 import styles from './styles';
 import UsersTable from './UsersTable';

@@ -33,8 +33,8 @@ import AddIcon from '@material-ui/icons/Add';
 import Collapse from '@material-ui/core/Collapse';
 import Checkbox from '@material-ui/core/Checkbox';
 
-import { makeSelectClusterID } from 'containers/App/selectors';
-import { makeSelectCurrentCluster } from 'containers/ClustersPage/selectors';
+import { makeSelectClusterID } from 'ducks/app/selectors';
+import { makeSelectCurrentCluster } from 'ducks/clusters/selectors';
 import * as actions from 'ducks/namespaces/actions';
 import {
   makeSelectNamespaces,

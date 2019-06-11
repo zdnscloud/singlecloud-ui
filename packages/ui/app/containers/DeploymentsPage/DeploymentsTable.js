@@ -26,7 +26,7 @@ import {
   makeSelectClusterID,
   makeSelectNamespaceID,
   makeSelectLocation,
-} from 'containers/App/selectors';
+} from 'ducks/app/selectors';
 import {
   makeSelectDeployments,
   makeSelectDeploymentsList,

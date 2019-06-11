@@ -28,8 +28,8 @@ import CardHeader from 'components/Card/CardHeader';
 import CardBody from 'components/Card/CardBody';
 import CardFooter from 'components/Card/CardFooter';
 
-import { makeSelectClusterID } from 'containers/App/selectors';
-import { makeSelectCurrentCluster } from 'containers/ClustersPage/selectors';
+import { makeSelectClusterID } from 'ducks/app/selectors';
+import { makeSelectCurrentCluster } from 'ducks/clusters/selectors';
 import * as actions from 'ducks/namespaces/actions';
 
 import messages from './messages';

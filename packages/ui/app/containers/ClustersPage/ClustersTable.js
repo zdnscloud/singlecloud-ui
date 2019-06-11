@@ -30,8 +30,12 @@ import SuccessIcon from 'components/Icons/Success';
 import FailureIcon from 'components/Icons/Failure';
 import { openTerminal } from 'containers/TerminalPage/actions';
 
-import { makeSelectClusters, makeSelectTableList } from './selectors';
-import * as actions from './actions';
+import * as actions from 'ducks/clusters/actions';
+import {
+  makeSelectClusters,
+  makeSelectClustersList,
+} from 'ducks/clusters/selectors';
+
 import messages from './messages';
 import styles from './styles';
 import schema from './tableSchema';
@@ -40,14 +44,14 @@ import schema from './tableSchema';
 export class ClustersTable extends React.PureComponent {
   static propTypes = {
     classes: PropTypes.object.isRequired,
-    tableList: PropTypes.object.isRequired,
+    data: PropTypes.object.isRequired,
     clusters: PropTypes.object.isRequired,
   };
 
   render() {
     const {
       classes,
-      tableList,
+      data,
       clusters,
       openTerminal,
       removeCluster,
@@ -73,7 +77,7 @@ export class ClustersTable extends React.PureComponent {
 
               <IconButton
                 aria-label="Delete"
-                onClick={(evt) => removeCluster(props.data.get('id'))}
+                onClick={(evt) => removeCluster(props.data.get('id'), { url: props.data.getIn(['links', 'remove'])})}
               >
                 <DeleteIcon />
               </IconButton>
@@ -123,7 +127,7 @@ export class ClustersTable extends React.PureComponent {
         <SimpleTable
           className={classes.table}
           schema={mergedSchema}
-          data={tableList.map((id) => clusters.get(id))}
+          data={data}
         />
       </Paper>
     );
@@ -132,7 +136,7 @@ export class ClustersTable extends React.PureComponent {
 
 const mapStateToProps = createStructuredSelector({
   clusters: makeSelectClusters(),
-  tableList: makeSelectTableList(),
+  data: makeSelectClustersList(),
 });
 
 const mapDispatchToProps = (dispatch) =>

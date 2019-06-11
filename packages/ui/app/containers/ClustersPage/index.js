@@ -21,7 +21,9 @@ import Card from 'components/Card/Card';
 import CardHeader from 'components/Card/CardHeader';
 import CardBody from 'components/Card/CardBody';
 
-import * as actions from './actions';
+import { makeSelectURL } from 'ducks/clusters/selectors';
+import * as actions from 'ducks/clusters/actions';
+
 import messages from './messages';
 import styles from './styles';
 import ClustersTable from './ClustersTable';
@@ -30,16 +32,24 @@ import ClustersPageHelmet from './helmet';
 /* eslint-disable react/prefer-stateless-function */
 export class ClustersPage extends React.PureComponent {
   static propTypes = {
-    initAction: PropTypes.func,
     classes: PropTypes.object.isRequired,
   };
 
   componentWillMount() {
-    this.props.initAction();
+    this.load();
+    this.timer = setInterval(() => this.load(), 3000);
   }
 
   componentWillUnmount() {
-    this.props.unmountAction();
+    clearInterval(this.timer);
+  }
+
+  load() {
+    const {
+      loadClusters,
+      url,
+    } = this.props;
+    loadClusters(url);
   }
 
   render() {
@@ -70,7 +80,9 @@ export class ClustersPage extends React.PureComponent {
   }
 }
 
-const mapStateToProps = createStructuredSelector({});
+const mapStateToProps = createStructuredSelector({
+  url: makeSelectURL(),
+});
 
 const mapDispatchToProps = (dispatch) =>
   bindActionCreators(

@@ -1,6 +1,6 @@
 import { fromJS } from 'immutable';
 
-import { makeSelectLocation } from 'containers/App/selectors';
+import { makeSelectLocation } from 'ducks/app/selectors';
 
 describe('makeSelectLocation', () => {
   const locationStateSelector = makeSelectLocation();

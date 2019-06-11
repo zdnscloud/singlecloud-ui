@@ -5,7 +5,6 @@
 import { createStore, applyMiddleware, compose } from 'redux';
 import { fromJS } from 'immutable';
 import { routerMiddleware } from 'connected-react-router/immutable';
-import createSagaMiddleware from 'redux-saga';
 import { createEpicMiddleware } from 'redux-observable';
 import { ajax } from 'rxjs/ajax';
 import { BehaviorSubject } from 'rxjs';
@@ -14,7 +13,6 @@ import authProvider from 'utils/authProvider';
 
 import createReducer from './reducers';
 import createEpic from './epics';
-import rootSaga from './rootSaga';
 
 const epicMiddleware = createEpicMiddleware({
   dependencies: {
@@ -63,16 +61,14 @@ const epicMiddleware = createEpicMiddleware({
     },
   },
 });
-const sagaMiddleware = createSagaMiddleware();
 
 export default function configureStore(initialState = {}, history) {
   // Create the store with two middlewares
-  // 1. sagaMiddleware: Makes redux-sagas work
+  // 1. epicMiddleware: Makes redux-observable work
   // 2. routerMiddleware: Syncs the location/URL path to the state
   const middlewares = [
-    sagaMiddleware,
-    routerMiddleware(history),
     epicMiddleware,
+    routerMiddleware(history),
   ];
 
   const enhancers = [applyMiddleware(...middlewares)];
@@ -94,13 +90,9 @@ export default function configureStore(initialState = {}, history) {
   );
 
   // Extensions
-  store.runSaga = sagaMiddleware.run;
   store.runEpic = epicMiddleware.run;
   store.injectedReducers = {}; // Reducer registry
-  store.injectedSagas = {}; // Saga registry
   store.injectedEpics = {}; // Epic registry
-
-  store.runSaga(rootSaga);
 
   const epic$ = new BehaviorSubject(createEpic(store.injectedEpics));
   // Every time a new epic is given to epic$ it

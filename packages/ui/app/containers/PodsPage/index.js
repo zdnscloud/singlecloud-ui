@@ -27,7 +27,7 @@ import CardBody from 'components/Card/CardBody';
 import {
   makeSelectClusterID,
   makeSelectNamespaceID,
-} from 'containers/App/selectors';
+} from 'ducks/app/selectors';
 import { makeSelectDeploymentID } from 'ducks/deployments/selectors';
 import * as actions from 'ducks/pods/actions';
 import { makeSelectURL } from 'ducks/pods/selectors';

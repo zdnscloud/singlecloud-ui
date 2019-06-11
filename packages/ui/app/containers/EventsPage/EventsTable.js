@@ -17,8 +17,9 @@ import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
 import { SimpleTable } from '@gsmlg/com';
 
-import { makeSelectEvents } from './selectors';
-import * as actions from './actions';
+import { makeSelectEvents } from 'ducks/events/selectors';
+import * as actions from 'ducks/events/actions';
+
 import messages from './messages';
 import styles from './styles';
 import schema from './tableSchema';

@@ -1,12 +1,12 @@
 import { fromJS } from 'immutable';
 import { createSelector } from 'reselect';
-import { initialState } from './reducer';
+import { initialState, prefix } from './index';
 
 /**
- * Direct selector to the eventsPage state domain
+ * Direct selector to the events state domain
  */
 
-const selectEventsPageDomain = (state) => state.get('eventsPage', initialState);
+const selectEventsDomain = (state) => state.get(prefix, initialState);
 
 /**
  * Other specific selectors
@@ -14,24 +14,23 @@ const selectEventsPageDomain = (state) => state.get('eventsPage', initialState);
 
 export const makeSelectClusterID = () =>
   createSelector(
-    selectEventsPageDomain,
+    selectEventsDomain,
     (substate) => substate.get('clusterID')
   );
 
 export const makeSelectEvents = () =>
   createSelector(
-    selectEventsPageDomain,
+    selectEventsDomain,
     makeSelectClusterID(),
     (substate, clusterID) => substate.getIn(['events', clusterID]) || []
   );
 
 /**
- * Default selector used by EventsPage
+ * Default selector used by Events
  */
-
 export const makeSelectEventsPage = () =>
   createSelector(
-    selectEventsPageDomain,
+    selectEventsDomain,
     (substate) => substate
   );
 

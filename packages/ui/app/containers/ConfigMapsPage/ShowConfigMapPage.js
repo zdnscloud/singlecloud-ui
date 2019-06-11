@@ -42,7 +42,7 @@ import ReadOnlyInput from 'components/CustomInput/ReadOnlyInput';
 import {
   makeSelectClusterID,
   makeSelectNamespaceID,
-} from 'containers/App/selectors';
+} from 'ducks/app/selectors';
 import * as actions from 'ducks/configMaps/actions';
 import {
   makeSelectCurrentConfigMap,

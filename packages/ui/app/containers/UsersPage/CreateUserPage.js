@@ -28,7 +28,7 @@ import CardHeader from 'components/Card/CardHeader';
 import CardFooter from 'components/Card/CardFooter';
 
 import * as actions from 'ducks/users/actions';
-import { makeSelectClustersAndNamespaces } from 'containers/ClustersPage/selectors';
+import { makeSelectClustersAndNamespaces } from 'ducks/clusters/selectors';
 
 import messages from './messages';
 import UsersHelmet from './helmet';

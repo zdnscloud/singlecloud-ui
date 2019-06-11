@@ -19,7 +19,8 @@ import Typography from '@material-ui/core/Typography';
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 
-import * as actions from './actions';
+import * as actions from 'ducks/events/actions';
+
 import messages from './messages';
 import styles from './styles';
 import EventsTable from './EventsTable';
@@ -35,7 +36,6 @@ export class EventsPage extends React.PureComponent {
   };
 
   componentWillMount() {
-    this.props.initAction(this.props.match);
   }
 
   render() {

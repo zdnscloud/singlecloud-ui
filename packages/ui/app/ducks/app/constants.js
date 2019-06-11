@@ -8,7 +8,7 @@
  * Follow this format:
  * export const YOUR_ACTION_CONSTANT = 'yourproject/YourContainer/YOUR_ACTION_CONSTANT';
  */
-const prefix = 'app/App';
+export const prefix = 'app';
 
 export const INIT_ACTION = `${prefix}/INIT_ACTION`;
 

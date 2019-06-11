@@ -11,6 +11,7 @@ import {
   throttleTime,
   throttle,
   catchError,
+  concat,
 } from 'rxjs/operators';
 import { ofType, combineEpics } from 'redux-observable';
 
@@ -73,6 +74,23 @@ export const removeNamespaceEpic = (action$, state$, { ajax }) =>
       )
     )
   );
+
+export const loadAllNamespacesEpic = (action$, state$, { ajax }) =>
+  action$.pipe(
+    ofType(c.LOAD_ALL_NAMESPACES),
+    mergeMap(({ payload: { clusters } }) => {
+      const list = clusters.map((c) => ({
+        clusterID: c.get('id'), url: c.getIn(['links', 'namespaces'])
+      })).map(({ url, clusterID }) => (
+        ajax(url).pipe(
+          map((resp) => a.loadNamespacesSuccess(resp, clusterID)),
+          catchError((error) => of(a.loadNamespacesFailure(error, clusterID)))
+        )
+      )).toJS();
+      return concat.apply(null, list);
+    })
+  );
+
 
 export default combineEpics(
   loadNamespacesEpic,

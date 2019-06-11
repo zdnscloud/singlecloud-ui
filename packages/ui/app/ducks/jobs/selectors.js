@@ -7,7 +7,7 @@ import {
 import {
   makeSelectClusterID,
   makeSelectNamespaceID,
-} from 'containers/App/selectors';
+} from 'ducks/app/selectors';
 import { makeSelectCurrentNamespace } from 'ducks/namespaces/selectors';
 
 import { prefix } from './constants';

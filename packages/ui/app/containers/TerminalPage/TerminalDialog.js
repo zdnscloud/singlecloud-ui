@@ -30,7 +30,7 @@ import Button from '@material-ui/core/Button';
 import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from 'components/Icons/Close';
 
-import { makeSelectClusterID } from 'containers/App/selectors';
+import { makeSelectClusterID } from 'ducks/app/selectors';
 
 import { makeSelectTermIsOpen } from './selectors';
 import * as actions from './actions';

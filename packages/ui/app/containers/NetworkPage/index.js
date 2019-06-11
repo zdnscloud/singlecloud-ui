@@ -30,7 +30,7 @@ import CardBody from 'components/Card/CardBody';
 import ReadOnlyInput from 'components/CustomInput/ReadOnlyInput';
 
 import * as actions from 'ducks/networks/actions';
-import { makeSelectClusterID } from 'containers/App/selectors';
+import { makeSelectClusterID } from 'ducks/app/selectors';
 import {
   makeSelectServiceNetworks,
   makeSelectPodNetworks,

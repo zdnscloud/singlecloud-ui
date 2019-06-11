@@ -29,8 +29,8 @@ import CardFooter from 'components/Card/CardFooter';
 
 import * as actions from 'ducks/users/actions';
 import { makeSelectEditingUser, makeSelectUID } from 'ducks/users/selectors';
-import { makeSelectLocation } from 'containers/App/selectors';
-import { makeSelectClustersAndNamespaces } from 'containers/ClustersPage/selectors';
+import { makeSelectLocation } from 'ducks/app/selectors';
+import { makeSelectClustersAndNamespaces } from 'ducks/clusters/selectors';
 
 import messages from './messages';
 import UsersHelmet from './helmet';

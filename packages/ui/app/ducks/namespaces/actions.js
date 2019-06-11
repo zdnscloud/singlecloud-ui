@@ -64,3 +64,8 @@ export const changeNamespace = (namespaceID, clusterID) => ({
   type: c.CHANGE_NAMESPACE,
   payload: { namespaceID, clusterID },
 });
+
+export const loadAllNamespaces = (clusters) => ({
+  type: c.LOAD_ALL_NAMESPACES,
+  payload: { clusters },
+});

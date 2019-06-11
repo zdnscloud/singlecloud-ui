@@ -28,8 +28,9 @@ import Typography from '@material-ui/core/Typography';
 import NormalIcon from 'components/Icons/Normal';
 import WarningIcon from 'components/Icons/Warning';
 
-import { makeSelectEvents } from './selectors';
-import * as actions from './actions';
+import { makeSelectEvents } from 'ducks/events/selectors';
+import * as actions from 'ducks/events/actions';
+
 import messages from './messages';
 import styles from './styles';
 

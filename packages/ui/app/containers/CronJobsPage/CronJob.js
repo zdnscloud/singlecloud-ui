@@ -41,7 +41,7 @@ import * as actions from 'ducks/cronJobs/actions';
 import {
   makeSelectClusterID,
   makeSelectNamespaceID,
-} from 'containers/App/selectors';
+} from 'ducks/app/selectors';
 import {
   makeSelectConfigMaps,
 } from 'ducks/configMaps/selectors';

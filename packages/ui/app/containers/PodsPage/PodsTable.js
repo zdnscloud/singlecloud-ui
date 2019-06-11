@@ -26,7 +26,7 @@ import ContainerTerminalDialog from 'containers/TerminalPage/ContainerTerminalDi
 import {
   makeSelectClusterID,
   makeSelectNamespaceID,
-} from 'containers/App/selectors';
+} from 'ducks/app/selectors';
 import { openContainerTerminal } from 'containers/TerminalPage/actions';
 import {
   makeSelectPodsList,

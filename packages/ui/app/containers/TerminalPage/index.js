@@ -26,7 +26,7 @@ import CardBody from 'components/Card/CardBody';
 import CardHeader from 'components/Card/CardHeader';
 import CardFooter from 'components/Card/CardFooter';
 
-import { makeSelectClusterID } from 'containers/App/selectors';
+import { makeSelectClusterID } from 'ducks/app/selectors';
 
 import makeSelectTerminalPage from './selectors';
 import * as actions from './actions';

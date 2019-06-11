@@ -21,22 +21,24 @@ import Card from 'components/Card/Card';
 import CardHeader from 'components/Card/CardHeader';
 import CardBody from 'components/Card/CardBody';
 
-import * as actions from './actions';
+import { makeSelectCurrentCluster } from 'ducks/clusters/selectors';
+import * as actions from 'ducks/events/actions';
+
 import messages from './messages';
 import styles from './styles';
 import ClusterDetailPageHelmet from './helmet';
-import { makeSelectCurrentCluster } from '../ClustersPage/selectors';
 import ClusterDetail from './ClusterDetail';
 
 /* eslint-disable react/prefer-stateless-function */
 export class ClusterDetailPage extends React.PureComponent {
   static propTypes = {
-    initAction: PropTypes.func,
     classes: PropTypes.object.isRequired,
   };
 
   componentWillMount() {
-    this.props.initAction();
+    const { openCluster, closeCluster, cluster } = this.props;
+    closeCluster();
+    openCluster(cluster.get('id'));
   }
 
   render() {

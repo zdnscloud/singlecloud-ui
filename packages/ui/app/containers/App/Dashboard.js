@@ -38,9 +38,17 @@ import Menubar from 'components/Menubar';
 import TerminalDialog from 'containers/TerminalPage/TerminalDialog';
 import GlobalStyle from 'global-styles';
 
-import { makeSelectClusters } from 'containers/ClustersPage/selectors';
-import EventsList from 'containers/EventsPage/EventsList';
+import * as actions from 'ducks/app/actions';
+import {
+  makeSelectActiveCluster,
+  makeSelectClusterID,
+  makeSelectShowEvents,
+  makeSelectLocation,
+  makeSelectShowMenuText,
+} from 'ducks/app/selectors';
+import { makeSelectClusters } from 'ducks/clusters/selectors';
 import { makeSelectIsLogin } from 'ducks/role/selectors';
+import EventsList from 'containers/EventsPage/EventsList';
 
 import dashboardStyle from './dashboardStyles';
 
@@ -48,16 +56,8 @@ import AppMenubar from './AppMenubar';
 import SelectCluster from './SelectCluster';
 import LeftMenu from './LeftMenu';
 import appRoutes from './routes';
-import * as actions from './actions';
-import {
-  makeSelectActiveCluster,
-  makeSelectClusterID,
-  makeSelectShowEvents,
-  makeSelectLocation,
-  makeSelectShowMenuText,
-} from './selectors';
 
-class App extends PureComponent {
+class Dashboard extends PureComponent {
   state = { hasError: false };
 
   componentWillMount() {
@@ -65,7 +65,6 @@ class App extends PureComponent {
     if (!isLogin) {
       history.push('/login');
     }
-    this.props.initAction();
   }
 
   componentWillUpdate(nextProps) {
@@ -95,7 +94,6 @@ class App extends PureComponent {
       changeCluster,
       toggleEventsView,
       showMenuText,
-      ...rest
     } = this.props;
     const hasEvents = clusterID && showEvents;
 
@@ -164,4 +162,4 @@ const withConnect = connect(
 export default compose(
   withConnect,
   withStyles(dashboardStyle)
-)(App);
+)(Dashboard);

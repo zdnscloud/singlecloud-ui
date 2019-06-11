@@ -18,12 +18,10 @@ import { Switch, Route, Redirect } from 'react-router-dom';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import { withRouter } from 'react-router';
 
+import GlobalStyle from 'global-styles';
 import LoginPage from 'containers/LoginPage/Loadable';
 import hexToRgb from '@gsmlg/utils/hexToRgb';
 
-import { makeSelectLocation } from './selectors';
-import * as actions from './actions';
-import GlobalStyle from '../../global-styles';
 import Dashboard from './Dashboard';
 
 const theme = createMuiTheme({
@@ -87,7 +85,6 @@ class App extends PureComponent {
   }
 
   componentWillMount() {
-    // this.props.initAction();
   }
 
   render() {
@@ -117,13 +114,11 @@ class App extends PureComponent {
 }
 
 const mapStateToProps = createStructuredSelector({
-  location: makeSelectLocation(),
 });
 
 const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
-      ...actions,
     },
     dispatch
   );

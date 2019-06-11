@@ -46,10 +46,9 @@ import CircleChart from 'components/Charts/Circle';
 import {
   makeSelectShowMenuText,
   makeSelectShowEvents,
-} from 'containers/App/selectors';
+} from 'ducks/app/selectors';
 
-import styles from './dashboardStyle';
-import * as actions from './actions';
+import styles from './clusterDetailStyle';
 import messages from './messages';
 
 const gaugeColor = '#FFFFFF';
@@ -273,7 +272,6 @@ const mapStateToProps = createStructuredSelector({
 const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
-      ...actions,
     },
     dispatch
   );

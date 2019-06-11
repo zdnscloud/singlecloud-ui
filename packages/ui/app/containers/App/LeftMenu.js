@@ -25,8 +25,7 @@ import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 import ChevronRight from 'components/Icons/ChevronRight';
 
-import messages from './messages';
-import * as actions from './actions';
+import * as actions from 'ducks/app/actions';
 import {
   makeSelectActiveCluster,
   makeSelectLeftMenus,
@@ -34,7 +33,9 @@ import {
   makeSelectShowEvents,
   makeSelectLocation,
   makeSelectShowMenuText,
-} from './selectors';
+} from 'ducks/app/selectors';
+
+import messages from './messages';
 import styles from './LeftMenuStyle';
 
 class LeftMenu extends PureComponent {

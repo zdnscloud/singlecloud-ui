@@ -41,16 +41,12 @@ import Menubar from 'components/Menubar';
 import DownIcon from 'components/Icons/Down';
 import ShellIcon from 'components/Icons/Shell';
 import AccountIcon from 'components/Icons/Account';
+import SelectNamespace from 'containers/NamespacesPage/SelectNamespace';
 
 import { makeSelectRole } from 'ducks/role/selectors';
 import * as roleActions from 'ducks/role/actions';
 import { openTerminal } from 'containers/TerminalPage/actions';
-
-import SelectCluster from './SelectCluster';
-import SelectNamespace from '../NamespacesPage/SelectNamespace';
-import dashboardStyle from './dashboardStyles';
-import messages from './messages';
-import * as actions from './actions';
+import * as actions from 'ducks/app/actions';
 import {
   makeSelectActiveCluster,
   makeSelectClusterID,
@@ -58,8 +54,12 @@ import {
   makeSelectLocation,
   makeSelectUserMenus,
   makeSelectShowMenuText,
-} from './selectors';
-import { makeSelectClusters } from '../ClustersPage/selectors';
+} from 'ducks/app/selectors';
+import { makeSelectClusters } from 'ducks/clusters/selectors';
+
+import SelectCluster from './SelectCluster';
+import dashboardStyle from './dashboardStyles';
+import messages from './messages';
 
 class AppMenubar extends PureComponent {
   static propTypes = {

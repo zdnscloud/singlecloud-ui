@@ -38,7 +38,7 @@ import CardFooter from 'components/Card/CardFooter';
 import {
   makeSelectClusterID,
   makeSelectNamespaceID,
-} from 'containers/App/selectors';
+} from 'ducks/app/selectors';
 import * as actions from 'ducks/configMaps/actions';
 import { makeSelectURL } from 'ducks/configMaps/selectors';
 

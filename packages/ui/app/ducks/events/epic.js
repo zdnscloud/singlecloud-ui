@@ -9,28 +9,24 @@ import {
   throttleTime,
   throttle,
 } from 'rxjs/operators';
-import { ofType } from 'redux-observable';
+import { ofType, combineEpics } from 'redux-observable';
 import SockJS from 'sockjs-client';
 
-import { INIT_ACTION } from './constants';
-import { addEvent, setEvents } from './actions';
+import * as c from './constants';
+import * as a from './actions';
 
 export const eventEpic = (action$) =>
   action$.pipe(
-    ofType(INIT_ACTION),
-    mergeMap(({ payload }) =>
+    ofType(c.OPEN_CLUSTER),
+    mergeMap(({ payload: { clusterID } }) => (
       Observable.create((observer) => {
-        const socket = new SockJS(
-          `${window.location.protocol}//${window.location.hostname}:${
-            window.location.port
-          }/apis/ws.zcloud.cn/v1/clusters/${payload.cluster_id}/event`
-        );
+        const { protocol, hostname, port } = window.location;
+        const socket = new SockJS(`${protocol}//${hostname}:${port}/apis/ws.zcloud.cn/v1/clusters/${clusterID}/event`);
 
         socket.onopen = () => {};
 
         socket.onmessage = (e) => {
           const evt = JSON.parse(e.data);
-          // console.log(evt);
           observer.next(evt);
         };
 
@@ -40,8 +36,10 @@ export const eventEpic = (action$) =>
       })
         .pipe(scan((acc, event) => acc.concat([event]).slice(-100), []))
         .pipe(debounceTime(100))
-        .pipe(map((events) => setEvents(events)))
-    )
+        .pipe(map((events) => a.setEvents(events, clusterID)))
+    ))
   );
 
-export default eventEpic;
+export default combineEpics(
+  eventEpic
+);
