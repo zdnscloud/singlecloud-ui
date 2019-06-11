@@ -33,6 +33,7 @@ import {
   makeSelectSTSPodsList,
   makeSelectDSPodsList,
   makeSelectCJPodsList,
+  makeSelectJOBPodsList,
 } from 'ducks/pods/selectors';
 import * as actions from 'ducks/pods/actions';
 
@@ -58,6 +59,7 @@ export class PodsTable extends React.PureComponent {
       stsPodList,
       dsPodList,
       cjPodList,
+      jobPodList,
       removePod,
       openPodLog,
       openContainerTerminal,
@@ -136,6 +138,9 @@ export class PodsTable extends React.PureComponent {
       case 'cj':
         data = cjPodList;
         break;
+      case 'job':
+        data = jobPodList;
+        break;
       default:
         data = deployPodList;
     }
@@ -161,6 +166,7 @@ const mapStateToProps = createStructuredSelector({
   stsPodList: makeSelectSTSPodsList(),
   dsPodList: makeSelectDSPodsList(),
   cjPodList: makeSelectCJPodsList(),
+  jobPodList: makeSelectJOBPodsList(),
 });
 
 const mapDispatchToProps = (dispatch) =>

@@ -34,7 +34,7 @@ import {
 } from 'ducks/cronJobs/selectors';
 import * as podsActions from 'ducks/pods/actions';
 import * as actions from 'ducks/cronJobs/actions';
-import { makeSelectDSURL as makeSelectDSPodsURL } from 'ducks/pods/selectors';
+import { makeSelectCJURL as makeSelectCJPodsURL } from 'ducks/pods/selectors';
 import PodsTable from 'containers/PodsPage/PodsTable';
 
 import CronJob from './CronJob';
@@ -74,7 +74,7 @@ export class CronJobDetailPage extends React.PureComponent {
       cronJobID,
       cronJob,
       podsUrl: url,
-      loadDSPods,
+      loadCJPods,
       loadCronJob,
     } = this.props;
     loadCronJob(cronJobID, {
@@ -82,7 +82,7 @@ export class CronJobDetailPage extends React.PureComponent {
       namespaceID,
       url: cronJob.getIn(['links', 'self']),
     });
-    loadDSPods({ url, clusterID, namespaceID, cronJobID });
+    loadCJPods({ url, clusterID, namespaceID, cronJobID });
   }
 
   render() {
@@ -118,7 +118,7 @@ const mapStateToProps = createStructuredSelector({
   clusterID: makeSelectClusterID(),
   namespaceID: makeSelectNamespaceID(),
   cronJobID: makeSelectCronJobID(),
-  podsUrl: makeSelectDSPodsURL(),
+  podsUrl: makeSelectCJPodsURL(),
   cronJob: makeSelectCurrentCronJob(),
 });
 

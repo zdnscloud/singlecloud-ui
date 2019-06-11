@@ -34,7 +34,7 @@ import {
 } from 'ducks/jobs/selectors';
 import * as podsActions from 'ducks/pods/actions';
 import * as actions from 'ducks/jobs/actions';
-import { makeSelectDSURL as makeSelectDSPodsURL } from 'ducks/pods/selectors';
+import { makeSelectJOBURL as makeSelectJOBPodsURL } from 'ducks/pods/selectors';
 import PodsTable from 'containers/PodsPage/PodsTable';
 
 import Job from './Job';
@@ -74,7 +74,7 @@ export class JobDetailPage extends React.PureComponent {
       jobID,
       job,
       podsUrl: url,
-      loadDSPods,
+      loadJOBPods,
       loadJob,
     } = this.props;
     loadJob(jobID, {
@@ -82,7 +82,7 @@ export class JobDetailPage extends React.PureComponent {
       namespaceID,
       url: job.getIn(['links', 'self']),
     });
-    loadDSPods({ url, clusterID, namespaceID, jobID });
+    loadJOBPods({ url, clusterID, namespaceID, jobID });
   }
 
   render() {
@@ -103,7 +103,7 @@ export class JobDetailPage extends React.PureComponent {
                   </h4>
                 </CardHeader>
                 <CardBody>
-                  <PodsTable parentType="cj" />
+                  <PodsTable parentType="job" />
                 </CardBody>
               </Card>
             </GridItem>
@@ -118,7 +118,7 @@ const mapStateToProps = createStructuredSelector({
   clusterID: makeSelectClusterID(),
   namespaceID: makeSelectNamespaceID(),
   jobID: makeSelectJobID(),
-  podsUrl: makeSelectDSPodsURL(),
+  podsUrl: makeSelectJOBPodsURL(),
   job: makeSelectCurrentJob(),
 });
 
