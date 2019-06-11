@@ -62,7 +62,7 @@ export class PodsTable extends React.PureComponent {
       jobPodList,
       removePod,
       openPodLog,
-      openContainerTerminal,
+      openTerminal,
     } = this.props;
     const mergedSchema = schema.map((item) => {
       if (item.id === 'containers') {
@@ -103,7 +103,7 @@ export class PodsTable extends React.PureComponent {
                         edge="end"
                         style={{ transform: 'scale(0.7)' }}
                         onClick={(evt) => {
-                          openContainerTerminal({
+                          openTerminal({
                             podID: props.data.get('id'),
                             containerName: ctn.get('name'),
                           }, {
@@ -173,7 +173,7 @@ const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
       ...actions,
-      openContainerTerminal,
+      openTerminal: openContainerTerminal,
     },
     dispatch
   );
