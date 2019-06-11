@@ -159,6 +159,14 @@ class DeploymentForm extends PureComponent {
                     <FormSection name="advancedOptions">
                       <GridContainer>
                         <GridItem xs={12} sm={12} md={12} className={classes.formLine}>
+                          <SwitchField
+                            name="relaodWhenConfigChange"
+                            label={<FormattedMessage {...messages.formRelaodWhenConfigChange} />}
+                          />
+                        </GridItem>
+                      </GridContainer>
+                      <GridContainer>
+                        <GridItem xs={12} sm={12} md={12} className={classes.formLine}>
                           <RadioField
                             name="exposedServiceType"
                             label={<FormattedMessage {...messages.formExposedServiceType} />}
