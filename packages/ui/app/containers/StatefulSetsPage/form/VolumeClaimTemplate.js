@@ -49,104 +49,83 @@ import MinusIcon from 'components/Icons/Minus';
 
 import messages from '../messages';
 
-const Volumes = ({
-  configMapsOptions,
-  containerIndex,
+const VolumeClaimTemplate = ({
   fields,
-  formValues,
+  classes,
   meta: { error, submitFailed },
 }) => {
 
   return (
-    <List component="ul">
-      <ListItem>
-        <ListItemText>
+    <Fragment>
+      <GridContainer>
+        <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
           <Button color="secondary" onClick={(evt) => fields.push({})}>
-            <FormattedMessage {...messages.formVolumes} />
+            <FormattedMessage {...messages.formAddVolumeClaimTemplate} />
             <PlusIcon />
           </Button>
-        </ListItemText>
-      </ListItem>
+        </GridItem>
+      </GridContainer>
+      {submitFailed && error && (
+        <ListItem>
+          <Danger>{error}</Danger>
+        </ListItem>
+      )}
       {fields.map((f, i) => {
-        let names = [];
-        const type = formValues && formValues.getIn([
-          'containers',
-          containerIndex,
-          'volumes',
-          i,
-          'type',
-        ]);
-        const pvcts = formValues && formValues.get('volumeClaimTemplate');
-        switch (type) {
-          case 'configmap':
-            names = configMapsOptions;
-            break;
-          case 'secret':
-            break;
-          case 'persistentVolume':
-            if (pvcts.size > 0) {
-              names = pvcts.map((pvct) => (
-                { label: pvct.name, value: pvct.name }
-              ));
-            }
-            break;
-        }
         return (
-          <ListItem key={i}>
-            <ListItemText>
-              <SelectField
-                name={`${f}.type`}
-                label={<FormattedMessage {...messages.formVolumeType} />}
-                options={[
-                  {
-                    label: <FormattedMessage {...messages.formVolumeTypeConfigMap} />,
-                    value: 'configmap',
-                  },
-                  {
-                    label: <FormattedMessage {...messages.formVolumeTypeSecret} />,
-                    value: 'secret',
-                  },
-                  {
-                    label: <FormattedMessage {...messages.formVolumeTypePersistentVolume} />,
-                    value: 'persistentVolume',
-                  },
-                ]}
-                formControlProps={{
-                  style: {
-                    marginTop: 10,
-                    width: 146,
-                  },
-                }}
-              />
-              &nbsp;&nbsp;&nbsp;&nbsp;
-              <SelectField
-                name={`${f}.name`}
-                label={<FormattedMessage {...messages.formVolumeName} />}
-                options={names}
-                formControlProps={{
-                  style: {
-                    marginTop: 10,
-                    width: 146,
-                  },
-                }}
-              />
-              &nbsp;&nbsp;&nbsp;&nbsp;
+          <GridContainer key={i}>
+            <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
               <InputField
-                name={`${f}.mountPath`}
-                label={<FormattedMessage {...messages.formMountPath} />}
+                label={<FormattedMessage {...messages.formVolumeClaimTemplateName} />}
+                name={`${f}.name`}
+                fullWidth
+                inputProps={{ type: 'text', autoComplete: 'off' }}
+                classes={classes}
               />
-            </ListItemText>
-            <IconButton
-              variant="contained"
-              onClick={(evt) => fields.remove(i)}
-            >
-              <MinusIcon />
-            </IconButton>
-          </ListItem>
+            </GridItem>
+            <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
+              <InputField
+                label={<FormattedMessage {...messages.formVolumeClaimTemplateSize} />}
+                name={`${f}.size`}
+                fullWidth
+                classes={classes}
+                inputProps={{
+                  type: 'text',
+                  autoComplete: 'off',
+                  endAdornment: 'Gi',
+                }}
+              />
+            </GridItem>
+            <GridItem xs={3} sm={3} md={3} className={classes.formLine} style={{ paddingTop: 18 }}>
+              <SelectField
+                label={<FormattedMessage {...messages.formVolumeClaimTemplateStorageClassName} />}
+                name={`${f}.storageClassName`}
+                formControlProps={{
+                  style: {
+                    width: '100%',
+                  },
+                }}
+                classes={classes}
+                options={[
+                  { label: 'lvm', value: 'lvm' },
+                  { label: 'nfs', value: 'nfs' },
+                  { label: 'termporary', value: 'termporary' },
+                  { label: 'ceph', value: 'ceph' },
+                ]}
+              />
+            </GridItem>
+            <GridItem xs={3} sm={3} md={3} className={classes.formLine} style={{ paddingTop: 18 }}>
+              <IconButton
+                variant="contained"
+                onClick={(evt) => fields.remove(i)}
+              >
+                <MinusIcon />
+              </IconButton>
+            </GridItem>
+          </GridContainer>
         );
       })}
-    </List>
+    </Fragment>
   );
 };
 
-export default Volumes;
+export default VolumeClaimTemplate;

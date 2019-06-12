@@ -49,6 +49,7 @@ import MinusIcon from 'components/Icons/Minus';
 
 import AdvancedServices from './form/AdvanceServices';
 import Containers from './form/Containers';
+import VolumeClaimTemplate from './form/VolumeClaimTemplate';
 import messages from './messages';
 
 class StatefulSetForm extends PureComponent {
@@ -233,48 +234,13 @@ class StatefulSetForm extends PureComponent {
                 </h4>
               </CardHeader>
               <CardBody>
-                <GridContainer>
-                  <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
-                    <InputField
-                      label={<FormattedMessage {...messages.formVolumeClaimTemplateName} />}
-                      name="volumeClaimTemplate.name"
-                      fullWidth
-                      inputProps={{ type: 'text', autoComplete: 'off' }}
-                      classes={classes}
-                    />
-                  </GridItem>
-                  <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
-                    <InputField
-                      label={<FormattedMessage {...messages.formVolumeClaimTemplateSize} />}
-                      name="volumeClaimTemplate.size"
-                      fullWidth
-                      inputProps={{ type: 'text', autoComplete: 'off' }}
-                      classes={classes}
-                      inputProps={{
-                        endAdornment: 'Gi',
-                      }}
-                    />
-                  </GridItem>
-                  <GridItem xs={3} sm={3} md={3} className={classes.formLine} style={{ paddingTop: 18 }}>
-                    <SelectField
-                      label={<FormattedMessage {...messages.formVolumeClaimTemplateStorageClassName} />}
-                      name="volumeClaimTemplate.storageClassName"
-                      formControlProps={{
-                        style: {
-                          width: '100%',
-                        },
-                      }}
-                      classes={classes}
-                      options={[
-                        //["lvm", "nfs", "temporary", "ceph"]
-                        { label: 'lvm', value: 'lvm' },
-                        { label: 'nfs', value: 'nfs' },
-                        { label: 'termporary', value: 'termporary' },
-                        { label: 'ceph', value: 'ceph' },
-                      ]}
-                    />
-                  </GridItem>
-                </GridContainer>
+                <FieldArray
+                  name="volumeClaimTemplate"
+                  classes={classes}
+                  component={VolumeClaimTemplate}
+                  theme={theme}
+                  formValues={formValues}
+                />
               </CardBody>
             </Card>
           </GridItem>

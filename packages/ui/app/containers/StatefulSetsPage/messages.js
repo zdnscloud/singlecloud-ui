@@ -201,6 +201,10 @@ export default defineMessages({
     id: `${scope}.formServiceConfig`,
     defaultMessage: 'ServiceConfig',
   },
+  formAddVolumeClaimTemplate: {
+    id: `${scope}.formAddVolumeClaimTemplate`,
+    defaultMessage: 'Addd Volume Claim Template',
+  },
   formVolumeClaimTemplate: {
     id: `${scope}.formVolumeClaimTemplate`,
     defaultMessage: 'Volume Claim Template',
