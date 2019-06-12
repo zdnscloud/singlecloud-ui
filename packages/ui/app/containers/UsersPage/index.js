@@ -67,7 +67,7 @@ export class UsersPage extends React.PureComponent {
                         aria-label="create user"
                         className={classes.menuButton}
                       >
-                        <AddIcon nativeColor="#fff" />
+                        <AddIcon style={{ color: '#fff' }} />
                       </IconButton>
                     </Link>
                   </h4>

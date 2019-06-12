@@ -78,7 +78,7 @@ export class CronJobsPage extends React.PureComponent {
                       className={classes.createBtnLink}
                     >
                       <IconButton>
-                        <AddIcon nativeColor="#fff" />
+                        <AddIcon style={{ color: '#fff' }} />
                       </IconButton>
                     </Link>
                   </h4>

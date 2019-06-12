@@ -110,7 +110,7 @@ export class TerminalDialog extends React.PureComponent {
               <FormattedMessage {...messages.header} />
             </h4>
             <IconButton onClick={closeTerminal} style={{ padding: 0 }}>
-              <CloseIcon nativeColor="#fff" />
+              <CloseIcon style={{ color: '#fff' }} />
             </IconButton>
           </CardHeader>
           <CardBody className={classes.dialogCardBody}>

@@ -53,12 +53,12 @@ export class PodsList extends React.PureComponent {
           return (
             <ExpansionPanel key={idx}>
               <ExpansionPanelSummary
-                expandIcon={<DownIcon nativeColor="#000" />}
+                expandIcon={<DownIcon style={{ color: '#000' }} />}
               >
                 <div className={classes.podNode}>
                   <div className={classes.c0}>
                     <IconButton>
-                      <HostIcon nativeColor="#fff" />
+                      <HostIcon style={{ color: '#fff' }} />
                     </IconButton>
                   </div>
                   <div className={classes.c1}>

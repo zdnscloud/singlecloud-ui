@@ -81,7 +81,7 @@ export class ConfigMapsPage extends React.PureComponent {
                         aria-label={<FormattedMessage {...messages.configMaps} />}
                         className={classes.menuButton}
                       >
-                        <AddIcon nativeColor="#fff" />
+                        <AddIcon style={{ color: '#fff' }} />
                       </IconButton>
                     </Link>
                   </h4>

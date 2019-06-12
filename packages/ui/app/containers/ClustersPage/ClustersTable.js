@@ -92,9 +92,9 @@ export class ClustersTable extends React.PureComponent {
             ...sch,
             component: (props) => (
               props.data.get('status') === 'Running' ? (
-                <SuccessIcon nativeColor={theme.palette.icons.a} />
+                <SuccessIcon style={{ color: theme.palette.icons.a }} />
               ) : (
-                <FailureIcon nativeColor={theme.palette.icons.b} />
+                <FailureIcon style={{ color: theme.palette.icons.b }} />
               )
             ),
           };

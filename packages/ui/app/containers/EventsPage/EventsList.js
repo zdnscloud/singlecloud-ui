@@ -59,9 +59,9 @@ export class EventsList extends React.PureComponent {
                 <ListItem className={classes.item} key={evt.id}>
                   <ListItemAvatar className={classes.itemAvatar}>
                     {evt.type === 'Warning' ? (
-                      <WarningIcon nativeColor="#FF7A22" />
+                      <WarningIcon style={{ color: '#FF7A22' }} />
                     ) : (
-                      <NormalIcon nativeColor="#1A435F" />
+                      <NormalIcon style={{ color: '#1A435F' }} />
                     )}
                   </ListItemAvatar>
                   <ListItemText

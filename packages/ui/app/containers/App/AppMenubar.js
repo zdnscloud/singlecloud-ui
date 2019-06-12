@@ -155,7 +155,6 @@ class AppMenubar extends PureComponent {
                 onClick={(evt) => toggleEventsView(!showEvents)}
               >
                 <DownIcon
-                  nativeColor="#fff"
                   style={{
                     transform: `rotate(${showEvents ? 180 : 0}deg)`,
                   }}

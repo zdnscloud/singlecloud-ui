@@ -78,7 +78,7 @@ export class NamespacesPage extends React.PureComponent {
                         component={Link}
                         to={`/clusters/${clusterID}/namespaces/create`}
                       >
-                        <AddIcon nativeColor="#fff" />
+                        <AddIcon style={{ color: '#fff' }} />
                       </IconButton>
                     </h4>
                   </CardHeader>
