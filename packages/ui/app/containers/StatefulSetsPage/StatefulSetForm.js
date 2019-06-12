@@ -235,7 +235,7 @@ class StatefulSetForm extends PureComponent {
               </CardHeader>
               <CardBody>
                 <FieldArray
-                  name="volumeClaimTemplate"
+                  name="persistentClaimVolumes"
                   classes={classes}
                   component={VolumeClaimTemplate}
                   theme={theme}
