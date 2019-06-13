@@ -85,6 +85,7 @@ class LeftMenu extends PureComponent {
                 to={prop.path}
                 className={classes.item}
                 onMouseEnter={handleOpen(prop.name)}
+                onMouseMove={handleOpen(prop.name)}
                 activeClassName="active"
                 key={key}
               >
@@ -93,7 +94,7 @@ class LeftMenu extends PureComponent {
                     <ListItemIcon>
                       <prop.icon style={{ color: '#fff', transform: 'scale(0.8334)' }} />
                     </ListItemIcon>
-                  ): null}
+                  ) : null}
                   {showText ? (
                     <ListItemText
                       primary={<FormattedMessage {...msgName} />}
@@ -122,7 +123,8 @@ class LeftMenu extends PureComponent {
                 button
                 className={classes.itemLink + listItemClasses}
                 onMouseEnter={handleOpen(prop.name)}
-                /* onMouseLeave={handleClose} */
+                onMouseMove={handleOpen(prop.name)}
+                onMouseLeave={handleClose}
               >
                 {prop.icon ? (
                   <ListItemIcon>
@@ -140,7 +142,10 @@ class LeftMenu extends PureComponent {
                   />
                 ) : null}
                 {prop.children ? (
-                  <ListItemSecondaryAction>
+                  <ListItemSecondaryAction
+                    onMouseEnter={handleOpen(prop.name)}
+                    onMouseMove={handleOpen(prop.name)}
+                  >
                     <ChevronRight
                       style={{
                         transform: 'scale(0.6)',
@@ -151,29 +156,17 @@ class LeftMenu extends PureComponent {
                 ) : null}
               </ListItem>
               {prop.name === this.state.openingMenu && prop.children ? (
-                <Popover
+                <Popper
                   open={prop.name === this.state.openingMenu}
+                  onMouseEnter={handleOpen(prop.name)}
+                  onMouseMove={handleOpen(prop.name)}
                   onClose={handleClose}
                   anchorEl={this.menuRef.current}
-                  anchorReference="none"
-                  ModalClasses={{
-                    root: classNames(classes.secondMenuModal, {
-                      [classes.menuShrinkModal]: !showText,
-                    }),
-                  }}
-                  PaperProps={{
-                    square: true,
-                    style: {
-                      maxHeight: '100vh',
-                      boxShadow: 'none',
-                    },
-                  }}
-                  transitionDuration={0}
-                  hideBackdrop
+                  placement="right-start"
+                  style={{ zIndex: 1300 }}
                 >
                   <div
                     className={classNames(classes.secondMenu)}
-                    onMouseLeave={handleClose}
                   >
                     <List component="div" disablePadding>
                       {prop.children.map((menu, idx) => {
@@ -208,14 +201,13 @@ class LeftMenu extends PureComponent {
                       })}
                     </List>
                   </div>
-                </Popover>
+                </Popper>
               ) : null}
             </Fragment>
           );
         })}
       </List>
     );
-    const brand = <div className={classes.logo} />;
     return (
       <div className={classes.root}>
         <Drawer
@@ -229,7 +221,6 @@ class LeftMenu extends PureComponent {
             }),
           }}
         >
-          {brand}
           <div
             className={classNames(classes.sidebarWrapper, {
               [classes.menuShrink]: !showText,
