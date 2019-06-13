@@ -172,7 +172,7 @@ const leftMenuStyle = (theme) => ({
   },
   itemLink: {
     width: 'auto',
-    transition: 'all 300ms linear',
+    ...transition,
     borderRadius: '0px',
     position: 'relative',
     padding: '10px 15px',
@@ -204,6 +204,9 @@ const leftMenuStyle = (theme) => ({
   'active itemText': {
     color: theme.palette.primary.contrastText,
     backgroundColor: theme.palette.primary.main,
+  },
+  itemSecondaryAction: {
+    ...transition,
   },
   whiteFont: {
     color: whiteColor,

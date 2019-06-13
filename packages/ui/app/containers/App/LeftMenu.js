@@ -145,6 +145,8 @@ class LeftMenu extends PureComponent {
                   <ListItemSecondaryAction
                     onMouseEnter={handleOpen(prop.name)}
                     onMouseMove={handleOpen(prop.name)}
+                    style={{ right: showText ? 16 : 0 }}
+                    className={classes.itemSecondaryAction}
                   >
                     <ChevronRight
                       style={{
