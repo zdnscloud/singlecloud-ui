@@ -66,6 +66,7 @@ class DaemonSetForm extends PureComponent {
       edit,
       initialValues,
       configMaps,
+      secrets,
       formValues,
       theme,
     } = this.props;
@@ -119,6 +120,7 @@ class DaemonSetForm extends PureComponent {
               classes={classes}
               component={Containers}
               configMaps={configMaps}
+              secrets={secrets}
               theme={theme}
               formValues={formValues}
             />

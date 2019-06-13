@@ -57,7 +57,10 @@ import {
   makeSelectNamespaceID,
 } from 'ducks/app/selectors';
 import * as sActions from 'ducks/secrets/actions';
-import { makeSelectSecrets } from 'ducks/secrets/selectors';
+import {
+  makeSelectSecrets,
+  makeSelectURL as makeSelectSecretURL,
+} from 'ducks/secrets/selectors';
 import * as cActions from 'ducks/configMaps/actions';
 import {
   makeSelectConfigMaps,
@@ -96,8 +99,7 @@ export class CreateDeployment extends React.PureComponent {
   };
 
   componentWillMount() {
-    const { clusterID, namespaceID, configMapURL, loadConfigMaps } = this.props;
-    loadConfigMaps({ url: configMapURL, clusterID, namespaceID });
+    this.load();
   }
 
   componentDidUpdate(prevProps) {
@@ -105,10 +107,23 @@ export class CreateDeployment extends React.PureComponent {
       clusterID: prevClusterID,
       namespaceID: prevNamespaceID,
     } = prevProps;
-    const { clusterID, namespaceID, configMapURL, loadConfigMaps } = this.props;
+    const { clusterID, namespaceID } = this.props;
     if (prevClusterID !== clusterID || prevNamespaceID !== namespaceID) {
-      loadConfigMaps({ url: configMapURL, clusterID, namespaceID });
+      this.load();
     }
+  }
+
+  load() {
+    const {
+      clusterID,
+      namespaceID,
+      configMapURL,
+      loadConfigMaps,
+      secretURL,
+      loadSecrets,
+    } = this.props;
+    loadConfigMaps({ url: configMapURL, clusterID, namespaceID });
+    loadSecrets({ url: secretURL, clusterID, namespaceID });
   }
 
   render() {
@@ -183,9 +198,10 @@ export class CreateDeployment extends React.PureComponent {
 const mapStateToProps = createStructuredSelector({
   clusterID: makeSelectClusterID(),
   namespaceID: makeSelectNamespaceID(),
-  configMapURL: makeSelectConfigMapURL(),
   url: makeSelectURL(),
+  configMapURL: makeSelectConfigMapURL(),
   configMaps: makeSelectConfigMaps(),
+  secretURL: makeSelectSecretURL(),
   secrets: makeSelectSecrets(),
   values: getFormValues(formName),
 });

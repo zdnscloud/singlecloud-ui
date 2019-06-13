@@ -67,6 +67,7 @@ class StatefulSetForm extends PureComponent {
       edit,
       initialValues,
       configMaps,
+      secrets,
       formValues,
       theme,
     } = this.props;
@@ -138,6 +139,7 @@ class StatefulSetForm extends PureComponent {
               classes={classes}
               component={Containers}
               configMaps={configMaps}
+              secrets={secrets}
               theme={theme}
               formValues={formValues}
             />

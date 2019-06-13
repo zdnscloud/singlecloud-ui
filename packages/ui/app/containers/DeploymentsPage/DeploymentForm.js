@@ -66,6 +66,7 @@ class DeploymentForm extends PureComponent {
       edit,
       initialValues,
       configMaps,
+      secrets,
       formValues,
       theme,
     } = this.props;
@@ -134,6 +135,7 @@ class DeploymentForm extends PureComponent {
               classes={classes}
               component={Containers}
               configMaps={configMaps}
+              secrets={secrets}
               theme={theme}
               formValues={formValues}
             />

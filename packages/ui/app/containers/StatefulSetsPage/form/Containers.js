@@ -56,6 +56,7 @@ const Containers = ({
   fields,
   meta: { error, submitFailed },
   configMaps,
+  secrets,
   classes,
   formValues,
 }) => {
@@ -66,6 +67,14 @@ const Containers = ({
     label: <FormattedMessage {...messages.formNone} />,
     value: '',
   });
+  const secretsOptions = secrets.toList().map((s) => ({
+    label: s.get('name'),
+    value: s.get('id'),
+  })).unshift({
+    label: <FormattedMessage {...messages.formNone} />,
+    value: '',
+  });
+
 
   return (
     <Card style={{ padding: 0, marginBottom: 0 }}>
@@ -141,6 +150,7 @@ const Containers = ({
                           component={Volumes}
                           containerIndex={i}
                           configMapsOptions={configMapsOptions}
+                          secretsOptions={secretsOptions}
                           formValues={formValues}
                         />
                       </GridItem>

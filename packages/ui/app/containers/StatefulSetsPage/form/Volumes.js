@@ -51,6 +51,7 @@ import messages from '../messages';
 
 const Volumes = ({
   configMapsOptions,
+  secretsOptions,
   containerIndex,
   fields,
   formValues,
@@ -82,9 +83,10 @@ const Volumes = ({
             names = configMapsOptions;
             break;
           case 'secret':
+            names = secretsOptions;
             break;
           case 'persistentVolume':
-            if (pvcts.size > 0) {
+            if (pvcts && pvcts.size > 0) {
               names = pvcts.map((pvct) => (
                 { label: pvct.name, value: pvct.name }
               ));

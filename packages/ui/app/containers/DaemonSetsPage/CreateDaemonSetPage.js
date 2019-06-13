@@ -56,9 +56,14 @@ import {
   makeSelectClusterID,
   makeSelectNamespaceID,
 } from 'ducks/app/selectors';
-import * as cActions from 'ducks/configMaps/actions';
-import { makeSelectConfigMaps } from 'ducks/configMaps/selectors';
+import * as sActions from 'ducks/secrets/actions';
 import {
+  makeSelectSecrets,
+  makeSelectURL as makeSelectSecretURL,
+} from 'ducks/secrets/selectors';
+import * as cActions from 'ducks/configMaps/actions';
+import {
+  makeSelectConfigMaps,
   makeSelectURL as makeSelectConfigMapURL,
 } from 'ducks/configMaps/selectors';
 import { makeSelectURL } from 'ducks/daemonSets/selectors';
@@ -94,8 +99,7 @@ export class CreateDaemonSet extends React.PureComponent {
   };
 
   componentWillMount() {
-    const { clusterID, namespaceID, configMapURL, loadConfigMaps } = this.props;
-    loadConfigMaps({ url: configMapURL, clusterID, namespaceID });
+    this.load();
   }
 
   componentDidUpdate(prevProps) {
@@ -103,10 +107,23 @@ export class CreateDaemonSet extends React.PureComponent {
       clusterID: prevClusterID,
       namespaceID: prevNamespaceID,
     } = prevProps;
-    const { clusterID, namespaceID, configMapURL, loadConfigMaps } = this.props;
+    const { clusterID, namespaceID } = this.props;
     if (prevClusterID !== clusterID || prevNamespaceID !== namespaceID) {
-      loadConfigMaps({ url: configMapURL, clusterID, namespaceID });
+      this.load();
     }
+  }
+
+  load() {
+    const {
+      clusterID,
+      namespaceID,
+      configMapURL,
+      loadConfigMaps,
+      secretURL,
+      loadSecrets,
+    } = this.props;
+    loadConfigMaps({ url: configMapURL, clusterID, namespaceID });
+    loadSecrets({ url: secretURL, clusterID, namespaceID });
   }
 
   render() {
@@ -118,6 +135,7 @@ export class CreateDaemonSet extends React.PureComponent {
       clusterID,
       namespaceID,
       configMaps,
+      secrets,
       values,
       theme,
     } = this.props;
@@ -154,6 +172,7 @@ export class CreateDaemonSet extends React.PureComponent {
                 classes={classes}
                 onSubmit={doSubmit}
                 configMaps={configMaps}
+                secrets={secrets}
                 initialValues={fromJS({ replicas: 1, containers: [{ name: '' }] })}
                 formValues={values}
                 theme={theme}
@@ -179,9 +198,11 @@ export class CreateDaemonSet extends React.PureComponent {
 const mapStateToProps = createStructuredSelector({
   clusterID: makeSelectClusterID(),
   namespaceID: makeSelectNamespaceID(),
-  configMapURL: makeSelectConfigMapURL(),
   url: makeSelectURL(),
+  configMapURL: makeSelectConfigMapURL(),
   configMaps: makeSelectConfigMaps(),
+  secretURL: makeSelectSecretURL(),
+  secrets: makeSelectSecrets(),
   values: getFormValues(formName),
 });
 
@@ -190,6 +211,7 @@ const mapDispatchToProps = (dispatch) =>
     {
       ...actions,
       loadConfigMaps: cActions.loadConfigMaps,
+      loadSecrets: sActions.loadSecrets,
       submitForm: () => submit(formName),
     },
     dispatch

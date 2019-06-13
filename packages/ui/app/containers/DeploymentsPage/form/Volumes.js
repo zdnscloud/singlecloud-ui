@@ -51,6 +51,7 @@ import messages from '../messages';
 
 const Volumes = ({
   configMapsOptions,
+  secretsOptions,
   containerIndex,
   fields,
   formValues,
@@ -81,6 +82,7 @@ const Volumes = ({
             names = configMapsOptions;
             break;
           case 'secret':
+            names = secretsOptions;
             break;
           case 'persistentvolume':
             break;
