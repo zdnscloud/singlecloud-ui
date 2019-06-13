@@ -36,7 +36,7 @@ export class PodsList extends React.PureComponent {
     data: PropTypes.object.isRequired,
   };
 
-  state = { activeIP: { ip: '' } };
+  state = {};
 
   render() {
     const { classes, data } = this.props;
@@ -44,6 +44,7 @@ export class PodsList extends React.PureComponent {
     return (
       <Paper className={classes.tableWrapper}>
         {data.map((n, idx) => {
+          const id = n.get('id');
           const podCIDR = n.get('podCIDR');
           const podIPs = n.get('podIPs');
           const [ip, mask] = podCIDR.split('/');
@@ -51,7 +52,7 @@ export class PodsList extends React.PureComponent {
           const used = podIPs && podIPs.size || 0;
 
           return (
-            <ExpansionPanel key={idx}>
+            <ExpansionPanel key={id}>
               <ExpansionPanelSummary
                 expandIcon={<DownIcon style={{ color: '#000' }} />}
               >
@@ -102,7 +103,7 @@ export class PodsList extends React.PureComponent {
                       active = podIPs.find((n) => n.get('ip') === ipAddr);
                     const mouseOver = (evt) => {
                       this.setState({
-                        activeIP: active ? active.toJS() : { ip: ipAddr },
+                        [id]: active ? active.toJS() : { ip: ipAddr },
                       });
                     };
 
@@ -130,12 +131,12 @@ export class PodsList extends React.PureComponent {
                     <div className={classes.infoLine}>
                       <FormattedMessage {...messages.activeIP} />
                       &nbsp;&nbsp;&nbsp;&nbsp;
-                      {this.state.activeIP.ip}
+                      {this.state[id] && this.state[id].ip}
                     </div>
                     <div className={classes.infoLine}>
                       <FormattedMessage {...messages.activePod} />
                       &nbsp;&nbsp;&nbsp;&nbsp;
-                      {this.state.activeIP.name}
+                      {this.state[id] && this.state[id].name}
                     </div>
                   </div>
                 </div>

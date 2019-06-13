@@ -56,9 +56,11 @@ import {
   makeSelectClusterID,
   makeSelectNamespaceID,
 } from 'ducks/app/selectors';
+import * as sActions from 'ducks/secrets/actions';
+import { makeSelectSecrets } from 'ducks/secrets/selectors';
 import * as cActions from 'ducks/configMaps/actions';
-import { makeSelectConfigMaps } from 'ducks/configMaps/selectors';
 import {
+  makeSelectConfigMaps,
   makeSelectURL as makeSelectConfigMapURL,
 } from 'ducks/configMaps/selectors';
 import { makeSelectURL } from 'ducks/deployments/selectors';
@@ -118,6 +120,7 @@ export class CreateDeployment extends React.PureComponent {
       clusterID,
       namespaceID,
       configMaps,
+      secrets,
       values,
       theme,
     } = this.props;
@@ -154,6 +157,7 @@ export class CreateDeployment extends React.PureComponent {
                 classes={classes}
                 onSubmit={doSubmit}
                 configMaps={configMaps}
+                secrets={secrets}
                 initialValues={fromJS({ replicas: 1, containers: [{ name: '' }] })}
                 formValues={values}
                 theme={theme}
@@ -182,6 +186,7 @@ const mapStateToProps = createStructuredSelector({
   configMapURL: makeSelectConfigMapURL(),
   url: makeSelectURL(),
   configMaps: makeSelectConfigMaps(),
+  secrets: makeSelectSecrets(),
   values: getFormValues(formName),
 });
 
@@ -190,6 +195,7 @@ const mapDispatchToProps = (dispatch) =>
     {
       ...actions,
       loadConfigMaps: cActions.loadConfigMaps,
+      loadSecrets: sActions.loadSecrets,
       submitForm: () => submit(formName),
     },
     dispatch
