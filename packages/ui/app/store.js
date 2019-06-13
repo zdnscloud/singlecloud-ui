@@ -1,3 +1,4 @@
+import { fromJS } from 'immutable';
 import localforage from 'localforage';
 import history from 'utils/history';
 
@@ -27,12 +28,11 @@ export const storePromise = new Promise((resolve, reject) => {
 export default store;
 
 if (window) {
-  window.onunload = () => {
+  window.onbeforeunload = () => {
     try {
       const state = store.getState().toJS();
-      const data = JSON.stringify(state);
       // TODO: encrypt data
-      localforage.setItem('persistentState', data);
+      localforage.setItem('persistentState', state);
     } catch (e) {}
   };
 }

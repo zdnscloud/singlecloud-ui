@@ -10,6 +10,7 @@ import { ajax } from 'rxjs/ajax';
 import { BehaviorSubject } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import authProvider from 'utils/authProvider';
+import persistentEnhancer from 'utils/persistentEnhancer';
 
 import createReducer from './reducers';
 import createEpic from './epics';
@@ -71,7 +72,7 @@ export default function configureStore(initialState = {}, history) {
     routerMiddleware(history),
   ];
 
-  const enhancers = [applyMiddleware(...middlewares)];
+  const enhancers = [applyMiddleware(...middlewares), persistentEnhancer];
 
   // If Redux DevTools Extension is installed use it, otherwise use Redux compose
   /* eslint-disable no-underscore-dangle, indent */
