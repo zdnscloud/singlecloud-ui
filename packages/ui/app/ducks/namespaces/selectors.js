@@ -36,7 +36,7 @@ export const makeSelectCurrentNamespaceID = () =>
     makeSelectNamespaceID(),
     makeSelectNamespacesList(),
     (substate, clusterID, nid, ns) =>
-      substate.getIn(['selectedNamespace', clusterID]) || nid || ns.getIn([0, 'id'])
+      substate.getIn(['selectedNamespace', clusterID]) || nid || ns.getIn([0, 'id']) || ''
   );
 
 export const makeSelectCurrentNamespace = () =>

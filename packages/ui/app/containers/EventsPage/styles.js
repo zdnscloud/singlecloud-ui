@@ -84,7 +84,9 @@ const styles = (theme) => ({
   item: {
 
   },
-  itemAvatar: {},
+  itemAvatar: {
+    minWidth: 36,
+  },
   itemText: {
     paddingRight: 0,
     display: 'flex',
@@ -111,6 +113,7 @@ const styles = (theme) => ({
     height: '24px',
     overflow: 'hidden',
     textOverflow: 'ellipsis',
+    fontSize: 14,
   },
   itemReason: {
     color: '#4A4A4A ',
@@ -119,6 +122,7 @@ const styles = (theme) => ({
     height: '24px',
     overflow: 'hidden',
     textOverflow: 'ellipsis',
+    fontSize: 12,
   },
   itemMessage: {
     color: '#4A4A4A',
@@ -126,6 +130,7 @@ const styles = (theme) => ({
     height: '24px',
     overflow: 'hidden',
     textOverflow: 'ellipsis',
+    fontSize: 14,
   },
   itemTime: {
     color: '#9B9B9B',
@@ -134,6 +139,7 @@ const styles = (theme) => ({
     height: '24px',
     overflow: 'hidden',
     textOverflow: 'ellipsis',
+    fontSize: 12,
   },
 });
 
