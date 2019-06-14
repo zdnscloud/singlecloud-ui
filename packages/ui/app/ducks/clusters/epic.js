@@ -56,10 +56,11 @@ export const loadClustersAndNamespacesEpic = (action$, state$, { ajax }) =>
         map((resp) => a.loadClustersSuccess(resp)),
         catchError((error) => of(a.loadClustersFailure(error)))
       )
-    )).pipe(mapTo(loadAllNamespaces(makeSelectClusters()(state$.value).toList())))
+    ))
   );
 
 export default combineEpics(
   loadClustersEpic,
-  removeClusterEpic
+  removeClusterEpic,
+  loadClustersAndNamespacesEpic
 );

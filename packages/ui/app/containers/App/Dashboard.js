@@ -61,16 +61,20 @@ class Dashboard extends PureComponent {
   state = { hasError: false };
 
   componentWillMount() {
-    const { isLogin, history } = this.props;
+    const { isLogin, history, initAction } = this.props;
     if (!isLogin) {
       history.push('/login');
+    } else {
+      initAction();
     }
   }
 
   componentWillUpdate(nextProps) {
-    const { isLogin, history } = nextProps;
+    const { isLogin, history, initAction } = nextProps;
     if (!isLogin) {
       history.push('/login');
+    } else {
+      // initAction();
     }
   }
 

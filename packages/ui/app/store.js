@@ -1,6 +1,7 @@
 import { fromJS } from 'immutable';
 import localforage from 'localforage';
 import history from 'utils/history';
+import persistentSubState from 'persistentSubState';
 
 import configureStore from './configureStore';
 
@@ -19,20 +20,11 @@ const initialState = {};
 const store = { instance: null };
 
 export const storePromise = new Promise((resolve, reject) => {
-  localforage.getItem('persistentState').then((state) => {
-    store.instance = configureStore(state || initialState, history);
+  localforage.getItem('persistentSubState').then((ps) => {
+    const st = ps ? fromJS(ps) : initialState;
+    store.instance = configureStore(st , history);
     resolve(store);
   });
 });
 
 export default store;
-
-if (window) {
-  window.onbeforeunload = () => {
-    try {
-      const state = store.getState().toJS();
-      // TODO: encrypt data
-      localforage.setItem('persistentState', state);
-    } catch (e) {}
-  };
-}
