@@ -79,7 +79,6 @@ export class SecretsPage extends React.PureComponent {
                     >
                       <IconButton
                         aria-label={<FormattedMessage {...messages.secrets} />}
-                        className={classes.menuButton}
                       >
                         <AddIcon style={{ color: '#fff' }} />
                       </IconButton>
