@@ -50,6 +50,7 @@ export const changeNamespaceEpic = (action$, state$, { ajax }) =>
         const suffix = pathname.split('/').slice(5).join('/');
         return of(push(`/clusters/${clusterID}/namespaces/${ns}/${suffix}`));
       }
+      return of({});
     })
   );
 
