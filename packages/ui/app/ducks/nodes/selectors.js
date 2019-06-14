@@ -3,7 +3,7 @@ import {
   createMatchSelector,
   getLocation,
 } from 'connected-react-router/immutable';
-import { makeSelectClusterID, makeSelectNodeID } from 'ducks/app/selectors';
+import { makeSelectClusterID } from 'ducks/app/selectors';
 import { prefix } from './constants';
 
 /**
@@ -29,21 +29,22 @@ export const makeSelectNodesList = () =>
       substate.get('list').map((id) => nodes.get(id))
   );
 
-export const makeSelectCurrentNodeID = () =>
+export const makeSelectNodeID = () =>
   createSelector(
-    selectNodesDomain,
-    makeSelectClusterID(),
-    makeSelectNodeID(),
-    makeSelectNodesList(),
-    (substate, clusterID, nid, ns) =>
-      substate.getIn(['selectedNode', clusterID]) || nid || ns.getIn([0, 'id'])
+    createMatchSelector('/clusters/:cluster_id/nodes/:node_id'),
+    (match) => {
+      if (match && match.params) {
+        return match.params.node_id;
+      }
+      return '';
+    }
   );
 
 export const makeSelectCurrentNode = () =>
   createSelector(
     selectNodesDomain,
     makeSelectClusterID(),
-    makeSelectCurrentNodeID(),
+    makeSelectNodeID(),
     (substate, clusterID, nid) =>
       substate.getIn(['nodes', clusterID, nid]) || substate.clear()
   );
