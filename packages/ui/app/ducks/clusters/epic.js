@@ -1,5 +1,5 @@
 import { push } from 'connected-react-router';
-import { Observable, interval, of, timer } from 'rxjs';
+import { Observable, interval, of, timer, concat } from 'rxjs';
 import {
   mergeMap,
   map,
@@ -52,9 +52,12 @@ export const loadClustersAndNamespacesEpic = (action$, state$, { ajax }) =>
   action$.pipe(
     ofType(c.LOAD_CLUSTERS_AND_NAMESPACES),
     mergeMap(() => (
-      ajax('/apis/zcloud.cn/v1/clusters').pipe(
-        map((resp) => a.loadClustersSuccess(resp)),
-        catchError((error) => of(a.loadClustersFailure(error)))
+      concat(
+        ajax('/apis/zcloud.cn/v1/clusters').pipe(
+          map((resp) => a.loadClustersSuccess(resp)),
+          catchError((error) => of(a.loadClustersFailure(error)))
+        ),
+        of(loadAllNamespaces(makeSelectClusters()(state$.value).toList()))
       )
     ))
   );
