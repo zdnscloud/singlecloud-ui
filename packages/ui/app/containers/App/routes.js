@@ -8,10 +8,11 @@ import Notifications from '@material-ui/icons/Notifications';
 import Unarchive from '@material-ui/icons/Unarchive';
 import Language from '@material-ui/icons/Language';
 
-import HomePage from 'containers/HomePage/Loadable';
 import ClustersPage from 'containers/ClustersPage/Loadable';
 import ClusterDetailPage from 'containers/ClusterDetailPage/Loadable';
-import NodesPage from 'containers/NodesPage/Loadable';
+import NodesPage, {
+  NodeDetailPage,
+} from 'containers/NodesPage/Loadable';
 import NamespacesPage, {
   CreateNamespacePage,
 } from 'containers/NamespacesPage/Loadable';
@@ -74,6 +75,12 @@ const appRoutes = [
     name: 'Nodes',
     icon: Dashboard,
     component: NodesPage,
+  },
+  {
+    path: '/clusters/:cluster_id/nodes/:node_id',
+    name: 'NodeDetail',
+    icon: Dashboard,
+    component: NodeDetailPage,
   },
   {
     path: '/clusters/:cluster_id/console',
