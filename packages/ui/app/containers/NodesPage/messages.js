@@ -59,4 +59,32 @@ export default defineMessages({
     id: `${scope}.tableTitleCreationTimestamp`,
     defaultMessage: 'CreationTimestamp',
   },
+  nodeInfo: {
+    id: `${scope}.nodeInfo`,
+    defaultMessage: 'NodeInfo',
+  },
+  nodeName: {
+    id: `${scope}.nodeName`,
+    defaultMessage: 'NodeName',
+  },
+  address: {
+    id: `${scope}.address`,
+    defaultMessage: 'Address',
+  },
+  dockerVersion: {
+    id: `${scope}.dockerVersion`,
+    defaultMessage: 'DockerVersion',
+  },
+  operatingSystemImage: {
+    id: `${scope}.operatingSystemImage`,
+    defaultMessage: 'OperatingSystemImage',
+  },
+  operatingSystem: {
+    id: `${scope}.operatingSystem`,
+    defaultMessage: 'OperatingSystem',
+  },
+  creationTimestamp: {
+    id: `${scope}.creationTimestamp`,
+    defaultMessage: 'creationTimestamp',
+  },
 });

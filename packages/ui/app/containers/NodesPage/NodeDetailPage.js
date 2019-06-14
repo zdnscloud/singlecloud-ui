@@ -21,9 +21,11 @@ import GridContainer from 'components/Grid/GridContainer';
 import Card from 'components/Card/Card';
 import CardHeader from 'components/Card/CardHeader';
 import CardBody from 'components/Card/CardBody';
+import ReadOnlyInput from 'components/CustomInput/ReadOnlyInput';
 
 import { makeSelectClusterID } from 'ducks/app/selectors';
 import { makeSelectCurrentCluster } from 'ducks/clusters/selectors';
+import { makeSelectCurrentNode } from 'ducks/nodes/selectors';
 import * as actions from 'ducks/nodes/actions';
 
 import messages from './messages';
@@ -51,7 +53,7 @@ export class NodeDetailPage extends React.PureComponent {
   }
 
   render() {
-    const { classes } = this.props;
+    const { classes, node } = this.props;
 
     return (
       <div className={classes.root}>
@@ -63,10 +65,58 @@ export class NodeDetailPage extends React.PureComponent {
               <Card>
                 <CardHeader color="primary">
                   <h4 className={classes.cardTitleWhite}>
-                    <FormattedMessage {...messages.nodes} />
+                    <FormattedMessage {...messages.nodeInfo} />
                   </h4>
                 </CardHeader>
                 <CardBody>
+                  <GridContainer>
+                    <GridItem xs={3} sm={3} md={3}>
+                      <ReadOnlyInput
+                        labelText={<FormattedMessage {...messages.nodeName} />}
+                        fullWidth
+                        value={node.get('name')}
+                      />
+                    </GridItem>
+                    <GridItem xs={3} sm={3} md={3}>
+                      <ReadOnlyInput
+                        labelText={<FormattedMessage {...messages.address} />}
+                        fullWidth
+                        value={node.get('address')}
+                      />
+                    </GridItem>
+                    <GridItem xs={3} sm={3} md={3}>
+                      <ReadOnlyInput
+                        labelText={<FormattedMessage {...messages.dockerVersion} />}
+                        fullWidth
+                        value={node.get('dockerVersion')}
+                      />
+                    </GridItem>
+                  </GridContainer>
+
+                  <GridContainer>
+                    <GridItem xs={3} sm={3} md={3}>
+                      <ReadOnlyInput
+                        labelText={<FormattedMessage {...messages.operatingSystemImage} />}
+                        fullWidth
+                        value={node.get('operatingSystemImage')}
+                      />
+                    </GridItem>
+                    <GridItem xs={3} sm={3} md={3}>
+                      <ReadOnlyInput
+                        labelText={<FormattedMessage {...messages.operatingSystem} />}
+                        fullWidth
+                        value={node.get('operatingSystem')}
+                      />
+                    </GridItem>
+                    <GridItem xs={3} sm={3} md={3}>
+                      <ReadOnlyInput
+                        labelText={<FormattedMessage {...messages.creationTimestamp} />}
+                        fullWidth
+                        value={node.get('creationTimestamp')}
+                      />
+                    </GridItem>
+                  </GridContainer>
+
                 </CardBody>
               </Card>
             </GridItem>
@@ -80,6 +130,7 @@ export class NodeDetailPage extends React.PureComponent {
 const mapStateToProps = createStructuredSelector({
   cluster: makeSelectCurrentCluster(),
   clusterID: makeSelectClusterID(),
+  node: makeSelectCurrentNode(),
 });
 
 const mapDispatchToProps = (dispatch) =>

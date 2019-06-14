@@ -23,6 +23,7 @@ function ReadOnlyInput({ ...props }) {
     white,
     inputRootCustomClasses,
     value,
+    fullWidth,
   } = props;
 
   const touchedError = false;
@@ -51,6 +52,7 @@ function ReadOnlyInput({ ...props }) {
     <FormControl
       {...formControlProps}
       className={formControlClasses}
+      fullWidth
     >
       {labelText !== undefined ? (
         <InputLabel
