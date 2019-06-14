@@ -33,9 +33,12 @@ export const initEpic = (action$, state$, { ajax }) =>
 export const changeClusterEpic = (action$, state$, { ajax }) =>
   action$.pipe(
     ofType(c.CHANGE_CLUSTER),
-    mergeMap(({ payload: { cluster } }) => (
-      of(push(`/clusters/${cluster}`))
-    ))
+    mergeMap(({ payload: { clusterID } }) => {
+      if (clusterID) {
+        return of(push(`/clusters/${clusterID}`));
+      }
+      return of(push('/clusters'));
+    })
   );
 
 export const changeNamespaceEpic = (action$, state$, { ajax }) =>
