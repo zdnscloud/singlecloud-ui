@@ -222,7 +222,7 @@ const leftMenuStyle = (theme) => ({
   sidebarWrapper: {
     position: 'absolute',
     height: 'calc(100vh - 64px)',
-    overflow: 'auto',
+    overflow: 'hidden',
     width: '232px',
     top: 64,
     left: 0,
