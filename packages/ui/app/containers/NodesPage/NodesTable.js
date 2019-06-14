@@ -11,6 +11,8 @@ import { FormattedMessage } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import { bindActionCreators, compose } from 'redux';
 
+import { Link } from 'react-router-dom';
+import Button from '@material-ui/core/Button';
 import { withStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import { SimpleTable } from '@gsmlg/com';
@@ -33,18 +35,35 @@ export class NodesTable extends React.PureComponent {
   };
 
   render() {
-    const { classes, data, nodes } = this.props;
+    const { classes, data, clusterID, nodes } = this.props;
+    const mapedSchema = schema.map((sche) => ({
+      ...sche,
+      label: (
+        <FormattedMessage {...messages[`tableTitle${sche.label}`]} />
+      ),
+    })).map((sch) => {
+      if (sch.id === 'name') {
+        return {
+          ...sch,
+          component: (props) => (
+            <Button
+              color="primary"
+              to={`/clusters/${clusterID}/nodes/${props.data.get('id')}`}
+              component={Link}
+            >
+              {props.data.get('name')}
+            </Button>
+          ),
+        };
+      }
+      return sch;
+    });
 
     return (
       <Paper className={classes.tableWrapper}>
         <SimpleTable
           className={classes.table}
-          schema={schema.map((sche) => ({
-            ...sche,
-            label: (
-              <FormattedMessage {...messages[`tableTitle${sche.label}`]} />
-            ),
-          }))}
+          schema={mapedSchema}
           data={data}
         />
       </Paper>
@@ -53,6 +72,7 @@ export class NodesTable extends React.PureComponent {
 }
 
 const mapStateToProps = createStructuredSelector({
+  clusterID: makeSelectClusterID(),
   nodes: makeSelectNodes(),
   data: makeSelectNodesList(),
 });

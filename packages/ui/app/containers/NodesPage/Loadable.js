@@ -9,3 +9,7 @@ import loadable from '@loadable/component';
 export default loadable(() =>
   import(/* webpackChunkName: "NodesPage" */ './index')
 );
+
+export const NodeDetailPage = loadable(() => (
+  import(/* NodeDetailPage */ './NodeDetailPage')
+));
