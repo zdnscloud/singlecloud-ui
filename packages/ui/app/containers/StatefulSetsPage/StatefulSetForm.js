@@ -166,8 +166,8 @@ class StatefulSetForm extends PureComponent {
                       <GridContainer>
                         <GridItem xs={12} sm={12} md={12} className={classes.formLine}>
                           <SwitchField
-                            name="relaodWhenConfigChange"
-                            label={<FormattedMessage {...messages.formRelaodWhenConfigChange} />}
+                            name="reloadWhenConfigChange"
+                            label={<FormattedMessage {...messages.formReloadWhenConfigChange} />}
                           />
                         </GridItem>
                       </GridContainer>

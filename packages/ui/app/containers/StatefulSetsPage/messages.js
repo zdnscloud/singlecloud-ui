@@ -153,9 +153,9 @@ export default defineMessages({
     id: `${scope}.formAdvancedOptions`,
     defaultMessage: 'AdvancedOptions',
   },
-  formRelaodWhenConfigChange: {
-    id: `${scope}.formRelaodWhenConfigChange`,
-    defaultMessage: 'RelaodWhenConfigChange',
+  formReloadWhenConfigChange: {
+    id: `${scope}.formReloadWhenConfigChange`,
+    defaultMessage: 'ReloadWhenConfigChange',
   },
   formExposedServiceType: {
     id: `${scope}.formExposedServiceType`,
