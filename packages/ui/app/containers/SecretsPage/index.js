@@ -44,8 +44,7 @@ export class SecretsPage extends React.PureComponent {
   };
 
   componentWillMount() {
-    const { clusterID, namespaceID, url, loadSecrets } = this.props;
-    loadSecrets({ url, clusterID, namespaceID });
+    this.load();
   }
 
   componentDidUpdate(prevProps) {
@@ -53,10 +52,15 @@ export class SecretsPage extends React.PureComponent {
       clusterID: prevClusterID,
       namespaceID: prevNamespaceID,
     } = prevProps;
-    const { clusterID, namespaceID, url, loadSecrets } = this.props;
+    const { clusterID, namespaceID } = this.props;
     if (prevClusterID !== clusterID || prevNamespaceID !== namespaceID) {
-      loadSecrets({ url, clusterID, namespaceID });
+      this.load();
     }
+  }
+
+  load() {
+    const { clusterID, namespaceID, url, loadSecrets } = this.props;
+    loadSecrets({ url, clusterID, namespaceID });
   }
 
   render() {

@@ -59,7 +59,7 @@ export const makeSelectCurrentSecret = () =>
   createSelector(
     makeSelectSecrets(),
     makeSelectSecretID(),
-    (maps, id) => maps.get(id)
+    (secrets, id) => secrets.get(id) || secrets.clear()
   );
 
 /**

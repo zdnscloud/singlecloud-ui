@@ -60,10 +60,10 @@ export class SecretsTable extends React.PureComponent {
 
     const mergedSchema = schema.concat([
       {
-        id: 'configs',
+        id: 'data',
         label: 'Count',
         component: (props) => {
-          const configs = props.data.get('configs');
+          const configs = props.data.get('data');
           if (configs) return configs.size;
           return 0;
         },

@@ -41,7 +41,7 @@ export const secretsReducer = (
     case c.LOAD_SECRET:
       return state;
     case c.LOAD_SECRET_SUCCESS: {
-      const { clusterID, namespaceID } = meta;
+      const { clusterID, namespaceID, id } = meta;
       const secret = payload.response;
       return state.setIn(['secrets', clusterID, namespaceID, secret.id], fromJS(secret));
     }

@@ -20,7 +20,7 @@ import * as a from './actions';
 export const loadSecretsEpic = (action$, state$, { ajax }) =>
   action$.pipe(
     ofType(c.LOAD_SECRETS),
-    mergeMap(({ meta: { url, clusterID, namespaceID } }) =>
+    mergeMap(({ meta: { url, clusterID, namespaceID } }) => (
       ajax(url).pipe(
         map((resp) =>
           a.loadSecretsSuccess(resp, { clusterID, namespaceID })
@@ -29,18 +29,18 @@ export const loadSecretsEpic = (action$, state$, { ajax }) =>
           of(a.loadSecretsFailure(error, { clusterID, namespaceID }))
         )
       )
-    )
+    ))
   );
 
 export const loadSecretEpic = (action$, state$, { ajax }) =>
   action$.pipe(
     ofType(c.LOAD_SECRET),
-    mergeMap(({ payload, meta: { url, clusterID, namespaceID } }) =>
-      ajax(`${url}/${payload}`).pipe(
-        map((resp) => a.loadSecretSuccess(resp)),
-        catchError((error) => of(a.loadSecretFailure(error)))
+    mergeMap(({ payload, meta: { url, clusterID, namespaceID } }) => (
+      ajax(`${url}`).pipe(
+        map((resp) => a.loadSecretSuccess(resp, { clusterID, namespaceID, id: payload })),
+        catchError((error) => of(a.loadSecretFailure(error, { clusterID, namespaceID })))
       )
-    )
+    ))
   );
 
 export const createSecretEpic = (action$, state$, { ajax }) =>

@@ -22,19 +22,22 @@ export const loadSecretsFailure = (error, meta) => ({
   error: true,
 });
 
-export const loadSecret = (id) => ({
+export const loadSecret = (id, meta) => ({
   type: c.LOAD_SECRET,
   payload: id,
+  meta,
 });
 
-export const loadSecretSuccess = (resp) => ({
+export const loadSecretSuccess = (resp, meta) => ({
   type: c.LOAD_SECRET_SUCCESS,
   payload: resp,
+  meta,
 });
 
-export const loadSecretFailure = (error) => ({
+export const loadSecretFailure = (error, meta) => ({
   type: c.LOAD_SECRET_FAILURE,
   payload: error,
+  meta,
   error: true,
 });
 

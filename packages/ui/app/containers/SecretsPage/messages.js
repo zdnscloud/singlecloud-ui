@@ -45,17 +45,17 @@ export default defineMessages({
     id: `${scope}.formName`,
     defaultMessage: 'Name',
   },
-  formFiles: {
-    id: `${scope}.formFiles`,
-    defaultMessage: 'Files',
+  formData: {
+    id: `${scope}.formData`,
+    defaultMessage: 'Data',
   },
-  formFileName: {
-    id: `${scope}.formFileName`,
-    defaultMessage: 'FileName',
+  formDataKey: {
+    id: `${scope}.formDataKey`,
+    defaultMessage: 'DataKey',
   },
-  formFileContent: {
-    id: `${scope}.formFileContent`,
-    defaultMessage: 'FileContent',
+  formDataValue: {
+    id: `${scope}.formDataValue`,
+    defaultMessage: 'DataValue',
   },
   formCreate: {
     id: `${scope}.formCreate`,

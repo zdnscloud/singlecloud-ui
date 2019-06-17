@@ -59,10 +59,10 @@ export class ShowSecret extends React.PureComponent {
     classes: PropTypes.object.isRequired,
   };
 
-  state = {
-    isOpen: false,
-    fileIndex: null,
-  };
+  componentWillMount() {
+    const { clusterID, namespaceID, url, loadSecrets } = this.props;
+    loadSecrets({ url, clusterID, namespaceID });
+  }
 
   render() {
     const {
@@ -85,7 +85,7 @@ export class ShowSecret extends React.PureComponent {
             </CardHeader>
             <CardBody>
               <GridContainer>
-                <GridItem xs={12} sm={12} md={12} className={classes.formLine}>
+                <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
                   <ReadOnlyInput
                     labelText={<FormattedMessage {...messages.formName} />}
                     value={secret.get('name')}
@@ -95,87 +95,35 @@ export class ShowSecret extends React.PureComponent {
                   />
                 </GridItem>
                 <GridItem xs={12} sm={12} md={12}>
-                  <GridContainer>
-                    {secret.get('configs').map((cfg, idx) => (
-                      <GridItem
-                        xs={3}
-                        sm={3}
-                        md={3}
-                        key={`${idx}-${cfg.get('name')}`}
-                      >
+                  {secret.get('data') && secret.get('data').map((sec, idx) => (
+                    <GridContainer key={`${idx}-${sec.get('key')}`}>
+                      <GridItem xs={3} sm={3} md={3}>
                         <ReadOnlyInput
-                          labelText={<FormattedMessage {...messages.formFileName} />}
-                          value={cfg.get('name')}
+                          labelText={<FormattedMessage {...messages.formDataKey} />}
+                          value={sec.get('key')}
                           fullWidth
                           formControlProps={{
                             className: classes.nameControl,
                           }}
-                          classes={{
-                            input: classes.fileNameLink,
-                          }}
-                          inputProps={{
-                            disabled: false,
-                            readOnly: true,
-                            onClick: (evt) => {
-                              this.setState({
-                                isOpen: true,
-                                fileIndex: idx,
-                              });
-                            },
+                        />
+                      </GridItem>
+                      <GridItem xs={3} sm={3} md={3}>
+                        <ReadOnlyInput
+                          labelText={<FormattedMessage {...messages.formDataValue} />}
+                          value={sec.get('value')}
+                          fullWidth
+                          formControlProps={{
+                            className: classes.nameControl,
                           }}
                         />
                       </GridItem>
-                    ))}
-                  </GridContainer>
+                    </GridContainer>
+                  ))}
                 </GridItem>
               </GridContainer>
             </CardBody>
           </Card>
-          <Dialog
-            maxWidth="lg"
-            fullWidth
-            open={this.state.isOpen}
-            onClose={() => {
-              this.setState({
-                isOpen: false,
-                fileIndex: null,
-              });
-            }}
-            PaperProps={{ style: { overflow: 'hidden' } }}
-          >
-            <Card className={classes.dialogCard}>
-              <CardHeader color="secondary" className={classes.dialogHeader}>
-                <h4 className={classes.cardTitleWhite}>
-                  <FormattedMessage {...messages.formShowFile} />
-                </h4>
-              </CardHeader>
-              <CardBody>
-                <AceEditor
-                  focus
-                  mode="yaml"
-                  theme="tomorrow_night"
-                  value={secret.getIn(['configs', this.state.fileIndex, 'data'])}
-                  height="calc(100vh - 225px)"
-                  width="calc(100vw - 200px)"
-                  readOnly
-                />
-              </CardBody>
-              <CardFooter>
-                <Button
-                  variant="contained"
-                  color="secondary"
-                  onClick={() => {
-                    this.setState({
-                      isOpen: false,
-                      fileIndex: null,
-                    });
-                  }}
-                >
-                  <FormattedMessage {...messages.formCloseFile} />
-                </Button>
-              </CardFooter>
-            </Card>
-          </Dialog>
+
         </div>
       </div>
     );

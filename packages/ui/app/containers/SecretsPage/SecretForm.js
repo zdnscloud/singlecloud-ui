@@ -40,64 +40,10 @@ import InputField from 'components/Field/InputField';
 
 import messages from './messages';
 
-const renderData = ({ meta, input, classes }) => {
-  const [open, setOpen] = useState(false);
-
-  return (
-    <div className={classes.fileContentButton}>
-      <Button color="secondary" onClick={() => setOpen(true)}>
-        <FormattedMessage {...messages.formFileContent} />
-      </Button>
-      <Dialog
-        maxWidth="lg"
-        fullWidth
-        disableBackdropClick
-        open={open}
-        onClose={() => {
-          setOpen(false);
-        }}
-        PaperProps={{ style: { overflow: 'hidden' } }}
-      >
-        <Card className={classes.dialogCard}>
-          <CardHeader color="secondary" className={classes.dialogHeader}>
-            <h4 className={classes.cardTitleWhite}>
-              <FormattedMessage {...messages.formEditFile} />
-            </h4>
-          </CardHeader>
-          <CardBody>
-            <AceEditor
-              focus
-              mode="yaml"
-              theme="tomorrow_night"
-              value={input.value}
-              height="calc(100vh - 225px)"
-              width="calc(100vw - 200px)"
-              onChange={(val, evt) => {
-                input.onChange(val);
-              }}
-            />
-          </CardBody>
-          <CardFooter>
-            <Button
-              variant="contained"
-              color="secondary"
-              onClick={() => {
-                setOpen(false);
-              }}
-            >
-              <FormattedMessage {...messages.formSetFile} />
-            </Button>
-          </CardFooter>
-        </Card>
-      </Dialog>
-    </div>
-  );
-};
-
 const renderConfigs = ({ fields, meta: { error, submitFailed }, classes }) => (
-  <List component="ul" className={classes.filesList}>
+  <List component="ul" className={classes.dataList}>
     <ListItem>
-      <ListItemText primary={<FormattedMessage {...messages.formFiles} />} />
+      <ListItemText primary={<FormattedMessage {...messages.formData} />} />
       <IconButton onClick={(evt) => fields.push({})}>
         <AddIcon />
       </IconButton>
@@ -111,14 +57,15 @@ const renderConfigs = ({ fields, meta: { error, submitFailed }, classes }) => (
       <ListItem key={i}>
         <ListItemText>
           <InputField
-            name={`${f}.name`}
-            label={<FormattedMessage {...messages.formFileName} />}
+            name={`${f}.key`}
+            label={<FormattedMessage {...messages.formDataKey} />}
+            className={classes.dataListKey}
           />
           &nbsp;&nbsp;&nbsp;&nbsp;
-          <Field
-            name={`${f}.data`}
-            component={renderData}
-            classes={classes}
+          <InputField
+            name={`${f}.value`}
+            label={<FormattedMessage {...messages.formDataValue} />}
+            className={classes.dataListValue}
           />
         </ListItemText>
         <IconButton
@@ -165,7 +112,7 @@ class SecretForm extends PureComponent {
           </GridItem>
           <GridItem xs={12} sm={12} md={12}>
             <FieldArray
-              name="configs"
+              name="data"
               component={renderConfigs}
               classes={classes}
             />

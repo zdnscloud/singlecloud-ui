@@ -114,8 +114,14 @@ const styles = (theme) => ({
     top: '3px',
     right: '10px',
   },
-  filesList: {
-    width: '500px',
+  dataList: {
+    width: '800px',
+  },
+  dataListKey: {
+    width: '300px',
+  },
+  dataListValue: {
+    width: '300px',
   },
   fileContentButton: {
     display: 'inline-block',
