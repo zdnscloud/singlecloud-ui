@@ -71,6 +71,10 @@ export default defineMessages({
     id: `${scope}.address`,
     defaultMessage: 'Address',
   },
+  roles: {
+    id: `${scope}.roles`,
+    defaultMessage: 'Roles',
+  },
   dockerVersion: {
     id: `${scope}.dockerVersion`,
     defaultMessage: 'DockerVersion',
@@ -86,5 +90,33 @@ export default defineMessages({
   creationTimestamp: {
     id: `${scope}.creationTimestamp`,
     defaultMessage: 'creationTimestamp',
+  },
+  cpu: {
+    id: `${scope}.cpu`,
+    defaultMessage: 'CPU',
+  },
+  memory: {
+    id: `${scope}.memory`,
+    defaultMessage: 'Memory',
+  },
+  pods: {
+    id: `${scope}.pods`,
+    defaultMessage: 'Pods',
+  },
+  labels: {
+    id: `${scope}.labels`,
+    defaultMessage: 'Labels',
+  },
+  annotations: {
+    id: `${scope}.annotations`,
+    defaultMessage: 'Annotations',
+  },
+  key: {
+    id: `${scope}.key`,
+    defaultMessage: 'Key',
+  },
+  value: {
+    id: `${scope}.value`,
+    defaultMessage: 'Value',
   },
 });
