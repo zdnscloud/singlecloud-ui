@@ -72,7 +72,7 @@ const AdvanceServices = ({
           }
         }
         const isUDP = port.get('protocol') === 'udp';
-        const itemName = `name[${idx}]`
+        const itemName = `${name}[${idx}]`;
 
         return (
           <ListItem key={i}>
