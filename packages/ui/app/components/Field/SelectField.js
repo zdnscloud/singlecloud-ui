@@ -10,6 +10,7 @@ const SelectComponent = ({
   label,
   input,
   classes,
+  disabled,
   meta,
   inputProps,
   labelProps,
@@ -18,13 +19,22 @@ const SelectComponent = ({
   ...custom
 }) => {
   return (
-    <FormControl {...formControlProps}>
-      <InputLabel htmlFor="" {...labelProps}>
+    <FormControl {...formControlProps} disabled={disabled}>
+      <InputLabel
+        htmlFor=""
+        {...labelProps}
+      >
         {label}
       </InputLabel>
-      <Select {...input} {...inputProps}>
+      <Select
+        {...input}
+        {...inputProps}
+      >
         {options.map((opt, i) => (
-          <MenuItem key={i} value={opt.value}>
+          <MenuItem
+            key={i}
+            value={opt.value}
+          >
             {opt.label}
           </MenuItem>
         ))}
