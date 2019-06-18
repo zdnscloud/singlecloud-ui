@@ -54,7 +54,7 @@ const AdvanceServices = ({
   ports,
   meta: { error, submitFailed },
 }) => {
-  const { onChange } = input;
+  const { onChange, name } = input;
   let { value } = input;
   if (!value) value = fromJS([]);
 
@@ -72,26 +72,31 @@ const AdvanceServices = ({
           }
         }
         const isUDP = port.get('protocol') === 'udp';
+        const itemName = `name[${idx}]`
 
         return (
           <ListItem key={i}>
             <ListItemText>
-              <div>
-                <ReadOnlyInput
-                  labelText={<FormattedMessage {...messages.formPortName} />}
-                  value={port.get('name')}
-                />
-                &nbsp;&nbsp;
-                <ReadOnlyInput
-                  labelText={<FormattedMessage {...messages.formPortProtocol} />}
-                  value={port.get('protocol')}
-                />
-                &nbsp;&nbsp;
-                <ReadOnlyInput
-                  labelText={<FormattedMessage {...messages.formPort} />}
-                  value={port.get('port')}
-                />
-              </div>
+              <GridContainer>
+                <GridItem xs={2} sm={2} md={2}>
+                  <ReadOnlyInput
+                    labelText={<FormattedMessage {...messages.formPortName} />}
+                    value={port.get('name')}
+                  />
+                </GridItem>
+                <GridItem xs={2} sm={2} md={2}>
+                  <ReadOnlyInput
+                    labelText={<FormattedMessage {...messages.formPortProtocol} />}
+                    value={port.get('protocol')}
+                  />
+                </GridItem>
+                <GridItem xs={2} sm={2} md={2}>
+                  <ReadOnlyInput
+                    labelText={<FormattedMessage {...messages.formPort} />}
+                    value={port.get('port')}
+                  />
+                </GridItem>
+              </GridContainer>
               <div style={{ display: 'flex', alignItems: 'flex-end' }}>
                 <Checkbox
                   style={{ paddingBottom: 0 }}
@@ -109,7 +114,7 @@ const AdvanceServices = ({
                   type="number"
                   label={<FormattedMessage {...messages.formServicePort} />}
                   disabled={!checked}
-                  value={value.getIn([idx, 'servicePort'])}
+                  value={checked ? value.getIn([idx, 'servicePort']) : ''}
                   onChange={(evt) => {
                     const val = Number(evt.target.value);
                     onChange(value.setIn([idx, 'servicePort'], val));
@@ -119,7 +124,7 @@ const AdvanceServices = ({
                 <Checkbox
                   style={{ paddingBottom: 0 }}
                   disabled={!checked}
-                  checked={value.getIn([idx, 'autoCreateIngress'])}
+                  checked={checked ? value.getIn([idx, 'autoCreateIngress']) : false}
                   onChange={(evt) => {
                     const ingress = value.getIn([idx, 'autoCreateIngress']);
                     onChange(value.setIn([idx, 'autoCreateIngress'], !ingress));
@@ -129,13 +134,17 @@ const AdvanceServices = ({
                 {isUDP ? (
                   <Fragment>
                     <SelectField
-                      disabled={!value.getIn([idx, 'autoCreateIngress'])}
-                      value={value.getIn([idx, 'ingressProtocol'])}
+                      disabled={!checked || !value.getIn([idx, 'autoCreateIngress'])}
+                      value={checked ? value.getIn([idx, 'ingressProtocol']) : ''}
                       onChange={(evt) => {
+                        if (!checked || !value.getIn([idx, 'autoCreateIngress'])) {
+                          return;
+                        }
                         const dn = value.getIn([idx, 'ingressProtocol']);
                         const protocol = evt.target.value;
                         onChange(value.setIn([idx, 'ingressProtocol'], protocol));
                       }}
+                      name={`${itemName}.ingressProtocol`}
                       label={<FormattedMessage {...messages.formPortProtocol} />}
                       options={[{ label: 'UDP', value: 'UDP' }]}
                       formControlProps={{
@@ -148,7 +157,7 @@ const AdvanceServices = ({
                     <TextField
                       label={<FormattedMessage {...messages.formIngressPort} />}
                       disabled={!value.getIn([idx, 'autoCreateIngress'])}
-                      value={value.getIn([idx, 'ingressPort'])}
+                      value={checked ? value.getIn([idx, 'ingressPort']) : ''}
                       onChange={(evt) => {
                         const dn = value.getIn([idx, 'ingressPort']);
                         const portVal = Number(evt.target.value);
@@ -162,13 +171,17 @@ const AdvanceServices = ({
                 ) : (
                   <Fragment>
                     <SelectField
-                      disabled={!value.getIn([idx, 'autoCreateIngress'])}
-                      value={value.getIn([idx, 'ingressProtocol'])}
+                      disabled={!checked || !value.getIn([idx, 'autoCreateIngress'])}
+                      value={checked ? value.getIn([idx, 'ingressProtocol']) : ''}
                       onChange={(evt) => {
+                        if (!checked || !value.getIn([idx, 'autoCreateIngress'])) {
+                          return;
+                        }
                         const dn = value.getIn([idx, 'ingressProtocol']);
                         const protocol = evt.target.value;
                         onChange(value.setIn([idx, 'ingressProtocol'], protocol));
                       }}
+                      name={`${itemName}.ingressProtocol`}
                       label={<FormattedMessage {...messages.formPortProtocol} />}
                       options={[
                         { label: 'TCP', value: 'TCP' },
@@ -185,7 +198,7 @@ const AdvanceServices = ({
                       <TextField
                         label={<FormattedMessage {...messages.formIngressPort} />}
                         disabled={!value.getIn([idx, 'autoCreateIngress'])}
-                        value={value.getIn([idx, 'ingressPort'])}
+                        value={checked ? value.getIn([idx, 'ingressPort']) : ''}
                         onChange={(evt) => {
                           const dn = value.getIn([idx, 'ingressPort']);
                           const portVal = Number(evt.target.value);
@@ -200,7 +213,7 @@ const AdvanceServices = ({
                         <TextField
                           label={<FormattedMessage {...messages.formIngressDomain} />}
                           disabled={!value.getIn([idx, 'autoCreateIngress'])}
-                          value={value.getIn([idx, 'ingressHost'])}
+                          value={checked ? value.getIn([idx, 'ingressHost']) : ''}
                           onChange={(evt) => {
                             onChange(value.setIn([idx, 'ingressHost'], evt.target.value));
                           }}
@@ -209,7 +222,7 @@ const AdvanceServices = ({
                         <TextField
                           label={<FormattedMessage {...messages.formIngressPath} />}
                           disabled={!value.getIn([idx, 'autoCreateIngress'])}
-                          value={value.getIn([idx, 'ingressPath'])}
+                          value={checked ? value.getIn([idx, 'ingressPath']) : ''}
                           onChange={(evt) => {
                             onChange(value.setIn([idx, 'ingressPath'], evt.target.value));
                           }}
