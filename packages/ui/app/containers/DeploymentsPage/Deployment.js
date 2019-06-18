@@ -340,43 +340,52 @@ export class Deployment extends React.PureComponent {
                               <List component="ul">
                                 {deployment.getIn(['advancedOptions', 'exposedServices']) &&
                                  deployment.getIn(['advancedOptions', 'exposedServices']).map((port, i) => (
-                                  <ListItem key={i}>
-                                    <ListItemText>
-                                      <ReadOnlyInput
-                                        labelText={<FormattedMessage {...messages.formPortName} />}
-                                        value={port.get('containerPortName')}
-                                      />
-                                      &nbsp;&nbsp;
-                                      <ReadOnlyInput
-                                        labelText={<FormattedMessage {...messages.formServicePort} />}
-                                        value={port.get('servicePort')}
-                                      />
-                                      {port.get('autoCreateIngress') ? (
-                                        <Fragment>
-                                          &nbsp;&nbsp;
-                                          <ReadOnlyInput
-                                            labelText={<FormattedMessage {...messages.formPortProtocol} />}
-                                            value={port.get('ingressProtocol')}
-                                          />
-                                          &nbsp;&nbsp;
-                                          <ReadOnlyInput
-                                            labelText={<FormattedMessage {...messages.formIngressPort} />}
-                                            value={port.get('ingressPort')}
-                                          />
-                                          &nbsp;&nbsp;
-                                          <ReadOnlyInput
-                                            labelText={<FormattedMessage {...messages.formIngressDomain} />}
-                                            value={port.get('ingressHost')}
-                                          />
-                                          &nbsp;&nbsp;
-                                          <ReadOnlyInput
-                                            labelText={<FormattedMessage {...messages.formIngressPath} />}
-                                            value={port.get('ingressPath')}
-                                          />
-                                        </Fragment>
-                                      ): null}
-                                    </ListItemText>
-                                  </ListItem>
+                                   <ListItem key={i}>
+                                     <ListItemText>
+                                       <GridContainer>
+                                         <GridItem xs={2} sm={2} md={2}>
+                                           <ReadOnlyInput
+                                             labelText={<FormattedMessage {...messages.formPortName} />}
+                                             value={port.get('containerPortName')}
+                                           />
+                                         </GridItem>
+                                         <GridItem xs={2} sm={2} md={2}>
+                                           <ReadOnlyInput
+                                             labelText={<FormattedMessage {...messages.formServicePort} />}
+                                             value={port.get('servicePort')}
+                                           />
+                                         </GridItem>
+                                         {port.get('autoCreateIngress') ? (
+                                           <Fragment>
+                                             <GridItem xs={2} sm={2} md={2}>
+                                               <ReadOnlyInput
+                                                 labelText={<FormattedMessage {...messages.formPortProtocol} />}
+                                                 value={port.get('ingressProtocol')}
+                                               />
+                                             </GridItem>
+                                             <GridItem xs={2} sm={2} md={2}>
+                                               <ReadOnlyInput
+                                                 labelText={<FormattedMessage {...messages.formIngressPort} />}
+                                                 value={port.get('ingressPort')}
+                                               />
+                                             </GridItem>
+                                             <GridItem xs={2} sm={2} md={2}>
+                                               <ReadOnlyInput
+                                                 labelText={<FormattedMessage {...messages.formIngressDomain} />}
+                                                 value={port.get('ingressHost')}
+                                               />
+                                             </GridItem>
+                                             <GridItem xs={2} sm={2} md={2}>
+                                               <ReadOnlyInput
+                                                 labelText={<FormattedMessage {...messages.formIngressPath} />}
+                                                 value={port.get('ingressPath')}
+                                               />
+                                             </GridItem>
+                                           </Fragment>
+                                         ): null}
+                                       </GridContainer>
+                                     </ListItemText>
+                                   </ListItem>
                                 ))}
                               </List>
                             </GridItem>
