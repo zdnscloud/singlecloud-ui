@@ -74,7 +74,7 @@ export class StatefulSetDetailPage extends React.PureComponent {
       statefulSetID,
       statefulSet,
       podsUrl: url,
-      loadPods,
+      loadSTSPods,
       loadStatefulSet,
     } = this.props;
     loadStatefulSet(statefulSetID, {
@@ -82,7 +82,7 @@ export class StatefulSetDetailPage extends React.PureComponent {
       namespaceID,
       url: statefulSet.getIn(['links', 'self']),
     });
-    loadPods({ url, clusterID, namespaceID, statefulSetID });
+    loadSTSPods({ url, clusterID, namespaceID, statefulSetID });
   }
 
   render() {
