@@ -153,15 +153,20 @@ export class DaemonSet extends React.PureComponent {
                                           {c.get('env').map((p, i) => (
                                             <ListItem key={i}>
                                               <ListItemText>
-                                                <ReadOnlyInput
-                                                  labelText={<FormattedMessage {...messages.formENVName} />}
-                                                  value={p.get('name')}
-                                                />
-                                                &nbsp;&nbsp;&nbsp;&nbsp;
-                                                <ReadOnlyInput
-                                                  labelText={<FormattedMessage {...messages.formENVValue} />}
-                                                  value={p.get('value')}
-                                                />
+                                                <GridContainer>
+                                                  <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
+                                                    <ReadOnlyInput
+                                                      labelText={<FormattedMessage {...messages.formENVName} />}
+                                                      value={p.get('name')}
+                                                    />
+                                                  </GridItem>
+                                                  <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
+                                                    <ReadOnlyInput
+                                                      labelText={<FormattedMessage {...messages.formENVValue} />}
+                                                      value={p.get('value')}
+                                                    />
+                                                  </GridItem>
+                                                </GridContainer>
                                               </ListItemText>
                                             </ListItem>
                                           ))}
@@ -179,20 +184,26 @@ export class DaemonSet extends React.PureComponent {
                                           {c.get('volumes').map((p, i) => (
                                             <ListItem key={i}>
                                               <ListItemText>
-                                                <ReadOnlyInput
-l                                                 labelText={<FormattedMessage {...messages.formVolumeType} />}
-                                                  value={typeMap[p.get('type')]}
-                                                />
-                                                &nbsp;&nbsp;&nbsp;&nbsp;
-                                                <ReadOnlyInput
-l                                                 labelText={<FormattedMessage {...messages.formVolumeName} />}
-                                                  value={p.get('name')}
-                                                />
-                                                &nbsp;&nbsp;&nbsp;&nbsp;
-                                                <ReadOnlyInput
-                                                  labelText={<FormattedMessage {...messages.formMountPath} />}
-                                                  value={p.get('mountPath')}
-                                                />
+                                                <GridContainer>
+                                                  <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
+                                                    <ReadOnlyInput
+                                                      labelText={<FormattedMessage {...messages.formVolumeType} />}
+                                                      value={typeMap[p.get('type')]}
+                                                    />
+                                                  </GridItem>
+                                                  <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
+                                                    <ReadOnlyInput
+                                                      labelText={<FormattedMessage {...messages.formVolumeName} />}
+                                                      value={p.get('name')}
+                                                    />
+                                                  </GridItem>
+                                                  <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
+                                                    <ReadOnlyInput
+                                                      labelText={<FormattedMessage {...messages.formMountPath} />}
+                                                      value={p.get('mountPath')}
+                                                    />
+                                                  </GridItem>
+                                                </GridContainer>
                                               </ListItemText>
                                             </ListItem>
                                           ))}
@@ -210,20 +221,26 @@ l                                                 labelText={<FormattedMessage {
                                           {c.get('exposedPorts').map((p, i) => (
                                             <ListItem key={i}>
                                               <ListItemText>
-                                                <ReadOnlyInput
-                                                  labelText={<FormattedMessage {...messages.formPortName} />}
-                                                  value={p.get('name')}
-                                                />
-                                                &nbsp;&nbsp;&nbsp;&nbsp;
-                                                <ReadOnlyInput
-                                                  labelText={<FormattedMessage {...messages.formPortProtocol} />}
-                                                  value={p.get('protocol')}
-                                                />
-                                                &nbsp;&nbsp;&nbsp;&nbsp;
-                                                <ReadOnlyInput
-                                                  labelText={<FormattedMessage {...messages.formPort} />}
-                                                  value={p.get('port')}
-                                                />
+                                                <GridContainer>
+                                                  <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
+                                                    <ReadOnlyInput
+                                                      labelText={<FormattedMessage {...messages.formPortName} />}
+                                                      value={p.get('name')}
+                                                    />
+                                                  </GridItem>
+                                                  <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
+                                                    <ReadOnlyInput
+                                                      labelText={<FormattedMessage {...messages.formPortProtocol} />}
+                                                      value={p.get('protocol')}
+                                                    />
+                                                  </GridItem>
+                                                  <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
+                                                    <ReadOnlyInput
+                                                      labelText={<FormattedMessage {...messages.formPort} />}
+                                                      value={p.get('port')}
+                                                    />
+                                                  </GridItem>
+                                                </GridContainer>
                                               </ListItemText>
                                             </ListItem>
                                           ))}
@@ -269,42 +286,51 @@ l                                                 labelText={<FormattedMessage {
                               <List component="ul">
                                 {daemonSet.getIn(['advancedOptions', 'exposedServices']) &&
                                  daemonSet.getIn(['advancedOptions', 'exposedServices']).map((port, i) => (
-                                  <ListItem key={i}>
-                                    <ListItemText>
-                                      <ReadOnlyInput
-                                        labelText={<FormattedMessage {...messages.formPortName} />}
-                                        value={port.get('containerPortName')}
-                                      />
-                                      &nbsp;&nbsp;
-                                      <ReadOnlyInput
-                                        labelText={<FormattedMessage {...messages.formServicePort} />}
-                                        value={port.get('servicePort')}
-                                      />
-                                      {port.get('autoCreateIngress') ? (
-                                        <Fragment>
-                                          &nbsp;&nbsp;
-                                          <ReadOnlyInput
-                                            labelText={<FormattedMessage {...messages.formPortProtocol} />}
-                                            value={port.get('ingressProtocol')}
-                                          />
-                                          &nbsp;&nbsp;
-                                          <ReadOnlyInput
-                                            labelText={<FormattedMessage {...messages.formIngressPort} />}
-                                            value={port.get('ingressPort')}
-                                          />
-                                          &nbsp;&nbsp;
-                                          <ReadOnlyInput
-                                            labelText={<FormattedMessage {...messages.formIngressDomain} />}
-                                            value={port.get('ingressHost')}
-                                          />
-                                          &nbsp;&nbsp;
-                                          <ReadOnlyInput
-                                            labelText={<FormattedMessage {...messages.formIngressPath} />}
-                                            value={port.get('ingressPath')}
-                                          />
-                                        </Fragment>
-                                      ): null}
-                                    </ListItemText>
+                                   <ListItem key={i}>
+                                     <ListItemText>
+                                       <GridContainer>
+                                         <GridItem xs={2} sm={2} md={2}>
+                                           <ReadOnlyInput
+                                             labelText={<FormattedMessage {...messages.formPortName} />}
+                                             value={port.get('containerPortName')}
+                                           />
+                                         </GridItem>
+                                         <GridItem xs={2} sm={2} md={2}>
+                                           <ReadOnlyInput
+                                             labelText={<FormattedMessage {...messages.formServicePort} />}
+                                             value={port.get('servicePort')}
+                                           />
+                                         </GridItem>
+                                         {port.get('autoCreateIngress') ? (
+                                           <Fragment>
+                                             <GridItem xs={2} sm={2} md={2}>
+                                               <ReadOnlyInput
+                                                 labelText={<FormattedMessage {...messages.formPortProtocol} />}
+                                                 value={port.get('ingressProtocol')}
+                                               />
+                                             </GridItem>
+                                             <GridItem xs={2} sm={2} md={2}>
+                                               <ReadOnlyInput
+                                                 labelText={<FormattedMessage {...messages.formIngressPort} />}
+                                                 value={port.get('ingressPort')}
+                                               />
+                                             </GridItem>
+                                             <GridItem xs={2} sm={2} md={2}>
+                                               <ReadOnlyInput
+                                                 labelText={<FormattedMessage {...messages.formIngressDomain} />}
+                                                 value={port.get('ingressHost')}
+                                               />
+                                             </GridItem>
+                                             <GridItem xs={2} sm={2} md={2}>
+                                               <ReadOnlyInput
+                                                 labelText={<FormattedMessage {...messages.formIngressPath} />}
+                                                 value={port.get('ingressPath')}
+                                               />
+                                             </GridItem>
+                                           </Fragment>
+                                         ): null}
+                                       </GridContainer>
+                                     </ListItemText>
                                   </ListItem>
                                 ))}
                               </List>
