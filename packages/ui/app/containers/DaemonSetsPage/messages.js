@@ -201,4 +201,25 @@ export default defineMessages({
     id: `${scope}.formServiceConfig`,
     defaultMessage: 'ServiceConfig',
   },
+  formAddVolumeClaimTemplate: {
+    id: `${scope}.formAddVolumeClaimTemplate`,
+    defaultMessage: 'Addd Volume Claim Template',
+  },
+  formVolumeClaimTemplate: {
+    id: `${scope}.formVolumeClaimTemplate`,
+    defaultMessage: 'Volume Claim Template',
+  },
+  formVolumeClaimTemplateName: {
+    id: `${scope}.formVolumeClaimTemplateName`,
+    defaultMessage: 'Name',
+  },
+  formVolumeClaimTemplateSize: {
+    id: `${scope}.formVolumeClaimTemplateSize`,
+    defaultMessage: 'Size',
+  },
+  formVolumeClaimTemplateStorageClassName: {
+    id: `${scope}.formVolumeClaimTemplateStorageClassName`,
+    defaultMessage: 'Storage Class Name',
+  },
+
 });

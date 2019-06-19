@@ -49,6 +49,7 @@ import MinusIcon from 'components/Icons/Minus';
 
 import AdvanceServices from './form/AdvanceServices';
 import Containers from './form/Containers';
+import VolumeClaimTemplate from './form/VolumeClaimTemplate';
 import messages from './messages';
 
 class DaemonSetForm extends PureComponent {
@@ -206,6 +207,24 @@ class DaemonSetForm extends PureComponent {
                     </FormSection>
                   </Fragment>
                 ) : null}
+              </CardBody>
+            </Card>
+          </GridItem>
+          <GridItem xs={12} sm={12} md={12}>
+            <Card style={{ marginTop: 20, marginBottom: 0 }}>
+              <CardHeader color="primary">
+                <h4 className={classes.cardTitleWhite}>
+                  <FormattedMessage {...messages.formVolumeClaimTemplate} />
+                </h4>
+              </CardHeader>
+              <CardBody>
+                <FieldArray
+                  name="persistentClaimVolumes"
+                  classes={classes}
+                  component={VolumeClaimTemplate}
+                  theme={theme}
+                  formValues={formValues}
+                />
               </CardBody>
             </Card>
           </GridItem>

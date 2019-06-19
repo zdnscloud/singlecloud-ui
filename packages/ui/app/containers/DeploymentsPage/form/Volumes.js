@@ -77,14 +77,20 @@ const Volumes = ({
           i,
           'type',
         ]);
-        switch(type) {
+        const pvcts = formValues && formValues.get('persistentClaimVolumes');
+        switch (type) {
           case 'configmap':
             names = configMapsOptions;
             break;
           case 'secret':
             names = secretsOptions;
             break;
-          case 'persistentvolume':
+          case 'persistentVolume':
+            if (pvcts && pvcts.size > 0) {
+              names = pvcts.map((pvct) => (
+                { label: pvct.name, value: pvct.name }
+              ));
+            }
             break;
         }
         return (
