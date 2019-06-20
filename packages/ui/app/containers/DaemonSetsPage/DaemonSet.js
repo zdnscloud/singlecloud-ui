@@ -271,7 +271,7 @@ export class DaemonSet extends React.PureComponent {
                       {daemonSet.get('advancedOptions') ? (
                         <Fragment>
                           <GridContainer>
-                            <GridItem xs={12} sm={12} md={12} className={classes.formLine}>
+                            <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
                               <ReadOnlyInput
                                 labelText={<FormattedMessage {...messages.formExposedServiceType} />}
                                 value={{
@@ -352,6 +352,40 @@ export class DaemonSet extends React.PureComponent {
                           </GridContainer>
                         </Fragment>
                       ) : null}
+                    </CardBody>
+                  </Card>
+                </GridItem>
+
+                <GridItem xs={12} sm={12} md={12}>
+                  <Card style={{ marginTop: 20, marginBottom: 0 }}>
+                    <CardHeader color="primary">
+                      <h4 className={classes.cardTitleWhite}>
+                        <FormattedMessage {...messages.formVolumeClaimTemplate} />
+                      </h4>
+                    </CardHeader>
+                    <CardBody>
+                      {daemonSet.get('persistentVolumes') && daemonSet.get('persistentVolumes').map((pv) => (
+                        <GridContainer>
+                          <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
+                            <ReadOnlyInput
+                              labelText={<FormattedMessage {...messages.formVolumeClaimTemplateName} />}
+                              value={pv.get('name')}
+                            />
+                          </GridItem>
+                          <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
+                            <ReadOnlyInput
+                              labelText={<FormattedMessage {...messages.formVolumeClaimTemplateSize} />}
+                              value={pv.get('size')}
+                            />
+                          </GridItem>
+                          <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
+                            <ReadOnlyInput
+                              labelText={<FormattedMessage {...messages.formVolumeClaimTemplateStorageClassName} />}
+                              value={pv.get('storageClassName')}
+                            />
+                          </GridItem>
+                        </GridContainer>
+                      ))}
                     </CardBody>
                   </Card>
                 </GridItem>

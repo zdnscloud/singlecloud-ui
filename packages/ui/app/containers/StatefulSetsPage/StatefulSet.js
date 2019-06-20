@@ -317,7 +317,7 @@ export class StatefulSet extends React.PureComponent {
                       {statefulSet.get('advancedOptions') ? (
                         <Fragment>
                           <GridContainer>
-                            <GridItem xs={12} sm={12} md={12} className={classes.formLine}>
+                            <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
                               <ReadOnlyInput
                                 labelText={<FormattedMessage {...messages.formExposedServiceType} />}
                                 value={{

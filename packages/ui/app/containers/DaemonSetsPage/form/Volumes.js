@@ -77,7 +77,7 @@ const Volumes = ({
           i,
           'type',
         ]);
-        const pvcts = formValues && formValues.get('persistentClaimVolumes');
+        const pvcts = formValues && formValues.get('persistentVolumess');
         switch (type) {
           case 'configmap':
             names = configMapsOptions;
