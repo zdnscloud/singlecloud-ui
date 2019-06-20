@@ -400,7 +400,7 @@ export class Deployment extends React.PureComponent {
                             <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
                               <ReadOnlyInput
                                 labelText={<FormattedMessage {...messages.formExposedMeticPort} />}
-                                value={deployment.getIn(['advancedOptions', 'exposedMetric', 'path'])}
+                                value={deployment.getIn(['advancedOptions', 'exposedMetric', 'port'])}
                               />
                             </GridItem>
                           </GridContainer>

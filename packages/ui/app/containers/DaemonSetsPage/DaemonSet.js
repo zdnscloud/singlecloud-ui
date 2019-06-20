@@ -346,7 +346,7 @@ export class DaemonSet extends React.PureComponent {
                             <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
                               <ReadOnlyInput
                                 labelText={<FormattedMessage {...messages.formExposedMeticPort} />}
-                                value={daemonSet.getIn(['advancedOptions', 'exposedMetric', 'path'])}
+                                value={daemonSet.getIn(['advancedOptions', 'exposedMetric', 'port'])}
                               />
                             </GridItem>
                           </GridContainer>
