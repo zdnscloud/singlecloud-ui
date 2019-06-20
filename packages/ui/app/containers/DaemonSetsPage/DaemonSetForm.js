@@ -219,7 +219,7 @@ class DaemonSetForm extends PureComponent {
               </CardHeader>
               <CardBody>
                 <FieldArray
-                  name="persistentVolumess"
+                  name="persistentVolumes"
                   classes={classes}
                   component={VolumeClaimTemplate}
                   theme={theme}
