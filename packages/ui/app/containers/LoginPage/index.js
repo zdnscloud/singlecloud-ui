@@ -50,9 +50,11 @@ export class LoginPage extends React.PureComponent {
   t = null;
 
   componentWillMount() {
-    const { isLogin, history } = this.props;
+    const { isLogin, history, casRole } = this.props;
     if (isLogin) {
       history.replace('/clusters');
+    } else {
+      casRole();
     }
   }
 

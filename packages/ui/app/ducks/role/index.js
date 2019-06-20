@@ -40,6 +40,13 @@ export const roleReducer = (
     case c.LOGOUT:
       return initialState;
 
+    case c.CAS_ROLE:
+      return state;
+    case c.CAS_ROLE_SUCCESS:
+      return state.setIn(['role', 'user'], payload.user);
+    case c.CAS_ROLE_FAILURE:
+      return state;
+
     default:
       return state;
   }

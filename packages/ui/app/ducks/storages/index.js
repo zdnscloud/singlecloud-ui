@@ -16,6 +16,7 @@ const { prefix } = constants;
 export { constants, actions, prefix };
 
 export const initialState = fromJS({
+  storageClasses: {},
   nfsStorages: {},
   lvmStorages: {},
 });
@@ -27,6 +28,18 @@ export const storagesReducer = (
   { type, payload, error, meta }
 ) => {
   switch (type) {
+    case c.LOAD_STORAGECLASSES:
+      return state;
+    case c.LOAD_STORAGECLASSES_SUCCESS: {
+      const { clusterID } = meta;
+      const { data, list } = procCollectionData(payload);
+      return state
+        .setIn(['storageClasses', clusterID], fromJS(data))
+        .set('list', fromJS(list));
+    }
+    case c.LOAD_STORAGECLASSES_FAILURE:
+      return state;
+
     case c.LOAD_NFS_STORAGES:
       return state;
     case c.LOAD_NFS_STORAGES_SUCCESS: {

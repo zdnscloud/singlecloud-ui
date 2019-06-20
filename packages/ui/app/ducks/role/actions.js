@@ -1,46 +1,62 @@
-import * as constants from './constants';
+import * as c from './constants';
 
 /*
   actions
 */
 export const login = (formData, meta) => ({
-  type: constants.LOGIN,
+  type: c.LOGIN,
   payload: { ...formData },
   meta,
 });
 
 export const loginRequest = () => ({
-  type: constants.LOGIN_REQUEST,
+  type: c.LOGIN_REQUEST,
   payload: {},
 });
 
 export const loginSuccess = (resp) => ({
-  type: constants.LOGIN_SUCCESS,
+  type: c.LOGIN_SUCCESS,
   payload: resp,
 });
 
 export const loginFailure = (errors) => ({
-  type: constants.LOGIN_FAILURE,
+  type: c.LOGIN_FAILURE,
   payload: errors,
   error: true,
 });
 
 export const logout = (data) => ({
-  type: constants.LOGOUT,
+  type: c.LOGOUT,
   payload: { data },
 });
 
 export const logoutRequest = () => ({
-  type: constants.LOGOUT_REQUEST,
+  type: c.LOGOUT_REQUEST,
   payload: {},
 });
 
 export const logoutSuccess = (data) => ({
-  type: constants.LOGOUT_SUCCESS,
+  type: c.LOGOUT_SUCCESS,
   payload: { data },
 });
 
 export const logoutFailure = (errors) => ({
-  type: constants.LOGOUT_FAILURE,
+  type: c.LOGOUT_FAILURE,
   payload: { errors },
+});
+
+export const casRole = () => ({
+  type: c.CAS_ROLE,
+  payload: {},
+});
+
+export const casRoleSuccess = (data) => ({
+  type: c.CAS_ROLE_SUCCESS,
+  payload: data,
+});
+
+export const casRoleFailure = (errors) => ({
+  type: c.CAS_ROLE_FAILURE,
+  payload: errors,
+  error: true,
 });

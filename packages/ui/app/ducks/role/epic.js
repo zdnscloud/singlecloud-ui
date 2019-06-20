@@ -36,4 +36,16 @@ export const loginEpic = (action$, state$, { ajax }) =>
     ))
   );
 
-export default combineEpics(loginEpic);
+export const casRoleEpic = (action$, state$, { ajax }) =>
+  action$.pipe(
+    ofType(c.CAS_ROLE),
+    mergeMap(({ payload }) => (
+      ajax('/cas/role').pipe((resp) => (
+        a.casRoleSuccess(resp)
+      ), catchError((error) => (
+        a.casRoleFailure(error)
+      )))
+    ))
+  );
+
+export default combineEpics(loginEpic, casRoleEpic);
