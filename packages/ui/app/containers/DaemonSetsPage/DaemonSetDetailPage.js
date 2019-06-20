@@ -31,6 +31,7 @@ import {
 import {
   makeSelectDaemonSetID,
   makeSelectCurrentDaemonSet,
+  makeSelectURL,
 } from 'ducks/daemonSets/selectors';
 import * as podsActions from 'ducks/pods/actions';
 import * as actions from 'ducks/daemonSets/actions';
@@ -54,6 +55,9 @@ export class DaemonSetDetailPage extends React.PureComponent {
   timer = null;
 
   componentWillMount() {
+    const { clusterID, namespaceID, url, loadDaemonSets } = this.props;
+    loadDaemonSets({ url, clusterID, namespaceID });
+
     this.loadDaemonSetAndPods();
     this.timer = setInterval(() => {
       if (this.timer) {
@@ -118,6 +122,7 @@ const mapStateToProps = createStructuredSelector({
   clusterID: makeSelectClusterID(),
   namespaceID: makeSelectNamespaceID(),
   daemonSetID: makeSelectDaemonSetID(),
+  url: makeSelectURL(),
   podsUrl: makeSelectDSPodsURL(),
   daemonSet: makeSelectCurrentDaemonSet(),
 });

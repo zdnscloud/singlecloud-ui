@@ -31,6 +31,7 @@ import {
 import {
   makeSelectDeploymentID,
   makeSelectCurrentDeployment,
+  makeSelectURL,
 } from 'ducks/deployments/selectors';
 import * as podsActions from 'ducks/pods/actions';
 import * as actions from 'ducks/deployments/actions';
@@ -54,6 +55,9 @@ export class DeploymentDetailPage extends React.PureComponent {
   timer = null;
 
   componentWillMount() {
+    const { clusterID, namespaceID, url, loadDeployments } = this.props;
+    loadDeployments({ url, clusterID, namespaceID });
+
     this.loadDeploymentAndPods();
     this.timer = setInterval(() => {
       if (this.timer) {
@@ -118,6 +122,7 @@ const mapStateToProps = createStructuredSelector({
   clusterID: makeSelectClusterID(),
   namespaceID: makeSelectNamespaceID(),
   deploymentID: makeSelectDeploymentID(),
+  url: makeSelectURL(),
   podsUrl: makeSelectPodsURL(),
   deployment: makeSelectCurrentDeployment(),
 });

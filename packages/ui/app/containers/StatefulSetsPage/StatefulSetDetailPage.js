@@ -31,6 +31,7 @@ import {
 import {
   makeSelectStatefulSetID,
   makeSelectCurrentStatefulSet,
+  makeSelectURL,
 } from 'ducks/statefulSets/selectors';
 import * as podsActions from 'ducks/pods/actions';
 import * as actions from 'ducks/statefulSets/actions';
@@ -54,6 +55,9 @@ export class StatefulSetDetailPage extends React.PureComponent {
   timer = null;
 
   componentWillMount() {
+    const { clusterID, namespaceID, url, loadStatefulSets } = this.props;
+    loadStatefulSets({ url, clusterID, namespaceID });
+
     this.loadStatefulSetAndPods();
     this.timer = setInterval(() => {
       if (this.timer) {
@@ -118,6 +122,7 @@ const mapStateToProps = createStructuredSelector({
   clusterID: makeSelectClusterID(),
   namespaceID: makeSelectNamespaceID(),
   statefulSetID: makeSelectStatefulSetID(),
+  url: makeSelectURL(),
   podsUrl: makeSelectPodsURL(),
   statefulSet: makeSelectCurrentStatefulSet(),
 });
