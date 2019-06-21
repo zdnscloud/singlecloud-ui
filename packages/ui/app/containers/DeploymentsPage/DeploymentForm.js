@@ -68,6 +68,7 @@ class DeploymentForm extends PureComponent {
       initialValues,
       configMaps,
       secrets,
+      storageClasses,
       formValues,
       theme,
     } = this.props;
@@ -239,6 +240,7 @@ class DeploymentForm extends PureComponent {
                   component={VolumeClaimTemplate}
                   theme={theme}
                   formValues={formValues}
+                  storageClasses={storageClasses}
                 />
               </CardBody>
             </Card>

@@ -33,9 +33,7 @@ export const storagesReducer = (
     case c.LOAD_STORAGECLASSES_SUCCESS: {
       const { clusterID } = meta;
       const { data, list } = procCollectionData(payload);
-      return state
-        .setIn(['storageClasses', clusterID], fromJS(data))
-        .set('list', fromJS(list));
+      return state.setIn(['storageClasses', clusterID], fromJS(data));
     }
     case c.LOAD_STORAGECLASSES_FAILURE:
       return state;

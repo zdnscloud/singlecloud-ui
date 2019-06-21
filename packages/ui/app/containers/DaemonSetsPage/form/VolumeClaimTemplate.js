@@ -52,8 +52,13 @@ import messages from '../messages';
 const VolumeClaimTemplate = ({
   fields,
   classes,
+  storageClasses,
   meta: { error, submitFailed },
 }) => {
+  const storageClassesOptions = storageClasses.toList().map((sc) => ({
+    label: sc.get('name'),
+    value: sc.get('name'),
+  }));
 
   return (
     <Fragment>
@@ -105,12 +110,7 @@ const VolumeClaimTemplate = ({
                   },
                 }}
                 classes={classes}
-                options={[
-                  { label: 'lvm', value: 'lvm' },
-                  { label: 'nfs', value: 'nfs' },
-                  { label: 'termporary', value: 'termporary' },
-                  { label: 'ceph', value: 'ceph' },
-                ]}
+                options={storageClassesOptions}
               />
             </GridItem>
             <GridItem xs={3} sm={3} md={3} className={classes.formLine} style={{ paddingTop: 18 }}>
