@@ -63,7 +63,8 @@ class Dashboard extends PureComponent {
   componentWillMount() {
     const { isLogin, history, initAction } = this.props;
     if (!isLogin) {
-      history.push('/login');
+      // history.push('/login');
+      window.location = '/cas/login';
     } else {
       initAction();
     }
@@ -72,7 +73,8 @@ class Dashboard extends PureComponent {
   componentWillUpdate(nextProps) {
     const { isLogin, history, initAction } = nextProps;
     if (!isLogin) {
-      history.push('/login');
+      // history.push('/login');
+      window.location = '/cas/login';
     } else {
       // initAction();
     }

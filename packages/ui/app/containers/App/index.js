@@ -22,6 +22,8 @@ import GlobalStyle from 'global-styles';
 import LoginPage from 'containers/LoginPage/Loadable';
 import hexToRgb from '@gsmlg/utils/hexToRgb';
 
+import * as roleActions from 'ducks/role/actions';
+
 import Dashboard from './Dashboard';
 
 const theme = createMuiTheme({
@@ -85,6 +87,8 @@ class App extends PureComponent {
   }
 
   componentWillMount() {
+    const { casRole } = this.props;
+    casRole('/cas/role');
   }
 
   render() {
@@ -119,6 +123,7 @@ const mapStateToProps = createStructuredSelector({
 const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
+      ...roleActions,
     },
     dispatch
   );

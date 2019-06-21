@@ -38,6 +38,7 @@ export const roleReducer = (
     }
 
     case c.LOGOUT:
+      setTimeout(() => window.location = '/cas/logout');
       return initialState;
 
     case c.CAS_ROLE:
