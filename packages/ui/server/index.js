@@ -18,6 +18,10 @@ app.use(
   '/apis',
   proxy({ target: `http://${backend}:8088`, changeOrigin: false, ws: true })
 );
+app.use(
+  '/cas',
+  proxy({ target: `http://${backend}:8088`, changeOrigin: false, ws: true })
+);
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));

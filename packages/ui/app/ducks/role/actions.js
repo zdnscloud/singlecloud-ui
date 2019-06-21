@@ -45,9 +45,9 @@ export const logoutFailure = (errors) => ({
   payload: { errors },
 });
 
-export const casRole = () => ({
+export const casRole = (url) => ({
   type: c.CAS_ROLE,
-  payload: {},
+  payload: url,
 });
 
 export const casRoleSuccess = (data) => ({

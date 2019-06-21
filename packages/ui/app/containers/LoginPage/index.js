@@ -54,7 +54,7 @@ export class LoginPage extends React.PureComponent {
     if (isLogin) {
       history.replace('/clusters');
     } else {
-      casRole();
+      casRole('/cas/role');
     }
   }
 
