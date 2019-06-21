@@ -38,6 +38,7 @@ import Menubar from 'components/Menubar';
 import TerminalDialog from 'containers/TerminalPage/TerminalDialog';
 import GlobalStyle from 'global-styles';
 
+import * as roleActions from 'ducks/role/actions';
 import * as actions from 'ducks/app/actions';
 import {
   makeSelectActiveCluster,
@@ -61,20 +62,20 @@ class Dashboard extends PureComponent {
   state = { hasError: false };
 
   componentWillMount() {
-    const { isLogin, history, initAction } = this.props;
+    const { isLogin, history, initAction, casRole } = this.props;
     if (!isLogin) {
       // history.push('/login');
-      window.location = '/cas/login';
+      casRole('/cas/role');
     } else {
       initAction();
     }
   }
 
   componentWillUpdate(nextProps) {
-    const { isLogin, history, initAction } = nextProps;
+    const { isLogin, history, initAction, casRole } = nextProps;
     if (!isLogin) {
       // history.push('/login');
-      window.location = '/cas/login';
+      casRole('/cas/role');
     } else {
       // initAction();
     }
@@ -156,6 +157,7 @@ const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
       ...actions,
+      ...roleActions,
     },
     dispatch
   );

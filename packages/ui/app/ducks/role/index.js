@@ -43,8 +43,13 @@ export const roleReducer = (
 
     case c.CAS_ROLE:
       return state;
-    case c.CAS_ROLE_SUCCESS:
-      return state.setIn(['role', 'user'], getByKey(payload, ['response', 'user']));
+    case c.CAS_ROLE_SUCCESS: {
+      const user = getByKey(payload, ['response', 'user']);
+      if (!user) {
+        setTimeout(() => window.location = '/cas/login');
+      }
+      return state.setIn(['role', 'user'], user);
+    }
     case c.CAS_ROLE_FAILURE:
       return state;
 
