@@ -43,7 +43,7 @@ import StoragePageHelmet from './helmet';
 import styles from './styles';
 import Node from './Node';
 import PVTable from './PVTable';
-
+import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
 /* eslint-disable react/prefer-stateless-function */
 export class StoragePage extends React.PureComponent {
   static propTypes = {
@@ -82,7 +82,7 @@ export class StoragePage extends React.PureComponent {
   }
 
   render() {
-    const { classes, theme, lvm, nfs } = this.props;
+    const { classes, theme, lvm, nfs ,clusterID} = this.props;
     let storage = lvm;
     if (this.state.tab === 1) {
       storage = nfs;
@@ -98,7 +98,19 @@ export class StoragePage extends React.PureComponent {
         <StoragePageHelmet />
         <CssBaseline />
         <Paper className={classes.content}>
-          <GridContainer>
+        <Breadcrumbs 
+            data={[
+              {
+                path:"javascript:;",
+                name: <FormattedMessage {...messages.pageDesc}/>
+              },
+              {
+                path: '/clusters/' + clusterID + '/storage',
+                name: <FormattedMessage {...messages.pageTitle}/>
+              }
+            ]}
+          />
+          <GridContainer className={classes.grid}>
             <GridItem xs={12} sm={12} md={12}>
               <Card>
                 <CardHeader color="primary" style={{ padding: 0 }}>

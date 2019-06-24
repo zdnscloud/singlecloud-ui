@@ -28,7 +28,8 @@ import messages from './messages';
 import styles from './styles';
 import ClustersTable from './ClustersTable';
 import ClustersPageHelmet from './helmet';
-
+import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
+import { injectIntl } from 'react-intl';
 /* eslint-disable react/prefer-stateless-function */
 export class ClustersPage extends React.PureComponent {
   static propTypes = {
@@ -54,13 +55,21 @@ export class ClustersPage extends React.PureComponent {
 
   render() {
     const { classes } = this.props;
-
+   
     return (
       <div className={classes.root}>
         <ClustersPageHelmet />
         <CssBaseline />
         <div className={classes.content}>
-          <GridContainer>
+          <Breadcrumbs 
+            data={[
+              {
+                path:"/clusters",
+                name: <FormattedMessage {...messages.clusters} />
+              }
+            ]}
+          />
+          <GridContainer className={classes.grid}>
             <GridItem xs={12} sm={12} md={12}>
               <Card>
                 <CardHeader color="primary">

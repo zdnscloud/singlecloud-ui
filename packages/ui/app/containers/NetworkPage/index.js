@@ -44,7 +44,7 @@ import styles from './styles';
 import Node from './Node';
 import ServiceTable from './ServiceTable';
 import PodsList from './PodsList';
-
+import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
 /* eslint-disable react/prefer-stateless-function */
 export class NetworkPage extends React.PureComponent {
   static propTypes = {
@@ -83,14 +83,26 @@ export class NetworkPage extends React.PureComponent {
   }
 
   render() {
-    const { classes, theme, services, pods } = this.props;
+    const { classes, theme, services, pods, clusterID} = this.props;
 
     return (
       <div className={classes.root}>
         <NetworkPageHelmet />
         <CssBaseline />
         <Paper className={classes.content}>
-          <GridContainer>
+        <Breadcrumbs 
+            data={[
+              {
+                path:"javascript:;",
+                name: <FormattedMessage {...messages.pageDesc}/>
+              },
+              {
+                path: '/clusters/' + clusterID + '/network ',
+                name: <FormattedMessage {...messages.pageTitle}/>
+              }
+            ]}
+          />
+          <GridContainer className={classes.grid}> 
             <GridItem xs={12} sm={12} md={12}>
               <Card>
                 <CardHeader color="primary" style={{ padding: 0 }}>

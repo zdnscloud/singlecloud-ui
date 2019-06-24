@@ -36,7 +36,7 @@ import messages from './messages';
 import DaemonSetsPageHelmet from './helmet';
 import styles from './styles';
 import DaemonSetsTable from './DaemonSetsTable';
-
+import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
 /* eslint-disable react/prefer-stateless-function */
 export class DaemonSetsPage extends React.PureComponent {
   static propTypes = {
@@ -60,13 +60,25 @@ export class DaemonSetsPage extends React.PureComponent {
   }
 
   render() {
-    const { classes } = this.props;
+    const { classes , clusterID, namespaceID } = this.props;
 
     return (
       <div className={classes.root}>
         <DaemonSetsPageHelmet />
         <CssBaseline />
         <div className={classes.content}>
+        <Breadcrumbs 
+            data={[
+              {
+                path:"javascript:;",
+                name: <FormattedMessage {...messages.pageDesc}/>
+              },
+              {
+                path: '/clusters/' + clusterID + '/namespaces/' + namespaceID +'/daemonSets',
+                name: <FormattedMessage {...messages.pageTitle}/>
+              }
+            ]}
+          />
           <GridContainer>
             <GridItem xs={12} sm={12} md={12}>
               <Card>

@@ -36,7 +36,7 @@ import messages from './messages';
 import ConfigMapsPageHelmet from './helmet';
 import styles from './styles';
 import ConfigMapsTable from './ConfigMapsTable';
-
+import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
 /* eslint-disable react/prefer-stateless-function */
 export class ConfigMapsPage extends React.PureComponent {
   static propTypes = {
@@ -60,14 +60,26 @@ export class ConfigMapsPage extends React.PureComponent {
   }
 
   render() {
-    const { classes } = this.props;
+    const { classes , clusterID, namespaceID} = this.props;
 
     return (
       <div className={classes.root}>
         <ConfigMapsPageHelmet />
         <CssBaseline />
         <div className={classes.content}>
-          <GridContainer>
+        <Breadcrumbs 
+            data={[
+              {
+                path:"javascript:;",
+                name: <FormattedMessage {...messages.pageDesc}/>
+              },
+              {
+                path: '/clusters/' + clusterID + '/namespaces/' + namespaceID +'/configmaps',
+                name: <FormattedMessage {...messages.pageTitle}/>
+              }
+            ]}
+          />
+          <GridContainer className={classes.grid}>
             <GridItem xs={12} sm={12} md={12}>
               <Card>
                 <CardHeader color="primary">

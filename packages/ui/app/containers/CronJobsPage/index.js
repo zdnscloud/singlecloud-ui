@@ -36,6 +36,7 @@ import messages from './messages';
 import CronJobsPageHelmet from './helmet';
 import styles from './styles';
 import CronJobsTable from './CronJobsTable';
+import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
 
 /* eslint-disable react/prefer-stateless-function */
 export class CronJobsPage extends React.PureComponent {
@@ -60,13 +61,25 @@ export class CronJobsPage extends React.PureComponent {
   }
 
   render() {
-    const { classes } = this.props;
+    const { classes , clusterID, namespaceID} = this.props;
 
     return (
       <div className={classes.root}>
         <CronJobsPageHelmet />
         <CssBaseline />
         <div className={classes.content}>
+           <Breadcrumbs 
+            data={[
+              {
+                path:"javascript:;",
+                name: <FormattedMessage {...messages.pageDesc}/>
+              },
+              {
+                path: '/clusters/' + clusterID + '/namespaces/' + namespaceID +'/cronJobs',
+                name: <FormattedMessage {...messages.pageTitle}/>
+              }
+            ]}
+          />
           <GridContainer>
             <GridItem xs={12} sm={12} md={12}>
               <Card>

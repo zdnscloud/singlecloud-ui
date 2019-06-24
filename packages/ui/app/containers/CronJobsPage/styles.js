@@ -69,8 +69,11 @@ const styles = (theme) => ({
   },
   content: {
     flexGrow: 1,
-    padding: theme.spacing.unit * 3,
     overflow: 'auto',
+  },
+  grid:{
+    padding:theme.spacing.unit * 2,
+    paddingTop:theme.spacing.unit * 1
   },
   appContainer: {},
   advanceContainer: {},

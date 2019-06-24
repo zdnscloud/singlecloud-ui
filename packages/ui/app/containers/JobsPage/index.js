@@ -36,7 +36,7 @@ import messages from './messages';
 import JobsPageHelmet from './helmet';
 import styles from './styles';
 import JobsTable from './JobsTable';
-
+import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
 /* eslint-disable react/prefer-stateless-function */
 export class JobsPage extends React.PureComponent {
   static propTypes = {
@@ -60,14 +60,26 @@ export class JobsPage extends React.PureComponent {
   }
 
   render() {
-    const { classes } = this.props;
+    const { classes ,clusterID, namespaceID } = this.props;
 
     return (
       <div className={classes.root}>
         <JobsPageHelmet />
         <CssBaseline />
         <div className={classes.content}>
-          <GridContainer>
+        <Breadcrumbs 
+            data={[
+              {
+                path:"javascript:;",
+                name: <FormattedMessage {...messages.pageDesc}/>
+              },
+              {
+                path: '/clusters/' + clusterID + '/namespaces/' + namespaceID +'/jobs',
+                name: <FormattedMessage {...messages.pageTitle}/>
+              }
+            ]}
+          />
+          <GridContainer className={classes.grid}>
             <GridItem xs={12} sm={12} md={12}>
               <Card>
                 <CardHeader color="primary">
