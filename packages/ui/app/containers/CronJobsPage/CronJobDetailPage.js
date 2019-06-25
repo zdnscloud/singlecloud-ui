@@ -23,6 +23,7 @@ import GridContainer from 'components/Grid/GridContainer';
 import Card from 'components/Card/Card';
 import CardHeader from 'components/Card/CardHeader';
 import CardBody from 'components/Card/CardBody';
+import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
 
 import {
   makeSelectClusterID,
@@ -86,15 +87,31 @@ export class CronJobDetailPage extends React.PureComponent {
   }
 
   render() {
-    const { classes, cronJob } = this.props;
+    const { classes, cronJob ,clusterID, namespaceID} = this.props;
 
     return (
       <div className={classes.root}>
         <CronJobDetailPageHelmet />
         <CssBaseline />
         <div className={classes.content}>
+          <Breadcrumbs 
+              data={[
+                {
+                  path:"#",
+                  name: <FormattedMessage {...messages.pageDesc}/>
+                },
+                {
+                  path: '/clusters/' + clusterID + '/namespaces/' + namespaceID +'/cronJobs',
+                  name: <FormattedMessage {...messages.pageTitle}/>
+                },
+                {
+                  path: '#',
+                  name: <FormattedMessage {...messages.cronJobDetail}/>
+                }
+              ]}
+          />
           <CronJob cronJob={cronJob} />
-          <GridContainer>
+          <GridContainer className={classes.grid}>
             <GridItem xs={12} sm={12} md={12}>
               <Card>
                 <CardHeader color="primary">

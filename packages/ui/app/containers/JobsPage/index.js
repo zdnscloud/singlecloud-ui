@@ -21,6 +21,7 @@ import IconButton from '@material-ui/core/IconButton';
 import AddIcon from 'components/Icons/Add';
 import GridItem from 'components/Grid/GridItem';
 import GridContainer from 'components/Grid/GridContainer';
+import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
 import Card from 'components/Card/Card';
 import CardHeader from 'components/Card/CardHeader';
 import CardBody from 'components/Card/CardBody';
@@ -36,7 +37,7 @@ import messages from './messages';
 import JobsPageHelmet from './helmet';
 import styles from './styles';
 import JobsTable from './JobsTable';
-import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
+
 /* eslint-disable react/prefer-stateless-function */
 export class JobsPage extends React.PureComponent {
   static propTypes = {
@@ -70,7 +71,7 @@ export class JobsPage extends React.PureComponent {
         <Breadcrumbs 
             data={[
               {
-                path:"javascript:;",
+                path:"#",
                 name: <FormattedMessage {...messages.pageDesc}/>
               },
               {

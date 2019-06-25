@@ -20,6 +20,7 @@ import AddIcon from '@material-ui/icons/Add';
 import MinimizeIcon from '@material-ui/icons/Minimize';
 import GridItem from 'components/Grid/GridItem';
 import GridContainer from 'components/Grid/GridContainer';
+import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
 import Card from 'components/Card/Card';
 import CardHeader from 'components/Card/CardHeader';
 import CardBody from 'components/Card/CardBody';
@@ -93,8 +94,24 @@ export class JobDetailPage extends React.PureComponent {
         <JobDetailPageHelmet />
         <CssBaseline />
         <div className={classes.content}>
+        <Breadcrumbs 
+            data={[
+              {
+                path:"#",
+                name: <FormattedMessage {...messages.pageDesc}/>
+              },
+              {
+                path: '/clusters/' + clusterID + '/namespaces/' + namespaceID +'/jobs',
+                name: <FormattedMessage {...messages.pageTitle}/>
+              }, 
+              {
+                path: '#',
+                name: <FormattedMessage {...messages.jobDetail}/>
+              }
+            ]}
+          />
           <Job job={job} />
-          <GridContainer>
+          <GridContainer className={classes.grid}>
             <GridItem xs={12} sm={12} md={12}>
               <Card>
                 <CardHeader color="primary">

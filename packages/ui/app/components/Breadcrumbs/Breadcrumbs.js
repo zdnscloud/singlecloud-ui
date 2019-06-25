@@ -3,9 +3,10 @@ import PropTypes from 'prop-types';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Breadcrumbs from '@material-ui/core/Breadcrumbs';
 import HomeIcon from '@material-ui/icons/Home';
-import Link from '@material-ui/core/Link';
+// import Link from '@material-ui/core/Link';
+import { Link } from 'react-router-dom';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
-
+import Button from '@material-ui/core/Button';
 const style = {
     breadcrumbs: {
       width: "100%",
@@ -20,10 +21,12 @@ const style = {
         color:"#9B9B9B"
     },
     inherit:{
-        color:"#9B9B9B"
+        color:"#9B9B9B",
+        textDecoration:'none'
     },
     textPrimary:{
-        color:"#1A435F"
+        color:"#1A435F",
+        textDecoration:'none'
     }
   };
 
@@ -34,12 +37,12 @@ function BreadcrumbsContainer({ ...props }) {
             separator={<NavigateNextIcon fontSize="small" />}  
             className={classes.breadcrumbs} 
         >
-          <Link color="inherit" href="/"><HomeIcon className={classes.icon} /></Link> 
+          <Link color="inherit" to="/"><HomeIcon className={classes.icon} /></Link> 
           {data.map((prop, key) => {
             return (
                 <Link 
                     className={ key === data.length-1 ? classes.textPrimary : classes.inherit} 
-                    href={prop.path}
+                    to={prop.path}
                 >
                     {prop.name}
                 </Link> 

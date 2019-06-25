@@ -51,6 +51,9 @@ import Card from 'components/Card/Card';
 import CardBody from 'components/Card/CardBody';
 import CardHeader from 'components/Card/CardHeader';
 import CardFooter from 'components/Card/CardFooter';
+import GridItem from 'components/Grid/GridItem';
+import GridContainer from 'components/Grid/GridContainer';
+import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
 
 import {
   makeSelectClusterID,
@@ -68,6 +71,7 @@ import messages from './messages';
 import JobsHelmet from './helmet';
 import styles from './styles';
 import JobForm from './JobForm';
+
 
 export const formName = 'createJobForm';
 
@@ -143,33 +147,53 @@ export class CreateJob extends React.PureComponent {
         <JobsHelmet />
         <CssBaseline />
         <div className={classes.content}>
-          <Card>
-            <CardHeader color="primary">
-              <h4 className={classes.cardTitleWhite}>
-                <FormattedMessage {...messages.createJob} />
-              </h4>
-            </CardHeader>
-            <CardBody style={{ paddingLeft: 0, paddingRight: 0 }}>
-              <CreateJobForm
-                classes={classes}
-                onSubmit={doSubmit}
-                configMaps={configMaps}
-                initialValues={fromJS({ replicas: 1, containers: [{ name: '' }] })}
-                formValues={values}
-                theme={theme}
-              />
-            </CardBody>
-            <CardFooter className={classes.cardFooter}>
-              <Button
-                variant="contained"
-                color="primary"
-                size="large"
-                onClick={submitForm}
-              >
-                <FormattedMessage {...messages.save} />
-              </Button>
-            </CardFooter>
-          </Card>
+        <Breadcrumbs 
+            data={[
+              {
+                path:"#",
+                name: <FormattedMessage {...messages.pageDesc}/>
+              },
+              {
+                path: '/clusters/' + clusterID + '/namespaces/' + namespaceID +'/jobs',
+                name: <FormattedMessage {...messages.pageTitle}/>
+              },
+              {
+                path: '#',
+                name: <FormattedMessage {...messages.createJob}/>
+              }
+            ]}
+          />
+          <GridContainer className={classes.grid}>
+            <GridItem xs={12} sm={12} md={12}>
+              <Card>
+                <CardHeader color="primary">
+                  <h4 className={classes.cardTitleWhite}>
+                    <FormattedMessage {...messages.createJob} />
+                  </h4>
+                </CardHeader>
+                <CardBody style={{ paddingLeft: 0, paddingRight: 0 }}>
+                  <CreateJobForm
+                    classes={classes}
+                    onSubmit={doSubmit}
+                    configMaps={configMaps}
+                    initialValues={fromJS({ replicas: 1, containers: [{ name: '' }] })}
+                    formValues={values}
+                    theme={theme}
+                  />
+                </CardBody>
+                <CardFooter className={classes.cardFooter}>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    size="large"
+                    onClick={submitForm}
+                  >
+                    <FormattedMessage {...messages.save} />
+                  </Button>
+                </CardFooter>
+              </Card>
+            </GridItem>
+          </GridContainer>
         </div>
       </div>
     );

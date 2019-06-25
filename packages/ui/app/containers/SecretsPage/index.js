@@ -74,7 +74,7 @@ export class SecretsPage extends React.PureComponent {
         <Breadcrumbs 
             data={[
               {
-                path:"javascript:;",
+                path:"#",
                 name: <FormattedMessage {...messages.pageDesc}/>
               },
               {

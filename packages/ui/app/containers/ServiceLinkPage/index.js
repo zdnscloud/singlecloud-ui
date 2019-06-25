@@ -104,11 +104,11 @@ export class ServiceLinkPage extends React.PureComponent {
         <Breadcrumbs 
             data={[
               {
-                path:"javascript:;",
+                path:"#",
                 name: <FormattedMessage {...messages.pageDesc}/>
               },
               {
-                path: '/clusters/' + clusterID + '/namespaces/' + namespaceID +'/deployments',
+                path: '/clusters/' + clusterID + '/namespaces/' + namespaceID +'/serviceLink',
                 name: <FormattedMessage {...messages.pageTitle}/>
               }
             ]}

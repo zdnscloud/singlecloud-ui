@@ -19,11 +19,12 @@ import Typography from '@material-ui/core/Typography';
 import Fab from '@material-ui/core/Fab';
 import IconButton from '@material-ui/core/IconButton';
 import AddIcon from 'components/Icons/Add';
-import GridItem from 'components/Grid/GridItem';
-import GridContainer from 'components/Grid/GridContainer';
 import Card from 'components/Card/Card';
 import CardHeader from 'components/Card/CardHeader';
 import CardBody from 'components/Card/CardBody';
+import GridItem from 'components/Grid/GridItem';
+import GridContainer from 'components/Grid/GridContainer';
+import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
 
 import {
   makeSelectClusterID,
@@ -36,7 +37,7 @@ import messages from './messages';
 import ConfigMapsPageHelmet from './helmet';
 import styles from './styles';
 import ConfigMapsTable from './ConfigMapsTable';
-import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
+
 /* eslint-disable react/prefer-stateless-function */
 export class ConfigMapsPage extends React.PureComponent {
   static propTypes = {
@@ -70,7 +71,7 @@ export class ConfigMapsPage extends React.PureComponent {
         <Breadcrumbs 
             data={[
               {
-                path:"javascript:;",
+                path:"#",
                 name: <FormattedMessage {...messages.pageDesc}/>
               },
               {

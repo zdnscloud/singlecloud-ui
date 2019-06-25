@@ -63,7 +63,7 @@ export class NodesPage extends React.PureComponent {
         <Breadcrumbs 
             data={[
               {
-                path:"javascript:;",
+                path:"#",
                 name: <FormattedMessage {...messages.pageDesc}/>
               },
               {

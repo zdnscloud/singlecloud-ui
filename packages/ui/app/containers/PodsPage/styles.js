@@ -71,6 +71,7 @@ const styles = (theme) => ({
     flexGrow: 1,
     padding: theme.spacing.unit * 3,
     overflow: 'auto',
+    overflowX:'hidden'
   },
   appContainer: {},
   advanceContainer: {},

@@ -67,18 +67,18 @@ export class DeploymentsPage extends React.PureComponent {
         <DeploymentsPageHelmet />
         <CssBaseline />
         <div className={classes.content}>
-        <Breadcrumbs 
-            data={[
-              {
-                path:"javascript:;",
-                name: <FormattedMessage {...messages.pageDesc}/>
-              },
-              {
-                path: '/clusters/' + clusterID + '/namespaces/' + namespaceID +'/deployments',
-                name: <FormattedMessage {...messages.pageTitle}/>
-              }
-            ]}
-          />
+          <Breadcrumbs 
+              data={[
+                {
+                  path:"#",
+                  name: <FormattedMessage {...messages.pageDesc}/>
+                },
+                {
+                  path: '/clusters/' + clusterID + '/namespaces/' + namespaceID +'/deployments',
+                  name: <FormattedMessage {...messages.pageTitle}/>
+                }
+              ]}
+            />
           <GridContainer className={classes.grid}>
             <GridItem xs={12} sm={12} md={12}>
               <Card>

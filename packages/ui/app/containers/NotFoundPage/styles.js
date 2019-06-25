@@ -8,6 +8,7 @@ const styles = (theme) => ({
     padding: theme.spacing.unit * 3,
     height: '100vh',
     overflow: 'auto',
+    overflowX:'hidden'
   },
 });
 

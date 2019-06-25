@@ -39,7 +39,7 @@ import * as actions from 'ducks/nodes/actions';
 import messages from './messages';
 import styles from './styles';
 import NodesPageHelmet from './helmet';
-
+import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
 /* eslint-disable react/prefer-stateless-function */
 export class NodeDetailPage extends React.PureComponent {
   static propTypes = {
@@ -61,14 +61,30 @@ export class NodeDetailPage extends React.PureComponent {
   }
 
   render() {
-    const { classes, node } = this.props;
+    const { classes, node,clusterID } = this.props;
 
     return (
       <div className={classes.root}>
         <NodesPageHelmet />
         <CssBaseline />
         <div className={classes.content}>
-          <GridContainer>
+        <Breadcrumbs 
+            data={[
+              {
+                path:"#",
+                name: <FormattedMessage {...messages.pageDesc}/>
+              },
+              {
+                path: '/clusters/' + clusterID + '/nodes',
+                name: <FormattedMessage {...messages.pageTitle}/>
+              },
+              {
+                path: '#',
+                name: <FormattedMessage {...messages.nodeDetails}/>
+              }
+            ]}
+          />
+          <GridContainer  className={classes.grid}>
             <GridItem xs={12} sm={12} md={12}>
               <Card>
                 <CardHeader color="primary">
@@ -200,7 +216,7 @@ export class NodeDetailPage extends React.PureComponent {
             </GridItem>
           </GridContainer>
 
-          <GridContainer>
+          <GridContainer className={classes.grid}>
             <GridItem xs={12} sm={12} md={12}>
               <Card>
                 <CardHeader color="primary">
@@ -234,7 +250,7 @@ export class NodeDetailPage extends React.PureComponent {
             </GridItem>
           </GridContainer>
 
-          <GridContainer>
+          <GridContainer className={classes.grid}>
             <GridItem xs={12} sm={12} md={12}>
               <Card>
                 <CardHeader color="primary">

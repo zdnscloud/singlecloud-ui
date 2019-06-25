@@ -101,7 +101,7 @@ export class StoragePage extends React.PureComponent {
         <Breadcrumbs 
             data={[
               {
-                path:"javascript:;",
+                path:"#",
                 name: <FormattedMessage {...messages.pageDesc}/>
               },
               {
@@ -171,7 +171,7 @@ export class StoragePage extends React.PureComponent {
               </Card>
             </GridItem>
           </GridContainer>
-          <GridContainer>
+          <GridContainer className={classes.grid}>
             <GridItem xs={12} sm={12} md={12}>
               <Card>
                 <CardHeader color="primary">

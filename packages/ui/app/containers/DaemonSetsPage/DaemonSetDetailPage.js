@@ -23,6 +23,7 @@ import GridContainer from 'components/Grid/GridContainer';
 import Card from 'components/Card/Card';
 import CardHeader from 'components/Card/CardHeader';
 import CardBody from 'components/Card/CardBody';
+import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
 
 import {
   makeSelectClusterID,
@@ -97,8 +98,24 @@ export class DaemonSetDetailPage extends React.PureComponent {
         <DaemonSetDetailPageHelmet />
         <CssBaseline />
         <div className={classes.content}>
+          <Breadcrumbs 
+            data={[
+              {
+                path:"#",
+                name: <FormattedMessage {...messages.pageDesc}/>
+              },
+              {
+                path: '/clusters/' + clusterID + '/namespaces/' + namespaceID +'/daemonSets',
+                name: <FormattedMessage {...messages.pageTitle}/>
+              },
+              {
+                path:"#",
+                name: <FormattedMessage {...messages.daemonSetDetail}/>
+              },
+            ]}
+          />
           <DaemonSet daemonSet={daemonSet} />
-          <GridContainer>
+          <GridContainer className={classes.grid}>
             <GridItem xs={12} sm={12} md={12}>
               <Card>
                 <CardHeader color="primary">

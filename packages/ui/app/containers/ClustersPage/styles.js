@@ -64,6 +64,7 @@ const styles = (theme) => ({
     flexGrow: 1,
     height: '100vh',
     overflow: 'auto',
+    overflowX:'hidden'
   },
   grid:{
     padding:theme.spacing.unit * 2,

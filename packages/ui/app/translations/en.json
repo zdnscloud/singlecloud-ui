@@ -301,6 +301,7 @@
   "app.containers.NodesPage.memory": "",
   "app.containers.NodesPage.nodeInfo": "",
   "app.containers.NodesPage.nodeName": "",
+  "app.containers.NodesPage.nodeDetails": "",
   "app.containers.NodesPage.nodes": "",
   "app.containers.NodesPage.operatingSystem": "",
   "app.containers.NodesPage.operatingSystemImage": "",

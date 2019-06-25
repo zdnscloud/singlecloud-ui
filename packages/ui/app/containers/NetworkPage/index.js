@@ -93,11 +93,11 @@ export class NetworkPage extends React.PureComponent {
         <Breadcrumbs 
             data={[
               {
-                path:"javascript:;",
+                path:"#",
                 name: <FormattedMessage {...messages.pageDesc}/>
               },
               {
-                path: '/clusters/' + clusterID + '/network ',
+                path: '/clusters/' + clusterID + '/network',
                 name: <FormattedMessage {...messages.pageTitle}/>
               }
             ]}

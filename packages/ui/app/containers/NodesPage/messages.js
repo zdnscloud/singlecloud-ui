@@ -31,6 +31,10 @@ export default defineMessages({
     id: `${scope}.pageDesc`,
     defaultMessage: 'This is the NodesPage description!',
   },
+  nodeDetails: {
+    id: `${scope}.nodeDetails`,
+    defaultMessage: 'This is the NodesPage description!',
+  },
   header: {
     id: `${scope}.header`,
     defaultMessage: 'This is the NodesPage header!',

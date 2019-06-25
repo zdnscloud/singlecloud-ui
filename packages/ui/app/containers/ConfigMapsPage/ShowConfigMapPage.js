@@ -33,6 +33,7 @@ import 'brace/theme/tomorrow_night';
 
 import GridItem from 'components/Grid/GridItem';
 import GridContainer from 'components/Grid/GridContainer';
+import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
 import Card from 'components/Card/Card';
 import CardBody from 'components/Card/CardBody';
 import CardHeader from 'components/Card/CardHeader';
@@ -77,60 +78,80 @@ export class ShowConfigMap extends React.PureComponent {
         <ConfigMapsPageHelmet />
         <CssBaseline />
         <div className={classes.content}>
-          <Card>
-            <CardHeader color="primary">
-              <h4 className={classes.cardTitleWhite}>
-                <FormattedMessage {...messages.showConfigMap} />
-              </h4>
-            </CardHeader>
-            <CardBody>
-              <GridContainer>
-                <GridItem xs={12} sm={12} md={12} className={classes.formLine}>
-                  <ReadOnlyInput
-                    labelText={<FormattedMessage {...messages.formName} />}
-                    value={configMap.get('name')}
-                    formControlProps={{
-                      className: classes.nameControl,
-                    }}
-                  />
-                </GridItem>
-                <GridItem xs={12} sm={12} md={12}>
+         <Breadcrumbs 
+            data={[
+              {
+                path:"#",
+                name: <FormattedMessage {...messages.pageDesc}/>
+              },
+              {
+                path: '/clusters/' + clusterID + '/namespaces/' + namespaceID +'/configmaps',
+                name: <FormattedMessage {...messages.pageTitle}/>
+              },
+              {
+                path:"#",
+                name: <FormattedMessage {...messages.showConfigMap}/>
+              },
+            ]}
+          />
+          <GridContainer className={classes.grid}>
+            <GridItem xs={12} sm={12} md={12}>
+              <Card>
+                <CardHeader color="primary">
+                  <h4 className={classes.cardTitleWhite}>
+                    <FormattedMessage {...messages.showConfigMap} />
+                  </h4>
+                </CardHeader>
+                <CardBody>
                   <GridContainer>
-                    {configMap.get('configs').map((cfg, idx) => (
-                      <GridItem
-                        xs={3}
-                        sm={3}
-                        md={3}
-                        key={`${idx}-${cfg.get('name')}`}
-                      >
-                        <ReadOnlyInput
-                          labelText={<FormattedMessage {...messages.formFileName} />}
-                          value={cfg.get('name')}
-                          fullWidth
-                          formControlProps={{
-                            className: classes.nameControl,
-                          }}
-                          classes={{
-                            input: classes.fileNameLink,
-                          }}
-                          inputProps={{
-                            disabled: false,
-                            readOnly: true,
-                            onClick: (evt) => {
-                              this.setState({
-                                isOpen: true,
-                                fileIndex: idx,
-                              });
-                            },
-                          }}
-                        />
-                      </GridItem>
-                    ))}
+                    <GridItem xs={12} sm={12} md={12} className={classes.formLine}>
+                      <ReadOnlyInput
+                        labelText={<FormattedMessage {...messages.formName} />}
+                        value={configMap.get('name')}
+                        formControlProps={{
+                          className: classes.nameControl,
+                        }}
+                      />
+                    </GridItem>
+                    <GridItem xs={12} sm={12} md={12}>
+                      <GridContainer>
+                        {configMap.get('configs').map((cfg, idx) => (
+                          <GridItem
+                            xs={3}
+                            sm={3}
+                            md={3}
+                            key={`${idx}-${cfg.get('name')}`}
+                          >
+                            <ReadOnlyInput
+                              labelText={<FormattedMessage {...messages.formFileName} />}
+                              value={cfg.get('name')}
+                              fullWidth
+                              formControlProps={{
+                                className: classes.nameControl,
+                              }}
+                              classes={{
+                                input: classes.fileNameLink,
+                              }}
+                              inputProps={{
+                                disabled: false,
+                                readOnly: true,
+                                onClick: (evt) => {
+                                  this.setState({
+                                    isOpen: true,
+                                    fileIndex: idx,
+                                  });
+                                },
+                              }}
+                            />
+                          </GridItem>
+                        ))}
+                      </GridContainer>
+                    </GridItem>
                   </GridContainer>
-                </GridItem>
-              </GridContainer>
-            </CardBody>
-          </Card>
+                </CardBody>
+              </Card>
+          </GridItem>
+          </GridContainer>
           <Dialog
             maxWidth="lg"
             fullWidth
@@ -175,6 +196,7 @@ export class ShowConfigMap extends React.PureComponent {
                 </Button>
               </CardFooter>
             </Card>
+            
           </Dialog>
         </div>
       </div>

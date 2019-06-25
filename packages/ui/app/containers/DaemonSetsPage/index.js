@@ -24,6 +24,7 @@ import GridContainer from 'components/Grid/GridContainer';
 import Card from 'components/Card/Card';
 import CardHeader from 'components/Card/CardHeader';
 import CardBody from 'components/Card/CardBody';
+import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
 
 import {
   makeSelectClusterID,
@@ -36,7 +37,7 @@ import messages from './messages';
 import DaemonSetsPageHelmet from './helmet';
 import styles from './styles';
 import DaemonSetsTable from './DaemonSetsTable';
-import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
+
 /* eslint-disable react/prefer-stateless-function */
 export class DaemonSetsPage extends React.PureComponent {
   static propTypes = {
@@ -70,7 +71,7 @@ export class DaemonSetsPage extends React.PureComponent {
         <Breadcrumbs 
             data={[
               {
-                path:"javascript:;",
+                path:"#",
                 name: <FormattedMessage {...messages.pageDesc}/>
               },
               {
@@ -79,7 +80,7 @@ export class DaemonSetsPage extends React.PureComponent {
               }
             ]}
           />
-          <GridContainer>
+          <GridContainer className={classes.grid}>
             <GridItem xs={12} sm={12} md={12}>
               <Card>
                 <CardHeader color="primary">

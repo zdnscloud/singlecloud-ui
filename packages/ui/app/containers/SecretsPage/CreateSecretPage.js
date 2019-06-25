@@ -26,6 +26,8 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import AttachmentIcon from '@material-ui/icons/Attachment';
+import GridItem from 'components/Grid/GridItem';
+import GridContainer from 'components/Grid/GridContainer';
 import AceEditor from 'react-ace';
 import 'brace/mode/yaml';
 import 'brace/theme/github';
@@ -46,7 +48,7 @@ import messages from './messages';
 import SecretsPageHelmet from './helmet';
 import styles from './styles';
 import SecretForm from './SecretForm';
-
+import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
 export const formName = 'createSecretForm';
 
 const validate = (values) => {
@@ -120,30 +122,50 @@ export class CreateSecret extends React.PureComponent {
         <SecretsPageHelmet />
         <CssBaseline />
         <div className={classes.content}>
-          <Card>
-            <CardHeader color="primary">
-              <h4 className={classes.cardTitleWhite}>
-                <FormattedMessage {...messages.createSecret} />
-              </h4>
-            </CardHeader>
-            <CardBody>
-              <CreateSecretForm
-                classes={classes}
-                onSubmit={doSubmit}
-                initialValues={fromJS({})}
-              />
-            </CardBody>
-            <CardFooter className={classes.cardFooter}>
-              <Button
-                variant="contained"
-                color="primary"
-                size="large"
-                onClick={submitForm}
-              >
-                <FormattedMessage {...messages.formCreate} />
-              </Button>
-            </CardFooter>
-          </Card>
+          <Breadcrumbs 
+            data={[
+              {
+                path:"#",
+                name: <FormattedMessage {...messages.pageDesc}/>
+              },
+              {
+                path: '/clusters/' + clusterID + '/namespaces/' + namespaceID +'/secrets',
+                name: <FormattedMessage {...messages.pageTitle}/>
+              },
+              {
+                path: '/clusters/' + clusterID + '/namespaces/' + namespaceID +'/secrets/create',
+                name: <FormattedMessage {...messages.createSecret}/>
+              }
+            ]}
+          />
+          <GridContainer  className={classes.grid}>
+            <GridItem xs={12} sm={12} md={12}>
+              <Card>
+                <CardHeader color="primary">
+                  <h4 className={classes.cardTitleWhite}>
+                    <FormattedMessage {...messages.createSecret} />
+                  </h4>
+                </CardHeader>
+                <CardBody>
+                  <CreateSecretForm
+                    classes={classes}
+                    onSubmit={doSubmit}
+                    initialValues={fromJS({})}
+                  />
+                </CardBody>
+                <CardFooter className={classes.cardFooter}>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    size="large"
+                    onClick={submitForm}
+                  >
+                    <FormattedMessage {...messages.formCreate} />
+                  </Button>
+                </CardFooter>
+              </Card>
+            </GridItem>
+          </GridContainer>
         </div>
       </div>
     );
