@@ -150,10 +150,6 @@ export class CreateJob extends React.PureComponent {
         <Breadcrumbs 
             data={[
               {
-                path:"#",
-                name: <FormattedMessage {...messages.pageDesc}/>
-              },
-              {
                 path: '/clusters/' + clusterID + '/namespaces/' + namespaceID +'/jobs',
                 name: <FormattedMessage {...messages.pageTitle}/>
               },

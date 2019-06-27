@@ -70,10 +70,6 @@ export class DeploymentsPage extends React.PureComponent {
           <Breadcrumbs 
               data={[
                 {
-                  path:"#",
-                  name: <FormattedMessage {...messages.pageDesc}/>
-                },
-                {
                   path: '/clusters/' + clusterID + '/namespaces/' + namespaceID +'/deployments',
                   name: <FormattedMessage {...messages.pageTitle}/>
                 }

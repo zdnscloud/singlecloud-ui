@@ -52,10 +52,6 @@ export class ClusterDetailPage extends React.PureComponent {
         <Breadcrumbs 
             data={[
               {
-                path:"#",
-                name: <FormattedMessage {...messages.pageDesc}/>
-              },
-              {
                 path: '/clusters/' + cluster.toJS().name,
                 name: <FormattedMessage {...messages.pageTitle}/>
               }

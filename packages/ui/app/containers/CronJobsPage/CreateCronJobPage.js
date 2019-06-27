@@ -149,10 +149,6 @@ export class CreateCronJob extends React.PureComponent {
           <Breadcrumbs 
               data={[
                 {
-                  path:"#",
-                  name: <FormattedMessage {...messages.pageDesc}/>
-                },
-                {
                   path: '/clusters/' + clusterID + '/namespaces/' + namespaceID +'/cronJobs',
                   name: <FormattedMessage {...messages.pageTitle}/>
                 },

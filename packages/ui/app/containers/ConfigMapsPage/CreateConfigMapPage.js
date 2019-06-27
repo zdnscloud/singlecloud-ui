@@ -126,10 +126,6 @@ export class CreateConfigMap extends React.PureComponent {
           <Breadcrumbs 
             data={[
               {
-                path:"#",
-                name: <FormattedMessage {...messages.pageDesc}/>
-              },
-              {
                 path: '/clusters/' + clusterID + '/namespaces/' + namespaceID +'/configmaps',
                 name: <FormattedMessage {...messages.pageTitle}/>
               },
