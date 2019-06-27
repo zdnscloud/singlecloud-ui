@@ -71,10 +71,6 @@ export class DaemonSetsPage extends React.PureComponent {
         <Breadcrumbs 
             data={[
               {
-                path:"#",
-                name: <FormattedMessage {...messages.pageDesc}/>
-              },
-              {
                 path: '/clusters/' + clusterID + '/namespaces/' + namespaceID +'/daemonSets',
                 name: <FormattedMessage {...messages.pageTitle}/>
               }

@@ -167,10 +167,6 @@ export class CreateStatefulSet extends React.PureComponent {
          <Breadcrumbs 
             data={[
               {
-                path:"#",
-                name: <FormattedMessage {...messages.pageDesc}/>
-              },
-              {
                 path: '/clusters/' + clusterID + '/namespaces/' + namespaceID +'/statefulSets',
                 name: <FormattedMessage {...messages.pageTitle}/>
               },

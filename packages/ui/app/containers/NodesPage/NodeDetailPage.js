@@ -71,10 +71,6 @@ export class NodeDetailPage extends React.PureComponent {
         <Breadcrumbs 
             data={[
               {
-                path:"#",
-                name: <FormattedMessage {...messages.pageDesc}/>
-              },
-              {
                 path: '/clusters/' + clusterID + '/nodes',
                 name: <FormattedMessage {...messages.pageTitle}/>
               },

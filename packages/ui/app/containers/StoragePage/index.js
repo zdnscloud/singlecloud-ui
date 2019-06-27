@@ -101,10 +101,6 @@ export class StoragePage extends React.PureComponent {
         <Breadcrumbs 
             data={[
               {
-                path:"#",
-                name: <FormattedMessage {...messages.pageDesc}/>
-              },
-              {
                 path: '/clusters/' + clusterID + '/storage',
                 name: <FormattedMessage {...messages.pageTitle}/>
               }

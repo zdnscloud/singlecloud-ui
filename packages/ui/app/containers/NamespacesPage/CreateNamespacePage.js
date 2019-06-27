@@ -93,10 +93,6 @@ export class CreateNamespacePage extends React.PureComponent {
         <Breadcrumbs 
             data={[
               {
-                path:"#",
-                name: <FormattedMessage {...messages.pageDesc}/>
-              },
-              {
                 path: '/clusters/' + clusterID + '/namespaces',
                 name: <FormattedMessage {...messages.pageTitle}/>
               },
