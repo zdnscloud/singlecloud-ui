@@ -25,7 +25,7 @@ module.exports = (options) => ({
   output: Object.assign(
     {
       // Compile into js/build.js
-      path: path.resolve(__dirname, '..', '..', 'build', 'assets'),
+      path: path.resolve(__dirname, '..', '..', 'build'),
       publicPath: '/assets/',
     },
     options.output
