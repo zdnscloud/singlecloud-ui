@@ -38,15 +38,19 @@ export const roleReducer = (
     }
 
     case c.LOGOUT:
-      setTimeout(() => window.location = '/cas/logout');
+      setTimeout(() => {
+        window.location.href = '/cas/logout';
+      });
       return initialState;
 
     case c.CAS_ROLE:
       return state;
     case c.CAS_ROLE_SUCCESS: {
       const user = getByKey(payload, ['response', 'user']);
-      if (!user) {
-        setTimeout(() => window.location = '/cas/login');
+      if (!user && !(meta && meta.noRedirect)) {
+        setTimeout(() => {
+          // window.location.href = '/cas/login';
+        });
       }
       return state.setIn(['role', 'user'], user);
     }

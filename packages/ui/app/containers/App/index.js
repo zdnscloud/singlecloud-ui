@@ -88,7 +88,7 @@ class App extends PureComponent {
 
   componentWillMount() {
     const { casRole } = this.props;
-    casRole('/cas/role');
+    casRole('/cas/role', { noRedirect: true });
   }
 
   render() {

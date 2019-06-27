@@ -45,18 +45,21 @@ export const logoutFailure = (errors) => ({
   payload: { errors },
 });
 
-export const casRole = (url) => ({
+export const casRole = (url, meta) => ({
   type: c.CAS_ROLE,
   payload: url,
+  meta,
 });
 
-export const casRoleSuccess = (data) => ({
+export const casRoleSuccess = (data, meta) => ({
   type: c.CAS_ROLE_SUCCESS,
   payload: data,
+  meta,
 });
 
-export const casRoleFailure = (errors) => ({
+export const casRoleFailure = (errors, meta) => ({
   type: c.CAS_ROLE_FAILURE,
   payload: errors,
+  meta,
   error: true,
 });

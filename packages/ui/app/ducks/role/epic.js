@@ -39,10 +39,10 @@ export const loginEpic = (action$, state$, { ajax }) =>
 export const casRoleEpic = (action$, state$, { ajax }) =>
   action$.pipe(
     ofType(c.CAS_ROLE),
-    mergeMap(({ payload }) => (
+    mergeMap(({ payload, meta }) => (
       ajax(payload).pipe(
-        map((resp) => a.casRoleSuccess(resp)),
-        catchError((error) => a.casRoleFailure(error))
+        map((resp) => a.casRoleSuccess(resp, meta)),
+        catchError((error) => a.casRoleFailure(error, meta))
       )
     ))
   );
