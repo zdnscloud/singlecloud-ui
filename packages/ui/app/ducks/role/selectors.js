@@ -38,8 +38,8 @@ export const makeSelectIsLogin = () =>
   createSelector(
     selectRoleDomain,
     (substate) => {
-      const jwt = substate.get('jwt');
-      return !!jwt;
+      const user = substate.getIn(['role', 'user']);
+      return !!user;
     }
   );
 

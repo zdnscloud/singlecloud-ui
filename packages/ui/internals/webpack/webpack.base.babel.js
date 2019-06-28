@@ -26,7 +26,7 @@ module.exports = (options) => ({
     {
       // Compile into js/build.js
       path: path.resolve(__dirname, '..', '..', 'build'),
-      publicPath: '/',
+      publicPath: '/assets/',
     },
     options.output
   ), // Merge with env dependent settings

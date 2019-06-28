@@ -68,6 +68,7 @@ class DaemonSetForm extends PureComponent {
       initialValues,
       configMaps,
       secrets,
+      storageClasses,
       formValues,
       theme,
     } = this.props;
@@ -224,6 +225,7 @@ class DaemonSetForm extends PureComponent {
                   component={VolumeClaimTemplate}
                   theme={theme}
                   formValues={formValues}
+                  storageClasses={storageClasses}
                 />
               </CardBody>
             </Card>

@@ -60,6 +60,9 @@ import {
   makeSelectClusterID,
   makeSelectNamespaceID,
 } from 'ducks/app/selectors';
+import {
+  makeSelectCurrentCluster,
+} from 'ducks/clusters/selectors';
 import * as sActions from 'ducks/secrets/actions';
 import {
   makeSelectSecrets,
@@ -70,6 +73,10 @@ import {
   makeSelectConfigMaps,
   makeSelectURL as makeSelectConfigMapURL,
 } from 'ducks/configMaps/selectors';
+import {
+  makeSelectCurrentStorageClasses,
+} from 'ducks/storages/selectors';
+import * as storagesAction from 'ducks/storages/actions';
 import { makeSelectURL } from 'ducks/statefulSets/selectors';
 import * as actions from 'ducks/statefulSets/actions';
 
@@ -121,13 +128,16 @@ export class CreateStatefulSet extends React.PureComponent {
     const {
       clusterID,
       namespaceID,
+      cluster,
       configMapURL,
       loadConfigMaps,
       secretURL,
       loadSecrets,
+      loadStorageClasses,
     } = this.props;
     loadConfigMaps({ url: configMapURL, clusterID, namespaceID });
     loadSecrets({ url: secretURL, clusterID, namespaceID });
+    loadStorageClasses(cluster.getIn(['links', 'storageclasses']), clusterID);
   }
 
   render() {
@@ -140,6 +150,7 @@ export class CreateStatefulSet extends React.PureComponent {
       namespaceID,
       configMaps,
       secrets,
+      storageClasses,
       values,
     } = this.props;
     async function doSubmit(formValues) {
@@ -190,6 +201,7 @@ export class CreateStatefulSet extends React.PureComponent {
                     onSubmit={doSubmit}
                     configMaps={configMaps}
                     secrets={secrets}
+                    storageClasses={storageClasses}
                     initialValues={fromJS({
                       replicas: 1,
                       containers: [{ name: '' }],
@@ -219,11 +231,13 @@ export class CreateStatefulSet extends React.PureComponent {
 const mapStateToProps = createStructuredSelector({
   clusterID: makeSelectClusterID(),
   namespaceID: makeSelectNamespaceID(),
+  cluster: makeSelectCurrentCluster(),
   url: makeSelectURL(),
   configMapURL: makeSelectConfigMapURL(),
   configMaps: makeSelectConfigMaps(),
   secretURL: makeSelectSecretURL(),
   secrets: makeSelectSecrets(),
+  storageClasses: makeSelectCurrentStorageClasses(),
   values: getFormValues(formName),
 });
 
@@ -233,6 +247,7 @@ const mapDispatchToProps = (dispatch) =>
       ...actions,
       loadConfigMaps: cActions.loadConfigMaps,
       loadSecrets: sActions.loadSecrets,
+      loadStorageClasses: storagesAction.loadStorageClasses,
       submitForm: () => submit(formName),
     },
     dispatch
