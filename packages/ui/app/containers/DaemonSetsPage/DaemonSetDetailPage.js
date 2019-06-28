@@ -105,7 +105,6 @@ export class DaemonSetDetailPage extends React.PureComponent {
                 name: <FormattedMessage {...messages.pageTitle}/>
               },
               {
-                path:"#",
                 name: <FormattedMessage {...messages.daemonSetDetail}/>
               },
             ]}

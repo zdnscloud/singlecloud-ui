@@ -85,7 +85,6 @@ export class ShowConfigMap extends React.PureComponent {
                 name: <FormattedMessage {...messages.pageTitle}/>
               },
               {
-                path:"#",
                 name: <FormattedMessage {...messages.showConfigMap}/>
               },
             ]}

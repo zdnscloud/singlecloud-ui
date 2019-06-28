@@ -7,6 +7,8 @@ import HomeIcon from '@material-ui/icons/Home';
 import { Link } from 'react-router-dom';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
+
 const style = {
     breadcrumbs: {
       width: "100%",
@@ -40,12 +42,18 @@ function BreadcrumbsContainer({ ...props }) {
           <Link color="inherit" to="/"><HomeIcon className={classes.icon} /></Link> 
           {data.map((prop, key) => {
             return (
-                <Link 
-                    className={ key === data.length-1 ? classes.textPrimary : classes.inherit} 
-                    to={prop.path}
+               key === data.length-1 ?  
+               <Typography 
+                  className={classes.textPrimary} 
                 >
-                    {prop.name}
-                </Link> 
+                  {prop.name}
+              </Typography> : 
+              <Link 
+                className={classes.inherit} 
+                to={prop.path}
+              >
+                {prop.name}
+              </Link> 
             )
           })}
         </Breadcrumbs>
