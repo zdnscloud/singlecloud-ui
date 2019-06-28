@@ -68,6 +68,7 @@ class StatefulSetForm extends PureComponent {
       initialValues,
       configMaps,
       secrets,
+      storageClasses,
       formValues,
       theme,
     } = this.props;
@@ -242,6 +243,7 @@ class StatefulSetForm extends PureComponent {
                   component={VolumeClaimTemplate}
                   theme={theme}
                   formValues={formValues}
+                  storageClasses={storageClasses}
                 />
               </CardBody>
             </Card>

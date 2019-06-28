@@ -1,8 +1,8 @@
 export default [
-  'role',
+  // 'role',
   'app',
   'language',
-  'router',
+  // 'router',
   'clusters',
   'namespaces',
 ];

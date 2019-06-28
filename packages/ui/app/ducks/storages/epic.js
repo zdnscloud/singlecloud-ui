@@ -17,6 +17,18 @@ import { ofType, combineEpics } from 'redux-observable';
 import * as c from './constants';
 import * as a from './actions';
 
+export const loadStroageClassesEpic = (action$, state$, { ajax }) =>
+  action$.pipe(
+    ofType(c.LOAD_STORAGECLASSES),
+    mergeMap(({ payload, meta: { clusterID } }) =>
+      ajax(payload).pipe(
+        map((resp) => a.loadStorageClassesSuccess(resp, clusterID)),
+        catchError((error) =>
+          of(a.loadStorageClassesFailure(error, clusterID)))
+      )
+    )
+  );
+
 export const loadNFSStoragesEpic = (action$, state$, { ajax }) =>
   action$.pipe(
     ofType(c.LOAD_NFS_STORAGES),
@@ -41,4 +53,8 @@ export const loadLVMStoragesEpic = (action$, state$, { ajax }) =>
     )
   );
 
-export default combineEpics(loadNFSStoragesEpic, loadLVMStoragesEpic);
+export default combineEpics(
+  loadStroageClassesEpic,
+  loadNFSStoragesEpic,
+  loadLVMStoragesEpic
+);

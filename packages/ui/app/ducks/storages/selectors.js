@@ -17,6 +17,19 @@ const selectStoragesDomain = (state) => state.get(prefix);
 /**
  * Other specific selectors
  */
+export const makeSelectStorageClasses = () =>
+  createSelector(
+    selectStoragesDomain,
+    (substate) => substate.get('storageClasses')
+  );
+
+export const makeSelectCurrentStorageClasses = () =>
+  createSelector(
+    makeSelectStorageClasses(),
+    makeSelectClusterID(),
+    (cs, clusterID) => cs.getIn([clusterID]) || cs.clear()
+  );
+
 export const makeSelectNFSStorages = () =>
   createSelector(
     selectStoragesDomain,

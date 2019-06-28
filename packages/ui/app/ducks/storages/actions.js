@@ -3,6 +3,25 @@ import * as c from './constants';
 /*
   actions
 */
+export const loadStorageClasses = (url, clusterID) => ({
+  type: c.LOAD_STORAGECLASSES,
+  payload: url,
+  meta: { clusterID },
+});
+
+export const loadStorageClassesSuccess = (resp, clusterID) => ({
+  type: c.LOAD_STORAGECLASSES_SUCCESS,
+  payload: resp,
+  meta: { clusterID },
+});
+
+export const loadStorageClassesFailure = (error, clusterID) => ({
+  type: c.LOAD_STORAGECLASSES_FAILURE,
+  payload: error,
+  meta: { clusterID },
+  error: true,
+});
+
 export const loadNFSStorages = (url, clusterID) => ({
   type: c.LOAD_NFS_STORAGES,
   payload: url,
