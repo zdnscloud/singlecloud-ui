@@ -130,7 +130,6 @@ export class CreateConfigMap extends React.PureComponent {
                 name: <FormattedMessage {...messages.pageTitle}/>
               },
               {
-                path:"#",
                 name: <FormattedMessage {...messages.createConfigMap}/>
               },
             ]}
