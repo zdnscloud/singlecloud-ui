@@ -91,7 +91,7 @@ export class StatefulSetDetailPage extends React.PureComponent {
   }
 
   render() {
-    const { classes, statefulSet } = this.props;
+    const { classes, statefulSet ,clusterID ,namespaceID} = this.props;
 
     return (
       <div className={classes.root}>
@@ -111,7 +111,7 @@ export class StatefulSetDetailPage extends React.PureComponent {
             ]}
           />
           <StatefulSet statefulSet={statefulSet} />
-          <GridContainer className={classes.grid}>>
+          <GridContainer className={classes.grid}>
             <GridItem xs={12} sm={12} md={12}>
               <Card>
                 <CardHeader color="primary">
