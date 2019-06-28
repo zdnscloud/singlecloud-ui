@@ -45,6 +45,15 @@ export const statefulSetsReducer = (
       const statefulSet = payload.response;
       // temporary add, may remove when support cancel load data
       if (statefulSet && statefulSet.id) {
+        let containers = statefulSet.containers;
+        containers.forEach((item) => {
+          if(item && item.args){
+            item.args = item.args.join(" ");
+          }
+          if(item && item.command){
+            item.command = item.command.join(" ");
+          }
+        })
         return state.setIn(['statefulSets', clusterID, namespaceID, statefulSet.id], fromJS(statefulSet));
       }
       return state;
