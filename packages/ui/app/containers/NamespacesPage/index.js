@@ -32,7 +32,7 @@ import messages from './messages';
 import styles from './styles';
 import NamespacesTable from './NamespacesTable';
 import NamespacesPageHelmet from './helmet';
-
+import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
 /* eslint-disable react/prefer-stateless-function */
 export class NamespacesPage extends React.PureComponent {
   static propTypes = {
@@ -59,14 +59,21 @@ export class NamespacesPage extends React.PureComponent {
 
   render() {
     const { classes, clusterID } = this.props;
-
     return (
       <div className={classes.root}>
         <NamespacesPageHelmet />
         <CssBaseline />
         <div className={classes.content}>
+        <Breadcrumbs 
+            data={[
+              {
+                path: '/clusters/' + clusterID + '/namespaces',
+                name: <FormattedMessage {...messages.pageTitle}/>
+              }
+            ]}
+          />
           <Typography component="div" className="">
-            <GridContainer>
+            <GridContainer  className={classes.grid}>
               <GridItem xs={12} sm={12} md={12}>
                 <Card>
                   <CardHeader color="primary">

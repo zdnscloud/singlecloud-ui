@@ -75,7 +75,7 @@ export class DaemonSet extends React.PureComponent {
     };
 
     return (
-      <GridContainer>
+      <GridContainer className={classes.grid}>
         <GridItem xs={12} sm={12} md={12}>
           <Card>
             <CardHeader color="primary">

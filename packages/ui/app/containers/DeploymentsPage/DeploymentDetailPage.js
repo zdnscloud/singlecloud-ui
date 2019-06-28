@@ -42,7 +42,7 @@ import Deployment from './Deployment';
 import messages from './messages';
 import DeploymentDetailPageHelmet from './helmet';
 import styles from './styles';
-
+import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
 /* eslint-disable react/prefer-stateless-function */
 export class DeploymentDetailPage extends React.PureComponent {
   static propTypes = {
@@ -90,15 +90,27 @@ export class DeploymentDetailPage extends React.PureComponent {
   }
 
   render() {
-    const { classes, deployment } = this.props;
+    const { classes, deployment ,clusterID, namespaceID,} = this.props;
 
     return (
       <div className={classes.root}>
         <DeploymentDetailPageHelmet />
         <CssBaseline />
         <div className={classes.content}>
+        <Breadcrumbs 
+            data={[
+              {
+                path: '/clusters/' + clusterID + '/namespaces/' + namespaceID +'/deployments',
+                name: <FormattedMessage {...messages.pageTitle}/>
+              },
+              {
+                path: '#',
+                name: <FormattedMessage {...messages.deploymentDetail}/>
+              }
+            ]}
+          />
           <Deployment deployment={deployment} />
-          <GridContainer>
+          <GridContainer className={classes.grid}>
             <GridItem xs={12} sm={12} md={12}>
               <Card>
                 <CardHeader color="primary">

@@ -29,7 +29,7 @@ import messages from './messages';
 import styles from './styles';
 import NodesTable from './NodesTable';
 import NodesPageHelmet from './helmet';
-
+import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
 /* eslint-disable react/prefer-stateless-function */
 export class NodesPage extends React.PureComponent {
   static propTypes = {
@@ -53,14 +53,23 @@ export class NodesPage extends React.PureComponent {
   }
 
   render() {
-    const { classes } = this.props;
-
+    const { classes ,clusterID} = this.props;
+ 
     return (
       <div className={classes.root}>
         <NodesPageHelmet />
         <CssBaseline />
         <div className={classes.content}>
-          <GridContainer>
+        <Breadcrumbs 
+            data={[
+              {
+                path: '/clusters/' + clusterID + '/nodes',
+                
+                name: <FormattedMessage {...messages.pageTitle}/>
+              }
+            ]}
+          />
+          <GridContainer className={classes.grid}>  
             <GridItem xs={12} sm={12} md={12}>
               <Card>
                 <CardHeader color="primary">

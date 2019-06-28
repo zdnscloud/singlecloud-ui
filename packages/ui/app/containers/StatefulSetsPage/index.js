@@ -24,6 +24,7 @@ import GridContainer from 'components/Grid/GridContainer';
 import Card from 'components/Card/Card';
 import CardHeader from 'components/Card/CardHeader';
 import CardBody from 'components/Card/CardBody';
+import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
 
 import {
   makeSelectClusterID,
@@ -60,14 +61,22 @@ export class StatefulSetsPage extends React.PureComponent {
   }
 
   render() {
-    const { classes } = this.props;
+    const { classes ,clusterID, namespaceID} = this.props;
 
     return (
       <div className={classes.root}>
         <StatefulSetsPageHelmet />
         <CssBaseline />
         <div className={classes.content}>
-          <GridContainer>
+          <Breadcrumbs 
+            data={[
+              {
+                path: '/clusters/' + clusterID + '/namespaces/' + namespaceID +'/statefulSets',
+                name: <FormattedMessage {...messages.pageTitle}/>
+              }
+            ]}
+          />
+          <GridContainer className={classes.grid}>
             <GridItem xs={12} sm={12} md={12}>
               <Card>
                 <CardHeader color="primary">

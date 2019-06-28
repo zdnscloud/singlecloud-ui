@@ -28,7 +28,7 @@ import messages from './messages';
 import styles from './styles';
 import ClusterDetailPageHelmet from './helmet';
 import ClusterDetail from './ClusterDetail';
-
+import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
 /* eslint-disable react/prefer-stateless-function */
 export class ClusterDetailPage extends React.PureComponent {
   static propTypes = {
@@ -39,17 +39,25 @@ export class ClusterDetailPage extends React.PureComponent {
     const { openCluster, closeCluster, cluster } = this.props;
     closeCluster();
     openCluster(cluster.get('id'));
+    
   }
 
   render() {
     const { classes, cluster } = this.props;
-
     return (
       <div className={classes.root}>
         <ClusterDetailPageHelmet />
         <CssBaseline />
         <div className={classes.content}>
-          <GridContainer>
+        <Breadcrumbs 
+            data={[
+              {
+                path: '/clusters/' + cluster.toJS().name,
+                name: <FormattedMessage {...messages.pageTitle}/>
+              }
+            ]}
+          />
+          <GridContainer className={classes.grid}>
             <GridItem xs={12} sm={12} md={12}>
               <Card>
                 <CardHeader color="primary">

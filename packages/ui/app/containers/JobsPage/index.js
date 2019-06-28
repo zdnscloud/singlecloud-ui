@@ -21,6 +21,7 @@ import IconButton from '@material-ui/core/IconButton';
 import AddIcon from 'components/Icons/Add';
 import GridItem from 'components/Grid/GridItem';
 import GridContainer from 'components/Grid/GridContainer';
+import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
 import Card from 'components/Card/Card';
 import CardHeader from 'components/Card/CardHeader';
 import CardBody from 'components/Card/CardBody';
@@ -60,14 +61,22 @@ export class JobsPage extends React.PureComponent {
   }
 
   render() {
-    const { classes } = this.props;
+    const { classes ,clusterID, namespaceID } = this.props;
 
     return (
       <div className={classes.root}>
         <JobsPageHelmet />
         <CssBaseline />
         <div className={classes.content}>
-          <GridContainer>
+        <Breadcrumbs 
+            data={[
+              {
+                path: '/clusters/' + clusterID + '/namespaces/' + namespaceID +'/jobs',
+                name: <FormattedMessage {...messages.pageTitle}/>
+              }
+            ]}
+          />
+          <GridContainer className={classes.grid}>
             <GridItem xs={12} sm={12} md={12}>
               <Card>
                 <CardHeader color="primary">

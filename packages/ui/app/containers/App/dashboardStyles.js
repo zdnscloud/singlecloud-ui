@@ -29,7 +29,7 @@ const appStyle = (theme) => ({
   },
   content: {
     minHeight: 'calc(100vh - 123px)',
-    padding: '5px',
+    // padding: '5px',
   },
   container,
   map: {},

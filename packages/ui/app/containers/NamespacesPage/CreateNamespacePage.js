@@ -36,6 +36,7 @@ import messages from './messages';
 import styles from './styles';
 import NamespacesPageHelmet from './helmet';
 import NamespaceForm from './NamespaceForm';
+import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
 
 export const formName = 'createNamespaceForm';
 
@@ -89,8 +90,20 @@ export class CreateNamespacePage extends React.PureComponent {
         <NamespacesPageHelmet />
         <CssBaseline />
         <div className={classes.content}>
+        <Breadcrumbs 
+            data={[
+              {
+                path: '/clusters/' + clusterID + '/namespaces',
+                name: <FormattedMessage {...messages.pageTitle}/>
+              },
+              {
+                path: '/clusters/' + clusterID + '/namespaces/create',
+                name: <FormattedMessage {...messages.createNamespace}/>
+              }
+            ]}
+          />
           <Typography component="div" className="">
-            <GridContainer>
+            <GridContainer className={classes.grid}>
               <GridItem xs={12} sm={12} md={12}>
                 <Card>
                   <CardHeader color="primary">

@@ -36,7 +36,7 @@ import messages from './messages';
 import SecretsPageHelmet from './helmet';
 import styles from './styles';
 import SecretsTable from './SecretsTable';
-
+import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
 /* eslint-disable react/prefer-stateless-function */
 export class SecretsPage extends React.PureComponent {
   static propTypes = {
@@ -64,14 +64,22 @@ export class SecretsPage extends React.PureComponent {
   }
 
   render() {
-    const { classes } = this.props;
+    const { classes , clusterID, namespaceID } = this.props;
 
     return (
       <div className={classes.root}>
         <SecretsPageHelmet />
         <CssBaseline />
         <div className={classes.content}>
-          <GridContainer>
+        <Breadcrumbs 
+            data={[
+              {
+                path: '/clusters/' + clusterID + '/namespaces/' + namespaceID +'/secrets',
+                name: <FormattedMessage {...messages.pageTitle}/>
+              }
+            ]}
+          />
+          <GridContainer  className={classes.grid}>
             <GridItem xs={12} sm={12} md={12}>
               <Card>
                 <CardHeader color="primary">
