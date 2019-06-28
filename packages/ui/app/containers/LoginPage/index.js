@@ -50,16 +50,16 @@ export class LoginPage extends React.PureComponent {
   t = null;
 
   componentWillMount() {
-    const { isLogin, history, casRole } = this.props;
+    const { isLogin, history, loadRole } = this.props;
     if (isLogin) {
       history.replace('/clusters');
     } else {
-      casRole('/cas/role', { noRedirect: true });
+      loadRole('/web/role');
     }
   }
 
   componentWillUpdate(nextProps) {
-    const { isLogin, history, casRole } = nextProps;
+    const { isLogin, history, loadRole } = nextProps;
     if (isLogin) {
       history.replace('/clusters');
     }
@@ -100,9 +100,9 @@ export class LoginPage extends React.PureComponent {
     async function submit(formValues) {
       try {
         const password = sha1(formValues.get('password')).toString(encHex);
-        const user = formValues.get('username');
+        const name = formValues.get('username');
         await new Promise((resolve, reject) => {
-          login({ user, password }, { resolve, reject });
+          login({ name, password }, { resolve, reject });
         });
       } catch (error) {
         throw new SubmissionError({ _error: error });

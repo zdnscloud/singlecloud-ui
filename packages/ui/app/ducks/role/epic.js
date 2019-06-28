@@ -1,7 +1,8 @@
-import { Observable, interval, of } from 'rxjs';
+import { Observable, interval, of, concat } from 'rxjs';
 import {
   mergeMap,
   map,
+  mapTo,
   debounce,
   debounceTime,
   reduce,
@@ -20,7 +21,7 @@ export const loginEpic = (action$, state$, { ajax }) =>
     ofType(c.LOGIN),
     mergeMap(({ payload, meta: { resolve, reject } }) => (
       ajax({
-        url: `/apis/zcloud.cn/v1/users/${payload.user}?action=login`,
+        url: `/web/login`,
         method: 'POST',
         body: payload,
       }).pipe(
@@ -32,19 +33,39 @@ export const loginEpic = (action$, state$, { ajax }) =>
           reject(error);
           return of(a.loginFailure(error));
         })
-      )
+      ).pipe(mapTo(a.loadRole('/web/role')))
     ))
   );
 
-export const casRoleEpic = (action$, state$, { ajax }) =>
+export const loadRoleEpic = (action$, state$, { ajax }) =>
   action$.pipe(
-    ofType(c.CAS_ROLE),
+    ofType(c.LOAD_ROLE),
     mergeMap(({ payload, meta }) => (
       ajax(payload).pipe(
-        map((resp) => a.casRoleSuccess(resp, meta)),
-        catchError((error) => a.casRoleFailure(error, meta))
+        map((resp) => a.loadRoleSuccess(resp, meta)),
+        catchError((error) => a.loadRoleFailure(error, meta))
       )
     ))
   );
 
-export default combineEpics(loginEpic, casRoleEpic);
+export const logoutEpic = (action$, state$, { ajax }) =>
+  action$.pipe(
+    ofType(c.LOGOUT),
+    mergeMap(({ payload }) => (
+      ajax({
+        url: `/web/logout`,
+        method: 'GET',
+      })
+        .pipe(
+          map((resp) => {
+            return a.logoutSuccess(resp);
+          }),
+          catchError((error) => {
+            return of(a.logoutFailure(error));
+          })
+        )
+        .pipe(mapTo(a.loadRole('/web/role')))
+    ))
+  );
+
+export default combineEpics(loginEpic, loadRoleEpic, logoutEpic);

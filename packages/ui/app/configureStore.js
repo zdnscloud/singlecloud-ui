@@ -9,7 +9,6 @@ import { createEpicMiddleware } from 'redux-observable';
 import { ajax } from 'rxjs/ajax';
 import { BehaviorSubject } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
-import authProvider from 'utils/authProvider';
 import persistentEnhancer from 'utils/persistentEnhancer';
 
 import createReducer from './reducers';
@@ -18,13 +17,11 @@ import createEpic from './epics';
 const epicMiddleware = createEpicMiddleware({
   dependencies: {
     ajax: (arg) => {
-      const auth = authProvider();
       let opt = arg;
       if (typeof opt === 'string') {
         opt = {
           url: arg,
           headers: {
-            ...auth,
             'Content-Type': 'application/json',
           },
         };
@@ -33,20 +30,17 @@ const epicMiddleware = createEpicMiddleware({
         ...opt,
         body: JSON.stringify(opt && opt.body),
         headers: {
-          ...auth,
           'Content-Type': 'application/json',
           ...(opt && opt.headers || {}),
         },
       });
     },
     getJSON: (arg) => {
-      const auth = authProvider();
       let opt = arg;
       if (typeof opt === 'string') {
         opt = {
           url: arg,
           headers: {
-            ...auth,
             'Content-Type': 'application/json',
           },
         };
@@ -54,7 +48,6 @@ const epicMiddleware = createEpicMiddleware({
       return ajax.getJSON({
         ...opt,
         headers: {
-          ...auth,
           'Content-Type': 'application/json',
           ...(opt.headers || {}),
         },
