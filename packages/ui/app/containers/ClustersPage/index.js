@@ -10,6 +10,7 @@ import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import { bindActionCreators, compose } from 'redux';
+import { Link } from 'react-router-dom';
 
 import { withStyles } from '@material-ui/core/styles';
 import Menubar from 'components/Menubar';
@@ -20,6 +21,9 @@ import GridContainer from 'components/Grid/GridContainer';
 import Card from 'components/Card/Card';
 import CardHeader from 'components/Card/CardHeader';
 import CardBody from 'components/Card/CardBody';
+import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
+import IconButton from '@material-ui/core/IconButton';
+import AddIcon from 'components/Icons/Add';
 
 import { makeSelectURL } from 'ducks/clusters/selectors';
 import * as actions from 'ducks/clusters/actions';
@@ -28,7 +32,7 @@ import messages from './messages';
 import styles from './styles';
 import ClustersTable from './ClustersTable';
 import ClustersPageHelmet from './helmet';
-import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
+
 import { injectIntl } from 'react-intl';
 /* eslint-disable react/prefer-stateless-function */
 export class ClustersPage extends React.PureComponent {
@@ -75,6 +79,14 @@ export class ClustersPage extends React.PureComponent {
                 <CardHeader color="primary">
                   <h4 className={classes.cardTitleWhite}>
                     <FormattedMessage {...messages.clusters} />
+                    <IconButton
+                        aria-label={<FormattedMessage {...messages.clusters} />}
+                        className={classes.menuButton}
+                        component={Link}
+                        to={`/clusters/create`}
+                      >
+                        <AddIcon style={{ color: '#fff' }} />
+                      </IconButton>
                   </h4>
                 </CardHeader>
                 <CardBody>

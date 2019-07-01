@@ -54,9 +54,9 @@ const styles = (theme) => ({
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
     }),
-    width: theme.spacing.unit * 7,
+    width: theme.spacing(7),
     [theme.breakpoints.up('sm')]: {
-      width: theme.spacing.unit * 9,
+      width: theme.spacing(9),
     },
   },
   appBarSpacer: theme.mixins.toolbar,
@@ -66,8 +66,8 @@ const styles = (theme) => ({
     overflowX:'hidden'
   },
   grid:{
-    padding:theme.spacing.unit * 2,
-    paddingTop:theme.spacing.unit * 1
+    padding:theme.spacing(2),
+    paddingTop:theme.spacing(1)
   },
   chartContainer: {
     marginLeft: -22,
@@ -76,13 +76,13 @@ const styles = (theme) => ({
     height: 320,
   },
   h5: {
-    marginBottom: theme.spacing.unit * 2,
+    marginBottom: theme.spacing(2),
   },
   margin: {
-    margin: theme.spacing.unit,
+    margin: theme.spacing(1),
   },
   button: {
-    margin: theme.spacing.unit,
+    margin: theme.spacing(1),
   },
   textField: {
     flexBasis: 200,

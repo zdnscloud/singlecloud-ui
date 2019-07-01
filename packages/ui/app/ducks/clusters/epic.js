@@ -62,8 +62,37 @@ export const loadClustersAndNamespacesEpic = (action$, state$, { ajax }) =>
     ))
   );
 
+export const createClusterEpic = (action$, state$, { ajax }) =>
+  action$.pipe(
+    ofType(c.CREATE_CLUSTER),
+    mergeMap(({ payload, meta: { resolve, reject, url } }) =>
+      ajax({
+        url,
+        method: 'POST',
+        body: payload,
+      }).pipe(
+        map((resp) => {
+          resolve(resp);
+          return a.createClusterSuccess(resp);
+        }),
+        catchError((error) => {
+          reject(error);
+          return of(a.createClusterFailure(error));
+        })
+      )
+    )
+  );
+
+export const afterCreateEpic = (action$) =>
+  action$.pipe(
+    ofType(c.CREATE_CLUSTER_SUCCESS),
+    mergeMap(({ payload, meta }) => timer(1000).pipe(mapTo(push(`/clusters`))))
+  );
+
 export default combineEpics(
   loadClustersEpic,
   removeClusterEpic,
-  loadClustersAndNamespacesEpic
+  loadClustersAndNamespacesEpic,
+  createClusterEpic,
+  afterCreateEpic
 );

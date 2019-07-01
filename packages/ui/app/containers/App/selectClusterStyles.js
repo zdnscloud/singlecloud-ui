@@ -1,11 +1,11 @@
 const styles = (theme) => ({
   formControl: {
-    margin: theme.spacing.unit,
+    margin: theme.spacing(1),
     minWidth: 144,
     marginRight: '2em',
   },
   selectEmpty: {
-    marginTop: theme.spacing.unit * 2,
+    marginTop: theme.spacing(2),
   },
   inputLabelRoot: {
     color: theme.palette.primary.contrastText,

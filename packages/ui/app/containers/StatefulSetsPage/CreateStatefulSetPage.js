@@ -192,7 +192,6 @@ export class CreateStatefulSet extends React.PureComponent {
                 name: <FormattedMessage {...messages.pageTitle}/>
               },
               {
-                path: '#',
                 name: <FormattedMessage {...messages.createStatefulSet}/>
               }
             ]}
