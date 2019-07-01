@@ -38,7 +38,7 @@ export class ClustersPage extends React.PureComponent {
 
   componentWillMount() {
     this.load();
-    // this.timer = setInterval(() => this.load(), 3000);
+    this.timer = setInterval(() => this.load(), 3000);
   }
 
   componentWillUnmount() {
