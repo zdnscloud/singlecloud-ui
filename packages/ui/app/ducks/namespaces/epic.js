@@ -80,7 +80,8 @@ export const loadAllNamespacesEpic = (action$, state$, { ajax }) =>
     ofType(c.LOAD_ALL_NAMESPACES),
     mergeMap(({ payload: { clusters } }) => {
       const list = clusters.map((c) => ({
-        clusterID: c.get('id'), url: c.getIn(['links', 'namespaces'])
+        clusterID: c.get('id'),
+        url: c.getIn(['links', 'namespaces']),
       })).map(({ url, clusterID }) => (
         ajax(url).pipe(
           map((resp) => a.loadNamespacesSuccess(resp, clusterID)),

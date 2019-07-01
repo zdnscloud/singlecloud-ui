@@ -76,7 +76,7 @@ class Dashboard extends PureComponent {
     if (!isLogin) {
       // history.push('/login');
       window.location.href = '/login';
-    } else {
+    } else if (!this.props.isLogin) {
       initAction();
     }
   }

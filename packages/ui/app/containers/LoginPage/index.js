@@ -67,13 +67,14 @@ export class LoginPage extends React.PureComponent {
 
   componentDidMount() {
     // we add a hidden class to the card and after 700 ms we delete it and the transition appears
-    setTimeout(() => {
+    this.cardTimer = setTimeout(() => {
       this.setState({ cardAnimaton: 'cardShown' });
     }, 700);
   }
 
   componentWillUnmount() {
     this.untrackMounse();
+    clearTimeout(this.cardTimer);
   }
 
   trackMouse(evt) {

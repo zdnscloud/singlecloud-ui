@@ -38,7 +38,7 @@ export class ClustersPage extends React.PureComponent {
 
   componentWillMount() {
     this.load();
-    this.timer = setInterval(() => this.load(), 3000);
+    // this.timer = setInterval(() => this.load(), 3000);
   }
 
   componentWillUnmount() {
@@ -55,13 +55,13 @@ export class ClustersPage extends React.PureComponent {
 
   render() {
     const { classes } = this.props;
-   
+
     return (
       <div className={classes.root}>
         <ClustersPageHelmet />
         <CssBaseline />
         <div className={classes.content}>
-          <Breadcrumbs 
+          <Breadcrumbs
             data={[
               {
                 path:"/clusters",
