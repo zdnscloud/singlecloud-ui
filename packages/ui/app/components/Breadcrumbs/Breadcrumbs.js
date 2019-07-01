@@ -45,12 +45,14 @@ function BreadcrumbsContainer({ ...props }) {
                key === data.length-1 ?  
                <Typography 
                   className={classes.textPrimary} 
+                  key={key}
                 >
                   {prop.name}
               </Typography> : 
               <Link 
                 className={classes.inherit} 
                 to={prop.path}
+                key={key}
               >
                 {prop.name}
               </Link> 

@@ -45,4 +45,117 @@ export default defineMessages({
     id: `${scope}.tableTitleActions`,
     defaultMessage: 'Actions',
   },
+  createClusters: {
+    id: `${scope}.createClusters`,
+    defaultMessage: 'This is the  createClusters!',
+  },
+  formCreate: {
+    id: `${scope}.formCreate`,
+    defaultMessage: 'formCreate',
+  }, 
+  formNode: {
+    id: `${scope}.formNode`,
+    defaultMessage: 'formNode',
+  },
+  formClusterName: {
+    id: `${scope}.formClusterName`,
+    defaultMessage: 'formClusterName',
+  },
+  formClusterSuffix: {
+    id: `${scope}.formClusterSuffix`,
+    defaultMessage: 'formClusterSuffix',
+  },
+  formClusterSuffix: {
+    id: `${scope}.formClusterSuffix`,
+    defaultMessage: 'formClusterSuffix',
+  },
+  formSSHPort: {
+    id: `${scope}.formSSHPort`,
+    defaultMessage: 'formSSHPort',
+  }, 
+  formSSHUser: {
+    id: `${scope}.formSSHUser`,
+    defaultMessage: 'formSSHUser',
+  }, 
+  formAdvancedOptions: {
+    id: `${scope}.formAdvancedOptions`,
+    defaultMessage: 'formAdvancedOptions',
+  },
+  formServiceIP: {
+    id: `${scope}.formServiceIP`,
+    defaultMessage: 'formServiceIP',
+  },  
+  formPodIP: {
+    id: `${scope}.formPodIP`,
+    defaultMessage: 'formPodIP',
+  },
+  formClustersNet: {
+    id: `${scope}.formClustersNet`,
+    defaultMessage: 'formClustersNet',
+  }, 
+  formClustersDNSIP: {
+    id: `${scope}.formClustersDNSIP`,
+    defaultMessage: 'formClustersDNSIP',
+  }, 
+  formForwardDNS: {
+    id: `${scope}.formForwardDNS`,
+    defaultMessage: 'formForwardDNS',
+  }, 
+  formPrivateWarehouses: {
+    id: `${scope}.formPrivateWarehouses`,
+    defaultMessage: 'formPrivateWarehouses',
+  }, 
+  formUrl: {
+    id: `${scope}.formUrl`,
+    defaultMessage: 'formUrl',
+  }, 
+  formCACertificate: {
+    id: `${scope}.formCACertificate`,
+    defaultMessage: 'formCACertificate',
+  }, 
+  formUser: {
+    id: `${scope}.formUser`,
+    defaultMessage: 'formUser',
+  }, 
+  formPwd: {
+    id: `${scope}.formPwd`,
+    defaultMessage: 'formPwd',
+  }, 
+  formSinglecloudUrl:{
+    id: `${scope}.formSinglecloudUrl`,
+    defaultMessage: 'formSinglecloudUrl',
+  }, 
+  formAddNode: {
+    id: `${scope}.formAddNode`,
+    defaultMessage: 'formAddNode',
+  }, 
+  formHostName: {
+    id: `${scope}.formHostName`,
+    defaultMessage: 'formHostName',
+  }, 
+  formMainNode: {
+    id: `${scope}.formMainNode`,
+    defaultMessage: 'formMainNode',
+  }, 
+  formETCDNode: {
+    id: `${scope}.formETCDNode`,
+    defaultMessage: 'formETCDNode',
+  }, 
+  formWorkNode: {
+    id: `${scope}.formWorkNode`,
+    defaultMessage: 'formWorkNode',
+  }, 
+  formBoundaryNode: {
+    id: `${scope}.formBoundaryNode`,
+    defaultMessage: 'formBoundaryNode',
+  },
+  createClustersButton: {
+    id: `${scope}.createClustersButton`,
+    defaultMessage: 'createClustersButton',
+  },
+  cancleClustersButton: {
+    id: `${scope}.cancleClustersButton`,
+    defaultMessage: 'cancleClustersButton',
+  },
+  
 });

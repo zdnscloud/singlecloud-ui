@@ -32,6 +32,9 @@ const styles = (theme) => ({
   menuButton: {
     marginLeft: 12,
     marginRight: 36,
+    position: 'absolute',
+    right: 0,
+    top: 6,
   },
   menuButtonHidden: {
     display: 'none',
@@ -111,6 +114,32 @@ const styles = (theme) => ({
   cardListTitle: {
     background: '#386fba',
   },
+  radioControl: {
+    flexDirection: 'row',
+  },
+  radioLabel: {
+    flexDirection: 'row',
+    lineHeight: 3,
+  },
+  radioGroup: {
+    flexDirection: 'row',
+    marginLeft: '2rem',
+  },
+  chexboxesControl: {
+    flexDirection: 'row',
+  },
+  chexboxesLabel: {
+    flexDirection: 'row',
+    lineHeight: 3,
+  },
+  chexboxesGroup:{
+    width:600,
+    flexDirection: 'row',
+    marginLeft: '0.8rem',
+  },
+  cancleBtn: {
+    marginLeft:"10px"
+  }
 });
 
 export default styles;

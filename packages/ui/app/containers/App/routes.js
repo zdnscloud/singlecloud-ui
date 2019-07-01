@@ -8,7 +8,9 @@ import Notifications from '@material-ui/icons/Notifications';
 import Unarchive from '@material-ui/icons/Unarchive';
 import Language from '@material-ui/icons/Language';
 
-import ClustersPage from 'containers/ClustersPage/Loadable';
+import ClustersPage,{
+  CreateClustersPage,
+} from 'containers/ClustersPage/Loadable';
 import ClusterDetailPage from 'containers/ClusterDetailPage/Loadable';
 import NodesPage, {
   NodeDetailPage,
@@ -63,6 +65,12 @@ const appRoutes = [
     name: 'Clusters',
     icon: Dashboard,
     component: ClustersPage,
+  },
+  {
+    path: '/clusters/create',
+    name: 'Cluster create',
+    icon: Dashboard,
+    component: CreateClustersPage,
   },
   {
     path: '/clusters/:cluster_id',
