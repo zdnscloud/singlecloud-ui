@@ -45,14 +45,14 @@ const styles = (theme) => ({
     overflowX:'hidden'
   },
   grid:{
-    padding:theme.spacing.unit * 2,
-    paddingTop:theme.spacing.unit * 1
+    padding:theme.spacing(2),
+    paddingTop:theme.spacing(1)
   },
   tableWrapper: {
     overflow: 'auto',
   },
   h5: {
-    marginBottom: theme.spacing.unit * 2,
+    marginBottom: theme.spacing(2),
   },
   cardCategoryWhite: {
     '&,& a,& a:hover,& a:focus': {

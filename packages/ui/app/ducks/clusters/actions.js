@@ -50,3 +50,24 @@ export const loadClustersAndNamespaces = () => ({
   type: c.LOAD_CLUSTERS_AND_NAMESPACES,
   payload: {},
 });
+
+export const createCluster = (data, meta) => ({
+  type: c.CREATE_CLUSTER,
+  payload: data,
+  meta,
+});
+
+export const createClusterSuccess = (resp, meta) => ({
+  type: c.CREATE_CLUSTER_SUCCESS,
+  payload: resp,
+  meta,
+});
+
+export const createClusterFailure = (error, meta) => ({
+  type: c.CREATE_CLUSTER_FAILURE,
+  payload: error,
+  meta,
+  error: true,
+});
+
+

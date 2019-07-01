@@ -32,18 +32,18 @@ const styles = (theme) => ({
     minHeight: 'calc(100vh - 65px - 82px)',
   },
   grid:{
-    padding:theme.spacing.unit * 2,
-    paddingTop:theme.spacing.unit * 1
+    padding:theme.spacing(2),
+    paddingTop:theme.spacing(1)
   },
   chartContainer: {},
   h5: {
-    marginBottom: theme.spacing.unit * 2,
+    marginBottom: theme.spacing(2),
   },
   margin: {
-    margin: theme.spacing.unit,
+    margin: theme.spacing(1),
   },
   button: {
-    margin: theme.spacing.unit,
+    margin: theme.spacing(1),
   },
   textField: {
     flexBasis: 200,

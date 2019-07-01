@@ -116,6 +116,7 @@ class StatefulSetForm extends PureComponent {
                   inputProps={{ type: 'text', autoComplete: 'off' }}
                   classes={classes}
                 />
+                
               </GridItem>
               <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
                 <InputField

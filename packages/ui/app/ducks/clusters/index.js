@@ -53,6 +53,15 @@ export const clustersReducer = (
     case c.CHANGE_CLUSTER:
       return state.set('selectedCluster', payload.clusterID);
 
+    case c.CREATE_CLUSTER:
+      return state;
+    case c.CREATE_CLUSTER_SUCCESS: {
+      const data = payload.response;
+      return state.setIn(['clusters', data.id], fromJS(data));
+    }
+    case c.CREATE_CLUSTER_FAILURE:
+      return state;
+
     default:
       return state;
   }
