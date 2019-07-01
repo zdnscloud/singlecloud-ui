@@ -45,9 +45,9 @@ export default defineMessages({
     id: `${scope}.tableTitleActions`,
     defaultMessage: 'Actions',
   },
-  createClusters: {
-    id: `${scope}.createClusters`,
-    defaultMessage: 'This is the  createClusters!',
+  createCluster: {
+    id: `${scope}.createCluster`,
+    defaultMessage: 'This is the  createCluster!',
   },
   formCreate: {
     id: `${scope}.formCreate`,
@@ -149,9 +149,9 @@ export default defineMessages({
     id: `${scope}.formBoundaryNode`,
     defaultMessage: 'formBoundaryNode',
   },
-  createClustersButton: {
-    id: `${scope}.createClustersButton`,
-    defaultMessage: 'createClustersButton',
+  createClusterButton: {
+    id: `${scope}.createClusterButton`,
+    defaultMessage: 'createClusterButton',
   },
   cancleClustersButton: {
     id: `${scope}.cancleClustersButton`,

@@ -14,7 +14,6 @@ import { reduxForm, getFormValues } from 'redux-form/immutable';
 import { SubmissionError, submit } from 'redux-form';
 
 import { withStyles } from '@material-ui/core/styles';
-import Menubar from 'components/Menubar';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Typography from '@material-ui/core/Typography';
 import Fab from '@material-ui/core/Fab';
@@ -23,17 +22,16 @@ import Button from '@material-ui/core/Button';
 import GridItem from 'components/Grid/GridItem';
 import GridContainer from 'components/Grid/GridContainer';
 
-import { makeSelectClusterID } from 'ducks/app/selectors';
-import { makeSelectCurrentCluster,makeSelectURL } from 'ducks/clusters/selectors';
+import { makeSelectURL } from 'ducks/clusters/selectors';
 import * as actions from 'ducks/clusters/actions';
 
 import messages from './messages';
 import styles from './styles';
 import ClustersPageHelmet from './helmet';
-import ClustersForm from './ClustersForm';
+import ClusterForm from './ClusterForm';
 import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
 
-export const formName = 'createClustersForm';
+export const formName = 'createClusterForm';
 
 const validate = (values) => {
   const errors = {};
@@ -46,27 +44,23 @@ const validate = (values) => {
   return errors;
 };
 
-const CreateClustersForm = reduxForm({
+const CreateClusterForm = reduxForm({
  form: formName,
  validate,
- })(ClustersForm);
+ })(ClusterForm);
 
 /* eslint-disable react/prefer-stateless-function */
-export class CreateClustersPage extends React.PureComponent {
+export class CreateClusterPage extends React.PureComponent {
   static propTypes = {
-    initAction: PropTypes.func,
     classes: PropTypes.object.isRequired,
-    match: PropTypes.object,
-    location: PropTypes.object,
   };
 
   render() {
     const {
       classes,
-      cluster,
-      clusterID,
       submitForm,
-      createClusters,
+      createCluster,
+      url,
       values
     } = this.props;
     async function doSubmit(formValues) {
@@ -75,11 +69,10 @@ export class CreateClustersPage extends React.PureComponent {
         console.log("data",data)
         debugger
         await new Promise((resolve, reject) => {
-          createClusters(data, {
+          createCluster(data, {
             resolve,
             reject,
             url,
-            clusterID,
           });
         });
       } catch (error) {
@@ -99,14 +92,14 @@ export class CreateClustersPage extends React.PureComponent {
                 name: <FormattedMessage {...messages.clusters}/>
               },
               {
-                name: <FormattedMessage {...messages.createClusters}/>
+                name: <FormattedMessage {...messages.createCluster}/>
               }
             ]}
           />
           <Typography component="div" className="">
             <GridContainer className={classes.grid}>
               <GridItem xs={12} sm={12} md={12}>
-                  <CreateClustersForm
+                  <CreateClusterForm
                     classes={classes}
                     onSubmit={doSubmit}
                     initialValues={fromJS({ name: '' })}
@@ -117,7 +110,7 @@ export class CreateClustersPage extends React.PureComponent {
                     color="primary"
                     onClick={submitForm}
                 >
-                    <FormattedMessage {...messages.createClustersButton} />
+                    <FormattedMessage {...messages.createClusterButton} />
                 </Button>
                 <Button
                     variant="contained"
@@ -136,8 +129,6 @@ export class CreateClustersPage extends React.PureComponent {
 }
 
 const mapStateToProps = createStructuredSelector({
-  clusterID: makeSelectClusterID(),
-  cluster: makeSelectCurrentCluster(),
   url: makeSelectURL(),
   values: getFormValues(formName),
 });
@@ -159,4 +150,4 @@ const withConnect = connect(
 export default compose(
   withConnect,
   withStyles(styles)
-)(CreateClustersPage);
+)(CreateClusterPage);

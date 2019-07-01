@@ -9,7 +9,7 @@ import Unarchive from '@material-ui/icons/Unarchive';
 import Language from '@material-ui/icons/Language';
 
 import ClustersPage,{
-  CreateClustersPage,
+  CreateClusterPage,
 } from 'containers/ClustersPage/Loadable';
 import ClusterDetailPage from 'containers/ClusterDetailPage/Loadable';
 import NodesPage, {
@@ -70,7 +70,7 @@ const appRoutes = [
     path: '/clusters/create',
     name: 'Cluster create',
     icon: Dashboard,
-    component: CreateClustersPage,
+    component: CreateClusterPage,
   },
   {
     path: '/clusters/:cluster_id',

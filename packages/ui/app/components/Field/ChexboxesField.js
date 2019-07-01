@@ -11,6 +11,8 @@ import FormHelperText from '@material-ui/core/FormHelperText';
 import FormGroup from '@material-ui/core/FormGroup';
 import Checkbox from '@material-ui/core/Checkbox';
 
+
+
 const renderChexboxesGroup = ({
   label,
   input,
@@ -23,9 +25,22 @@ const renderChexboxesGroup = ({
   formLabelComponent,
   ...custom
 }) => {
-  const onChange = (...args) => {
-    input.onChange(...args);
+  let rolesArr= [] ;
+  const onChange = (event,...args) => {
+    if(input.value){
+      let arr = input.value.filter((n) => n !== undefined);
+      rolesArr = rolesArr.concat(arr)
+    }
+    event.persist();
+    if(event.target.checked){
+      rolesArr.push(event.target.value)
+    } else {
+      rolesArr = rolesArr.filter((n) => n !== event.target.value )
+    }
+    input.onChange(rolesArr);
+    // console.log("onChange",rolesArr)
   };
+
   return (
     <FormControl
       component={formControlComponent}
@@ -42,18 +57,26 @@ const renderChexboxesGroup = ({
       <FormGroup
         aria-label={label}
         className={classes.group}
-        value={input.value}
-        onChange={onChange}
       >
         {options.map((opt, i) => (
+          // <FormControlLabel
+          //   key={i}
+          //   control={<Checkbox onChange={(evt) => { 
+          //     input.onChange(evt.target.value);
+          //   }} color="primary" />}
+          //   label={opt.label}
+          //   value={opt.value}
+          //   style ={{ marginRight:"40px"}}
+          //   {...opt}
+          // />
           <FormControlLabel
             key={i}
-            control={<Checkbox color="primary" />}
+            control={<Checkbox onChange={onChange} color="primary" />}
             label={opt.label}
             value={opt.value}
             style ={{ marginRight:"40px"}}
             {...opt}
-          />
+        />
         ))}
       </FormGroup>
     </FormControl>
