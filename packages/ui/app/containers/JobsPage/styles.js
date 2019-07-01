@@ -56,15 +56,15 @@ const styles = (theme) => ({
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
     }),
-    width: theme.spacing.unit * 7,
+    width: theme.spacing(7),
     [theme.breakpoints.up('sm')]: {
-      width: theme.spacing.unit * 9,
+      width: theme.spacing(9),
     },
   },
   appBarSpacer: theme.mixins.toolbar,
   select: {
     flexGrow: 1,
-    padding: theme.spacing.unit * 3,
+    padding: theme.spacing(3),
     overflow: 'auto',
   },
   content: {
@@ -73,8 +73,8 @@ const styles = (theme) => ({
     overflowX:'hidden'
   },
   grid:{
-    padding:theme.spacing.unit * 2,
-    paddingTop:theme.spacing.unit * 1
+    padding:theme.spacing(2),
+    paddingTop:theme.spacing(1)
   },
   appContainer: {},
   advanceContainer: {},
@@ -82,10 +82,10 @@ const styles = (theme) => ({
     textAlign: 'right',
   },
   h5: {
-    marginBottom: theme.spacing.unit * 2,
+    marginBottom: theme.spacing(2),
   },
   margin: {
-    margin: theme.spacing.unit,
+    margin: theme.spacing(1),
   },
   textField: {
     flexBasis: 200,
@@ -97,12 +97,12 @@ const styles = (theme) => ({
     marginRight: '10px',
   },
   formControl: {
-    margin: theme.spacing.unit,
+    margin: theme.spacing(1),
     flexBasis: 200,
     minWidth: 194,
   },
   selectEmpty: {
-    marginTop: theme.spacing.unit * 2,
+    marginTop: theme.spacing(2),
   },
   addContainerWrap: {
     minHeight: '75px',

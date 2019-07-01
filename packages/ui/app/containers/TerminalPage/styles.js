@@ -32,7 +32,7 @@ const styles = (theme) => ({
   appBarSpacer: theme.mixins.toolbar,
   content: {
     flexGrow: 1,
-    padding: theme.spacing.unit * 3,
+    padding: theme.spacing(3),
     height: '100vh',
     overflow: 'auto',
     overflowX:'hidden'
@@ -44,10 +44,10 @@ const styles = (theme) => ({
     height: 'calc(100% - 39px - 64px)',
   },
   button: {
-    margin: theme.spacing.unit,
+    margin: theme.spacing(1),
   },
   h5: {
-    marginBottom: theme.spacing.unit * 2,
+    marginBottom: theme.spacing(2),
   },
   cardCategoryWhite: {
     '&,& a,& a:hover,& a:focus': {
