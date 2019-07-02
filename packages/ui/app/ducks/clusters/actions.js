@@ -69,5 +69,3 @@ export const createClusterFailure = (error, meta) => ({
   meta,
   error: true,
 });
-
-

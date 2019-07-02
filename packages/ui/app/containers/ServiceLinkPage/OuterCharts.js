@@ -34,9 +34,9 @@ import CardFooter from 'components/Card/CardFooter';
 
 import OuterServiceTree from 'components/tree/OuterServiceTree';
 
-import styles from './cardStyles';
 import * as actions from 'ducks/serviceLinks/actions';
 import { makeSelectCurrentOuterServices } from 'ducks/serviceLinks/selectors';
+import styles from './cardStyles';
 
 import messages from './messages';
 
@@ -108,18 +108,32 @@ export class OuterCharts extends React.PureComponent {
         {os.map((s, i) => {
           const [type, idx, name] = s.name.split(separator);
           const { children } = s;
-          const count = _.reduce(children, (n, c) => {
-            const m = _.reduce(c.children, (nn, cc) => {
-              const mm = _.reduce(cc.children, (nnn, ccc) => {
-                const mmm = _.reduce(ccc.children, (nnnn, cccc) => {
-                  return nnnn += 1;
-                }, 0);
-                return nnn + mmm;
-              }, 0);
-              return nn + mm;
-            }, 0);
-            return n + (m < 4 ? 4 : m);
-          }, 0);
+          const count = _.reduce(
+            children,
+            (n, c) => {
+              const m = _.reduce(
+                c.children,
+                (nn, cc) => {
+                  const mm = _.reduce(
+                    cc.children,
+                    (nnn, ccc) => {
+                      const mmm = _.reduce(
+                        ccc.children,
+                        (nnnn, cccc) => (nnnn += 1),
+                        0
+                      );
+                      return nnn + mmm;
+                    },
+                    0
+                  );
+                  return nn + mm;
+                },
+                0
+              );
+              return n + (m < 4 ? 4 : m);
+            },
+            0
+          );
 
           return (
             <GridItem xs={12} sm={12} md={12} key={i}>

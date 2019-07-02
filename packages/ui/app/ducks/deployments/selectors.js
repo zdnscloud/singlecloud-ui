@@ -27,7 +27,8 @@ export const makeSelectDeployments = () =>
     makeSelectClusterID(),
     makeSelectNamespaceID(),
     (substate, clusterID, namespaceID) =>
-      substate.getIn(['deployments', clusterID, namespaceID]) || substate.clear()
+      substate.getIn(['deployments', clusterID, namespaceID]) ||
+      substate.clear()
   );
 
 export const makeSelectDeploymentsList = () =>
@@ -46,7 +47,9 @@ export const makeSelectURL = () =>
 
 export const makeSelectDeploymentID = () =>
   createSelector(
-    createMatchSelector('/clusters/:cluster_id/namespaces/:namespace_id/deployments/:deployment_id'),
+    createMatchSelector(
+      '/clusters/:cluster_id/namespaces/:namespace_id/deployments/:deployment_id'
+    ),
     (match) => {
       if (match && match.params) {
         return match.params.deployment_id;
@@ -62,7 +65,8 @@ export const makeSelectCurrentDeployment = () =>
     makeSelectNamespaceID(),
     makeSelectDeploymentID(),
     (substate, clusterID, namespaceID, deploymentID) =>
-      substate.getIn(['deployments', clusterID, namespaceID, deploymentID]) || substate.clear()
+      substate.getIn(['deployments', clusterID, namespaceID, deploymentID]) ||
+      substate.clear()
   );
 
 /**

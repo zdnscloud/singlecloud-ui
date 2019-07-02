@@ -32,11 +32,11 @@ import { makeSelectClusterID } from 'ducks/app/selectors';
 import { makeSelectCurrentCluster } from 'ducks/clusters/selectors';
 import * as actions from 'ducks/namespaces/actions';
 
+import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
 import messages from './messages';
 import styles from './styles';
 import NamespacesPageHelmet from './helmet';
 import NamespaceForm from './NamespaceForm';
-import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
 
 export const formName = 'createNamespaceForm';
 
@@ -90,16 +90,16 @@ export class CreateNamespacePage extends React.PureComponent {
         <NamespacesPageHelmet />
         <CssBaseline />
         <div className={classes.content}>
-        <Breadcrumbs 
+          <Breadcrumbs
             data={[
               {
-                path: '/clusters/' + clusterID + '/namespaces',
-                name: <FormattedMessage {...messages.pageTitle}/>
+                path: `/clusters/${clusterID}/namespaces`,
+                name: <FormattedMessage {...messages.pageTitle} />,
               },
               {
-                path: '/clusters/' + clusterID + '/namespaces/create',
-                name: <FormattedMessage {...messages.createNamespace}/>
-              }
+                path: `/clusters/${clusterID}/namespaces/create`,
+                name: <FormattedMessage {...messages.createNamespace} />,
+              },
             ]}
           />
           <Typography component="div" className="">

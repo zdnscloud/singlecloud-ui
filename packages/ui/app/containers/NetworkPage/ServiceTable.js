@@ -31,7 +31,7 @@ export class ServiceTable extends React.PureComponent {
     const { classes, data } = this.props;
     const mergedSchema = schema.map((s) => ({
       ...s,
-      label: <FormattedMessage {...messages[`tableTitle${s.label}`]} />
+      label: <FormattedMessage {...messages[`tableTitle${s.label}`]} />,
     }));
 
     return (
@@ -46,6 +46,4 @@ export class ServiceTable extends React.PureComponent {
   }
 }
 
-export default compose(
-  withStyles(styles)
-)(ServiceTable);
+export default compose(withStyles(styles))(ServiceTable);

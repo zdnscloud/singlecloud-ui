@@ -7,7 +7,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, injectIntl } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import { bindActionCreators, compose } from 'redux';
 import { Link } from 'react-router-dom';
@@ -33,7 +33,6 @@ import styles from './styles';
 import ClustersTable from './ClustersTable';
 import ClustersPageHelmet from './helmet';
 
-import { injectIntl } from 'react-intl';
 /* eslint-disable react/prefer-stateless-function */
 export class ClustersPage extends React.PureComponent {
   static propTypes = {
@@ -50,10 +49,7 @@ export class ClustersPage extends React.PureComponent {
   }
 
   load() {
-    const {
-      loadClusters,
-      url,
-    } = this.props;
+    const { loadClusters, url } = this.props;
     loadClusters(url);
   }
 
@@ -68,9 +64,9 @@ export class ClustersPage extends React.PureComponent {
           <Breadcrumbs
             data={[
               {
-                path:"/clusters",
-                name: <FormattedMessage {...messages.clusters} />
-              }
+                path: '/clusters',
+                name: <FormattedMessage {...messages.clusters} />,
+              },
             ]}
           />
           <GridContainer className={classes.grid}>
@@ -80,13 +76,13 @@ export class ClustersPage extends React.PureComponent {
                   <h4 className={classes.cardTitleWhite}>
                     <FormattedMessage {...messages.clusters} />
                     <IconButton
-                        aria-label={<FormattedMessage {...messages.clusters} />}
-                        className={classes.menuButton}
-                        component={Link}
-                        to={`/clusters/create`}
-                      >
-                        <AddIcon style={{ color: '#fff' }} />
-                      </IconButton>
+                      aria-label={<FormattedMessage {...messages.clusters} />}
+                      className={classes.menuButton}
+                      component={Link}
+                      to="/clusters/create"
+                    >
+                      <AddIcon style={{ color: '#fff' }} />
+                    </IconButton>
                   </h4>
                 </CardHeader>
                 <CardBody>

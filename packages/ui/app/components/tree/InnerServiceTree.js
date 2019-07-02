@@ -71,11 +71,17 @@ export default class InnerServiceTree extends React.Component {
       <div>
         <svg width={width} height={height}>
           <LinearGradient id="lg" from="#fdfba3" to="#fefefe" />
-          <rect width={width} height={height} rx={0} fill="#f3c" fillOpacity={0} />
-          <Group top={height / 2} left={margin.left*2}>
+          <rect
+            width={width}
+            height={height}
+            rx={0}
+            fill="#f3c"
+            fillOpacity={0}
+          />
+          <Group top={height / 2} left={margin.left * 2}>
             <Tree
               root={root}
-              size={[sizeWidth-margin.left*2, sizeHeight-margin.top*2]}
+              size={[sizeWidth - margin.left * 2, sizeHeight - margin.top * 2]}
               separation={(a, b) => (a.parent === b.parent ? 1 : 0.5) / a.depth}
               nodeSize={[150, 100]}
             >

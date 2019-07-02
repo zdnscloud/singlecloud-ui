@@ -121,9 +121,7 @@ class AppMenubar extends PureComponent {
               onClick={(evt) => this.openUserMenu(evt)}
             >
               <AccountIcon />
-              <small style={{ fontSize: '14px' }}>
-                {role.get('user')}
-              </small>
+              <small style={{ fontSize: '14px' }}>{role.get('user')}</small>
             </IconButton>
             <Menu
               id="user-menu"
@@ -146,7 +144,7 @@ class AppMenubar extends PureComponent {
               ))}
               <Divider />
               <MenuItem onClick={logout}>
-                <FormattedMessage {...messages[`userLogout`]} />
+                <FormattedMessage {...messages.userLogout} />
               </MenuItem>
             </Menu>
             {clusterID && (

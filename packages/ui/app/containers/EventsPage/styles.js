@@ -65,7 +65,7 @@ const styles = (theme) => ({
     padding: theme.spacing(3),
     height: '100vh',
     overflow: 'auto',
-    overflowX:'hidden'
+    overflowX: 'hidden',
   },
   chartContainer: {
     marginLeft: -22,
@@ -82,9 +82,7 @@ const styles = (theme) => ({
   wrapper: {
     minHeight: 'calc(100vh - 65px)',
   },
-  item: {
-
-  },
+  item: {},
   itemAvatar: {
     minWidth: 36,
   },

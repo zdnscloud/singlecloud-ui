@@ -72,16 +72,18 @@ class JobForm extends PureComponent {
       if (formData && formData.get) {
         const containers = formData.get('containers');
         if (containers && containers.map) {
-          return containers.map((ctn) => {
-            const exposedPorts = ctn && ctn.get && ctn.get('exposedPorts');
-            if (exposedPorts) {
-              return ctn.get('exposedPorts').filter((p) => {
-                const port = p && (p.get && p.get('port') || p.port);
-                return typeof port === 'number';
-              });
-            }
-            return fromJS([]);
-          }).flatten(true);
+          return containers
+            .map((ctn) => {
+              const exposedPorts = ctn && ctn.get && ctn.get('exposedPorts');
+              if (exposedPorts) {
+                return ctn.get('exposedPorts').filter((p) => {
+                  const port = p && ((p.get && p.get('port')) || p.port);
+                  return typeof port === 'number';
+                });
+              }
+              return fromJS([]);
+            })
+            .flatten(true);
         }
         return fromJS([]);
       }
@@ -94,9 +96,7 @@ class JobForm extends PureComponent {
         <GridContainer>
           {error ? (
             <GridItem xs={12} sm={12} md={12}>
-              <Danger>
-                {getByKey(error, ['response', 'message'])}
-              </Danger>
+              <Danger>{getByKey(error, ['response', 'message'])}</Danger>
             </GridItem>
           ) : null}
           <GridItem xs={12} sm={12} md={12}>

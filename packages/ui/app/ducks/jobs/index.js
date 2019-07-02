@@ -45,7 +45,10 @@ export const jobsReducer = (
       const job = payload.response;
       // temporary add, may remove when support cancel load data
       if (job && job.id) {
-        return state.setIn(['jobs', clusterID, namespaceID, job.id], fromJS(job));
+        return state.setIn(
+          ['jobs', clusterID, namespaceID, job.id],
+          fromJS(job)
+        );
       }
       return state;
     }
@@ -57,7 +60,10 @@ export const jobsReducer = (
     case c.CREATE_JOB_SUCCESS: {
       const { clusterID, namespaceID } = meta;
       const data = payload.response;
-      return state.setIn(['jobs', clusterID, namespaceID, data.id], fromJS(data));
+      return state.setIn(
+        ['jobs', clusterID, namespaceID, data.id],
+        fromJS(data)
+      );
     }
 
     case c.CREATE_JOB_FAILURE:
@@ -84,13 +90,10 @@ export const jobsReducer = (
     case c.SCALE_JOB_SUCCESS: {
       const { clusterID, namespaceID } = meta;
       const data = payload.response;
-      return state.setIn([
-        'jobs',
-        clusterID,
-        namespaceID,
-        data.id,
-        'replicas',
-      ], data.replicas);
+      return state.setIn(
+        ['jobs', clusterID, namespaceID, data.id, 'replicas'],
+        data.replicas
+      );
     }
     case c.SCALE_JOB_FAILURE:
       return state;

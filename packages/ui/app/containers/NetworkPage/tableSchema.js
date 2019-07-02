@@ -6,11 +6,9 @@ import ListItemText from '@material-ui/core/ListItemText';
 
 const schema = ['ip', 'name'];
 
-const tableSchema = schema.map((id) => {
-  return ({
-    id,
-    label: ucfirst(id),
-  });
-});
+const tableSchema = schema.map((id) => ({
+  id,
+  label: ucfirst(id),
+}));
 
 export default tableSchema;

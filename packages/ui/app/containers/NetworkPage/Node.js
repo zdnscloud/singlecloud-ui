@@ -34,7 +34,7 @@ export const Node = (props) => {
   }, []);
   const { classes, theme, node } = props;
   const width = rect.width / 2;
-  const height = rect.height;
+  const { height } = rect;
   const radius = Math.min(width, height) * 0.8;
   const centerY = height / 2;
   const centerX = width / 2;
@@ -42,7 +42,7 @@ export const Node = (props) => {
     { label: 'used', value: node.get('usedsize') },
     { label: 'free', value: node.get('freesize') },
   ];
-  const percent = Math.round(node.get('usedsize') / node.get('size') * 100);
+  const percent = Math.round((node.get('usedsize') / node.get('size')) * 100);
 
   return (
     <Paper elevation={0} className={classes.node} ref={measuredRef}>
@@ -58,8 +58,8 @@ export const Node = (props) => {
               padAngle={0}
               pieSort={(n) => true}
             >
-              {(pie) => {
-                return pie.arcs.map((arc, i) => {
+              {(pie) =>
+                pie.arcs.map((arc, i) => {
                   const { label } = arc.data;
                   const [centroidX, centroidY] = pie.path.centroid(arc);
                   const { startAngle, endAngle } = arc;
@@ -70,11 +70,11 @@ export const Node = (props) => {
                       <path d={pie.path(arc)} fill={fillColor} />
                     </g>
                   );
-                });
-              }}
+                })
+              }
             </Pie>
             <text
-              fill={'#000'}
+              fill="#000"
               x={0}
               y={0}
               dy=".5em"
@@ -110,6 +110,4 @@ export const Node = (props) => {
   );
 };
 
-export default compose(
-  withStyles(styles, { withTheme: true })
-)(Node);
+export default compose(withStyles(styles, { withTheme: true }))(Node);

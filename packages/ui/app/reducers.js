@@ -19,9 +19,7 @@ import serviceLinksReducer, {
 import configMapsReducer, {
   prefix as configMapsPrefix,
 } from 'ducks/configMaps';
-import secretsReducer, {
-  prefix as secretsPrefix,
-} from 'ducks/secrets';
+import secretsReducer, { prefix as secretsPrefix } from 'ducks/secrets';
 import deploymentsReducer, {
   prefix as deploymentsPrefix,
 } from 'ducks/deployments';
@@ -31,33 +29,17 @@ import statefulSetsReducer, {
 import daemonSetsReducer, {
   prefix as daemonSetsPrefix,
 } from 'ducks/daemonSets';
-import cronJobsReducer, {
-  prefix as cronJobsPrefix,
-} from 'ducks/cronJobs';
-import jobsReducer, {
-  prefix as jobsPrefix,
-} from 'ducks/jobs';
-import podsReducer, {
-  prefix as podsPrefix,
-} from 'ducks/pods';
-import storagesReducer, {
-  prefix as storagesPrefix,
-} from 'ducks/storages';
-import networksReducer, {
-  prefix as networksPrefix,
-} from 'ducks/networks';
+import cronJobsReducer, { prefix as cronJobsPrefix } from 'ducks/cronJobs';
+import jobsReducer, { prefix as jobsPrefix } from 'ducks/jobs';
+import podsReducer, { prefix as podsPrefix } from 'ducks/pods';
+import storagesReducer, { prefix as storagesPrefix } from 'ducks/storages';
+import networksReducer, { prefix as networksPrefix } from 'ducks/networks';
 import namespacesReducer, {
   prefix as namespacesPrefix,
 } from 'ducks/namespaces';
-import nodesReducer, {
-  prefix as nodesPrefix,
-} from 'ducks/nodes';
-import clustersReducer, {
-  prefix as clustersPrefix,
-} from 'ducks/clusters';
-import eventsReducer, {
-  prefix as eventsPrefix,
-} from 'ducks/events';
+import nodesReducer, { prefix as nodesPrefix } from 'ducks/nodes';
+import clustersReducer, { prefix as clustersPrefix } from 'ducks/clusters';
+import eventsReducer, { prefix as eventsPrefix } from 'ducks/events';
 
 /**
  * Merges the main reducer with the router state and dynamically injected reducers

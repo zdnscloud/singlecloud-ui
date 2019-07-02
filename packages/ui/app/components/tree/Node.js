@@ -39,7 +39,7 @@ function Node({ node, onClick }) {
       Icon = ServiceIcon;
       break;
     case 'pod':
-      switch(state) {
+      switch (state) {
         case 'Running':
           Icon = RunningPodIcon;
           break;
@@ -65,7 +65,7 @@ function Node({ node, onClick }) {
           break;
         default:
           Icon = FailurePodIcon;
-          // Icon = PodIcon;
+        // Icon = PodIcon;
       }
       break;
     case 'deploy':
@@ -84,7 +84,7 @@ function Node({ node, onClick }) {
         width={width}
         y={-height / 2}
         x={-width / 2}
-        fill={'transparent'}
+        fill="transparent"
         fillOpacity={1}
         stroke={color}
         strokeWidth={0}

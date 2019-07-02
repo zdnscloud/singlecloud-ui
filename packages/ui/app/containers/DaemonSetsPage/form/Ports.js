@@ -49,10 +49,7 @@ import MinusIcon from 'components/Icons/Minus';
 
 import messages from '../messages';
 
-const Ports = ({
-  fields,
-  meta: { error, submitFailed },
-}) => {
+const Ports = ({ fields, meta: { error, submitFailed } }) => {
   const options = [
     { label: 'TCP', value: 'tcp' },
     { label: 'UDP', value: 'udp' },
@@ -100,10 +97,7 @@ const Ports = ({
               }}
             />
           </ListItemText>
-          <IconButton
-            variant="contained"
-            onClick={(evt) => fields.remove(i)}
-          >
+          <IconButton variant="contained" onClick={(evt) => fields.remove(i)}>
             <MinusIcon />
           </IconButton>
         </ListItem>

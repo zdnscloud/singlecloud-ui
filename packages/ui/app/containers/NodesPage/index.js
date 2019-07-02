@@ -25,11 +25,11 @@ import { makeSelectClusterID } from 'ducks/app/selectors';
 import { makeSelectCurrentCluster } from 'ducks/clusters/selectors';
 import * as actions from 'ducks/nodes/actions';
 
+import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
 import messages from './messages';
 import styles from './styles';
 import NodesTable from './NodesTable';
 import NodesPageHelmet from './helmet';
-import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
 /* eslint-disable react/prefer-stateless-function */
 export class NodesPage extends React.PureComponent {
   static propTypes = {
@@ -43,33 +43,29 @@ export class NodesPage extends React.PureComponent {
   }
 
   load() {
-    const {
-      cluster,
-      clusterID,
-      loadNodes,
-    } = this.props
+    const { cluster, clusterID, loadNodes } = this.props;
     const url = cluster.getIn(['links', 'nodes']);
     loadNodes(url, clusterID);
   }
 
   render() {
-    const { classes ,clusterID} = this.props;
- 
+    const { classes, clusterID } = this.props;
+
     return (
       <div className={classes.root}>
         <NodesPageHelmet />
         <CssBaseline />
         <div className={classes.content}>
-        <Breadcrumbs 
+          <Breadcrumbs
             data={[
               {
-                path: '/clusters/' + clusterID + '/nodes',
-                
-                name: <FormattedMessage {...messages.pageTitle}/>
-              }
+                path: `/clusters/${clusterID}/nodes`,
+
+                name: <FormattedMessage {...messages.pageTitle} />,
+              },
             ]}
           />
-          <GridContainer className={classes.grid}>  
+          <GridContainer className={classes.grid}>
             <GridItem xs={12} sm={12} md={12}>
               <Card>
                 <CardHeader color="primary">

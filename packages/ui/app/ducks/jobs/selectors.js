@@ -34,8 +34,7 @@ export const makeSelectJobsList = () =>
   createSelector(
     selectJobsDomain,
     makeSelectJobs(),
-    (substate, jobs) =>
-      substate.get('list').map((id) => jobs.get(id))
+    (substate, jobs) => substate.get('list').map((id) => jobs.get(id))
   );
 
 export const makeSelectURL = () =>
@@ -46,7 +45,9 @@ export const makeSelectURL = () =>
 
 export const makeSelectJobID = () =>
   createSelector(
-    createMatchSelector('/clusters/:cluster_id/namespaces/:namespace_id/jobs/:job_id'),
+    createMatchSelector(
+      '/clusters/:cluster_id/namespaces/:namespace_id/jobs/:job_id'
+    ),
     (match) => {
       if (match && match.params) {
         return match.params.job_id;
@@ -62,7 +63,8 @@ export const makeSelectCurrentJob = () =>
     makeSelectNamespaceID(),
     makeSelectJobID(),
     (substate, clusterID, namespaceID, jobID) =>
-      substate.getIn(['jobs', clusterID, namespaceID, jobID]) || substate.clear()
+      substate.getIn(['jobs', clusterID, namespaceID, jobID]) ||
+      substate.clear()
   );
 
 /**

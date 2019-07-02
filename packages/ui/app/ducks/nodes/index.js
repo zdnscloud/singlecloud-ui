@@ -62,10 +62,7 @@ export const nodesReducer = (
       return state;
 
     case c.CHANGE_NODE:
-      return state.setIn(
-        ['selectedNode', payload.clusterID],
-        payload.nodeID
-      );
+      return state.setIn(['selectedNode', payload.clusterID], payload.nodeID);
 
     default:
       return state;

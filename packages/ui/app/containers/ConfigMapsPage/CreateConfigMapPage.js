@@ -123,14 +123,14 @@ export class CreateConfigMap extends React.PureComponent {
         <ConfigMapsPageHelmet />
         <CssBaseline />
         <div className={classes.content}>
-          <Breadcrumbs 
+          <Breadcrumbs
             data={[
               {
-                path: '/clusters/' + clusterID + '/namespaces/' + namespaceID +'/configmaps',
-                name: <FormattedMessage {...messages.pageTitle}/>
+                path: `/clusters/${clusterID}/namespaces/${namespaceID}/configmaps`,
+                name: <FormattedMessage {...messages.pageTitle} />,
               },
               {
-                name: <FormattedMessage {...messages.createConfigMap}/>
+                name: <FormattedMessage {...messages.createConfigMap} />,
               },
             ]}
           />
@@ -160,7 +160,7 @@ export class CreateConfigMap extends React.PureComponent {
                   </Button>
                 </CardFooter>
               </Card>
-              </GridItem>
+            </GridItem>
           </GridContainer>
         </div>
       </div>

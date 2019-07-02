@@ -56,99 +56,96 @@ const Volumes = ({
   fields,
   formValues,
   meta: { error, submitFailed },
-}) => {
-
-  return (
-    <List component="ul">
-      <ListItem>
-        <ListItemText>
-          <Button color="secondary" onClick={(evt) => fields.push({})}>
-            <FormattedMessage {...messages.formVolumes} />
-            <PlusIcon />
-          </Button>
-        </ListItemText>
-      </ListItem>
-      {fields.map((f, i) => {
-        let names = [];
-        const type = formValues && formValues.getIn([
-          'containers',
-          containerIndex,
-          'volumes',
-          i,
-          'type',
-        ]);
-        const pvcts = formValues && formValues.get('persistentVolumes');
-        switch (type) {
-          case 'configmap':
-            names = configMapsOptions;
-            break;
-          case 'secret':
-            names = secretsOptions;
-            break;
-          case 'persistentVolume':
-            if (pvcts && pvcts.size > 0) {
-              names = pvcts.map((pvct) => (
-                { label: pvct.name, value: pvct.name }
-              ));
-            }
-            break;
-        }
-        return (
-          <ListItem key={i}>
-            <ListItemText>
-              <SelectField
-                name={`${f}.type`}
-                label={<FormattedMessage {...messages.formVolumeType} />}
-                options={[
-                  {
-                    label: <FormattedMessage {...messages.formVolumeTypeConfigMap} />,
-                    value: 'configmap',
-                  },
-                  {
-                    label: <FormattedMessage {...messages.formVolumeTypeSecret} />,
-                    value: 'secret',
-                  },
-                  {
-                    label: <FormattedMessage {...messages.formVolumeTypePersistentVolume} />,
-                    value: 'persistentVolume',
-                  },
-                ]}
-                formControlProps={{
-                  style: {
-                    marginTop: 10,
-                    width: 146,
-                  },
-                }}
-              />
-              &nbsp;&nbsp;&nbsp;&nbsp;
-              <SelectField
-                name={`${f}.name`}
-                label={<FormattedMessage {...messages.formVolumeName} />}
-                options={names}
-                formControlProps={{
-                  style: {
-                    marginTop: 10,
-                    width: 146,
-                  },
-                }}
-              />
-              &nbsp;&nbsp;&nbsp;&nbsp;
-              <InputField
-                name={`${f}.mountPath`}
-                label={<FormattedMessage {...messages.formMountPath} />}
-              />
-            </ListItemText>
-            <IconButton
-              variant="contained"
-              onClick={(evt) => fields.remove(i)}
-            >
-              <MinusIcon />
-            </IconButton>
-          </ListItem>
-        );
-      })}
-    </List>
-  );
-};
+}) => (
+  <List component="ul">
+    <ListItem>
+      <ListItemText>
+        <Button color="secondary" onClick={(evt) => fields.push({})}>
+          <FormattedMessage {...messages.formVolumes} />
+          <PlusIcon />
+        </Button>
+      </ListItemText>
+    </ListItem>
+    {fields.map((f, i) => {
+      let names = [];
+      const type = formValues && formValues.getIn([
+        'containers',
+        containerIndex,
+        'volumes',
+        i,
+        'type',
+      ]);
+      const pvcts = formValues && formValues.get('persistentVolumes');
+      switch (type) {
+        case 'configmap':
+          names = configMapsOptions;
+          break;
+        case 'secret':
+          names = secretsOptions;
+          break;
+        case 'persistentVolume':
+          if (pvcts && pvcts.size > 0) {
+            names = pvcts.map((pvct) => (
+              { label: pvct.name, value: pvct.name }
+            ));
+          }
+          break;
+      }
+      return (
+        <ListItem key={i}>
+          <ListItemText>
+            <SelectField
+              name={`${f}.type`}
+              label={<FormattedMessage {...messages.formVolumeType} />}
+              options={[
+                {
+                  label: <FormattedMessage {...messages.formVolumeTypeConfigMap} />,
+                  value: 'configmap',
+                },
+                {
+                  label: <FormattedMessage {...messages.formVolumeTypeSecret} />,
+                  value: 'secret',
+                },
+                {
+                  label: <FormattedMessage {...messages.formVolumeTypePersistentVolume} />,
+                  value: 'persistentVolume',
+                },
+              ]}
+              formControlProps={{
+                style: {
+                  marginTop: 10,
+                  width: 146,
+                },
+              }}
+            />
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            <SelectField
+              name={`${f}.name`}
+              label={<FormattedMessage {...messages.formVolumeName} />}
+              options={names}
+              formControlProps={{
+                style: {
+                  marginTop: 10,
+                  width: 146,
+                },
+              }}
+            />
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            <InputField
+              name={`${f}.mountPath`}
+              label={<FormattedMessage {...messages.formMountPath} />}
+            />
+          </ListItemText>
+          <IconButton
+            variant="contained"
+            onClick={(evt) => fields.remove(i)}
+          >
+            <MinusIcon />
+          </IconButton>
+        </ListItem>
+      );
+    })}
+  </List>
+);
 
 export default Volumes;

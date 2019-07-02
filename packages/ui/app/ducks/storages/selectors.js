@@ -3,9 +3,7 @@ import {
   createMatchSelector,
   getLocation,
 } from 'connected-react-router/immutable';
-import {
-  makeSelectClusterID,
-} from 'ducks/app/selectors';
+import { makeSelectClusterID } from 'ducks/app/selectors';
 import { prefix } from './constants';
 
 /**
@@ -46,16 +44,14 @@ export const makeSelectCurrentNFSStorages = () =>
   createSelector(
     makeSelectNFSStorages(),
     makeSelectClusterID(),
-    (storages, clusterID) =>
-      storages.getIn([clusterID]) || storages.clear()
+    (storages, clusterID) => storages.getIn([clusterID]) || storages.clear()
   );
 
 export const makeSelectCurrentLVMStorages = () =>
   createSelector(
     makeSelectLVMStorages(),
     makeSelectClusterID(),
-    (storages, clusterID) =>
-      storages.getIn([clusterID]) || storages.clear()
+    (storages, clusterID) => storages.getIn([clusterID]) || storages.clear()
   );
 
 /**

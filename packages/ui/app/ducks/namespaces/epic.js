@@ -24,8 +24,7 @@ export const loadNamespacesEpic = (action$, state$, { ajax }) =>
     mergeMap(({ payload, meta: { clusterID } }) =>
       ajax(payload).pipe(
         map((resp) => a.loadNamespacesSuccess(resp, clusterID)),
-        catchError((error) =>
-          of(a.loadNamespacesFailure(error, clusterID)))
+        catchError((error) => of(a.loadNamespacesFailure(error, clusterID)))
       )
     )
   );
@@ -54,7 +53,9 @@ export const createNamespaceEpic = (action$, state$, { ajax }) =>
 export const afterCreateEpic = (action$) =>
   action$.pipe(
     ofType(c.CREATE_NAMESPACE_SUCCESS),
-    mergeMap(({ payload, meta }) => timer(1000).pipe(mapTo(push(`/clusters/${meta.clusterID}/namespaces`))))
+    mergeMap(({ payload, meta }) =>
+      timer(1000).pipe(mapTo(push(`/clusters/${meta.clusterID}/namespaces`)))
+    )
   );
 
 export const removeNamespaceEpic = (action$, state$, { ajax }) =>
@@ -65,12 +66,12 @@ export const removeNamespaceEpic = (action$, state$, { ajax }) =>
         url: `${url}`,
         method: 'DELETE',
       }).pipe(
-        map((resp) => {
-          return a.removeNamespaceSuccess(resp, { id: payload, clusterID });
-        }),
-        catchError((error) => {
-          return of(a.removeNamespaceFailure(error, { id: payload, clusterID }));
-        })
+        map((resp) =>
+          a.removeNamespaceSuccess(resp, { id: payload, clusterID })
+        ),
+        catchError((error) =>
+          of(a.removeNamespaceFailure(error, { id: payload, clusterID }))
+        )
       )
     )
   );
@@ -79,19 +80,21 @@ export const loadAllNamespacesEpic = (action$, state$, { ajax }) =>
   action$.pipe(
     ofType(c.LOAD_ALL_NAMESPACES),
     mergeMap(({ payload: { clusters } }) => {
-      const list = clusters.map((c) => ({
-        clusterID: c.get('id'),
-        url: c.getIn(['links', 'namespaces']),
-      })).map(({ url, clusterID }) => (
-        ajax(url).pipe(
-          map((resp) => a.loadNamespacesSuccess(resp, clusterID)),
-          catchError((error) => of(a.loadNamespacesFailure(error, clusterID)))
+      const list = clusters
+        .map((c) => ({
+          clusterID: c.get('id'),
+          url: c.getIn(['links', 'namespaces']),
+        }))
+        .map(({ url, clusterID }) =>
+          ajax(url).pipe(
+            map((resp) => a.loadNamespacesSuccess(resp, clusterID)),
+            catchError((error) => of(a.loadNamespacesFailure(error, clusterID)))
+          )
         )
-      )).toJS();
+        .toJS();
       return concat.apply(null, list);
     })
   );
-
 
 export default combineEpics(
   loadNamespacesEpic,

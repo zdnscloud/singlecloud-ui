@@ -46,55 +46,77 @@ export const loadConfigMapEpic = (action$, state$, { ajax }) =>
 export const createConfigMapEpic = (action$, state$, { ajax }) =>
   action$.pipe(
     ofType(c.CREATE_CONFIG_MAP),
-    mergeMap(({ payload, meta: { resolve, reject, url, clusterID, namespaceID } }) =>
-      ajax({
-        url,
-        method: 'POST',
-        body: payload,
-      }).pipe(
-        map((resp) => {
-          resolve(resp);
-          return a.createConfigMapSuccess(resp, { clusterID, namespaceID });
-        }),
-        catchError((error) => {
-          reject(error);
-          return of(a.createConfigMapFailure(error, { clusterID, namespaceID }));
-        })
-      )
+    mergeMap(
+      ({ payload, meta: { resolve, reject, url, clusterID, namespaceID } }) =>
+        ajax({
+          url,
+          method: 'POST',
+          body: payload,
+        }).pipe(
+          map((resp) => {
+            resolve(resp);
+            return a.createConfigMapSuccess(resp, { clusterID, namespaceID });
+          }),
+          catchError((error) => {
+            reject(error);
+            return of(
+              a.createConfigMapFailure(error, { clusterID, namespaceID })
+            );
+          })
+        )
     )
   );
 
 export const afterCreateEpic = (action$) =>
   action$.pipe(
     ofType(c.CREATE_CONFIG_MAP_SUCCESS),
-    mergeMap(({ payload, meta }) => timer(1000).pipe(mapTo(push(`/clusters/${meta.clusterID}/namespaces/${meta.namespaceID}/configmaps`))))
+    mergeMap(({ payload, meta }) =>
+      timer(1000).pipe(
+        mapTo(
+          push(
+            `/clusters/${meta.clusterID}/namespaces/${meta.namespaceID}/configmaps`
+          )
+        )
+      )
+    )
   );
 
 export const updateConfigMapEpic = (action$, state$, { ajax }) =>
   action$.pipe(
     ofType(c.UPDATE_CONFIG_MAP),
-    mergeMap(({ payload, meta: { resolve, reject, url, clusterID, namespaceID } }) =>
-      ajax({
-        url,
-        method: 'PUT',
-        body: payload,
-      }).pipe(
-        map((resp) => {
-          resolve(resp);
-          return a.updateConfigMapSuccess(resp, { clusterID, namespaceID });
-        }),
-        catchError((error) => {
-          reject(error);
-          return of(a.updateConfigMapFailure(error, { clusterID, namespaceID }));
-        })
-      )
+    mergeMap(
+      ({ payload, meta: { resolve, reject, url, clusterID, namespaceID } }) =>
+        ajax({
+          url,
+          method: 'PUT',
+          body: payload,
+        }).pipe(
+          map((resp) => {
+            resolve(resp);
+            return a.updateConfigMapSuccess(resp, { clusterID, namespaceID });
+          }),
+          catchError((error) => {
+            reject(error);
+            return of(
+              a.updateConfigMapFailure(error, { clusterID, namespaceID })
+            );
+          })
+        )
     )
   );
 
 export const afterUpdateEpic = (action$) =>
   action$.pipe(
     ofType(c.UPDATE_CONFIG_MAP_SUCCESS),
-    mergeMap(({ payload, meta }) => timer(1000).pipe(mapTo(push(`/clusters/${meta.clusterID}/namespaces/${meta.namespaceID}/configmaps`))))
+    mergeMap(({ payload, meta }) =>
+      timer(1000).pipe(
+        mapTo(
+          push(
+            `/clusters/${meta.clusterID}/namespaces/${meta.namespaceID}/configmaps`
+          )
+        )
+      )
+    )
   );
 
 export const removeConfigMapEpic = (action$, state$, { ajax }) =>
@@ -105,12 +127,22 @@ export const removeConfigMapEpic = (action$, state$, { ajax }) =>
         url: `${url}`,
         method: 'DELETE',
       }).pipe(
-        map((resp) => {
-          return a.removeConfigMapSuccess(resp, { id: payload, clusterID, namespaceID });
-        }),
-        catchError((error) => {
-          return of(a.removeConfigMapFailure(error, { id: payload, clusterID, namespaceID }));
-        })
+        map((resp) =>
+          a.removeConfigMapSuccess(resp, {
+            id: payload,
+            clusterID,
+            namespaceID,
+          })
+        ),
+        catchError((error) =>
+          of(
+            a.removeConfigMapFailure(error, {
+              id: payload,
+              clusterID,
+              namespaceID,
+            })
+          )
+        )
       )
     )
   );

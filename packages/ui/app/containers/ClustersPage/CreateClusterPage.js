@@ -25,17 +25,17 @@ import GridContainer from 'components/Grid/GridContainer';
 import { makeSelectURL } from 'ducks/clusters/selectors';
 import * as actions from 'ducks/clusters/actions';
 
+import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
 import messages from './messages';
 import styles from './styles';
 import ClustersPageHelmet from './helmet';
 import ClusterForm from './ClusterForm';
-import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
 
 export const formName = 'createClusterForm';
 
 const validate = (values) => {
   const errors = {};
-  const requiredFields = ['name','option','option.sshUser','option.sshKey'];
+  const requiredFields = ['name', 'option', 'option.sshUser', 'option.sshKey'];
   requiredFields.forEach((field) => {
     if (!values.get(field)) {
       errors[field] = 'Required';
@@ -45,9 +45,9 @@ const validate = (values) => {
 };
 
 const CreateClusterForm = reduxForm({
- form: formName,
- validate,
- })(ClusterForm);
+  form: formName,
+  validate,
+})(ClusterForm);
 
 /* eslint-disable react/prefer-stateless-function */
 export class CreateClusterPage extends React.PureComponent {
@@ -56,18 +56,12 @@ export class CreateClusterPage extends React.PureComponent {
   };
 
   render() {
-    const {
-      classes,
-      submitForm,
-      createCluster,
-      url,
-      values
-    } = this.props;
+    const { classes, submitForm, createCluster, url, values } = this.props;
     async function doSubmit(formValues) {
       try {
         const data = formValues.toJS();
-        console.log("data",data)
-        debugger
+        console.log('data', data);
+        debugger;
         await new Promise((resolve, reject) => {
           createCluster(data, {
             resolve,
@@ -85,39 +79,39 @@ export class CreateClusterPage extends React.PureComponent {
         <ClustersPageHelmet />
         <CssBaseline />
         <div className={classes.content}>
-        <Breadcrumbs 
+          <Breadcrumbs
             data={[
               {
                 path: '/clusters/',
-                name: <FormattedMessage {...messages.clusters}/>
+                name: <FormattedMessage {...messages.clusters} />,
               },
               {
-                name: <FormattedMessage {...messages.createCluster}/>
-              }
+                name: <FormattedMessage {...messages.createCluster} />,
+              },
             ]}
           />
           <Typography component="div" className="">
             <GridContainer className={classes.grid}>
               <GridItem xs={12} sm={12} md={12}>
-                  <CreateClusterForm
-                    classes={classes}
-                    onSubmit={doSubmit}
-                    initialValues={fromJS({ name: '' })}
-                    formValues={values}
-                  />
+                <CreateClusterForm
+                  classes={classes}
+                  onSubmit={doSubmit}
+                  initialValues={fromJS({ name: '' })}
+                  formValues={values}
+                />
                 <Button
-                    variant="contained"
-                    color="primary"
-                    onClick={submitForm}
+                  variant="contained"
+                  color="primary"
+                  onClick={submitForm}
                 >
-                    <FormattedMessage {...messages.createClusterButton} />
+                  <FormattedMessage {...messages.createClusterButton} />
                 </Button>
                 <Button
-                    variant="contained"
-                    className={classes.cancleBtn}
-                    // onClick={submitForm}
+                  variant="contained"
+                  className={classes.cancleBtn}
+                  // onClick={submitForm}
                 >
-                    <FormattedMessage {...messages.cancleClustersButton} />
+                  <FormattedMessage {...messages.cancleClustersButton} />
                 </Button>
               </GridItem>
             </GridContainer>

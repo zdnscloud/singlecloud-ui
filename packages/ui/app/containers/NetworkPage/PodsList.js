@@ -49,7 +49,7 @@ export class PodsList extends React.PureComponent {
           const podIPs = n.get('podIPs');
           const [ip, mask] = podCIDR.split('/');
           const total = 2 ** (32 - Number(mask));
-          const used = podIPs && podIPs.size || 0;
+          const used = (podIPs && podIPs.size) || 0;
 
           return (
             <ExpansionPanel key={id}>
@@ -111,7 +111,9 @@ export class PodsList extends React.PureComponent {
                       <div
                         key={`index-${n}`}
                         onClick={mouseOver}
-                        className={`${classes.ipitem} ${active ? 'active' : ''}`}
+                        className={`${classes.ipitem} ${
+                          active ? 'active' : ''
+                        }`}
                       ></div>
                     );
                   })}
@@ -149,6 +151,4 @@ export class PodsList extends React.PureComponent {
   }
 }
 
-export default compose(
-  withStyles(styles)
-)(PodsList);
+export default compose(withStyles(styles))(PodsList);

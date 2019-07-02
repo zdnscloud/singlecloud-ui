@@ -91,22 +91,22 @@ export class StatefulSetDetailPage extends React.PureComponent {
   }
 
   render() {
-    const { classes, statefulSet ,clusterID ,namespaceID} = this.props;
+    const { classes, statefulSet, clusterID, namespaceID } = this.props;
 
     return (
       <div className={classes.root}>
         <StatefulSetDetailPageHelmet />
         <CssBaseline />
         <div className={classes.content}>
-          <Breadcrumbs 
+          <Breadcrumbs
             data={[
               {
-                path: '/clusters/' + clusterID + '/namespaces/' + namespaceID + '/statefulSets',
-                name: <FormattedMessage {...messages.pageTitle}/>
+                path: `/clusters/${clusterID}/namespaces/${namespaceID}/statefulSets`,
+                name: <FormattedMessage {...messages.pageTitle} />,
               },
               {
-                name: <FormattedMessage {...messages.statefulSetDetail}/>
-              }
+                name: <FormattedMessage {...messages.statefulSetDetail} />,
+              },
             ]}
           />
           <StatefulSet statefulSet={statefulSet} />

@@ -76,16 +76,18 @@ class DeploymentForm extends PureComponent {
       if (formData && formData.get) {
         const containers = formData.get('containers');
         if (containers && containers.map) {
-          return containers.map((ctn) => {
-            const exposedPorts = ctn && ctn.get && ctn.get('exposedPorts');
-            if (exposedPorts) {
-              return ctn.get('exposedPorts').filter((p) => {
-                const port = p && (p.get && p.get('port') || p.port);
-                return typeof port === 'number';
-              });
-            }
-            return fromJS([]);
-          }).flatten(true);
+          return containers
+            .map((ctn) => {
+              const exposedPorts = ctn && ctn.get && ctn.get('exposedPorts');
+              if (exposedPorts) {
+                return ctn.get('exposedPorts').filter((p) => {
+                  const port = p && ((p.get && p.get('port')) || p.port);
+                  return typeof port === 'number';
+                });
+              }
+              return fromJS([]);
+            })
+            .flatten(true);
         }
         return fromJS([]);
       }
@@ -98,9 +100,7 @@ class DeploymentForm extends PureComponent {
         <GridContainer>
           {error ? (
             <GridItem xs={12} sm={12} md={12}>
-              <Danger>
-                {getByKey(error, ['response', 'message'])}
-              </Danger>
+              <Danger>{getByKey(error, ['response', 'message'])}</Danger>
             </GridItem>
           ) : null}
           <GridItem xs={12} sm={12} md={12}>
@@ -154,7 +154,9 @@ class DeploymentForm extends PureComponent {
                   <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
                     <SwitchField
                       name="enableAdvancedOptions"
-                      label={<FormattedMessage {...messages.formAdvancedOptions} />}
+                      label={
+                        <FormattedMessage {...messages.formAdvancedOptions} />
+                      }
                     />
                   </GridItem>
                 </GridContainer>
@@ -162,18 +164,36 @@ class DeploymentForm extends PureComponent {
                   <Fragment>
                     <FormSection name="advancedOptions">
                       <GridContainer>
-                        <GridItem xs={12} sm={12} md={12} className={classes.formLine}>
+                        <GridItem
+                          xs={12}
+                          sm={12}
+                          md={12}
+                          className={classes.formLine}
+                        >
                           <SwitchField
                             name="reloadWhenConfigChange"
-                            label={<FormattedMessage {...messages.formReloadWhenConfigChange} />}
+                            label={
+                              <FormattedMessage
+                                {...messages.formReloadWhenConfigChange}
+                              />
+                            }
                           />
                         </GridItem>
                       </GridContainer>
                       <GridContainer>
-                        <GridItem xs={12} sm={12} md={12} className={classes.formLine}>
+                        <GridItem
+                          xs={12}
+                          sm={12}
+                          md={12}
+                          className={classes.formLine}
+                        >
                           <RadioField
                             name="exposedServiceType"
-                            label={<FormattedMessage {...messages.formExposedServiceType} />}
+                            label={
+                              <FormattedMessage
+                                {...messages.formExposedServiceType}
+                              />
+                            }
                             classes={{
                               formControl: classes.radioControl,
                               formLabel: classes.radioLabel,
@@ -183,8 +203,8 @@ class DeploymentForm extends PureComponent {
                               { label: 'Cluster IP', value: 'clusterip' },
                               { label: 'Node Port', value: 'nodeport' },
                             ]}
-                            formControlComponent={'div'}
-                            formLabelComponent={'div'}
+                            formControlComponent="div"
+                            formLabelComponent="div"
                           />
                         </GridItem>
                       </GridContainer>
@@ -195,18 +215,36 @@ class DeploymentForm extends PureComponent {
                         component={AdvanceServices}
                       />
                       <GridContainer>
-                        <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
+                        <GridItem
+                          xs={3}
+                          sm={3}
+                          md={3}
+                          className={classes.formLine}
+                        >
                           <InputField
-                            label={<FormattedMessage {...messages.formExposedMetricPath} />}
+                            label={
+                              <FormattedMessage
+                                {...messages.formExposedMetricPath}
+                              />
+                            }
                             fullWidth
                             inputProps={{ type: 'text', autoComplete: 'off' }}
                             classes={classes}
                             name="exposedMetric.path"
                           />
                         </GridItem>
-                        <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
+                        <GridItem
+                          xs={3}
+                          sm={3}
+                          md={3}
+                          className={classes.formLine}
+                        >
                           <InputField
-                            label={<FormattedMessage {...messages.formExposedMeticPort} />}
+                            label={
+                              <FormattedMessage
+                                {...messages.formExposedMeticPort}
+                              />
+                            }
                             normalize={(val) => Number(val)}
                             fullWidth
                             inputProps={{

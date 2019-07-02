@@ -22,7 +22,7 @@ const store = { instance: null };
 export const storePromise = new Promise((resolve, reject) => {
   localforage.getItem('persistentSubState').then((ps) => {
     const st = ps ? fromJS(ps) : initialState;
-    store.instance = configureStore(st , history);
+    store.instance = configureStore(st, history);
     resolve(store);
   });
 });

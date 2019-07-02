@@ -61,19 +61,19 @@ export class StatefulSetsPage extends React.PureComponent {
   }
 
   render() {
-    const { classes ,clusterID, namespaceID} = this.props;
+    const { classes, clusterID, namespaceID } = this.props;
 
     return (
       <div className={classes.root}>
         <StatefulSetsPageHelmet />
         <CssBaseline />
         <div className={classes.content}>
-          <Breadcrumbs 
+          <Breadcrumbs
             data={[
               {
-                path: '/clusters/' + clusterID + '/namespaces/' + namespaceID +'/statefulSets',
-                name: <FormattedMessage {...messages.pageTitle}/>
-              }
+                path: `/clusters/${clusterID}/namespaces/${namespaceID}/statefulSets`,
+                name: <FormattedMessage {...messages.pageTitle} />,
+              },
             ]}
           />
           <GridContainer className={classes.grid}>

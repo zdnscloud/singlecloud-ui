@@ -38,12 +38,12 @@ import {
   makeSelectCurrentNFSStorages,
 } from 'ducks/storages/selectors';
 
+import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
 import messages from './messages';
 import StoragePageHelmet from './helmet';
 import styles from './styles';
 import Node from './Node';
 import PVTable from './PVTable';
-import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
 /* eslint-disable react/prefer-stateless-function */
 export class StoragePage extends React.PureComponent {
   static propTypes = {
@@ -60,9 +60,7 @@ export class StoragePage extends React.PureComponent {
   }
 
   componentDidUpdate(prevProps) {
-    const {
-      clusterID: prevClusterID,
-    } = prevProps;
+    const { clusterID: prevClusterID } = prevProps;
     const { clusterID, namespace } = this.props;
     if (clusterID !== prevClusterID) {
       this.load();
@@ -70,11 +68,7 @@ export class StoragePage extends React.PureComponent {
   }
 
   load() {
-    const {
-      clusterID,
-      loadNFSStorages,
-      loadLVMStorages,
-    } = this.props;
+    const { clusterID, loadNFSStorages, loadLVMStorages } = this.props;
     const nfsurl = `/apis/agent.zcloud.cn/v1/clusters/${clusterID}/storages/nfs`;
     const lvmurl = `/apis/agent.zcloud.cn/v1/clusters/${clusterID}/storages/lvm`;
     loadNFSStorages(nfsurl, clusterID);
@@ -82,7 +76,7 @@ export class StoragePage extends React.PureComponent {
   }
 
   render() {
-    const { classes, theme, lvm, nfs ,clusterID} = this.props;
+    const { classes, theme, lvm, nfs, clusterID } = this.props;
     let storage = lvm;
     if (this.state.tab === 1) {
       storage = nfs;
@@ -98,12 +92,12 @@ export class StoragePage extends React.PureComponent {
         <StoragePageHelmet />
         <CssBaseline />
         <Paper className={classes.content}>
-        <Breadcrumbs 
+          <Breadcrumbs
             data={[
               {
-                path: '/clusters/' + clusterID + '/storage',
-                name: <FormattedMessage {...messages.pageTitle}/>
-              }
+                path: `/clusters/${clusterID}/storage`,
+                name: <FormattedMessage {...messages.pageTitle} />,
+              },
             ]}
           />
           <GridContainer className={classes.grid}>
@@ -129,38 +123,39 @@ export class StoragePage extends React.PureComponent {
                     <GridItem xs={2} sm={2} md={2}>
                       <ReadOnlyInput
                         labelText={<FormattedMessage {...messages.size} />}
-                        value={totalSize + ''}
+                        value={`${totalSize}`}
                         inputProps={{
-                          endAdornment: (<span className={classes.text}>G</span>),
+                          endAdornment: <span className={classes.text}>G</span>,
                         }}
                       />
                     </GridItem>
                     <GridItem xs={2} sm={2} md={2}>
                       <ReadOnlyInput
                         labelText={<FormattedMessage {...messages.freesize} />}
-                        value={freeSize + ''}
+                        value={`${freeSize}`}
                         inputProps={{
-                          endAdornment: (<span className={classes.text}>G</span>),
+                          endAdornment: <span className={classes.text}>G</span>,
                         }}
                       />
                     </GridItem>
                     <GridItem xs={2} sm={2} md={2}>
                       <ReadOnlyInput
                         labelText={<FormattedMessage {...messages.usedsize} />}
-                        value={usedSize + ''}
+                        value={`${usedSize}`}
                         inputProps={{
-                          endAdornment: (<span className={classes.text}>G</span>),
+                          endAdornment: <span className={classes.text}>G</span>,
                         }}
                       />
                     </GridItem>
                   </GridContainer>
                   {this.state.tab === 0 ? (
                     <GridContainer>
-                      {nodes && nodes.map((node, i) => (
-                        <GridItem key={i} xs={3} sm={3} md={3}>
-                          <Node node={node} />
-                        </GridItem>
-                      ))}
+                      {nodes &&
+                        nodes.map((node, i) => (
+                          <GridItem key={i} xs={3} sm={3} md={3}>
+                            <Node node={node} />
+                          </GridItem>
+                        ))}
                     </GridContainer>
                   ) : null}
                 </CardBody>
@@ -175,11 +170,7 @@ export class StoragePage extends React.PureComponent {
                     <FormattedMessage {...messages.pvList} />
                   </h4>
                 </CardHeader>
-                <CardBody>
-                  {pvs ? (
-                    <PVTable data={pvs} />
-                  ) : null}
-                </CardBody>
+                <CardBody>{pvs ? <PVTable data={pvs} /> : null}</CardBody>
               </Card>
             </GridItem>
           </GridContainer>

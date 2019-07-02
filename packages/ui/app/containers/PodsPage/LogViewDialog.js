@@ -107,21 +107,18 @@ class LogViewDialog extends React.Component {
             </IconButton>
           </CardHeader>
           <CardBody className={classes.dialogCardBody}>
-            <Paper
-              className={classes.dialogCardBodyPaper}
-            >
+            <Paper className={classes.dialogCardBodyPaper}>
               <div className={classes.logsWrapper}>
                 <pre className={classes.logs}>
-                  {logs && logs.map((log, i) => (
-                    <div key={i}>
-                      <time className={classes.logTime}>
-                        {log[0].toLocaleString()}
-                      </time>
-                      <span className={classes.log}>
-                        {log[1]}
-                      </span>
-                    </div>
-                  ))}
+                  {logs &&
+                    logs.map((log, i) => (
+                      <div key={i}>
+                        <time className={classes.logTime}>
+                          {log[0].toLocaleString()}
+                        </time>
+                        <span className={classes.log}>{log[1]}</span>
+                      </div>
+                    ))}
                 </pre>
               </div>
             </Paper>

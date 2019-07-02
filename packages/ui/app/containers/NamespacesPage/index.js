@@ -28,11 +28,11 @@ import { makeSelectClusterID } from 'ducks/app/selectors';
 import { makeSelectCurrentCluster } from 'ducks/clusters/selectors';
 import * as actions from 'ducks/namespaces/actions';
 
+import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
 import messages from './messages';
 import styles from './styles';
 import NamespacesTable from './NamespacesTable';
 import NamespacesPageHelmet from './helmet';
-import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
 /* eslint-disable react/prefer-stateless-function */
 export class NamespacesPage extends React.PureComponent {
   static propTypes = {
@@ -48,11 +48,7 @@ export class NamespacesPage extends React.PureComponent {
   }
 
   load() {
-    const {
-      cluster,
-      clusterID,
-      loadNamespaces,
-    } = this.props
+    const { cluster, clusterID, loadNamespaces } = this.props;
     const url = cluster.getIn(['links', 'namespaces']);
     loadNamespaces(url, clusterID);
   }
@@ -64,23 +60,25 @@ export class NamespacesPage extends React.PureComponent {
         <NamespacesPageHelmet />
         <CssBaseline />
         <div className={classes.content}>
-        <Breadcrumbs 
+          <Breadcrumbs
             data={[
               {
-                path: '/clusters/' + clusterID + '/namespaces',
-                name: <FormattedMessage {...messages.pageTitle}/>
-              }
+                path: `/clusters/${clusterID}/namespaces`,
+                name: <FormattedMessage {...messages.pageTitle} />,
+              },
             ]}
           />
           <Typography component="div" className="">
-            <GridContainer  className={classes.grid}>
+            <GridContainer className={classes.grid}>
               <GridItem xs={12} sm={12} md={12}>
                 <Card>
                   <CardHeader color="primary">
                     <h4 className={classes.cardTitleWhite}>
                       <FormattedMessage {...messages.namespaces} />
                       <IconButton
-                        aria-label={<FormattedMessage {...messages.namespaces} />}
+                        aria-label={
+                          <FormattedMessage {...messages.namespaces} />
+                        }
                         className={classes.menuButton}
                         component={Link}
                         to={`/clusters/${clusterID}/namespaces/create`}

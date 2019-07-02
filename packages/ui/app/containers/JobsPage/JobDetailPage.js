@@ -29,10 +29,7 @@ import {
   makeSelectClusterID,
   makeSelectNamespaceID,
 } from 'ducks/app/selectors';
-import {
-  makeSelectJobID,
-  makeSelectCurrentJob,
-} from 'ducks/jobs/selectors';
+import { makeSelectJobID, makeSelectCurrentJob } from 'ducks/jobs/selectors';
 import * as podsActions from 'ducks/pods/actions';
 import * as actions from 'ducks/jobs/actions';
 import { makeSelectJOBURL as makeSelectJOBPodsURL } from 'ducks/pods/selectors';
@@ -94,16 +91,16 @@ export class JobDetailPage extends React.PureComponent {
         <JobDetailPageHelmet />
         <CssBaseline />
         <div className={classes.content}>
-        <Breadcrumbs 
+          <Breadcrumbs
             data={[
               {
-                path: '/clusters/' + clusterID + '/namespaces/' + namespaceID +'/jobs',
-                name: <FormattedMessage {...messages.pageTitle}/>
-              }, 
+                path: `/clusters/${clusterID}/namespaces/${namespaceID}/jobs`,
+                name: <FormattedMessage {...messages.pageTitle} />,
+              },
               {
                 path: '#',
-                name: <FormattedMessage {...messages.jobDetail}/>
-              }
+                name: <FormattedMessage {...messages.jobDetail} />,
+              },
             ]}
           />
           <Job job={job} />

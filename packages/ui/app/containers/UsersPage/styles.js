@@ -68,7 +68,7 @@ const styles = (theme) => ({
     padding: theme.spacing(3),
     minHeight: '100vh',
     overflow: 'auto',
-    overflowX:'hidden'
+    overflowX: 'hidden',
   },
   chartContainer: {
     marginLeft: -22,

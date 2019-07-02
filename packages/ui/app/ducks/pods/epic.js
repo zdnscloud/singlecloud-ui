@@ -42,7 +42,13 @@ export const loadSTSPodsEpic = (action$, state$, { ajax }) =>
           a.loadSTSPodsSuccess(resp, { clusterID, namespaceID, statefulSetID })
         ),
         catchError((error) =>
-          of(a.loadSTSPodsFailure(error, { clusterID, namespaceID, statefulSetID }))
+          of(
+            a.loadSTSPodsFailure(error, {
+              clusterID,
+              namespaceID,
+              statefulSetID,
+            })
+          )
         )
       )
     )
@@ -58,7 +64,9 @@ export const loadDSPodsEpic = (action$, state$, { ajax }) =>
           a.loadDSPodsSuccess(resp, { clusterID, namespaceID, daemonSetID })
         ),
         catchError((error) =>
-          of(a.loadDSPodsFailure(error, { clusterID, namespaceID, daemonSetID }))
+          of(
+            a.loadDSPodsFailure(error, { clusterID, namespaceID, daemonSetID })
+          )
         )
       )
     )

@@ -27,7 +27,8 @@ export const makeSelectStatefulSets = () =>
     makeSelectClusterID(),
     makeSelectNamespaceID(),
     (substate, clusterID, namespaceID) =>
-      substate.getIn(['statefulSets', clusterID, namespaceID]) || substate.clear()
+      substate.getIn(['statefulSets', clusterID, namespaceID]) ||
+      substate.clear()
   );
 
 export const makeSelectStatefulSetsList = () =>
@@ -46,7 +47,9 @@ export const makeSelectURL = () =>
 
 export const makeSelectStatefulSetID = () =>
   createSelector(
-    createMatchSelector('/clusters/:cluster_id/namespaces/:namespace_id/statefulSets/:statefulSet_id'),
+    createMatchSelector(
+      '/clusters/:cluster_id/namespaces/:namespace_id/statefulSets/:statefulSet_id'
+    ),
     (match) => {
       if (match && match.params) {
         return match.params.statefulSet_id;
@@ -62,7 +65,8 @@ export const makeSelectCurrentStatefulSet = () =>
     makeSelectNamespaceID(),
     makeSelectStatefulSetID(),
     (substate, clusterID, namespaceID, statefulSetID) =>
-      substate.getIn(['statefulSets', clusterID, namespaceID, statefulSetID]) || substate.clear()
+      substate.getIn(['statefulSets', clusterID, namespaceID, statefulSetID]) ||
+      substate.clear()
   );
 
 /**

@@ -60,10 +60,11 @@ import {
   makeSelectNamespaceID,
 } from 'ducks/app/selectors';
 import * as cActions from 'ducks/configMaps/actions';
-import { makeSelectConfigMaps } from 'ducks/configMaps/selectors';
 import {
+  makeSelectConfigMaps,
   makeSelectURL as makeSelectConfigMapURL,
 } from 'ducks/configMaps/selectors';
+
 import { makeSelectURL } from 'ducks/cronJobs/selectors';
 import * as actions from 'ducks/cronJobs/actions';
 
@@ -146,48 +147,51 @@ export class CreateCronJob extends React.PureComponent {
         <CronJobsHelmet />
         <CssBaseline />
         <div className={classes.content}>
-          <Breadcrumbs 
-              data={[
-                {
-                  path: '/clusters/' + clusterID + '/namespaces/' + namespaceID +'/cronJobs',
-                  name: <FormattedMessage {...messages.pageTitle}/>
-                },
-                {
-                  path: '#',
-                  name: <FormattedMessage {...messages.createCronJob}/>
-                }
-              ]}
-            />
-            <GridContainer className={classes.grid}>
-               <GridItem xs={12} sm={12} md={12}>
-                <Card>
-                  <CardHeader color="primary">
-                    <h4 className={classes.cardTitleWhite}>
-                      <FormattedMessage {...messages.createCronJob} />
-                    </h4>
-                  </CardHeader>
-                  <CardBody style={{ paddingLeft: 0, paddingRight: 0 }}>
-                    <CreateCronJobForm
-                      classes={classes}
-                      onSubmit={doSubmit}
-                      configMaps={configMaps}
-                      initialValues={fromJS({ replicas: 1, containers: [{ name: '' }] })}
-                      formValues={values}
-                      theme={theme}
-                    />
-                  </CardBody>
-                  <CardFooter className={classes.cardFooter}>
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      size="large"
-                      onClick={submitForm}
-                    >
-                      <FormattedMessage {...messages.save} />
-                    </Button>
-                  </CardFooter>
-                </Card>
-              </GridItem>
+          <Breadcrumbs
+            data={[
+              {
+                path: `/clusters/${clusterID}/namespaces/${namespaceID}/cronJobs`,
+                name: <FormattedMessage {...messages.pageTitle} />,
+              },
+              {
+                path: '#',
+                name: <FormattedMessage {...messages.createCronJob} />,
+              },
+            ]}
+          />
+          <GridContainer className={classes.grid}>
+            <GridItem xs={12} sm={12} md={12}>
+              <Card>
+                <CardHeader color="primary">
+                  <h4 className={classes.cardTitleWhite}>
+                    <FormattedMessage {...messages.createCronJob} />
+                  </h4>
+                </CardHeader>
+                <CardBody style={{ paddingLeft: 0, paddingRight: 0 }}>
+                  <CreateCronJobForm
+                    classes={classes}
+                    onSubmit={doSubmit}
+                    configMaps={configMaps}
+                    initialValues={fromJS({
+                      replicas: 1,
+                      containers: [{ name: '' }],
+                    })}
+                    formValues={values}
+                    theme={theme}
+                  />
+                </CardBody>
+                <CardFooter className={classes.cardFooter}>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    size="large"
+                    onClick={submitForm}
+                  >
+                    <FormattedMessage {...messages.save} />
+                  </Button>
+                </CardFooter>
+              </Card>
+            </GridItem>
           </GridContainer>
         </div>
       </div>

@@ -113,7 +113,8 @@ class Dashboard extends PureComponent {
           data-ref="mainPanel"
           style={{
             marginRight: hasEvents ? '310px' : null,
-            width: `calc(100% - ${(hasEvents ? 310 : 0) + (showMenuText ? 232 : 60)}px)`,
+            width: `calc(100% - ${(hasEvents ? 310 : 0) +
+              (showMenuText ? 232 : 60)}px)`,
           }}
         >
           <div className={classes.content}>

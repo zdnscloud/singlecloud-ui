@@ -32,11 +32,11 @@ import {
 import * as actions from 'ducks/deployments/actions';
 import { makeSelectURL } from 'ducks/deployments/selectors';
 
+import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
 import messages from './messages';
 import DeploymentsPageHelmet from './helmet';
 import styles from './styles';
 import DeploymentsTable from './DeploymentsTable';
-import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
 /* eslint-disable react/prefer-stateless-function */
 export class DeploymentsPage extends React.PureComponent {
   static propTypes = {
@@ -60,21 +60,21 @@ export class DeploymentsPage extends React.PureComponent {
   }
 
   render() {
-    const { classes ,clusterID,namespaceID} = this.props;
+    const { classes, clusterID, namespaceID } = this.props;
 
     return (
       <div className={classes.root}>
         <DeploymentsPageHelmet />
         <CssBaseline />
         <div className={classes.content}>
-          <Breadcrumbs 
-              data={[
-                {
-                  path: '/clusters/' + clusterID + '/namespaces/' + namespaceID +'/deployments',
-                  name: <FormattedMessage {...messages.pageTitle}/>
-                }
-              ]}
-            />
+          <Breadcrumbs
+            data={[
+              {
+                path: `/clusters/${clusterID}/namespaces/${namespaceID}/deployments`,
+                name: <FormattedMessage {...messages.pageTitle} />,
+              },
+            ]}
+          />
           <GridContainer className={classes.grid}>
             <GridItem xs={12} sm={12} md={12}>
               <Card>

@@ -79,11 +79,11 @@ export default defineMessages({
   },
   clusterAllNamespaces: {
     id: `${scope}.clusterAllNamespaces`,
-    defaultMessage: 'cluster {cluster}\'s all namespace',
+    defaultMessage: "cluster {cluster}'s all namespace",
   },
   clusterNamespace: {
     id: `${scope}.clusterNamespace`,
-    defaultMessage: 'cluster {cluster}\'s namespace {namespace}',
+    defaultMessage: "cluster {cluster}'s namespace {namespace}",
   },
   updateUser: {
     id: `${scope}.updateUser`,

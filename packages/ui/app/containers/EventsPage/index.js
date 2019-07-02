@@ -35,8 +35,7 @@ export class EventsPage extends React.PureComponent {
     location: PropTypes.object,
   };
 
-  componentWillMount() {
-  }
+  componentWillMount() {}
 
   render() {
     const { classes } = this.props;

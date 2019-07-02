@@ -44,33 +44,35 @@ export class UsersTable extends React.PureComponent {
 
   render() {
     const { classes, usersList, removeUser } = this.props;
-    const mergedSchema = schema.concat([
-      {
-        id: 'actions',
-        label: 'Actions',
-        component: (props) => (
-          <Fragment>
-            <Link
-              to={`/users/${props.data.get('id')}/edit`}
-              className={classes.createBtnLink}
-            >
-              <IconButton aria-label="Edit User">
-                <EditIcon />
+    const mergedSchema = schema
+      .concat([
+        {
+          id: 'actions',
+          label: 'Actions',
+          component: (props) => (
+            <Fragment>
+              <Link
+                to={`/users/${props.data.get('id')}/edit`}
+                className={classes.createBtnLink}
+              >
+                <IconButton aria-label="Edit User">
+                  <EditIcon />
+                </IconButton>
+              </Link>
+              <IconButton
+                aria-label="Delete"
+                onClick={(evt) => removeUser(props.data.get('id'))}
+              >
+                <DeleteIcon />
               </IconButton>
-            </Link>
-            <IconButton
-              aria-label="Delete"
-              onClick={(evt) => removeUser(props.data.get('id'))}
-            >
-              <DeleteIcon />
-            </IconButton>
-          </Fragment>
-        ),
-      },
-    ]).map((s) => ({
-      ...s,
-      label: <FormattedMessage {...messages[`tableTitle${s.label}`]} />
-    }));
+            </Fragment>
+          ),
+        },
+      ])
+      .map((s) => ({
+        ...s,
+        label: <FormattedMessage {...messages[`tableTitle${s.label}`]} />,
+      }));
 
     return (
       <Paper className={classes.tableWrapper}>

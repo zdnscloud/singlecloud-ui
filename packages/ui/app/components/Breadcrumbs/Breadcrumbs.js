@@ -10,62 +10,61 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 
 const style = {
-    breadcrumbs: {
-      width: "100%",
-      padding:6, 
-      paddingLeft:16,
-      background:"#fff"
-    },
-    icon: {
-        width: 20,
-        height: 20,
-        verticalAlign:"text-bottom",
-        color:"#9B9B9B"
-    },
-    inherit:{
-        color:"#9B9B9B",
-        textDecoration:'none'
-    },
-    textPrimary:{
-        color:"#1A435F",
-        textDecoration:'none'
-    }
-  };
+  breadcrumbs: {
+    width: '100%',
+    padding: 6,
+    paddingLeft: 16,
+    background: '#fff',
+  },
+  icon: {
+    width: 20,
+    height: 20,
+    verticalAlign: 'text-bottom',
+    color: '#9B9B9B',
+  },
+  inherit: {
+    color: '#9B9B9B',
+    textDecoration: 'none',
+  },
+  textPrimary: {
+    color: '#1A435F',
+    textDecoration: 'none',
+  },
+};
 
 function BreadcrumbsContainer({ ...props }) {
-    const { classes, children, className, data, ...rest } = props;
-    return (
-        <Breadcrumbs 
-            separator={<NavigateNextIcon fontSize="small" />}  
-            className={classes.breadcrumbs} 
-        >
-          <Link color="inherit" to="/"><HomeIcon className={classes.icon} /></Link> 
-          {data.map((prop, key) => {
-            return (
-               key === data.length-1 ?  
-               <Typography 
-                  className={classes.textPrimary} 
-                  key={key}
-                >
-                  {prop.name}
-              </Typography> : 
-              <Link 
-                className={classes.inherit} 
-                to={prop.path}
-                key={key}
-              >
-                {prop.name}
-              </Link> 
-            )
-          })}
-        </Breadcrumbs>
-      );
+  const { classes, children, className, data, ...rest } = props;
+  return (
+    <Breadcrumbs
+      separator={<NavigateNextIcon fontSize="small" />}
+      className={classes.breadcrumbs}
+    >
+      <Link color="inherit" to="/">
+        <HomeIcon className={classes.icon} />
+      </Link>
+      {data.map((prop, key) =>
+        key === data.length-1 ?
+          <Typography
+            className={classes.textPrimary}
+            key={key}
+          >
+            {prop.name}
+          </Typography> :
+          <Link
+            className={classes.inherit}
+            to={prop.path}
+            key={key}
+          >
+            {prop.name}
+          </Link>
+      )}
+    </Breadcrumbs>
+  );
 }
 
-
 BreadcrumbsContainer.propTypes = {
-    classes: PropTypes.object.isRequired,
-    children: PropTypes.node,
-    className: PropTypes.string
-  };
+  classes: PropTypes.object.isRequired,
+  children: PropTypes.node,
+  className: PropTypes.string,
+};
 export default withStyles(style)(BreadcrumbsContainer);

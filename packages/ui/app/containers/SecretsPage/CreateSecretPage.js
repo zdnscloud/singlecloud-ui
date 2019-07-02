@@ -44,11 +44,11 @@ import {
 import * as actions from 'ducks/secrets/actions';
 import { makeSelectURL } from 'ducks/secrets/selectors';
 
+import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
 import messages from './messages';
 import SecretsPageHelmet from './helmet';
 import styles from './styles';
 import SecretForm from './SecretForm';
-import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
 export const formName = 'createSecretForm';
 
 const validate = (values) => {
@@ -122,19 +122,19 @@ export class CreateSecret extends React.PureComponent {
         <SecretsPageHelmet />
         <CssBaseline />
         <div className={classes.content}>
-          <Breadcrumbs 
+          <Breadcrumbs
             data={[
               {
-                path: '/clusters/' + clusterID + '/namespaces/' + namespaceID +'/secrets',
-                name: <FormattedMessage {...messages.pageTitle}/>
+                path: `/clusters/${clusterID}/namespaces/${namespaceID}/secrets`,
+                name: <FormattedMessage {...messages.pageTitle} />,
               },
               {
-                path: '/clusters/' + clusterID + '/namespaces/' + namespaceID +'/secrets/create',
-                name: <FormattedMessage {...messages.createSecret}/>
-              }
+                path: `/clusters/${clusterID}/namespaces/${namespaceID}/secrets/create`,
+                name: <FormattedMessage {...messages.createSecret} />,
+              },
             ]}
           />
-          <GridContainer  className={classes.grid}>
+          <GridContainer className={classes.grid}>
             <GridItem xs={12} sm={12} md={12}>
               <Card>
                 <CardHeader color="primary">

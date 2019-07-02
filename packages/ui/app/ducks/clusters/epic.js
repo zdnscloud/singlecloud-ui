@@ -38,12 +38,10 @@ export const removeClusterEpic = (action$, state$, { ajax }) =>
         url: `${url}`,
         method: 'DELETE',
       }).pipe(
-        map((resp) => {
-          return a.removeClusterSuccess(resp, { id: payload });
-        }),
-        catchError((error) => {
-          return of(a.removeClusterFailure(error, { id: payload }));
-        })
+        map((resp) => a.removeClusterSuccess(resp, { id: payload })),
+        catchError((error) =>
+          of(a.removeClusterFailure(error, { id: payload }))
+        )
       )
     )
   );
@@ -51,7 +49,7 @@ export const removeClusterEpic = (action$, state$, { ajax }) =>
 export const loadClustersAndNamespacesEpic = (action$, state$, { ajax }) =>
   action$.pipe(
     ofType(c.LOAD_CLUSTERS_AND_NAMESPACES),
-    mergeMap(() => (
+    mergeMap(() =>
       concat(
         ajax('/apis/zcloud.cn/v1/clusters').pipe(
           map((resp) => a.loadClustersSuccess(resp)),
@@ -59,7 +57,7 @@ export const loadClustersAndNamespacesEpic = (action$, state$, { ajax }) =>
         ),
         of(loadAllNamespaces(makeSelectClusters()(state$.value).toList()))
       )
-    ))
+    )
   );
 
 export const createClusterEpic = (action$, state$, { ajax }) =>

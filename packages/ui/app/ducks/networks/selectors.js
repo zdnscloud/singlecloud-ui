@@ -3,9 +3,7 @@ import {
   createMatchSelector,
   getLocation,
 } from 'connected-react-router/immutable';
-import {
-  makeSelectClusterID,
-} from 'ducks/app/selectors';
+import { makeSelectClusterID } from 'ducks/app/selectors';
 import { prefix } from './constants';
 
 /**
@@ -33,16 +31,14 @@ export const makeSelectCurrentPodNetworks = () =>
   createSelector(
     makeSelectPodNetworks(),
     makeSelectClusterID(),
-    (networks, clusterID) =>
-      networks.getIn([clusterID]) || networks.clear()
+    (networks, clusterID) => networks.getIn([clusterID]) || networks.clear()
   );
 
 export const makeSelectCurrentServiceNetworks = () =>
   createSelector(
     makeSelectServiceNetworks(),
     makeSelectClusterID(),
-    (networks, clusterID) =>
-      networks.getIn([clusterID]) || networks.clear()
+    (networks, clusterID) => networks.getIn([clusterID]) || networks.clear()
   );
 
 /**

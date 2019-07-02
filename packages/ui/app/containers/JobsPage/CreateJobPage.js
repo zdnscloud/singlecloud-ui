@@ -60,10 +60,11 @@ import {
   makeSelectNamespaceID,
 } from 'ducks/app/selectors';
 import * as cActions from 'ducks/configMaps/actions';
-import { makeSelectConfigMaps } from 'ducks/configMaps/selectors';
 import {
+  makeSelectConfigMaps,
   makeSelectURL as makeSelectConfigMapURL,
 } from 'ducks/configMaps/selectors';
+
 import { makeSelectURL } from 'ducks/jobs/selectors';
 import * as actions from 'ducks/jobs/actions';
 
@@ -71,7 +72,6 @@ import messages from './messages';
 import JobsHelmet from './helmet';
 import styles from './styles';
 import JobForm from './JobForm';
-
 
 export const formName = 'createJobForm';
 
@@ -147,16 +147,16 @@ export class CreateJob extends React.PureComponent {
         <JobsHelmet />
         <CssBaseline />
         <div className={classes.content}>
-        <Breadcrumbs 
+          <Breadcrumbs
             data={[
               {
-                path: '/clusters/' + clusterID + '/namespaces/' + namespaceID +'/jobs',
-                name: <FormattedMessage {...messages.pageTitle}/>
+                path: `/clusters/${clusterID}/namespaces/${namespaceID}/jobs`,
+                name: <FormattedMessage {...messages.pageTitle} />,
               },
               {
                 path: '#',
-                name: <FormattedMessage {...messages.createJob}/>
-              }
+                name: <FormattedMessage {...messages.createJob} />,
+              },
             ]}
           />
           <GridContainer className={classes.grid}>
@@ -172,7 +172,10 @@ export class CreateJob extends React.PureComponent {
                     classes={classes}
                     onSubmit={doSubmit}
                     configMaps={configMaps}
-                    initialValues={fromJS({ replicas: 1, containers: [{ name: '' }] })}
+                    initialValues={fromJS({
+                      replicas: 1,
+                      containers: [{ name: '' }],
+                    })}
                     formValues={values}
                     theme={theme}
                   />

@@ -52,7 +52,13 @@ export class TerminalDialog extends React.PureComponent {
   termEl = createRef();
 
   render() {
-    const { classes, open, clusterID, namespaceID, closeContainerTerminal } = this.props;
+    const {
+      classes,
+      open,
+      clusterID,
+      namespaceID,
+      closeContainerTerminal,
+    } = this.props;
     const { protocol, hostname, port } = window.location;
 
     return (
@@ -119,10 +125,7 @@ export class TerminalDialog extends React.PureComponent {
             </IconButton>
           </CardHeader>
           <CardBody className={classes.dialogCardBody}>
-            <Paper
-              className={classes.dialogCardBodyPaper}
-              ref={this.termEl}
-            />
+            <Paper className={classes.dialogCardBodyPaper} ref={this.termEl} />
           </CardBody>
         </Card>
       </Dialog>

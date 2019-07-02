@@ -60,20 +60,26 @@ const Containers = ({
   classes,
   formValues,
 }) => {
-  const configMapsOptions = configMaps.toList().map((m) => ({
-    label: m.get('name'),
-    value: m.get('id'),
-  })).unshift({
-    label: <FormattedMessage {...messages.formNone} />,
-    value: '',
-  });
-  const secretsOptions = secrets.toList().map((s) => ({
-    label: s.get('name'),
-    value: s.get('id'),
-  })).unshift({
-    label: <FormattedMessage {...messages.formNone} />,
-    value: '',
-  });
+  const configMapsOptions = configMaps
+    .toList()
+    .map((m) => ({
+      label: m.get('name'),
+      value: m.get('id'),
+    }))
+    .unshift({
+      label: <FormattedMessage {...messages.formNone} />,
+      value: '',
+    });
+  const secretsOptions = secrets
+    .toList()
+    .map((s) => ({
+      label: s.get('name'),
+      value: s.get('id'),
+    }))
+    .unshift({
+      label: <FormattedMessage {...messages.formNone} />,
+      value: '',
+    });
 
   return (
     <Card style={{ padding: 0, marginBottom: 0 }}>
@@ -106,7 +112,9 @@ const Containers = ({
                       <GridItem xs={3} sm={3} md={3}>
                         <InputField
                           name={`${f}.name`}
-                          label={<FormattedMessage {...messages.formContainerName} />}
+                          label={
+                            <FormattedMessage {...messages.formContainerName} />
+                          }
                           fullWidth
                         />
                       </GridItem>
@@ -136,10 +144,7 @@ const Containers = ({
                     </GridContainer>
                     <GridContainer>
                       <GridItem xs={6} sm={6} md={6}>
-                        <FieldArray
-                          name={`${f}.env`}
-                          component={Envs}
-                        />
+                        <FieldArray name={`${f}.env`} component={Envs} />
                       </GridItem>
                     </GridContainer>
                     <GridContainer>

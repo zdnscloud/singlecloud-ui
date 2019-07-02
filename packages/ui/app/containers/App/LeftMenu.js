@@ -39,7 +39,6 @@ import messages from './messages';
 import styles from './LeftMenuStyle';
 
 class LeftMenu extends PureComponent {
-
   state = {
     openingMenu: null,
   };
@@ -92,7 +91,9 @@ class LeftMenu extends PureComponent {
                 <ListItem button className={classes.itemLink + listItemClasses}>
                   {prop.icon ? (
                     <ListItemIcon>
-                      <prop.icon style={{ color: '#fff', transform: 'scale(0.8334)' }} />
+                      <prop.icon
+                        style={{ color: '#fff', transform: 'scale(0.8334)' }}
+                      />
                     </ListItemIcon>
                   ) : null}
                   {showText ? (
@@ -128,7 +129,9 @@ class LeftMenu extends PureComponent {
               >
                 {prop.icon ? (
                   <ListItemIcon>
-                    <prop.icon style={{ color: '#fff', transform: 'scale(0.8334)' }} />
+                    <prop.icon
+                      style={{ color: '#fff', transform: 'scale(0.8334)' }}
+                    />
                   </ListItemIcon>
                 ) : null}
                 {showText ? (
@@ -167,9 +170,7 @@ class LeftMenu extends PureComponent {
                   placement="right-start"
                   style={{ zIndex: 1300 }}
                 >
-                  <div
-                    className={classNames(classes.secondMenu)}
-                  >
+                  <div className={classNames(classes.secondMenu)}>
                     <List component="div" disablePadding>
                       {prop.children.map((menu, idx) => {
                         const itemClasses = classNames({
@@ -265,5 +266,5 @@ const withConnect = connect(
 
 export default compose(
   withStyles(styles),
-  withConnect,
+  withConnect
 )(LeftMenu);

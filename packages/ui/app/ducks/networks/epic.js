@@ -23,8 +23,7 @@ export const loadPodNetworksEpic = (action$, state$, { ajax }) =>
     mergeMap(({ payload, meta: { clusterID } }) =>
       ajax(payload).pipe(
         map((resp) => a.loadPodNetworksSuccess(resp, clusterID)),
-        catchError((error) =>
-          of(a.loadPodNetworksFailure(error, clusterID)))
+        catchError((error) => of(a.loadPodNetworksFailure(error, clusterID)))
       )
     )
   );
@@ -36,7 +35,8 @@ export const loadServiceNetworksEpic = (action$, state$, { ajax }) =>
       ajax(payload).pipe(
         map((resp) => a.loadServiceNetworksSuccess(resp, clusterID)),
         catchError((error) =>
-          of(a.loadServiceNetworksFailure(error, clusterID)))
+          of(a.loadServiceNetworksFailure(error, clusterID))
+        )
       )
     )
   );

@@ -70,11 +70,11 @@ const styles = (theme) => ({
   content: {
     flexGrow: 1,
     overflow: 'auto',
-    overflowX:'hidden'
+    overflowX: 'hidden',
   },
-  grid:{
-    padding:theme.spacing(2),
-    paddingTop:theme.spacing(1)
+  grid: {
+    padding: theme.spacing(2),
+    paddingTop: theme.spacing(1),
   },
   appContainer: {},
   advanceContainer: {},

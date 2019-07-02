@@ -61,19 +61,19 @@ export class ConfigMapsPage extends React.PureComponent {
   }
 
   render() {
-    const { classes , clusterID, namespaceID} = this.props;
+    const { classes, clusterID, namespaceID } = this.props;
 
     return (
       <div className={classes.root}>
         <ConfigMapsPageHelmet />
         <CssBaseline />
         <div className={classes.content}>
-        <Breadcrumbs 
+          <Breadcrumbs
             data={[
               {
-                path: '/clusters/' + clusterID + '/namespaces/' + namespaceID +'/configmaps',
-                name: <FormattedMessage {...messages.pageTitle}/>
-              }
+                path: `/clusters/${clusterID}/namespaces/${namespaceID}/configmaps`,
+                name: <FormattedMessage {...messages.pageTitle} />,
+              },
             ]}
           />
           <GridContainer className={classes.grid}>
@@ -87,7 +87,9 @@ export class ConfigMapsPage extends React.PureComponent {
                       className={classes.createBtnLink}
                     >
                       <IconButton
-                        aria-label={<FormattedMessage {...messages.configMaps} />}
+                        aria-label={
+                          <FormattedMessage {...messages.configMaps} />
+                        }
                       >
                         <AddIcon style={{ color: '#fff' }} />
                       </IconButton>

@@ -45,16 +45,19 @@ export const statefulSetsReducer = (
       const statefulSet = payload.response;
       // temporary add, may remove when support cancel load data
       if (statefulSet && statefulSet.id) {
-        let containers = statefulSet.containers;
+        const { containers } = statefulSet;
         containers.forEach((item) => {
-          if(item && item.args){
-            item.args = item.args.join(" ");
+          if (item && item.args) {
+            item.args = item.args.join(' ');
           }
-          if(item && item.command){
-            item.command = item.command.join(" ");
+          if (item && item.command) {
+            item.command = item.command.join(' ');
           }
-        })
-        return state.setIn(['statefulSets', clusterID, namespaceID, statefulSet.id], fromJS(statefulSet));
+        });
+        return state.setIn(
+          ['statefulSets', clusterID, namespaceID, statefulSet.id],
+          fromJS(statefulSet)
+        );
       }
       return state;
     }
@@ -66,7 +69,10 @@ export const statefulSetsReducer = (
     case c.CREATE_STATEFULSET_SUCCESS: {
       const { clusterID, namespaceID } = meta;
       const data = payload.response;
-      return state.setIn(['statefulSets', clusterID, namespaceID, data.id], fromJS(data));
+      return state.setIn(
+        ['statefulSets', clusterID, namespaceID, data.id],
+        fromJS(data)
+      );
     }
 
     case c.CREATE_STATEFULSET_FAILURE:
@@ -93,13 +99,10 @@ export const statefulSetsReducer = (
     case c.SCALE_STATEFULSET_SUCCESS: {
       const { clusterID, namespaceID } = meta;
       const data = payload.response;
-      return state.setIn([
-        'statefulSets',
-        clusterID,
-        namespaceID,
-        data.id,
-        'replicas',
-      ], data.replicas);
+      return state.setIn(
+        ['statefulSets', clusterID, namespaceID, data.id, 'replicas'],
+        data.replicas
+      );
     }
     case c.SCALE_STATEFULSET_FAILURE:
       return state;

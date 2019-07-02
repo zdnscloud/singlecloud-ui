@@ -87,24 +87,24 @@ export class CronJobDetailPage extends React.PureComponent {
   }
 
   render() {
-    const { classes, cronJob ,clusterID, namespaceID} = this.props;
+    const { classes, cronJob, clusterID, namespaceID } = this.props;
 
     return (
       <div className={classes.root}>
         <CronJobDetailPageHelmet />
         <CssBaseline />
         <div className={classes.content}>
-          <Breadcrumbs 
-              data={[
-                {
-                  path: '/clusters/' + clusterID + '/namespaces/' + namespaceID +'/cronJobs',
-                  name: <FormattedMessage {...messages.pageTitle}/>
-                },
-                {
-                  path: '#',
-                  name: <FormattedMessage {...messages.cronJobDetail}/>
-                }
-              ]}
+          <Breadcrumbs
+            data={[
+              {
+                path: `/clusters/${clusterID}/namespaces/${namespaceID}/cronJobs`,
+                name: <FormattedMessage {...messages.pageTitle} />,
+              },
+              {
+                path: '#',
+                name: <FormattedMessage {...messages.cronJobDetail} />,
+              },
+            ]}
           />
           <CronJob cronJob={cronJob} />
           <GridContainer className={classes.grid}>

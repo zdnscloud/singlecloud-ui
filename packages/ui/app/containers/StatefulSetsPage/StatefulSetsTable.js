@@ -63,11 +63,13 @@ export class StatefulSetsTable extends React.PureComponent {
             <Fragment>
               <IconButton
                 aria-label="Delete"
-                onClick={(evt) => removeStatefulSet(props.data.get('id'), {
-                  clusterID,
-                  namespaceID,
-                  url: props.data.getIn(['links', 'remove']),
-                })}
+                onClick={(evt) =>
+                  removeStatefulSet(props.data.get('id'), {
+                    clusterID,
+                    namespaceID,
+                    url: props.data.getIn(['links', 'remove']),
+                  })
+                }
               >
                 <DeleteIcon />
               </IconButton>
@@ -91,9 +93,10 @@ export class StatefulSetsTable extends React.PureComponent {
           };
         }
         return sch;
-      }).map((s) => ({
+      })
+      .map((s) => ({
         ...s,
-        label: <FormattedMessage {...messages[`tableTitle${s.label}`]} />
+        label: <FormattedMessage {...messages[`tableTitle${s.label}`]} />,
       }));
 
     return (

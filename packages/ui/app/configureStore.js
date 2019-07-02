@@ -31,7 +31,7 @@ const epicMiddleware = createEpicMiddleware({
         body: JSON.stringify(opt && opt.body),
         headers: {
           'Content-Type': 'application/json',
-          ...(opt && opt.headers || {}),
+          ...((opt && opt.headers) || {}),
         },
       });
     },
@@ -60,10 +60,7 @@ export default function configureStore(initialState = {}, history) {
   // Create the store with two middlewares
   // 1. epicMiddleware: Makes redux-observable work
   // 2. routerMiddleware: Syncs the location/URL path to the state
-  const middlewares = [
-    epicMiddleware,
-    routerMiddleware(history),
-  ];
+  const middlewares = [epicMiddleware, routerMiddleware(history)];
 
   const enhancers = [applyMiddleware(...middlewares)];
 

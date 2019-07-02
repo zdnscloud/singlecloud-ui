@@ -18,15 +18,15 @@ export const makeSelectNodes = () =>
   createSelector(
     selectNodesDomain,
     makeSelectClusterID(),
-    (substate, clusterID) => substate.getIn(['nodes', clusterID]) || substate.clear()
+    (substate, clusterID) =>
+      substate.getIn(['nodes', clusterID]) || substate.clear()
   );
 
 export const makeSelectNodesList = () =>
   createSelector(
     selectNodesDomain,
     makeSelectNodes(),
-    (substate, nodes) =>
-      substate.get('list').map((id) => nodes.get(id))
+    (substate, nodes) => substate.get('list').map((id) => nodes.get(id))
   );
 
 export const makeSelectNodeID = () =>
@@ -48,7 +48,6 @@ export const makeSelectCurrentNode = () =>
     (substate, clusterID, nid) =>
       substate.getIn(['nodes', clusterID, nid]) || substate.clear()
   );
-
 
 /**
  * Default selector used by Nodes

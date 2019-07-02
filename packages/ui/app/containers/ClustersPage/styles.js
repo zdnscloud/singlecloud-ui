@@ -67,11 +67,11 @@ const styles = (theme) => ({
     flexGrow: 1,
     height: '100vh',
     overflow: 'auto',
-    overflowX:'hidden'
+    overflowX: 'hidden',
   },
-  grid:{
-    padding:theme.spacing(2),
-    paddingTop:theme.spacing(1)
+  grid: {
+    padding: theme.spacing(2),
+    paddingTop: theme.spacing(1),
   },
   chartContainer: {
     marginLeft: -22,
@@ -132,14 +132,14 @@ const styles = (theme) => ({
     flexDirection: 'row',
     lineHeight: 3,
   },
-  chexboxesGroup:{
-    width:600,
+  chexboxesGroup: {
+    width: 600,
     flexDirection: 'row',
     marginLeft: '0.8rem',
   },
   cancleBtn: {
-    marginLeft:"10px"
-  }
+    marginLeft: '10px',
+  },
 });
 
 export default styles;

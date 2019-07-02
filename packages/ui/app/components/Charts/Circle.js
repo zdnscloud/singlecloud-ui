@@ -17,10 +17,10 @@ const Circle = (props) => {
   const centerY = height / 2;
   const centerX = width / 2;
   const data = [
-    { label: 'used', value: value },
+    { label: 'used', value },
     { label: 'free', value: total - value },
   ];
-  const percent = Math.round(value / total * 100);
+  const percent = Math.round((value / total) * 100);
 
   return (
     <div ref={measuredRef} {...rest}>
@@ -35,8 +35,8 @@ const Circle = (props) => {
             padAngle={0}
             pieSort={(n) => true}
           >
-            {(pie) => {
-              return pie.arcs.map((arc, i) => {
+            {(pie) =>
+              pie.arcs.map((arc, i) => {
                 const { label } = arc.data;
                 const [centroidX, centroidY] = pie.path.centroid(arc);
                 const { startAngle, endAngle } = arc;
@@ -47,11 +47,11 @@ const Circle = (props) => {
                     <path d={pie.path(arc)} fill={fillColor} />
                   </g>
                 );
-              });
-            }}
+              })
+            }
           </Pie>
           <text
-            fill={'#40B7E8'}
+            fill="#40B7E8"
             x={0}
             y={0}
             dy=".5em"
