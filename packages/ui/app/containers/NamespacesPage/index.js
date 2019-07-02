@@ -23,16 +23,17 @@ import GridContainer from 'components/Grid/GridContainer';
 import Card from 'components/Card/Card';
 import CardHeader from 'components/Card/CardHeader';
 import CardBody from 'components/Card/CardBody';
+import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
 
 import { makeSelectClusterID } from 'ducks/app/selectors';
 import { makeSelectCurrentCluster } from 'ducks/clusters/selectors';
 import * as actions from 'ducks/namespaces/actions';
 
-import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
 import messages from './messages';
 import styles from './styles';
 import NamespacesTable from './NamespacesTable';
 import NamespacesPageHelmet from './helmet';
+
 /* eslint-disable react/prefer-stateless-function */
 export class NamespacesPage extends React.PureComponent {
   static propTypes = {
@@ -48,7 +49,11 @@ export class NamespacesPage extends React.PureComponent {
   }
 
   load() {
-    const { cluster, clusterID, loadNamespaces } = this.props;
+    const {
+      cluster,
+      clusterID,
+      loadNamespaces,
+    } = this.props
     const url = cluster.getIn(['links', 'namespaces']);
     loadNamespaces(url, clusterID);
   }
@@ -68,7 +73,7 @@ export class NamespacesPage extends React.PureComponent {
               },
             ]}
           />
-          <Typography component="div" className="">
+          <Typography component="div">
             <GridContainer className={classes.grid}>
               <GridItem xs={12} sm={12} md={12}>
                 <Card>
@@ -76,9 +81,7 @@ export class NamespacesPage extends React.PureComponent {
                     <h4 className={classes.cardTitleWhite}>
                       <FormattedMessage {...messages.namespaces} />
                       <IconButton
-                        aria-label={
-                          <FormattedMessage {...messages.namespaces} />
-                        }
+                        aria-label={<FormattedMessage {...messages.namespaces} />}
                         className={classes.menuButton}
                         component={Link}
                         to={`/clusters/${clusterID}/namespaces/create`}

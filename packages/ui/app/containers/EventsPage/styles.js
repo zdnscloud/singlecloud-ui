@@ -63,18 +63,17 @@ const styles = (theme) => ({
   content: {
     flexGrow: 1,
     padding: theme.spacing(3),
-    height: '100vh',
     overflow: 'auto',
     overflowX: 'hidden',
   },
   chartContainer: {
     marginLeft: -22,
   },
-  tableContainer: {
-    height: 320,
-  },
   button: {
     margin: theme.spacing(1),
+  },
+  tableWrapper: {
+    overflow: 'auto',
   },
   h5: {
     marginBottom: theme.spacing(2),
@@ -82,63 +81,32 @@ const styles = (theme) => ({
   wrapper: {
     minHeight: 'calc(100vh - 65px)',
   },
-  item: {},
-  itemAvatar: {
-    minWidth: 36,
+  cardCategoryWhite: {
+    position: 'relative',
+    '&,& a,& a:hover,& a:focus': {
+      color: 'rgba(255,255,255,.62)',
+      margin: '0',
+      fontSize: '14px',
+      marginTop: '0',
+      marginBottom: '0',
+    },
+    '& a,& a:hover,& a:focus': {
+      color: '#FFFFFF',
+    },
   },
-  itemText: {
-    paddingRight: 0,
-    display: 'flex',
-    flexDirection: 'column',
-    whiteSpace: 'nowrap',
-    fontSize: '12px',
-    textOverflow: 'ellipsis',
-  },
-  itemText1: {
-    display: 'flex',
-    flexDirection: 'row',
-    width: '223px',
-    height: '24px',
-  },
-  itemText2: {
-    display: 'flex',
-    flexDirection: 'row',
-    width: '223px',
-    height: '24px',
-  },
-  itemName: {
-    color: '#40B7E8',
-    width: '165px',
-    height: '24px',
-    overflow: 'hidden',
-    textOverflow: 'ellipsis',
-    fontSize: 14,
-  },
-  itemReason: {
-    color: '#4A4A4A ',
-    alignSelf: 'flex-end',
-    width: '58px',
-    height: '24px',
-    overflow: 'hidden',
-    textOverflow: 'ellipsis',
-    fontSize: 12,
-  },
-  itemMessage: {
-    color: '#4A4A4A',
-    width: '165px',
-    height: '24px',
-    overflow: 'hidden',
-    textOverflow: 'ellipsis',
-    fontSize: 14,
-  },
-  itemTime: {
-    color: '#9B9B9B',
-    alignSelf: 'flex-end',
-    width: '58px',
-    height: '24px',
-    overflow: 'hidden',
-    textOverflow: 'ellipsis',
-    fontSize: 12,
+  cardTitleWhite: {
+    color: '#FFFFFF',
+    marginTop: '0px',
+    minHeight: 'auto',
+    fontFamily: "'Roboto', 'Helvetica', 'Arial', sans-serif",
+    marginBottom: '3px',
+    textDecoration: 'none',
+    '& small': {
+      color: '#777',
+      fontSize: '65%',
+      fontWeight: '400',
+      lineHeight: '1',
+    },
   },
 });
 

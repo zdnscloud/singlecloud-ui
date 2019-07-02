@@ -28,6 +28,7 @@ import Typography from '@material-ui/core/Typography';
 import NormalIcon from 'components/Icons/Normal';
 import WarningIcon from 'components/Icons/Warning';
 
+import { makeSelectClusterID } from 'ducks/app/selectors';
 import { makeSelectEvents } from 'ducks/events/selectors';
 import * as actions from 'ducks/events/actions';
 
@@ -42,12 +43,19 @@ export class EventsList extends React.PureComponent {
   };
 
   render() {
-    const { classes, events } = this.props;
+    const { classes, clusterID, events } = this.props;
     const rEvents = events.reverse();
 
     return (
       <Paper className={classes.wrapper}>
         <List>
+          <ListItem>
+            <ListItemText>
+              <Link to={`/clusters/${clusterID}/events`} >
+                Link
+              </Link>
+            </ListItemText>
+          </ListItem>
           <ReactCSSTransitionGroup
             transitionName="eventItem"
             transitionEnterTimeout={500}
@@ -121,6 +129,7 @@ export class EventsList extends React.PureComponent {
 }
 
 const mapStateToProps = createStructuredSelector({
+  clusterID: makeSelectClusterID(),
   events: makeSelectEvents(),
 });
 
