@@ -61,19 +61,19 @@ export class JobsPage extends React.PureComponent {
   }
 
   render() {
-    const { classes ,clusterID, namespaceID } = this.props;
+    const { classes, clusterID, namespaceID } = this.props;
 
     return (
       <div className={classes.root}>
         <JobsPageHelmet />
         <CssBaseline />
         <div className={classes.content}>
-        <Breadcrumbs 
+          <Breadcrumbs
             data={[
               {
-                path: '/clusters/' + clusterID + '/namespaces/' + namespaceID +'/jobs',
-                name: <FormattedMessage {...messages.pageTitle}/>
-              }
+                path: `/clusters/${clusterID}/namespaces/${namespaceID}/jobs`,
+                name: <FormattedMessage {...messages.pageTitle} />,
+              },
             ]}
           />
           <GridContainer className={classes.grid}>

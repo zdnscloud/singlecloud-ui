@@ -45,7 +45,10 @@ export const daemonSetsReducer = (
       const daemonSet = payload.response;
       // temporary add, may remove when support cancel load data
       if (daemonSet && daemonSet.id) {
-        return state.setIn(['daemonSets', clusterID, namespaceID, daemonSet.id], fromJS(daemonSet));
+        return state.setIn(
+          ['daemonSets', clusterID, namespaceID, daemonSet.id],
+          fromJS(daemonSet)
+        );
       }
       return state;
     }
@@ -57,7 +60,10 @@ export const daemonSetsReducer = (
     case c.CREATE_DAEMONSET_SUCCESS: {
       const { clusterID, namespaceID } = meta;
       const data = payload.response;
-      return state.setIn(['daemonSets', clusterID, namespaceID, data.id], fromJS(data));
+      return state.setIn(
+        ['daemonSets', clusterID, namespaceID, data.id],
+        fromJS(data)
+      );
     }
 
     case c.CREATE_DAEMONSET_FAILURE:
@@ -84,13 +90,10 @@ export const daemonSetsReducer = (
     case c.SCALE_DAEMONSET_SUCCESS: {
       const { clusterID, namespaceID } = meta;
       const data = payload.response;
-      return state.setIn([
-        'daemonSets',
-        clusterID,
-        namespaceID,
-        data.id,
-        'replicas',
-      ], data.replicas);
+      return state.setIn(
+        ['daemonSets', clusterID, namespaceID, data.id, 'replicas'],
+        data.replicas
+      );
     }
     case c.SCALE_DAEMONSET_FAILURE:
       return state;

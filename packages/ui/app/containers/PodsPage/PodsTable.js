@@ -64,18 +64,17 @@ export class PodsTable extends React.PureComponent {
       openPodLog,
       openTerminal,
     } = this.props;
-    const mergedSchema = schema.map((item) => {
-      if (item.id === 'containers') {
-        return {
-          ...item,
-          component(props) {
-            return props.data
-              .get('containers')
-              .map((ctn, i) => (
+    const mergedSchema = schema
+      .map((item) => {
+        if (item.id === 'containers') {
+          return {
+            ...item,
+            component(props) {
+              return props.data.get('containers').map((ctn, i) => (
                 <Chip
                   key={i}
                   variant="outlined"
-                  label={(
+                  label={
                     <Fragment>
                       {`${ctn.get('image')}    `}
                       <IconButton
@@ -85,13 +84,16 @@ export class PodsTable extends React.PureComponent {
                         edge="end"
                         style={{ transform: 'scale(0.7)' }}
                         onClick={(evt) => {
-                          openPodLog({
-                            podID: props.data.get('id'),
-                            containerName: ctn.get('name'),
-                          }, {
-                            clusterID,
-                            namespaceID,
-                          });
+                          openPodLog(
+                            {
+                              podID: props.data.get('id'),
+                              containerName: ctn.get('name'),
+                            },
+                            {
+                              clusterID,
+                              namespaceID,
+                            }
+                          );
                         }}
                       >
                         <LogIcon />
@@ -103,30 +105,33 @@ export class PodsTable extends React.PureComponent {
                         edge="end"
                         style={{ transform: 'scale(0.7)' }}
                         onClick={(evt) => {
-                          openTerminal({
-                            podID: props.data.get('id'),
-                            containerName: ctn.get('name'),
-                          }, {
-                            clusterID,
-                            namespaceID,
-                          })
+                          openTerminal(
+                            {
+                              podID: props.data.get('id'),
+                              containerName: ctn.get('name'),
+                            },
+                            {
+                              clusterID,
+                              namespaceID,
+                            }
+                          );
                         }}
                       >
                         <ShellIcon />
                       </IconButton>
                     </Fragment>
-                  )}
+                  }
                 />
               ));
-          },
-        };
-      }
-      return item;
-    })
-    .map((s) => ({
-      ...s,
-      label: <FormattedMessage {...messages[`tableTitle${s.label}`]} />,
-    }));
+            },
+          };
+        }
+        return item;
+      })
+      .map((s) => ({
+        ...s,
+        label: <FormattedMessage {...messages[`tableTitle${s.label}`]} />,
+      }));
     let data = [];
     switch (parentType) {
       case 'sts':

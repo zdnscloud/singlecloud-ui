@@ -207,10 +207,7 @@ export class ClusterDetail extends React.PureComponent {
           <GridItem xs={12} sm={12} md={4}>
             <Card chart>
               <CardHeader color="azure" className={classes.cardHeaderLine}>
-                <CircleChart
-                  value={cpuRatio}
-                  total={100}
-                />
+                <CircleChart value={cpuRatio} total={100} />
               </CardHeader>
               <CardBody>
                 <h4 className={classes.cardTitle}>
@@ -225,10 +222,7 @@ export class ClusterDetail extends React.PureComponent {
           <GridItem xs={12} sm={12} md={4}>
             <Card chart>
               <CardHeader color="azure" className={classes.cardHeaderLine}>
-                <CircleChart
-                  value={memoryRatio}
-                  total={100}
-                />
+                <CircleChart value={memoryRatio} total={100} />
               </CardHeader>
               <CardBody>
                 <h4 className={classes.cardTitle}>
@@ -243,10 +237,7 @@ export class ClusterDetail extends React.PureComponent {
           <GridItem xs={12} sm={12} md={4}>
             <Card chart>
               <CardHeader color="azure" className={classes.cardHeaderLine}>
-                <CircleChart
-                  value={podRatio}
-                  total={100}
-                />
+                <CircleChart value={podRatio} total={100} />
               </CardHeader>
               <CardBody>
                 <h4 className={classes.cardTitle}>
@@ -269,12 +260,7 @@ const mapStateToProps = createStructuredSelector({
   showEvents: makeSelectShowEvents(),
 });
 
-const mapDispatchToProps = (dispatch) =>
-  bindActionCreators(
-    {
-    },
-    dispatch
-  );
+const mapDispatchToProps = (dispatch) => bindActionCreators({}, dispatch);
 
 const withConnect = connect(
   mapStateToProps,

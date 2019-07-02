@@ -53,65 +53,66 @@ export class EventsList extends React.PureComponent {
             transitionEnterTimeout={500}
             transitionLeaveTimeout={300}
           >
-            {rEvents.map((evt, i) => {
-
-              return (
-                <ListItem className={classes.item} key={evt.id}>
-                  <ListItemAvatar className={classes.itemAvatar}>
-                    {evt.type === 'Warning' ? (
-                      <WarningIcon style={{
+            {rEvents.map((evt, i) => (
+              <ListItem className={classes.item} key={evt.id}>
+                <ListItemAvatar className={classes.itemAvatar}>
+                  {evt.type === 'Warning' ? (
+                    <WarningIcon
+                      style={{
                         color: '#FF7A22',
                         transform: 'scale(0.85)',
-                      }} />
-                    ) : (
-                      <NormalIcon style={{
+                      }}
+                    />
+                  ) : (
+                    <NormalIcon
+                      style={{
                         color: '#1A435F',
                         transform: 'scale(0.85)',
-                      }} />
-                    )}
-                  </ListItemAvatar>
-                  <ListItemText
-                    className={classes.itemText}
-                    primary={
-                      <Typography className={classes.itemText1} component="div">
-                        <Typography
-                          className={classes.itemName}
-                          component="div"
-                          title={evt.name}
-                        >
-                          {evt.name}
-                        </Typography>
-                        <Typography
-                          className={classes.itemReason}
-                          component="div"
-                          title={evt.reason}
-                        >
-                          {evt.reason}
-                        </Typography>
+                      }}
+                    />
+                  )}
+                </ListItemAvatar>
+                <ListItemText
+                  className={classes.itemText}
+                  primary={
+                    <Typography className={classes.itemText1} component="div">
+                      <Typography
+                        className={classes.itemName}
+                        component="div"
+                        title={evt.name}
+                      >
+                        {evt.name}
                       </Typography>
-                    }
-                    secondary={
-                      <Typography className={classes.itemText2} component="div">
-                        <Typography
-                          className={classes.itemMessage}
-                          component="div"
-                          title={evt.message}
-                        >
-                          {evt.message}
-                        </Typography>
-                        <Typography
-                          className={classes.itemTime}
-                          component="div"
-                          title={evt.time}
-                        >
-                          {evt.time}
-                        </Typography>
+                      <Typography
+                        className={classes.itemReason}
+                        component="div"
+                        title={evt.reason}
+                      >
+                        {evt.reason}
                       </Typography>
-                    }
-                  />
-                </ListItem>
-              );
-            })}
+                    </Typography>
+                  }
+                  secondary={
+                    <Typography className={classes.itemText2} component="div">
+                      <Typography
+                        className={classes.itemMessage}
+                        component="div"
+                        title={evt.message}
+                      >
+                        {evt.message}
+                      </Typography>
+                      <Typography
+                        className={classes.itemTime}
+                        component="div"
+                        title={evt.time}
+                      >
+                        {evt.time}
+                      </Typography>
+                    </Typography>
+                  }
+                />
+              </ListItem>
+            ))}
           </ReactCSSTransitionGroup>
         </List>
       </Paper>

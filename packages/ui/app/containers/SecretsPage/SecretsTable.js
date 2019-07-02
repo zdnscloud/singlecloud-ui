@@ -58,56 +58,63 @@ export class SecretsTable extends React.PureComponent {
       removeSecret,
     } = this.props;
 
-    const mergedSchema = schema.concat([
-      {
-        id: 'data',
-        label: 'Count',
-        component: (props) => {
-          const configs = props.data.get('data');
-          if (configs) return configs.size;
-          return 0;
+    const mergedSchema = schema
+      .concat([
+        {
+          id: 'data',
+          label: 'Count',
+          component: (props) => {
+            const configs = props.data.get('data');
+            if (configs) return configs.size;
+            return 0;
+          },
         },
-      },
-      {
-        id: 'actions',
-        label: 'Actions',
-        component: (props) => (
-          <Fragment>
-            <IconButton
-              variant="outlined"
-              size="small"
-              className={classes.button}
-              onClick={(evt) => removeSecret(props.data.get('id'), {
-                clusterID,
-                namespaceID,
-                url: props.data.getIn(['links', 'remove']),
-              })}
-            >
-              <DeleteIcon />
-            </IconButton>
-          </Fragment>
-        ),
-      },
-    ]).map((s) => ({
-      ...s,
-      label: <FormattedMessage {...messages[`tableTitle${s.label}`]} />
-    })).map((sch) => {
-      if (sch.id === 'name') {
-        return {
-          ...sch,
+        {
+          id: 'actions',
+          label: 'Actions',
           component: (props) => (
-            <Button
-              color="primary"
-              to={`/clusters/${clusterID}/namespaces/${namespaceID}/secrets/${props.data.get('id')}`}
-              component={Link}
-            >
-              {props.data.get('name')}
-            </Button>
+            <Fragment>
+              <IconButton
+                variant="outlined"
+                size="small"
+                className={classes.button}
+                onClick={(evt) =>
+                  removeSecret(props.data.get('id'), {
+                    clusterID,
+                    namespaceID,
+                    url: props.data.getIn(['links', 'remove']),
+                  })
+                }
+              >
+                <DeleteIcon />
+              </IconButton>
+            </Fragment>
           ),
-        };
-      }
-      return sch;
-    });
+        },
+      ])
+      .map((s) => ({
+        ...s,
+        label: <FormattedMessage {...messages[`tableTitle${s.label}`]} />,
+      }))
+      .map((sch) => {
+        if (sch.id === 'name') {
+          return {
+            ...sch,
+            component: (props) => (
+              <Button
+                color="primary"
+                to={`/clusters/${clusterID}/namespaces/${namespaceID}/secrets/${props.data.get(
+                  'id'
+                )}`}
+                component={Link}
+              >
+                {props.data.get('name')}
+              </Button>
+            ),
+          };
+        }
+        return sch;
+      });
 
     return (
       <Paper className={classes.tableWrapper}>

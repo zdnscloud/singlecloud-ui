@@ -34,8 +34,7 @@ export const makeSelectCronJobsList = () =>
   createSelector(
     selectCronJobsDomain,
     makeSelectCronJobs(),
-    (substate, cronJobs) =>
-      substate.get('list').map((id) => cronJobs.get(id))
+    (substate, cronJobs) => substate.get('list').map((id) => cronJobs.get(id))
   );
 
 export const makeSelectURL = () =>
@@ -46,7 +45,9 @@ export const makeSelectURL = () =>
 
 export const makeSelectCronJobID = () =>
   createSelector(
-    createMatchSelector('/clusters/:cluster_id/namespaces/:namespace_id/cronJobs/:cronJob_id'),
+    createMatchSelector(
+      '/clusters/:cluster_id/namespaces/:namespace_id/cronJobs/:cronJob_id'
+    ),
     (match) => {
       if (match && match.params) {
         return match.params.cronJob_id;
@@ -62,7 +63,8 @@ export const makeSelectCurrentCronJob = () =>
     makeSelectNamespaceID(),
     makeSelectCronJobID(),
     (substate, clusterID, namespaceID, cronJobID) =>
-      substate.getIn(['cronJobs', clusterID, namespaceID, cronJobID]) || substate.clear()
+      substate.getIn(['cronJobs', clusterID, namespaceID, cronJobID]) ||
+      substate.clear()
   );
 
 /**

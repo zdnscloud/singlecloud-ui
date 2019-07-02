@@ -37,8 +37,8 @@ import CardFooter from 'components/Card/CardFooter';
 import InnerServiceTree from 'components/tree/InnerServiceTree';
 
 import * as actions from 'ducks/serviceLinks/actions';
-import styles from './cardStyles';
 import { makeSelectCurrentInnerServices } from 'ducks/serviceLinks/selectors';
+import styles from './cardStyles';
 
 import messages from './messages';
 
@@ -101,15 +101,23 @@ export class InnerCharts extends React.PureComponent {
         {is.map((s, i) => {
           const [type, idx, name] = s.name.split(separator);
           const { children } = s;
-          const count = _.reduce(children, (n, c) => {
-            const m = _.reduce(c.children, (nn, cc) => {
-              return nn += 1;
-            }, 0);
-            return n + (m < 4 ? 4 : m);
-          }, 0);
+          const count = _.reduce(
+            children,
+            (n, c) => {
+              const m = _.reduce(c.children, (nn, cc) => (nn += 1), 0);
+              return n + (m < 4 ? 4 : m);
+            },
+            0
+          );
 
           return (
-            <GridItem xs={12} sm={6} md={6} key={i} style={{ float: i % 2 === 0 ? 'left' : 'right' }}>
+            <GridItem
+              xs={12}
+              sm={6}
+              md={6}
+              key={i}
+              style={{ float: i % 2 === 0 ? 'left' : 'right' }}
+            >
               <Card>
                 <CardHeader color="info" icon>
                   <h3 className={classes.cardTitle}>

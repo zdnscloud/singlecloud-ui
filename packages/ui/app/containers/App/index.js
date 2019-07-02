@@ -117,8 +117,7 @@ class App extends PureComponent {
   }
 }
 
-const mapStateToProps = createStructuredSelector({
-});
+const mapStateToProps = createStructuredSelector({});
 
 const mapDispatchToProps = (dispatch) =>
   bindActionCreators(

@@ -10,6 +10,6 @@ export default loadable(() =>
   import(/* webpackChunkName: "NodesPage" */ './index')
 );
 
-export const NodeDetailPage = loadable(() => (
+export const NodeDetailPage = loadable(() =>
   import(/* NodeDetailPage */ './NodeDetailPage')
-));
+);

@@ -1,13 +1,13 @@
-import { container } from "assets/jss/material-kit-react";
+import { container } from 'assets/jss/material-kit-react';
 
 const completedStyle = {
   section: {
-    padding: "70px 0"
+    padding: '70px 0',
   },
   container: {
     ...container,
-    textAlign: "center !important"
-  }
+    textAlign: 'center !important',
+  },
 };
 
 export default completedStyle;

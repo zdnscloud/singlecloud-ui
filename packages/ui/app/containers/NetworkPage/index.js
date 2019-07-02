@@ -38,13 +38,13 @@ import {
   makeSelectCurrentPodNetworks,
 } from 'ducks/networks/selectors';
 
+import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
 import messages from './messages';
 import NetworkPageHelmet from './helmet';
 import styles from './styles';
 import Node from './Node';
 import ServiceTable from './ServiceTable';
 import PodsList from './PodsList';
-import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
 /* eslint-disable react/prefer-stateless-function */
 export class NetworkPage extends React.PureComponent {
   static propTypes = {
@@ -61,9 +61,7 @@ export class NetworkPage extends React.PureComponent {
   }
 
   componentDidUpdate(prevProps) {
-    const {
-      clusterID: prevClusterID,
-    } = prevProps;
+    const { clusterID: prevClusterID } = prevProps;
     const { clusterID, namespace } = this.props;
     if (clusterID !== prevClusterID) {
       this.load();
@@ -71,11 +69,7 @@ export class NetworkPage extends React.PureComponent {
   }
 
   load() {
-    const {
-      clusterID,
-      loadPodNetworks,
-      loadServiceNetworks,
-    } = this.props;
+    const { clusterID, loadPodNetworks, loadServiceNetworks } = this.props;
     const podurl = `/apis/agent.zcloud.cn/v1/clusters/${clusterID}/podnetworks`;
     const serviceurl = `/apis/agent.zcloud.cn/v1/clusters/${clusterID}/servicenetworks`;
     loadPodNetworks(podurl, clusterID);
@@ -83,22 +77,22 @@ export class NetworkPage extends React.PureComponent {
   }
 
   render() {
-    const { classes, theme, services, pods, clusterID} = this.props;
+    const { classes, theme, services, pods, clusterID } = this.props;
 
     return (
       <div className={classes.root}>
         <NetworkPageHelmet />
         <CssBaseline />
         <Paper className={classes.content}>
-        <Breadcrumbs 
+          <Breadcrumbs
             data={[
               {
-                path: '/clusters/' + clusterID + '/network',
-                name: <FormattedMessage {...messages.pageTitle}/>
-              }
+                path: `/clusters/${clusterID}/network`,
+                name: <FormattedMessage {...messages.pageTitle} />,
+              },
             ]}
           />
-          <GridContainer className={classes.grid}> 
+          <GridContainer className={classes.grid}>
             <GridItem xs={12} sm={12} md={12}>
               <Card>
                 <CardHeader color="primary" style={{ padding: 0 }}>
@@ -112,7 +106,9 @@ export class NetworkPage extends React.PureComponent {
                       }}
                     >
                       <Tab label={<FormattedMessage {...messages.podIP} />} />
-                      <Tab label={<FormattedMessage {...messages.serviceIP} />} />
+                      <Tab
+                        label={<FormattedMessage {...messages.serviceIP} />}
+                      />
                     </Tabs>
                   </h4>
                 </CardHeader>

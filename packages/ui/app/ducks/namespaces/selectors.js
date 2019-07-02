@@ -3,7 +3,10 @@ import {
   createMatchSelector,
   getLocation,
 } from 'connected-react-router/immutable';
-import { makeSelectClusterID, makeSelectNamespaceID } from 'ducks/app/selectors';
+import {
+  makeSelectClusterID,
+  makeSelectNamespaceID,
+} from 'ducks/app/selectors';
 import { prefix } from './constants';
 
 /**
@@ -18,7 +21,8 @@ export const makeSelectNamespaces = () =>
   createSelector(
     selectNamespacesDomain,
     makeSelectClusterID(),
-    (substate, clusterID) => substate.getIn(['namespaces', clusterID]) || substate.clear()
+    (substate, clusterID) =>
+      substate.getIn(['namespaces', clusterID]) || substate.clear()
   );
 
 export const makeSelectNamespacesList = () =>
@@ -36,7 +40,10 @@ export const makeSelectCurrentNamespaceID = () =>
     makeSelectNamespaceID(),
     makeSelectNamespacesList(),
     (substate, clusterID, nid, ns) =>
-      substate.getIn(['selectedNamespace', clusterID]) || nid || ns.getIn([0, 'id']) || ''
+      substate.getIn(['selectedNamespace', clusterID]) ||
+      nid ||
+      ns.getIn([0, 'id']) ||
+      ''
   );
 
 export const makeSelectCurrentNamespace = () =>
@@ -47,7 +54,6 @@ export const makeSelectCurrentNamespace = () =>
     (substate, clusterID, nid) =>
       substate.getIn(['namespaces', clusterID, nid]) || substate.clear()
   );
-
 
 /**
  * Default selector used by Namespaces

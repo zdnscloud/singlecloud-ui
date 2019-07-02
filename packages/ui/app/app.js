@@ -64,8 +64,12 @@ if (!window.Intl) {
     })
       .then(() =>
         Promise.all([
-          import(/* webpackChunkName: "intl.zh" */ 'intl/locale-data/jsonp/zh.js'),
-          import(/* webpackChunkName: "intl.en" */ 'intl/locale-data/jsonp/en.js'),
+          import(
+            /* webpackChunkName: "intl.zh" */ 'intl/locale-data/jsonp/zh.js'
+          ),
+          import(
+            /* webpackChunkName: "intl.en" */ 'intl/locale-data/jsonp/en.js'
+          ),
         ])
       )
       .then(() => render(translationMessages))

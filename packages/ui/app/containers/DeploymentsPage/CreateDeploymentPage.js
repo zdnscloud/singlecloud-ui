@@ -56,9 +56,7 @@ import {
   makeSelectClusterID,
   makeSelectNamespaceID,
 } from 'ducks/app/selectors';
-import {
-  makeSelectCurrentCluster,
-} from 'ducks/clusters/selectors';
+import { makeSelectCurrentCluster } from 'ducks/clusters/selectors';
 import * as sActions from 'ducks/secrets/actions';
 import {
   makeSelectSecrets,
@@ -69,19 +67,17 @@ import {
   makeSelectConfigMaps,
   makeSelectURL as makeSelectConfigMapURL,
 } from 'ducks/configMaps/selectors';
-import {
-  makeSelectCurrentStorageClasses,
-} from 'ducks/storages/selectors';
+import { makeSelectCurrentStorageClasses } from 'ducks/storages/selectors';
 import * as storagesAction from 'ducks/storages/actions';
 import { makeSelectURL } from 'ducks/deployments/selectors';
 import * as actions from 'ducks/deployments/actions';
 import GridItem from 'components/Grid/GridItem';
 import GridContainer from 'components/Grid/GridContainer';
+import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
 import messages from './messages';
 import DeploymentsHelmet from './helmet';
 import styles from './styles';
 import DeploymentForm from './DeploymentForm';
-import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
 
 export const formName = 'createDeploymentForm';
 
@@ -150,7 +146,7 @@ export class CreateDeployment extends React.PureComponent {
       secrets,
       storageClasses,
       values,
-      theme
+      theme,
     } = this.props;
     async function doSubmit(formValues) {
       try {
@@ -174,50 +170,53 @@ export class CreateDeployment extends React.PureComponent {
         <DeploymentsHelmet />
         <CssBaseline />
         <div className={classes.content}>
-        <Breadcrumbs 
-          data={[
-                {
-                  path: '/clusters/' + clusterID + '/namespaces/' + namespaceID +'/deployments',
-                  name: <FormattedMessage {...messages.pageTitle}/>
-                },
-                {
-                  path: '#',
-                  name: <FormattedMessage {...messages.createDeployment}/>
-                }
-              ]}
-            />
-           <GridContainer className={classes.grid}>
-             <GridItem xs={12} sm={12} md={12}>
-                <Card>
-                  <CardHeader color="primary">
-                    <h4 className={classes.cardTitleWhite}>
-                      <FormattedMessage {...messages.createDeployment} />
-                    </h4>
-                  </CardHeader>
-                  <CardBody style={{ paddingLeft: 0, paddingRight: 0 }}>
-                    <CreateDeploymentForm
-                      classes={classes}
-                      onSubmit={doSubmit}
-                      configMaps={configMaps}
-                      secrets={secrets}
-                      storageClasses={storageClasses}
-                      initialValues={fromJS({ replicas: 1, containers: [{ name: '' }] })}
-                      formValues={values}
-                      theme={theme}
-                    />
-                  </CardBody>
-                  <CardFooter className={classes.cardFooter}>
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      size="large"
-                      onClick={submitForm}
-                    >
-                      <FormattedMessage {...messages.save} />
-                    </Button>
-                  </CardFooter>
-                </Card>
-             </GridItem>
+          <Breadcrumbs
+            data={[
+              {
+                path: `/clusters/${clusterID}/namespaces/${namespaceID}/deployments`,
+                name: <FormattedMessage {...messages.pageTitle} />,
+              },
+              {
+                path: '#',
+                name: <FormattedMessage {...messages.createDeployment} />,
+              },
+            ]}
+          />
+          <GridContainer className={classes.grid}>
+            <GridItem xs={12} sm={12} md={12}>
+              <Card>
+                <CardHeader color="primary">
+                  <h4 className={classes.cardTitleWhite}>
+                    <FormattedMessage {...messages.createDeployment} />
+                  </h4>
+                </CardHeader>
+                <CardBody style={{ paddingLeft: 0, paddingRight: 0 }}>
+                  <CreateDeploymentForm
+                    classes={classes}
+                    onSubmit={doSubmit}
+                    configMaps={configMaps}
+                    secrets={secrets}
+                    storageClasses={storageClasses}
+                    initialValues={fromJS({
+                      replicas: 1,
+                      containers: [{ name: '' }],
+                    })}
+                    formValues={values}
+                    theme={theme}
+                  />
+                </CardBody>
+                <CardFooter className={classes.cardFooter}>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    size="large"
+                    onClick={submitForm}
+                  >
+                    <FormattedMessage {...messages.save} />
+                  </Button>
+                </CardFooter>
+              </Card>
+            </GridItem>
           </GridContainer>
         </div>
       </div>

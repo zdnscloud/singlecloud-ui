@@ -66,26 +66,21 @@ export class ShowConfigMap extends React.PureComponent {
   };
 
   render() {
-    const {
-      classes,
-      clusterID,
-      namespaceID,
-      configMap,
-    } = this.props;
+    const { classes, clusterID, namespaceID, configMap } = this.props;
 
     return (
       <div className={classes.root}>
         <ConfigMapsPageHelmet />
         <CssBaseline />
         <div className={classes.content}>
-         <Breadcrumbs 
+          <Breadcrumbs
             data={[
               {
-                path: '/clusters/' + clusterID + '/namespaces/' + namespaceID +'/configmaps',
-                name: <FormattedMessage {...messages.pageTitle}/>
+                path: `/clusters/${clusterID}/namespaces/${namespaceID}/configmaps`,
+                name: <FormattedMessage {...messages.pageTitle} />,
               },
               {
-                name: <FormattedMessage {...messages.showConfigMap}/>
+                name: <FormattedMessage {...messages.showConfigMap} />,
               },
             ]}
           />
@@ -99,7 +94,12 @@ export class ShowConfigMap extends React.PureComponent {
                 </CardHeader>
                 <CardBody>
                   <GridContainer>
-                    <GridItem xs={12} sm={12} md={12} className={classes.formLine}>
+                    <GridItem
+                      xs={12}
+                      sm={12}
+                      md={12}
+                      className={classes.formLine}
+                    >
                       <ReadOnlyInput
                         labelText={<FormattedMessage {...messages.formName} />}
                         value={configMap.get('name')}
@@ -118,7 +118,9 @@ export class ShowConfigMap extends React.PureComponent {
                             key={`${idx}-${cfg.get('name')}`}
                           >
                             <ReadOnlyInput
-                              labelText={<FormattedMessage {...messages.formFileName} />}
+                              labelText={
+                                <FormattedMessage {...messages.formFileName} />
+                              }
                               value={cfg.get('name')}
                               fullWidth
                               formControlProps={{
@@ -145,7 +147,7 @@ export class ShowConfigMap extends React.PureComponent {
                   </GridContainer>
                 </CardBody>
               </Card>
-          </GridItem>
+            </GridItem>
           </GridContainer>
           <Dialog
             maxWidth="lg"
@@ -170,7 +172,11 @@ export class ShowConfigMap extends React.PureComponent {
                   focus
                   mode="yaml"
                   theme="tomorrow_night"
-                  value={configMap.getIn(['configs', this.state.fileIndex, 'data'])}
+                  value={configMap.getIn([
+                    'configs',
+                    this.state.fileIndex,
+                    'data',
+                  ])}
                   height="calc(100vh - 225px)"
                   width="calc(100vw - 200px)"
                   readOnly
@@ -191,7 +197,6 @@ export class ShowConfigMap extends React.PureComponent {
                 </Button>
               </CardFooter>
             </Card>
-            
           </Dialog>
         </div>
       </div>

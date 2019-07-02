@@ -34,21 +34,16 @@ function Menubar(props) {
       <Toolbar disableGutters className={classes.toolbar}>
         <div className={classes.toolbarLeft}>
           <div className={classes.menuButton}>
-            <IconButton
-              style={{ color: '#fff' }}
-              onClick={onClickMenuButton}
-            >
+            <IconButton style={{ color: '#fff' }} onClick={onClickMenuButton}>
               <MenuIcon color="inherit" />
             </IconButton>
           </div>
           <div className={classes.logo}>
             <img src={logo} alt="logo" className={classes.img} />
           </div>
-          { headerLeftContent }
+          {headerLeftContent}
         </div>
-        <div className={classes.toolbarRight}>
-          { headerRightContent }
-        </div>
+        <div className={classes.toolbarRight}>{headerRightContent}</div>
       </Toolbar>
     </AppBar>
   );

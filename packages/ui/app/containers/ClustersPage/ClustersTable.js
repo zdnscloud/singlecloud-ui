@@ -77,11 +77,14 @@ export class ClustersTable extends React.PureComponent {
 
               <IconButton
                 aria-label="Delete"
-                onClick={(evt) => removeCluster(props.data.get('id'), { url: props.data.getIn(['links', 'remove'])})}
+                onClick={(evt) =>
+                  removeCluster(props.data.get('id'), {
+                    url: props.data.getIn(['links', 'remove']),
+                  })
+                }
               >
                 <DeleteIcon />
               </IconButton>
-
             </Fragment>
           ),
         },
@@ -90,13 +93,12 @@ export class ClustersTable extends React.PureComponent {
         if (sch.id === 'status') {
           return {
             ...sch,
-            component: (props) => (
+            component: (props) =>
               props.data.get('status') === 'Running' ? (
                 <SuccessIcon style={{ color: theme.palette.icons.a }} />
               ) : (
                 <FailureIcon style={{ color: theme.palette.icons.b }} />
-              )
-            ),
+              ),
           };
         }
         return sch;
@@ -117,9 +119,10 @@ export class ClustersTable extends React.PureComponent {
           };
         }
         return sch;
-      }).map((s) => ({
+      })
+      .map((s) => ({
         ...s,
-        label: <FormattedMessage {...messages[`tableTitle${s.label}`]} />
+        label: <FormattedMessage {...messages[`tableTitle${s.label}`]} />,
       }));
 
     return (

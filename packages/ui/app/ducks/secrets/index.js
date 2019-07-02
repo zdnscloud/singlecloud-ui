@@ -43,7 +43,10 @@ export const secretsReducer = (
     case c.LOAD_SECRET_SUCCESS: {
       const { clusterID, namespaceID, id } = meta;
       const secret = payload.response;
-      return state.setIn(['secrets', clusterID, namespaceID, secret.id], fromJS(secret));
+      return state.setIn(
+        ['secrets', clusterID, namespaceID, secret.id],
+        fromJS(secret)
+      );
     }
     case c.LOAD_SECRET_FAILURE:
       return state;
@@ -53,7 +56,10 @@ export const secretsReducer = (
     case c.CREATE_SECRET_SUCCESS: {
       const { clusterID, namespaceID } = meta;
       const data = payload.response;
-      return state.setIn(['secrets', clusterID, namespaceID, data.id], fromJS(data));
+      return state.setIn(
+        ['secrets', clusterID, namespaceID, data.id],
+        fromJS(data)
+      );
     }
 
     case c.CREATE_SECRET_FAILURE:

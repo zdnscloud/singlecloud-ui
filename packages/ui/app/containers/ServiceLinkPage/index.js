@@ -35,12 +35,12 @@ import {
 } from 'ducks/app/selectors';
 import { makeSelectCurrentNamespace } from 'ducks/namespaces/selectors';
 
+import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
 import messages from './messages';
 import ServiceLinkPageHelmet from './helmet';
 import styles from './styles';
 import InnerCharts from './InnerCharts';
 import OuterCharts from './OuterCharts';
-import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
 /* eslint-disable react/prefer-stateless-function */
 export class ServiceLinkPage extends React.PureComponent {
   static propTypes = {
@@ -94,19 +94,19 @@ export class ServiceLinkPage extends React.PureComponent {
   }
 
   render() {
-    const { classes ,clusterID, namespaceID} = this.props;
+    const { classes, clusterID, namespaceID } = this.props;
 
     return (
       <div className={classes.root}>
         <ServiceLinkPageHelmet />
         <CssBaseline />
         <Paper className={classes.content}>
-        <Breadcrumbs 
+          <Breadcrumbs
             data={[
               {
-                path: '/clusters/' + clusterID + '/namespaces/' + namespaceID +'/serviceLink',
-                name: <FormattedMessage {...messages.pageTitle}/>
-              }
+                path: `/clusters/${clusterID}/namespaces/${namespaceID}/serviceLink`,
+                name: <FormattedMessage {...messages.pageTitle} />,
+              },
             ]}
           />
           <GridContainer className={classes.grid}>

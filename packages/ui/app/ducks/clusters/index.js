@@ -32,9 +32,7 @@ export const clustersReducer = (
       return state;
     case c.LOAD_CLUSTERS_SUCCESS: {
       const { data, list } = procCollectionData(payload);
-      return state
-        .set('clusters', fromJS(data))
-        .set('list', fromJS(list));
+      return state.set('clusters', fromJS(data)).set('list', fromJS(list));
     }
     case c.LOAD_CLUSTERS_FAILURE:
       return state;

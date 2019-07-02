@@ -67,7 +67,13 @@ export default class OuterServiceTree extends React.Component {
       <div>
         <svg width={width} height={height}>
           <LinearGradient id="lg" from="#fdfba3" to="#fefefe" />
-          <rect width={width} height={height} rx={0} fill="#000" fillOpacity={0} />
+          <rect
+            width={width}
+            height={height}
+            rx={0}
+            fill="#000"
+            fillOpacity={0}
+          />
           <Group top={height / 2} left={100}>
             <Tree
               root={root}

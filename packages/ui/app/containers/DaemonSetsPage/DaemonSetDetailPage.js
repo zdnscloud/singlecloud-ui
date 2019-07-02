@@ -98,14 +98,14 @@ export class DaemonSetDetailPage extends React.PureComponent {
         <DaemonSetDetailPageHelmet />
         <CssBaseline />
         <div className={classes.content}>
-          <Breadcrumbs 
+          <Breadcrumbs
             data={[
               {
-                path: '/clusters/' + clusterID + '/namespaces/' + namespaceID +'/daemonSets',
-                name: <FormattedMessage {...messages.pageTitle}/>
+                path: `/clusters/${clusterID}/namespaces/${namespaceID}/daemonSets`,
+                name: <FormattedMessage {...messages.pageTitle} />,
               },
               {
-                name: <FormattedMessage {...messages.daemonSetDetail}/>
+                name: <FormattedMessage {...messages.daemonSetDetail} />,
               },
             ]}
           />

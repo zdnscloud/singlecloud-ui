@@ -1,11 +1,11 @@
-import { container } from 'assets/jss/material-kit-react';
-import boxImage from 'images/login-bg-box.png';
-import image from 'images/login-bg.jpg';
 import {
+  container,
   primaryColor,
   dangerColor,
   successColor,
 } from 'assets/jss/material-kit-react';
+import boxImage from 'images/login-bg-box.png';
+import image from 'images/login-bg.jpg';
 
 const signupPageStyle = (theme) => ({
   container: {

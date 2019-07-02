@@ -25,10 +25,7 @@ import {
   makeSelectCronJobID,
   makeSelectCurrentCronJob,
 } from 'ducks/cronJobs/selectors';
-import {
-  makeSelectJobID,
-  makeSelectCurrentJob,
-} from 'ducks/jobs/selectors';
+import { makeSelectJobID, makeSelectCurrentJob } from 'ducks/jobs/selectors';
 
 import { prefix } from './constants';
 
@@ -48,15 +45,15 @@ export const makeSelectPods = () =>
     makeSelectNamespaceID(),
     makeSelectDeploymentID(),
     (substate, clusterID, namespaceID, deploymentID) =>
-      substate.getIn(['pods', clusterID, namespaceID, deploymentID]) || substate.clear()
+      substate.getIn(['pods', clusterID, namespaceID, deploymentID]) ||
+      substate.clear()
   );
 
 export const makeSelectPodsList = () =>
   createSelector(
     selectPodsDomain,
     makeSelectPods(),
-    (substate, pods) =>
-      substate.get('list').map((id) => pods.get(id))
+    (substate, pods) => substate.get('list').map((id) => pods.get(id))
   );
 
 export const makeSelectURL = () =>
@@ -73,15 +70,15 @@ export const makeSelectSTSPods = () =>
     makeSelectNamespaceID(),
     makeSelectStatefulSetID(),
     (substate, clusterID, namespaceID, statefulSetID) =>
-      substate.getIn(['stsPods', clusterID, namespaceID, statefulSetID]) || substate.clear()
+      substate.getIn(['stsPods', clusterID, namespaceID, statefulSetID]) ||
+      substate.clear()
   );
 
 export const makeSelectSTSPodsList = () =>
   createSelector(
     selectPodsDomain,
     makeSelectSTSPods(),
-    (substate, pods) =>
-      substate.get('stsList').map((id) => pods.get(id))
+    (substate, pods) => substate.get('stsList').map((id) => pods.get(id))
   );
 
 export const makeSelectSTSURL = () =>
@@ -98,15 +95,15 @@ export const makeSelectDSPods = () =>
     makeSelectNamespaceID(),
     makeSelectDaemonSetID(),
     (substate, clusterID, namespaceID, daemonSetID) =>
-      substate.getIn(['dsPods', clusterID, namespaceID, daemonSetID]) || substate.clear()
+      substate.getIn(['dsPods', clusterID, namespaceID, daemonSetID]) ||
+      substate.clear()
   );
 
 export const makeSelectDSPodsList = () =>
   createSelector(
     selectPodsDomain,
     makeSelectDSPods(),
-    (substate, pods) =>
-      substate.get('dsList').map((id) => pods.get(id))
+    (substate, pods) => substate.get('dsList').map((id) => pods.get(id))
   );
 
 export const makeSelectDSURL = () =>
@@ -123,15 +120,15 @@ export const makeSelectCJPods = () =>
     makeSelectNamespaceID(),
     makeSelectCronJobID(),
     (substate, clusterID, namespaceID, cronJobID) =>
-      substate.getIn(['cjPods', clusterID, namespaceID, cronJobID]) || substate.clear()
+      substate.getIn(['cjPods', clusterID, namespaceID, cronJobID]) ||
+      substate.clear()
   );
 
 export const makeSelectCJPodsList = () =>
   createSelector(
     selectPodsDomain,
     makeSelectCJPods(),
-    (substate, pods) =>
-      substate.get('cjList').map((id) => pods.get(id))
+    (substate, pods) => substate.get('cjList').map((id) => pods.get(id))
   );
 
 export const makeSelectCJURL = () =>
@@ -148,15 +145,15 @@ export const makeSelectJOBPods = () =>
     makeSelectNamespaceID(),
     makeSelectJobID(),
     (substate, clusterID, namespaceID, jobID) =>
-      substate.getIn(['jobPods', clusterID, namespaceID, jobID]) || substate.clear()
+      substate.getIn(['jobPods', clusterID, namespaceID, jobID]) ||
+      substate.clear()
   );
 
 export const makeSelectJOBPodsList = () =>
   createSelector(
     selectPodsDomain,
     makeSelectJOBPods(),
-    (substate, pods) =>
-      substate.get('jobList').map((id) => pods.get(id))
+    (substate, pods) => substate.get('jobList').map((id) => pods.get(id))
   );
 
 export const makeSelectJOBURL = () =>
@@ -191,10 +188,10 @@ export const makeSelectLogURL = () =>
     makeSelectNamespaceID(),
     (substate, clusterID, namespaceID) =>
       `${window.location.protocol}//${window.location.hostname}:${
-         window.location.port
-       }/apis/ws.zcloud.cn/v1/clusters/${clusterID}/namespaces/${namespaceID}/pods/${
-         substate.getIn(['openingPodLog', 'podID'])
-       }/containers/${substate.getIn(['openingPodLog', 'containerName'])}/log`
+        window.location.port
+      }/apis/ws.zcloud.cn/v1/clusters/${clusterID}/namespaces/${namespaceID}/pods/${substate.getIn(
+        ['openingPodLog', 'podID']
+      )}/containers/${substate.getIn(['openingPodLog', 'containerName'])}/log`
   );
 
 /**

@@ -45,7 +45,10 @@ export const deploymentsReducer = (
       const deployment = payload.response;
       // temporary add, may remove when support cancel load data
       if (deployment && deployment.id) {
-        return state.setIn(['deployments', clusterID, namespaceID, deployment.id], fromJS(deployment));
+        return state.setIn(
+          ['deployments', clusterID, namespaceID, deployment.id],
+          fromJS(deployment)
+        );
       }
       return state;
     }
@@ -57,7 +60,10 @@ export const deploymentsReducer = (
     case c.CREATE_DEPLOYMENT_SUCCESS: {
       const { clusterID, namespaceID } = meta;
       const data = payload.response;
-      return state.setIn(['deployments', clusterID, namespaceID, data.id], fromJS(data));
+      return state.setIn(
+        ['deployments', clusterID, namespaceID, data.id],
+        fromJS(data)
+      );
     }
 
     case c.CREATE_DEPLOYMENT_FAILURE:
@@ -84,13 +90,10 @@ export const deploymentsReducer = (
     case c.SCALE_DEPLOYMENT_SUCCESS: {
       const { clusterID, namespaceID } = meta;
       const data = payload.response;
-      return state.setIn([
-        'deployments',
-        clusterID,
-        namespaceID,
-        data.id,
-        'replicas',
-      ], data.replicas);
+      return state.setIn(
+        ['deployments', clusterID, namespaceID, data.id, 'replicas'],
+        data.replicas
+      );
     }
     case c.SCALE_DEPLOYMENT_FAILURE:
       return state;

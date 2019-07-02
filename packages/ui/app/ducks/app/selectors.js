@@ -93,7 +93,10 @@ export const makeSelectLeftMenus = () =>
               { name: 'Overview', path: `/clusters/${cluster}` },
               { name: 'Namespaces', path: `/clusters/${cluster}/namespaces` },
               { name: 'Nodes', path: `/clusters/${cluster}/nodes` },
-              { name: 'ResourceQuota', path: `/clusters/${cluster}/resourceQuota` },
+              {
+                name: 'ResourceQuota',
+                path: `/clusters/${cluster}/resourceQuota`,
+              },
             ],
             icon: ManagementIcon,
           },

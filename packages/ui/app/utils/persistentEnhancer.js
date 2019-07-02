@@ -40,8 +40,7 @@ const persistentEnhancer = (createStore) => (
     const willBeSaved = {};
     persistentSubState.forEach((sub) => {
       const subst = st.get(sub);
-      if (subst)
-        willBeSaved[sub] = subst.toJS();
+      if (subst) willBeSaved[sub] = subst.toJS();
     });
     localforage.setItem('persistentSubState', willBeSaved);
     const end = Date.now();

@@ -3,17 +3,19 @@ import TimeCell from 'components/Cells/TimeCell';
 
 const schema = ['name', 'creationTimestamp'];
 
-const tableSchema = schema.map((id) => ({
-  id,
-  label: ucfirst(id),
-})).map((item) => {
-  if (item.id === 'creationTimestamp') {
-    return {
-      ...item,
-      component: TimeCell,
-    };
-  }
-  return item;
-});
+const tableSchema = schema
+  .map((id) => ({
+    id,
+    label: ucfirst(id),
+  }))
+  .map((item) => {
+    if (item.id === 'creationTimestamp') {
+      return {
+        ...item,
+        component: TimeCell,
+      };
+    }
+    return item;
+  });
 
 export default tableSchema;

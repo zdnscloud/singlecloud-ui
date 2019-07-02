@@ -25,12 +25,7 @@ const SwitchComponent = ({
 const SwitchField = (props) => {
   const { component, ...rest } = props;
 
-  return (
-    <Field
-      {...rest}
-      component={SwitchComponent}
-    />
-  );
+  return <Field {...rest} component={SwitchComponent} />;
 };
 
 export default SwitchField;

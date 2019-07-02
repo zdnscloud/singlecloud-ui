@@ -38,11 +38,11 @@ import * as actions from 'ducks/deployments/actions';
 import { makeSelectURL as makeSelectPodsURL } from 'ducks/pods/selectors';
 import PodsTable from 'containers/PodsPage/PodsTable';
 
+import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
 import Deployment from './Deployment';
 import messages from './messages';
 import DeploymentDetailPageHelmet from './helmet';
 import styles from './styles';
-import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
 /* eslint-disable react/prefer-stateless-function */
 export class DeploymentDetailPage extends React.PureComponent {
   static propTypes = {
@@ -90,23 +90,23 @@ export class DeploymentDetailPage extends React.PureComponent {
   }
 
   render() {
-    const { classes, deployment ,clusterID, namespaceID,} = this.props;
+    const { classes, deployment, clusterID, namespaceID } = this.props;
 
     return (
       <div className={classes.root}>
         <DeploymentDetailPageHelmet />
         <CssBaseline />
         <div className={classes.content}>
-        <Breadcrumbs 
+          <Breadcrumbs
             data={[
               {
-                path: '/clusters/' + clusterID + '/namespaces/' + namespaceID +'/deployments',
-                name: <FormattedMessage {...messages.pageTitle}/>
+                path: `/clusters/${clusterID}/namespaces/${namespaceID}/deployments`,
+                name: <FormattedMessage {...messages.pageTitle} />,
               },
               {
                 path: '#',
-                name: <FormattedMessage {...messages.deploymentDetail}/>
-              }
+                name: <FormattedMessage {...messages.deploymentDetail} />,
+              },
             ]}
           />
           <Deployment deployment={deployment} />

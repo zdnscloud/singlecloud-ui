@@ -60,9 +60,7 @@ import {
   makeSelectClusterID,
   makeSelectNamespaceID,
 } from 'ducks/app/selectors';
-import {
-  makeSelectCurrentCluster,
-} from 'ducks/clusters/selectors';
+import { makeSelectCurrentCluster } from 'ducks/clusters/selectors';
 import * as sActions from 'ducks/secrets/actions';
 import {
   makeSelectSecrets,
@@ -73,9 +71,7 @@ import {
   makeSelectConfigMaps,
   makeSelectURL as makeSelectConfigMapURL,
 } from 'ducks/configMaps/selectors';
-import {
-  makeSelectCurrentStorageClasses,
-} from 'ducks/storages/selectors';
+import { makeSelectCurrentStorageClasses } from 'ducks/storages/selectors';
 import * as storagesAction from 'ducks/storages/actions';
 import { makeSelectURL } from 'ducks/statefulSets/selectors';
 import * as actions from 'ducks/statefulSets/actions';
@@ -156,16 +152,16 @@ export class CreateStatefulSet extends React.PureComponent {
     async function doSubmit(formValues) {
       try {
         const data = formValues.toJS();
-        let containers = data.containers;
+        const { containers } = data;
         containers.forEach((item) => {
-          if(item && item.args){
-            item.args = item.args.split(" ");
+          if (item && item.args) {
+            item.args = item.args.split(' ');
           }
-          if(item && item.command){
-            item.command = item.command.split(" ");
+          if (item && item.command) {
+            item.command = item.command.split(' ');
           }
-        })
-        console.log("containers",containers,"data",data)
+        });
+        console.log('containers', containers, 'data', data);
         await new Promise((resolve, reject) => {
           createStatefulSet(data, {
             resolve,
@@ -185,15 +181,15 @@ export class CreateStatefulSet extends React.PureComponent {
         <StatefulSetsHelmet />
         <CssBaseline />
         <div className={classes.content}>
-         <Breadcrumbs 
+          <Breadcrumbs
             data={[
               {
-                path: '/clusters/' + clusterID + '/namespaces/' + namespaceID +'/statefulSets',
-                name: <FormattedMessage {...messages.pageTitle}/>
+                path: `/clusters/${clusterID}/namespaces/${namespaceID}/statefulSets`,
+                name: <FormattedMessage {...messages.pageTitle} />,
               },
               {
-                name: <FormattedMessage {...messages.createStatefulSet}/>
-              }
+                name: <FormattedMessage {...messages.createStatefulSet} />,
+              },
             ]}
           />
           <GridContainer className={classes.grid}>

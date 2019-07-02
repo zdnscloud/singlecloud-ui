@@ -49,44 +49,35 @@ import MinusIcon from 'components/Icons/Minus';
 
 import messages from '../messages';
 
-const Envs = ({
-  fields,
-  meta: { error, submitFailed },
-}) => {
-
-  return (
-    <List component="ul">
-      <ListItem>
+const Envs = ({ fields, meta: { error, submitFailed } }) => (
+  <List component="ul">
+    <ListItem>
+      <ListItemText>
+        <Button color="secondary" onClick={(evt) => fields.push({})}>
+          <FormattedMessage {...messages.formENV} />
+          <PlusIcon />
+        </Button>
+      </ListItemText>
+    </ListItem>
+    {fields.map((f, i) => (
+      <ListItem key={i}>
         <ListItemText>
-          <Button color="secondary" onClick={(evt) => fields.push({})}>
-            <FormattedMessage {...messages.formENV} />
-            <PlusIcon />
-          </Button>
+          <InputField
+            name={`${f}.name`}
+            label={<FormattedMessage {...messages.formENVName} />}
+          />
+          &nbsp;&nbsp;&nbsp;&nbsp;
+          <InputField
+            name={`${f}.value`}
+            label={<FormattedMessage {...messages.formENVValue} />}
+          />
         </ListItemText>
+        <IconButton variant="contained" onClick={(evt) => fields.remove(i)}>
+          <MinusIcon />
+        </IconButton>
       </ListItem>
-      {fields.map((f, i) => (
-        <ListItem key={i}>
-          <ListItemText>
-            <InputField
-              name={`${f}.name`}
-              label={<FormattedMessage {...messages.formENVName} />}
-            />
-            &nbsp;&nbsp;&nbsp;&nbsp;
-            <InputField
-              name={`${f}.value`}
-              label={<FormattedMessage {...messages.formENVValue} />}
-            />
-          </ListItemText>
-          <IconButton
-            variant="contained"
-            onClick={(evt) => fields.remove(i)}
-          >
-            <MinusIcon />
-          </IconButton>
-        </ListItem>
-      ))}
-    </List>
-  );
-};
+    ))}
+  </List>
+);
 
 export default Envs;

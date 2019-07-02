@@ -63,7 +63,9 @@ export const createUserEpic = (action$, state$, { ajax }) =>
 export const afterCreateEpic = (action$) =>
   action$.pipe(
     ofType(c.CREATE_USER_SUCCESS),
-    mergeMap(({ payload }) => timer(1000).pipe(mapTo(push(`/users/${payload.response.id}/profile`))))
+    mergeMap(({ payload }) =>
+      timer(1000).pipe(mapTo(push(`/users/${payload.response.id}/profile`)))
+    )
   );
 
 export const updateUserEpic = (action$, state$, { ajax }) =>
@@ -90,7 +92,9 @@ export const updateUserEpic = (action$, state$, { ajax }) =>
 export const afterUpdateEpic = (action$) =>
   action$.pipe(
     ofType(c.UPDATE_USER_SUCCESS),
-    mergeMap(({ payload }) => timer(1000).pipe(mapTo(push(`/users/${payload.response.id}/profile`))))
+    mergeMap(({ payload }) =>
+      timer(1000).pipe(mapTo(push(`/users/${payload.response.id}/profile`)))
+    )
   );
 
 export const removeUserEpic = (action$, state$, { ajax }) =>
@@ -131,7 +135,9 @@ export const resetPasswordEpic = (action$, state$, { ajax }) =>
 export const afterPasswordEpic = (action$) =>
   action$.pipe(
     ofType(c.RESET_PASSWORD_SUCCESS),
-    mergeMap(({ payload }) => timer(1000).pipe(mapTo(push(`/users/${payload.id}/profile`))))
+    mergeMap(({ payload }) =>
+      timer(1000).pipe(mapTo(push(`/users/${payload.id}/profile`)))
+    )
   );
 
 export default combineEpics(

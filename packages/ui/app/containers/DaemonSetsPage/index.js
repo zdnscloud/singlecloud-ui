@@ -61,19 +61,19 @@ export class DaemonSetsPage extends React.PureComponent {
   }
 
   render() {
-    const { classes , clusterID, namespaceID } = this.props;
+    const { classes, clusterID, namespaceID } = this.props;
 
     return (
       <div className={classes.root}>
         <DaemonSetsPageHelmet />
         <CssBaseline />
         <div className={classes.content}>
-        <Breadcrumbs 
+          <Breadcrumbs
             data={[
               {
-                path: '/clusters/' + clusterID + '/namespaces/' + namespaceID +'/daemonSets',
-                name: <FormattedMessage {...messages.pageTitle}/>
-              }
+                path: `/clusters/${clusterID}/namespaces/${namespaceID}/daemonSets`,
+                name: <FormattedMessage {...messages.pageTitle} />,
+              },
             ]}
           />
           <GridContainer className={classes.grid}>

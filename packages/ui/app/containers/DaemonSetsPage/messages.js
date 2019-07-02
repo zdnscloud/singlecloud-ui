@@ -221,5 +221,4 @@ export default defineMessages({
     id: `${scope}.formVolumeClaimTemplateStorageClassName`,
     defaultMessage: 'Storage Class Name',
   },
-
 });

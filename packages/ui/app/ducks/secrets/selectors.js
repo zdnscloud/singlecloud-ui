@@ -34,8 +34,7 @@ export const makeSelectSecretsList = () =>
   createSelector(
     selectSecretsDomain,
     makeSelectSecrets(),
-    (substate, secrets) =>
-      substate.get('list').map((id) => secrets.get(id))
+    (substate, secrets) => substate.get('list').map((id) => secrets.get(id))
   );
 
 export const makeSelectURL = () =>
@@ -46,7 +45,9 @@ export const makeSelectURL = () =>
 
 export const makeSelectSecretID = () =>
   createSelector(
-    createMatchSelector('/clusters/:cluster_id/namespaces/:namespace_id/secrets/:secret_id'),
+    createMatchSelector(
+      '/clusters/:cluster_id/namespaces/:namespace_id/secrets/:secret_id'
+    ),
     (match) => {
       if (match && match.params) {
         return match.params.secret_id;

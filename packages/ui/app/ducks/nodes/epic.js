@@ -23,8 +23,7 @@ export const loadNodesEpic = (action$, state$, { ajax }) =>
     mergeMap(({ payload, meta: { clusterID } }) =>
       ajax(payload).pipe(
         map((resp) => a.loadNodesSuccess(resp, clusterID)),
-        catchError((error) =>
-          of(a.loadNodesFailure(error, clusterID)))
+        catchError((error) => of(a.loadNodesFailure(error, clusterID)))
       )
     )
   );
@@ -53,7 +52,9 @@ export const createNodeEpic = (action$, state$, { ajax }) =>
 export const afterCreateEpic = (action$) =>
   action$.pipe(
     ofType(c.CREATE_NODE_SUCCESS),
-    mergeMap(({ payload, meta }) => timer(1000).pipe(mapTo(push(`/clusters/${meta.clusterID}/nodes`))))
+    mergeMap(({ payload, meta }) =>
+      timer(1000).pipe(mapTo(push(`/clusters/${meta.clusterID}/nodes`)))
+    )
   );
 
 export const removeNodeEpic = (action$, state$, { ajax }) =>
@@ -64,12 +65,10 @@ export const removeNodeEpic = (action$, state$, { ajax }) =>
         url: `${url}`,
         method: 'DELETE',
       }).pipe(
-        map((resp) => {
-          return a.removeNodeSuccess(resp, { id: payload, clusterID });
-        }),
-        catchError((error) => {
-          return of(a.removeNodeFailure(error, { id: payload, clusterID }));
-        })
+        map((resp) => a.removeNodeSuccess(resp, { id: payload, clusterID })),
+        catchError((error) =>
+          of(a.removeNodeFailure(error, { id: payload, clusterID }))
+        )
       )
     )
   );

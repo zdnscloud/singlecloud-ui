@@ -45,7 +45,10 @@ export const cronJobsReducer = (
       const cronJob = payload.response;
       // temporary add, may remove when support cancel load data
       if (cronJob && cronJob.id) {
-        return state.setIn(['cronJobs', clusterID, namespaceID, cronJob.id], fromJS(cronJob));
+        return state.setIn(
+          ['cronJobs', clusterID, namespaceID, cronJob.id],
+          fromJS(cronJob)
+        );
       }
       return state;
     }
@@ -57,7 +60,10 @@ export const cronJobsReducer = (
     case c.CREATE_CRONJOB_SUCCESS: {
       const { clusterID, namespaceID } = meta;
       const data = payload.response;
-      return state.setIn(['cronJobs', clusterID, namespaceID, data.id], fromJS(data));
+      return state.setIn(
+        ['cronJobs', clusterID, namespaceID, data.id],
+        fromJS(data)
+      );
     }
 
     case c.CREATE_CRONJOB_FAILURE:
@@ -84,13 +90,10 @@ export const cronJobsReducer = (
     case c.SCALE_CRONJOB_SUCCESS: {
       const { clusterID, namespaceID } = meta;
       const data = payload.response;
-      return state.setIn([
-        'cronJobs',
-        clusterID,
-        namespaceID,
-        data.id,
-        'replicas',
-      ], data.replicas);
+      return state.setIn(
+        ['cronJobs', clusterID, namespaceID, data.id, 'replicas'],
+        data.replicas
+      );
     }
     case c.SCALE_CRONJOB_FAILURE:
       return state;

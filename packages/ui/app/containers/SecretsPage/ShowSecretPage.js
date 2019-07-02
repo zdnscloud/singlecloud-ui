@@ -39,7 +39,6 @@ import CardHeader from 'components/Card/CardHeader';
 import CardFooter from 'components/Card/CardFooter';
 import ReadOnlyInput from 'components/CustomInput/ReadOnlyInput';
 
-
 import {
   makeSelectClusterID,
   makeSelectNamespaceID,
@@ -50,10 +49,10 @@ import {
   makeSelectURL,
 } from 'ducks/secrets/selectors';
 
+import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
 import messages from './messages';
 import SecretsPageHelmet from './helmet';
 import styles from './styles';
-import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
 /* eslint-disable react/prefer-stateless-function */
 export class ShowSecret extends React.PureComponent {
   static propTypes = {
@@ -66,78 +65,80 @@ export class ShowSecret extends React.PureComponent {
   }
 
   render() {
-    const {
-      classes,
-      clusterID,
-      namespaceID,
-      secret,
-    } = this.props;
+    const { classes, clusterID, namespaceID, secret } = this.props;
 
     return (
       <div className={classes.root}>
         <SecretsPageHelmet />
         <CssBaseline />
         <div className={classes.content}>
-        <Breadcrumbs 
+          <Breadcrumbs
             data={[
               {
-                path: '/clusters/' + clusterID + '/namespaces/' + namespaceID +'/secrets',
-                name: <FormattedMessage {...messages.pageTitle}/>
+                path: `/clusters/${clusterID}/namespaces/${namespaceID}/secrets`,
+                name: <FormattedMessage {...messages.pageTitle} />,
               },
               {
                 path: '#',
-                name: <FormattedMessage {...messages.showSecret}/>
-              }
+                name: <FormattedMessage {...messages.showSecret} />,
+              },
             ]}
           />
-          <GridContainer  className={classes.grid}>
+          <GridContainer className={classes.grid}>
             <GridItem xs={12} sm={12} md={12}>
-            <Card>
-              <CardHeader color="primary">
-                <h4 className={classes.cardTitleWhite}>
-                  <FormattedMessage {...messages.showSecret} />
-                </h4>
-              </CardHeader>
-              <CardBody>
-                <GridContainer>
-                  <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
-                    <ReadOnlyInput
-                      labelText={<FormattedMessage {...messages.formName} />}
-                      value={secret.get('name')}
-                      formControlProps={{
-                        className: classes.nameControl,
-                      }}
-                    />
-                  </GridItem>
-                  <GridItem xs={12} sm={12} md={12}>
-                    {secret.get('data') && secret.get('data').map((sec, idx) => (
-                      <GridContainer key={`${idx}-${sec.get('key')}`}>
-                        <GridItem xs={3} sm={3} md={3}>
-                          <ReadOnlyInput
-                            labelText={<FormattedMessage {...messages.formDataKey} />}
-                            value={sec.get('key')}
-                            fullWidth
-                            formControlProps={{
-                              className: classes.nameControl,
-                            }}
-                          />
-                        </GridItem>
-                        <GridItem xs={3} sm={3} md={3}>
-                          <ReadOnlyInput
-                            labelText={<FormattedMessage {...messages.formDataValue} />}
-                            value={sec.get('value')}
-                            fullWidth
-                            formControlProps={{
-                              className: classes.nameControl,
-                            }}
-                          />
-                        </GridItem>
-                      </GridContainer>
-                    ))}
-                  </GridItem>
-                </GridContainer>
-              </CardBody>
-            </Card>
+              <Card>
+                <CardHeader color="primary">
+                  <h4 className={classes.cardTitleWhite}>
+                    <FormattedMessage {...messages.showSecret} />
+                  </h4>
+                </CardHeader>
+                <CardBody>
+                  <GridContainer>
+                    <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
+                      <ReadOnlyInput
+                        labelText={<FormattedMessage {...messages.formName} />}
+                        value={secret.get('name')}
+                        formControlProps={{
+                          className: classes.nameControl,
+                        }}
+                      />
+                    </GridItem>
+                    <GridItem xs={12} sm={12} md={12}>
+                      {secret.get('data') &&
+                        secret.get('data').map((sec, idx) => (
+                          <GridContainer key={`${idx}-${sec.get('key')}`}>
+                            <GridItem xs={3} sm={3} md={3}>
+                              <ReadOnlyInput
+                                labelText={
+                                  <FormattedMessage {...messages.formDataKey} />
+                                }
+                                value={sec.get('key')}
+                                fullWidth
+                                formControlProps={{
+                                  className: classes.nameControl,
+                                }}
+                              />
+                            </GridItem>
+                            <GridItem xs={3} sm={3} md={3}>
+                              <ReadOnlyInput
+                                labelText={
+                                  <FormattedMessage
+                                    {...messages.formDataValue}
+                                  />
+                                }
+                                value={sec.get('value')}
+                                fullWidth
+                                formControlProps={{
+                                  className: classes.nameControl,
+                                }}
+                              />
+                            </GridItem>
+                          </GridContainer>
+                        ))}
+                    </GridItem>
+                  </GridContainer>
+                </CardBody>
+              </Card>
             </GridItem>
           </GridContainer>
         </div>

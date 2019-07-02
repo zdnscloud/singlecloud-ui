@@ -27,7 +27,7 @@ import CardHeader from 'components/Card/CardHeader';
 import CardFooter from 'components/Card/CardFooter';
 import Dialog from '@material-ui/core/Dialog';
 import Button from '@material-ui/core/Button';
-import IconButton from "@material-ui/core/IconButton";
+import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from 'components/Icons/Close';
 
 import { makeSelectClusterID } from 'ducks/app/selectors';
@@ -62,7 +62,8 @@ export class TerminalDialog extends React.PureComponent {
         onEnter={() => {
           const term = new Terminal();
           const socket = new SockJS(
-            `${protocol}//${hostname}:${port}/apis/ws.zcloud.cn/v1/clusters/${clusterID || open}/shell`
+            `${protocol}//${hostname}:${port}/apis/ws.zcloud.cn/v1/clusters/${clusterID ||
+              open}/shell`
           );
 
           term.on('data', (data) => {
@@ -114,10 +115,7 @@ export class TerminalDialog extends React.PureComponent {
             </IconButton>
           </CardHeader>
           <CardBody className={classes.dialogCardBody}>
-            <Paper
-              className={classes.dialogCardBodyPaper}
-              ref={this.termEl}
-            />
+            <Paper className={classes.dialogCardBodyPaper} ref={this.termEl} />
           </CardBody>
         </Card>
       </Dialog>

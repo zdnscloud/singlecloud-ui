@@ -23,8 +23,7 @@ export const loadStroageClassesEpic = (action$, state$, { ajax }) =>
     mergeMap(({ payload, meta: { clusterID } }) =>
       ajax(payload).pipe(
         map((resp) => a.loadStorageClassesSuccess(resp, clusterID)),
-        catchError((error) =>
-          of(a.loadStorageClassesFailure(error, clusterID)))
+        catchError((error) => of(a.loadStorageClassesFailure(error, clusterID)))
       )
     )
   );
@@ -35,8 +34,7 @@ export const loadNFSStoragesEpic = (action$, state$, { ajax }) =>
     mergeMap(({ payload, meta: { clusterID } }) =>
       ajax(payload).pipe(
         map((resp) => a.loadNFSStoragesSuccess(resp, clusterID)),
-        catchError((error) =>
-          of(a.loadNFSStoragesFailure(error, clusterID)))
+        catchError((error) => of(a.loadNFSStoragesFailure(error, clusterID)))
       )
     )
   );
@@ -47,8 +45,7 @@ export const loadLVMStoragesEpic = (action$, state$, { ajax }) =>
     mergeMap(({ payload, meta: { clusterID } }) =>
       ajax(payload).pipe(
         map((resp) => a.loadLVMStoragesSuccess(resp, clusterID)),
-        catchError((error) =>
-          of(a.loadLVMStoragesFailure(error, clusterID)))
+        catchError((error) => of(a.loadLVMStoragesFailure(error, clusterID)))
       )
     )
   );

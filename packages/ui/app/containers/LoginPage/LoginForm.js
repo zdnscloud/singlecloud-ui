@@ -112,13 +112,34 @@ const LoginForm = (props) => {
     <form className={classes.form} onSubmit={handleSubmit}>
       <CardHeader className={classes.cardHeader}>
         <svg xmlns="http://www.w3.org/2000/svg" width="50" height="85">
-		      <g transform="scale(0.3)">
-			      <polygon fill="#209cce" points="115.95 156.57 0 156.57 51.16 108.87 165.9 108.87 115.95 156.57"/>
-			      <polygon fill="none" stroke="#209cc3" strokeWidth="1.42" points="52.29 107.56 1.41 154.97 117.85 44.91 166.62 0.53 52.29 107.56"/>
-			      <polygon fill="#6fc493" points="115.95 47.38 115.95 156.57 165.9 108.87 165.9 0.34 115.95 47.38"/>
-			      <polygon fill="#209cce" points="115.95 47.38 0 47.38 51.16 0.34 165.9 0.34 115.95 47.38"/>
-            <text fontSize="56" fill="#618297" fontFamily="ArialMT, Arial" transform="translate(0 240)">Zcloud</text>
-	        </g>
+          <g transform="scale(0.3)">
+            <polygon
+              fill="#209cce"
+              points="115.95 156.57 0 156.57 51.16 108.87 165.9 108.87 115.95 156.57"
+            />
+            <polygon
+              fill="none"
+              stroke="#209cc3"
+              strokeWidth="1.42"
+              points="52.29 107.56 1.41 154.97 117.85 44.91 166.62 0.53 52.29 107.56"
+            />
+            <polygon
+              fill="#6fc493"
+              points="115.95 47.38 115.95 156.57 165.9 108.87 165.9 0.34 115.95 47.38"
+            />
+            <polygon
+              fill="#209cce"
+              points="115.95 47.38 0 47.38 51.16 0.34 165.9 0.34 115.95 47.38"
+            />
+            <text
+              fontSize="56"
+              fill="#618297"
+              fontFamily="ArialMT, Arial"
+              transform="translate(0 240)"
+            >
+              Zcloud
+            </text>
+          </g>
         </svg>
       </CardHeader>
       <CardBody>

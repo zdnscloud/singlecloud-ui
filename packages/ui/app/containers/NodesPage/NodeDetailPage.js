@@ -1,4 +1,3 @@
-
 /**
  *
  * NodeDetailPage
@@ -36,10 +35,10 @@ import { makeSelectCurrentCluster } from 'ducks/clusters/selectors';
 import { makeSelectCurrentNode } from 'ducks/nodes/selectors';
 import * as actions from 'ducks/nodes/actions';
 
+import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
 import messages from './messages';
 import styles from './styles';
 import NodesPageHelmet from './helmet';
-import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
 /* eslint-disable react/prefer-stateless-function */
 export class NodeDetailPage extends React.PureComponent {
   static propTypes = {
@@ -51,36 +50,32 @@ export class NodeDetailPage extends React.PureComponent {
   }
 
   load() {
-    const {
-      cluster,
-      clusterID,
-      loadNodes,
-    } = this.props
+    const { cluster, clusterID, loadNodes } = this.props;
     const url = cluster.getIn(['links', 'nodes']);
     loadNodes(url, clusterID);
   }
 
   render() {
-    const { classes, node,clusterID } = this.props;
+    const { classes, node, clusterID } = this.props;
 
     return (
       <div className={classes.root}>
         <NodesPageHelmet />
         <CssBaseline />
         <div className={classes.content}>
-        <Breadcrumbs 
+          <Breadcrumbs
             data={[
               {
-                path: '/clusters/' + clusterID + '/nodes',
-                name: <FormattedMessage {...messages.pageTitle}/>
+                path: `/clusters/${clusterID}/nodes`,
+                name: <FormattedMessage {...messages.pageTitle} />,
               },
               {
                 path: '#',
-                name: <FormattedMessage {...messages.nodeDetails}/>
-              }
+                name: <FormattedMessage {...messages.nodeDetails} />,
+              },
             ]}
           />
-          <GridContainer  className={classes.grid}>
+          <GridContainer className={classes.grid}>
             <GridItem xs={12} sm={12} md={12}>
               <Card>
                 <CardHeader color="primary">
@@ -108,7 +103,9 @@ export class NodeDetailPage extends React.PureComponent {
                       <ReadOnlyInput
                         labelText={<FormattedMessage {...messages.roles} />}
                         fullWidth
-                        value={node.get('roles') && node.get('roles').join(', ')}
+                        value={
+                          node.get('roles') && node.get('roles').join(', ')
+                        }
                       />
                     </GridItem>
                   </GridContainer>
@@ -116,21 +113,29 @@ export class NodeDetailPage extends React.PureComponent {
                   <GridContainer>
                     <GridItem xs={3} sm={3} md={3}>
                       <ReadOnlyInput
-                        labelText={<FormattedMessage {...messages.dockerVersion} />}
+                        labelText={
+                          <FormattedMessage {...messages.dockerVersion} />
+                        }
                         fullWidth
                         value={node.get('dockerVersion')}
                       />
                     </GridItem>
                     <GridItem xs={3} sm={3} md={3}>
                       <ReadOnlyInput
-                        labelText={<FormattedMessage {...messages.operatingSystemImage} />}
+                        labelText={
+                          <FormattedMessage
+                            {...messages.operatingSystemImage}
+                          />
+                        }
                         fullWidth
                         value={node.get('operatingSystemImage')}
                       />
                     </GridItem>
                     <GridItem xs={3} sm={3} md={3}>
                       <ReadOnlyInput
-                        labelText={<FormattedMessage {...messages.operatingSystem} />}
+                        labelText={
+                          <FormattedMessage {...messages.operatingSystem} />
+                        }
                         fullWidth
                         value={node.get('operatingSystem')}
                       />
@@ -140,9 +145,13 @@ export class NodeDetailPage extends React.PureComponent {
                   <GridContainer>
                     <GridItem xs={3} sm={3} md={3}>
                       <ReadOnlyInput
-                        labelText={<FormattedMessage {...messages.creationTimestamp} />}
+                        labelText={
+                          <FormattedMessage {...messages.creationTimestamp} />
+                        }
                         fullWidth
-                        value={moment(node.get('creationTimestamp')).format('YYYY-MM-DD HH:mm:ss')}
+                        value={moment(node.get('creationTimestamp')).format(
+                          'YYYY-MM-DD HH:mm:ss'
+                        )}
                       />
                     </GridItem>
                   </GridContainer>
@@ -150,7 +159,10 @@ export class NodeDetailPage extends React.PureComponent {
                   <GridContainer>
                     <GridItem xs={12} sm={12} md={4}>
                       <Card chart>
-                        <CardHeader color="azure" className={classes.cardHeaderLine}>
+                        <CardHeader
+                          color="azure"
+                          className={classes.cardHeaderLine}
+                        >
                           <CircleChart
                             value={node.get('cpuUsedRatio') * 100}
                             total={100}
@@ -160,7 +172,9 @@ export class NodeDetailPage extends React.PureComponent {
                           <h4 className={classes.cardTitle}>
                             <FormattedMessage {...messages.cpu} />
                             <span className={classes.cardTitleValue}>
-                              {`${node.get('cpuUsed') / 1000} / ${node.get('cpu') / 1000}`}
+                              {`${node.get('cpuUsed') / 1000} / ${node.get(
+                                'cpu'
+                              ) / 1000}`}
                             </span>
                           </h4>
                           <p className={classes.cardCategory} />
@@ -169,7 +183,10 @@ export class NodeDetailPage extends React.PureComponent {
                     </GridItem>
                     <GridItem xs={12} sm={12} md={4}>
                       <Card chart>
-                        <CardHeader color="azure" className={classes.cardHeaderLine}>
+                        <CardHeader
+                          color="azure"
+                          className={classes.cardHeaderLine}
+                        >
                           <CircleChart
                             value={node.get('memoryUsedRatio') * 100}
                             total={100}
@@ -179,7 +196,11 @@ export class NodeDetailPage extends React.PureComponent {
                           <h4 className={classes.cardTitle}>
                             <FormattedMessage {...messages.memory} />
                             <span className={classes.cardTitleValue}>
-                              {`${(node.get('memoryUsed') / 1024 ** 3).toFixed(2)} / ${(node.get('memory') / 1024 ** 3).toFixed(2)} GiB`}
+                              {`${(node.get('memoryUsed') / 1024 ** 3).toFixed(
+                                2
+                              )} / ${(node.get('memory') / 1024 ** 3).toFixed(
+                                2
+                              )} GiB`}
                             </span>
                           </h4>
                           <p className={classes.cardCategory} />
@@ -188,7 +209,10 @@ export class NodeDetailPage extends React.PureComponent {
                     </GridItem>
                     <GridItem xs={12} sm={12} md={4}>
                       <Card chart>
-                        <CardHeader color="azure" className={classes.cardHeaderLine}>
+                        <CardHeader
+                          color="azure"
+                          className={classes.cardHeaderLine}
+                        >
                           <CircleChart
                             value={node.get('podUsedRatio') * 100}
                             total={100}
@@ -206,7 +230,6 @@ export class NodeDetailPage extends React.PureComponent {
                       </Card>
                     </GridItem>
                   </GridContainer>
-
                 </CardBody>
               </Card>
             </GridItem>
@@ -233,12 +256,16 @@ export class NodeDetailPage extends React.PureComponent {
                       </TableRow>
                     </TableHead>
                     <TableBody>
-                      {node.get('labels') && node.get('labels').map((val, key) => (
-                        <TableRow key={key}>
-                          <TableCell>{key}</TableCell>
-                          <TableCell>{val}</TableCell>
-                        </TableRow>
-                      )).toList()}
+                      {node.get('labels') &&
+                        node
+                          .get('labels')
+                          .map((val, key) => (
+                            <TableRow key={key}>
+                              <TableCell>{key}</TableCell>
+                              <TableCell>{val}</TableCell>
+                            </TableRow>
+                          ))
+                          .toList()}
                     </TableBody>
                   </Table>
                 </CardBody>
@@ -267,19 +294,22 @@ export class NodeDetailPage extends React.PureComponent {
                       </TableRow>
                     </TableHead>
                     <TableBody>
-                      {node.get('annotations') && node.get('annotations').map((val, key) => (
-                        <TableRow key={key}>
-                          <TableCell>{key}</TableCell>
-                          <TableCell>{val+''}</TableCell>
-                        </TableRow>
-                      )).toList()}
+                      {node.get('annotations') &&
+                        node
+                          .get('annotations')
+                          .map((val, key) => (
+                            <TableRow key={key}>
+                              <TableCell>{key}</TableCell>
+                              <TableCell>{`${val}`}</TableCell>
+                            </TableRow>
+                          ))
+                          .toList()}
                     </TableBody>
                   </Table>
                 </CardBody>
               </Card>
             </GridItem>
           </GridContainer>
-
         </div>
       </div>
     );

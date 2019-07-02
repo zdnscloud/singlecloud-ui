@@ -46,7 +46,9 @@ export const makeSelectURL = () =>
 
 export const makeSelectDaemonSetID = () =>
   createSelector(
-    createMatchSelector('/clusters/:cluster_id/namespaces/:namespace_id/daemonSets/:daemonSet_id'),
+    createMatchSelector(
+      '/clusters/:cluster_id/namespaces/:namespace_id/daemonSets/:daemonSet_id'
+    ),
     (match) => {
       if (match && match.params) {
         return match.params.daemonSet_id;
@@ -62,7 +64,8 @@ export const makeSelectCurrentDaemonSet = () =>
     makeSelectNamespaceID(),
     makeSelectDaemonSetID(),
     (substate, clusterID, namespaceID, daemonSetID) =>
-      substate.getIn(['daemonSets', clusterID, namespaceID, daemonSetID]) || substate.clear()
+      substate.getIn(['daemonSets', clusterID, namespaceID, daemonSetID]) ||
+      substate.clear()
   );
 
 /**

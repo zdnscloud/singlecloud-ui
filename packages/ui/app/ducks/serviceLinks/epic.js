@@ -24,7 +24,8 @@ export const loadOuterServicesEpic = (action$, state$, { ajax }) =>
       ajax(payload).pipe(
         map((resp) => a.loadOuterServicesSuccess(resp, clusterID, namespaceID)),
         catchError((error) =>
-          of(a.loadOuterServicesFailure(error, clusterID, namespaceID)))
+          of(a.loadOuterServicesFailure(error, clusterID, namespaceID))
+        )
       )
     )
   );
@@ -36,7 +37,8 @@ export const loadInnerServicesEpic = (action$, state$, { ajax }) =>
       ajax(payload).pipe(
         map((resp) => a.loadInnerServicesSuccess(resp, clusterID, namespaceID)),
         catchError((error) =>
-          of(a.loadInnerServicesFailure(error, clusterID, namespaceID)))
+          of(a.loadInnerServicesFailure(error, clusterID, namespaceID))
+        )
       )
     )
   );

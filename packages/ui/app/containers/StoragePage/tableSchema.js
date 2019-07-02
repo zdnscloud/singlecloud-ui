@@ -8,24 +8,25 @@ const schema = ['name', 'size', 'pods'];
 
 const tableSchema = schema.map((id) => {
   if (id === 'pods') {
-    return ({
+    return {
       id,
       label: ucfirst(id),
       component: (props) => (
         <List dense>
-          {props.data.get('pods') && props.data.get('pods').map((p, i) => (
-            <ListItem key={`n-i-${p.get('name')}`}>
-              <ListItemText primary={p.get('name')} />
-            </ListItem>
-          ))}
+          {props.data.get('pods') &&
+            props.data.get('pods').map((p, i) => (
+              <ListItem key={`n-i-${p.get('name')}`}>
+                <ListItemText primary={p.get('name')} />
+              </ListItem>
+            ))}
         </List>
       ),
-    });
+    };
   }
-  return ({
+  return {
     id,
     label: ucfirst(id),
-  });
+  };
 });
 
 export default tableSchema;

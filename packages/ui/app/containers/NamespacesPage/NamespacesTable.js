@@ -40,30 +40,38 @@ export class NamespacesTable extends React.PureComponent {
   };
 
   render() {
-    const { classes, clusterID, data, namespaces, removeNamespace } = this.props;
-    const mergedSchema = schema.concat([
-      {
-        id: 'actions',
-        label: 'Actions',
-        component: (props) => (
-          <Fragment>
-            <IconButton
-              aria-label="Delete"
-              onClick={(evt) => {
-                const ns = props.data;
-                const url = ns.getIn(['links', 'remove']);
-                removeNamespace(ns.get('id'), { url, clusterID });
-              }}
-            >
-              <DeleteIcon />
-            </IconButton>
-          </Fragment>
-        ),
-      },
-    ]).map((s) => ({
-      ...s,
-      label: <FormattedMessage {...messages[`tableTitle${s.label}`]} />
-    }));
+    const {
+      classes,
+      clusterID,
+      data,
+      namespaces,
+      removeNamespace,
+    } = this.props;
+    const mergedSchema = schema
+      .concat([
+        {
+          id: 'actions',
+          label: 'Actions',
+          component: (props) => (
+            <Fragment>
+              <IconButton
+                aria-label="Delete"
+                onClick={(evt) => {
+                  const ns = props.data;
+                  const url = ns.getIn(['links', 'remove']);
+                  removeNamespace(ns.get('id'), { url, clusterID });
+                }}
+              >
+                <DeleteIcon />
+              </IconButton>
+            </Fragment>
+          ),
+        },
+      ])
+      .map((s) => ({
+        ...s,
+        label: <FormattedMessage {...messages[`tableTitle${s.label}`]} />,
+      }));
 
     return (
       <Paper className={classes.tableWrapper}>

@@ -47,9 +47,7 @@ export const podsReducer = (
       });
     }
     case c.CLOSE_POD_LOG:
-      return state
-        .set('openingPodLog', null)
-        .set('openingLogs', fromJS([]));
+      return state.set('openingPodLog', null).set('openingLogs', fromJS([]));
 
     case c.SET_OPENING_LOGS:
       return state.set('openingLogs', payload);

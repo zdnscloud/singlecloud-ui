@@ -18,10 +18,12 @@ import * as a from './actions';
 export const eventEpic = (action$) =>
   action$.pipe(
     ofType(c.OPEN_CLUSTER),
-    mergeMap(({ payload: { clusterID } }) => (
+    mergeMap(({ payload: { clusterID } }) =>
       Observable.create((observer) => {
         const { protocol, hostname, port } = window.location;
-        const socket = new SockJS(`${protocol}//${hostname}:${port}/apis/ws.zcloud.cn/v1/clusters/${clusterID}/event`);
+        const socket = new SockJS(
+          `${protocol}//${hostname}:${port}/apis/ws.zcloud.cn/v1/clusters/${clusterID}/event`
+        );
 
         socket.onopen = () => {};
 
@@ -37,9 +39,7 @@ export const eventEpic = (action$) =>
         .pipe(scan((acc, event) => acc.concat([event]).slice(-100), []))
         .pipe(debounceTime(100))
         .pipe(map((events) => a.setEvents(events, clusterID)))
-    ))
+    )
   );
 
-export default combineEpics(
-  eventEpic
-);
+export default combineEpics(eventEpic);

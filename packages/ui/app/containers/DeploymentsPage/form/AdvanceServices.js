@@ -49,11 +49,7 @@ import MinusIcon from 'components/Icons/Minus';
 
 import messages from '../messages';
 
-const AdvanceServices = ({
-  input,
-  ports,
-  meta: { error, submitFailed },
-}) => {
+const AdvanceServices = ({ input, ports, meta: { error, submitFailed } }) => {
   const { onChange, name } = input;
   let { value } = input;
   if (!value) value = fromJS([]);
@@ -61,9 +57,9 @@ const AdvanceServices = ({
   return (
     <List component="ul">
       {ports.map((port, i) => {
-        const idx = value.findIndex((v) => (
-          v.get('containerPortName') === port.get('name')
-        ));
+        const idx = value.findIndex(
+          (v) => v.get('containerPortName') === port.get('name')
+        );
         const checked = idx !== -1;
         if (checked) {
           const it = value.get(idx);
@@ -86,7 +82,9 @@ const AdvanceServices = ({
                 </GridItem>
                 <GridItem xs={2} sm={2} md={2}>
                   <ReadOnlyInput
-                    labelText={<FormattedMessage {...messages.formPortProtocol} />}
+                    labelText={
+                      <FormattedMessage {...messages.formPortProtocol} />
+                    }
                     value={port.get('protocol')}
                   />
                 </GridItem>
@@ -105,7 +103,11 @@ const AdvanceServices = ({
                     if (checked) {
                       onChange(value.delete(idx));
                     } else {
-                      onChange(value.push(port.set('containerPortName', port.get('name'))));
+                      onChange(
+                        value.push(
+                          port.set('containerPortName', port.get('name'))
+                        )
+                      );
                     }
                   }}
                 />
@@ -124,7 +126,9 @@ const AdvanceServices = ({
                 <Checkbox
                   style={{ paddingBottom: 0 }}
                   disabled={!checked}
-                  checked={checked ? value.getIn([idx, 'autoCreateIngress']) : false}
+                  checked={
+                    checked ? value.getIn([idx, 'autoCreateIngress']) : false
+                  }
                   onChange={(evt) => {
                     const ingress = value.getIn([idx, 'autoCreateIngress']);
                     onChange(value.setIn([idx, 'autoCreateIngress'], !ingress));
@@ -134,18 +138,29 @@ const AdvanceServices = ({
                 {isUDP ? (
                   <Fragment>
                     <SelectField
-                      disabled={!checked || !value.getIn([idx, 'autoCreateIngress'])}
-                      value={checked ? value.getIn([idx, 'ingressProtocol']) : ''}
+                      disabled={
+                        !checked || !value.getIn([idx, 'autoCreateIngress'])
+                      }
+                      value={
+                        checked ? value.getIn([idx, 'ingressProtocol']) : ''
+                      }
                       onChange={(evt) => {
-                        if (!checked || !value.getIn([idx, 'autoCreateIngress'])) {
+                        if (
+                          !checked ||
+                          !value.getIn([idx, 'autoCreateIngress'])
+                        ) {
                           return;
                         }
                         const dn = value.getIn([idx, 'ingressProtocol']);
                         const protocol = evt.target.value;
-                        onChange(value.setIn([idx, 'ingressProtocol'], protocol));
+                        onChange(
+                          value.setIn([idx, 'ingressProtocol'], protocol)
+                        );
                       }}
                       name={`${itemName}.ingressProtocol`}
-                      label={<FormattedMessage {...messages.formPortProtocol} />}
+                      label={
+                        <FormattedMessage {...messages.formPortProtocol} />
+                      }
                       options={[{ label: 'UDP', value: 'UDP' }]}
                       formControlProps={{
                         style: {
@@ -171,18 +186,29 @@ const AdvanceServices = ({
                 ) : (
                   <Fragment>
                     <SelectField
-                      disabled={!checked || !value.getIn([idx, 'autoCreateIngress'])}
-                      value={checked ? value.getIn([idx, 'ingressProtocol']) : ''}
+                      disabled={
+                        !checked || !value.getIn([idx, 'autoCreateIngress'])
+                      }
+                      value={
+                        checked ? value.getIn([idx, 'ingressProtocol']) : ''
+                      }
                       onChange={(evt) => {
-                        if (!checked || !value.getIn([idx, 'autoCreateIngress'])) {
+                        if (
+                          !checked ||
+                          !value.getIn([idx, 'autoCreateIngress'])
+                        ) {
                           return;
                         }
                         const dn = value.getIn([idx, 'ingressProtocol']);
                         const protocol = evt.target.value;
-                        onChange(value.setIn([idx, 'ingressProtocol'], protocol));
+                        onChange(
+                          value.setIn([idx, 'ingressProtocol'], protocol)
+                        );
                       }}
                       name={`${itemName}.ingressProtocol`}
-                      label={<FormattedMessage {...messages.formPortProtocol} />}
+                      label={
+                        <FormattedMessage {...messages.formPortProtocol} />
+                      }
                       options={[
                         { label: 'TCP', value: 'TCP' },
                         { label: 'HTTP', value: 'HTTP' },
@@ -196,7 +222,9 @@ const AdvanceServices = ({
                     &nbsp;&nbsp;
                     {value.getIn([idx, 'ingressProtocol']) === 'TCP' ? (
                       <TextField
-                        label={<FormattedMessage {...messages.formIngressPort} />}
+                        label={
+                          <FormattedMessage {...messages.formIngressPort} />
+                        }
                         disabled={!value.getIn([idx, 'autoCreateIngress'])}
                         value={checked ? value.getIn([idx, 'ingressPort']) : ''}
                         onChange={(evt) => {
@@ -211,20 +239,38 @@ const AdvanceServices = ({
                     ) : (
                       <Fragment>
                         <TextField
-                          label={<FormattedMessage {...messages.formIngressDomain} />}
+                          label={
+                            <FormattedMessage {...messages.formIngressDomain} />
+                          }
                           disabled={!value.getIn([idx, 'autoCreateIngress'])}
-                          value={checked ? value.getIn([idx, 'ingressHost']) : ''}
+                          value={
+                            checked ? value.getIn([idx, 'ingressHost']) : ''
+                          }
                           onChange={(evt) => {
-                            onChange(value.setIn([idx, 'ingressHost'], evt.target.value));
+                            onChange(
+                              value.setIn(
+                                [idx, 'ingressHost'],
+                                evt.target.value
+                              )
+                            );
                           }}
                         />
                         &nbsp;&nbsp;
                         <TextField
-                          label={<FormattedMessage {...messages.formIngressPath} />}
+                          label={
+                            <FormattedMessage {...messages.formIngressPath} />
+                          }
                           disabled={!value.getIn([idx, 'autoCreateIngress'])}
-                          value={checked ? value.getIn([idx, 'ingressPath']) : ''}
+                          value={
+                            checked ? value.getIn([idx, 'ingressPath']) : ''
+                          }
                           onChange={(evt) => {
-                            onChange(value.setIn([idx, 'ingressPath'], evt.target.value));
+                            onChange(
+                              value.setIn(
+                                [idx, 'ingressPath'],
+                                evt.target.value
+                              )
+                            );
                           }}
                         />
                       </Fragment>

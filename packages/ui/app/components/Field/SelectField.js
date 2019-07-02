@@ -17,31 +17,20 @@ const SelectComponent = ({
   formControlProps,
   options,
   ...custom
-}) => {
-  return (
-    <FormControl {...formControlProps} disabled={disabled}>
-      <InputLabel
-        htmlFor=""
-        {...labelProps}
-      >
-        {label}
-      </InputLabel>
-      <Select
-        {...input}
-        {...inputProps}
-      >
-        {options.map((opt, i) => (
-          <MenuItem
-            key={i}
-            value={opt.value}
-          >
-            {opt.label}
-          </MenuItem>
-        ))}
-      </Select>
-    </FormControl>
-  );
-};
+}) => (
+  <FormControl {...formControlProps} disabled={disabled}>
+    <InputLabel htmlFor="" {...labelProps}>
+      {label}
+    </InputLabel>
+    <Select {...input} {...inputProps}>
+      {options.map((opt, i) => (
+        <MenuItem key={i} value={opt.value}>
+          {opt.label}
+        </MenuItem>
+      ))}
+    </Select>
+  </FormControl>
+);
 
 SelectComponent.defaultProps = {
   options: [],
@@ -50,12 +39,7 @@ SelectComponent.defaultProps = {
 const SelectField = (props) => {
   const { component, ...rest } = props;
 
-  return (
-    <Field
-      {...rest}
-      component={SelectComponent}
-    />
-  );
+  return <Field {...rest} component={SelectComponent} />;
 };
 
 export default SelectField;

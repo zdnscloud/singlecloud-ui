@@ -18,7 +18,10 @@ export const initialState = fromJS({
   containerTermIsOpen: false,
 });
 
-function terminalPageReducer(state = initialState, { type, payload, meta, error }) {
+function terminalPageReducer(
+  state = initialState,
+  { type, payload, meta, error }
+) {
   switch (type) {
     case INIT_ACTION:
       return state;

@@ -50,15 +50,14 @@ export const changeNamespaceEpic = (action$, state$, { ajax }) =>
       const namespaceID = makeSelectNamespaceID()(state$.value);
       if (namespaceID) {
         const pathname = location.get('pathname');
-        const suffix = pathname.split('/').slice(5).join('/');
+        const suffix = pathname
+          .split('/')
+          .slice(5)
+          .join('/');
         return of(push(`/clusters/${clusterID}/namespaces/${ns}/${suffix}`));
       }
       return of({});
     })
   );
 
-export default combineEpics(
-  initEpic,
-  changeClusterEpic,
-  changeNamespaceEpic
-);
+export default combineEpics(initEpic, changeClusterEpic, changeNamespaceEpic);

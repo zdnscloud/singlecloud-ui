@@ -36,28 +36,28 @@ export class NodesTable extends React.PureComponent {
 
   render() {
     const { classes, data, clusterID, nodes } = this.props;
-    const mapedSchema = schema.map((sche) => ({
-      ...sche,
-      label: (
-        <FormattedMessage {...messages[`tableTitle${sche.label}`]} />
-      ),
-    })).map((sch) => {
-      if (sch.id === 'name') {
-        return {
-          ...sch,
-          component: (props) => (
-            <Button
-              color="primary"
-              to={`/clusters/${clusterID}/nodes/${props.data.get('id')}`}
-              component={Link}
-            >
-              {props.data.get('name')}
-            </Button>
-          ),
-        };
-      }
-      return sch;
-    });
+    const mapedSchema = schema
+      .map((sche) => ({
+        ...sche,
+        label: <FormattedMessage {...messages[`tableTitle${sche.label}`]} />,
+      }))
+      .map((sch) => {
+        if (sch.id === 'name') {
+          return {
+            ...sch,
+            component: (props) => (
+              <Button
+                color="primary"
+                to={`/clusters/${clusterID}/nodes/${props.data.get('id')}`}
+                component={Link}
+              >
+                {props.data.get('name')}
+              </Button>
+            ),
+          };
+        }
+        return sch;
+      });
 
     return (
       <Paper className={classes.tableWrapper}>

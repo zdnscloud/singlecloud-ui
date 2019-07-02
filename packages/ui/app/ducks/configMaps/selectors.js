@@ -46,7 +46,9 @@ export const makeSelectURL = () =>
 
 export const makeSelectConfigMapID = () =>
   createSelector(
-    createMatchSelector('/clusters/:cluster_id/namespaces/:namespace_id/configmaps/:configmap_id'),
+    createMatchSelector(
+      '/clusters/:cluster_id/namespaces/:namespace_id/configmaps/:configmap_id'
+    ),
     (match) => {
       if (match && match.params) {
         return match.params.configmap_id;

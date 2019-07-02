@@ -11,8 +11,6 @@ import FormHelperText from '@material-ui/core/FormHelperText';
 import FormGroup from '@material-ui/core/FormGroup';
 import Checkbox from '@material-ui/core/Checkbox';
 
-
-
 const renderChexboxesGroup = ({
   label,
   input,
@@ -25,17 +23,17 @@ const renderChexboxesGroup = ({
   formLabelComponent,
   ...custom
 }) => {
-  let rolesArr= [] ;
-  const onChange = (event,...args) => {
-    if(input.value){
-      let arr = input.value.filter((n) => n !== undefined);
-      rolesArr = rolesArr.concat(arr)
+  let rolesArr = [];
+  const onChange = (event, ...args) => {
+    if (input.value) {
+      const arr = input.value.filter((n) => n !== undefined);
+      rolesArr = rolesArr.concat(arr);
     }
     event.persist();
-    if(event.target.checked){
-      rolesArr.push(event.target.value)
+    if (event.target.checked) {
+      rolesArr.push(event.target.value);
     } else {
-      rolesArr = rolesArr.filter((n) => n !== event.target.value )
+      rolesArr = rolesArr.filter((n) => n !== event.target.value);
     }
     input.onChange(rolesArr);
     // console.log("onChange",rolesArr)
@@ -54,14 +52,11 @@ const renderChexboxesGroup = ({
       >
         {label}
       </FormLabel>
-      <FormGroup
-        aria-label={label}
-        className={classes.group}
-      >
+      <FormGroup aria-label={label} className={classes.group}>
         {options.map((opt, i) => (
           // <FormControlLabel
           //   key={i}
-          //   control={<Checkbox onChange={(evt) => { 
+          //   control={<Checkbox onChange={(evt) => {
           //     input.onChange(evt.target.value);
           //   }} color="primary" />}
           //   label={opt.label}
@@ -74,9 +69,9 @@ const renderChexboxesGroup = ({
             control={<Checkbox onChange={onChange} color="primary" />}
             label={opt.label}
             value={opt.value}
-            style ={{ marginRight:"40px"}}
+            style={{ marginRight: '40px' }}
             {...opt}
-        />
+          />
         ))}
       </FormGroup>
     </FormControl>

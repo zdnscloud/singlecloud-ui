@@ -54,57 +54,49 @@ const CustomCheckbox = ({
       label={label}
     />
   );
-}
-
-const renderClusters = ({
-  label,
-  input,
-  meta,
-  clusters,
-  ...custom
-}) => {
-  return (
-    <Fragment>
-      {clusters.toList().map((c, i) => {
-        const name = c.get('name');
-        const ns = c.get('namespaces');
-        const { value, ...ipt } = input;
-        return (
-          <Fragment key={i}>
-            <FormGroup row>
-              <CustomCheckbox
-                {...ipt}
-                {...custom}
-                label={<FormattedMessage {...messages.clusterAllNamespaces} values={{cluster: name}} />}
-                value={value}
-                cluster={name}
-                namespace="_all"
-              />
-            </FormGroup>
-            {ns.size > 0 ? (
-              <FormGroup row>
-                {ns.toList().map((n, ii) => {
-                  const nname = n.get('name');
-                  return (
-                    <CustomCheckbox
-                      key={ii}
-                      {...ipt}
-                      {...custom}
-                      label={<FormattedMessage {...messages.clusterNamespace} values={{cluster: name, namespace: nname}} />}
-                      value={value}
-                      cluster={name}
-                      namespace={nname}
-                    />
-                  );
-                })}
-              </FormGroup>
-            ) : null}
-          </Fragment>
-        );
-      })}
-    </Fragment>
-  )
 };
+
+const renderClusters = ({ label, input, meta, clusters, ...custom }) => (
+  <Fragment>
+    {clusters.toList().map((c, i) => {
+      const name = c.get('name');
+      const ns = c.get('namespaces');
+      const { value, ...ipt } = input;
+      return (
+        <Fragment key={i}>
+          <FormGroup row>
+            <CustomCheckbox
+              {...ipt}
+              {...custom}
+              label={<FormattedMessage {...messages.clusterAllNamespaces} values={{cluster: name}} />}
+              value={value}
+              cluster={name}
+              namespace="_all"
+            />
+          </FormGroup>
+          {ns.size > 0 ? (
+            <FormGroup row>
+              {ns.toList().map((n, ii) => {
+                const nname = n.get('name');
+                return (
+                  <CustomCheckbox
+                    key={ii}
+                    {...ipt}
+                    {...custom}
+                    label={<FormattedMessage {...messages.clusterNamespace} values={{cluster: name, namespace: nname}} />}
+                    value={value}
+                    cluster={name}
+                    namespace={nname}
+                  />
+                );
+              })}
+            </FormGroup>
+          ) : null}
+        </Fragment>
+      );
+    })}
+  </Fragment>
+);
 
 const AuthField = (props) => {
   const { component, ...rest } = props;

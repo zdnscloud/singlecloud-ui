@@ -75,55 +75,70 @@ const VolumeClaimTemplate = ({
           <Danger>{error}</Danger>
         </ListItem>
       )}
-      {fields.map((f, i) => {
-        return (
-          <GridContainer key={i}>
-            <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
-              <InputField
-                label={<FormattedMessage {...messages.formVolumeClaimTemplateName} />}
-                name={`${f}.name`}
-                fullWidth
-                inputProps={{ type: 'text', autoComplete: 'off' }}
-                classes={classes}
-              />
-            </GridItem>
-            <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
-              <InputField
-                label={<FormattedMessage {...messages.formVolumeClaimTemplateSize} />}
-                name={`${f}.size`}
-                fullWidth
-                classes={classes}
-                inputProps={{
-                  type: 'text',
-                  autoComplete: 'off',
-                  endAdornment: 'Gi',
-                }}
-              />
-            </GridItem>
-            <GridItem xs={3} sm={3} md={3} className={classes.formLine} style={{ paddingTop: 18 }}>
-              <SelectField
-                label={<FormattedMessage {...messages.formVolumeClaimTemplateStorageClassName} />}
-                name={`${f}.storageClassName`}
-                formControlProps={{
-                  style: {
-                    width: '100%',
-                  },
-                }}
-                classes={classes}
-                options={storageClassesOptions}
-              />
-            </GridItem>
-            <GridItem xs={3} sm={3} md={3} className={classes.formLine} style={{ paddingTop: 18 }}>
-              <IconButton
-                variant="contained"
-                onClick={(evt) => fields.remove(i)}
-              >
-                <MinusIcon />
-              </IconButton>
-            </GridItem>
-          </GridContainer>
-        );
-      })}
+      {fields.map((f, i) => (
+        <GridContainer key={i}>
+          <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
+            <InputField
+              label={
+                <FormattedMessage {...messages.formVolumeClaimTemplateName} />
+              }
+              name={`${f}.name`}
+              fullWidth
+              inputProps={{ type: 'text', autoComplete: 'off' }}
+              classes={classes}
+            />
+          </GridItem>
+          <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
+            <InputField
+              label={
+                <FormattedMessage {...messages.formVolumeClaimTemplateSize} />
+              }
+              name={`${f}.size`}
+              fullWidth
+              classes={classes}
+              inputProps={{
+                type: 'text',
+                autoComplete: 'off',
+                endAdornment: 'Gi',
+              }}
+            />
+          </GridItem>
+          <GridItem
+            xs={3}
+            sm={3}
+            md={3}
+            className={classes.formLine}
+            style={{ paddingTop: 18 }}
+          >
+            <SelectField
+              label={
+                <FormattedMessage
+                  {...messages.formVolumeClaimTemplateStorageClassName}
+                />
+              }
+              name={`${f}.storageClassName`}
+              formControlProps={{
+                style: {
+                  width: '100%',
+                },
+              }}
+              classes={classes}
+              options={storageClassesOptions}
+            />
+          </GridItem>
+          <GridItem
+            xs={3}
+            sm={3}
+            md={3}
+            className={classes.formLine}
+            style={{ paddingTop: 18 }}
+          >
+            <IconButton variant="contained" onClick={(evt) => fields.remove(i)}>
+              <MinusIcon />
+            </IconButton>
+          </GridItem>
+        </GridContainer>
+      ))}
     </Fragment>
   );
 };

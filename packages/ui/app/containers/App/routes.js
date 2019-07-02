@@ -8,13 +8,11 @@ import Notifications from '@material-ui/icons/Notifications';
 import Unarchive from '@material-ui/icons/Unarchive';
 import Language from '@material-ui/icons/Language';
 
-import ClustersPage,{
+import ClustersPage, {
   CreateClusterPage,
 } from 'containers/ClustersPage/Loadable';
 import ClusterDetailPage from 'containers/ClusterDetailPage/Loadable';
-import NodesPage, {
-  NodeDetailPage,
-} from 'containers/NodesPage/Loadable';
+import NodesPage, { NodeDetailPage } from 'containers/NodesPage/Loadable';
 import NamespacesPage, {
   CreateNamespacePage,
 } from 'containers/NamespacesPage/Loadable';
@@ -128,7 +126,8 @@ const appRoutes = [
     component: CreateConfigMapPage,
   },
   {
-    path: '/clusters/:cluster_id/namespaces/:namespace_id/configmaps/:configmap_id',
+    path:
+      '/clusters/:cluster_id/namespaces/:namespace_id/configmaps/:configmap_id',
     name: 'show configmap',
     icon: Dashboard,
     component: ShowConfigMapPage,
@@ -168,7 +167,8 @@ const appRoutes = [
     component: CreateDeploymentPage,
   },
   {
-    path: '/clusters/:cluster_id/namespaces/:namespace_id/deployments/:deployment_id',
+    path:
+      '/clusters/:cluster_id/namespaces/:namespace_id/deployments/:deployment_id',
     name: 'Deployment Detail',
     icon: Dashboard,
     component: DeploymentDetailPage,
@@ -188,7 +188,8 @@ const appRoutes = [
     component: CreateStatefulSetPage,
   },
   {
-    path: '/clusters/:cluster_id/namespaces/:namespace_id/statefulSets/:stateful_set_id',
+    path:
+      '/clusters/:cluster_id/namespaces/:namespace_id/statefulSets/:stateful_set_id',
     name: 'StatefulSet Detail',
     icon: Dashboard,
     component: StatefulSetDetailPage,
@@ -208,7 +209,8 @@ const appRoutes = [
     component: CreateDaemonSetPage,
   },
   {
-    path: '/clusters/:cluster_id/namespaces/:namespace_id/daemonSets/:daemonset_set_id',
+    path:
+      '/clusters/:cluster_id/namespaces/:namespace_id/daemonSets/:daemonset_set_id',
     name: 'DaemonSet Detail',
     icon: Dashboard,
     component: DaemonSetDetailPage,
@@ -228,7 +230,8 @@ const appRoutes = [
     component: CreateCronJobPage,
   },
   {
-    path: '/clusters/:cluster_id/namespaces/:namespace_id/cronJobs/:cron_job_id',
+    path:
+      '/clusters/:cluster_id/namespaces/:namespace_id/cronJobs/:cron_job_id',
     name: 'CronJob Detail',
     icon: Dashboard,
     component: CronJobDetailPage,

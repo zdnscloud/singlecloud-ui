@@ -31,8 +31,7 @@ export const makeSelectClustersList = () =>
   createSelector(
     selectClustersDomain,
     makeSelectClusters(),
-    (substate, clusters) =>
-      substate.get('list').map((id) => clusters.get(id))
+    (substate, clusters) => substate.get('list').map((id) => clusters.get(id))
   );
 
 export const makeSelectCurrentCluster = () =>

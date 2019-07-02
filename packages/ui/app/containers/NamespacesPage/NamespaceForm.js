@@ -47,9 +47,7 @@ class NamespaceForm extends PureComponent {
         <GridContainer>
           {error ? (
             <GridItem xs={12} sm={12} md={12}>
-              <Danger>
-                {getByKey(error, ['response', 'message'])}
-              </Danger>
+              <Danger>{getByKey(error, ['response', 'message'])}</Danger>
             </GridItem>
           ) : null}
           <GridItem xs={12} sm={12} md={12} className={classes.formLine}>

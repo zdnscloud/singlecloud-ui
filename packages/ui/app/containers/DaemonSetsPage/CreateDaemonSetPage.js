@@ -59,9 +59,7 @@ import {
   makeSelectClusterID,
   makeSelectNamespaceID,
 } from 'ducks/app/selectors';
-import {
-  makeSelectCurrentCluster,
-} from 'ducks/clusters/selectors';
+import { makeSelectCurrentCluster } from 'ducks/clusters/selectors';
 import * as sActions from 'ducks/secrets/actions';
 import {
   makeSelectSecrets,
@@ -72,9 +70,7 @@ import {
   makeSelectConfigMaps,
   makeSelectURL as makeSelectConfigMapURL,
 } from 'ducks/configMaps/selectors';
-import {
-  makeSelectCurrentStorageClasses,
-} from 'ducks/storages/selectors';
+import { makeSelectCurrentStorageClasses } from 'ducks/storages/selectors';
 import * as storagesAction from 'ducks/storages/actions';
 import { makeSelectURL } from 'ducks/daemonSets/selectors';
 import * as actions from 'ducks/daemonSets/actions';
@@ -175,18 +171,18 @@ export class CreateDaemonSet extends React.PureComponent {
         <DaemonSetsHelmet />
         <CssBaseline />
         <div className={classes.content}>
-          <Breadcrumbs 
-              data={[
-                {
-                  path: '/clusters/' + clusterID + '/namespaces/' + namespaceID +'/daemonSets',
-                  name: <FormattedMessage {...messages.pageTitle}/>
-                },
-                {
-                  path: '#',
-                  name: <FormattedMessage {...messages.createDaemonSet}/>
-                }
-              ]}
-            />
+          <Breadcrumbs
+            data={[
+              {
+                path: `/clusters/${clusterID}/namespaces/${namespaceID}/daemonSets`,
+                name: <FormattedMessage {...messages.pageTitle} />,
+              },
+              {
+                path: '#',
+                name: <FormattedMessage {...messages.createDaemonSet} />,
+              },
+            ]}
+          />
           <GridContainer className={classes.grid}>
             <GridItem xs={12} sm={12} md={12}>
               <Card>
@@ -202,7 +198,10 @@ export class CreateDaemonSet extends React.PureComponent {
                     configMaps={configMaps}
                     secrets={secrets}
                     storageClasses={storageClasses}
-                    initialValues={fromJS({ replicas: 1, containers: [{ name: '' }] })}
+                    initialValues={fromJS({
+                      replicas: 1,
+                      containers: [{ name: '' }],
+                    })}
                     formValues={values}
                     theme={theme}
                   />
