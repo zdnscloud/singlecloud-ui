@@ -41,8 +41,6 @@ export class EventsPage extends React.PureComponent {
     location: PropTypes.object,
   };
 
-  componentWillMount() {}
-
   render() {
     const { classes, clusterID } = this.props;
 
@@ -54,13 +52,13 @@ export class EventsPage extends React.PureComponent {
           <Breadcrumbs
             data={[
               {
-                path: '/clusters/' + clusterID + '/events',
-                name: <FormattedMessage {...messages.pageTitle}/>
-              }
+                path: `/clusters/${clusterID}/events`,
+                name: <FormattedMessage {...messages.pageTitle} />,
+              },
             ]}
           />
-          <Typography component="div" className="">
-            <GridContainer  className={classes.grid}>
+          <Typography component="div">
+            <GridContainer className={classes.grid}>
               <GridItem xs={12} sm={12} md={12}>
                 <Card>
                   <CardHeader color="primary">

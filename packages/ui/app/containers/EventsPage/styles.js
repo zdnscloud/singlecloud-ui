@@ -78,6 +78,15 @@ const styles = (theme) => ({
   wrapper: {
     minHeight: 'calc(100vh - 65px)',
   },
+  list: {
+    paddingTop: 0,
+  },
+  firstItem: {
+    padding: 0,
+    height: 36,
+    display: 'flex',
+    justifyContent: 'flex-end',
+  },
   item: {},
   itemAvatar: {
     minWidth: 36,

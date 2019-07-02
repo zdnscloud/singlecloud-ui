@@ -34,7 +34,10 @@ export class EventsTable extends React.PureComponent {
 
   render() {
     const { classes, events } = this.props;
-    const mergedSchema = schema.concat([]);
+    const mergedSchema = schema.map((s) => ({
+      ...s,
+      label: <FormattedMessage {...messages[`tableTitle${s.label}`]} />,
+    }));
 
     return (
       <Paper className={classes.tableWrapper}>

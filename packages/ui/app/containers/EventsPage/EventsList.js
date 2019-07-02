@@ -25,8 +25,10 @@ import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
+import IconButton from '@material-ui/core/IconButton';
 import NormalIcon from 'components/Icons/Normal';
 import WarningIcon from 'components/Icons/Warning';
+import MaxWindowIcon from 'components/Icons/MaxWindow';
 
 import { makeSelectClusterID } from 'ducks/app/selectors';
 import { makeSelectEvents } from 'ducks/events/selectors';
@@ -43,18 +45,24 @@ export class EventsList extends React.PureComponent {
   };
 
   render() {
-    const { classes, clusterID, events } = this.props;
+    const { classes, clusterID, events, theme } = this.props;
     const rEvents = events.reverse();
 
     return (
       <Paper className={classes.wrapper}>
-        <List>
-          <ListItem>
-            <ListItemText>
-              <Link to={`/clusters/${clusterID}/events`} >
-                Link
-              </Link>
-            </ListItemText>
+        <List className={classes.list}>
+          <ListItem className={classes.firstItem}>
+            <IconButton
+              component={Link}
+              to={`/clusters/${clusterID}/events`}
+            >
+              <MaxWindowIcon
+                style={{
+                  color: theme.palette.icons.e,
+                  transform: 'scale(0.65)',
+                }}
+              />
+            </IconButton>
           </ListItem>
           <ReactCSSTransitionGroup
             transitionName="eventItem"
@@ -67,14 +75,14 @@ export class EventsList extends React.PureComponent {
                   {evt.type === 'Warning' ? (
                     <WarningIcon
                       style={{
-                        color: '#FF7A22',
+                        color: theme.palette.icons.f,
                         transform: 'scale(0.85)',
                       }}
                     />
                   ) : (
                     <NormalIcon
                       style={{
-                        color: '#1A435F',
+                        color: theme.palette.secondary.main,
                         transform: 'scale(0.85)',
                       }}
                     />
@@ -148,5 +156,5 @@ const withConnect = connect(
 
 export default compose(
   withConnect,
-  withStyles(styles)
+  withStyles(styles, { withTheme: true })
 )(EventsList);
