@@ -35,7 +35,7 @@ export const formName = 'createClusterForm';
 
 const validate = (values) => {
   const errors = {};
-  const requiredFields = ['name', 'option', 'option.sshUser', 'option.sshKey'];
+  const requiredFields = ['name', 'clusterDomain','singlecloudAddress','sshUser'];
   requiredFields.forEach((field) => {
     if (!values.get(field)) {
       errors[field] = 'Required';
@@ -59,16 +59,29 @@ export class CreateClusterPage extends React.PureComponent {
     const { classes, submitForm, createCluster, url, values } = this.props;
     async function doSubmit(formValues) {
       try {
-        const data = formValues.toJS();
-        console.log('data', data);
-        debugger;
-        await new Promise((resolve, reject) => {
-          createCluster(data, {
-            resolve,
-            reject,
-            url,
-          });
-        });
+        const formData = formValues.toJS();
+        let data = {
+          ...formData.advancedOptions,
+          name : formData.name,
+          nodes : formData.nodes,
+          singlecloudAddress : formData.singlecloudAddress,
+          option : {
+            ...formData.advancedOptions.option,
+            sshUser : formData.sshUser,
+            clusterDomain : formData.clusterDomain,
+            clusterUpstreamDNS : formData.advancedOptions.option.clusterUpstreamDNS.split(' '),
+            sshKey : document.getElementById('text-button-file').files[0].value
+          }
+        }
+        console.log('data', data,formData);
+        debugger
+        // await new Promise((resolve, reject) => {
+        //   createCluster(data, {
+        //     resolve,
+        //     reject,
+        //     url,
+        //   });
+        // });
       } catch (error) {
         throw new SubmissionError({ _error: error });
       }

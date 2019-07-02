@@ -77,6 +77,10 @@ export default defineMessages({
     id: `${scope}.formSSHUser`,
     defaultMessage: 'formSSHUser',
   },
+  formSSHKey: {
+    id: `${scope}.formSSHKey`,
+    defaultMessage: 'formSSHKey',
+  },
   formAdvancedOptions: {
     id: `${scope}.formAdvancedOptions`,
     defaultMessage: 'formAdvancedOptions',

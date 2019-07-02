@@ -61,6 +61,7 @@
   "app.containers.ClustersPage.formPodIP": "POD IP段",
   "app.containers.ClustersPage.formPrivateWarehouses": "私有仓库",
   "app.containers.ClustersPage.formPwd": "密码",
+  "app.containers.ClustersPage.formSSHKey": "formSSHKey",
   "app.containers.ClustersPage.formSSHPort": "SSH 端口",
   "app.containers.ClustersPage.formSSHUser": "SSH 用户",
   "app.containers.ClustersPage.formServiceIP": "服务IP端",

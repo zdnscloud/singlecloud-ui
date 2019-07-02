@@ -161,7 +161,6 @@ export class CreateStatefulSet extends React.PureComponent {
             item.command = item.command.split(' ');
           }
         });
-        console.log('containers', containers, 'data', data);
         await new Promise((resolve, reject) => {
           createStatefulSet(data, {
             resolve,

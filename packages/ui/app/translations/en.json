@@ -61,6 +61,7 @@
   "app.containers.ClustersPage.formPodIP": "",
   "app.containers.ClustersPage.formPrivateWarehouses": "",
   "app.containers.ClustersPage.formPwd": "",
+  "app.containers.ClustersPage.formSSHKey": "",
   "app.containers.ClustersPage.formSSHPort": "",
   "app.containers.ClustersPage.formSSHUser": "",
   "app.containers.ClustersPage.formServiceIP": "",

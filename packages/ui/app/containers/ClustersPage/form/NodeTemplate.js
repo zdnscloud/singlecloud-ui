@@ -41,7 +41,6 @@ const NodeTemplate = ({ fields, classes, meta: { error, submitFailed } }) => (
             name={`${f}.name`}
             fullWidth
             inputProps={{ type: 'text', autoComplete: 'off' }}
-            classes={classes}
           />
         </GridItem>
         <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
@@ -49,7 +48,6 @@ const NodeTemplate = ({ fields, classes, meta: { error, submitFailed } }) => (
             label="IP"
             name={`${f}.address`}
             fullWidth
-            classes={classes}
             inputProps={{
               type: 'text',
               autoComplete: 'off',
