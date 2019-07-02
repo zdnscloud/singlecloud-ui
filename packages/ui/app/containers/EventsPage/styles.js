@@ -63,24 +63,29 @@ const styles = (theme) => ({
   content: {
     flexGrow: 1,
     padding: theme.spacing(3),
-    height: '100vh',
     overflow: 'auto',
     overflowX: 'hidden',
   },
-  chartContainer: {
-    marginLeft: -22,
-  },
-  tableContainer: {
-    height: 320,
-  },
   button: {
     margin: theme.spacing(1),
+  },
+  tableWrapper: {
+    overflow: 'auto',
   },
   h5: {
     marginBottom: theme.spacing(2),
   },
   wrapper: {
     minHeight: 'calc(100vh - 65px)',
+  },
+  list: {
+    paddingTop: 0,
+  },
+  firstItem: {
+    padding: 0,
+    height: 36,
+    display: 'flex',
+    justifyContent: 'flex-end',
   },
   item: {},
   itemAvatar: {
@@ -139,6 +144,33 @@ const styles = (theme) => ({
     overflow: 'hidden',
     textOverflow: 'ellipsis',
     fontSize: 12,
+  },
+  cardCategoryWhite: {
+    position: 'relative',
+    '&,& a,& a:hover,& a:focus': {
+      color: 'rgba(255,255,255,.62)',
+      margin: '0',
+      fontSize: '14px',
+      marginTop: '0',
+      marginBottom: '0',
+    },
+    '& a,& a:hover,& a:focus': {
+      color: '#FFFFFF',
+    },
+  },
+  cardTitleWhite: {
+    color: '#FFFFFF',
+    marginTop: '0px',
+    minHeight: 'auto',
+    fontFamily: "'Roboto', 'Helvetica', 'Arial', sans-serif",
+    marginBottom: '3px',
+    textDecoration: 'none',
+    '& small': {
+      color: '#777',
+      fontSize: '65%',
+      fontWeight: '400',
+      lineHeight: '1',
+    },
   },
 });
 
