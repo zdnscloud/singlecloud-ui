@@ -53,6 +53,7 @@ export class ClustersTable extends React.PureComponent {
       classes,
       data,
       clusters,
+      // eslint-disable-next-line no-shadow
       openTerminal,
       removeCluster,
       theme,

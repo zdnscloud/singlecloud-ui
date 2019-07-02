@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { PureComponent, Fragment, useState } from 'react';
 import { fromJS, is } from 'immutable';
 import { compose } from 'redux';
@@ -21,23 +22,19 @@ import GridContainer from 'components/Grid/GridContainer';
 import InputField from 'components/Field/InputField';
 import SwitchField from 'components/Field/SwitchField';
 import RadioField from 'components/Field/RadioField';
-// import Button from '@material-ui/core/Button';
 import Button from 'components/CustomButtons/Button';
 import NodeTemplate from './form/NodeTemplate';
 import messages from './messages';
 
-
-
-
 class ClusterForm extends PureComponent {
   state = {};
-  onFileUpload = (values) => {
-    console.log("88",values)
-    //debugger
+
+  onFileUpload = (event) => {
+    console.log(event);
   };
+
   render() {
     const {
-      clusters,
       handleSubmit,
       error,
       classes,
@@ -84,9 +81,7 @@ class ClusterForm extends PureComponent {
                   <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
                     <InputField
                       label={
-                        <FormattedMessage
-                          {...messages.formSinglecloudUrl}
-                        />
+                        <FormattedMessage {...messages.formSinglecloudUrl} />
                       }
                       fullWidth
                       inputProps={{ type: 'text', autoComplete: 'off' }}
@@ -97,41 +92,37 @@ class ClusterForm extends PureComponent {
                 <GridContainer>
                   <GridItem xs={3} sm={3} md={3} className={classes.formLine} >
                     <InputField
-                      label={
-                        <FormattedMessage {...messages.formSSHUser} />
-                      }
+                      label={<FormattedMessage {...messages.formSSHUser} />}
                       fullWidth
                       inputProps={{ type: 'text', autoComplete: 'off' }}
                       name="sshUser"
                     />
                   </GridItem>
                   <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
-                      <InputField
-                        label={
-                          <FormattedMessage {...messages.formSSHKey} />
-                        }
-                        inputProps={{ type: 'text', autoComplete: 'off' }}
-                        fullWidth
-                        name="option.sshKey"
-                      />
-                    </GridItem>
-                    <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
-                      <input
-                        accept="Unix/*"
-                        className={classes.input}
-                        id="text-button-file"
-                        type="file"
-                        onChange={this.onFileUpload}
-                      />
-                      <label htmlFor="text-button-file">
-                        <Button 
-                          className={classes.button} 
-                          onClick={this.onFileUpload}
-                          >
-                            Upload
-                          </Button>
-                      </label>
-                    </GridItem>
+                    <InputField
+                      label={<FormattedMessage {...messages.formSSHKey} />}
+                      inputProps={{ type: 'text', autoComplete: 'off' }}
+                      fullWidth
+                      name="option.sshKey"
+                    />
+                  </GridItem>
+                  <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
+                    <input
+                      accept="Unix/*"
+                      className={classes.input}
+                      id="text-button-file"
+                      type="file"
+                      onChange={this.onFileUpload}
+                    />
+                    <label htmlFor="text-button-file">
+                      <Button
+                        className={classes.button}
+                        onClick={this.onFileUpload}
+                      >
+                        Upload
+                      </Button>
+                    </label>
+                  </GridItem>
                 </GridContainer>
                 <GridContainer>
                   <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
@@ -147,7 +138,12 @@ class ClusterForm extends PureComponent {
                   <Fragment>
                     <FormSection name="advancedOptions">
                       <GridContainer>
-                        <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
+                        <GridItem
+                          xs={3}
+                          sm={3}
+                          md={3}
+                          className={classes.formLine}
+                        >
                           <InputField
                             label={
                               <FormattedMessage {...messages.formSSHPort} />
@@ -158,7 +154,12 @@ class ClusterForm extends PureComponent {
                         </GridItem>
                       </GridContainer>
                       <GridContainer>
-                      <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
+                        <GridItem
+                          xs={3}
+                          sm={3}
+                          md={3}
+                          className={classes.formLine}
+                        >
                           <InputField
                             label={
                               <FormattedMessage {...messages.formServiceIP} />
@@ -168,7 +169,12 @@ class ClusterForm extends PureComponent {
                             name="option.serviceCidr"
                           />
                         </GridItem>
-                        <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
+                        <GridItem
+                          xs={3}
+                          sm={3}
+                          md={3}
+                          className={classes.formLine}
+                        >
                           <InputField
                             label={<FormattedMessage {...messages.formPodIP} />}
                             fullWidth
@@ -178,7 +184,12 @@ class ClusterForm extends PureComponent {
                         </GridItem>
                       </GridContainer>
                       <GridContainer>
-                      <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
+                        <GridItem
+                          xs={3}
+                          sm={3}
+                          md={3}
+                          className={classes.formLine}
+                        >
                           <RadioField
                             name="network.plugin"
                             label={
@@ -199,7 +210,12 @@ class ClusterForm extends PureComponent {
                         </GridItem>
                       </GridContainer>
                       <GridContainer>
-                      <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
+                        <GridItem
+                          xs={3}
+                          sm={3}
+                          md={3}
+                          className={classes.formLine}
+                        >
                           <InputField
                             label={
                               <FormattedMessage
@@ -211,7 +227,12 @@ class ClusterForm extends PureComponent {
                             name="option.clusterDNSServiceIP"
                           />
                         </GridItem>
-                        <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
+                        <GridItem
+                          xs={3}
+                          sm={3}
+                          md={3}
+                          className={classes.formLine}
+                        >
                           <InputField
                             label={
                               <FormattedMessage {...messages.formForwardDNS} />
@@ -223,7 +244,12 @@ class ClusterForm extends PureComponent {
                         </GridItem>
                       </GridContainer>
                       <GridContainer>
-                      <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
+                        <GridItem
+                          xs={3}
+                          sm={3}
+                          md={3}
+                          className={classes.formLine}
+                        >
                           <label>
                             <FormattedMessage
                               {...messages.formPrivateWarehouses}
@@ -232,7 +258,12 @@ class ClusterForm extends PureComponent {
                         </GridItem>
                       </GridContainer>
                       <GridContainer>
-                      <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
+                        <GridItem
+                          xs={3}
+                          sm={3}
+                          md={3}
+                          className={classes.formLine}
+                        >
                           <InputField
                             label={<FormattedMessage {...messages.formUrl} />}
                             fullWidth
@@ -240,7 +271,12 @@ class ClusterForm extends PureComponent {
                             name="privateRegistry.url"
                           />
                         </GridItem>
-                        <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
+                        <GridItem
+                          xs={3}
+                          sm={3}
+                          md={3}
+                          className={classes.formLine}
+                        >
                           <InputField
                             label={
                               <FormattedMessage
@@ -254,7 +290,12 @@ class ClusterForm extends PureComponent {
                         </GridItem>
                       </GridContainer>
                       <GridContainer>
-                      <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
+                        <GridItem
+                          xs={3}
+                          sm={3}
+                          md={3}
+                          className={classes.formLine}
+                        >
                           <InputField
                             label={<FormattedMessage {...messages.formUser} />}
                             fullWidth
@@ -262,7 +303,12 @@ class ClusterForm extends PureComponent {
                             name="privateRegistry.user"
                           />
                         </GridItem>
-                        <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
+                        <GridItem
+                          xs={3}
+                          sm={3}
+                          md={3}
+                          className={classes.formLine}
+                        >
                           <InputField
                             label={<FormattedMessage {...messages.formPwd} />}
                             fullWidth
