@@ -22,6 +22,7 @@ import GridContainer from 'components/Grid/GridContainer';
 import InputField from 'components/Field/InputField';
 import SwitchField from 'components/Field/SwitchField';
 import RadioField from 'components/Field/RadioField';
+import FileReaderField from 'components/Field/FileReaderField';
 import Button from 'components/CustomButtons/Button';
 import NodeTemplate from './form/NodeTemplate';
 import messages from './messages';
@@ -29,16 +30,11 @@ import messages from './messages';
 class ClusterForm extends PureComponent {
   state = {};
 
-  onFileUpload = (event) => {
-    console.log(event);
-  };
-
   render() {
     const {
       handleSubmit,
       error,
       classes,
-      storageClasses,
       formValues,
       theme,
     } = this.props;
@@ -90,7 +86,7 @@ class ClusterForm extends PureComponent {
                   </GridItem>
                 </GridContainer>
                 <GridContainer>
-                  <GridItem xs={3} sm={3} md={3} className={classes.formLine} >
+                  <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
                     <InputField
                       label={<FormattedMessage {...messages.formSSHUser} />}
                       fullWidth
@@ -99,29 +95,14 @@ class ClusterForm extends PureComponent {
                     />
                   </GridItem>
                   <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
-                    <InputField
+                    <FileReaderField
                       label={<FormattedMessage {...messages.formSSHKey} />}
-                      inputProps={{ type: 'text', autoComplete: 'off' }}
-                      fullWidth
-                      name="option.sshKey"
+                      name="sshKey"
+                      buttonProps={{
+                        color: 'default',
+                        variant: 'text',
+                      }}
                     />
-                  </GridItem>
-                  <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
-                    <input
-                      accept="Unix/*"
-                      className={classes.input}
-                      id="text-button-file"
-                      type="file"
-                      onChange={this.onFileUpload}
-                    />
-                    <label htmlFor="text-button-file">
-                      <Button
-                        className={classes.button}
-                        onClick={this.onFileUpload}
-                      >
-                        Upload
-                      </Button>
-                    </label>
                   </GridItem>
                 </GridContainer>
                 <GridContainer>
@@ -135,190 +116,176 @@ class ClusterForm extends PureComponent {
                   </GridItem>
                 </GridContainer>
                 {formValues && formValues.get('enableAdvancedOptions') ? (
-                  <Fragment>
-                    <FormSection name="advancedOptions">
-                      <GridContainer>
-                        <GridItem
-                          xs={3}
-                          sm={3}
-                          md={3}
-                          className={classes.formLine}
-                        >
-                          <InputField
-                            label={
-                              <FormattedMessage {...messages.formSSHPort} />
-                            }
-                            fullWidth
-                            name="option.sshPort"
+                  <FormSection name="advancedOptions">
+                    <GridContainer>
+                      <GridItem
+                        xs={3}
+                        sm={3}
+                        md={3}
+                        className={classes.formLine}
+                      >
+                        <InputField
+                          label={<FormattedMessage {...messages.formSSHPort} />}
+                          fullWidth
+                          name="sshPort"
+                        />
+                      </GridItem>
+                    </GridContainer>
+                    <GridContainer>
+                      <GridItem
+                        xs={3}
+                        sm={3}
+                        md={3}
+                        className={classes.formLine}
+                      >
+                        <InputField
+                          label={
+                            <FormattedMessage {...messages.formServiceIP} />
+                          }
+                          fullWidth
+                          inputProps={{ type: 'text', autoComplete: 'off' }}
+                          name="serviceCidr"
+                        />
+                      </GridItem>
+                      <GridItem
+                        xs={3}
+                        sm={3}
+                        md={3}
+                        className={classes.formLine}
+                      >
+                        <InputField
+                          label={<FormattedMessage {...messages.formPodIP} />}
+                          fullWidth
+                          inputProps={{ type: 'text', autoComplete: 'off' }}
+                          name="clusterCidr"
+                        />
+                      </GridItem>
+                    </GridContainer>
+                    <GridContainer>
+                      <GridItem
+                        xs={6}
+                        sm={6}
+                        md={6}
+                        className={classes.formLine}
+                      >
+                        <RadioField
+                          name="network.plugin"
+                          label={
+                            <FormattedMessage {...messages.formClustersNet} />
+                          }
+                          classes={{
+                            formControl: classes.radioControl,
+                            formLabel: classes.radioLabel,
+                            group: classes.radioGroup,
+                          }}
+                          options={[
+                            { label: 'flannel', value: 'flannel' },
+                            { label: 'calico', value: 'calico' },
+                          ]}
+                          formControlComponent="div"
+                          formLabelComponent="div"
+                        />
+                      </GridItem>
+                    </GridContainer>
+                    <GridContainer>
+                      <GridItem
+                        xs={3}
+                        sm={3}
+                        md={3}
+                        className={classes.formLine}
+                      >
+                        <InputField
+                          label={<FormattedMessage {...messages.formClustersDNSIP} />}
+                          fullWidth
+                          inputProps={{ type: 'text', autoComplete: 'off' }}
+                          name="clusterDNSServiceIP"
+                        />
+                      </GridItem>
+                      <GridItem
+                        xs={3}
+                        sm={3}
+                        md={3}
+                        className={classes.formLine}
+                      >
+                        <InputField
+                          label={<FormattedMessage {...messages.formForwardDNS} />}
+                          fullWidth
+                          inputProps={{ type: 'text', autoComplete: 'off' }}
+                          name="clusterUpstreamDNS"
+                        />
+                      </GridItem>
+                    </GridContainer>
+                    <GridContainer>
+                      <GridItem
+                        xs={3}
+                        sm={3}
+                        md={3}
+                        className={classes.formLine}
+                      >
+                        <label>
+                          <FormattedMessage
+                            {...messages.formPrivateWarehouses}
                           />
-                        </GridItem>
-                      </GridContainer>
-                      <GridContainer>
-                        <GridItem
-                          xs={3}
-                          sm={3}
-                          md={3}
-                          className={classes.formLine}
-                        >
-                          <InputField
-                            label={
-                              <FormattedMessage {...messages.formServiceIP} />
-                            }
-                            fullWidth
-                            inputProps={{ type: 'text', autoComplete: 'off' }}
-                            name="option.serviceCidr"
-                          />
-                        </GridItem>
-                        <GridItem
-                          xs={3}
-                          sm={3}
-                          md={3}
-                          className={classes.formLine}
-                        >
-                          <InputField
-                            label={<FormattedMessage {...messages.formPodIP} />}
-                            fullWidth
-                            inputProps={{ type: 'text', autoComplete: 'off' }}
-                            name="option.clusterCidr"
-                          />
-                        </GridItem>
-                      </GridContainer>
-                      <GridContainer>
-                        <GridItem
-                          xs={3}
-                          sm={3}
-                          md={3}
-                          className={classes.formLine}
-                        >
-                          <RadioField
-                            name="network.plugin"
-                            label={
-                              <FormattedMessage {...messages.formClustersNet} />
-                            }
-                            classes={{
-                              formControl: classes.radioControl,
-                              formLabel: classes.radioLabel,
-                              group: classes.radioGroup,
-                            }}
-                            options={[
-                              { label: 'flannel', value: 'flannel' },
-                              { label: 'calico', value: 'calico' },
-                            ]}
-                            formControlComponent="div"
-                            formLabelComponent="div"
-                          />
-                        </GridItem>
-                      </GridContainer>
-                      <GridContainer>
-                        <GridItem
-                          xs={3}
-                          sm={3}
-                          md={3}
-                          className={classes.formLine}
-                        >
-                          <InputField
-                            label={
-                              <FormattedMessage
-                                {...messages.formClustersDNSIP}
-                              />
-                            }
-                            fullWidth
-                            inputProps={{ type: 'text', autoComplete: 'off' }}
-                            name="option.clusterDNSServiceIP"
-                          />
-                        </GridItem>
-                        <GridItem
-                          xs={3}
-                          sm={3}
-                          md={3}
-                          className={classes.formLine}
-                        >
-                          <InputField
-                            label={
-                              <FormattedMessage {...messages.formForwardDNS} />
-                            }
-                            fullWidth
-                            inputProps={{ type: 'text', autoComplete: 'off' }}
-                            name="option.clusterUpstreamDNS"
-                          />
-                        </GridItem>
-                      </GridContainer>
-                      <GridContainer>
-                        <GridItem
-                          xs={3}
-                          sm={3}
-                          md={3}
-                          className={classes.formLine}
-                        >
-                          <label>
-                            <FormattedMessage
-                              {...messages.formPrivateWarehouses}
-                            />
-                          </label>
-                        </GridItem>
-                      </GridContainer>
-                      <GridContainer>
-                        <GridItem
-                          xs={3}
-                          sm={3}
-                          md={3}
-                          className={classes.formLine}
-                        >
-                          <InputField
-                            label={<FormattedMessage {...messages.formUrl} />}
-                            fullWidth
-                            inputProps={{ type: 'text', autoComplete: 'off' }}
-                            name="privateRegistry.url"
-                          />
-                        </GridItem>
-                        <GridItem
-                          xs={3}
-                          sm={3}
-                          md={3}
-                          className={classes.formLine}
-                        >
-                          <InputField
-                            label={
-                              <FormattedMessage
-                                {...messages.formCACertificate}
-                              />
-                            }
-                            fullWidth
-                            inputProps={{ type: 'text', autoComplete: 'off' }}
-                            name="privateRegistry.cacert"
-                          />
-                        </GridItem>
-                      </GridContainer>
-                      <GridContainer>
-                        <GridItem
-                          xs={3}
-                          sm={3}
-                          md={3}
-                          className={classes.formLine}
-                        >
-                          <InputField
-                            label={<FormattedMessage {...messages.formUser} />}
-                            fullWidth
-                            inputProps={{ type: 'text', autoComplete: 'off' }}
-                            name="privateRegistry.user"
-                          />
-                        </GridItem>
-                        <GridItem
-                          xs={3}
-                          sm={3}
-                          md={3}
-                          className={classes.formLine}
-                        >
-                          <InputField
-                            label={<FormattedMessage {...messages.formPwd} />}
-                            fullWidth
-                            inputProps={{ type: 'text', autoComplete: 'off' }}
-                            name="privateRegistry.password"
-                          />
-                        </GridItem>
-                      </GridContainer>
-                    </FormSection>
-                  </Fragment>
+                        </label>
+                      </GridItem>
+                    </GridContainer>
+                    <GridContainer>
+                      <GridItem
+                        xs={3}
+                        sm={3}
+                        md={3}
+                        className={classes.formLine}
+                      >
+                        <InputField
+                          label={<FormattedMessage {...messages.formUrl} />}
+                          fullWidth
+                          inputProps={{ type: 'text', autoComplete: 'off' }}
+                          name="privateRegistries[0].url"
+                        />
+                      </GridItem>
+                      <GridItem
+                        xs={3}
+                        sm={3}
+                        md={3}
+                        className={classes.formLine}
+                      >
+                        <InputField
+                          label={<FormattedMessage {...messages.formCACertificate} />}
+                          fullWidth
+                          inputProps={{ type: 'text', autoComplete: 'off' }}
+                          name="privateRegistries[0].cacert"
+                        />
+                      </GridItem>
+                    </GridContainer>
+                    <GridContainer>
+                      <GridItem
+                        xs={3}
+                        sm={3}
+                        md={3}
+                        className={classes.formLine}
+                      >
+                        <InputField
+                          label={<FormattedMessage {...messages.formUser} />}
+                          fullWidth
+                          inputProps={{ type: 'text', autoComplete: 'off' }}
+                          name="privateRegistries[0].user"
+                        />
+                      </GridItem>
+                      <GridItem
+                        xs={3}
+                        sm={3}
+                        md={3}
+                        className={classes.formLine}
+                      >
+                        <InputField
+                          label={<FormattedMessage {...messages.formPwd} />}
+                          fullWidth
+                          inputProps={{ type: 'text', autoComplete: 'off' }}
+                          name="privateRegistries[0].password"
+                        />
+                      </GridItem>
+                    </GridContainer>
+                  </FormSection>
                 ) : null}
               </GridItem>
             </CardBody>
@@ -336,7 +303,6 @@ class ClusterForm extends PureComponent {
                 component={NodeTemplate}
                 theme={theme}
                 formValues={formValues}
-                storageClasses={storageClasses}
               />
             </CardBody>
           </Card>
