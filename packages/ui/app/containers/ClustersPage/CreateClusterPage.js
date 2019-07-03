@@ -64,19 +64,14 @@ export class CreateClusterPage extends React.PureComponent {
     const { classes, submitForm, createCluster, url, values } = this.props;
     async function doSubmit(formValues) {
       try {
-        const formData = formValues.toJS();
+        const {
+          advancedOptions,
+          enableAdvancedOptions,
+          ...formData
+        } = formValues.toJS();
         const data = {
-          ...formData.advancedOptions,
-          name: formData.name,
-          nodes: formData.nodes,
-          singlecloudAddress: formData.singlecloudAddress,
-          option: {
-            ...formData.advancedOptions.option,
-            sshUser: formData.sshUser,
-            clusterDomain: formData.clusterDomain,
-            clusterUpstreamDNS: formData.advancedOptions.option.clusterUpstreamDNS.split(' '),
-            sshKey: '',
-          },
+          ...formData,
+          ...(enableAdvancedOptions ? advancedOptions : {}),
         };
         // eslint-disable-next-line no-console
         console.log('data', data, formData);
