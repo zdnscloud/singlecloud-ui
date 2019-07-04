@@ -61,6 +61,7 @@ import UsersPage, {
   UserProfilePage,
   PasswordSetupPage,
 } from 'containers/UsersPage/Loadable';
+import UserQuotasPage from 'containers/UserQuotasPage/Loadable';
 
 const appRoutes = [
   {
@@ -321,6 +322,12 @@ const appRoutes = [
     name: 'Password Setup',
     icon: Dashboard,
     component: PasswordSetupPage,
+  },
+  {
+    path: '/userQuotas',
+    name: 'User Quotas',
+    icon: Dashboard,
+    component: UserQuotasPage,
   },
 ];
 

@@ -84,9 +84,9 @@ export const makeSelectLeftMenus = () =>
     makeSelectCurrentNamespaceID(),
     makeSelectIsAdmin(),
     (appState, cluster, namespace, isAdmin) => {
-      const menus = [{ name: 'Global', path: '/clusters', icon: OverviewIcon }];
+      let menus = [{ name: 'Global', path: '/clusters', icon: OverviewIcon }];
       if (cluster !== '') {
-        return menus.concat([
+        menus = menus.concat([
           {
             name: 'ClusterManagement',
             children: [
@@ -154,6 +154,9 @@ export const makeSelectLeftMenus = () =>
           },
         ]);
       }
+      menus = menus.concat([
+        { name: 'UserQuotas', path: '/userQuotas', icon: OverviewIcon }
+      ])
       return menus;
     }
   );
