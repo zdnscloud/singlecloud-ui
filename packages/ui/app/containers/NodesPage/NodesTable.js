@@ -4,7 +4,7 @@
  *
  */
 
-import React from 'react';
+import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
@@ -15,6 +15,8 @@ import { Link } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 import { withStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
+import IconButton from '@material-ui/core/IconButton';
+import DeleteIcon from '@material-ui/icons/Delete';
 import { SimpleTable } from '@gsmlg/com';
 
 import { makeSelectClusterID } from 'ducks/app/selectors';
@@ -35,8 +37,28 @@ export class NodesTable extends React.PureComponent {
   };
 
   render() {
-    const { classes, data, clusterID, nodes } = this.props;
+    const { classes, data, clusterID, nodes, removeNode } = this.props;
     const mapedSchema = schema
+      .concat([
+        {
+          id: 'actions',
+          label: 'Actions',
+          component: (props) => (
+            <Fragment>
+              <IconButton
+                aria-label="Delete"
+                onClick={(evt) =>
+                  removeNode(props.data.get('id'), {
+                    url: props.data.getIn(['links', 'remove']),
+                  })
+                }
+              >
+                <DeleteIcon />
+              </IconButton>
+            </Fragment>
+          ),
+        },
+      ])
       .map((sche) => ({
         ...sche,
         label: <FormattedMessage {...messages[`tableTitle${sche.label}`]} />,

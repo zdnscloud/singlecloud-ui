@@ -10,6 +10,7 @@ import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import { bindActionCreators, compose } from 'redux';
+import { Link } from 'react-router-dom';
 
 import { withStyles } from '@material-ui/core/styles';
 import Menubar from 'components/Menubar';
@@ -20,12 +21,14 @@ import GridContainer from 'components/Grid/GridContainer';
 import Card from 'components/Card/Card';
 import CardHeader from 'components/Card/CardHeader';
 import CardBody from 'components/Card/CardBody';
+import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
+import AddIcon from 'components/Icons/Add';
+import IconButton from '@material-ui/core/IconButton';
 
 import { makeSelectClusterID } from 'ducks/app/selectors';
 import { makeSelectCurrentCluster } from 'ducks/clusters/selectors';
 import * as actions from 'ducks/nodes/actions';
 
-import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
 import messages from './messages';
 import styles from './styles';
 import NodesTable from './NodesTable';
@@ -71,6 +74,14 @@ export class NodesPage extends React.PureComponent {
                 <CardHeader color="primary">
                   <h4 className={classes.cardTitleWhite}>
                     <FormattedMessage {...messages.nodes} />
+                    <IconButton
+                      aria-label={<FormattedMessage {...messages.nodes} />}
+                      className={classes.menuButton}
+                      component={Link}
+                      to={`/clusters/${clusterID}/nodes/create`}
+                    >
+                      <AddIcon style={{ color: '#fff' }} />
+                    </IconButton>
                   </h4>
                 </CardHeader>
                 <CardBody>

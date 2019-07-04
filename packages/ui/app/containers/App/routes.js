@@ -13,7 +13,10 @@ import ClustersPage, {
   CreateClusterPage,
 } from 'containers/ClustersPage/Loadable';
 import ClusterDetailPage from 'containers/ClusterDetailPage/Loadable';
-import NodesPage, { NodeDetailPage } from 'containers/NodesPage/Loadable';
+import NodesPage, {
+  NodeDetailPage,
+  CreateNodePage,
+} from 'containers/NodesPage/Loadable';
 import NamespacesPage, {
   CreateNamespacePage,
   NamespaceDetailPage,
@@ -83,6 +86,12 @@ const appRoutes = [
     name: 'Nodes',
     icon: Dashboard,
     component: NodesPage,
+  },
+  {
+    path: '/clusters/:cluster_id/nodes/create',
+    name: 'CreateNode',
+    icon: Dashboard,
+    component: CreateNodePage,
   },
   {
     path: '/clusters/:cluster_id/nodes/:node_id',

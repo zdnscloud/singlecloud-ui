@@ -32,6 +32,9 @@ const styles = (theme) => ({
   menuButton: {
     marginLeft: 12,
     marginRight: 36,
+    position: 'absolute',
+    right: 0,
+    top: 6,
   },
   menuButtonHidden: {
     display: 'none',
@@ -89,6 +92,21 @@ const styles = (theme) => ({
   },
   cardHeaderLine: {
     borderBottom: '1px #DFE0DF solid',
+  },
+  cancleBtn: {
+    marginLeft: '10px',
+  },
+  chexboxesControl: {
+    flexDirection: 'row',
+  },
+  chexboxesLabel: {
+    flexDirection: 'row',
+    lineHeight: 3,
+  },
+  chexboxesGroup: {
+    width: '100%',
+    flexDirection: 'row',
+    marginLeft: '0.8rem',
   },
 });
 

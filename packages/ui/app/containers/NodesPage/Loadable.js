@@ -13,3 +13,7 @@ export default loadable(() =>
 export const NodeDetailPage = loadable(() =>
   import(/* NodeDetailPage */ './NodeDetailPage')
 );
+
+export const CreateNodePage = loadable(() =>
+  import(/* NodeDetailPage */ './CreateNodePage')
+);

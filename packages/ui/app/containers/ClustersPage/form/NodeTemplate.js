@@ -82,11 +82,11 @@ const NodeTemplate = ({ fields, classes, meta: { error, submitFailed } }) => (
                 },
                 {
                   label: <FormattedMessage {...messages.formETCDNode} />,
-                  value: 'worker',
+                  value: 'etcd',
                 },
                 {
                   label: <FormattedMessage {...messages.formWorkNode} />,
-                  value: 'etcd',
+                  value: 'worker',
                 },
                 {
                   label: <FormattedMessage {...messages.formBoundaryNode} />,

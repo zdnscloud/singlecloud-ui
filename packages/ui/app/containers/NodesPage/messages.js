@@ -63,6 +63,10 @@ export default defineMessages({
     id: `${scope}.tableTitleCreationTimestamp`,
     defaultMessage: 'CreationTimestamp',
   },
+  tableTitleActions: {
+    id: `${scope}.tableTitleActions`,
+    defaultMessage: 'Actions',
+  },
   nodeInfo: {
     id: `${scope}.nodeInfo`,
     defaultMessage: 'NodeInfo',
@@ -122,5 +126,41 @@ export default defineMessages({
   value: {
     id: `${scope}.value`,
     defaultMessage: 'Value',
+  },
+  createNode: {
+    id: `${scope}.createNode`,
+    defaultMessage: 'CreateNode',
+  },
+  formAddNode: {
+    id: `${scope}.formAddNode`,
+    defaultMessage: 'AddNode',
+  },
+  formHostName: {
+    id: `${scope}.formHostName`,
+    defaultMessage: 'HostName',
+  },
+  formMainNode: {
+    id: `${scope}.formMainNode`,
+    defaultMessage: 'MainNode',
+  },
+  formETCDNode: {
+    id: `${scope}.formETCDNode`,
+    defaultMessage: 'ETCDNode',
+  },
+  formWorkNode: {
+    id: `${scope}.formWorkNode`,
+    defaultMessage: 'WorkNode',
+  },
+  formBoundaryNode: {
+    id: `${scope}.formBoundaryNode`,
+    defaultMessage: 'BoundaryNode',
+  },
+  createNodeButton: {
+    id: `${scope}.createNodeButton`,
+    defaultMessage: 'createNodeButton',
+  },
+  cancleNodesButton: {
+    id: `${scope}.cancleNodesButton`,
+    defaultMessage: 'cancleNodeButton',
   },
 });
