@@ -37,6 +37,9 @@ import networksReducer, { prefix as networksPrefix } from 'ducks/networks';
 import namespacesReducer, {
   prefix as namespacesPrefix,
 } from 'ducks/namespaces';
+import resourceQuotasReducer, {
+  prefix as resourceQuotasPrefix,
+} from 'ducks/resourceQuotas';
 import nodesReducer, { prefix as nodesPrefix } from 'ducks/nodes';
 import clustersReducer, { prefix as clustersPrefix } from 'ducks/clusters';
 import eventsReducer, { prefix as eventsPrefix } from 'ducks/events';
@@ -64,6 +67,7 @@ export default function createReducer(injectedReducers = {}) {
     [storagesPrefix]: storagesReducer,
     [networksPrefix]: networksReducer,
     [namespacesPrefix]: namespacesReducer,
+    [resourceQuotasPrefix]: resourceQuotasReducer,
     [nodesPrefix]: nodesReducer,
     [clustersPrefix]: clustersReducer,
     [eventsPrefix]: eventsReducer,

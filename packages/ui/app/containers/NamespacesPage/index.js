@@ -49,11 +49,7 @@ export class NamespacesPage extends React.PureComponent {
   }
 
   load() {
-    const {
-      cluster,
-      clusterID,
-      loadNamespaces,
-    } = this.props
+    const { cluster, clusterID, loadNamespaces } = this.props;
     const url = cluster.getIn(['links', 'namespaces']);
     loadNamespaces(url, clusterID);
   }
@@ -81,7 +77,9 @@ export class NamespacesPage extends React.PureComponent {
                     <h4 className={classes.cardTitleWhite}>
                       <FormattedMessage {...messages.namespaces} />
                       <IconButton
-                        aria-label={<FormattedMessage {...messages.namespaces} />}
+                        aria-label={
+                          <FormattedMessage {...messages.namespaces} />
+                        }
                         className={classes.menuButton}
                         component={Link}
                         to={`/clusters/${clusterID}/namespaces/create`}
@@ -91,7 +89,7 @@ export class NamespacesPage extends React.PureComponent {
                     </h4>
                   </CardHeader>
                   <CardBody>
-                    <NamespacesTable />
+                    <NamespacesTable location={this.props.location} />
                   </CardBody>
                 </Card>
               </GridItem>

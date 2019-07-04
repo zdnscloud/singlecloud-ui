@@ -1,3 +1,4 @@
+/* eslint-disable import/named */
 // @material-ui/icons
 import Dashboard from '@material-ui/icons/Dashboard';
 import Person from '@material-ui/icons/Person';
@@ -15,6 +16,7 @@ import ClusterDetailPage from 'containers/ClusterDetailPage/Loadable';
 import NodesPage, { NodeDetailPage } from 'containers/NodesPage/Loadable';
 import NamespacesPage, {
   CreateNamespacePage,
+  NamespaceDetailPage,
 } from 'containers/NamespacesPage/Loadable';
 import TerminalPage from 'containers/TerminalPage/Loadable';
 import EventsPage from 'containers/EventsPage/Loadable';
@@ -111,6 +113,12 @@ const appRoutes = [
     name: 'namespaces',
     icon: Dashboard,
     component: CreateNamespacePage,
+  },
+  {
+    path: '/clusters/:cluster_id/namespaces/:namespace_id/resourcequotas',
+    name: 'namespaces',
+    icon: Dashboard,
+    component: NamespaceDetailPage,
   },
   // configmap
   {

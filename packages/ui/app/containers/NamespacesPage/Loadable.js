@@ -13,3 +13,7 @@ export default loadable(() =>
 export const CreateNamespacePage = loadable(() =>
   import(/* webpackChunkName: "CreateNamespacePage" */ './CreateNamespacePage')
 );
+
+export const NamespaceDetailPage = loadable(() =>
+  import(/* webpackChunkName: "NamespaceDetailPage" */ './NamespaceDetailPage')
+);

@@ -53,4 +53,36 @@ export default defineMessages({
     id: `${scope}.createNamespaceButton`,
     defaultMessage: 'Create Namespace',
   },
+  namespaceDetail: {
+    id: `${scope}.namespaceDetail`,
+    defaultMessage: 'NamespaceDetail',
+  },
+  detail: {
+    id: `${scope}.detail`,
+    defaultMessage: 'Detail',
+  },
+  tag: {
+    id: `${scope}.tag`,
+    defaultMessage: 'Tag',
+  },
+  note: {
+    id: `${scope}.note`,
+    defaultMessage: 'Note',
+  },
+  CPUQuota: {
+    id: `${scope}.CPUQuota`,
+    defaultMessage: 'CPUQuota',
+  },
+  CPUQuotaEndAdornment: {
+    id: `${scope}.CPUQuotaEndAdornment`,
+    defaultMessage: 'He',
+  },
+  memoryQuota: {
+    id: `${scope}.memoryQuota`,
+    defaultMessage: 'MemoryQuota',
+  },
+  storageQuota: {
+    id: `${scope}.storageQuota`,
+    defaultMessage: 'StorageQuota',
+  },
 });

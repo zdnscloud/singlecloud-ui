@@ -22,6 +22,7 @@ import serviceLinksEpic from 'ducks/serviceLinks/epic';
 import storagesEpic from 'ducks/storages/epic';
 import networksEpic from 'ducks/networks/epic';
 import clustersEpic from 'ducks/clusters/epic';
+import resourceQuotasEpic from 'ducks/resourceQuotas/epic';
 
 /**
  * Create root Epic
@@ -45,7 +46,8 @@ export default function createEpic(injectedEpics = {}) {
     podsEpic,
     serviceLinksEpic,
     storagesEpic,
-    networksEpic
+    networksEpic,
+    resourceQuotasEpic
   );
 
   return rootEpic;

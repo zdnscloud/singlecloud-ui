@@ -20,7 +20,11 @@ import { SimpleTable } from '@gsmlg/com';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
 
-import { makeSelectClusterID } from 'ducks/app/selectors';
+import {
+  makeSelectClusterID,
+  makeSelectNamespaceID,
+  makeSelectLocation,
+} from 'ducks/app/selectors';
 import * as actions from 'ducks/namespaces/actions';
 import {
   makeSelectNamespaces,
@@ -46,7 +50,9 @@ export class NamespacesTable extends React.PureComponent {
       data,
       namespaces,
       removeNamespace,
+      location,
     } = this.props;
+    const pathname = location.get('pathname');
     const mergedSchema = schema
       .concat([
         {
@@ -68,6 +74,23 @@ export class NamespacesTable extends React.PureComponent {
           ),
         },
       ])
+      .map((sch) => {
+        if (sch.id === 'name') {
+          return {
+            ...sch,
+            component: (props) => (
+              <Button
+                color="primary"
+                component={Link}
+                to={`${pathname}/${props.data.get('id')}/resourcequotas`}
+              >
+                {props.data.get('name')}
+              </Button>
+            ),
+          };
+        }
+        return sch;
+      })
       .map((s) => ({
         ...s,
         label: <FormattedMessage {...messages[`tableTitle${s.label}`]} />,
@@ -86,8 +109,10 @@ export class NamespacesTable extends React.PureComponent {
 }
 
 const mapStateToProps = createStructuredSelector({
+  location: makeSelectLocation(),
   clusterID: makeSelectClusterID(),
   namespaces: makeSelectNamespaces(),
+  namespaceID: makeSelectNamespaceID(),
   data: makeSelectNamespacesList(),
 });
 
