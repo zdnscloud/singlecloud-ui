@@ -66,7 +66,6 @@ import UsersPage, {
   UserProfilePage,
   PasswordSetupPage,
 } from 'containers/UsersPage/Loadable';
-import UserQuotasPage from 'containers/UserQuotasPage/Loadable';
 
 const appRoutes = [
   {
