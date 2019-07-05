@@ -3,6 +3,8 @@ const drawerWidth = 240;
 const styles = (theme) => ({
   root: {
     display: 'flex',
+    flexDirection: 'column',
+    fontSize: '14px',
   },
   toolbar: {
     paddingRight: 24, // keep right padding when drawer closed
@@ -63,9 +65,13 @@ const styles = (theme) => ({
     },
   },
   appBarSpacer: theme.mixins.toolbar,
+  select: {
+    flexGrow: 1,
+    padding: theme.spacing(3),
+    overflow: 'auto',
+  },
   content: {
     flexGrow: 1,
-    height: '100vh',
     overflow: 'auto',
     overflowX: 'hidden',
   },
@@ -73,17 +79,39 @@ const styles = (theme) => ({
     padding: theme.spacing(2),
     paddingTop: theme.spacing(1),
   },
-  chartContainer: {
-    marginLeft: -22,
-  },
-  tableContainer: {
-    height: 320,
-  },
-  button: {
-    margin: theme.spacing(1),
+  appContainer: {},
+  advanceContainer: {},
+  actionContainer: {
+    textAlign: 'right',
   },
   h5: {
     marginBottom: theme.spacing(2),
+  },
+  margin: {
+    margin: theme.spacing(1),
+  },
+  textField: {
+    flexBasis: 200,
+  },
+  padding10: {
+    padding: '10px',
+  },
+  marginRight10: {
+    marginRight: '10px',
+  },
+  formControl: {
+    margin: theme.spacing(1),
+    flexBasis: 200,
+    minWidth: 194,
+  },
+  selectEmpty: {
+    marginTop: theme.spacing(2),
+  },
+  addContainerWrap: {
+    minHeight: '75px',
+  },
+  addContainerButton: {
+    alignSelf: 'center',
   },
   cardCategoryWhite: {
     '&,& a,& a:hover,& a:focus': {
@@ -111,8 +139,23 @@ const styles = (theme) => ({
       lineHeight: '1',
     },
   },
-  cardListTitle: {
-    background: '#386fba',
+  separateLineWrap: {
+    marginTop: '8px',
+    marginRight: '5px',
+    background: '#eee',
+  },
+  separateLine: {
+    marginTop: '8px',
+    boxShadow: '1px 0px 2px #ccc',
+    border: '1px solid #ccc',
+  },
+  removeBtn: {
+    float: 'right',
+  },
+  createBtnLink: {
+    position: 'absolute',
+    top: '3px',
+    right: '10px',
   },
   radioControl: {
     flexDirection: 'row',
@@ -124,18 +167,6 @@ const styles = (theme) => ({
   radioGroup: {
     flexDirection: 'row',
     marginLeft: '2rem',
-  },
-  chexboxesControl: {
-    flexDirection: 'row',
-  },
-  chexboxesLabel: {
-    flexDirection: 'row',
-    lineHeight: 3,
-  },
-  chexboxesGroup: {
-    width: 600,
-    flexDirection: 'row',
-    marginLeft: '0.8rem',
   },
   cancleBtn: {
     marginLeft: '10px',

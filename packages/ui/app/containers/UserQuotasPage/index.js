@@ -16,6 +16,7 @@ import { withStyles } from '@material-ui/core/styles';
 import Menubar from 'components/Menubar';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Typography from '@material-ui/core/Typography';
+import Fab from '@material-ui/core/Fab';
 import GridItem from 'components/Grid/GridItem';
 import GridContainer from 'components/Grid/GridContainer';
 import Card from 'components/Card/Card';
@@ -73,9 +74,18 @@ export class UserQuotasPage extends React.PureComponent {
                 <CardHeader color="primary">
                   <h4 className={classes.cardTitleWhite}>
                     <FormattedMessage {...messages.userQuotas} />
+                    <IconButton
+                      aria-label={<FormattedMessage {...messages.userQuotas} />}
+                      className={classes.menuButton}
+                      component={Link}
+                      to={`/userQuotas/create`}
+                    >
+                      <AddIcon style={{ color: '#fff' }} />
+                    </IconButton>
                   </h4>
                 </CardHeader>
                 <CardBody>
+                  <UserQuotasTable />
                 </CardBody>
               </Card>
             </GridItem>
@@ -103,4 +113,7 @@ const withConnect = connect(
   mapDispatchToProps
 );
 
-export default compose(withConnect, withStyles(styles))(UserQuotasPage);
+export default compose(
+  withConnect,
+  withStyles(styles)
+)(UserQuotasPage);

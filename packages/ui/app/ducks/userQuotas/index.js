@@ -37,20 +37,6 @@ export const userQuotasReducer = (
     case c.LOAD_USER_QUOTAS_FAILURE:
       return state;
 
-    case c.REMOVE_USER_QUOTA:
-      return state;
-    case c.REMOVE_USER_QUOTA_SUCCESS: {
-      const { id } = meta;
-      return state
-        .deleteIn(['userQuotas', id])
-        .update('list', (l) => l.filterNot((i) => i === id));
-    }
-    case c.REMOVE_USER_QUOTA_FAILURE:
-      return state;
-
-    case c.CHANGE_USER_QUOTA:
-      return state.set('selectedUserQuota', payload.userQuotaID);
-
     case c.CREATE_USER_QUOTA:
       return state;
     case c.CREATE_USER_QUOTA_SUCCESS: {
@@ -59,6 +45,23 @@ export const userQuotasReducer = (
     }
     case c.CREATE_USER_QUOTA_FAILURE:
       return state;
+
+    case c.REMOVE_USER_QUOTA:
+      return state;
+    case c.REMOVE_USER_QUOTA_SUCCESS: {
+      const { clusterID, id } = meta;
+      return state
+        .deleteIn(['userQuotas', clusterID, id])
+        .update('list', (l) => l.filterNot((i) => i === id));
+    }
+    case c.REMOVE_USER_QUOTA_FAILURE:
+      return state;
+
+    case c.CHANGE_USER_QUOTA:
+      return state.setIn(
+        ['selectedUserQuota'],
+        payload.userQuotaID
+      );
 
     default:
       return state;

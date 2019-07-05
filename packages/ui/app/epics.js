@@ -49,7 +49,7 @@ export default function createEpic(injectedEpics = {}) {
     serviceLinksEpic,
     storagesEpic,
     networksEpic,
-    resourceQuotasEpic
+    userQuotasEpic
   );
 
   return rootEpic;
