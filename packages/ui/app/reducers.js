@@ -43,7 +43,9 @@ import resourceQuotasReducer, {
 import nodesReducer, { prefix as nodesPrefix } from 'ducks/nodes';
 import clustersReducer, { prefix as clustersPrefix } from 'ducks/clusters';
 import eventsReducer, { prefix as eventsPrefix } from 'ducks/events';
-
+import userQuotasReducer, {
+  prefix as userQuotasPrefix,
+} from 'ducks/userQuotas';
 /**
  * Merges the main reducer with the router state and dynamically injected reducers
  */
@@ -71,6 +73,7 @@ export default function createReducer(injectedReducers = {}) {
     [nodesPrefix]: nodesReducer,
     [clustersPrefix]: clustersReducer,
     [eventsPrefix]: eventsReducer,
+    [userQuotasPrefix]: userQuotasReducer,
     terminalPage: terminalPageReducer,
     ...injectedReducers,
   });

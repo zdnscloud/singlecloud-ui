@@ -1,9 +1,8 @@
- /**
+/**
  *
- * DeploymentsPage
+ * NamespaceDetailPage
  *
  */
-
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -12,66 +11,58 @@ import { createStructuredSelector } from 'reselect';
 import { bindActionCreators, compose } from 'redux';
 
 import { withStyles } from '@material-ui/core/styles';
-import { Link } from 'react-router-dom';
-import Menubar from 'components/Menubar';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import Typography from '@material-ui/core/Typography';
-import Fab from '@material-ui/core/Fab';
-import IconButton from '@material-ui/core/IconButton';
-import AddIcon from 'components/Icons/Add';
 import GridItem from 'components/Grid/GridItem';
 import GridContainer from 'components/Grid/GridContainer';
 import Card from 'components/Card/Card';
 import CardHeader from 'components/Card/CardHeader';
 import CardBody from 'components/Card/CardBody';
-
+import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
 import {
   makeSelectClusterID,
   makeSelectNamespaceID,
 } from 'ducks/app/selectors';
-import * as actions from 'ducks/deployments/actions';
-import { makeSelectURL } from 'ducks/deployments/selectors';
+import {
+  makeSelectResourceQuotaID,
+  makeSelectCurrentResourceQuota,
+  makeSelectURL,
+} from 'ducks/resourceQuotas/selectors';
+import * as actions from 'ducks/resourceQuotas/actions';
 
-import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
+// import ResourceQuota from './ResourceQuota';
 import messages from './messages';
-import DeploymentsPageHelmet from './helmet';
+import NamespaceDetailPageHelmet from './helmet';
 import styles from './styles';
-import DeploymentsTable from './DeploymentsTable';
 /* eslint-disable react/prefer-stateless-function */
-export class DeploymentsPage extends React.PureComponent {
+export class NamespaceDetailPage extends React.PureComponent {
   static propTypes = {
+    initAction: PropTypes.func,
     classes: PropTypes.object.isRequired,
+    match: PropTypes.object,
+    location: PropTypes.object,
   };
 
   componentWillMount() {
-    const { clusterID, namespaceID, url, loadDeployments } = this.props;
-    loadDeployments({ url, clusterID, namespaceID });
-  }
-
-  componentDidUpdate(prevProps) {
-    const {
-      clusterID: prevClusterID,
-      namespaceID: prevNamespaceID,
-    } = prevProps;
-    const { clusterID, namespaceID, url, loadDeployments } = this.props;
-    if (prevClusterID !== clusterID || prevNamespaceID !== namespaceID) {
-      loadDeployments({ url, clusterID, namespaceID });
-    }
+    const { clusterID, namespaceID, url, loadResourceQuota } = this.props;
+    // loadResourceQuota({ url, clusterID, namespaceID });
   }
 
   render() {
-    const { classes, clusterID, namespaceID } = this.props;
+    const { classes, resourceQuota, clusterID, namespaceID } = this.props;
 
     return (
       <div className={classes.root}>
-        <DeploymentsPageHelmet />
+        <NamespaceDetailPageHelmet />
         <CssBaseline />
         <div className={classes.content}>
           <Breadcrumbs
             data={[
               {
-                path: `/clusters/${clusterID}/namespaces/${namespaceID}/deployments`,
+                path: `/clusters/${clusterID}/userQuotas`,
                 name: <FormattedMessage {...messages.pageTitle} />,
+              },
+              {
+                name: <FormattedMessage {...messages.namespaceDetail} />,
               },
             ]}
           />
@@ -80,19 +71,11 @@ export class DeploymentsPage extends React.PureComponent {
               <Card>
                 <CardHeader color="primary">
                   <h4 className={classes.cardTitleWhite}>
-                    <FormattedMessage {...messages.deployments} />
-                    <Link
-                      to={`${this.props.location.pathname}/create`}
-                      className={classes.createBtnLink}
-                    >
-                      <IconButton>
-                        <AddIcon style={{ color: '#fff' }} />
-                      </IconButton>
-                    </Link>
+                    <FormattedMessage {...messages.detail} />
                   </h4>
                 </CardHeader>
                 <CardBody>
-                  <DeploymentsTable location={this.props.location} />
+                  {/* <ResourceQuota resourceQuota={resourceQuota} /> */}
                 </CardBody>
               </Card>
             </GridItem>
@@ -106,7 +89,9 @@ export class DeploymentsPage extends React.PureComponent {
 const mapStateToProps = createStructuredSelector({
   clusterID: makeSelectClusterID(),
   namespaceID: makeSelectNamespaceID(),
+  // deploymentID: makeSelectResourceQuotaID(),
   url: makeSelectURL(),
+  // resourceQuota: makeSelectCurrentResourceQuota(),
 });
 
 const mapDispatchToProps = (dispatch) =>
@@ -125,4 +110,4 @@ const withConnect = connect(
 export default compose(
   withConnect,
   withStyles(styles)
-)(DeploymentsPage);
+)(NamespaceDetailPage);

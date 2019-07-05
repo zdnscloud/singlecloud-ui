@@ -152,6 +152,11 @@ export const makeSelectLeftMenus = () =>
             ],
             icon: SystemIcon,
           },
+          {
+            name: 'UserQuotas',
+            path: `/clusters/${cluster}/userQuotas`,
+            icon: SystemIcon,
+          },
         ]);
       }
       return menus;

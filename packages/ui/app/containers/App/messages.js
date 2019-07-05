@@ -125,4 +125,8 @@ export default defineMessages({
     id: `${scope}.leftMenuNetwork`,
     defaultMessage: 'Network',
   },
+  leftMenuUserQuotas: {
+    id: `${scope}.leftMenuUserQuotas`,
+    defaultMessage: 'UserQuotas',
+  },
 });

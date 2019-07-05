@@ -54,6 +54,11 @@ import SecretsPage, {
 import ServiceLinkPage from 'containers/ServiceLinkPage/Loadable';
 import StoragePage from 'containers/StoragePage/Loadable';
 import NetworkPage from 'containers/NetworkPage/Loadable';
+import UserQuotasPage, {
+  CreateUserQuotaPage,
+  UserQuotaDetailPage,
+} from 'containers/UserQuotasPage/Loadable';
+// UserQuotasPage
 
 import UsersPage, {
   CreateUserPage,
@@ -322,6 +327,26 @@ const appRoutes = [
     icon: Dashboard,
     component: PasswordSetupPage,
   },
+  // userQuotas
+  {
+    path: '/clusters/:cluster_id/userQuotas',
+    name: 'UserQuotas',
+    icon: Dashboard,
+    component: UserQuotasPage,
+  },
+  {
+    path: '/clusters/:cluster_id/userQuotas/create',
+    name: 'Create UserQuota',
+    icon: Dashboard,
+    component: CreateUserQuotaPage,
+  },
+  {
+    path: '/clusters/:cluster_id/userQuotas/:userQuota_id',
+    name: 'UserQuota Detail',
+    icon: Dashboard,
+    component: UserQuotaDetailPage,
+  },
+  // userQuotas end
 ];
 
 export default appRoutes;

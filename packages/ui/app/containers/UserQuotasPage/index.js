@@ -1,6 +1,6 @@
- /**
+/**
  *
- * DeploymentsPage
+ * UserQuotasPage
  *
  */
 
@@ -25,52 +25,45 @@ import Card from 'components/Card/Card';
 import CardHeader from 'components/Card/CardHeader';
 import CardBody from 'components/Card/CardBody';
 
-import {
-  makeSelectClusterID,
-  makeSelectNamespaceID,
-} from 'ducks/app/selectors';
-import * as actions from 'ducks/deployments/actions';
-import { makeSelectURL } from 'ducks/deployments/selectors';
+import { makeSelectClusterID } from 'ducks/app/selectors';
+import { makeSelectCurrentCluster } from 'ducks/clusters/selectors';
+import * as actions from 'ducks/userQuotas/actions';
 
 import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
 import messages from './messages';
-import DeploymentsPageHelmet from './helmet';
+import UserQuotasPageHelmet from './helmet';
 import styles from './styles';
-import DeploymentsTable from './DeploymentsTable';
+// import UserQuotasTable from './UserQuotasTable';
 /* eslint-disable react/prefer-stateless-function */
-export class DeploymentsPage extends React.PureComponent {
+export class UserQuotasPage extends React.PureComponent {
   static propTypes = {
+    initAction: PropTypes.func,
     classes: PropTypes.object.isRequired,
+    match: PropTypes.object,
   };
 
   componentWillMount() {
-    const { clusterID, namespaceID, url, loadDeployments } = this.props;
-    loadDeployments({ url, clusterID, namespaceID });
+    this.load();
   }
 
-  componentDidUpdate(prevProps) {
-    const {
-      clusterID: prevClusterID,
-      namespaceID: prevNamespaceID,
-    } = prevProps;
-    const { clusterID, namespaceID, url, loadDeployments } = this.props;
-    if (prevClusterID !== clusterID || prevNamespaceID !== namespaceID) {
-      loadDeployments({ url, clusterID, namespaceID });
-    }
+  load() {
+    const { cluster, clusterID, loadUserQuotas } = this.props;
+    const url = cluster.getIn(['links', 'loadUserQuotas']);
+    loadUserQuotas(url, clusterID);
   }
 
   render() {
-    const { classes, clusterID, namespaceID } = this.props;
+    const { classes, clusterID } = this.props;
 
     return (
       <div className={classes.root}>
-        <DeploymentsPageHelmet />
+        <UserQuotasPageHelmet />
         <CssBaseline />
         <div className={classes.content}>
           <Breadcrumbs
             data={[
               {
-                path: `/clusters/${clusterID}/namespaces/${namespaceID}/deployments`,
+                path: `/clusters/${clusterID}/userQuotas`,
                 name: <FormattedMessage {...messages.pageTitle} />,
               },
             ]}
@@ -80,19 +73,19 @@ export class DeploymentsPage extends React.PureComponent {
               <Card>
                 <CardHeader color="primary">
                   <h4 className={classes.cardTitleWhite}>
-                    <FormattedMessage {...messages.deployments} />
-                    <Link
-                      to={`${this.props.location.pathname}/create`}
-                      className={classes.createBtnLink}
+                    <FormattedMessage {...messages.userQuotas} />
+                    <IconButton
+                      aria-label={<FormattedMessage {...messages.userQuotas} />}
+                      className={classes.menuButton}
+                      component={Link}
+                      to={`/clusters/${clusterID}/userQuotas/create`}
                     >
-                      <IconButton>
-                        <AddIcon style={{ color: '#fff' }} />
-                      </IconButton>
-                    </Link>
+                      <AddIcon style={{ color: '#fff' }} />
+                    </IconButton>
                   </h4>
                 </CardHeader>
                 <CardBody>
-                  <DeploymentsTable location={this.props.location} />
+                  {/* <UserQuotasTable location={this.props.location} /> */}
                 </CardBody>
               </Card>
             </GridItem>
@@ -104,9 +97,8 @@ export class DeploymentsPage extends React.PureComponent {
 }
 
 const mapStateToProps = createStructuredSelector({
+  cluster: makeSelectCurrentCluster(),
   clusterID: makeSelectClusterID(),
-  namespaceID: makeSelectNamespaceID(),
-  url: makeSelectURL(),
 });
 
 const mapDispatchToProps = (dispatch) =>
@@ -125,4 +117,4 @@ const withConnect = connect(
 export default compose(
   withConnect,
   withStyles(styles)
-)(DeploymentsPage);
+)(UserQuotasPage);
