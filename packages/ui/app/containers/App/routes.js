@@ -335,19 +335,13 @@ const appRoutes = [
   },
   // userQuotas
   {
-    path: '/clusters/:cluster_id/userQuotas',
-    name: 'UserQuotas',
-    icon: Dashboard,
-    component: UserQuotasPage,
-  },
-  {
-    path: '/clusters/:cluster_id/userQuotas/create',
+    path: '/userQuotas/create',
     name: 'Create UserQuota',
     icon: Dashboard,
     component: CreateUserQuotaPage,
   },
   {
-    path: '/clusters/:cluster_id/userQuotas/:userQuota_id',
+    path: '/userQuotas/:userQuota_id',
     name: 'UserQuota Detail',
     icon: Dashboard,
     component: UserQuotaDetailPage,

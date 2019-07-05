@@ -49,9 +49,9 @@ export const userQuotasReducer = (
     case c.REMOVE_USER_QUOTA:
       return state;
     case c.REMOVE_USER_QUOTA_SUCCESS: {
-      const { clusterID, id } = meta;
+      const { id } = meta;
       return state
-        .deleteIn(['userQuotas', clusterID, id])
+        .deleteIn(['userQuotas', id])
         .update('list', (l) => l.filterNot((i) => i === id));
     }
     case c.REMOVE_USER_QUOTA_FAILURE:

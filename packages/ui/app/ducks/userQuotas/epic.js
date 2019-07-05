@@ -20,10 +20,10 @@ import * as a from './actions';
 export const loadUserQuotasEpic = (action$, state$, { ajax }) =>
   action$.pipe(
     ofType(c.LOAD_USER_QUOTAS),
-    mergeMap(({ payload, meta: { clusterID } }) =>
+    mergeMap(({ payload }) =>
       ajax(payload).pipe(
-        map((resp) => a.loadUserQuotasSuccess(resp, clusterID)),
-        catchError((error) => of(a.loadUserQuotasFailure(error, clusterID)))
+        map((resp) => a.loadUserQuotasSuccess(resp)),
+        catchError((error) => of(a.loadUserQuotasFailure(error)))
       )
     )
   );
@@ -60,16 +60,16 @@ export const afterCreateEpic = (action$) =>
 export const removeUserQuotaEpic = (action$, state$, { ajax }) =>
   action$.pipe(
     ofType(c.REMOVE_USER_QUOTA),
-    mergeMap(({ payload, meta: { url, clusterID } }) =>
+    mergeMap(({ payload, meta: { url } }) =>
       ajax({
         url: `${url}`,
         method: 'DELETE',
       }).pipe(
         map((resp) =>
-          a.removeUserQuotaSuccess(resp, { id: payload, clusterID })
+          a.removeUserQuotaSuccess(resp, { id: payload })
         ),
         catchError((error) =>
-          of(a.removeUserQuotaFailure(error, { id: payload, clusterID }))
+          of(a.removeUserQuotaFailure(error, { id: payload }))
         )
       )
     )
