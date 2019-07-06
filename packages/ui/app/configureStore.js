@@ -7,7 +7,7 @@ import { fromJS } from 'immutable';
 import { routerMiddleware } from 'connected-react-router/immutable';
 import { createEpicMiddleware } from 'redux-observable';
 import { ajax } from 'rxjs/ajax';
-import { BehaviorSubject, of } from 'rxjs';
+import { BehaviorSubject, concat, of, throwError } from 'rxjs';
 import { catchError, map, switchMap } from 'rxjs/operators';
 import getByKey from '@gsmlg/utils/getByKey';
 // import persistentEnhancer from 'utils/persistentEnhancer';
@@ -42,9 +42,15 @@ const epicMiddleware = createEpicMiddleware({
         }),
         catchError((error) => {
           if (getByKey(error, 'status') === 401) {
-            return of(loadRole());
+            console.log('unauthorized', error.status);
+            import('store').then((exports) => {
+              const store = getByKey(exports, ['default', 'instance']);
+              setTimeout(() => {
+                store.dispatch(loadRole());
+              }, 100);
+            });
           }
-          throw error;
+          return throwError(error);
         })
       );
     },

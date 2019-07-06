@@ -17,6 +17,7 @@ import getByKey from '@gsmlg/utils/getByKey';
 
 import * as c from './constants';
 import * as a from './actions';
+import { makeSelectIsLogin } from './selectors';
 
 export const loginEpic = (action$, state$, { ajax }) =>
   action$.pipe(
@@ -49,12 +50,26 @@ export const loadRoleEpic = (action$, state$, { ajax }) =>
         map((resp) => {
           const user = getByKey(resp, ['response', 'user']);
           const authBy = getByKey(resp, ['response', 'authBy']);
+          const isLogin = makeSelectIsLogin()(state$.value);
           if (!user) {
             if (authBy === 'cas') {
               window.location.reload();
             } else {
-              return push('/login');
+              import('store').then((exports) => {
+                const store = getByKey(exports, ['default', 'instance']);
+                setTimeout(() => {
+                  store.dispatch(push('/login'));
+                }, 100);
+              });
+              return a.loadRoleSuccess(resp, meta);
             }
+          } else if (!isLogin) {
+            import('store').then((exports) => {
+              const store = getByKey(exports, ['default', 'instance']);
+              setTimeout(() => {
+                store.dispatch(push('/clusters'));
+              }, 100);
+            });
           }
           return a.loadRoleSuccess(resp, meta);
         }),
