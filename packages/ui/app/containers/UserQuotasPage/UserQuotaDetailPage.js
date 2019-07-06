@@ -1,6 +1,6 @@
 /**
  *
- * NamespaceDetailPage
+ * UserQuotaDetailPage
  *
  */
 import React from 'react';
@@ -18,23 +18,23 @@ import Card from 'components/Card/Card';
 import CardHeader from 'components/Card/CardHeader';
 import CardBody from 'components/Card/CardBody';
 import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
+import ReadOnlyInput from 'components/CustomInput/ReadOnlyInput';
+
 import {
   makeSelectClusterID,
   makeSelectNamespaceID,
 } from 'ducks/app/selectors';
 import {
-  makeSelectResourceQuotaID,
-  makeSelectCurrentResourceQuota,
+  makeSelectCurrentUserQuota,
   makeSelectURL,
-} from 'ducks/resourceQuotas/selectors';
-import * as actions from 'ducks/resourceQuotas/actions';
+} from 'ducks/userQuotas/selectors';
+import * as actions from 'ducks/userQuotas/actions';
 
-// import ResourceQuota from './ResourceQuota';
 import messages from './messages';
-import NamespaceDetailPageHelmet from './helmet';
+import UserQuotaDetailPageHelmet from './helmet';
 import styles from './styles';
 /* eslint-disable react/prefer-stateless-function */
-export class NamespaceDetailPage extends React.PureComponent {
+export class UserQuotaDetailPage extends React.PureComponent {
   static propTypes = {
     initAction: PropTypes.func,
     classes: PropTypes.object.isRequired,
@@ -43,22 +43,26 @@ export class NamespaceDetailPage extends React.PureComponent {
   };
 
   componentWillMount() {
-    const { clusterID, namespaceID, url, loadResourceQuota } = this.props;
-    // loadResourceQuota({ url, clusterID, namespaceID });
+    this.load();
+  }
+
+  load() {
+    const { loadUserQuotas, url } = this.props;
+    loadUserQuotas(url);
   }
 
   render() {
-    const { classes, resourceQuota, clusterID, namespaceID } = this.props;
+    const { classes, userQuota } = this.props;
 
     return (
       <div className={classes.root}>
-        <NamespaceDetailPageHelmet />
+        <UserQuotaDetailPageHelmet />
         <CssBaseline />
         <div className={classes.content}>
           <Breadcrumbs
             data={[
               {
-                path: `/clusters/${clusterID}/userQuotas`,
+                path: `/userQuotas`,
                 name: <FormattedMessage {...messages.pageTitle} />,
               },
               {
@@ -75,7 +79,66 @@ export class NamespaceDetailPage extends React.PureComponent {
                   </h4>
                 </CardHeader>
                 <CardBody>
-                  {/* <ResourceQuota resourceQuota={resourceQuota} /> */}
+                  <GridContainer>
+                    <GridItem xs={3} sm={3} md={3}>
+                      <ReadOnlyInput
+                        labelText={
+                          <FormattedMessage {...messages.formClusterName} />
+                        }
+                        fullWidth
+                        value={userQuota.get('clusterName')}
+                      />
+                    </GridItem>
+                    <GridItem xs={3} sm={3} md={3}>
+                      <ReadOnlyInput
+                        labelText={
+                          <FormattedMessage {...messages.formNamespace} />
+                        }
+                        fullWidth
+                        value={userQuota.get('namespace')}
+                      />
+                    </GridItem>
+                  </GridContainer>
+                  <GridContainer>
+                    <GridItem xs={3} sm={3} md={3}>
+                      <ReadOnlyInput
+                        labelText={<FormattedMessage {...messages.formCPU} />}
+                        fullWidth
+                        inputProps={{
+                          endAdornment: (
+                            <FormattedMessage
+                              {...messages.formCPUEndAdornment}
+                            />
+                          ),
+                        }}
+                        value={userQuota.get('cpu')}
+                      />
+                    </GridItem>
+                    <GridItem xs={3} sm={3} md={3}>
+                      <ReadOnlyInput
+                        labelText={
+                          <FormattedMessage {...messages.formMemory} />
+                        }
+                        fullWidth
+                        inputProps={{
+                          endAdornment: 'Gi',
+                        }}
+                        value={userQuota.get('memory')}
+                      />
+                    </GridItem>
+                    <GridItem xs={3} sm={3} md={3}>
+                      <ReadOnlyInput
+                        labelText={
+                          <FormattedMessage {...messages.formStorage} />
+                        }
+                        fullWidth
+                        inputProps={{
+                          endAdornment: 'Gi',
+                        }}
+                        value={userQuota.get('storage')}
+                      />
+                    </GridItem>
+                  </GridContainer>
                 </CardBody>
               </Card>
             </GridItem>
@@ -87,11 +150,8 @@ export class NamespaceDetailPage extends React.PureComponent {
 }
 
 const mapStateToProps = createStructuredSelector({
-  clusterID: makeSelectClusterID(),
-  namespaceID: makeSelectNamespaceID(),
-  // deploymentID: makeSelectResourceQuotaID(),
+  userQuota: makeSelectCurrentUserQuota(),
   url: makeSelectURL(),
-  // resourceQuota: makeSelectCurrentResourceQuota(),
 });
 
 const mapDispatchToProps = (dispatch) =>
@@ -110,4 +170,4 @@ const withConnect = connect(
 export default compose(
   withConnect,
   withStyles(styles)
-)(NamespaceDetailPage);
+)(UserQuotaDetailPage);

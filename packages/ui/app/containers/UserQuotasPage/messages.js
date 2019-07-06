@@ -89,9 +89,9 @@ export default defineMessages({
     id: `${scope}.formPurpose`,
     defaultMessage: 'Purpose',
   },
-  formArgs: {
-    id: `${scope}.formArgs`,
-    defaultMessage: 'Args',
+  formClusterName: {
+    id: `${scope}.formClusterName`,
+    defaultMessage: 'ClusterName',
   },
   formENV: {
     id: `${scope}.formENV`,

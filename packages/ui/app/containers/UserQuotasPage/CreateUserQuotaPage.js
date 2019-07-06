@@ -67,25 +67,18 @@ export class CreateUserQuotaPage extends React.PureComponent {
   };
 
   render() {
-    const {
-      classes,
-      cluster,
-      clusterID,
-      submitForm,
-      createUserQuota,
-    } = this.props;
+    const { classes, cluster, submitForm, createUserQuota } = this.props;
     const url = cluster.getIn(['links', 'userQuotas']);
     async function doSubmit(formValues) {
       try {
-        // const name = formValues.get('name');
         const { ...formData } = formValues.toJS();
         const data = {
           ...formData,
         };
         console.log('data', data);
-        // await new Promise((resolve, reject) => {
-        //   createUserQuota({ data }, { resolve, reject, clusterID, url });
-        // });
+        await new Promise((resolve, reject) => {
+          createUserQuota({ data }, { resolve, reject, url });
+        });
       } catch (error) {
         throw new SubmissionError({ _error: error });
       }
@@ -99,7 +92,7 @@ export class CreateUserQuotaPage extends React.PureComponent {
           <Breadcrumbs
             data={[
               {
-                path: `/clusters/${clusterID}/userQuotas`,
+                path: `/userQuotas`,
                 name: <FormattedMessage {...messages.pageTitle} />,
               },
               {
@@ -138,7 +131,7 @@ export class CreateUserQuotaPage extends React.PureComponent {
                         <Button
                           variant="contained"
                           className={classes.cancleBtn}
-                          to={`/clusters/${clusterID}/userQuotas`}
+                          to="/userQuotas"
                           component={Link}
                         >
                           <FormattedMessage
