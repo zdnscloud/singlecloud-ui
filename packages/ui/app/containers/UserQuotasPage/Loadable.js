@@ -21,3 +21,9 @@ export const UserQuotaDetailPage = loadable(() =>
     /* webpackChunkName: "UserQuotaDetailPage" */ './UserQuotaDetailPage'
   )
 );
+
+export const RequestUserQuotaPage = loadable(() =>
+  import(
+    /* webpackChunkName: "RequestUserQuotaPage" */ './RequestUserQuotaPage'
+  )
+);

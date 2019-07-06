@@ -65,12 +65,31 @@ export const removeUserQuotaEpic = (action$, state$, { ajax }) =>
         url: `${url}`,
         method: 'DELETE',
       }).pipe(
-        map((resp) =>
-          a.removeUserQuotaSuccess(resp, { id: payload })
-        ),
+        map((resp) => a.removeUserQuotaSuccess(resp, { id: payload })),
         catchError((error) =>
           of(a.removeUserQuotaFailure(error, { id: payload }))
         )
+      )
+    )
+  );
+
+export const updateUserQuotaEpic = (action$, state$, { ajax }) =>
+  action$.pipe(
+    ofType(c.UPDATE_USER_QUOTA),
+    mergeMap(({ payload, meta: { resolve, reject, url } }) =>
+      ajax({
+        url,
+        method: 'PUT',
+        body: payload,
+      }).pipe(
+        map((resp) => {
+          resolve(resp);
+          return a.updateUserQuotaSuccess(resp);
+        }),
+        catchError((error) => {
+          reject(error);
+          return of(a.updateUserQuotaFailure(error));
+        })
       )
     )
   );
@@ -79,5 +98,6 @@ export default combineEpics(
   loadUserQuotasEpic,
   createUserQuotaEpic,
   afterCreateEpic,
-  removeUserQuotaEpic
+  removeUserQuotaEpic,
+  updateUserQuotaEpic
 );

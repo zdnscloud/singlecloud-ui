@@ -93,37 +93,37 @@ export default defineMessages({
     id: `${scope}.formClusterName`,
     defaultMessage: 'ClusterName',
   },
-  formENV: {
-    id: `${scope}.formENV`,
-    defaultMessage: 'ENV',
+  formRejectionReason: {
+    id: `${scope}.formRejectionReason`,
+    defaultMessage: 'RejectionReason',
   },
-  formENVName: {
-    id: `${scope}.formENVName`,
-    defaultMessage: 'Name',
+  detail: {
+    id: `${scope}.detail`,
+    defaultMessage: 'Detail',
   },
-  formENVValue: {
-    id: `${scope}.formENVValue`,
-    defaultMessage: 'Value',
+  passBtn: {
+    id: `${scope}.passBtn`,
+    defaultMessage: 'Pass',
   },
-  formConfigName: {
-    id: `${scope}.formConfigName`,
-    defaultMessage: 'ConfigName',
+  rejectBtn: {
+    id: `${scope}.rejectBtn`,
+    defaultMessage: 'Reject',
   },
   formNone: {
     id: `${scope}.formNone`,
     defaultMessage: 'None',
   },
-  formVolumeTypeConfigMap: {
-    id: `${scope}.formVolumeTypeConfigMap`,
-    defaultMessage: 'Config Map',
+  requestList: {
+    id: `${scope}.requestList`,
+    defaultMessage: 'RequestList',
   },
-  formVolumeTypeSecret: {
-    id: `${scope}.formVolumeTypeSecret`,
-    defaultMessage: 'Secret',
+  requestDetail: {
+    id: `${scope}.requestDetail`,
+    defaultMessage: 'RequestDetail',
   },
-  formVolumeTypePersistentVolume: {
-    id: `${scope}.formVolumeTypePersistentVolume`,
-    defaultMessage: 'Persistent Volume',
+  requestType: {
+    id: `${scope}.requestType`,
+    defaultMessage: 'RequestType',
   },
   formVolumeType: {
     id: `${scope}.formVolumeType`,

@@ -57,6 +57,7 @@ import NetworkPage from 'containers/NetworkPage/Loadable';
 import UserQuotasPage, {
   CreateUserQuotaPage,
   UserQuotaDetailPage,
+  RequestUserQuotaPage,
 } from 'containers/UserQuotasPage/Loadable';
 // UserQuotasPage
 
@@ -345,6 +346,12 @@ const appRoutes = [
     name: 'UserQuota Detail',
     icon: Dashboard,
     component: UserQuotaDetailPage,
+  },
+  {
+    path: '/userQuotas/:userQuota_id/request',
+    name: 'UserQuota Request',
+    icon: Dashboard,
+    component: RequestUserQuotaPage,
   },
   // userQuotas end
 ];

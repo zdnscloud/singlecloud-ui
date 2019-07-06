@@ -32,6 +32,17 @@ export const makeSelectClusterID = () =>
     }
   );
 
+export const makeSelectUserQuotaID = () =>
+  createSelector(
+    createMatchSelector('/userQuotas/:userQuotas_id'),
+    (match) => {
+      if (match && match.params) {
+        return match.params.userQuotas_id;
+      }
+      return '';
+    }
+  );
+
 export const makeSelectNamespaceID = () =>
   createSelector(
     createMatchSelector('/clusters/:cluster_id/namespaces/:namespace_id'),

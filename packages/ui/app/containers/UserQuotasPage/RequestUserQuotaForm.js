@@ -12,7 +12,7 @@ import TextareaField from 'components/Field/TextareaField';
 
 import messages from './messages';
 
-class UserQuotaForm extends PureComponent {
+class RequestUserQuotaForm extends PureComponent {
   state = {};
 
   render() {
@@ -26,7 +26,6 @@ class UserQuotaForm extends PureComponent {
       profile,
       initialValues,
     } = this.props;
-
     return (
       <form className={getByKey(classes, 'form')} onSubmit={handleSubmit}>
         <GridContainer>
@@ -35,74 +34,83 @@ class UserQuotaForm extends PureComponent {
               <Danger>{getByKey(error, ['response', 'message'])}</Danger>
             </GridItem>
           ) : null}
-          <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
+          <GridItem xs={3} sm={3} md={3}>
             <InputField
-              label={<FormattedMessage {...messages.formNamespace} />}
-              name="namespace"
-              formControlProps={{
-                className: classes.nameControl,
-              }}
-              inputProps={{
-                type: 'text',
-                autoComplete: 'off',
-              }}
+              name="requestType"
+              labelText={<FormattedMessage {...messages.formClusterName} />}
+              fullWidth
             />
           </GridItem>
-          <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
-            <p>username</p>
+          <GridItem xs={3} sm={3} md={3}>
+            <InputField
+              name="clusterName"
+              labelText={<FormattedMessage {...messages.formClusterName} />}
+              fullWidth
+            />
+          </GridItem>
+          <GridItem xs={3} sm={3} md={3}>
+            <InputField
+              name="namespace"
+              labelText={<FormattedMessage {...messages.formNamespace} />}
+              fullWidth
+            />
           </GridItem>
         </GridContainer>
         <GridContainer>
-          <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
+          <GridItem xs={3} sm={3} md={3}>
             <InputField
-              label={<FormattedMessage {...messages.formCPU} />}
               name="cpu"
-              formControlProps={{
-                className: classes.nameControl,
-              }}
+              labelText={<FormattedMessage {...messages.formCPU} />}
+              fullWidth
               inputProps={{
-                type: 'text',
-                autoComplete: 'off',
                 endAdornment: (
                   <FormattedMessage {...messages.formCPUEndAdornment} />
                 ),
               }}
             />
           </GridItem>
-          <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
+          <GridItem xs={3} sm={3} md={3}>
             <InputField
-              label={<FormattedMessage {...messages.formMemory} />}
               name="memory"
-              formControlProps={{
-                className: classes.nameControl,
-              }}
+              labelText={<FormattedMessage {...messages.formMemory} />}
+              fullWidth
               inputProps={{
-                type: 'text',
-                autoComplete: 'off',
                 endAdornment: 'Gi',
               }}
             />
           </GridItem>
-          <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
+          <GridItem xs={3} sm={3} md={3}>
             <InputField
-              label={<FormattedMessage {...messages.formStorage} />}
               name="storage"
-              formControlProps={{
-                className: classes.nameControl,
-              }}
+              labelText={<FormattedMessage {...messages.formStorage} />}
+              fullWidth
               inputProps={{
-                type: 'text',
-                autoComplete: 'off',
                 endAdornment: 'Gi',
               }}
             />
           </GridItem>
         </GridContainer>
-        <GridContainer style={{ marginTop: '20px' }}>
+        <GridContainer>
           <GridItem xs={9} sm={9} md={9} className={classes.formLine}>
             <TextareaField
               name="purpose"
               label={<FormattedMessage {...messages.formPurpose} />}
+              formControlProps={{
+                className: classes.textareaControl,
+              }}
+              inputProps={{
+                type: 'text',
+                autoComplete: 'off',
+                rows: '4',
+              }}
+            />
+          </GridItem>
+        </GridContainer>
+        <GridContainer>
+          <GridItem xs={9} sm={9} md={9} className={classes.formLine}>
+            <TextareaField
+              name="rejectionReason"
+              label={<FormattedMessage {...messages.formRejectionReason} />}
               formControlProps={{
                 className: classes.textareaControl,
               }}
@@ -119,4 +127,4 @@ class UserQuotaForm extends PureComponent {
   }
 }
 
-export default UserQuotaForm;
+export default RequestUserQuotaForm;

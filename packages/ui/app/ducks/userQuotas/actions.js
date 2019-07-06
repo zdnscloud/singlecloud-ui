@@ -60,6 +60,23 @@ export const removeUserQuotaFailure = (error, meta) => ({
   error: true,
 });
 
+export const updateUserQuota = (data, meta) => ({
+  type: c.UPDATE_USER_QUOTA,
+  payload: data,
+  meta,
+});
+
+export const updateUserQuotaSuccess = (resp) => ({
+  type: c.UPDATE_USER_QUOTA_SUCCESS,
+  payload: resp,
+});
+
+export const updateUserQuotaFailure = (error) => ({
+  type: c.UPDATE_USER_QUOTA_FAILURE,
+  payload: error,
+  error: true,
+});
+
 export const changeUserQuota = (userQuotaID) => ({
   type: c.CHANGE_USER_QUOTA,
   payload: { userQuotaID },

@@ -171,6 +171,9 @@ const styles = (theme) => ({
   cancleBtn: {
     marginLeft: '10px',
   },
+  textareaControl: {
+    width: '100%',
+  }
 });
 
 export default styles;

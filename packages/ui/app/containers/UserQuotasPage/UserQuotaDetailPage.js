@@ -17,13 +17,14 @@ import GridContainer from 'components/Grid/GridContainer';
 import Card from 'components/Card/Card';
 import CardHeader from 'components/Card/CardHeader';
 import CardBody from 'components/Card/CardBody';
+import CardFooter from 'components/Card/CardFooter';
 import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
 import ReadOnlyInput from 'components/CustomInput/ReadOnlyInput';
+import ReadOnlyTextarea from 'components/CustomTextarea/ReadOnlyTextarea';
 
-import {
-  makeSelectClusterID,
-  makeSelectNamespaceID,
-} from 'ducks/app/selectors';
+import Button from '@material-ui/core/Button';
+import { Link } from 'react-router-dom';
+
 import {
   makeSelectCurrentUserQuota,
   makeSelectURL,
@@ -53,7 +54,6 @@ export class UserQuotaDetailPage extends React.PureComponent {
 
   render() {
     const { classes, userQuota } = this.props;
-
     return (
       <div className={classes.root}>
         <UserQuotaDetailPageHelmet />
@@ -66,7 +66,7 @@ export class UserQuotaDetailPage extends React.PureComponent {
                 name: <FormattedMessage {...messages.pageTitle} />,
               },
               {
-                name: <FormattedMessage {...messages.namespaceDetail} />,
+                name: <FormattedMessage {...messages.detail} />,
               },
             ]}
           />
@@ -136,6 +136,42 @@ export class UserQuotaDetailPage extends React.PureComponent {
                           endAdornment: 'Gi',
                         }}
                         value={userQuota.get('storage')}
+                      />
+                    </GridItem>
+                  </GridContainer>
+                  <GridContainer>
+                    <GridItem xs={9} sm={9} md={9} className={classes.formLine}>
+                      <ReadOnlyTextarea
+                        name="purpose"
+                        label={<FormattedMessage {...messages.formPurpose} />}
+                        formControlProps={{
+                          className: classes.textareaControl,
+                        }}
+                        inputProps={{
+                          type: 'text',
+                          autoComplete: 'off',
+                          rows: '4',
+                        }}
+                        value={userQuota.get('purpose')}
+                      />
+                    </GridItem>
+                  </GridContainer>
+                  <GridContainer>
+                    <GridItem xs={9} sm={9} md={9} className={classes.formLine}>
+                      <ReadOnlyTextarea
+                        name="purpose"
+                        label={
+                          <FormattedMessage {...messages.formRejectionReason} />
+                        }
+                        formControlProps={{
+                          className: classes.textareaControl,
+                        }}
+                        inputProps={{
+                          type: 'text',
+                          autoComplete: 'off',
+                          rows: '4',
+                        }}
+                        value={userQuota.get('rejectionReason')}
                       />
                     </GridItem>
                   </GridContainer>

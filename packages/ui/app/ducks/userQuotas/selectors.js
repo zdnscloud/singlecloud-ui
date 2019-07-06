@@ -3,6 +3,7 @@ import {
   createMatchSelector,
   getLocation,
 } from 'connected-react-router/immutable';
+import { makeSelectUserQuotaID } from 'ducks/app/selectors';
 import { prefix } from './constants';
 
 /**
@@ -29,13 +30,14 @@ export const makeSelectUserQuotasList = () =>
   createSelector(
     selectUserQuotasDomain,
     makeSelectUserQuotas(),
-    (substate, userQuotas) => substate.get('list').map((id) => userQuotas.get(id))
+    (substate, userQuotas) =>
+      substate.get('list').map((id) => userQuotas.get(id))
   );
 
 export const makeSelectCurrentUserQuota = () =>
   createSelector(
     selectUserQuotasDomain,
-    // makeSelectUserQuotaID(),
+    makeSelectUserQuotaID(),
     (substate, userQuotaID) =>
       substate.getIn(['userQuotas', userQuotaID]) || substate.clear()
   );

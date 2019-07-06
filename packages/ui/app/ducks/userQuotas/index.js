@@ -57,11 +57,15 @@ export const userQuotasReducer = (
     case c.REMOVE_USER_QUOTA_FAILURE:
       return state;
 
+    case c.UPDATE_USER_QUOTA:
+      return state;
+    case c.UPDATE_USER_QUOTA_SUCCESS:
+      return state;
+    case c.UPDATE_USER_QUOTA_FAILURE:
+      return state;
+
     case c.CHANGE_USER_QUOTA:
-      return state.setIn(
-        ['selectedUserQuota'],
-        payload.userQuotaID
-      );
+      return state.setIn(['selectedUserQuota'], payload.userQuotaID);
 
     default:
       return state;

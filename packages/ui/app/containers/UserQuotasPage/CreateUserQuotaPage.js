@@ -15,12 +15,8 @@ import { SubmissionError, submit } from 'redux-form';
 import { Link } from 'react-router-dom';
 
 import { withStyles } from '@material-ui/core/styles';
-import Menubar from 'components/Menubar';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Typography from '@material-ui/core/Typography';
-import Fab from '@material-ui/core/Fab';
-import IconButton from '@material-ui/core/IconButton';
-import AddIcon from 'components/Icons/Add';
 import Button from '@material-ui/core/Button';
 import GridItem from 'components/Grid/GridItem';
 import GridContainer from 'components/Grid/GridContainer';
@@ -29,8 +25,7 @@ import CardHeader from 'components/Card/CardHeader';
 import CardBody from 'components/Card/CardBody';
 import CardFooter from 'components/Card/CardFooter';
 
-import { makeSelectClusterID } from 'ducks/app/selectors';
-import { makeSelectCurrentCluster } from 'ducks/clusters/selectors';
+import { makeSelectURL } from 'ducks/userQuotas/selectors';
 import * as actions from 'ducks/userQuotas/actions';
 
 import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
@@ -67,8 +62,7 @@ export class CreateUserQuotaPage extends React.PureComponent {
   };
 
   render() {
-    const { classes, cluster, submitForm, createUserQuota } = this.props;
-    const url = cluster.getIn(['links', 'userQuotas']);
+    const { classes, submitForm, createUserQuota, url } = this.props;
     async function doSubmit(formValues) {
       try {
         const { ...formData } = formValues.toJS();
@@ -77,7 +71,7 @@ export class CreateUserQuotaPage extends React.PureComponent {
         };
         console.log('data', data);
         await new Promise((resolve, reject) => {
-          createUserQuota({ data }, { resolve, reject, url });
+          createUserQuota({ ...data }, { resolve, reject, url });
         });
       } catch (error) {
         throw new SubmissionError({ _error: error });
@@ -152,8 +146,7 @@ export class CreateUserQuotaPage extends React.PureComponent {
 }
 
 const mapStateToProps = createStructuredSelector({
-  clusterID: makeSelectClusterID(),
-  cluster: makeSelectCurrentCluster(),
+  url: makeSelectURL(),
 });
 
 const mapDispatchToProps = (dispatch) =>
