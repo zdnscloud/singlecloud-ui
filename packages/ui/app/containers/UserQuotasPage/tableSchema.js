@@ -1,7 +1,7 @@
 import { ucfirst } from '@gsmlg/utils';
 import TimeCell from 'components/Cells/TimeCell';
 
-const schema = ['status', 'name', 'nodeCount', 'creationTimestamp'];
+const schema = ['name', 'creationTimestamp'];
 
 const tableSchema = schema
   .map((id) => ({
