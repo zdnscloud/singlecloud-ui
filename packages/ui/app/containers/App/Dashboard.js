@@ -63,22 +63,7 @@ class Dashboard extends PureComponent {
 
   componentWillMount() {
     const { isLogin, history, initAction, loadRole } = this.props;
-    if (!isLogin) {
-      // history.push('/login');
-      window.location.href = '/login';
-    } else {
-      initAction();
-    }
-  }
-
-  componentWillUpdate(nextProps) {
-    const { isLogin, history, initAction, loadRole } = nextProps;
-    if (!isLogin) {
-      // history.push('/login');
-      window.location.href = '/login';
-    } else if (!this.props.isLogin) {
-      initAction();
-    }
+    initAction();
   }
 
   render() {

@@ -12,6 +12,8 @@ import {
   catchError,
 } from 'rxjs/operators';
 import { ofType, combineEpics } from 'redux-observable';
+import { push } from 'connected-react-router';
+import getByKey from '@gsmlg/utils/getByKey';
 
 import * as c from './constants';
 import * as a from './actions';
@@ -44,7 +46,18 @@ export const loadRoleEpic = (action$, state$, { ajax }) =>
     ofType(c.LOAD_ROLE),
     mergeMap(({ payload, meta }) =>
       ajax(payload).pipe(
-        map((resp) => a.loadRoleSuccess(resp, meta)),
+        map((resp) => {
+          const user = getByKey(resp, ['response', 'user']);
+          const authBy = getByKey(resp, ['response', 'authBy']);
+          if (!user) {
+            if (authBy === 'cas') {
+              window.location.reload();
+            } else {
+              return push('/login');
+            }
+          }
+          return a.loadRoleSuccess(resp, meta);
+        }),
         catchError((error) => a.loadRoleFailure(error, meta))
       )
     )
