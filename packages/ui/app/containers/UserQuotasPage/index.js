@@ -78,7 +78,7 @@ export class UserQuotasPage extends React.PureComponent {
                       aria-label={<FormattedMessage {...messages.userQuotas} />}
                       className={classes.menuButton}
                       component={Link}
-                      to={`/userQuotas/create`}
+                      to="/userQuotas/create"
                     >
                       <AddIcon style={{ color: '#fff' }} />
                     </IconButton>
