@@ -28,6 +28,17 @@ export const loadStroageClassesEpic = (action$, state$, { ajax }) =>
     )
   );
 
+export const loadStoragesEpic = (action$, state$, { ajax }) =>
+  action$.pipe(
+    ofType(c.LOAD_STORAGES),
+    mergeMap(({ payload, meta: { clusterID } }) =>
+      ajax(payload).pipe(
+        map((resp) => a.loadStoragesSuccess(resp, clusterID)),
+        catchError((error) => of(a.loadStoragesFailure(error, clusterID)))
+      )
+    )
+  );
+
 export const loadNFSStoragesEpic = (action$, state$, { ajax }) =>
   action$.pipe(
     ofType(c.LOAD_NFS_STORAGES),
@@ -51,6 +62,7 @@ export const loadLVMStoragesEpic = (action$, state$, { ajax }) =>
   );
 
 export default combineEpics(
+  loadStoragesEpic,
   loadStroageClassesEpic,
   loadNFSStoragesEpic,
   loadLVMStoragesEpic

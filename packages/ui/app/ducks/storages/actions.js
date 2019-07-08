@@ -22,6 +22,25 @@ export const loadStorageClassesFailure = (error, clusterID) => ({
   error: true,
 });
 
+export const loadStorages = (url, clusterID) => ({
+  type: c.LOAD_STORAGES,
+  payload: url,
+  meta: { clusterID },
+});
+
+export const loadStoragesSuccess = (resp, clusterID) => ({
+  type: c.LOAD_STORAGES_SUCCESS,
+  payload: resp,
+  meta: { clusterID },
+});
+
+export const loadStoragesFailure = (error, clusterID) => ({
+  type: c.LOAD_STORAGES_FAILURE,
+  payload: error,
+  meta: { clusterID },
+  error: true,
+});
+
 export const loadNFSStorages = (url, clusterID) => ({
   type: c.LOAD_NFS_STORAGES,
   payload: url,

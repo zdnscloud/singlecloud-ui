@@ -28,6 +28,26 @@ export const makeSelectCurrentStorageClasses = () =>
     (cs, clusterID) => cs.getIn([clusterID]) || cs.clear()
   );
 
+export const makeSelectStorages = () =>
+  createSelector(
+    selectStoragesDomain,
+    makeSelectClusterID(),
+    (substate, clusterID) =>
+      substate.getIn(['storages', clusterID]) || substate.clear()
+  );
+
+export const makeSelectStoragesList = () =>
+  createSelector(
+    selectStoragesDomain,
+    makeSelectStorages(),
+    (substate, storages) =>
+      substate
+        .get('storagesList')
+        .map((id) => (
+          storages.get(id) || storages.clear()
+        ))
+  );
+
 export const makeSelectNFSStorages = () =>
   createSelector(
     selectStoragesDomain,
@@ -55,13 +75,12 @@ export const makeSelectCurrentLVMStorages = () =>
   );
 
 /**
- * Default selector used by LoginPage
+ * Default selector
  */
-
-const makeSelectStorages = () =>
+const makeSelectStoragesState = () =>
   createSelector(
     selectStoragesDomain,
     (substate) => substate
   );
 
-export default makeSelectStorages;
+export default makeSelectStoragesState;

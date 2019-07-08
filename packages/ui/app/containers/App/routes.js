@@ -52,7 +52,7 @@ import SecretsPage, {
   ShowSecretPage,
 } from 'containers/SecretsPage/Loadable';
 import ServiceLinkPage from 'containers/ServiceLinkPage/Loadable';
-import StoragePage from 'containers/StoragePage/Loadable';
+import StoragesPage from 'containers/StoragesPage/Loadable';
 import NetworkPage from 'containers/NetworkPage/Loadable';
 
 import UsersPage, {
@@ -281,10 +281,10 @@ const appRoutes = [
     component: ServiceLinkPage,
   },
   {
-    path: '/clusters/:cluster_id/storage',
+    path: '/clusters/:cluster_id/storages',
     name: 'Storage',
     icon: Dashboard,
-    component: StoragePage,
+    component: StoragesPage,
   },
   {
     path: '/clusters/:cluster_id/network',

@@ -138,8 +138,8 @@ export const makeSelectLeftMenus = () =>
             name: 'SystemManagement',
             children: [
               {
-                name: 'Storage',
-                path: `/clusters/${cluster}/storage`,
+                name: 'Storages',
+                path: `/clusters/${cluster}/storages`,
               },
               {
                 name: 'Network',
