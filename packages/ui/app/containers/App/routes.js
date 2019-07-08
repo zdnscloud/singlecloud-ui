@@ -58,6 +58,8 @@ import UserQuotasPage, {
   CreateUserQuotaPage,
   UserQuotaDetailPage,
   RequestUserQuotaPage,
+  AdminUserQuotaPage,
+  EditUserQuotaPage,
 } from 'containers/UserQuotasPage/Loadable';
 // UserQuotasPage
 
@@ -334,6 +336,12 @@ const appRoutes = [
     icon: Dashboard,
     component: UserQuotasPage,
   },
+  {
+    path: '/adminUserQuotas',
+    name: 'User Quotas',
+    icon: Dashboard,
+    component: AdminUserQuotaPage,
+  },
   // userQuotas
   {
     path: '/userQuotas/create',
@@ -352,6 +360,12 @@ const appRoutes = [
     name: 'UserQuota Request',
     icon: Dashboard,
     component: RequestUserQuotaPage,
+  },
+  {
+    path: '/userQuotas/:userQuota_id/edit',
+    name: 'UserQuota Edit',
+    icon: Dashboard,
+    component: EditUserQuotaPage,
   },
   // userQuotas end
 ];

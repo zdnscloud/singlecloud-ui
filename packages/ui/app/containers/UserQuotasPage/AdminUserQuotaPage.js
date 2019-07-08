@@ -1,46 +1,51 @@
 /**
  *
- * RequestUserQuotaPage
+ * AdminUserQuotaPage
  *
  */
+
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import { bindActionCreators, compose } from 'redux';
-import { SubmissionError, submit } from 'redux-form';
 import { Link } from 'react-router-dom';
+import { SubmissionError, submit } from 'redux-form';
 import { reduxForm, getFormValues } from 'redux-form/immutable';
+import { fromJS } from 'immutable';
 
 import { withStyles } from '@material-ui/core/styles';
+import Menubar from 'components/Menubar';
 import CssBaseline from '@material-ui/core/CssBaseline';
+import Typography from '@material-ui/core/Typography';
+import Fab from '@material-ui/core/Fab';
 import GridItem from 'components/Grid/GridItem';
 import GridContainer from 'components/Grid/GridContainer';
 import Card from 'components/Card/Card';
 import CardHeader from 'components/Card/CardHeader';
 import CardBody from 'components/Card/CardBody';
-import CardFooter from 'components/Card/CardFooter';
 import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
-
+import IconButton from '@material-ui/core/IconButton';
 import Button from '@material-ui/core/Button';
 
 import {
-  makeSelectCurrentUserQuota,
   makeSelectURL,
+  makeSelectUserQuotasList,
 } from 'ducks/userQuotas/selectors';
 import * as actions from 'ducks/userQuotas/actions';
 
 import messages from './messages';
-import RequestUserQuotaPageHelmet from './helmet';
 import styles from './styles';
-import RequestUserQuotaForm from './RequestUserQuotaForm';
+import AdminUserQuotasTable from './AdminUserQuotasTable';
+import AdminUserQuotaPageHelmet from './helmet';
+import UserQuotaForm from './form/searchForm';
 
-export const formName = 'CreateRequestUserQuotaForm';
+export const formName = 'searchUserQuotaForm';
 
 const validate = (values) => {
   const errors = {};
-  const requiredFields = ['namespace', 'cpu', 'memory', 'storage', 'purpose'];
+  const requiredFields = [];
   requiredFields.forEach((field) => {
     if (!values.get(field)) {
       errors[field] = 'Required';
@@ -49,21 +54,25 @@ const validate = (values) => {
   return errors;
 };
 
-const CreateRequestUserQuotaForm = reduxForm({
+const SearchUserQuotaForm = reduxForm({
   form: formName,
   validate,
-})(RequestUserQuotaForm);
+})(UserQuotaForm);
 
-export class RequestUserQuotaPage extends React.PureComponent {
-  static propTypes = {
-    initAction: PropTypes.func,
-    classes: PropTypes.object.isRequired,
-    match: PropTypes.object,
-    location: PropTypes.object,
+/* eslint-disable react/prefer-stateless-function */
+export class AdminUserQuotaPage extends React.PureComponent {
+  static propTypes = {};
+
+  state = {
+    filter: {},
   };
 
   componentWillMount() {
     this.load();
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.timer);
   }
 
   load() {
@@ -72,34 +81,23 @@ export class RequestUserQuotaPage extends React.PureComponent {
   }
 
   render() {
-    const { classes, userQuota, submitForm, requestUserQuota } = this.props;
-    const getClickedAction = () => this.clickedAction;
-    async function doSubmit(formValues) {
-      try {
-        const { clusterName, reason } = formValues.toJS();
-        const action = getClickedAction();
-        const url = `${userQuota.getIn(['links', 'self'])}?action=${action}`;
-        const data = action === 'approval' ? { clusterName } : { reason };
-        await new Promise((resolve, reject) => {
-          requestUserQuota({ ...data }, { resolve, reject, url });
-        });
-      } catch (error) {
-        throw new SubmissionError({ _error: error });
-      }
-    }
+    const { classes, submitForm } = this.props;
+    const doSubmit = (formValues) => {
+      this.setState({
+        filter: formValues.toJS(),
+      });
+    };
+
     return (
       <div className={classes.root}>
-        <RequestUserQuotaPageHelmet />
+        <AdminUserQuotaPageHelmet />
         <CssBaseline />
         <div className={classes.content}>
           <Breadcrumbs
             data={[
               {
-                path: `/adminUserQuotas`,
+                path: '/adminUserQuotas',
                 name: <FormattedMessage {...messages.adminRequestListPage} />,
-              },
-              {
-                name: <FormattedMessage {...messages.requestDetail} />,
               },
             ]}
           />
@@ -108,42 +106,30 @@ export class RequestUserQuotaPage extends React.PureComponent {
               <Card>
                 <CardHeader color="primary">
                   <h4 className={classes.cardTitleWhite}>
-                    <FormattedMessage {...messages.detail} />
+                    <FormattedMessage {...messages.requestList} />
                   </h4>
                 </CardHeader>
                 <CardBody>
-                  <CreateRequestUserQuotaForm
-                    classes={classes}
-                    onSubmit={doSubmit}
-                    initialValues={userQuota}
-                  />
-                </CardBody>
-                <CardFooter className={classes.cardFooter}>
-                  <GridContainer>
-                    <GridItem xs={12} sm={12} md={12}>
+                  <GridContainer style={{ marginBottom: '20px' }}>
+                    <GridItem xs={6} sm={6} md={6}>
+                      <SearchUserQuotaForm
+                        classes={classes}
+                        onSubmit={doSubmit}
+                      />
+                    </GridItem>
+                    <GridItem xs={6} sm={6} md={6}>
                       <Button
                         variant="contained"
                         color="primary"
-                        onClick={() => {
-                          this.clickedAction = 'approval';
-                          submitForm();
-                        }}
+                        onClick={submitForm}
+                        style={{ marginTop: '20px' }}
                       >
-                        <FormattedMessage {...messages.passBtn} />
-                      </Button>
-                      <Button
-                        variant="contained"
-                        className={classes.cancleBtn}
-                        onClick={() => {
-                          this.clickedAction = 'reject';
-                          submitForm();
-                        }}
-                      >
-                        <FormattedMessage {...messages.rejectBtn} />
+                        <FormattedMessage {...messages.searchUserQuotaButton} />
                       </Button>
                     </GridItem>
                   </GridContainer>
-                </CardFooter>
+                  <AdminUserQuotasTable filter={this.state.filter} />
+                </CardBody>
               </Card>
             </GridItem>
           </GridContainer>
@@ -154,7 +140,6 @@ export class RequestUserQuotaPage extends React.PureComponent {
 }
 
 const mapStateToProps = createStructuredSelector({
-  userQuota: makeSelectCurrentUserQuota(),
   url: makeSelectURL(),
 });
 
@@ -175,4 +160,4 @@ const withConnect = connect(
 export default compose(
   withConnect,
   withStyles(styles)
-)(RequestUserQuotaPage);
+)(AdminUserQuotaPage);

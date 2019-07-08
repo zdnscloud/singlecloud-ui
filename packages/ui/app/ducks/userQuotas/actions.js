@@ -77,6 +77,23 @@ export const updateUserQuotaFailure = (error) => ({
   error: true,
 });
 
+export const requestUserQuota = (data, meta) => ({
+  type: c.REQUEST_USER_QUOTA,
+  payload: data,
+  meta,
+});
+
+export const requestUserQuotaSuccess = (resp) => ({
+  type: c.REQUEST_USER_QUOTA_SUCCESS,
+  payload: resp,
+});
+
+export const requestUserQuotaFailure = (error) => ({
+  type: c.REQUEST_USER_QUOTA_FAILURE,
+  payload: error,
+  error: true,
+});
+
 export const changeUserQuota = (userQuotaID) => ({
   type: c.CHANGE_USER_QUOTA,
   payload: { userQuotaID },

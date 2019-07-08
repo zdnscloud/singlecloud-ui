@@ -43,7 +43,7 @@ import styles from './styles';
 import schema from './tableSchema';
 
 /* eslint-disable react/prefer-stateless-function */
-export class UserQuotasTable extends React.PureComponent {
+export class AdminUserQuotasTable extends React.PureComponent {
   static propTypes = {
     classes: PropTypes.object.isRequired,
     data: PropTypes.object.isRequired,
@@ -56,6 +56,7 @@ export class UserQuotasTable extends React.PureComponent {
       data,
       // eslint-disable-next-line no-shadow
       removeUserQuota,
+      filter,
       theme,
     } = this.props;
     const mergedSchema = schema
@@ -74,13 +75,6 @@ export class UserQuotasTable extends React.PureComponent {
                 }
               >
                 <DeleteIcon />
-              </IconButton>
-              <IconButton
-                aria-label="Edit"
-                to={`/userQuotas/${props.data.get('id')}/edit`}
-                component={Link}
-              >
-                <EditIcon />
               </IconButton>
             </Fragment>
           ),
@@ -135,7 +129,7 @@ export class UserQuotasTable extends React.PureComponent {
             component: (props) => (
               <Button
                 color="primary"
-                to={`/userQuotas/${props.data.get('id')}`}
+                to={`/userQuotas/${props.data.get('id')}/request`}
                 component={Link}
               >
                 {props.data.get('name')}
@@ -155,7 +149,29 @@ export class UserQuotasTable extends React.PureComponent {
         <SimpleTable
           className={classes.table}
           schema={mergedSchema}
-          data={data}
+          data={data.filter((item) => {
+            let flag = true;
+            console.log(filter);
+            if (filter.userName && filter.status) {
+              if (filter.status === 'all') {
+                flag = item.get('name') === filter.userName;
+              }
+              flag =
+                item.get('name') === filter.userName &&
+                item.get('status') === filter.status;
+            }
+            if (filter.status && !filter.userName) {
+              if (filter.status === 'all') {
+                flag = true;
+              } else {
+                flag = item.get('status') === filter.status;
+              }
+            }
+            if (filter.userName && !filter.status) {
+              flag = item.get('name') === filter.userName;
+            }
+            return flag;
+          })}
         />
       </Paper>
     );
@@ -183,4 +199,4 @@ const withConnect = connect(
 export default compose(
   withConnect,
   withStyles(styles, { withTheme: true })
-)(UserQuotasTable);
+)(AdminUserQuotasTable);

@@ -29,6 +29,22 @@ export default defineMessages({
     id: `${scope}.tableTitleName`,
     defaultMessage: 'Name',
   },
+  tableTitleStatus: {
+    id: `${scope}.tableTitleStatus`,
+    defaultMessage: 'Status',
+  },
+  tableTitleCpu: {
+    id: `${scope}.tableTitleCpu`,
+    defaultMessage: 'CPU',
+  },
+  tableTitleMemory: {
+    id: `${scope}.tableTitleMemory`,
+    defaultMessage: 'Memory',
+  },
+  tableTitleStorage: {
+    id: `${scope}.tableTitleStorage`,
+    defaultMessage: 'Storage',
+  },
   tableTitleReplicas: {
     id: `${scope}.tableTitleReplicas`,
     defaultMessage: 'Replicas',
@@ -41,6 +57,18 @@ export default defineMessages({
     id: `${scope}.tableTitleActions`,
     defaultMessage: 'Actions',
   },
+  tableProcessing: {
+    id: `${scope}.tableProcessing`,
+    defaultMessage: 'Processing',
+  },
+  tableApproval: {
+    id: `${scope}.tableApproval`,
+    defaultMessage: 'Approval',
+  },
+  tableRejection: {
+    id: `${scope}.tableRejection`,
+    defaultMessage: 'Rejection',
+  },
   createUserQuota: {
     id: `${scope}.createUserQuota`,
     defaultMessage: 'Create UserQuota',
@@ -52,6 +80,22 @@ export default defineMessages({
   cancleUserQuotaButton: {
     id: `${scope}.cancleUserQuotaButton`,
     defaultMessage: 'Cancle',
+  },
+  searchUserQuotaButton: {
+    id: `${scope}.searchUserQuotaButton`,
+    defaultMessage: 'Search',
+  },
+  searchFormUserName: {
+    id: `${scope}.searchFormUserName`,
+    defaultMessage: 'UserName',
+  },
+  searchFormStatus: {
+    id: `${scope}.searchFormStatus`,
+    defaultMessage: 'Status',
+  },
+  selectAll: {
+    id: `${scope}.selectAll`,
+    defaultMessage: 'All',
   },
   userQuotaDetail: {
     id: `${scope}.userQuotaDetail`,
@@ -113,6 +157,14 @@ export default defineMessages({
     id: `${scope}.formNone`,
     defaultMessage: 'None',
   },
+  adminRequestListPage: {
+    id: `${scope}.adminRequestListPage`,
+    defaultMessage: 'AdminRequestListPage',
+  },
+  adminRequestList: {
+    id: `${scope}.adminRequestList`,
+    defaultMessage: 'AdminRequestList',
+  },
   requestList: {
     id: `${scope}.requestList`,
     defaultMessage: 'RequestList',
@@ -125,13 +177,13 @@ export default defineMessages({
     id: `${scope}.requestType`,
     defaultMessage: 'RequestType',
   },
-  formVolumeType: {
-    id: `${scope}.formVolumeType`,
-    defaultMessage: 'VolumeType',
+  editPage: {
+    id: `${scope}.editPage`,
+    defaultMessage: 'EditPage',
   },
-  formVolumeName: {
-    id: `${scope}.formVolumeName`,
-    defaultMessage: 'VolumeName',
+  edit: {
+    id: `${scope}.edit`,
+    defaultMessage: 'Edit',
   },
   formMountPath: {
     id: `${scope}.formMountPath`,

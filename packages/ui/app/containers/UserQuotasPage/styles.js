@@ -173,7 +173,12 @@ const styles = (theme) => ({
   },
   textareaControl: {
     width: '100%',
-  }
+  },
+  username: {
+    fontSize: '14px',
+    display: 'block',
+    marginTop: '20px',
+  },
 });
 
 export default styles;

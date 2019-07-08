@@ -94,10 +94,50 @@ export const updateUserQuotaEpic = (action$, state$, { ajax }) =>
     )
   );
 
+export const afterUpdateEpic = (action$) =>
+  action$.pipe(
+    ofType(c.UPDATE_USER_QUOTA_SUCCESS),
+    mergeMap(({ payload, meta }) =>
+      timer(1000).pipe(mapTo(push(`/userQuotas`)))
+    )
+  );
+
+export const requestUserQuotaEpic = (action$, state$, { ajax }) =>
+  action$.pipe(
+    ofType(c.REQUEST_USER_QUOTA),
+    mergeMap(({ payload, meta: { resolve, reject, url } }) =>
+      ajax({
+        url,
+        method: 'POST',
+        body: payload,
+      }).pipe(
+        map((resp) => {
+          resolve(resp);
+          return a.requestUserQuotaSuccess(resp);
+        }),
+        catchError((error) => {
+          reject(error);
+          return of(a.requestUserQuotaFailure(error));
+        })
+      )
+    )
+  );
+
+export const afterRequestEpic = (action$) =>
+  action$.pipe(
+    ofType(c.REQUEST_USER_QUOTA_SUCCESS),
+    mergeMap(({ payload, meta }) =>
+      timer(1000).pipe(mapTo(push(`/adminUserQuotas`)))
+    )
+  );
+
 export default combineEpics(
   loadUserQuotasEpic,
   createUserQuotaEpic,
   afterCreateEpic,
   removeUserQuotaEpic,
-  updateUserQuotaEpic
+  updateUserQuotaEpic,
+  afterUpdateEpic,
+  requestUserQuotaEpic,
+  afterRequestEpic
 );

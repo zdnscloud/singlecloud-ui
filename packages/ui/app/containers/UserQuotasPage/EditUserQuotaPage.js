@@ -1,6 +1,6 @@
 /**
  *
- * Create UserQuota Page
+ * Edit UserQuota Page
  *
  */
 import React from 'react';
@@ -25,8 +25,10 @@ import CardHeader from 'components/Card/CardHeader';
 import CardBody from 'components/Card/CardBody';
 import CardFooter from 'components/Card/CardFooter';
 
-import { makeSelectURL } from 'ducks/userQuotas/selectors';
-import { makeSelectRole } from 'ducks/role/selectors';
+import {
+  makeSelectURL,
+  makeSelectCurrentUserQuota,
+} from 'ducks/userQuotas/selectors';
 import * as actions from 'ducks/userQuotas/actions';
 
 import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
@@ -54,7 +56,7 @@ const CreateUserQuotaForm = reduxForm({
 })(UserQuotaForm);
 
 /* eslint-disable react/prefer-stateless-function */
-export class CreateUserQuotaPage extends React.PureComponent {
+export class EditUserQuotaPage extends React.PureComponent {
   static propTypes = {
     initAction: PropTypes.func,
     classes: PropTypes.object.isRequired,
@@ -62,17 +64,38 @@ export class CreateUserQuotaPage extends React.PureComponent {
     location: PropTypes.object,
   };
 
+  componentWillMount() {
+    this.load();
+  }
+
+  load() {
+    const { loadUserQuotas, url } = this.props;
+    loadUserQuotas(url);
+  }
+
   render() {
-    const { classes, submitForm, createUserQuota, url, role } = this.props;
+    const { classes, submitForm, updateUserQuota, userQuota } = this.props;
+    const url = userQuota.getIn(['links', 'update']);
     async function doSubmit(formValues) {
       try {
-        const { ...formData } = formValues.toJS();
+        const {
+          cpu,
+          memory,
+          namespace,
+          storage,
+          purpose,
+          ...formData
+        } = formValues.toJS();
         const data = {
-          ...formData,
+          cpu,
+          memory,
+          namespace,
+          storage,
+          purpose,
         };
-        console.log('data', data);
+        console.log('data', data, url);
         await new Promise((resolve, reject) => {
-          createUserQuota({ ...data }, { resolve, reject, url });
+          updateUserQuota({ ...data }, { resolve, reject, url });
         });
       } catch (error) {
         throw new SubmissionError({ _error: error });
@@ -91,7 +114,7 @@ export class CreateUserQuotaPage extends React.PureComponent {
                 name: <FormattedMessage {...messages.pageTitle} />,
               },
               {
-                name: <FormattedMessage {...messages.createUserQuota} />,
+                name: <FormattedMessage {...messages.editPage} />,
               },
             ]}
           />
@@ -101,16 +124,16 @@ export class CreateUserQuotaPage extends React.PureComponent {
                 <Card>
                   <CardHeader color="primary">
                     <h4 className={classes.cardTitleWhite}>
-                      <FormattedMessage {...messages.createUserQuota} />
+                      <FormattedMessage {...messages.edit} />
                     </h4>
                   </CardHeader>
                   <CardBody>
                     <CreateUserQuotaForm
                       classes={classes}
                       onSubmit={doSubmit}
+                      initialValues={userQuota}
                       // eslint-disable-next-line jsx-a11y/aria-role
-                      formRole="create"
-                      role={role}
+                      formRole="edit"
                     />
                   </CardBody>
                   <CardFooter className={classes.cardFooter}>
@@ -150,7 +173,7 @@ export class CreateUserQuotaPage extends React.PureComponent {
 
 const mapStateToProps = createStructuredSelector({
   url: makeSelectURL(),
-  role: makeSelectRole(),
+  userQuota: makeSelectCurrentUserQuota(),
 });
 
 const mapDispatchToProps = (dispatch) =>
@@ -170,4 +193,4 @@ const withConnect = connect(
 export default compose(
   withConnect,
   withStyles(styles)
-)(CreateUserQuotaPage);
+)(EditUserQuotaPage);

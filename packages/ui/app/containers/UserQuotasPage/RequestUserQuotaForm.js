@@ -109,7 +109,7 @@ class RequestUserQuotaForm extends PureComponent {
         <GridContainer>
           <GridItem xs={9} sm={9} md={9} className={classes.formLine}>
             <TextareaField
-              name="rejectionReason"
+              name="reason"
               label={<FormattedMessage {...messages.formRejectionReason} />}
               formControlProps={{
                 className: classes.textareaControl,

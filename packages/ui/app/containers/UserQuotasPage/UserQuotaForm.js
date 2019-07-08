@@ -10,6 +10,8 @@ import GridContainer from 'components/Grid/GridContainer';
 import InputField from 'components/Field/InputField';
 import TextareaField from 'components/Field/TextareaField';
 
+import { makeSelectRole } from 'ducks/role/selectors';
+
 import messages from './messages';
 
 class UserQuotaForm extends PureComponent {
@@ -25,14 +27,31 @@ class UserQuotaForm extends PureComponent {
       classes,
       profile,
       initialValues,
+      formRole,
+      role,
     } = this.props;
-
+    // eslint-disable-next-line no-console
     return (
       <form className={getByKey(classes, 'form')} onSubmit={handleSubmit}>
         <GridContainer>
           {error ? (
             <GridItem xs={12} sm={12} md={12}>
               <Danger>{getByKey(error, ['response', 'message'])}</Danger>
+            </GridItem>
+          ) : null}
+          {formRole === 'edit' ? (
+            <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
+              <InputField
+                label={<FormattedMessage {...messages.formClusterName} />}
+                name="clusterName"
+                formControlProps={{
+                  className: classes.nameControl,
+                }}
+                inputProps={{
+                  type: 'text',
+                  autoComplete: 'off',
+                }}
+              />
             </GridItem>
           ) : null}
           <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
@@ -48,9 +67,11 @@ class UserQuotaForm extends PureComponent {
               }}
             />
           </GridItem>
-          <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
-            <p>username</p>
-          </GridItem>
+          {formRole === 'create' ? (
+            <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
+              <small className={classes.username}>{role.get('user')}</small>
+            </GridItem>
+          ) : null}
         </GridContainer>
         <GridContainer>
           <GridItem xs={3} sm={3} md={3} className={classes.formLine}>

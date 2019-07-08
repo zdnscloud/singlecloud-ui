@@ -59,9 +59,20 @@ export const userQuotasReducer = (
 
     case c.UPDATE_USER_QUOTA:
       return state;
-    case c.UPDATE_USER_QUOTA_SUCCESS:
-      return state;
+    case c.UPDATE_USER_QUOTA_SUCCESS: {
+      const data = payload.response;
+      return state.setIn(['userQuotas', data.id], fromJS(data));
+    }
     case c.UPDATE_USER_QUOTA_FAILURE:
+      return state;
+
+    case c.REQUEST_USER_QUOTA:
+      return state;
+    case c.REQUEST_USER_QUOTA_SUCCESS: {
+      const data = payload.response;
+      return state;
+    }
+    case c.REQUEST_USER_QUOTA_FAILURE:
       return state;
 
     case c.CHANGE_USER_QUOTA:

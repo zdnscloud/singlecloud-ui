@@ -166,7 +166,11 @@ export const makeSelectLeftMenus = () =>
         ]);
       }
       menus = menus.concat([
-        { name: 'UserQuotas', path: '/userQuotas', icon: OverviewIcon }
+        {
+          name: 'UserQuotas',
+          path: isAdmin ? '/adminUserQuotas' : '/userQuotas',
+          icon: OverviewIcon,
+        },
       ]);
       return menus;
     }
