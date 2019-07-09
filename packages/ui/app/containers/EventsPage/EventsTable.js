@@ -28,8 +28,6 @@ import schema from './tableSchema';
 export class EventsTable extends React.PureComponent {
   static propTypes = {
     classes: PropTypes.object.isRequired,
-    events: PropTypes.object,
-    location: PropTypes.object,
   };
 
   render() {
