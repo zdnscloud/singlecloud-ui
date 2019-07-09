@@ -45,6 +45,15 @@ export const daemonSetsReducer = (
       const daemonSet = payload.response;
       // temporary add, may remove when support cancel load data
       if (daemonSet && daemonSet.id) {
+        const { containers } = daemonSet;
+        containers.forEach((item) => {
+          if (item && item.args) {
+            item.args = item.args.join(' ');
+          }
+          if (item && item.command) {
+            item.command = item.command.join(' ');
+          }
+        });
         return state.setIn(
           ['daemonSets', clusterID, namespaceID, daemonSet.id],
           fromJS(daemonSet)

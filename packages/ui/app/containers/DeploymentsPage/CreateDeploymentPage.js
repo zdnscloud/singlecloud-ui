@@ -151,6 +151,15 @@ export class CreateDeployment extends React.PureComponent {
     async function doSubmit(formValues) {
       try {
         const data = formValues.toJS();
+        const { containers } = data;
+        containers.forEach((item) => {
+          if (item && item.args) {
+            item.args = item.args.split(' ');
+          }
+          if (item && item.command) {
+            item.command = item.command.split(' ');
+          }
+        });
         await new Promise((resolve, reject) => {
           createDeployment(data, {
             resolve,

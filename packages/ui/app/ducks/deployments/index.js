@@ -45,6 +45,15 @@ export const deploymentsReducer = (
       const deployment = payload.response;
       // temporary add, may remove when support cancel load data
       if (deployment && deployment.id) {
+        const { containers } = deployment;
+        containers.forEach((item) => {
+          if (item && item.args) {
+            item.args = item.args.join(' ');
+          }
+          if (item && item.command) {
+            item.command = item.command.join(' ');
+          }
+        });
         return state.setIn(
           ['deployments', clusterID, namespaceID, deployment.id],
           fromJS(deployment)

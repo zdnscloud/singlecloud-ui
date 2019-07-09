@@ -45,6 +45,15 @@ export const jobsReducer = (
       const job = payload.response;
       // temporary add, may remove when support cancel load data
       if (job && job.id) {
+        const { containers } = job;
+        containers.forEach((item) => {
+          if (item && item.args) {
+            item.args = item.args.join(' ');
+          }
+          if (item && item.command) {
+            item.command = item.command.join(' ');
+          }
+        });
         return state.setIn(
           ['jobs', clusterID, namespaceID, job.id],
           fromJS(job)
