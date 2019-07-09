@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import React from 'react';
 import { Field } from 'redux-form/immutable';
 import InputLabel from '@material-ui/core/InputLabel';
@@ -38,8 +39,15 @@ SelectComponent.defaultProps = {
 
 const SelectField = (props) => {
   const { component, ...rest } = props;
+  let { options } = rest;
+  if (options && Array.isArray(options)) {
+    options = options.map((opt) => ({
+      label: _.isString(opt) ? opt : opt.label,
+      value: _.isString(opt) ? opt : opt.value,
+    }));
+  }
 
-  return <Field {...rest} component={SelectComponent} />;
+  return <Field {...rest} component={SelectComponent} options={options} />;
 };
 
 export default SelectField;

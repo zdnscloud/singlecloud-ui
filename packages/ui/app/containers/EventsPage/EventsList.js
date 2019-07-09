@@ -31,7 +31,7 @@ import WarningIcon from 'components/Icons/Warning';
 import MaxWindowIcon from 'components/Icons/MaxWindow';
 
 import { makeSelectClusterID } from 'ducks/app/selectors';
-import { makeSelectEvents } from 'ducks/events/selectors';
+import { makeSelectLatestEvents } from 'ducks/events/selectors';
 import * as actions from 'ducks/events/actions';
 
 import messages from './messages';
@@ -138,7 +138,7 @@ export class EventsList extends React.PureComponent {
 
 const mapStateToProps = createStructuredSelector({
   clusterID: makeSelectClusterID(),
-  events: makeSelectEvents(),
+  events: makeSelectLatestEvents(),
 });
 
 const mapDispatchToProps = (dispatch) =>

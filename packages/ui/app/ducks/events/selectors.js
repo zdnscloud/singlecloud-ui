@@ -25,6 +25,13 @@ export const makeSelectEvents = () =>
     (substate, clusterID) => substate.getIn(['events', clusterID]) || []
   );
 
+export const makeSelectLatestEvents = () =>
+  createSelector(
+    selectEventsDomain,
+    makeSelectClusterID(),
+    (substate, clusterID) => (substate.getIn(['events', clusterID]) || []).slice(-100)
+  );
+
 /**
  * Default selector used by Events
  */
