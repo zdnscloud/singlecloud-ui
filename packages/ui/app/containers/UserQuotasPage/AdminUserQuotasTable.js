@@ -155,10 +155,11 @@ export class AdminUserQuotasTable extends React.PureComponent {
             if (filter.userName && filter.status) {
               if (filter.status === 'all') {
                 flag = item.get('name') === filter.userName;
+              } else {
+                flag =
+                  item.get('name') === filter.userName &&
+                  item.get('status') === filter.status;
               }
-              flag =
-                item.get('name') === filter.userName &&
-                item.get('status') === filter.status;
             }
             if (filter.status && !filter.userName) {
               if (filter.status === 'all') {
