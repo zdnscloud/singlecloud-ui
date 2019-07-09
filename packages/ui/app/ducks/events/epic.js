@@ -36,7 +36,7 @@ export const eventEpic = (action$) =>
           observer.complete();
         };
       })
-        .pipe(scan((acc, event) => acc.concat([event]).slice(-100), []))
+        .pipe(scan((acc, event) => acc.concat([event]).slice(-1000), []))
         .pipe(debounceTime(100))
         .pipe(map((events) => a.setEvents(events, clusterID)))
     )

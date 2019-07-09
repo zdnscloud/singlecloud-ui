@@ -46,7 +46,7 @@ export class EventsList extends React.PureComponent {
 
   render() {
     const { classes, clusterID, events, theme } = this.props;
-    const rEvents = events.reverse();
+    const rEvents = events.reverse().slice(0, 100);
 
     return (
       <Paper className={classes.wrapper}>
