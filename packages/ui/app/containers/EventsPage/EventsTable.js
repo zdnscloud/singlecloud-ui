@@ -33,18 +33,35 @@ export class EventsTable extends React.PureComponent {
   };
 
   render() {
-    const { classes, events } = this.props;
+    const { classes, events, filters } = this.props;
+    const allFilter = '__all__';
     const mergedSchema = schema.map((s) => ({
       ...s,
       label: <FormattedMessage {...messages[`tableTitle${s.label}`]} />,
     }));
+    console.log(filters.toJS(), events);
 
     return (
       <Paper className={classes.tableWrapper}>
         <SimpleTable
           className={classes.table}
           schema={mergedSchema}
-          data={events}
+          data={events.filter((evt) => {
+            let flag = true;
+            if (filters.get('type') !== allFilter) {
+              flag = flag && filters.get('type') === evt.type;
+            }
+            if (filters.get('namespace') !== allFilter) {
+              flag = flag && filters.get('namespace') === evt.namespace;
+            }
+            if (filters.get('kind') !== allFilter) {
+              flag = flag && filters.get('kind') === evt.kind;
+            }
+            if (filters.get('name') !== allFilter) {
+              flag = flag && filters.get('name') === evt.name;
+            }
+            return flag;
+          })}
         />
       </Paper>
     );
