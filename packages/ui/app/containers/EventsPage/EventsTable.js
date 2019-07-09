@@ -39,7 +39,6 @@ export class EventsTable extends React.PureComponent {
       ...s,
       label: <FormattedMessage {...messages[`tableTitle${s.label}`]} />,
     }));
-    console.log(filters.toJS(), events);
 
     return (
       <Paper className={classes.tableWrapper}>
@@ -61,7 +60,7 @@ export class EventsTable extends React.PureComponent {
               flag = flag && filters.get('name') === evt.name;
             }
             return flag;
-          })}
+          }).reverse()}
         />
       </Paper>
     );
