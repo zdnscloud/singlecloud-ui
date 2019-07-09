@@ -43,6 +43,13 @@ const EventsFilterForm = reduxForm({
   form: formName,
 })(FilterForm);
 
+const formInitialValues = fromJS({
+  type: '__all__',
+  namespace: '__all__',
+  kind: '__all__',
+  name: '__all__',
+});
+
 /* eslint-disable react/prefer-stateless-function */
 export class EventsPage extends React.PureComponent {
   static propTypes = {
@@ -104,12 +111,7 @@ export class EventsPage extends React.PureComponent {
                   <CardBody>
                     <EventsFilterForm
                       classes={classes}
-                      initialValues={fromJS({
-                        type: '__all__',
-                        namespace: '__all__',
-                        kind: '__all__',
-                        name: '__all__',
-                      })}
+                      initialValues={formInitialValues}
                       {...options}
                     />
                     <EventsTable filters={filters} />
@@ -129,7 +131,7 @@ const mapStateToProps = createStructuredSelector({
   namespaces: makeSelectNamespaces(),
   filters: createSelector(
     getFormValues(formName),
-    (v) => v
+    (v) => v || formInitialValues
   ),
 });
 
