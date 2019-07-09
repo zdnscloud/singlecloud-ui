@@ -4,7 +4,7 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 
-const schema = ['name'];
+const schema = ['name', 'nodes', 'size', 'usedsize', 'freesize'];
 
 const tableSchema = schema.map((id) => {
   if (id === 'pods') {

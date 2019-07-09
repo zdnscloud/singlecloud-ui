@@ -49,9 +49,21 @@ export default defineMessages({
     id: `${scope}.tableTitleName`,
     defaultMessage: 'Name',
   },
+  tableTitleNodes: {
+    id: `${scope}.tableTitleNodes`,
+    defaultMessage: 'Nodes',
+  },
   tableTitleSize: {
     id: `${scope}.tableTitleSize`,
     defaultMessage: 'Size',
+  },
+  tableTitleUsedsize: {
+    id: `${scope}.tableTitleUsedsize`,
+    defaultMessage: 'Usedsize',
+  },
+  tableTitleFreesize: {
+    id: `${scope}.tableTitleFreesize`,
+    defaultMessage: 'Freesize',
   },
   tableTitleActions: {
     id: `${scope}.tableTitleActions`,
@@ -72,5 +84,9 @@ export default defineMessages({
   usedsize: {
     id: `${scope}.usedsize`,
     defaultMessage: 'Used',
+  },
+  createStorageButton: {
+    id: `${scope}.createStorageButton`,
+    defaultMessage: 'createStorageButton',
   },
 });
