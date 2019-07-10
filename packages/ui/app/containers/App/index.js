@@ -69,6 +69,21 @@ const theme = createMuiTheme({
         textTransform: 'none',
       },
     },
+    MuiInputLabel: {
+      shrink: {
+        transform: 'translate(0, 1.5px) scale(0.85)',
+      },
+    },
+    MuiInputBase: {
+      root: {
+        fontSize: '14px',
+      },
+    },
+    MuiFormLabel: {
+      root: {
+        fontSize: '12px',
+      }
+    }
   },
 });
 

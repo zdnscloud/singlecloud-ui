@@ -107,7 +107,6 @@ class JobForm extends PureComponent {
                   name="name"
                   fullWidth
                   inputProps={{ type: 'text', autoComplete: 'off' }}
-                  classes={classes}
                 />
               </GridItem>
               <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
@@ -126,7 +125,6 @@ class JobForm extends PureComponent {
                   ]}
                   formControlProps={{
                     style: {
-                      marginTop: 18,
                       width: '100%',
                     },
                   }}

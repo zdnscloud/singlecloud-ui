@@ -113,7 +113,6 @@ const Volumes = ({
               ]}
               formControlProps={{
                 style: {
-                  marginTop: 10,
                   width: 146,
                 },
               }}
@@ -125,7 +124,6 @@ const Volumes = ({
               options={names}
               formControlProps={{
                 style: {
-                  marginTop: 10,
                   width: 146,
                 },
               }}
