@@ -4,6 +4,7 @@ import {
   getLocation,
 } from 'connected-react-router/immutable';
 import { makeSelectClusterID } from 'ducks/app/selectors';
+import { makeSelectCurrentCluster } from 'ducks/clusters/selectors';
 import { prefix } from './constants';
 
 /**
@@ -26,6 +27,12 @@ export const makeSelectCurrentStorageClasses = () =>
     makeSelectStorageClasses(),
     makeSelectClusterID(),
     (cs, clusterID) => cs.getIn([clusterID]) || cs.clear()
+  );
+
+export const makeSelectURL = () =>
+  createSelector(
+    makeSelectCurrentCluster(),
+    (ns) => ns.getIn(['links', 'storageclusters'])
   );
 
 export const makeSelectStorages = () =>

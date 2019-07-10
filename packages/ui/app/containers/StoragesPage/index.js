@@ -35,10 +35,7 @@ import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
 import * as actions from 'ducks/storages/actions';
 import { makeSelectClusterID } from 'ducks/app/selectors';
 import {
-  makeSelectLVMStorages,
-  makeSelectNFSStorages,
-  makeSelectCurrentLVMStorages,
-  makeSelectCurrentNFSStorages,
+  makeSelectURL,
 } from 'ducks/storages/selectors';
 
 import StoragesTable from './StoragesTable';
@@ -66,8 +63,7 @@ export class StoragesPage extends React.PureComponent {
   }
 
   load() {
-    const { clusterID, loadStorages } = this.props;
-    const url = `/apis/agent.zcloud.cn/v1/clusters/${clusterID}/storages`;
+    const { clusterID, loadStorages, url } = this.props;
     loadStorages(url, clusterID);
   }
 
@@ -119,6 +115,7 @@ export class StoragesPage extends React.PureComponent {
 
 const mapStateToProps = createStructuredSelector({
   clusterID: makeSelectClusterID(),
+  url: makeSelectURL(),
 });
 
 const mapDispatchToProps = (dispatch) =>

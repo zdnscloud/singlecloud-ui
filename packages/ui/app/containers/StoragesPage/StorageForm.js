@@ -24,6 +24,7 @@ import Danger from 'components/Typography/Danger';
 import GridItem from 'components/Grid/GridItem';
 import GridContainer from 'components/Grid/GridContainer';
 import InputField from 'components/Field/InputField';
+import SelectField from 'components/Field/SelectField';
 
 import messages from './messages';
 
@@ -51,18 +52,29 @@ class StorageForm extends PureComponent {
             </GridItem>
           ) : null}
           <GridItem xs={12} sm={12} md={12} className={classes.formLine}>
-            <InputField
-              /* label={<FormattedMessage {...messages.formName} />} */
-              name="name"
-              formControlProps={{
-                className: classes.nameControl,
-              }}
-              inputProps={{
-                type: 'text',
-                autoComplete: 'off',
-              }}
-              classes={classes}
-            />
+            <GridContainer>
+              <GridItem xs={3} sm={3} md={3}>
+                <InputField
+                  label={<FormattedMessage {...messages.formName} />}
+                  name="name"
+                  fullWidth
+                  inputProps={{
+                    type: 'text',
+                    autoComplete: 'off',
+                  }}
+                  classes={classes}
+                />
+              </GridItem>
+              <GridItem xs={3} sm={3} md={3}>
+                <SelectField
+                  label={<FormattedMessage {...messages.formStoragetype} />}
+                  name="storagetype"
+                  fullWidth
+                  classes={classes}
+                  options={['lvm', 'ceph']}
+                />
+              </GridItem>
+            </GridContainer>
           </GridItem>
         </GridContainer>
       </form>

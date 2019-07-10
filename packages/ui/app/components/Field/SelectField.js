@@ -17,9 +17,10 @@ const SelectComponent = ({
   labelProps,
   formControlProps,
   options,
+  fullWidth,
   ...custom
 }) => (
-  <FormControl {...formControlProps} disabled={disabled}>
+  <FormControl {...formControlProps} disabled={disabled} fullWidth={fullWidth}>
     <InputLabel htmlFor="" {...labelProps}>
       {label}
     </InputLabel>

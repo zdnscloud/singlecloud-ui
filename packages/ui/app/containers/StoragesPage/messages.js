@@ -89,4 +89,12 @@ export default defineMessages({
     id: `${scope}.createStorageButton`,
     defaultMessage: 'createStorageButton',
   },
+  formName: {
+    id: `${scope}.formName`,
+    defaultMessage: 'formName',
+  },
+  formStoragetype: {
+    id: `${scope}.formStoragetype`,
+    defaultMessage: 'formStoragetype',
+  },
 });
