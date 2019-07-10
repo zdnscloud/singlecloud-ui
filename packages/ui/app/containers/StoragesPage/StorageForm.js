@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import { compose } from 'redux';
 import { FormattedMessage } from 'react-intl';
-import { Field, reduxForm } from 'redux-form/immutable';
+import { Field, FieldArray, reduxForm } from 'redux-form/immutable';
 import getByKey from '@gsmlg/utils/getByKey';
 
 import withStyles from '@material-ui/core/styles/withStyles';
@@ -27,6 +27,7 @@ import InputField from 'components/Field/InputField';
 import SelectField from 'components/Field/SelectField';
 
 import messages from './messages';
+// import Hosts from './form/Hosts';
 
 class StorageForm extends PureComponent {
   state = {};
@@ -75,6 +76,13 @@ class StorageForm extends PureComponent {
                 />
               </GridItem>
             </GridContainer>
+          </GridItem>
+          <GridItem xs={12} sm={12} md={12} className={classes.formLine}>
+            {/* <FieldArray */}
+            {/*   name="hosts" */}
+            {/*   classes={classes} */}
+            {/*   component={Hosts} */}
+            {/* /> */}
           </GridItem>
         </GridContainer>
       </form>
