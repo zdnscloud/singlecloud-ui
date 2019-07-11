@@ -82,8 +82,8 @@ const theme = createMuiTheme({
     MuiFormLabel: {
       root: {
         fontSize: '12px',
-      }
-    }
+      },
+    },
   },
 });
 

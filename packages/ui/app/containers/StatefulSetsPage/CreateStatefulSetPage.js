@@ -193,37 +193,26 @@ export class CreateStatefulSet extends React.PureComponent {
           />
           <GridContainer className={classes.grid}>
             <GridItem xs={12} sm={12} md={12}>
-              <Card>
-                <CardHeader color="primary">
-                  <h4 className={classes.cardTitleWhite}>
-                    <FormattedMessage {...messages.createStatefulSet} />
-                  </h4>
-                </CardHeader>
-                <CardBody style={{ paddingLeft: 0, paddingRight: 0 }}>
-                  <CreateStatefulSetForm
-                    classes={classes}
-                    onSubmit={doSubmit}
-                    configMaps={configMaps}
-                    secrets={secrets}
-                    storageClasses={storageClasses}
-                    initialValues={fromJS({
-                      replicas: 1,
-                      containers: [{ name: '' }],
-                    })}
-                    formValues={values}
-                  />
-                </CardBody>
-                <CardFooter className={classes.cardFooter}>
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    size="large"
-                    onClick={submitForm}
-                  >
-                    <FormattedMessage {...messages.save} />
-                  </Button>
-                </CardFooter>
-              </Card>
+              <CreateStatefulSetForm
+                classes={classes}
+                onSubmit={doSubmit}
+                configMaps={configMaps}
+                secrets={secrets}
+                storageClasses={storageClasses}
+                initialValues={fromJS({
+                  replicas: 1,
+                  containers: [{ name: '' }],
+                })}
+                formValues={values}
+              />
+              <Button
+                variant="contained"
+                color="primary"
+                size="large"
+                onClick={submitForm}
+              >
+                <FormattedMessage {...messages.save} />
+              </Button>
             </GridItem>
           </GridContainer>
         </div>
