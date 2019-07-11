@@ -10,6 +10,6 @@ export default loadable(() =>
   import(/* webpackChunkName: "StoragePage" */ './index')
 );
 
-export const CreateStoragePage = loadable(() => (
+export const CreateStoragePage = loadable(() =>
   import(/* webpackChunkName: "CreateStoragePage" */ './CreateStoragePage')
-));
+);

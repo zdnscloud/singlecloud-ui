@@ -97,4 +97,8 @@ export default defineMessages({
     id: `${scope}.formStoragetype`,
     defaultMessage: 'formStoragetype',
   },
+  formAddStorage: {
+    id: `${scope}.formAddStorage`,
+    defaultMessage: 'formAddStorage',
+  },
 });

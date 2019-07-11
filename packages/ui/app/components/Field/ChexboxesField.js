@@ -23,20 +23,16 @@ const renderChexboxesGroup = ({
   formLabelComponent,
   ...custom
 }) => {
-  let rolesArr = [];
   const onChange = (event, ...args) => {
-    if (input.value) {
-      const arr = input.value.filter((n) => n !== undefined);
-      rolesArr = rolesArr.concat(arr);
-    }
-    event.persist();
+    let val = input.value || [];
+    const { checked, value } = event.target;
+
     if (event.target.checked) {
-      rolesArr.push(event.target.value);
+      val.push(value);
     } else {
-      rolesArr = rolesArr.filter((n) => n !== event.target.value);
+      val = val.filter((v) => v !== value);
     }
-    input.onChange(rolesArr);
-    // console.log("onChange",rolesArr)
+    input.onChange(val);
   };
 
   return (
@@ -54,16 +50,6 @@ const renderChexboxesGroup = ({
       </FormLabel>
       <FormGroup aria-label={label} className={classes.group}>
         {options.map((opt, i) => (
-          // <FormControlLabel
-          //   key={i}
-          //   control={<Checkbox onChange={(evt) => {
-          //     input.onChange(evt.target.value);
-          //   }} color="primary" />}
-          //   label={opt.label}
-          //   value={opt.value}
-          //   style ={{ marginRight:"40px"}}
-          //   {...opt}
-          // />
           <FormControlLabel
             key={i}
             control={<Checkbox onChange={onChange} color="primary" />}

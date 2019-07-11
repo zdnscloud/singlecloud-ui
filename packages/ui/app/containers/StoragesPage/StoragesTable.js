@@ -20,10 +20,7 @@ import { SimpleTable } from '@gsmlg/com';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
 
-import {
-  makeSelectClusterID,
-  makeSelectLocation,
-} from 'ducks/app/selectors';
+import { makeSelectClusterID, makeSelectLocation } from 'ducks/app/selectors';
 import * as actions from 'ducks/storages/actions';
 import {
   makeSelectStorages,

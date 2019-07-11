@@ -37,9 +37,7 @@ const epicMiddleware = createEpicMiddleware({
           ...((opt && opt.headers) || {}),
         },
       }).pipe(
-        map((resp) => {
-          return resp;
-        }),
+        map((resp) => resp),
         catchError((error) => {
           if (getByKey(error, 'status') === 401) {
             console.log('unauthorized', error.status);

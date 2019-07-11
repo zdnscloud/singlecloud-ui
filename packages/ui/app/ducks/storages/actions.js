@@ -78,3 +78,22 @@ export const loadLVMStoragesFailure = (error, clusterID) => ({
   meta: { clusterID },
   error: true,
 });
+
+export const loadBlockDevices = (url, clusterID) => ({
+  type: c.LOAD_BLOCK_DEVICES,
+  payload: url,
+  meta: { clusterID },
+});
+
+export const loadBlockDevicesSuccess = (resp, clusterID) => ({
+  type: c.LOAD_BLOCK_DEVICES_SUCCESS,
+  payload: resp,
+  meta: { clusterID },
+});
+
+export const loadBlockDevicesFailure = (error, clusterID) => ({
+  type: c.LOAD_BLOCK_DEVICES_FAILURE,
+  payload: error,
+  meta: { clusterID },
+  error: true,
+});

@@ -50,9 +50,7 @@ export const makeSelectStoragesList = () =>
     (substate, storages) =>
       substate
         .get('storagesList')
-        .map((id) => (
-          storages.get(id) || storages.clear()
-        ))
+        .map((id) => storages.get(id) || storages.clear())
   );
 
 export const makeSelectNFSStorages = () =>
@@ -79,6 +77,30 @@ export const makeSelectCurrentLVMStorages = () =>
     makeSelectLVMStorages(),
     makeSelectClusterID(),
     (storages, clusterID) => storages.getIn([clusterID]) || storages.clear()
+  );
+
+export const makeSelectBlockDevicesURL = () =>
+  createSelector(
+    makeSelectCurrentCluster(),
+    (ns) => ns.getIn(['links', 'blockdevices'])
+  );
+
+export const makeSelectBlockDevices = () =>
+  createSelector(
+    selectStoragesDomain,
+    makeSelectClusterID(),
+    (substate, clusterID) =>
+      substate.getIn(['blockDevices', clusterID]) || substate.clear()
+  );
+
+export const makeSelectBlockDevicesList = () =>
+  createSelector(
+    selectStoragesDomain,
+    makeSelectBlockDevices(),
+    (substate, blockDevices) =>
+      substate
+        .get('blockDevicesList')
+        .map((id) => blockDevices.get(id) || blockDevices.clear())
   );
 
 /**

@@ -68,7 +68,12 @@ const renderClusters = ({ label, input, meta, clusters, ...custom }) => (
             <CustomCheckbox
               {...ipt}
               {...custom}
-              label={<FormattedMessage {...messages.clusterAllNamespaces} values={{cluster: name}} />}
+              label={
+                <FormattedMessage
+                  {...messages.clusterAllNamespaces}
+                  values={{ cluster: name }}
+                />
+              }
               value={value}
               cluster={name}
               namespace="_all"
@@ -83,7 +88,12 @@ const renderClusters = ({ label, input, meta, clusters, ...custom }) => (
                     key={ii}
                     {...ipt}
                     {...custom}
-                    label={<FormattedMessage {...messages.clusterNamespace} values={{cluster: name, namespace: nname}} />}
+                    label={
+                      <FormattedMessage
+                        {...messages.clusterNamespace}
+                        values={{ cluster: name, namespace: nname }}
+                      />
+                    }
                     value={value}
                     cluster={name}
                     namespace={nname}

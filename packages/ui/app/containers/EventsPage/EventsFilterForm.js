@@ -76,7 +76,7 @@ class EventsFilterForm extends PureComponent {
             <SelectField
               label={<FormattedMessage {...messages.tableTitleType} />}
               name="type"
-              options={[{label: 'ALL', value: '__all__'}].concat(types)}
+              options={[{ label: 'ALL', value: '__all__' }].concat(types)}
               inputProps={{ displayEmpty: true }}
               formControlProps={{
                 style: {
@@ -89,7 +89,7 @@ class EventsFilterForm extends PureComponent {
             <SelectField
               label={<FormattedMessage {...messages.tableTitleNamespace} />}
               name="namespace"
-              options={[{label: 'ALL', value: '__all__'}].concat(namespaces)}
+              options={[{ label: 'ALL', value: '__all__' }].concat(namespaces)}
               inputProps={{ displayEmpty: true }}
               formControlProps={{
                 style: {
@@ -102,7 +102,7 @@ class EventsFilterForm extends PureComponent {
             <SelectField
               label={<FormattedMessage {...messages.tableTitleKind} />}
               name="kind"
-              options={[{label: 'ALL', value: '__all__'}].concat(kinds)}
+              options={[{ label: 'ALL', value: '__all__' }].concat(kinds)}
               inputProps={{ displayEmpty: true }}
               formControlProps={{
                 style: {
@@ -115,7 +115,7 @@ class EventsFilterForm extends PureComponent {
             <SelectField
               label={<FormattedMessage {...messages.tableTitleName} />}
               name="name"
-              options={[{label: 'ALL', value: '__all__'}].concat(names)}
+              options={[{ label: 'ALL', value: '__all__' }].concat(names)}
               inputProps={{ displayEmpty: true }}
               formControlProps={{
                 style: {

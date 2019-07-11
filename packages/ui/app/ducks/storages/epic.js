@@ -61,9 +61,21 @@ export const loadLVMStoragesEpic = (action$, state$, { ajax }) =>
     )
   );
 
+export const loadBlockDevicesEpic = (action$, state$, { ajax }) =>
+  action$.pipe(
+    ofType(c.LOAD_BLOCK_DEVICES),
+    mergeMap(({ payload, meta: { clusterID } }) =>
+      ajax(payload).pipe(
+        map((resp) => a.loadBlockDevicesSuccess(resp, clusterID)),
+        catchError((error) => of(a.loadBlockDevicesFailure(error, clusterID)))
+      )
+    )
+  );
+
 export default combineEpics(
   loadStoragesEpic,
   loadStroageClassesEpic,
+  loadBlockDevicesEpic,
   loadNFSStoragesEpic,
   loadLVMStoragesEpic
 );

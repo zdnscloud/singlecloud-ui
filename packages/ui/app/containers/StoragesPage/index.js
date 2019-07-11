@@ -17,7 +17,6 @@ import Menubar from 'components/Menubar';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
-// import SwipeableViews from 'react-swipeable-views';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import IconButton from '@material-ui/core/IconButton';
@@ -34,9 +33,7 @@ import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
 
 import * as actions from 'ducks/storages/actions';
 import { makeSelectClusterID } from 'ducks/app/selectors';
-import {
-  makeSelectURL,
-} from 'ducks/storages/selectors';
+import { makeSelectURL } from 'ducks/storages/selectors';
 
 import StoragesTable from './StoragesTable';
 import messages from './messages';

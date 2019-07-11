@@ -27,7 +27,7 @@ import InputField from 'components/Field/InputField';
 import SelectField from 'components/Field/SelectField';
 
 import messages from './messages';
-// import Hosts from './form/Hosts';
+import Hosts from './form/Hosts';
 
 class StorageForm extends PureComponent {
   state = {};
@@ -41,7 +41,9 @@ class StorageForm extends PureComponent {
       error,
       classes,
       profile,
+      blockDevices,
       initialValues,
+      formValues,
     } = this.props;
 
     return (
@@ -78,11 +80,13 @@ class StorageForm extends PureComponent {
             </GridContainer>
           </GridItem>
           <GridItem xs={12} sm={12} md={12} className={classes.formLine}>
-            {/* <FieldArray */}
-            {/*   name="hosts" */}
-            {/*   classes={classes} */}
-            {/*   component={Hosts} */}
-            {/* /> */}
+            <FieldArray
+              name="hosts"
+              classes={classes}
+              component={Hosts}
+              blockDevices={blockDevices}
+              values={formValues.get('hosts')}
+            />
           </GridItem>
         </GridContainer>
       </form>

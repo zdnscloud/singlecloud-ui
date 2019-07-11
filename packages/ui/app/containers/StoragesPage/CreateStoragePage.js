@@ -31,6 +31,11 @@ import CardFooter from 'components/Card/CardFooter';
 import { makeSelectClusterID } from 'ducks/app/selectors';
 import { makeSelectCurrentCluster } from 'ducks/clusters/selectors';
 import * as actions from 'ducks/storages/actions';
+import {
+  makeSelectURL,
+  makeSelectBlockDevicesURL,
+  makeSelectBlockDevicesList,
+} from 'ducks/storages/selectors';
 
 import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
 import messages from './messages';
@@ -65,15 +70,34 @@ export class CreateStoragePage extends React.PureComponent {
     location: PropTypes.object,
   };
 
+  componentWillMount() {
+    this.load();
+  }
+
+  componentDidUpdate(prevProps) {
+    const { clusterID: prevClusterID } = prevProps;
+    const { clusterID } = this.props;
+    if (clusterID !== prevClusterID) {
+      this.load();
+    }
+  }
+
+  load() {
+    const { clusterID, loadBlockDevices, devicesURL } = this.props;
+    loadBlockDevices(devicesURL, clusterID);
+  }
+
   render() {
     const {
+      blockDevices,
       classes,
       cluster,
       clusterID,
-      submitForm,
       createStorage,
+      submitForm,
+      url,
+      values,
     } = this.props;
-    const url = cluster.getIn(['links', 'storages']);
     async function doSubmit(formValues) {
       try {
         const name = formValues.get('name');
@@ -116,6 +140,8 @@ export class CreateStoragePage extends React.PureComponent {
                       classes={classes}
                       onSubmit={doSubmit}
                       initialValues={fromJS({ name: '' })}
+                      blockDevices={blockDevices}
+                      formValues={values}
                     />
                   </CardBody>
                   <CardFooter className={classes.cardFooter}>
@@ -139,7 +165,10 @@ export class CreateStoragePage extends React.PureComponent {
 
 const mapStateToProps = createStructuredSelector({
   clusterID: makeSelectClusterID(),
-  cluster: makeSelectCurrentCluster(),
+  url: makeSelectURL(),
+  devicesURL: makeSelectBlockDevicesURL(),
+  blockDevices: makeSelectBlockDevicesList(),
+  values: getFormValues(formName),
 });
 
 const mapDispatchToProps = (dispatch) =>

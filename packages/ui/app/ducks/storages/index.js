@@ -19,6 +19,8 @@ export const initialState = fromJS({
   storageClasses: {},
   storages: {},
   storagesList: [],
+  blockDevices: {},
+  blockDevicesList: [],
   nfsStorages: {},
   lvmStorages: {},
 });
@@ -44,7 +46,7 @@ export const storagesReducer = (
       return state;
     case c.LOAD_STORAGES_SUCCESS: {
       const { clusterID } = meta;
-      const { data, list } = procCollectionData(payload, { generateID: true });
+      const { data, list } = procCollectionData(payload);
       return state
         .setIn(['storages', clusterID], fromJS(data))
         .set('storagesList', fromJS(list));
@@ -70,6 +72,18 @@ export const storagesReducer = (
       return state.setIn(['lvmStorages', clusterID], fromJS(data));
     }
     case c.LOAD_LVM_STORAGES_FAILURE:
+      return state;
+
+    case c.LOAD_BLOCK_DEVICES:
+      return state;
+    case c.LOAD_BLOCK_DEVICES_SUCCESS: {
+      const { clusterID } = meta;
+      const { data, list } = procCollectionData(payload, { generateID: true });
+      return state
+        .setIn(['blockDevices', clusterID], fromJS(data))
+        .set('blockDevicesList', fromJS(list));
+    }
+    case c.LOAD_BLOCK_DEVICES_FAILURE:
       return state;
 
     default:
