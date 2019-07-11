@@ -84,7 +84,7 @@ export class JobDetailPage extends React.PureComponent {
   }
 
   render() {
-    const { classes, job } = this.props;
+    const { classes, job, clusterID, namespaceID } = this.props;
 
     return (
       <div className={classes.root}>

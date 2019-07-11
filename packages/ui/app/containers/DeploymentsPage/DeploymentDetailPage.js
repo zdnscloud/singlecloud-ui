@@ -104,7 +104,6 @@ export class DeploymentDetailPage extends React.PureComponent {
                 name: <FormattedMessage {...messages.pageTitle} />,
               },
               {
-                path: '#',
                 name: <FormattedMessage {...messages.deploymentDetail} />,
               },
             ]}
