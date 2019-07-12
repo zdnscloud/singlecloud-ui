@@ -84,6 +84,11 @@ const theme = createMuiTheme({
         fontSize: '12px',
       },
     },
+    MuiSelect: {
+      selectMenu: {
+        height: '1.1875em',
+      },
+    },
   },
 });
 
