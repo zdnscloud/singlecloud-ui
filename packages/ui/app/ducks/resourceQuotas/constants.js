@@ -1,4 +1,4 @@
-export const prefix = 'resourceQuota';
+export const prefix = 'resourceQuotas';
 /*
   constants
 */
