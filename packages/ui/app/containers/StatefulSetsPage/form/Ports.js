@@ -82,7 +82,6 @@ const Ports = ({ fields, meta: { error, submitFailed } }) => {
               options={options}
               formControlProps={{
                 style: {
-                  marginTop: '10px',
                   width: '146px',
                 },
               }}

@@ -91,7 +91,7 @@ export class DaemonSetDetailPage extends React.PureComponent {
   }
 
   render() {
-    const { classes, daemonSet } = this.props;
+    const { classes, daemonSet, clusterID, namespaceID } = this.props;
 
     return (
       <div className={classes.root}>

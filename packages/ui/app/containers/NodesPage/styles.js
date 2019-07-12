@@ -49,7 +49,6 @@ const styles = (theme) => ({
   },
   grid: {
     padding: theme.spacing(2),
-    paddingTop: theme.spacing(1),
   },
   tableWrapper: {
     overflow: 'auto',

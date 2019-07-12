@@ -9,21 +9,9 @@ import { connect } from 'react-redux';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import { bindActionCreators, compose } from 'redux';
-import {
-  reduxForm,
-  getFormValues,
-  SubmissionError,
-  submit,
-} from 'redux-form/immutable';
-
 import { withStyles } from '@material-ui/core/styles';
-import { Link } from 'react-router-dom';
-import Menubar from 'components/Menubar';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import Typography from '@material-ui/core/Typography';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import ButtonBase from '@material-ui/core/ButtonBase';
-import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 import RemoveIcon from '@material-ui/icons/Remove';
 import GridItem from 'components/Grid/GridItem';
@@ -83,83 +71,85 @@ export class StatefulSet extends React.PureComponent {
               </h4>
             </CardHeader>
             <CardBody style={{ paddingLeft: 0, paddingRight: 0 }}>
-              <GridContainer>
-                <GridItem xs={12} sm={12} md={12}>
-                  <GridContainer style={{ paddingLeft: 30, paddingRight: 30 }}>
-                    <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
-                      <ReadOnlyInput
-                        labelText={<FormattedMessage {...messages.formName} />}
-                        name="name"
-                        fullWidth
-                        value={statefulSet.get('name')}
-                      />
-                    </GridItem>
-                    <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
-                      <ReadOnlyInput
-                        labelText={
-                          <FormattedMessage {...messages.formReplicas} />
-                        }
-                        name="replicas"
-                        fullWidth
-                        value={statefulSet.get('replicas')}
-                        inputProps={{
-                          type: 'number',
-                          autoComplete: 'off',
-                          endAdornment: (
-                            <InputAdornment position="end">
-                              <ButtonBase
-                                disabled={replicas === 1}
-                                onClick={(evt) => {
-                                  scaleStatefulSet(
-                                    {
-                                      replicas: replicas - 1,
-                                    },
-                                    {
-                                      url: updateUrl,
-                                      statefulSet,
-                                      clusterID,
-                                      namespaceID,
-                                    }
-                                  );
-                                }}
-                              >
-                                <RemoveIcon />
-                              </ButtonBase>
-                              <ButtonBase
-                                disabled={replicas >= 50}
-                                onClick={(evt) => {
-                                  scaleStatefulSet(
-                                    {
-                                      replicas: replicas + 1,
-                                    },
-                                    {
-                                      url: updateUrl,
-                                      statefulSet,
-                                      clusterID,
-                                      namespaceID,
-                                    }
-                                  );
-                                }}
-                              >
-                                <AddIcon />
-                              </ButtonBase>
-                            </InputAdornment>
-                          ),
-                        }}
-                      />
-                    </GridItem>
-                  </GridContainer>
-                </GridItem>
-                <GridItem xs={12} sm={12} md={12}>
-                  <Card>
-                    <CardHeader color="primary">
-                      <h4 className={classes.cardTitleWhite}>
-                        <FormattedMessage {...messages.formContainers} />
-                      </h4>
-                    </CardHeader>
-                    <CardBody>
-                      <List component="ul">
-                        {statefulSet &&
+              <GridItem xs={12} sm={12} md={12}>
+                <GridContainer style={{ paddingLeft: 30, paddingRight: 30 }}>
+                  <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
+                    <ReadOnlyInput
+                      labelText={<FormattedMessage {...messages.formName} />}
+                      name="name"
+                      fullWidth
+                      value={statefulSet.get('name')}
+                    />
+                  </GridItem>
+                  <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
+                    <ReadOnlyInput
+                      labelText={
+                        <FormattedMessage {...messages.formReplicas} />
+                      }
+                      name="replicas"
+                      fullWidth
+                      value={statefulSet.get('replicas')}
+                      inputProps={{
+                        type: 'number',
+                        autoComplete: 'off',
+                        endAdornment: (
+                          <InputAdornment position="end">
+                            <ButtonBase
+                              disabled={replicas === 1}
+                              onClick={(evt) => {
+                                scaleStatefulSet(
+                                  {
+                                    replicas: replicas - 1,
+                                  },
+                                  {
+                                    url: updateUrl,
+                                    statefulSet,
+                                    clusterID,
+                                    namespaceID,
+                                  }
+                                );
+                              }}
+                            >
+                              <RemoveIcon />
+                            </ButtonBase>
+                            <ButtonBase
+                              disabled={replicas >= 50}
+                              onClick={(evt) => {
+                                scaleStatefulSet(
+                                  {
+                                    replicas: replicas + 1,
+                                  },
+                                  {
+                                    url: updateUrl,
+                                    statefulSet,
+                                    clusterID,
+                                    namespaceID,
+                                  }
+                                );
+                              }}
+                            >
+                              <AddIcon />
+                            </ButtonBase>
+                          </InputAdornment>
+                        ),
+                      }}
+                    />
+                  </GridItem>
+                </GridContainer>
+              </GridItem>
+            </CardBody>
+          </Card>
+        </GridItem>
+        <GridItem xs={12} sm={12} md={12}>
+          <Card>
+            <CardHeader color="primary">
+              <h4 className={classes.cardTitleWhite}>
+                <FormattedMessage {...messages.formContainers} />
+              </h4>
+            </CardHeader>
+            <CardBody>
+              <List component="ul">
+                {statefulSet &&
                           statefulSet.get('containers') &&
                           statefulSet.get('containers').map((c, i) => (
                             <Card key={i}>
@@ -438,62 +428,59 @@ export class StatefulSet extends React.PureComponent {
                               </CardBody>
                             </Card>
                           ))}
-                      </List>
-                    </CardBody>
-                  </Card>
-                </GridItem>
-              </GridContainer>
-
-              <GridContainer>
-                <GridItem xs={12} sm={12} md={12} className={classes.formLine}>
-                  <Card>
-                    <CardHeader color="primary">
-                      <h4 className={classes.cardTitleWhite}>
-                        <FormattedMessage {...messages.formServiceConfig} />
-                      </h4>
-                    </CardHeader>
-                    <CardBody>
-                      {statefulSet.get('advancedOptions') ? (
-                        <Fragment>
-                          <GridContainer>
-                            <GridItem
-                              xs={3}
-                              sm={3}
-                              md={3}
-                              className={classes.formLine}
-                            >
-                              <ReadOnlyInput
-                                labelText={
-                                  <FormattedMessage
-                                    {...messages.formExposedServiceType}
-                                  />
-                                }
-                                value={
-                                  {
-                                    clusterip: 'Cluster IP',
-                                    nodeport: 'Node Port',
-                                  }[
-                                    statefulSet.getIn([
-                                      'advancedOptions',
-                                      'exposedServiceType',
-                                    ])
-                                  ]
-                                }
-                              />
-                            </GridItem>
-                          </GridContainer>
-                          <GridContainer>
-                            <GridItem
-                              xs={12}
-                              sm={12}
-                              md={12}
-                              className={classes.formLine}
-                            >
-                              <List component="ul">
-                                {statefulSet.getIn([
-                                  'advancedOptions',
-                                  'exposedServices',
-                                ]) &&
+              </List>
+            </CardBody>
+          </Card>
+        </GridItem>
+        <GridItem xs={12} sm={12} md={12} className={classes.formLine}>
+          <Card>
+            <CardHeader color="primary">
+              <h4 className={classes.cardTitleWhite}>
+                <FormattedMessage {...messages.formServiceConfig} />
+              </h4>
+            </CardHeader>
+            <CardBody>
+              {statefulSet.get('advancedOptions') ? (
+                <Fragment>
+                  <GridContainer>
+                    <GridItem
+                      xs={3}
+                      sm={3}
+                      md={3}
+                      className={classes.formLine}
+                    >
+                      <ReadOnlyInput
+                        labelText={
+                          <FormattedMessage
+                            {...messages.formExposedServiceType}
+                          />
+                        }
+                        value={
+                          {
+                            clusterip: 'Cluster IP',
+                            nodeport: 'Node Port',
+                          }[
+                            statefulSet.getIn([
+                              'advancedOptions',
+                              'exposedServiceType',
+                            ])
+                          ]
+                        }
+                      />
+                    </GridItem>
+                  </GridContainer>
+                  <GridContainer>
+                    <GridItem
+                      xs={12}
+                      sm={12}
+                      md={12}
+                      className={classes.formLine}
+                    >
+                      <List component="ul">
+                        {statefulSet.getIn([
+                          'advancedOptions',
+                          'exposedServices',
+                        ]) &&
                                   statefulSet
                                     .getIn([
                                       'advancedOptions',
@@ -581,65 +568,65 @@ export class StatefulSet extends React.PureComponent {
                                         </ListItemText>
                                       </ListItem>
                                     ))}
-                              </List>
-                            </GridItem>
-                          </GridContainer>
-                          <GridContainer>
-                            <GridItem
-                              xs={3}
-                              sm={3}
-                              md={3}
-                              className={classes.formLine}
-                            >
-                              <ReadOnlyInput
-                                labelText={
-                                  <FormattedMessage
-                                    {...messages.formExposedMetricPath}
-                                  />
-                                }
-                                value={statefulSet.getIn([
-                                  'advancedOptions',
-                                  'exposedMetric',
-                                  'path',
-                                ])}
-                              />
-                            </GridItem>
-                            <GridItem
-                              xs={3}
-                              sm={3}
-                              md={3}
-                              className={classes.formLine}
-                            >
-                              <ReadOnlyInput
-                                labelText={
-                                  <FormattedMessage
-                                    {...messages.formExposedMeticPort}
-                                  />
-                                }
-                                value={statefulSet.getIn([
-                                  'advancedOptions',
-                                  'exposedMetric',
-                                  'port',
-                                ])}
-                              />
-                            </GridItem>
-                          </GridContainer>
-                        </Fragment>
-                      ) : null}
-                    </CardBody>
-                  </Card>
-                </GridItem>
-                <GridItem xs={12} sm={12} md={12}>
-                  <Card style={{ marginTop: 20, marginBottom: 0 }}>
-                    <CardHeader color="primary">
-                      <h4 className={classes.cardTitleWhite}>
-                        <FormattedMessage
-                          {...messages.formVolumeClaimTemplate}
-                        />
-                      </h4>
-                    </CardHeader>
-                    <CardBody>
-                      {statefulSet.get('persistentVolumes') &&
+                      </List>
+                    </GridItem>
+                  </GridContainer>
+                  <GridContainer>
+                    <GridItem
+                      xs={3}
+                      sm={3}
+                      md={3}
+                      className={classes.formLine}
+                    >
+                      <ReadOnlyInput
+                        labelText={
+                          <FormattedMessage
+                            {...messages.formExposedMetricPath}
+                          />
+                        }
+                        value={statefulSet.getIn([
+                          'advancedOptions',
+                          'exposedMetric',
+                          'path',
+                        ])}
+                      />
+                    </GridItem>
+                    <GridItem
+                      xs={3}
+                      sm={3}
+                      md={3}
+                      className={classes.formLine}
+                    >
+                      <ReadOnlyInput
+                        labelText={
+                          <FormattedMessage
+                            {...messages.formExposedMeticPort}
+                          />
+                        }
+                        value={statefulSet.getIn([
+                          'advancedOptions',
+                          'exposedMetric',
+                          'port',
+                        ])}
+                      />
+                    </GridItem>
+                  </GridContainer>
+                </Fragment>
+              ) : null}
+            </CardBody>
+          </Card>
+        </GridItem>
+        <GridItem xs={12} sm={12} md={12}>
+          <Card style={{ marginTop: 20, marginBottom: 0 }}>
+            <CardHeader color="primary">
+              <h4 className={classes.cardTitleWhite}>
+                <FormattedMessage
+                  {...messages.formVolumeClaimTemplate}
+                />
+              </h4>
+            </CardHeader>
+            <CardBody>
+              {statefulSet.get('persistentVolumes') &&
                         statefulSet.get('persistentVolumes').map((pv) => (
                           <GridContainer>
                             <GridItem
@@ -689,10 +676,6 @@ export class StatefulSet extends React.PureComponent {
                             </GridItem>
                           </GridContainer>
                         ))}
-                    </CardBody>
-                  </Card>
-                </GridItem>
-              </GridContainer>
             </CardBody>
           </Card>
         </GridItem>
