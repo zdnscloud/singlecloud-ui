@@ -86,6 +86,15 @@ export const storagesReducer = (
     case c.LOAD_BLOCK_DEVICES_FAILURE:
       return state;
 
+    case c.CREATE_STORAGE:
+      return state;
+    case c.CREATE_STORAGE_SUCCESS: {
+      const { clusterID } = meta;
+      return state;
+    }
+    case c.CREATE_STORAGE_FAILURE:
+      return state;
+
     default:
       return state;
   }

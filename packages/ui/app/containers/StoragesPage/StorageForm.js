@@ -65,7 +65,6 @@ class StorageForm extends PureComponent {
                     type: 'text',
                     autoComplete: 'off',
                   }}
-                  classes={classes}
                 />
               </GridItem>
               <GridItem xs={3} sm={3} md={3}>
@@ -73,7 +72,6 @@ class StorageForm extends PureComponent {
                   label={<FormattedMessage {...messages.formStoragetype} />}
                   name="storagetype"
                   fullWidth
-                  classes={classes}
                   options={['lvm', 'ceph']}
                 />
               </GridItem>

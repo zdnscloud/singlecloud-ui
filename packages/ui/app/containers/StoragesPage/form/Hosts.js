@@ -48,7 +48,7 @@ import SwitchField from 'components/Field/SwitchField';
 import RadioField from 'components/Field/RadioField';
 import PlusIcon from 'components/Icons/Plus';
 import MinusIcon from 'components/Icons/Minus';
-import ChexboxesField from 'components/Field/ChexboxesField';
+import CheckboxField from 'components/Field/ChexboxesField';
 
 import messages from '../messages';
 
@@ -89,11 +89,19 @@ const Hosts = ({
             open={Boolean(anchorEl)}
             onClose={handleClose}
           >
-            {blockDevices.map((b, i) => (
+            {blockDevices.filterNot((bld) => values.find((val) => val.get('nodeName') === bld.get('nodeName'))).map((b, i) => (
               <MenuItem
+                key={i}
                 onClick={() => {
                   handleClose();
-                  fields.push(b);
+                  fields.push(
+                    b.set('options', b.get('blockDevices').map((bd) => ({
+                      label: `${bd.get('name')} (${bd.get('size')}Gi) ${bd.get('parted') ? 'parted' : ''} ${bd.get('filesystem') ? 'filesystem' : ''} ${bd.get('mount') ? 'mount' : ''}`,
+                      value: bd.get('name'),
+                    })).toJS())
+                      .set('blockDevices', b.get('blockDevices').clear())
+                      .set('devicesInfo', b.get('blockDevices'))
+                  );
                 }}
               >
                 {b.get('nodeName')}
@@ -111,7 +119,7 @@ const Hosts = ({
         <GridContainer key={i}>
           <GridItem xs={3} sm={3} md={3}>
             <ReadOnlyInput
-              labelText={<FormattedMessage {...messages.formName} />}
+              labelText={<FormattedMessage {...messages.formHostname} />}
               name={`${f}.nodeName`}
               fullWidth
               value={values.getIn([i, 'nodeName'])}
@@ -124,10 +132,14 @@ const Hosts = ({
             </IconButton>
           </GridItem>
           <GridItem xs={9} sm={9} md={9}>
-            <ChexboxesField
-              label={values.getIn([i, 'nodeName'])}
+            <CheckboxField
               name={`${f}.blockDevices`}
-              options={[]}
+              options={values.getIn([i, 'options'])}
+              classes={{
+                formControl: classes.formControl,
+                formLabel: classes.formLabel,
+                group: classes.group,
+              }}
             />
           </GridItem>
         </GridContainer>

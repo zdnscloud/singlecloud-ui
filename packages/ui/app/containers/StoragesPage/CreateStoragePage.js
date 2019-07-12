@@ -61,6 +61,8 @@ const CreateStorageForm = reduxForm({
   validate,
 })(StorageForm);
 
+const initFormValue = fromJS({ name: '', storagetype: '', hosts: [] });
+
 /* eslint-disable react/prefer-stateless-function */
 export class CreateStoragePage extends React.PureComponent {
   static propTypes = {
@@ -100,9 +102,9 @@ export class CreateStoragePage extends React.PureComponent {
     } = this.props;
     async function doSubmit(formValues) {
       try {
-        const name = formValues.get('name');
+        const data = formValues.toJS();
         await new Promise((resolve, reject) => {
-          createStorage({ name }, { resolve, reject, clusterID, url });
+          createStorage({ ...data }, { resolve, reject, clusterID, url });
         });
       } catch (error) {
         throw new SubmissionError({ _error: error });
@@ -139,9 +141,9 @@ export class CreateStoragePage extends React.PureComponent {
                     <CreateStorageForm
                       classes={classes}
                       onSubmit={doSubmit}
-                      initialValues={fromJS({ name: '' })}
+                      initialValues={initFormValue}
                       blockDevices={blockDevices}
-                      formValues={values}
+                      formValues={values || initFormValue}
                     />
                   </CardBody>
                   <CardFooter className={classes.cardFooter}>

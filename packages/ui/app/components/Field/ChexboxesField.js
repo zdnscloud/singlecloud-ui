@@ -24,11 +24,11 @@ const renderChexboxesGroup = ({
   ...custom
 }) => {
   const onChange = (event, ...args) => {
-    let val = input.value || [];
+    let val = input.value || List([]);
     const { checked, value } = event.target;
 
-    if (event.target.checked) {
-      val.push(value);
+    if (checked) {
+      val = val.push(value);
     } else {
       val = val.filter((v) => v !== value);
     }
@@ -75,8 +75,15 @@ renderChexboxesGroup.defaultProps = {
 
 const ChexboxesField = (props) => {
   const { component, ...rest } = props;
+  let { options } = rest;
+  if (options && Array.isArray(options)) {
+    options = options.map((opt) => ({
+      label: _.isString(opt) ? opt : opt.label,
+      value: _.isString(opt) ? opt : opt.value,
+    }));
+  }
 
-  return <Field {...rest} component={renderChexboxesGroup} />;
+  return <Field {...rest} component={renderChexboxesGroup} options={options} />;
 };
 
 export default ChexboxesField;

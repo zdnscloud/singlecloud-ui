@@ -72,10 +72,41 @@ export const loadBlockDevicesEpic = (action$, state$, { ajax }) =>
     )
   );
 
+export const createStorageEpic = (action$, state$, { ajax }) =>
+  action$.pipe(
+    ofType(c.CREATE_STORAGE),
+    mergeMap(({ payload, meta: { resolve, reject, url, clusterID } }) =>
+      ajax({
+        url,
+        method: 'POST',
+        body: payload,
+      }).pipe(
+        map((resp) => {
+          resolve(resp);
+          return a.createStorageSuccess(resp, { clusterID });
+        }),
+        catchError((error) => {
+          reject(error);
+          return of(a.createStorageFailure(error, { clusterID }));
+        })
+      )
+    )
+  );
+
+export const afterCreateEpic = (action$) =>
+  action$.pipe(
+    ofType(c.CREATE_STORAGE_SUCCESS),
+    mergeMap(({ payload, meta }) =>
+      timer(1000).pipe(mapTo(push(`/clusters/${meta.clusterID}/storages`)))
+    )
+  );
+
 export default combineEpics(
   loadStoragesEpic,
   loadStroageClassesEpic,
   loadBlockDevicesEpic,
+  createStorageEpic,
+  afterCreateEpic,
   loadNFSStoragesEpic,
   loadLVMStoragesEpic
 );

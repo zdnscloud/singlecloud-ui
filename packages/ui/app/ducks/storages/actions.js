@@ -97,3 +97,22 @@ export const loadBlockDevicesFailure = (error, clusterID) => ({
   meta: { clusterID },
   error: true,
 });
+
+export const createStorage = (data, meta) => ({
+  type: c.CREATE_STORAGE,
+  payload: data,
+  meta,
+});
+
+export const createStorageSuccess = (resp, clusterID) => ({
+  type: c.CREATE_STORAGE_SUCCESS,
+  payload: resp,
+  meta: { clusterID },
+});
+
+export const createStorageFailure = (error, clusterID) => ({
+  type: c.CREATE_STORAGE_FAILURE,
+  payload: error,
+  meta: { clusterID },
+  error: true,
+});

@@ -101,4 +101,8 @@ export default defineMessages({
     id: `${scope}.formAddStorage`,
     defaultMessage: 'formAddStorage',
   },
+  formHostname: {
+    id: `${scope}.formHostname`,
+    defaultMessage: 'formHostname',
+  },
 });

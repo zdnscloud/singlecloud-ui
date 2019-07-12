@@ -103,6 +103,13 @@ const styles = (theme) => ({
     float: 'left',
     width: '50%',
   },
+  formLabel: {
+    display: 'none',
+  },
+  group: {
+    display: 'flex',
+    flexDirection: 'row',
+  },
 });
 
 export default styles;
