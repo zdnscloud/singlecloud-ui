@@ -95,6 +95,17 @@ export const storagesReducer = (
     case c.CREATE_STORAGE_FAILURE:
       return state;
 
+    case c.REMOVE_STORAGE:
+      return state;
+    case c.REMOVE_STORAGE_SUCCESS: {
+      const { clusterID, id } = meta;
+      return state
+        .deleteIn(['storages', clusterID, id])
+        .update('storagesList', (list) => list.filter((i) => i !== id));
+    }
+    case c.REMOVE_STORAGE_FAILURE:
+      return state;
+
     default:
       return state;
   }

@@ -101,12 +101,31 @@ export const afterCreateEpic = (action$) =>
     )
   );
 
+export const removeStorageEpic = (action$, state$, { ajax }) =>
+  action$.pipe(
+    ofType(c.REMOVE_STORAGE),
+    mergeMap(({ payload, meta: { url, clusterID } }) =>
+      ajax({
+        url,
+        method: 'DELETE',
+      }).pipe(
+        map((resp) => {
+          return a.removeStorageSuccess(resp, { id: payload, clusterID });
+        }),
+        catchError((error) => {
+          return of(a.removeStorageFailure(error, { id: payload, clusterID }));
+        })
+      )
+    )
+  );
+
 export default combineEpics(
   loadStoragesEpic,
   loadStroageClassesEpic,
   loadBlockDevicesEpic,
   createStorageEpic,
   afterCreateEpic,
+  removeStorageEpic,
   loadNFSStoragesEpic,
   loadLVMStoragesEpic
 );
