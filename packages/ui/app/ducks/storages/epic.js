@@ -109,12 +109,10 @@ export const removeStorageEpic = (action$, state$, { ajax }) =>
         url,
         method: 'DELETE',
       }).pipe(
-        map((resp) => {
-          return a.removeStorageSuccess(resp, { id: payload, clusterID });
-        }),
-        catchError((error) => {
-          return of(a.removeStorageFailure(error, { id: payload, clusterID }));
-        })
+        map((resp) => a.removeStorageSuccess(resp, { id: payload, clusterID })),
+        catchError((error) =>
+          of(a.removeStorageFailure(error, { id: payload, clusterID }))
+        )
       )
     )
   );
