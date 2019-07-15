@@ -104,15 +104,15 @@ export const createStorage = (data, meta) => ({
   meta,
 });
 
-export const createStorageSuccess = (resp, clusterID) => ({
+export const createStorageSuccess = (resp, meta) => ({
   type: c.CREATE_STORAGE_SUCCESS,
   payload: resp,
-  meta: { clusterID },
+  meta,
 });
 
-export const createStorageFailure = (error, clusterID) => ({
+export const createStorageFailure = (error, meta) => ({
   type: c.CREATE_STORAGE_FAILURE,
   payload: error,
-  meta: { clusterID },
+  meta,
   error: true,
 });
