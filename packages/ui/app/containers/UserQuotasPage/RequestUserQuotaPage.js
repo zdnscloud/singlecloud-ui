@@ -22,6 +22,7 @@ import CardHeader from 'components/Card/CardHeader';
 import CardBody from 'components/Card/CardBody';
 import CardFooter from 'components/Card/CardFooter';
 import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
+import { makeSelectClusters } from 'ducks/clusters/selectors';
 
 import Button from '@material-ui/core/Button';
 
@@ -72,7 +73,13 @@ export class RequestUserQuotaPage extends React.PureComponent {
   }
 
   render() {
-    const { classes, userQuota, submitForm, requestUserQuota } = this.props;
+    const {
+      classes,
+      userQuota,
+      submitForm,
+      requestUserQuota,
+      clusters,
+    } = this.props;
     const getClickedAction = () => this.clickedAction;
     async function doSubmit(formValues) {
       try {
@@ -116,6 +123,8 @@ export class RequestUserQuotaPage extends React.PureComponent {
                     classes={classes}
                     onSubmit={doSubmit}
                     initialValues={userQuota}
+                    userQuota={userQuota}
+                    clusters={clusters}
                   />
                 </CardBody>
                 <CardFooter className={classes.cardFooter}>
@@ -156,6 +165,7 @@ export class RequestUserQuotaPage extends React.PureComponent {
 const mapStateToProps = createStructuredSelector({
   userQuota: makeSelectCurrentUserQuota(),
   url: makeSelectURL(),
+  clusters: makeSelectClusters(),
 });
 
 const mapDispatchToProps = (dispatch) =>

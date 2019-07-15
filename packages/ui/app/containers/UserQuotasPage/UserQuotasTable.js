@@ -75,13 +75,15 @@ export class UserQuotasTable extends React.PureComponent {
               >
                 <DeleteIcon />
               </IconButton>
-              <IconButton
-                aria-label="Edit"
-                to={`/userQuotas/${props.data.get('id')}/edit`}
-                component={Link}
-              >
-                <EditIcon />
-              </IconButton>
+              {props.data.get('status') !== 'processing' ? (
+                <IconButton
+                  aria-label="Edit"
+                  to={`/userQuotas/${props.data.get('id')}/edit`}
+                  component={Link}
+                >
+                  <EditIcon />
+                </IconButton>
+              ) : null}
             </Fragment>
           ),
         },
