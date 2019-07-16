@@ -17,7 +17,7 @@ import getByKey from '@gsmlg/utils/getByKey';
 
 import * as c from './constants';
 import * as a from './actions';
-import { makeSelectIsLogin } from './selectors';
+import { makeSelectIsLogin, makeSelectIsCAS } from './selectors';
 
 export const loginEpic = (action$, state$, { ajax }) =>
   action$.pipe(
@@ -81,17 +81,25 @@ export const loadRoleEpic = (action$, state$, { ajax }) =>
 export const logoutEpic = (action$, state$, { ajax }) =>
   action$.pipe(
     ofType(c.LOGOUT),
-    mergeMap(({ payload }) =>
-      ajax({
-        url: `/web/logout`,
+    mergeMap(({ payload }) => {
+      const logoutURL = '/web/logout';
+      const isCAS = makeSelectIsCAS()(state$.value);
+      if (isCAS) {
+        return of(() => {
+          window.location.href = logoutURL;
+          return a.logoutSuccess();
+        });
+      }
+      return ajax({
+        url: logoutURL,
         method: 'GET',
       })
         .pipe(
           map((resp) => a.logoutSuccess(resp)),
           catchError((error) => of(a.logoutFailure(error)))
         )
-        .pipe(mapTo(a.loadRole('/web/role')))
-    )
+        .pipe(mapTo(a.loadRole('/web/role')));
+    })
   );
 
 export default combineEpics(loginEpic, loadRoleEpic, logoutEpic);
