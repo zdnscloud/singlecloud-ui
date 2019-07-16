@@ -76,11 +76,16 @@ export class CreateNamespacePage extends React.PureComponent {
     const url = cluster.getIn(['links', 'namespaces']);
     async function doSubmit(formValues) {
       try {
-        const { name, limits, ...formData } = formValues.toJS();
+        const { name, cpu, memory, storage } = formValues.toJS();
         const data = {
           name,
-          limits,
+          limits: {
+            'limits.cpu': cpu,
+            'limits.memory': memory,
+            'requests.cpu': storage,
+          },
         };
+        console.log('data', data);
         await new Promise((resolve, reject) => {
           createNamespace({ name }, { resolve, reject, clusterID, url, data });
         });
@@ -119,6 +124,7 @@ export class CreateNamespacePage extends React.PureComponent {
                       classes={classes}
                       onSubmit={doSubmit}
                       initialValues={fromJS({ name: '' })}
+                      type="create"
                     />
                   </CardBody>
                   <CardFooter className={classes.cardFooter}>

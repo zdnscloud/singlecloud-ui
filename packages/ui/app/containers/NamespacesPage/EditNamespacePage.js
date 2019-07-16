@@ -28,7 +28,10 @@ import CardHeader from 'components/Card/CardHeader';
 import CardBody from 'components/Card/CardBody';
 import CardFooter from 'components/Card/CardFooter';
 
-import { makeSelectClusterID } from 'ducks/app/selectors';
+import { 
+  makeSelectClusterID,
+  makeSelectNamespaceID,
+ } from 'ducks/app/selectors';
 import { makeSelectCurrentCluster } from 'ducks/clusters/selectors';
 import * as actions from 'ducks/resourceQuotas/actions';
 
@@ -82,15 +85,29 @@ export class EditNamespacePage extends React.PureComponent {
       cluster,
       clusterID,
       submitForm,
-      createNamespace,
+      updateResourceQuota,
       resourceQuota,
+      namespaceID,
     } = this.props;
-    const url = cluster.getIn(['links', 'namespaces']);
+    const rs = {
+      cpu: resourceQuota.getIn(['limits', 'limits.cpu']),
+      memory: resourceQuota.getIn(['limits', 'limits.memory']),
+      storage: resourceQuota.getIn(['limits', 'requests.cpu']),
+    };
+    const url = resourceQuota.getIn(['links', 'self']);
     async function doSubmit(formValues) {
       try {
-        const name = formValues.get('name');
+        const { name, cpu, memory, storage } = formValues.toJS();
+        const data = {
+          name,
+          limits: {
+            'limits.cpu': cpu,
+            'limits.memory': memory,
+            'requests.cpu': storage,
+          },
+        };
         await new Promise((resolve, reject) => {
-          createNamespace({ name }, { resolve, reject, clusterID, url });
+          updateResourceQuota({ data }, { resolve, reject, clusterID, url });
         });
       } catch (error) {
         throw new SubmissionError({ _error: error });
@@ -126,7 +143,9 @@ export class EditNamespacePage extends React.PureComponent {
                     <CreateNamespaceForm
                       classes={classes}
                       onSubmit={doSubmit}
-                      initialValues={resourceQuota}
+                      initialValues={rs}
+                      namespaceID={namespaceID}
+                      type="edit"
                     />
                   </CardBody>
                   <CardFooter className={classes.cardFooter}>
@@ -152,6 +171,7 @@ const mapStateToProps = createStructuredSelector({
   clusterID: makeSelectClusterID(),
   cluster: makeSelectCurrentCluster(),
   url: makeSelectURL(),
+  namespaceID: makeSelectNamespaceID(),
   resourceQuota: makeSelectCurrentResourceQuota(),
 });
 

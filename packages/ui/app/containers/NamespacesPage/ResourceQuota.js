@@ -44,7 +44,7 @@ export class ResourceQuota extends React.PureComponent {
               <ReadOnlyInput
                 labelText={<FormattedMessage {...messages.formName} />}
                 fullWidth
-                value={resourceQuota.get('name')}
+                value={namespaceID}
               />
             </GridItem>
           </GridContainer>
@@ -58,7 +58,7 @@ export class ResourceQuota extends React.PureComponent {
                     <FormattedMessage {...messages.CPUQuotaEndAdornment} />
                   ),
                 }}
-                // value={resourceQuota.getIn(['limits', 'limits.cpu'])}
+                value={resourceQuota.getIn(['limits', 'limits.cpu'])}
               />
             </GridItem>
             <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
@@ -68,7 +68,7 @@ export class ResourceQuota extends React.PureComponent {
                 inputProps={{
                   endAdornment: 'Gi',
                 }}
-                // value={resourceQuota.getIn(['limits', 'limits.memory'])}
+                value={resourceQuota.getIn(['limits', 'limits.memory'])}
               />
             </GridItem>
             <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
@@ -78,7 +78,7 @@ export class ResourceQuota extends React.PureComponent {
                 inputProps={{
                   endAdornment: 'Gi',
                 }}
-                // value={resourceQuota.getIn(['limits', 'limits.storage'])}
+                value={resourceQuota.getIn(['limits', 'requests.cpu'])}
               />
             </GridItem>
           </GridContainer>

@@ -29,15 +29,10 @@ export const resourceQuotaReducer = (
       return state;
     case c.LOAD_RESOURCE_QUOTA_SUCCESS: {
       const { clusterID, namespaceID } = meta;
-      const resourceQuota = payload.response;
-      // temporary add, may remove when support cancel load data
-      if (resourceQuota && resourceQuota.id) {
-        return state.setIn(
-          ['resourcequotas', clusterID, namespaceID],
-          fromJS(resourceQuota)
-        );
-      }
-      return state;
+      const { data, list } = procCollectionData(payload);
+      return state
+        .setIn(['resourcequotas', clusterID], fromJS(data))
+        .set('list', fromJS(list));
     }
     case c.LOAD_RESOURCE_QUOTA_FAILURE:
       return state;
@@ -52,6 +47,22 @@ export const resourceQuotaReducer = (
         fromJS(data)
       );
     }
+    case c.CREATE_RESOURCE_QUOTA_FAILURE:
+      return state;
+
+    case c.UPDATE_RESOURCE_QUOTA:
+      return state;
+    case c.UPDATE_RESOURCE_QUOTA_SUCCESS: {
+      const { clusterID, namespaceID } = meta;
+      const data = payload.response;
+      return state.setIn(
+        ['resourcequotas', clusterID, namespaceID, data.id],
+        fromJS(data)
+      );
+    }
+    case c.UPDATE_RESOURCE_QUOTA_FAILURE:
+      return state;
+
     default:
       return state;
   }

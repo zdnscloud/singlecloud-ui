@@ -40,3 +40,20 @@ export const createResourceQuotaFailure = (error, meta) => ({
   meta,
   error: true,
 });
+
+export const updateResourceQuota = (data, meta) => ({
+  type: c.UPDATE_RESOURCE_QUOTA,
+  payload: data,
+  meta,
+});
+
+export const updateResourceQuotaSuccess = (resp) => ({
+  type: c.UPDATE_RESOURCE_QUOTA_SUCCESS,
+  payload: resp,
+});
+
+export const updateResourceQuotaFailure = (error) => ({
+  type: c.UPDATE_RESOURCE_QUOTA_FAILURE,
+  payload: error,
+  error: true,
+});

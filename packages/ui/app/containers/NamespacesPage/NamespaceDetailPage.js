@@ -49,7 +49,6 @@ export class NamespaceDetailPage extends React.PureComponent {
 
   render() {
     const { classes, resourceQuota, clusterID, namespaceID } = this.props;
-
     return (
       <div className={classes.root}>
         <NamespaceDetailPageHelmet />
