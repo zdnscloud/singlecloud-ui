@@ -85,10 +85,8 @@ export const logoutEpic = (action$, state$, { ajax }) =>
       const logoutURL = '/web/logout';
       const isCAS = makeSelectIsCAS()(state$.value);
       if (isCAS) {
-        return of(() => {
-          window.location.href = logoutURL;
-          return a.logoutSuccess();
-        });
+        window.location.href = logoutURL;
+        return of(a.logoutSuccess());
       }
       return ajax({
         url: logoutURL,
