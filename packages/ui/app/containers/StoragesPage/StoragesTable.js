@@ -55,6 +55,14 @@ export class StoragesTable extends React.PureComponent {
           label: 'Actions',
           component: (props) => (
             <Fragment>
+              <Button
+                color="primary"
+                component={Link}
+                to={`${pathname}/${props.data.get('id')}/edit`}
+              >
+                {props.data.get('name')}
+              </Button>
+
               <IconButton
                 aria-label="Delete"
                 onClick={(evt) => {

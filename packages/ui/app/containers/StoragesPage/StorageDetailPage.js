@@ -32,10 +32,9 @@ import ReadOnlyInput from 'components/CustomInput/ReadOnlyInput';
 import * as actions from 'ducks/storages/actions';
 import { makeSelectClusterID } from 'ducks/app/selectors';
 import {
-  makeSelectLVMStorages,
-  makeSelectNFSStorages,
-  makeSelectCurrentLVMStorages,
-  makeSelectCurrentNFSStorages,
+  makeSelectStorages,
+  makeSelectStorageID,
+  makeSelectCurrentStorage,
 } from 'ducks/storages/selectors';
 
 import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
@@ -44,6 +43,7 @@ import StoragePageHelmet from './helmet';
 import styles from './styles';
 import Node from './Node';
 import PVTable from './PVTable';
+
 /* eslint-disable react/prefer-stateless-function */
 export class StoragePage extends React.PureComponent {
   static propTypes = {
@@ -51,36 +51,24 @@ export class StoragePage extends React.PureComponent {
     classes: PropTypes.object.isRequired,
   };
 
-  state = { tab: 0 };
-
-  setTab = (evt, val) => this.setState({ tab: val });
-
   componentWillMount() {
     this.load();
   }
 
   componentDidUpdate(prevProps) {
     const { clusterID: prevClusterID } = prevProps;
-    const { clusterID, namespace } = this.props;
+    const { clusterID } = this.props;
     if (clusterID !== prevClusterID) {
       this.load();
     }
   }
 
   load() {
-    const { clusterID, loadNFSStorages, loadLVMStorages } = this.props;
-    const nfsurl = `/apis/agent.zcloud.cn/v1/clusters/${clusterID}/storages/nfs`;
-    const lvmurl = `/apis/agent.zcloud.cn/v1/clusters/${clusterID}/storages/lvm`;
-    loadNFSStorages(nfsurl, clusterID);
-    loadLVMStorages(lvmurl, clusterID);
   }
 
   render() {
-    const { classes, theme, lvm, nfs, clusterID } = this.props;
-    let storage = lvm;
-    if (this.state.tab === 1) {
-      storage = nfs;
-    }
+    const { classes, theme, storage, clusterID } = this.props;
+    const name = storage.get('name');
     const totalSize = storage.get('size');
     const freeSize = storage.get('freesize');
     const usedSize = storage.get('usedsize');
@@ -95,7 +83,11 @@ export class StoragePage extends React.PureComponent {
           <Breadcrumbs
             data={[
               {
-                path: `/clusters/${clusterID}/storage`,
+                path: `/clusters/${clusterID}/storages`,
+                name: <FormattedMessage {...messages.pageTitle} />,
+              },
+              {
+                path: `/clusters/${clusterID}/storages`,
                 name: <FormattedMessage {...messages.pageTitle} />,
               },
             ]}
@@ -103,19 +95,9 @@ export class StoragePage extends React.PureComponent {
           <GridContainer className={classes.grid}>
             <GridItem xs={12} sm={12} md={12}>
               <Card>
-                <CardHeader color="primary" style={{ padding: 0 }}>
+                <CardHeader color="primary">
                   <h4 className={classes.cardTitleWhite}>
-                    <Tabs
-                      value={this.state.tab}
-                      onChange={this.setTab}
-                      textColor="inherit"
-                      classes={{
-                        indicator: classes.indicator,
-                      }}
-                    >
-                      <Tab label={<FormattedMessage {...messages.lvm} />} />
-                      <Tab label={<FormattedMessage {...messages.nfs} />} />
-                    </Tabs>
+                    {name}
                   </h4>
                 </CardHeader>
                 <CardBody>
@@ -148,16 +130,14 @@ export class StoragePage extends React.PureComponent {
                       />
                     </GridItem>
                   </GridContainer>
-                  {this.state.tab === 0 ? (
-                    <GridContainer>
-                      {nodes &&
-                        nodes.map((node, i) => (
-                          <GridItem key={i} xs={3} sm={3} md={3}>
-                            <Node node={node} />
-                          </GridItem>
-                        ))}
-                    </GridContainer>
-                  ) : null}
+                  <GridContainer>
+                    {nodes &&
+                     nodes.map((node, i) => (
+                       <GridItem key={i} xs={3} sm={3} md={3}>
+                         <Node node={node} />
+                       </GridItem>
+                     ))}
+                  </GridContainer>
                 </CardBody>
               </Card>
             </GridItem>
@@ -182,8 +162,7 @@ export class StoragePage extends React.PureComponent {
 
 const mapStateToProps = createStructuredSelector({
   clusterID: makeSelectClusterID(),
-  lvm: makeSelectCurrentLVMStorages(),
-  nfs: makeSelectCurrentNFSStorages(),
+  storage: makeSelectCurrentStorage(),
 });
 
 const mapDispatchToProps = (dispatch) =>

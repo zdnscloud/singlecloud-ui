@@ -103,6 +103,24 @@ export const makeSelectBlockDevicesList = () =>
         .map((id) => blockDevices.get(id) || blockDevices.clear())
   );
 
+export const makeSelectStorageID = () =>
+  createSelector(
+    createMatchSelector('/clusters/:cluster_id/storages/:storage_id'),
+    (match) => {
+      if (match && match.params) {
+        return match.params.storage_id;
+      }
+      return '';
+    }
+  );
+
+export const makeSelectCurrentStorage = () =>
+  createSelector(
+    makeSelectStorages(),
+    makeSelectStorageID(),
+    (storages, id) => storages.get(id) || storages.clear()
+  );
+
 /**
  * Default selector
  */

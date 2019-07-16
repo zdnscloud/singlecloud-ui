@@ -54,6 +54,8 @@ import SecretsPage, {
 import ServiceLinkPage from 'containers/ServiceLinkPage/Loadable';
 import StoragesPage, {
   CreateStoragePage,
+  EditStoragePage,
+  StorageDetailPage,
 } from 'containers/StoragesPage/Loadable';
 import NetworkPage from 'containers/NetworkPage/Loadable';
 
@@ -293,6 +295,18 @@ const appRoutes = [
     name: 'Create Storage',
     icon: Dashboard,
     component: CreateStoragePage,
+  },
+  {
+    path: '/clusters/:cluster_id/storages/:storage_id/edit',
+    name: 'Edit Storage',
+    icon: Dashboard,
+    component: EditStoragePage,
+  },
+  {
+    path: '/clusters/:cluster_id/storages/:storage_id',
+    name: 'Show Storage Detail',
+    icon: Dashboard,
+    component: StorageDetailPage,
   },
   {
     path: '/clusters/:cluster_id/network',
