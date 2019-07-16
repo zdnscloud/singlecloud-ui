@@ -36,7 +36,10 @@ export const roleReducer = (
       return state;
     case c.LOAD_ROLE_SUCCESS: {
       const user = getByKey(payload, ['response', 'user']);
-      return state.setIn(['role', 'user'], user);
+      const authBy = getByKey(payload, ['response', 'authBy']);
+      return state
+        .setIn(['role', 'user'], user)
+        .setIn(['role', 'authBy'], authBy);
     }
     case c.LOAD_ROLE_FAILURE:
       return state;

@@ -49,6 +49,15 @@ export const makeSelectIsAdmin = () =>
     (substate) => substate.getIn(['role', 'user']) === 'admin'
   );
 
+export const makeSelectIsCAS = () =>
+  createSelector(
+    selectRoleDomain,
+    (substate) => {
+      const authBy = substate.getIn(['role', 'authBy']);
+      return authBy === 'CAS';
+    }
+  );
+
 /**
  * Default selector used by LoginPage
  */
