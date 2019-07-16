@@ -63,19 +63,19 @@ export class UserQuotasTable extends React.PureComponent {
         {
           id: 'actions',
           label: 'Actions',
-          component: (props) => (
-            <Fragment>
-              <IconButton
-                aria-label="Delete"
-                onClick={(evt) =>
-                  removeUserQuota(props.data.get('id'), {
-                    url: props.data.getIn(['links', 'remove']),
-                  })
-                }
-              >
-                <DeleteIcon />
-              </IconButton>
-              {props.data.get('status') !== 'processing' ? (
+          component: (props) =>
+            props.data.get('status') !== 'processing' ? (
+              <Fragment>
+                <IconButton
+                  aria-label="Delete"
+                  onClick={(evt) =>
+                    removeUserQuota(props.data.get('id'), {
+                      url: props.data.getIn(['links', 'remove']),
+                    })
+                  }
+                >
+                  <DeleteIcon />
+                </IconButton>
                 <IconButton
                   aria-label="Edit"
                   to={`/userQuotas/${props.data.get('id')}/edit`}
@@ -83,9 +83,8 @@ export class UserQuotasTable extends React.PureComponent {
                 >
                   <EditIcon />
                 </IconButton>
-              ) : null}
-            </Fragment>
-          ),
+              </Fragment>
+            ) : null,
         },
       ])
       .map((sch) => {

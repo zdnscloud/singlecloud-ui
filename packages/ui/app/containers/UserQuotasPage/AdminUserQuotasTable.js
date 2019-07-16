@@ -66,16 +66,18 @@ export class AdminUserQuotasTable extends React.PureComponent {
           label: 'Actions',
           component: (props) => (
             <Fragment>
-              <IconButton
-                aria-label="Delete"
-                onClick={(evt) =>
-                  removeUserQuota(props.data.get('id'), {
-                    url: props.data.getIn(['links', 'remove']),
-                  })
-                }
-              >
-                <DeleteIcon />
-              </IconButton>
+              {props.data.get('status') !== 'processing' ? (
+                <IconButton
+                  aria-label="Delete"
+                  onClick={(evt) =>
+                    removeUserQuota(props.data.get('id'), {
+                      url: props.data.getIn(['links', 'remove']),
+                    })
+                  }
+                >
+                  <DeleteIcon />
+                </IconButton>
+              ) : null}
             </Fragment>
           ),
         },
