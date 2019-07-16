@@ -14,7 +14,10 @@ import {
   concat,
 } from 'rxjs/operators';
 import { ofType, combineEpics } from 'redux-observable';
-
+import {
+  createResourceQuota,
+  createResourceQuotaFailure,
+} from 'ducks/resourceQuotas/actions';
 import * as c from './constants';
 import * as a from './actions';
 
@@ -53,8 +56,16 @@ export const createNamespaceEpic = (action$, state$, { ajax }) =>
 export const afterCreateEpic = (action$) =>
   action$.pipe(
     ofType(c.CREATE_NAMESPACE_SUCCESS),
-    mergeMap(({ payload, meta }) =>
-      timer(1000).pipe(mapTo(push(`/clusters/${meta.clusterID}/namespaces`)))
+    mergeMap(
+      ({ payload, meta }) =>
+        concat(
+          // eslint-disable-next-line no-undef
+          ajax(meta.url).pipe(
+            map(() => createResourceQuota(meta.data)),
+            catchError((error) => of(createResourceQuotaFailure(error)))
+          )
+        )
+      // timer(1000).pipe(mapTo(push(`/clusters/${meta.clusterID}/namespaces`)))
     )
   );
 

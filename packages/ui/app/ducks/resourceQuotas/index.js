@@ -42,9 +42,9 @@ export const resourceQuotaReducer = (
     case c.LOAD_RESOURCE_QUOTA_FAILURE:
       return state;
 
-    case c.CREATE_DEPLOYMENT:
+    case c.CREATE_RESOURCE_QUOTA:
       return state;
-    case c.CREATE_DEPLOYMENT_SUCCESS: {
+    case c.CREATE_RESOURCE_QUOTA_SUCCESS: {
       const { clusterID, namespaceID } = meta;
       const data = payload.response;
       return state.setIn(

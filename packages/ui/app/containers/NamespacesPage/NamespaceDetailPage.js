@@ -89,7 +89,6 @@ export class NamespaceDetailPage extends React.PureComponent {
 const mapStateToProps = createStructuredSelector({
   clusterID: makeSelectClusterID(),
   namespaceID: makeSelectNamespaceID(),
-  deploymentID: makeSelectResourceQuotaID(),
   url: makeSelectURL(),
   resourceQuota: makeSelectCurrentResourceQuota(),
 });

@@ -30,7 +30,13 @@ import CardFooter from 'components/Card/CardFooter';
 
 import { makeSelectClusterID } from 'ducks/app/selectors';
 import { makeSelectCurrentCluster } from 'ducks/clusters/selectors';
-import * as actions from 'ducks/namespaces/actions';
+import * as actions from 'ducks/resourceQuotas/actions';
+
+import {
+  makeSelectResourceQuotaID,
+  makeSelectCurrentResourceQuota,
+  makeSelectURL,
+} from 'ducks/resourceQuotas/selectors';
 
 import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
 import messages from './messages';
@@ -57,13 +63,18 @@ const CreateNamespaceForm = reduxForm({
 })(NamespaceForm);
 
 /* eslint-disable react/prefer-stateless-function */
-export class CreateNamespacePage extends React.PureComponent {
+export class EditNamespacePage extends React.PureComponent {
   static propTypes = {
     initAction: PropTypes.func,
     classes: PropTypes.object.isRequired,
     match: PropTypes.object,
     location: PropTypes.object,
   };
+
+  componentWillMount() {
+    const { clusterID, namespaceID, url, loadResourceQuota } = this.props;
+    loadResourceQuota({ url, clusterID, namespaceID });
+  }
 
   render() {
     const {
@@ -72,17 +83,14 @@ export class CreateNamespacePage extends React.PureComponent {
       clusterID,
       submitForm,
       createNamespace,
+      resourceQuota,
     } = this.props;
     const url = cluster.getIn(['links', 'namespaces']);
     async function doSubmit(formValues) {
       try {
-        const { name, limits, ...formData } = formValues.toJS();
-        const data = {
-          name,
-          limits,
-        };
+        const name = formValues.get('name');
         await new Promise((resolve, reject) => {
-          createNamespace({ name }, { resolve, reject, clusterID, url, data });
+          createNamespace({ name }, { resolve, reject, clusterID, url });
         });
       } catch (error) {
         throw new SubmissionError({ _error: error });
@@ -101,7 +109,7 @@ export class CreateNamespacePage extends React.PureComponent {
                 name: <FormattedMessage {...messages.pageTitle} />,
               },
               {
-                name: <FormattedMessage {...messages.createNamespace} />,
+                name: <FormattedMessage {...messages.editNamespace} />,
               },
             ]}
           />
@@ -111,14 +119,14 @@ export class CreateNamespacePage extends React.PureComponent {
                 <Card>
                   <CardHeader color="primary">
                     <h4 className={classes.cardTitleWhite}>
-                      <FormattedMessage {...messages.createNamespace} />
+                      <FormattedMessage {...messages.edit} />
                     </h4>
                   </CardHeader>
                   <CardBody>
                     <CreateNamespaceForm
                       classes={classes}
                       onSubmit={doSubmit}
-                      initialValues={fromJS({ name: '' })}
+                      initialValues={resourceQuota}
                     />
                   </CardBody>
                   <CardFooter className={classes.cardFooter}>
@@ -143,6 +151,8 @@ export class CreateNamespacePage extends React.PureComponent {
 const mapStateToProps = createStructuredSelector({
   clusterID: makeSelectClusterID(),
   cluster: makeSelectCurrentCluster(),
+  url: makeSelectURL(),
+  resourceQuota: makeSelectCurrentResourceQuota(),
 });
 
 const mapDispatchToProps = (dispatch) =>
@@ -162,4 +172,4 @@ const withConnect = connect(
 export default compose(
   withConnect,
   withStyles(styles)
-)(CreateNamespacePage);
+)(EditNamespacePage);
