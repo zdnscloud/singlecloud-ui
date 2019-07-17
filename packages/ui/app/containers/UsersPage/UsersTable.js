@@ -25,8 +25,6 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import KeyIcon from '@material-ui/icons/VpnKey';
 import { SimpleTable } from '@gsmlg/com';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTerminal } from '@fortawesome/free-solid-svg-icons';
 
 import { makeSelectUsers, makeSelectUsersList } from 'ducks/users/selectors';
 import * as actions from 'ducks/users/actions';

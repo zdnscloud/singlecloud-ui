@@ -21,8 +21,6 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import { SimpleTable } from '@gsmlg/com';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTerminal } from '@fortawesome/free-solid-svg-icons';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
 import ShellIcon from 'components/Icons/Shell';
