@@ -1,7 +1,15 @@
-export const prefix = 'resourceQuota';
+export const prefix = 'resourceQuotas';
 /*
   constants
 */
 export const LOAD_RESOURCE_QUOTA = `${prefix}/LOAD_RESOURCE_QUOTA`;
 export const LOAD_RESOURCE_QUOTA_SUCCESS = `${prefix}/LOAD_RESOURCE_QUOTA_SUCCESS`;
 export const LOAD_RESOURCE_QUOTA_FAILURE = `${prefix}/LOAD_RESOURCE_QUOTA_FAILURE`;
+
+export const CREATE_RESOURCE_QUOTA = `${prefix}/CREATE_RESOURCE_QUOTA`;
+export const CREATE_RESOURCE_QUOTA_SUCCESS = `${prefix}/CREATE_RESOURCE_QUOTA_SUCCESS`;
+export const CREATE_RESOURCE_QUOTA_FAILURE = `${prefix}/CREATE_RESOURCE_QUOTA_FAILURE`;
+
+export const UPDATE_RESOURCE_QUOTA = `${prefix}/UPDATE_RESOURCE_QUOTA`;
+export const UPDATE_RESOURCE_QUOTA_SUCCESS = `${prefix}/UPDATE_RESOURCE_QUOTA_SUCCESS`;
+export const UPDATE_RESOURCE_QUOTA_FAILURE = `${prefix}/UPDATE_RESOURCE_QUOTA_FAILURE`;

@@ -117,12 +117,16 @@ export default defineMessages({
     id: `${scope}.leftMenuServiceLink`,
     defaultMessage: 'ServiceLink',
   },
-  leftMenuStorage: {
-    id: `${scope}.leftMenuStorage`,
-    defaultMessage: 'Storage',
+  leftMenuStorages: {
+    id: `${scope}.leftMenuStorages`,
+    defaultMessage: 'Storages',
   },
   leftMenuNetwork: {
     id: `${scope}.leftMenuNetwork`,
     defaultMessage: 'Network',
+  },
+  leftMenuUserQuotas: {
+    id: `${scope}.leftMenuUserQuotas`,
+    defaultMessage: 'UserQuotas',
   },
 });

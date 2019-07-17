@@ -52,7 +52,7 @@ export const loadRoleEpic = (action$, state$, { ajax }) =>
           const authBy = getByKey(resp, ['response', 'authBy']);
           const isLogin = makeSelectIsLogin()(state$.value);
           if (!user) {
-            if (authBy === 'cas') {
+            if (authBy === 'CAS') {
               window.location.reload();
             } else {
               import('store').then((exports) => {

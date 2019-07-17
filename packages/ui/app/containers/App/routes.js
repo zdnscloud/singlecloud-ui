@@ -20,6 +20,7 @@ import NodesPage, {
 import NamespacesPage, {
   CreateNamespacePage,
   NamespaceDetailPage,
+  EditNamespacePage,
 } from 'containers/NamespacesPage/Loadable';
 import TerminalPage from 'containers/TerminalPage/Loadable';
 import EventsPage from 'containers/EventsPage/Loadable';
@@ -52,8 +53,20 @@ import SecretsPage, {
   ShowSecretPage,
 } from 'containers/SecretsPage/Loadable';
 import ServiceLinkPage from 'containers/ServiceLinkPage/Loadable';
-import StoragePage from 'containers/StoragePage/Loadable';
+import StoragesPage, {
+  CreateStoragePage,
+  EditStoragePage,
+  StorageDetailPage,
+} from 'containers/StoragesPage/Loadable';
 import NetworkPage from 'containers/NetworkPage/Loadable';
+import UserQuotasPage, {
+  CreateUserQuotaPage,
+  UserQuotaDetailPage,
+  RequestUserQuotaPage,
+  AdminUserQuotaPage,
+  EditUserQuotaPage,
+} from 'containers/UserQuotasPage/Loadable';
+// UserQuotasPage
 
 import UsersPage, {
   CreateUserPage,
@@ -128,6 +141,12 @@ const appRoutes = [
     name: 'namespaces',
     icon: Dashboard,
     component: NamespaceDetailPage,
+  },
+  {
+    path: '/clusters/:cluster_id/namespaces/:namespace_id/edit',
+    name: 'namespaces',
+    icon: Dashboard,
+    component: EditNamespacePage,
   },
   // configmap
   {
@@ -281,10 +300,28 @@ const appRoutes = [
     component: ServiceLinkPage,
   },
   {
-    path: '/clusters/:cluster_id/storage',
+    path: '/clusters/:cluster_id/storages',
     name: 'Storage',
     icon: Dashboard,
-    component: StoragePage,
+    component: StoragesPage,
+  },
+  {
+    path: '/clusters/:cluster_id/storages/create',
+    name: 'Create Storage',
+    icon: Dashboard,
+    component: CreateStoragePage,
+  },
+  {
+    path: '/clusters/:cluster_id/storages/:storage_id/edit',
+    name: 'Edit Storage',
+    icon: Dashboard,
+    component: EditStoragePage,
+  },
+  {
+    path: '/clusters/:cluster_id/storages/:storage_id/show',
+    name: 'Show Storage Detail',
+    icon: Dashboard,
+    component: StorageDetailPage,
   },
   {
     path: '/clusters/:cluster_id/network',
@@ -322,6 +359,44 @@ const appRoutes = [
     icon: Dashboard,
     component: PasswordSetupPage,
   },
+  {
+    path: '/userQuotas',
+    name: 'User Quotas',
+    icon: Dashboard,
+    component: UserQuotasPage,
+  },
+  {
+    path: '/adminUserQuotas',
+    name: 'User Quotas',
+    icon: Dashboard,
+    component: AdminUserQuotaPage,
+  },
+  // userQuotas
+  {
+    path: '/userQuotas/create',
+    name: 'Create UserQuota',
+    icon: Dashboard,
+    component: CreateUserQuotaPage,
+  },
+  {
+    path: '/userQuotas/:userQuota_id',
+    name: 'UserQuota Detail',
+    icon: Dashboard,
+    component: UserQuotaDetailPage,
+  },
+  {
+    path: '/userQuotas/:userQuota_id/request',
+    name: 'UserQuota Request',
+    icon: Dashboard,
+    component: RequestUserQuotaPage,
+  },
+  {
+    path: '/userQuotas/:userQuota_id/edit',
+    name: 'UserQuota Edit',
+    icon: Dashboard,
+    component: EditUserQuotaPage,
+  },
+  // userQuotas end
 ];
 
 export default appRoutes;

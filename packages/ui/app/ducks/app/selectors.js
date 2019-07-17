@@ -32,6 +32,17 @@ export const makeSelectClusterID = () =>
     }
   );
 
+export const makeSelectUserQuotaID = () =>
+  createSelector(
+    createMatchSelector('/userQuotas/:userQuotas_id'),
+    (match) => {
+      if (match && match.params) {
+        return match.params.userQuotas_id;
+      }
+      return '';
+    }
+  );
+
 export const makeSelectNamespaceID = () =>
   createSelector(
     createMatchSelector('/clusters/:cluster_id/namespaces/:namespace_id'),
@@ -84,9 +95,9 @@ export const makeSelectLeftMenus = () =>
     makeSelectCurrentNamespaceID(),
     makeSelectIsAdmin(),
     (appState, cluster, namespace, isAdmin) => {
-      const menus = [{ name: 'Global', path: '/clusters', icon: OverviewIcon }];
+      let menus = [{ name: 'Global', path: '/clusters', icon: OverviewIcon }];
       if (cluster !== '') {
-        return menus.concat([
+        menus = menus.concat([
           {
             name: 'ClusterManagement',
             children: [
@@ -138,8 +149,8 @@ export const makeSelectLeftMenus = () =>
             name: 'SystemManagement',
             children: [
               {
-                name: 'Storage',
-                path: `/clusters/${cluster}/storage`,
+                name: 'Storages',
+                path: `/clusters/${cluster}/storages`,
               },
               {
                 name: 'Network',
@@ -154,6 +165,13 @@ export const makeSelectLeftMenus = () =>
           },
         ]);
       }
+      menus = menus.concat([
+        {
+          name: 'UserQuotas',
+          path: isAdmin ? '/adminUserQuotas' : '/userQuotas',
+          icon: OverviewIcon,
+        },
+      ]);
       return menus;
     }
   );

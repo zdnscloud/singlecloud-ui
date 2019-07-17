@@ -68,13 +68,9 @@ const Volumes = ({
     </ListItem>
     {fields.map((f, i) => {
       let names = [];
-      const type = formValues && formValues.getIn([
-        'containers',
-        containerIndex,
-        'volumes',
-        i,
-        'type',
-      ]);
+      const type =
+        formValues &&
+        formValues.getIn(['containers', containerIndex, 'volumes', i, 'type']);
       const pvcts = formValues && formValues.get('persistentVolumes');
       switch (type) {
         case 'configmap':
@@ -85,9 +81,10 @@ const Volumes = ({
           break;
         case 'persistentVolume':
           if (pvcts && pvcts.size > 0) {
-            names = pvcts.map((pvct) => (
-              { label: pvct.name, value: pvct.name }
-            ));
+            names = pvcts.map((pvct) => ({
+              label: pvct.name,
+              value: pvct.name,
+            }));
           }
           break;
       }
@@ -99,15 +96,23 @@ const Volumes = ({
               label={<FormattedMessage {...messages.formVolumeType} />}
               options={[
                 {
-                  label: <FormattedMessage {...messages.formVolumeTypeConfigMap} />,
+                  label: (
+                    <FormattedMessage {...messages.formVolumeTypeConfigMap} />
+                  ),
                   value: 'configmap',
                 },
                 {
-                  label: <FormattedMessage {...messages.formVolumeTypeSecret} />,
+                  label: (
+                    <FormattedMessage {...messages.formVolumeTypeSecret} />
+                  ),
                   value: 'secret',
                 },
                 {
-                  label: <FormattedMessage {...messages.formVolumeTypePersistentVolume} />,
+                  label: (
+                    <FormattedMessage
+                      {...messages.formVolumeTypePersistentVolume}
+                    />
+                  ),
                   value: 'persistentVolume',
                 },
               ]}
@@ -134,10 +139,7 @@ const Volumes = ({
               label={<FormattedMessage {...messages.formMountPath} />}
             />
           </ListItemText>
-          <IconButton
-            variant="contained"
-            onClick={(evt) => fields.remove(i)}
-          >
+          <IconButton variant="contained" onClick={(evt) => fields.remove(i)}>
             <MinusIcon />
           </IconButton>
         </ListItem>

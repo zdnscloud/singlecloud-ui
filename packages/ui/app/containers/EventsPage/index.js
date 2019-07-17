@@ -60,31 +60,26 @@ export class EventsPage extends React.PureComponent {
   };
 
   render() {
-    const {
-      classes,
-      clusterID,
-      events,
-      filters,
-    } = this.props;
-    const options = events.reduce(({
-      types,
-      namespaces,
-      kinds,
-      names,
-    }, { type, namespace, kind, name }) => {
-      return {
+    const { classes, clusterID, events, filters } = this.props;
+    const options = events.reduce(
+      (
+        { types, namespaces, kinds, names },
+        { type, namespace, kind, name }
+      ) => ({
         types: types.includes(type) ? types : types.concat([type]),
-        namespaces: namespaces.includes(namespace) ? namespaces : namespaces.concat([namespace]),
+        namespaces: namespaces.includes(namespace)
+          ? namespaces
+          : namespaces.concat([namespace]),
         kinds: kinds.includes(kind) ? kinds : kinds.concat([kind]),
         names: names.includes(name) ? names : names.concat([name]),
-      };
-    }, {
-      types: [],
-      namespaces: [],
-      kinds: [],
-      names: [],
-    });
-
+      }),
+      {
+        types: [],
+        namespaces: [],
+        kinds: [],
+        names: [],
+      }
+    );
 
     return (
       <div className={classes.root}>

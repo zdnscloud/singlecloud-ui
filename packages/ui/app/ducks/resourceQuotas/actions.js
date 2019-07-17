@@ -21,3 +21,39 @@ export const loadResourceQuotaFailure = (error, meta) => ({
   meta,
   error: true,
 });
+
+export const createResourceQuota = (data, meta) => ({
+  type: c.CREATE_RESOURCE_QUOTA,
+  payload: data,
+  meta,
+});
+
+export const createResourceQuotaSuccess = (resp, meta) => ({
+  type: c.CREATE_RESOURCE_QUOTA_SUCCESS,
+  payload: resp,
+  meta,
+});
+
+export const createResourceQuotaFailure = (error, meta) => ({
+  type: c.CREATE_RESOURCE_QUOTA_FAILURE,
+  payload: error,
+  meta,
+  error: true,
+});
+
+export const updateResourceQuota = (data, meta) => ({
+  type: c.UPDATE_RESOURCE_QUOTA,
+  payload: data,
+  meta,
+});
+
+export const updateResourceQuotaSuccess = (resp) => ({
+  type: c.UPDATE_RESOURCE_QUOTA_SUCCESS,
+  payload: resp,
+});
+
+export const updateResourceQuotaFailure = (error) => ({
+  type: c.UPDATE_RESOURCE_QUOTA_FAILURE,
+  payload: error,
+  error: true,
+});

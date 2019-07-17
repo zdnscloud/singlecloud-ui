@@ -29,7 +29,8 @@ export const makeSelectLatestEvents = () =>
   createSelector(
     selectEventsDomain,
     makeSelectClusterID(),
-    (substate, clusterID) => (substate.getIn(['events', clusterID]) || []).slice(-100)
+    (substate, clusterID) =>
+      (substate.getIn(['events', clusterID]) || []).slice(-100)
   );
 
 /**

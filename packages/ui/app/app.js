@@ -5,8 +5,10 @@
  * code.
  */
 
-// Needed for redux-saga es2015 generator support
+// Needed for async function to generator support
 import '@babel/polyfill';
+import immu from 'immutable';
+window.Immutable = immu;
 
 // Import all the third party stuff
 import React from 'react';

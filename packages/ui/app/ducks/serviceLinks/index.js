@@ -33,7 +33,7 @@ export const serviceLinksReducer = (
       return state;
     case c.LOAD_OUTER_SERVICES_SUCCESS: {
       const { clusterID, namespaceID } = meta;
-      const { data } = payload.response;
+      const data = getByKey(payload, ['response', 'data']) || [];
       const resData =
         data &&
         data.map((d, i) => {
@@ -54,9 +54,9 @@ export const serviceLinksReducer = (
                       name: `deploy${separator}${i}-${ii}-${iii}${separator}${w.name}`,
                       children:
                         w.pods &&
-                        w.pods.map((p, iiii) => ({
-                          ...p,
-                          name: `pod${separator}${i}-${ii}-${iii}-${iiii}${separator}${p.name}`,
+                        w.pods.map((pp, iiii) => ({
+                          ...pp,
+                          name: `pod${separator}${i}-${ii}-${iii}-${iiii}${separator}${pp.name}`,
                         })),
                     })),
                 },

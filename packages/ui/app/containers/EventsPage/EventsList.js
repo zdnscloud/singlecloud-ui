@@ -52,10 +52,7 @@ export class EventsList extends React.PureComponent {
       <Paper className={classes.wrapper}>
         <List className={classes.list}>
           <ListItem className={classes.firstItem}>
-            <IconButton
-              component={Link}
-              to={`/clusters/${clusterID}/events`}
-            >
+            <IconButton component={Link} to={`/clusters/${clusterID}/events`}>
               <MaxWindowIcon
                 style={{
                   color: theme.palette.icons.e,

@@ -23,6 +23,7 @@ import storagesEpic from 'ducks/storages/epic';
 import networksEpic from 'ducks/networks/epic';
 import clustersEpic from 'ducks/clusters/epic';
 import resourceQuotasEpic from 'ducks/resourceQuotas/epic';
+import userQuotasEpic from 'ducks/userQuotas/epic';
 
 /**
  * Create root Epic
@@ -34,6 +35,7 @@ export default function createEpic(injectedEpics = {}) {
     eventsEpic,
     roleEpic,
     usersEpic,
+    userQuotasEpic,
     namespacesEpic,
     nodesEpic,
     configMapsEpic,

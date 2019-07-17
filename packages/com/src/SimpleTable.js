@@ -7,7 +7,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { isImmutable } from 'immutable';
 
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -15,6 +14,7 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 
+const { isImmutable } = Immutable;
 
 export class SimpleTable extends React.PureComponent {
   static propTypes = {
@@ -29,7 +29,7 @@ export class SimpleTable extends React.PureComponent {
   };
 
   getKey(data, key) {
-    if (isImmutable(data)) {
+    if (data && data.get && typeof data.get === 'function') {
       return data.get(key);
     } else if (typeof data === 'object') {
       return data[key];

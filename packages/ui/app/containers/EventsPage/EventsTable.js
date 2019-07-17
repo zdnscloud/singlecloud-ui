@@ -43,22 +43,24 @@ export class EventsTable extends React.PureComponent {
         <SimpleTable
           className={classes.table}
           schema={mergedSchema}
-          data={events.filter((evt) => {
-            let flag = true;
-            if (filters.get('type') !== allFilter) {
-              flag = flag && filters.get('type') === evt.type;
-            }
-            if (filters.get('namespace') !== allFilter) {
-              flag = flag && filters.get('namespace') === evt.namespace;
-            }
-            if (filters.get('kind') !== allFilter) {
-              flag = flag && filters.get('kind') === evt.kind;
-            }
-            if (filters.get('name') !== allFilter) {
-              flag = flag && filters.get('name') === evt.name;
-            }
-            return flag;
-          }).reverse()}
+          data={events
+            .filter((evt) => {
+              let flag = true;
+              if (filters.get('type') !== allFilter) {
+                flag = flag && filters.get('type') === evt.type;
+              }
+              if (filters.get('namespace') !== allFilter) {
+                flag = flag && filters.get('namespace') === evt.namespace;
+              }
+              if (filters.get('kind') !== allFilter) {
+                flag = flag && filters.get('kind') === evt.kind;
+              }
+              if (filters.get('name') !== allFilter) {
+                flag = flag && filters.get('name') === evt.name;
+              }
+              return flag;
+            })
+            .reverse()}
         />
       </Paper>
     );
