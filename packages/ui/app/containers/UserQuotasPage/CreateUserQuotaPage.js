@@ -1,6 +1,6 @@
 /**
  *
- * Create Namespace Page
+ * Create UserQuota Page
  *
  */
 import React from 'react';
@@ -12,14 +12,11 @@ import { bindActionCreators, compose } from 'redux';
 import { fromJS } from 'immutable';
 import { reduxForm, getFormValues } from 'redux-form/immutable';
 import { SubmissionError, submit } from 'redux-form';
+import { Link } from 'react-router-dom';
 
 import { withStyles } from '@material-ui/core/styles';
-import Menubar from 'components/Menubar';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Typography from '@material-ui/core/Typography';
-import Fab from '@material-ui/core/Fab';
-import IconButton from '@material-ui/core/IconButton';
-import AddIcon from 'components/Icons/Add';
 import Button from '@material-ui/core/Button';
 import GridItem from 'components/Grid/GridItem';
 import GridContainer from 'components/Grid/GridContainer';
@@ -28,21 +25,21 @@ import CardHeader from 'components/Card/CardHeader';
 import CardBody from 'components/Card/CardBody';
 import CardFooter from 'components/Card/CardFooter';
 
-import { makeSelectClusterID } from 'ducks/app/selectors';
-import { makeSelectCurrentCluster } from 'ducks/clusters/selectors';
-import * as actions from 'ducks/namespaces/actions';
+import { makeSelectURL } from 'ducks/userQuotas/selectors';
+import { makeSelectRole } from 'ducks/role/selectors';
+import * as actions from 'ducks/userQuotas/actions';
 
 import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
 import messages from './messages';
 import styles from './styles';
-import NamespacesPageHelmet from './helmet';
-import NamespaceForm from './NamespaceForm';
+import UserQuotasPageHelmet from './helmet';
+import UserQuotaForm from './UserQuotaForm';
 
-export const formName = 'createNamespaceForm';
+export const formName = 'createUserQuotaForm';
 
 const validate = (values) => {
   const errors = {};
-  const requiredFields = ['name'];
+  const requiredFields = ['namespace', 'cpu', 'memory', 'storage', 'purpose'];
   requiredFields.forEach((field) => {
     if (!values.get(field)) {
       errors[field] = 'Required';
@@ -51,13 +48,13 @@ const validate = (values) => {
   return errors;
 };
 
-const CreateNamespaceForm = reduxForm({
+const CreateUserQuotaForm = reduxForm({
   form: formName,
   validate,
-})(NamespaceForm);
+})(UserQuotaForm);
 
 /* eslint-disable react/prefer-stateless-function */
-export class CreateNamespacePage extends React.PureComponent {
+export class CreateUserQuotaPage extends React.PureComponent {
   static propTypes = {
     initAction: PropTypes.func,
     classes: PropTypes.object.isRequired,
@@ -66,28 +63,16 @@ export class CreateNamespacePage extends React.PureComponent {
   };
 
   render() {
-    const {
-      classes,
-      cluster,
-      clusterID,
-      submitForm,
-      createNamespace,
-    } = this.props;
-    const url = cluster.getIn(['links', 'namespaces']);
+    const { classes, submitForm, createUserQuota, url, role } = this.props;
     async function doSubmit(formValues) {
       try {
-        const { name, cpu, memory, storage } = formValues.toJS();
+        const { ...formData } = formValues.toJS();
         const data = {
-          name,
-          limits: {
-            'limits.cpu': cpu,
-            'limits.memory': memory,
-            'requests.cpu': storage,
-          },
+          ...formData,
         };
         console.log('data', data);
         await new Promise((resolve, reject) => {
-          createNamespace({ name }, { resolve, reject, clusterID, url, data });
+          createUserQuota({ ...data }, { resolve, reject, url });
         });
       } catch (error) {
         throw new SubmissionError({ _error: error });
@@ -96,17 +81,17 @@ export class CreateNamespacePage extends React.PureComponent {
 
     return (
       <div className={classes.root}>
-        <NamespacesPageHelmet />
+        <UserQuotasPageHelmet />
         <CssBaseline />
         <div className={classes.content}>
           <Breadcrumbs
             data={[
               {
-                path: `/clusters/${clusterID}/namespaces`,
+                path: `/userQuotas`,
                 name: <FormattedMessage {...messages.pageTitle} />,
               },
               {
-                name: <FormattedMessage {...messages.createNamespace} />,
+                name: <FormattedMessage {...messages.createUserQuota} />,
               },
             ]}
           />
@@ -116,25 +101,42 @@ export class CreateNamespacePage extends React.PureComponent {
                 <Card>
                   <CardHeader color="primary">
                     <h4 className={classes.cardTitleWhite}>
-                      <FormattedMessage {...messages.createNamespace} />
+                      <FormattedMessage {...messages.createUserQuota} />
                     </h4>
                   </CardHeader>
                   <CardBody>
-                    <CreateNamespaceForm
+                    <CreateUserQuotaForm
                       classes={classes}
                       onSubmit={doSubmit}
-                      initialValues={fromJS({ name: '' })}
-                      type="create"
+                      // eslint-disable-next-line jsx-a11y/aria-role
+                      formRole="create"
+                      role={role}
                     />
                   </CardBody>
                   <CardFooter className={classes.cardFooter}>
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      onClick={submitForm}
-                    >
-                      <FormattedMessage {...messages.createNamespaceButton} />
-                    </Button>
+                    <GridContainer>
+                      <GridItem xs={12} sm={12} md={12}>
+                        <Button
+                          variant="contained"
+                          color="primary"
+                          onClick={submitForm}
+                        >
+                          <FormattedMessage
+                            {...messages.createUserQuotaButton}
+                          />
+                        </Button>
+                        <Button
+                          variant="contained"
+                          className={classes.cancleBtn}
+                          to="/userQuotas"
+                          component={Link}
+                        >
+                          <FormattedMessage
+                            {...messages.cancleUserQuotaButton}
+                          />
+                        </Button>
+                      </GridItem>
+                    </GridContainer>
                   </CardFooter>
                 </Card>
               </GridItem>
@@ -147,8 +149,8 @@ export class CreateNamespacePage extends React.PureComponent {
 }
 
 const mapStateToProps = createStructuredSelector({
-  clusterID: makeSelectClusterID(),
-  cluster: makeSelectCurrentCluster(),
+  url: makeSelectURL(),
+  role: makeSelectRole(),
 });
 
 const mapDispatchToProps = (dispatch) =>
@@ -168,4 +170,4 @@ const withConnect = connect(
 export default compose(
   withConnect,
   withStyles(styles)
-)(CreateNamespacePage);
+)(CreateUserQuotaPage);

@@ -9,12 +9,6 @@ import { connect } from 'react-redux';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import { bindActionCreators, compose } from 'redux';
-import {
-  reduxForm,
-  getFormValues,
-  SubmissionError,
-  submit,
-} from 'redux-form/immutable';
 
 import { withStyles } from '@material-ui/core/styles';
 
@@ -49,25 +43,8 @@ export class ResourceQuota extends React.PureComponent {
             <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
               <ReadOnlyInput
                 labelText={<FormattedMessage {...messages.formName} />}
-                name="name"
                 fullWidth
-                value={resourceQuota.get('name')}
-              />
-            </GridItem>
-            <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
-              <ReadOnlyInput
-                labelText={<FormattedMessage {...messages.tag} />}
-                name="name"
-                fullWidth
-                // value={resourceQuota.getIn(['limits', 'requests.cpu'])}
-              />
-            </GridItem>
-            <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
-              <ReadOnlyInput
-                labelText={<FormattedMessage {...messages.note} />}
-                name="name"
-                fullWidth
-                // value={resourceQuota.get('name')}
+                value={namespaceID}
               />
             </GridItem>
           </GridContainer>
@@ -75,7 +52,6 @@ export class ResourceQuota extends React.PureComponent {
             <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
               <ReadOnlyInput
                 labelText={<FormattedMessage {...messages.CPUQuota} />}
-                name="name"
                 fullWidth
                 inputProps={{
                   endAdornment: (
@@ -88,23 +64,21 @@ export class ResourceQuota extends React.PureComponent {
             <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
               <ReadOnlyInput
                 labelText={<FormattedMessage {...messages.memoryQuota} />}
-                name="name"
                 fullWidth
                 inputProps={{
                   endAdornment: 'Gi',
                 }}
-                value={resourceQuota.getIn(['limits', 'limits.storage'])}
+                value={resourceQuota.getIn(['limits', 'limits.memory'])}
               />
             </GridItem>
             <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
               <ReadOnlyInput
                 labelText={<FormattedMessage {...messages.storageQuota} />}
-                name="name"
                 fullWidth
                 inputProps={{
                   endAdornment: 'Gi',
                 }}
-                value={resourceQuota.getIn(['limits', 'limits.storage'])}
+                value={resourceQuota.getIn(['limits', 'requests.cpu'])}
               />
             </GridItem>
           </GridContainer>

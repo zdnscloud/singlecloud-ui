@@ -85,4 +85,12 @@ export default defineMessages({
     id: `${scope}.storageQuota`,
     defaultMessage: 'StorageQuota',
   },
+  editNamespace: {
+    id: `${scope}.editNamespace`,
+    defaultMessage: 'EditNamespace',
+  },
+  edit: {
+    id: `${scope}.edit`,
+    defaultMessage: 'Edit',
+  },
 });

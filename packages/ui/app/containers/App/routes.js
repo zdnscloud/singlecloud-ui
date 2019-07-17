@@ -20,6 +20,7 @@ import NodesPage, {
 import NamespacesPage, {
   CreateNamespacePage,
   NamespaceDetailPage,
+  EditNamespacePage,
 } from 'containers/NamespacesPage/Loadable';
 import TerminalPage from 'containers/TerminalPage/Loadable';
 import EventsPage from 'containers/EventsPage/Loadable';
@@ -58,6 +59,14 @@ import StoragesPage, {
   StorageDetailPage,
 } from 'containers/StoragesPage/Loadable';
 import NetworkPage from 'containers/NetworkPage/Loadable';
+import UserQuotasPage, {
+  CreateUserQuotaPage,
+  UserQuotaDetailPage,
+  RequestUserQuotaPage,
+  AdminUserQuotaPage,
+  EditUserQuotaPage,
+} from 'containers/UserQuotasPage/Loadable';
+// UserQuotasPage
 
 import UsersPage, {
   CreateUserPage,
@@ -132,6 +141,12 @@ const appRoutes = [
     name: 'namespaces',
     icon: Dashboard,
     component: NamespaceDetailPage,
+  },
+  {
+    path: '/clusters/:cluster_id/namespaces/:namespace_id/edit',
+    name: 'namespaces',
+    icon: Dashboard,
+    component: EditNamespacePage,
   },
   // configmap
   {
@@ -344,6 +359,44 @@ const appRoutes = [
     icon: Dashboard,
     component: PasswordSetupPage,
   },
+  {
+    path: '/userQuotas',
+    name: 'User Quotas',
+    icon: Dashboard,
+    component: UserQuotasPage,
+  },
+  {
+    path: '/adminUserQuotas',
+    name: 'User Quotas',
+    icon: Dashboard,
+    component: AdminUserQuotaPage,
+  },
+  // userQuotas
+  {
+    path: '/userQuotas/create',
+    name: 'Create UserQuota',
+    icon: Dashboard,
+    component: CreateUserQuotaPage,
+  },
+  {
+    path: '/userQuotas/:userQuota_id',
+    name: 'UserQuota Detail',
+    icon: Dashboard,
+    component: UserQuotaDetailPage,
+  },
+  {
+    path: '/userQuotas/:userQuota_id/request',
+    name: 'UserQuota Request',
+    icon: Dashboard,
+    component: RequestUserQuotaPage,
+  },
+  {
+    path: '/userQuotas/:userQuota_id/edit',
+    name: 'UserQuota Edit',
+    icon: Dashboard,
+    component: EditUserQuotaPage,
+  },
+  // userQuotas end
 ];
 
 export default appRoutes;

@@ -3,15 +3,18 @@ import { compose } from 'redux';
 import { FormattedMessage } from 'react-intl';
 import { Field, reduxForm } from 'redux-form/immutable';
 import getByKey from '@gsmlg/utils/getByKey';
+
 import Danger from 'components/Typography/Danger';
 import GridItem from 'components/Grid/GridItem';
 import GridContainer from 'components/Grid/GridContainer';
 import InputField from 'components/Field/InputField';
-import ReadOnlyInput from 'components/CustomInput/ReadOnlyInput';
+import TextareaField from 'components/Field/TextareaField';
+
+import { makeSelectRole } from 'ducks/role/selectors';
 
 import messages from './messages';
 
-class NamespaceForm extends PureComponent {
+class UserQuotaForm extends PureComponent {
   state = {};
 
   render() {
@@ -24,9 +27,10 @@ class NamespaceForm extends PureComponent {
       classes,
       profile,
       initialValues,
-      type,
-      namespaceID,
+      formRole,
+      role,
     } = this.props;
+    // eslint-disable-next-line no-console
     return (
       <form className={getByKey(classes, 'form')} onSubmit={handleSubmit}>
         <GridContainer>
@@ -35,19 +39,11 @@ class NamespaceForm extends PureComponent {
               <Danger>{getByKey(error, ['response', 'message'])}</Danger>
             </GridItem>
           ) : null}
-          {type === 'edit' ? (
-            <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
-              <ReadOnlyInput
-                labelText={<FormattedMessage {...messages.formName} />}
-                fullWidth
-                value={namespaceID}
-              />
-            </GridItem>
-          ) : (
+          {formRole === 'edit' ? (
             <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
               <InputField
-                label={<FormattedMessage {...messages.formName} />}
-                name="name"
+                label={<FormattedMessage {...messages.formClusterName} />}
+                name="clusterName"
                 formControlProps={{
                   className: classes.nameControl,
                 }}
@@ -57,12 +53,30 @@ class NamespaceForm extends PureComponent {
                 }}
               />
             </GridItem>
-          )}
+          ) : null}
+          <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
+            <InputField
+              label={<FormattedMessage {...messages.formNamespace} />}
+              name="namespace"
+              formControlProps={{
+                className: classes.nameControl,
+              }}
+              inputProps={{
+                type: 'text',
+                autoComplete: 'off',
+              }}
+            />
+          </GridItem>
+          {formRole === 'create' ? (
+            <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
+              <small className={classes.username}>{role.get('user')}</small>
+            </GridItem>
+          ) : null}
         </GridContainer>
         <GridContainer>
           <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
             <InputField
-              label={<FormattedMessage {...messages.CPUQuota} />}
+              label={<FormattedMessage {...messages.formCPU} />}
               name="cpu"
               formControlProps={{
                 className: classes.nameControl,
@@ -71,14 +85,14 @@ class NamespaceForm extends PureComponent {
                 type: 'text',
                 autoComplete: 'off',
                 endAdornment: (
-                  <FormattedMessage {...messages.CPUQuotaEndAdornment} />
+                  <FormattedMessage {...messages.formCPUEndAdornment} />
                 ),
               }}
             />
           </GridItem>
           <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
             <InputField
-              label={<FormattedMessage {...messages.memoryQuota} />}
+              label={<FormattedMessage {...messages.formMemory} />}
               name="memory"
               formControlProps={{
                 className: classes.nameControl,
@@ -92,7 +106,7 @@ class NamespaceForm extends PureComponent {
           </GridItem>
           <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
             <InputField
-              label={<FormattedMessage {...messages.storageQuota} />}
+              label={<FormattedMessage {...messages.formStorage} />}
               name="storage"
               formControlProps={{
                 className: classes.nameControl,
@@ -105,9 +119,25 @@ class NamespaceForm extends PureComponent {
             />
           </GridItem>
         </GridContainer>
+        <GridContainer style={{ marginTop: '20px' }}>
+          <GridItem xs={9} sm={9} md={9} className={classes.formLine}>
+            <TextareaField
+              name="purpose"
+              label={<FormattedMessage {...messages.formPurpose} />}
+              formControlProps={{
+                className: classes.textareaControl,
+              }}
+              inputProps={{
+                type: 'text',
+                autoComplete: 'off',
+                rows: '4',
+              }}
+            />
+          </GridItem>
+        </GridContainer>
       </form>
     );
   }
 }
 
-export default NamespaceForm;
+export default UserQuotaForm;

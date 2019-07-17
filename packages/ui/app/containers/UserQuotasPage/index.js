@@ -1,67 +1,70 @@
 /**
  *
- * NamespaceDetailPage
+ * UserQuotasPage
  *
  */
+
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import { bindActionCreators, compose } from 'redux';
+import { Link } from 'react-router-dom';
 
 import { withStyles } from '@material-ui/core/styles';
+import Menubar from 'components/Menubar';
 import CssBaseline from '@material-ui/core/CssBaseline';
+import Typography from '@material-ui/core/Typography';
+import Fab from '@material-ui/core/Fab';
 import GridItem from 'components/Grid/GridItem';
 import GridContainer from 'components/Grid/GridContainer';
 import Card from 'components/Card/Card';
 import CardHeader from 'components/Card/CardHeader';
 import CardBody from 'components/Card/CardBody';
 import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
-import {
-  makeSelectClusterID,
-  makeSelectNamespaceID,
-} from 'ducks/app/selectors';
-import {
-  makeSelectResourceQuotaID,
-  makeSelectCurrentResourceQuota,
-  makeSelectURL,
-} from 'ducks/resourceQuotas/selectors';
-import * as actions from 'ducks/resourceQuotas/actions';
+import IconButton from '@material-ui/core/IconButton';
+import AddIcon from 'components/Icons/Add';
 
-import ResourceQuota from './ResourceQuota';
+import { makeSelectURL } from 'ducks/userQuotas/selectors';
+import * as actions from 'ducks/userQuotas/actions';
+
 import messages from './messages';
-import NamespaceDetailPageHelmet from './helmet';
 import styles from './styles';
+import UserQuotasTable from './UserQuotasTable';
+import UserQuotasPageHelmet from './helmet';
+
 /* eslint-disable react/prefer-stateless-function */
-export class NamespaceDetailPage extends React.PureComponent {
-  static propTypes = {
-    initAction: PropTypes.func,
-    classes: PropTypes.object.isRequired,
-    match: PropTypes.object,
-    location: PropTypes.object,
-  };
+export class UserQuotasPage extends React.PureComponent {
+  static propTypes = {};
 
   componentWillMount() {
-    const { clusterID, namespaceID, url, loadResourceQuota } = this.props;
-    loadResourceQuota({ url, clusterID, namespaceID });
+    this.load();
+    this.timer = setInterval(() => this.load(), 3000);
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.timer);
+  }
+
+  load() {
+    const { loadUserQuotas, url } = this.props;
+    loadUserQuotas(url);
   }
 
   render() {
-    const { classes, resourceQuota, clusterID, namespaceID } = this.props;
+    const { classes } = this.props;
+
     return (
       <div className={classes.root}>
-        <NamespaceDetailPageHelmet />
+        <UserQuotasPageHelmet />
         <CssBaseline />
         <div className={classes.content}>
           <Breadcrumbs
             data={[
               {
-                path: `/clusters/${clusterID}/namespaces`,
-                name: <FormattedMessage {...messages.pageTitle} />,
-              },
-              {
-                name: <FormattedMessage {...messages.namespaceDetail} />,
+                path: '/userQuotas',
+                name: <FormattedMessage {...messages.userQuotas} />,
               },
             ]}
           />
@@ -70,11 +73,19 @@ export class NamespaceDetailPage extends React.PureComponent {
               <Card>
                 <CardHeader color="primary">
                   <h4 className={classes.cardTitleWhite}>
-                    <FormattedMessage {...messages.detail} />
+                    <FormattedMessage {...messages.userQuotas} />
+                    <IconButton
+                      aria-label={<FormattedMessage {...messages.userQuotas} />}
+                      className={classes.menuButton}
+                      component={Link}
+                      to="/userQuotas/create"
+                    >
+                      <AddIcon style={{ color: '#fff' }} />
+                    </IconButton>
                   </h4>
                 </CardHeader>
                 <CardBody>
-                  <ResourceQuota resourceQuota={resourceQuota} />
+                  <UserQuotasTable />
                 </CardBody>
               </Card>
             </GridItem>
@@ -86,10 +97,7 @@ export class NamespaceDetailPage extends React.PureComponent {
 }
 
 const mapStateToProps = createStructuredSelector({
-  clusterID: makeSelectClusterID(),
-  namespaceID: makeSelectNamespaceID(),
   url: makeSelectURL(),
-  resourceQuota: makeSelectCurrentResourceQuota(),
 });
 
 const mapDispatchToProps = (dispatch) =>
@@ -108,4 +116,4 @@ const withConnect = connect(
 export default compose(
   withConnect,
   withStyles(styles)
-)(NamespaceDetailPage);
+)(UserQuotasPage);
