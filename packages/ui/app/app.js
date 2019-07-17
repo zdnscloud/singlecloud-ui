@@ -5,7 +5,7 @@
  * code.
  */
 
-// Needed for redux-saga es2015 generator support
+// Needed for async function to generator support
 import '@babel/polyfill';
 
 // Import all the third party stuff
