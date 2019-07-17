@@ -77,7 +77,6 @@ class SearchForm extends PureComponent {
               ]}
               formControlProps={{
                 style: {
-                  marginTop: 10,
                   width: '100%',
                 },
               }}

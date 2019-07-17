@@ -122,7 +122,7 @@ export class AdminUserQuotaPage extends React.PureComponent {
                         variant="contained"
                         color="primary"
                         onClick={submitForm}
-                        style={{ marginTop: '20px' }}
+                        style={{ marginTop: '10px' }}
                       >
                         <FormattedMessage {...messages.searchUserQuotaButton} />
                       </Button>
