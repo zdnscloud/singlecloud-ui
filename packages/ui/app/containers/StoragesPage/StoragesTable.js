@@ -19,6 +19,7 @@ import { SimpleTable } from '@gsmlg/com';
 
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
+import EditIcon from 'components/Icons/Edit';
 
 import { makeSelectClusterID, makeSelectLocation } from 'ducks/app/selectors';
 import * as actions from 'ducks/storages/actions';
@@ -55,13 +56,13 @@ export class StoragesTable extends React.PureComponent {
           label: 'Actions',
           component: (props) => (
             <Fragment>
-              <Button
-                color="primary"
+              <IconButton
+                aria-label="Edit"
                 component={Link}
                 to={`${pathname}/${props.data.get('id')}/edit`}
               >
-                {props.data.get('name')}
-              </Button>
+                <EditIcon />
+              </IconButton>
 
               <IconButton
                 aria-label="Delete"
