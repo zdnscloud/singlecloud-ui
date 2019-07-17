@@ -105,7 +105,7 @@ export class SecretsTable extends React.PureComponent {
                 color="primary"
                 to={`/clusters/${clusterID}/namespaces/${namespaceID}/secrets/${props.data.get(
                   'id'
-                )}`}
+                )}/show`}
                 component={Link}
               >
                 {props.data.get('name')}

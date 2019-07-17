@@ -98,7 +98,7 @@ const appRoutes = [
     component: CreateNodePage,
   },
   {
-    path: '/clusters/:cluster_id/nodes/:node_id',
+    path: '/clusters/:cluster_id/nodes/:node_id/show',
     name: 'NodeDetail',
     icon: Dashboard,
     component: NodeDetailPage,
@@ -128,7 +128,7 @@ const appRoutes = [
     component: CreateNamespacePage,
   },
   {
-    path: '/clusters/:cluster_id/namespaces/:namespace_id/resourcequotas',
+    path: '/clusters/:cluster_id/namespaces/:namespace_id/show',
     name: 'namespaces',
     icon: Dashboard,
     component: NamespaceDetailPage,
@@ -148,7 +148,7 @@ const appRoutes = [
   },
   {
     path:
-      '/clusters/:cluster_id/namespaces/:namespace_id/configmaps/:configmap_id',
+      '/clusters/:cluster_id/namespaces/:namespace_id/configmaps/:configmap_id/show',
     name: 'show configmap',
     icon: Dashboard,
     component: ShowConfigMapPage,
@@ -168,7 +168,7 @@ const appRoutes = [
     component: CreateSecretPage,
   },
   {
-    path: '/clusters/:cluster_id/namespaces/:namespace_id/secrets/:secret_id',
+    path: '/clusters/:cluster_id/namespaces/:namespace_id/secrets/:secret_id/show',
     name: 'show secret',
     icon: Dashboard,
     component: ShowSecretPage,
@@ -189,7 +189,7 @@ const appRoutes = [
   },
   {
     path:
-      '/clusters/:cluster_id/namespaces/:namespace_id/deployments/:deployment_id',
+      '/clusters/:cluster_id/namespaces/:namespace_id/deployments/:deployment_id/show',
     name: 'Deployment Detail',
     icon: Dashboard,
     component: DeploymentDetailPage,
@@ -210,7 +210,7 @@ const appRoutes = [
   },
   {
     path:
-      '/clusters/:cluster_id/namespaces/:namespace_id/statefulSets/:stateful_set_id',
+      '/clusters/:cluster_id/namespaces/:namespace_id/statefulSets/:stateful_set_id/show',
     name: 'StatefulSet Detail',
     icon: Dashboard,
     component: StatefulSetDetailPage,
@@ -231,7 +231,7 @@ const appRoutes = [
   },
   {
     path:
-      '/clusters/:cluster_id/namespaces/:namespace_id/daemonSets/:daemonset_set_id',
+      '/clusters/:cluster_id/namespaces/:namespace_id/daemonSets/:daemonset_set_id/show',
     name: 'DaemonSet Detail',
     icon: Dashboard,
     component: DaemonSetDetailPage,
@@ -252,7 +252,7 @@ const appRoutes = [
   },
   {
     path:
-      '/clusters/:cluster_id/namespaces/:namespace_id/cronJobs/:cron_job_id',
+      '/clusters/:cluster_id/namespaces/:namespace_id/cronJobs/:cron_job_id/show',
     name: 'CronJob Detail',
     icon: Dashboard,
     component: CronJobDetailPage,
@@ -272,7 +272,7 @@ const appRoutes = [
     component: CreateJobPage,
   },
   {
-    path: '/clusters/:cluster_id/namespaces/:namespace_id/jobs/:cron_job_id',
+    path: '/clusters/:cluster_id/namespaces/:namespace_id/jobs/:job_id/show',
     name: 'Job Detail',
     icon: Dashboard,
     component: JobDetailPage,
