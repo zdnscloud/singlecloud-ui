@@ -73,12 +73,12 @@ const Hosts = ({
             <TableCell
               className={`${classes.tableCell} ${classes.tableHeadCell}`}
             >
-              Host
+              <FormattedMessage {...messages.formNodeName} />
             </TableCell>
             <TableCell
               className={`${classes.tableCell} ${classes.tableHeadCell}`}
             >
-              Devices
+              <FormattedMessage {...messages.formBlockDevices} />
             </TableCell>
           </TableRow>
         </TableHead>

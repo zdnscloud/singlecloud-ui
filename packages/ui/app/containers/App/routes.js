@@ -303,7 +303,7 @@ const appRoutes = [
     component: EditStoragePage,
   },
   {
-    path: '/clusters/:cluster_id/storages/:storage_id',
+    path: '/clusters/:cluster_id/storages/:storage_id/show',
     name: 'Show Storage Detail',
     icon: Dashboard,
     component: StorageDetailPage,

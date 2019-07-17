@@ -113,12 +113,16 @@ export default defineMessages({
     id: `${scope}.formStoragetype`,
     defaultMessage: 'formStoragetype',
   },
-  formHostname: {
-    id: `${scope}.formHostname`,
-    defaultMessage: 'formHostname',
-  },
   formHostnames: {
     id: `${scope}.formHostnames`,
     defaultMessage: 'formHostnames',
+  },
+  formNodeName: {
+    id: `${scope}.formNodeName`,
+    defaultMessage: 'formNodeName',
+  },
+  formBlockDevices: {
+    id: `${scope}.formBlockDevices`,
+    defaultMessage: 'formBlockDevices',
   },
 });

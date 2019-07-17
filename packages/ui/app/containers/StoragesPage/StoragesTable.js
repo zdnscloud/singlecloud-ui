@@ -86,7 +86,7 @@ export class StoragesTable extends React.PureComponent {
               <Button
                 color="primary"
                 component={Link}
-                to={`${pathname}/${props.data.get('id')}`}
+                to={`${pathname}/${props.data.get('id')}/show`}
               >
                 {props.data.get('name')}
               </Button>
