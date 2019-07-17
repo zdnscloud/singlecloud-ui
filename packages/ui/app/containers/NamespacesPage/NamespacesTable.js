@@ -71,13 +71,13 @@ export class NamespacesTable extends React.PureComponent {
               >
                 <DeleteIcon />
               </IconButton>
-              <IconButton
+              {/* <IconButton
                 aria-label="Edit"
                 to={`${pathname}/${props.data.get('id')}/edit`}
                 component={Link}
               >
                 <EditIcon />
-              </IconButton>
+              </IconButton> */}
             </Fragment>
           ),
         },
