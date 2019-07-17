@@ -129,33 +129,24 @@ export class CreateStoragePage extends React.PureComponent {
             ]}
           />
           <Typography component="div" className="">
+            <CreateStorageForm
+              classes={classes}
+              onSubmit={doSubmit}
+              initialValues={initFormValue}
+              blockDevices={blockDevices}
+              formValues={values || initFormValue}
+            />
             <GridContainer className={classes.grid}>
               <GridItem xs={12} sm={12} md={12}>
-                <Card>
-                  <CardHeader color="primary">
-                    <h4 className={classes.cardTitleWhite}>
-                      <FormattedMessage {...messages.createStorage} />
-                    </h4>
-                  </CardHeader>
-                  <CardBody>
-                    <CreateStorageForm
-                      classes={classes}
-                      onSubmit={doSubmit}
-                      initialValues={initFormValue}
-                      blockDevices={blockDevices}
-                      formValues={values || initFormValue}
-                    />
-                  </CardBody>
-                  <CardFooter className={classes.cardFooter}>
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      onClick={submitForm}
-                    >
-                      <FormattedMessage {...messages.createStorageButton} />
-                    </Button>
-                  </CardFooter>
-                </Card>
+                <CardFooter className={classes.cardFooter}>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={submitForm}
+                  >
+                    <FormattedMessage {...messages.createStorageButton} />
+                  </Button>
+                </CardFooter>
               </GridItem>
             </GridContainer>
           </Typography>

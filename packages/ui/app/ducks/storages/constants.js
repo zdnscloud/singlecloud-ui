@@ -30,3 +30,7 @@ export const CREATE_STORAGE_FAILURE = `${prefix}/CREATE_STORAGE_FAILURE`;
 export const REMOVE_STORAGE = `${prefix}/REMOVE_STORAGE`;
 export const REMOVE_STORAGE_SUCCESS = `${prefix}/REMOVE_STORAGE_SUCCESS`;
 export const REMOVE_STORAGE_FAILURE = `${prefix}/REMOVE_STORAGE_FAILURE`;
+
+export const EDIT_STORAGE = `${prefix}/EDIT_STORAGE`;
+export const EDIT_STORAGE_SUCCESS = `${prefix}/EDIT_STORAGE_SUCCESS`;
+export const EDIT_STORAGE_FAILURE = `${prefix}/EDIT_STORAGE_FAILURE`;

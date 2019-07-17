@@ -106,6 +106,15 @@ export const storagesReducer = (
     case c.REMOVE_STORAGE_FAILURE:
       return state;
 
+    case c.EDIT_STORAGE:
+      return state;
+    case c.EDIT_STORAGE_SUCCESS: {
+      const { clusterID } = meta;
+      return state;
+    }
+    case c.EDIT_STORAGE_FAILURE:
+      return state;
+
     default:
       return state;
   }

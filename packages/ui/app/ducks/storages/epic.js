@@ -117,6 +117,35 @@ export const removeStorageEpic = (action$, state$, { ajax }) =>
     )
   );
 
+export const editStorageEpic = (action$, state$, { ajax }) =>
+  action$.pipe(
+    ofType(c.EDIT_STORAGE),
+    mergeMap(({ payload, meta: { resolve, reject, url, clusterID } }) =>
+      ajax({
+        url,
+        method: 'PUT',
+        body: payload,
+      }).pipe(
+        map((resp) => {
+          resolve(resp);
+          return a.editStorageSuccess(resp, { clusterID });
+        }),
+        catchError((error) => {
+          reject(error);
+          return of(a.editStorageFailure(error, { clusterID }));
+        })
+      )
+    )
+  );
+
+export const afterEditEpic = (action$) =>
+  action$.pipe(
+    ofType(c.EDIT_STORAGE_SUCCESS),
+    mergeMap(({ payload, meta }) =>
+      timer(1000).pipe(mapTo(push(`/clusters/${meta.clusterID}/storages`)))
+    )
+  );
+
 export default combineEpics(
   loadStoragesEpic,
   loadStroageClassesEpic,
@@ -124,6 +153,8 @@ export default combineEpics(
   createStorageEpic,
   afterCreateEpic,
   removeStorageEpic,
+  editStorageEpic,
+  afterEditEpic,
   loadNFSStoragesEpic,
   loadLVMStoragesEpic
 );

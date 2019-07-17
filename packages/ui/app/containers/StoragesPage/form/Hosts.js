@@ -22,128 +22,92 @@ import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import FormGroup from '@material-ui/core/FormGroup';
-import TextField from '@material-ui/core/TextField';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
-import Button from '@material-ui/core/Button';
-import IconButton from '@material-ui/core/IconButton';
-import AddIcon from '@material-ui/icons/Add';
-import DeleteIcon from '@material-ui/icons/Delete';
-import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
+import Table from '@material-ui/core/Table';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
 
-import Card from 'components/Card/Card';
-import CardBody from 'components/Card/CardBody';
-import CardHeader from 'components/Card/CardHeader';
-import CardFooter from 'components/Card/CardFooter';
-import CustomInput from 'components/CustomInput/CustomInput';
-import ReadOnlyInput from 'components/CustomInput/ReadOnlyInput';
 import Danger from 'components/Typography/Danger';
-import GridItem from 'components/Grid/GridItem';
 import GridContainer from 'components/Grid/GridContainer';
-import InputField from 'components/Field/InputField';
-import SelectField from 'components/Field/SelectField';
-import SwitchField from 'components/Field/SwitchField';
-import RadioField from 'components/Field/RadioField';
-import PlusIcon from 'components/Icons/Plus';
-import MinusIcon from 'components/Icons/Minus';
-import CheckboxField from 'components/Field/ChexboxesField';
+import GridItem from 'components/Grid/GridItem';
 
 import messages from '../messages';
 
 const Hosts = ({
+  input,
   blockDevices,
   classes,
   fields,
-  values,
   meta: { error, submitFailed },
 }) => {
-  const [anchorEl, setAnchorEl] = useState(null);
+  const onChange = (event) => {
+    let val = input.value;
+    const { checked, value } = event.target;
 
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleClose = () => {
-    setAnchorEl(null);
+    if (checked) {
+      val = val.push(value);
+    } else {
+      val = val.filter((v) => v !== value);
+    }
+    input.onChange(val);
   };
 
   return (
     <Fragment>
-      <GridContainer>
-        <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
-          <Button
-            color="secondary"
-            onClick={handleClick}
-            aria-controls="simple-menu"
-            aria-haspopup="true"
-          >
-            <FormattedMessage {...messages.formAddStorage} />
-            <PlusIcon />
-          </Button>
-          <Menu
-            id="simple-menu"
-            anchorEl={anchorEl}
-            keepMounted
-            open={Boolean(anchorEl)}
-            onClose={handleClose}
-          >
-            {blockDevices.filterNot((bld) => values.find((val) => val.get('nodeName') === bld.get('nodeName'))).map((b, i) => (
-              <MenuItem
-                key={i}
-                onClick={() => {
-                  handleClose();
-                  fields.push(
-                    b.set('options', b.get('blockDevices').map((bd) => ({
-                      label: `${bd.get('name')} (${bd.get('size')}Gi) ${bd.get('parted') ? 'parted' : ''} ${bd.get('filesystem') ? 'filesystem' : ''} ${bd.get('mount') ? 'mount' : ''}`,
-                      value: bd.get('name'),
-                    })).toJS())
-                      .set('blockDevices', b.get('blockDevices').clear())
-                      .set('devicesInfo', b.get('blockDevices'))
-                  );
-                }}
-              >
-                {b.get('nodeName')}
-              </MenuItem>
-            ))}
-          </Menu>
-        </GridItem>
-      </GridContainer>
       {submitFailed && error && (
-        <ListItem>
-          <Danger>{error}</Danger>
-        </ListItem>
-      )}
-      {fields.map((f, i) => (
-        <GridContainer key={i}>
-          <GridItem xs={3} sm={3} md={3}>
-            <ReadOnlyInput
-              labelText={<FormattedMessage {...messages.formHostname} />}
-              name={`${f}.nodeName`}
-              fullWidth
-              value={values.getIn([i, 'nodeName'])}
-            />
-          </GridItem>
-          <GridItem xs={3} sm={3} md={3}></GridItem>
-          <GridItem xs={3} sm={3} md={3}>
-            <IconButton variant="contained" onClick={(evt) => fields.remove(i)}>
-              <MinusIcon />
-            </IconButton>
-          </GridItem>
-          <GridItem xs={9} sm={9} md={9}>
-            <CheckboxField
-              name={`${f}.blockDevices`}
-              options={values.getIn([i, 'options'])}
-              classes={{
-                formControl: classes.formControl,
-                formLabel: classes.formLabel,
-                group: classes.group,
-              }}
-            />
+        <GridContainer>
+          <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
+            <Danger>{error}</Danger>
           </GridItem>
         </GridContainer>
-      ))}
+      )}
+      <Table className={classes.table}>
+        <TableHead>
+          <TableRow>
+            <TableCell
+              style={{ width: 80 }}
+              className={`${classes.tableCell} ${classes.tableHeadCell}`}
+            >
+            </TableCell>
+            <TableCell
+              className={`${classes.tableCell} ${classes.tableHeadCell}`}
+            >
+              Host
+            </TableCell>
+            <TableCell
+              className={`${classes.tableCell} ${classes.tableHeadCell}`}
+            >
+              Devices
+            </TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {blockDevices.map((b, i) => (
+            <TableRow key={i}>
+              <TableCell className={classes.tableCell}>
+                <Checkbox
+                  checked={input.value.includes(b.get('nodeName'))}
+                  onChange={onChange}
+                  value={b.get('nodeName')}
+                  color="primary"
+                />
+              </TableCell>
+              <TableCell className={`${classes.tableCell}`}>
+                {b.get('nodeName')}
+              </TableCell>
+              <TableCell className={`${classes.tableCell}`}>
+                {b.get('blockDevices').map((bd) => (
+                  <span style={{ marginRight: 18 }}>
+                    <span>{bd.get('name')}</span>
+                    <span>({bd.get('size')}GiB)</span>
+                  </span>
+                ))}
+              </TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
     </Fragment>
   );
 };

@@ -29,6 +29,10 @@ export default defineMessages({
     id: `${scope}.createStorage`,
     defaultMessage: 'CreateStorage',
   },
+  editStorage: {
+    id: `${scope}.editStorage`,
+    defaultMessage: 'EditStorage',
+  },
   storage: {
     id: `${scope}.storage`,
     defaultMessage: 'Storage',
@@ -93,6 +97,14 @@ export default defineMessages({
     id: `${scope}.createStorageButton`,
     defaultMessage: 'createStorageButton',
   },
+  editStorageButton: {
+    id: `${scope}.editStorageButton`,
+    defaultMessage: 'editStorageButton',
+  },
+  formStorage: {
+    id: `${scope}.formStorage`,
+    defaultMessage: 'formStorage',
+  },
   formName: {
     id: `${scope}.formName`,
     defaultMessage: 'formName',
@@ -101,12 +113,12 @@ export default defineMessages({
     id: `${scope}.formStoragetype`,
     defaultMessage: 'formStoragetype',
   },
-  formAddStorage: {
-    id: `${scope}.formAddStorage`,
-    defaultMessage: 'formAddStorage',
-  },
   formHostname: {
     id: `${scope}.formHostname`,
     defaultMessage: 'formHostname',
+  },
+  formHostnames: {
+    id: `${scope}.formHostnames`,
+    defaultMessage: 'formHostnames',
   },
 });

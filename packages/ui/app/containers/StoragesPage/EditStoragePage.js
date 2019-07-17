@@ -33,6 +33,7 @@ import { makeSelectCurrentCluster } from 'ducks/clusters/selectors';
 import * as actions from 'ducks/storages/actions';
 import {
   makeSelectURL,
+  makeSelectCurrentStorage,
   makeSelectBlockDevicesURL,
   makeSelectBlockDevicesList,
 } from 'ducks/storages/selectors';
@@ -61,15 +62,10 @@ const EditStorageForm = reduxForm({
   validate,
 })(StorageForm);
 
-const initFormValue = fromJS({ name: '', storagetype: '', hosts: [] });
-
 /* eslint-disable react/prefer-stateless-function */
 export class EditStoragePage extends React.PureComponent {
   static propTypes = {
-    initAction: PropTypes.func,
     classes: PropTypes.object.isRequired,
-    match: PropTypes.object,
-    location: PropTypes.object,
   };
 
   componentWillMount() {
@@ -85,6 +81,8 @@ export class EditStoragePage extends React.PureComponent {
   }
 
   load() {
+    const { loadStorages, url } = this.props;
+    loadStorages(url, clusterID);
     const { clusterID, loadBlockDevices, devicesURL } = this.props;
     loadBlockDevices(devicesURL, clusterID);
   }
@@ -95,16 +93,17 @@ export class EditStoragePage extends React.PureComponent {
       classes,
       cluster,
       clusterID,
-      createStorage,
+      editStorage,
       submitForm,
-      url,
+      storage,
       values,
     } = this.props;
+    const url = storage.getIn(['links', 'update']);
     async function doSubmit(formValues) {
       try {
         const data = formValues.toJS();
         await new Promise((resolve, reject) => {
-          createStorage({ ...data }, { resolve, reject, clusterID, url });
+          editStorage({ ...data }, { resolve, reject, clusterID, url });
         });
       } catch (error) {
         throw new SubmissionError({ _error: error });
@@ -123,39 +122,31 @@ export class EditStoragePage extends React.PureComponent {
                 name: <FormattedMessage {...messages.pageTitle} />,
               },
               {
-                path: `/clusters/${clusterID}/storages/create`,
-                name: <FormattedMessage {...messages.createStorage} />,
+                path: `/clusters/${clusterID}/storages/${storage.get('id')}/edit`,
+                name: <FormattedMessage {...messages.editStorage} />,
               },
             ]}
           />
           <Typography component="div" className="">
+            <EditStorageForm
+              classes={classes}
+              onSubmit={doSubmit}
+              initialValues={storage}
+              blockDevices={blockDevices}
+              formValues={values || storage}
+              edit={true}
+            />
             <GridContainer className={classes.grid}>
               <GridItem xs={12} sm={12} md={12}>
-                <Card>
-                  <CardHeader color="primary">
-                    <h4 className={classes.cardTitleWhite}>
-                      <FormattedMessage {...messages.createStorage} />
-                    </h4>
-                  </CardHeader>
-                  <CardBody>
-                    <EditStorageForm
-                      classes={classes}
-                      onSubmit={doSubmit}
-                      initialValues={initFormValue}
-                      blockDevices={blockDevices}
-                      formValues={values || initFormValue}
-                    />
-                  </CardBody>
-                  <CardFooter className={classes.cardFooter}>
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      onClick={submitForm}
-                    >
-                      <FormattedMessage {...messages.createStorageButton} />
-                    </Button>
-                  </CardFooter>
-                </Card>
+                <CardFooter className={classes.cardFooter}>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={submitForm}
+                  >
+                    <FormattedMessage {...messages.editStorageButton} />
+                  </Button>
+                </CardFooter>
               </GridItem>
             </GridContainer>
           </Typography>
@@ -171,6 +162,7 @@ const mapStateToProps = createStructuredSelector({
   devicesURL: makeSelectBlockDevicesURL(),
   blockDevices: makeSelectBlockDevicesList(),
   values: getFormValues(formName),
+  storage: makeSelectCurrentStorage(),
 });
 
 const mapDispatchToProps = (dispatch) =>

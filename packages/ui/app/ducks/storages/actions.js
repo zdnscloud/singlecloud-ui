@@ -135,3 +135,22 @@ export const removeStorageFailure = (error, meta) => ({
   meta,
   error: true,
 });
+
+export const editStorage = (data, meta) => ({
+  type: c.EDIT_STORAGE,
+  payload: data,
+  meta,
+});
+
+export const editStorageSuccess = (resp, meta) => ({
+  type: c.EDIT_STORAGE_SUCCESS,
+  payload: resp,
+  meta,
+});
+
+export const editStorageFailure = (error, meta) => ({
+  type: c.EDIT_STORAGE_FAILURE,
+  payload: error,
+  meta,
+  error: true,
+});
