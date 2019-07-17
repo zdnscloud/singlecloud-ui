@@ -14,8 +14,6 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 
-const { isImmutable } = Immutable;
-
 export class SimpleTable extends React.PureComponent {
   static propTypes = {
     schema: PropTypes.arrayOf(PropTypes.shape({
