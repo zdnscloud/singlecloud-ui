@@ -82,7 +82,7 @@ export class NamespacesTable extends React.PureComponent {
               <Button
                 color="primary"
                 component={Link}
-                to={`${pathname}/${props.data.get('id')}/resourcequotas`}
+                to={`${pathname}/${props.data.get('id')}/show`}
               >
                 {props.data.get('name')}
               </Button>

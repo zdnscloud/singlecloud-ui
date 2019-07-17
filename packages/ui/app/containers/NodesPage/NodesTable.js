@@ -70,7 +70,7 @@ export class NodesTable extends React.PureComponent {
             component: (props) => (
               <Button
                 color="primary"
-                to={`/clusters/${clusterID}/nodes/${props.data.get('id')}`}
+                to={`/clusters/${clusterID}/nodes/${props.data.get('id')}/show`}
                 component={Link}
               >
                 {props.data.get('name')}

@@ -105,7 +105,7 @@ export class ConfigMapsTable extends React.PureComponent {
                 color="primary"
                 to={`/clusters/${clusterID}/namespaces/${namespaceID}/configmaps/${props.data.get(
                   'id'
-                )}`}
+                )}/show`}
                 component={Link}
               >
                 {props.data.get('name')}
