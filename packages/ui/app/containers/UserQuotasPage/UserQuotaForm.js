@@ -3,6 +3,8 @@ import { compose } from 'redux';
 import { FormattedMessage } from 'react-intl';
 import { Field, reduxForm } from 'redux-form/immutable';
 import getByKey from '@gsmlg/utils/getByKey';
+import sha256 from 'crypto-js/sha256';
+import encHex from 'crypto-js/enc-hex';
 
 import Danger from 'components/Typography/Danger';
 import GridItem from 'components/Grid/GridItem';
@@ -30,7 +32,9 @@ class UserQuotaForm extends PureComponent {
       formRole,
       role,
     } = this.props;
-    // eslint-disable-next-line no-console
+    const user = role.get('user');
+    const userHash = sha256(user).toString(encHex).slice(0, 6);
+
     return (
       <form className={getByKey(classes, 'form')} onSubmit={handleSubmit}>
         <GridContainer>
@@ -65,11 +69,12 @@ class UserQuotaForm extends PureComponent {
                 type: 'text',
                 autoComplete: 'off',
               }}
+              fullWidth
             />
           </GridItem>
           {formRole === 'create' ? (
             <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
-              <small className={classes.username}>{role.get('user')}</small>
+              <small className={classes.username}>{userHash}</small>
             </GridItem>
           ) : null}
         </GridContainer>
