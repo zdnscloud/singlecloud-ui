@@ -35,6 +35,7 @@ import {
   makeSelectStorages,
   makeSelectStorageID,
   makeSelectCurrentStorage,
+  makeSelectURL,
 } from 'ducks/storages/selectors';
 
 import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
@@ -66,6 +67,10 @@ export class StoragePage extends React.PureComponent {
   }
 
   load() {
+    const { clusterID, loadStorages, url } = this.props;
+    if (url) {
+      loadStorages(url, clusterID);
+    }
   }
 
   render() {
@@ -76,6 +81,7 @@ export class StoragePage extends React.PureComponent {
     const usedSize = storage.get('usedsize');
     const nodes = storage.get('nodes');
     const pvs = storage.get('pvs');
+    const enableFilter = storage.get('storagetype') === 'lvm';
 
     return (
       <div className={classes.root}>
@@ -89,8 +95,7 @@ export class StoragePage extends React.PureComponent {
                 name: <FormattedMessage {...messages.pageTitle} />,
               },
               {
-                path: `/clusters/${clusterID}/storages`,
-                name: <FormattedMessage {...messages.pageTitle} />,
+                name: <FormattedMessage {...messages.storageDetail} />,
               },
             ]}
           />
@@ -139,14 +144,14 @@ export class StoragePage extends React.PureComponent {
                          <Node
                            node={node}
                            checkedNode={this.state.checkedNode}
-                           onClick={(evt) => {
+                           onClick={enableFilter ? (evt) => {
                              const name = node.get('name');
                              if (name === this.state.checkedNode) {
                                this.setState({ checkedNode: null });
                              } else {
                                this.setState({ checkedNode: name });
                              }
-                           }}
+                           } : null}
                          />
                        </GridItem>
                      ))}
@@ -186,6 +191,7 @@ export class StoragePage extends React.PureComponent {
 
 const mapStateToProps = createStructuredSelector({
   clusterID: makeSelectClusterID(),
+  url: makeSelectURL(),
   storage: makeSelectCurrentStorage(),
 });
 

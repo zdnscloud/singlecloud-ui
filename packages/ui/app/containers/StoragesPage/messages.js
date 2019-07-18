@@ -33,6 +33,10 @@ export default defineMessages({
     id: `${scope}.editStorage`,
     defaultMessage: 'EditStorage',
   },
+  storageDetail: {
+    id: `${scope}.storageDetail`,
+    defaultMessage: 'StorageDetail',
+  },
   storage: {
     id: `${scope}.storage`,
     defaultMessage: 'Storage',

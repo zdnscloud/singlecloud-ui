@@ -61,7 +61,9 @@ export class StoragesPage extends React.PureComponent {
 
   load() {
     const { clusterID, loadStorages, url } = this.props;
-    loadStorages(url, clusterID);
+    if (url) {
+      loadStorages(url, clusterID);
+    }
   }
 
   render() {
