@@ -34,7 +34,7 @@ export const Node = (props) => {
       setRect(el.getBoundingClientRect());
     }
   }, []);
-  const { classes, theme, node } = props;
+  const { classes, theme, node, checkedNode, onClick } = props;
   const width = rect.width / 2;
   const { height } = rect;
   const radius = Math.min(width, height) * 0.8;
@@ -47,7 +47,7 @@ export const Node = (props) => {
   const percent = Math.round((node.get('usedsize') / node.get('size')) * 100);
 
   return (
-    <Paper elevation={0} className={classes.node} ref={measuredRef}>
+    <Paper elevation={0} className={classes.node} ref={measuredRef} onClick={onClick}>
       <Typography className={classes.nodeChart} component="div">
         <svg width={width} height={height}>
           <Group top={centerY} left={centerX}>

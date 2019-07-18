@@ -77,6 +77,14 @@ export default defineMessages({
     id: `${scope}.tableTitleActions`,
     defaultMessage: 'Actions',
   },
+  tableTitlePods: {
+    id: `${scope}.tableTitlePods`,
+    defaultMessage: 'Pods',
+  },
+  tableTitleNode: {
+    id: `${scope}.tableTitleNode`,
+    defaultMessage: 'Node',
+  },
   nodeName: {
     id: `${scope}.nodeName`,
     defaultMessage: 'Node',

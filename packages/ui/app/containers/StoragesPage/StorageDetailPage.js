@@ -51,6 +51,8 @@ export class StoragePage extends React.PureComponent {
     classes: PropTypes.object.isRequired,
   };
 
+  state = { checkedNode: null };
+
   componentWillMount() {
     this.load();
   }
@@ -134,7 +136,18 @@ export class StoragePage extends React.PureComponent {
                     {nodes &&
                      nodes.map((node, i) => (
                        <GridItem key={i} xs={3} sm={3} md={3}>
-                         <Node node={node} />
+                         <Node
+                           node={node}
+                           checkedNode={this.state.checkedNode}
+                           onClick={(evt) => {
+                             const name = node.get('name');
+                             if (name === this.state.checkedNode) {
+                               this.setState({ checkedNode: null });
+                             } else {
+                               this.setState({ checkedNode: name });
+                             }
+                           }}
+                         />
                        </GridItem>
                      ))}
                   </GridContainer>
@@ -150,7 +163,18 @@ export class StoragePage extends React.PureComponent {
                     <FormattedMessage {...messages.pvList} />
                   </h4>
                 </CardHeader>
-                <CardBody>{pvs ? <PVTable data={pvs} /> : null}</CardBody>
+                <CardBody>
+                  {pvs ? (
+                    <PVTable
+                      data={pvs.filter((pv) => {
+                        if (this.state.checkedNode) {
+                          return pv.get('node') === this.state.checkedNode;
+                        }
+                        return true;
+                      })}
+                    />
+                  ) : null}
+                </CardBody>
               </Card>
             </GridItem>
           </GridContainer>
