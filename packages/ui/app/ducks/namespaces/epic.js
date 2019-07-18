@@ -18,6 +18,7 @@ import {
   createResourceQuotaFailure,
   createResourceQuotaSuccess,
 } from 'ducks/resourceQuotas/actions';
+import { makeSelectClusters } from 'ducks/clusters/selectors';
 import * as c from './constants';
 import * as a from './actions';
 
@@ -96,7 +97,8 @@ export const removeNamespaceEpic = (action$, state$, { ajax }) =>
 export const loadAllNamespacesEpic = (action$, state$, { ajax }) =>
   action$.pipe(
     ofType(c.LOAD_ALL_NAMESPACES),
-    mergeMap(({ payload: { clusters } }) => {
+    mergeMap(() => {
+      const clusters = makeSelectClusters()(state$.value).toList();
       const list = clusters
         .map((c) => ({
           clusterID: c.get('id'),
@@ -109,11 +111,12 @@ export const loadAllNamespacesEpic = (action$, state$, { ajax }) =>
           )
         )
         .toJS();
-      return concat.apply(null, list);
+      return concat(...list);
     })
   );
 
 export default combineEpics(
+  loadAllNamespacesEpic,
   loadNamespacesEpic,
   createNamespaceEpic,
   afterCreateEpic,

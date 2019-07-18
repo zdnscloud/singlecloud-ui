@@ -63,7 +63,7 @@ export const loadRoleEpic = (action$, state$, { ajax }) =>
               });
               return a.loadRoleSuccess(resp, meta);
             }
-          } else if (!isLogin) {
+          } else if (!isLogin && window.location.pathname.includes('/login')) {
             import('store').then((exports) => {
               const store = getByKey(exports, ['default', 'instance']);
               setTimeout(() => {
@@ -73,7 +73,7 @@ export const loadRoleEpic = (action$, state$, { ajax }) =>
           }
           return a.loadRoleSuccess(resp, meta);
         }),
-        catchError((error) => a.loadRoleFailure(error, meta))
+        catchError((error) => of(a.loadRoleFailure(error, meta)))
       )
     )
   );
