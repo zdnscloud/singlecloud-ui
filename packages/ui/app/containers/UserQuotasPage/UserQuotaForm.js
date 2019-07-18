@@ -32,7 +32,8 @@ class UserQuotaForm extends PureComponent {
       formRole,
       role,
     } = this.props;
-    const user = role.get('user');
+    
+    const user = formRole === 'create' ? role.get('user') : "";
     const userHash = sha256(user).toString(encHex).slice(0, 6);
 
     return (
