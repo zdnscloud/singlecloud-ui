@@ -18,7 +18,7 @@ import { SimpleTable } from '@gsmlg/com';
 
 import messages from './messages';
 import styles from './styles';
-import schema from './tableSchema';
+import schema from './pvTableSchema';
 
 /* eslint-disable react/prefer-stateless-function */
 export class PVTable extends React.PureComponent {
