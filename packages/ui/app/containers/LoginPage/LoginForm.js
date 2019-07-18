@@ -148,12 +148,14 @@ const LoginForm = (props) => {
           component={UsernameField}
           label={<FormattedMessage {...messages.username} />}
           cns={classes}
+          fullWidth
         />
         <Field
           name="password"
           component={PasswordField}
           label={<FormattedMessage {...messages.password} />}
           cns={classes}
+          fullWidth
         />
       </CardBody>
       {error ? (

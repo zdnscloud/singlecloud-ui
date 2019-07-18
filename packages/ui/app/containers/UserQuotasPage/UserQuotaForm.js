@@ -93,6 +93,7 @@ class UserQuotaForm extends PureComponent {
                   <FormattedMessage {...messages.formCPUEndAdornment} />
                 ),
               }}
+              fullWidth
             />
           </GridItem>
           <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
@@ -107,6 +108,7 @@ class UserQuotaForm extends PureComponent {
                 autoComplete: 'off',
                 endAdornment: 'Gi',
               }}
+              fullWidth
             />
           </GridItem>
           <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
@@ -121,6 +123,7 @@ class UserQuotaForm extends PureComponent {
                 autoComplete: 'off',
                 endAdornment: 'Gi',
               }}
+              fullWidth
             />
           </GridItem>
         </GridContainer>
