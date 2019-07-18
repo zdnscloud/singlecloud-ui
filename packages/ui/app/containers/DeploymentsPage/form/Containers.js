@@ -1,4 +1,5 @@
 import React, { PureComponent, Fragment, useState } from 'react';
+import { fromJS, is } from 'immutable';
 import { FormattedMessage } from 'react-intl';
 import { FieldArray } from 'redux-form/immutable';
 import List from '@material-ui/core/List';
@@ -62,7 +63,7 @@ const Containers = ({
         <List component="ul">
           <ListItem>
             <ListItemText>
-              <Button color="secondary" onClick={(evt) => fields.push({})}>
+              <Button color="secondary" onClick={(evt) => fields.push(fromJS({}))}>
                 <FormattedMessage {...messages.formAddContainer} />
                 <PlusIcon />
               </Button>

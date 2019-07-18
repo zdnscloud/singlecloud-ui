@@ -204,7 +204,6 @@ class DeploymentForm extends PureComponent {
                             }
                             fullWidth
                             inputProps={{ type: 'text', autoComplete: 'off' }}
-                            classes={classes}
                             name="exposedMetric.path"
                           />
                         </GridItem>
@@ -228,7 +227,6 @@ class DeploymentForm extends PureComponent {
                               min: 1,
                               max: 65535,
                             }}
-                            classes={classes}
                             name="exposedMetric.port"
                           />
                         </GridItem>
