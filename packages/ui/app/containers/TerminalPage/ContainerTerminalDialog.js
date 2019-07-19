@@ -73,7 +73,9 @@ export class TerminalDialog extends React.PureComponent {
           // /apis/ws.zcloud.cn/v1//clusters/%s/namespaces/%s/pods/%s/containers/%s/shell
           const { podID, containerName } = open;
           const socket = new SockJS(
-            `${protocol}//${hostname}:${port}/apis/ws.zcloud.cn/v1/clusters/${clusterID}/namespaces/${namespaceID}/pods/${podID}/containers/${containerName}/shell`
+            `${protocol}//${hostname}:${port}/apis/ws.zcloud.cn/v1/clusters/${clusterID}/namespaces/${namespaceID}/pods/${podID}/containers/${containerName}/shell`,
+            null,
+            { transports: 'websocket' }
           );
 
           term.on('data', (data) => {

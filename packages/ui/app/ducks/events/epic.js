@@ -22,7 +22,9 @@ export const eventEpic = (action$) =>
       Observable.create((observer) => {
         const { protocol, hostname, port } = window.location;
         const socket = new SockJS(
-          `${protocol}//${hostname}:${port}/apis/ws.zcloud.cn/v1/clusters/${clusterID}/event`
+          `${protocol}//${hostname}:${port}/apis/ws.zcloud.cn/v1/clusters/${clusterID}/event`,
+          null,
+          { transports: 'websocket' }
         );
 
         socket.onopen = () => {};

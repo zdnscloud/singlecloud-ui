@@ -12,7 +12,6 @@ import { createStructuredSelector, createSelector } from 'reselect';
 import { bindActionCreators, compose } from 'redux';
 import { reduxForm, getFormValues } from 'redux-form/immutable';
 import { fromJS } from 'immutable';
-import SockJS from 'sockjs-client';
 
 import { withStyles } from '@material-ui/core/styles';
 import Menubar from 'components/Menubar';
