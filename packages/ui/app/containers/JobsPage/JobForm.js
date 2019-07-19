@@ -34,6 +34,7 @@ class JobForm extends PureComponent {
       configMaps,
       formValues,
       theme,
+      secrets
     } = this.props;
     const getPorts = (formData) => {
       if (formData && formData.get) {
@@ -113,6 +114,7 @@ class JobForm extends PureComponent {
           <GridItem xs={12} sm={12} md={12}>
             <FieldArray
               name="containers"
+              secrets={secrets}
               classes={classes}
               component={Containers}
               configMaps={configMaps}

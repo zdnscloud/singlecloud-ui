@@ -82,8 +82,8 @@ const Volumes = ({
         case 'persistentVolume':
           if (pvcts && pvcts.size > 0) {
             names = pvcts.map((pvct) => ({
-              label: pvct.name,
-              value: pvct.name,
+              label: pvct.get('name'),
+              value: pvct.get('name'),
             }));
           }
           break;

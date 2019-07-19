@@ -27,6 +27,7 @@ class CronJobForm extends PureComponent {
       configMaps,
       formValues,
       theme,
+      secrets,
     } = this.props;
     const getPorts = (formData) => {
       if (formData && formData.get) {
@@ -115,6 +116,7 @@ class CronJobForm extends PureComponent {
             <FieldArray
               name="containers"
               classes={classes}
+              secrets={secrets}
               component={Containers}
               configMaps={configMaps}
               theme={theme}

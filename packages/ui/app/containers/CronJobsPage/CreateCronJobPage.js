@@ -16,7 +16,11 @@ import {
   SubmissionError,
   submit,
 } from 'redux-form/immutable';
-
+import {
+  makeSelectSecrets,
+  makeSelectURL as makeSelectSecretURL,
+} from 'ducks/secrets/selectors';
+import * as sActions from 'ducks/secrets/actions';
 import { withStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Button from '@material-ui/core/Button';
@@ -68,18 +72,20 @@ export class CreateCronJob extends React.PureComponent {
   };
 
   componentWillMount() {
-    const { clusterID, namespaceID, configMapURL, loadConfigMaps } = this.props;
+    const { clusterID, namespaceID, configMapURL, loadConfigMaps, loadSecrets, secretURL } = this.props;
+    loadSecrets({ url: secretURL, clusterID, namespaceID });
     loadConfigMaps({ url: configMapURL, clusterID, namespaceID });
   }
 
   componentDidUpdate(prevProps) {
     const {
       clusterID: prevClusterID,
-      namespaceID: prevNamespaceID,
+      namespaceID: prevNamespaceID,loadSecrets,secretURL
     } = prevProps;
     const { clusterID, namespaceID, configMapURL, loadConfigMaps } = this.props;
     if (prevClusterID !== clusterID || prevNamespaceID !== namespaceID) {
       loadConfigMaps({ url: configMapURL, clusterID, namespaceID });
+      loadSecrets({ url: secretURL, clusterID, namespaceID });
     }
   }
 
@@ -94,6 +100,7 @@ export class CreateCronJob extends React.PureComponent {
       configMaps,
       values,
       theme,
+      secrets,
     } = this.props;
     async function doSubmit(formValues) {
       try {
@@ -141,6 +148,7 @@ export class CreateCronJob extends React.PureComponent {
             <GridItem xs={12} sm={12} md={12}>
               <CreateCronJobForm
                 classes={classes}
+                secrets={secrets}
                 onSubmit={doSubmit}
                 configMaps={configMaps}
                 initialValues={fromJS({
@@ -174,6 +182,8 @@ const mapStateToProps = createStructuredSelector({
   url: makeSelectURL(),
   configMaps: makeSelectConfigMaps(),
   values: getFormValues(formName),
+  secrets: makeSelectSecrets(),
+  secretURL: makeSelectSecretURL(),
 });
 
 const mapDispatchToProps = (dispatch) =>
@@ -181,6 +191,7 @@ const mapDispatchToProps = (dispatch) =>
     {
       ...actions,
       loadConfigMaps: cActions.loadConfigMaps,
+      loadSecrets: sActions.loadSecrets,
       submitForm: () => submit(formName),
     },
     dispatch
