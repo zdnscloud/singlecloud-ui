@@ -1,4 +1,5 @@
 import React, { PureComponent, Fragment, useState } from 'react';
+import { fromJS, is } from 'immutable';
 import { FormattedMessage } from 'react-intl';
 import ListItem from '@material-ui/core/ListItem';
 import Button from '@material-ui/core/Button';
@@ -28,7 +29,7 @@ const VolumeClaimTemplate = ({
     <Fragment>
       <GridContainer>
         <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
-          <Button color="secondary" onClick={(evt) => fields.push({})}>
+          <Button color="secondary" onClick={(evt) => fields.push(fromJS({}))}>
             <FormattedMessage {...messages.formAddVolumeClaimTemplate} />
             <PlusIcon />
           </Button>

@@ -53,7 +53,7 @@ const Envs = ({ fields, meta: { error, submitFailed } }) => (
   <List component="ul">
     <ListItem>
       <ListItemText>
-        <Button color="secondary" onClick={(evt) => fields.push({})}>
+        <Button color="secondary" onClick={(evt) => fields.push(fromJS({}))}>
           <FormattedMessage {...messages.formENV} />
           <PlusIcon />
         </Button>

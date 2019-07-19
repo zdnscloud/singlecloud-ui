@@ -51,6 +51,7 @@ import messages from '../messages';
 
 const Volumes = ({
   configMapsOptions,
+  secretsOptions,
   containerIndex,
   fields,
   formValues,
@@ -59,7 +60,7 @@ const Volumes = ({
   <List component="ul">
     <ListItem>
       <ListItemText>
-        <Button color="secondary" onClick={(evt) => fields.push({})}>
+        <Button color="secondary" onClick={(evt) => fields.push(fromJS({}))}>
           <FormattedMessage {...messages.formVolumes} />
           <PlusIcon />
         </Button>
@@ -70,13 +71,21 @@ const Volumes = ({
       const type =
         formValues &&
         formValues.getIn(['containers', containerIndex, 'volumes', i, 'type']);
+      const pvcts = formValues && formValues.get('persistentVolumes');
       switch (type) {
         case 'configmap':
           names = configMapsOptions;
           break;
         case 'secret':
+          names = secretsOptions;
           break;
-        case 'persistentvolume':
+        case 'persistentVolume':
+          if (pvcts && pvcts.size > 0) {
+            names = pvcts.map((pvct) => ({
+              label: pvct.name,
+              value: pvct.name,
+            }));
+          }
           break;
       }
       return (
