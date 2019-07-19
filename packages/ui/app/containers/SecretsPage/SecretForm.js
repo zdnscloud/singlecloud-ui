@@ -1,5 +1,6 @@
 import React, { PureComponent, Fragment, useState } from 'react';
 import { compose } from 'redux';
+import { fromJS } from 'immutable';
 import { Field, FieldArray, reduxForm } from 'redux-form/immutable';
 import { FormattedMessage } from 'react-intl';
 import getByKey from '@gsmlg/utils/getByKey';
@@ -44,7 +45,7 @@ const renderConfigs = ({ fields, meta: { error, submitFailed }, classes }) => (
   <List component="ul" className={classes.dataList}>
     <ListItem>
       <ListItemText primary={<FormattedMessage {...messages.formData} />} />
-      <IconButton onClick={(evt) => fields.push({})}>
+      <IconButton onClick={(evt) => fields.push(fromJS({}))}>
         <AddIcon />
       </IconButton>
     </ListItem>
@@ -99,7 +100,7 @@ class SecretForm extends PureComponent {
     return (
       <form className={getByKey(classes, 'form')} onSubmit={handleSubmit}>
         <GridContainer>
-          <GridItem xs={12} sm={12} md={12} className={classes.formLine}>
+          <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
             <InputField
               label={<FormattedMessage {...messages.formName} />}
               name="name"
@@ -107,7 +108,7 @@ class SecretForm extends PureComponent {
                 className: classes.nameControl,
               }}
               inputProps={{ type: 'text', autoComplete: 'off', disabled: edit }}
-              classes={classes}
+              fullWidth
             />
           </GridItem>
           <GridItem xs={12} sm={12} md={12}>

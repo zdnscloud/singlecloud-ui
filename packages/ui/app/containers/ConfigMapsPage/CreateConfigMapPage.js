@@ -68,7 +68,8 @@ const validate = (values) => {
     errors.configs = [];
     configs.forEach((c) => {
       if (c) {
-        const { name, data } = c;
+        const name = c.get('name');
+        const data = c.get('data');
         const err = {};
         if (!name) err.name = 'Required';
         if (!data) err.data = 'Required';

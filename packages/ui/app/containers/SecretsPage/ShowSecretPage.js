@@ -101,6 +101,7 @@ export class ShowSecret extends React.PureComponent {
                         formControlProps={{
                           className: classes.nameControl,
                         }}
+                        fullWidth
                       />
                     </GridItem>
                     <GridItem xs={12} sm={12} md={12}>
