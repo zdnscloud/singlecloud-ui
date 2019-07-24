@@ -35,6 +35,8 @@ import {
   makeSelectConfigMapsList,
 } from 'ducks/configMaps/selectors';
 
+import ConfirmDelete from 'components/ConfirmDelete/ConfirmDelete';
+
 import messages from './messages';
 import styles from './styles';
 import schema from './tableSchema';
@@ -74,20 +76,13 @@ export class ConfigMapsTable extends React.PureComponent {
           label: 'Actions',
           component: (props) => (
             <Fragment>
-              <IconButton
-                variant="outlined"
-                size="small"
-                className={classes.button}
-                onClick={(evt) =>
-                  removeConfigMap(props.data.get('id'), {
-                    clusterID,
-                    namespaceID,
-                    url: props.data.getIn(['links', 'remove']),
-                  })
-                }
-              >
-                <DeleteIcon />
-              </IconButton>
+              <ConfirmDelete 
+                  actionName={removeConfigMap}
+                  id={props.data.get('id')}
+                  url={props.data.getIn(['links', 'remove'])}
+                  clusterID={clusterID}
+                  namespaceID={namespaceID}
+                />
             </Fragment>
           ),
         },

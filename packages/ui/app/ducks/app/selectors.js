@@ -8,6 +8,7 @@ import OverviewIcon from 'components/Icons/Overview';
 import ManagementIcon from 'components/Icons/Management';
 import ApplicationIcon from 'components/Icons/Application';
 import SystemIcon from 'components/Icons/System';
+import UserQuotasIcon from 'components/Icons/UserQuotas';
 
 import { makeSelectRole, makeSelectIsAdmin } from 'ducks/role/selectors';
 
@@ -165,7 +166,7 @@ export const makeSelectLeftMenus = () =>
         {
           name: 'UserQuotas',
           path: isAdmin ? '/adminUserQuotas' : '/userQuotas',
-          icon: OverviewIcon,
+          icon: UserQuotasIcon,
         },
       ]);
       return menus;

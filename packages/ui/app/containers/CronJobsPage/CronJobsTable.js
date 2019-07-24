@@ -33,6 +33,8 @@ import {
 } from 'ducks/cronJobs/selectors';
 import * as actions from 'ducks/cronJobs/actions';
 
+import ConfirmDelete from 'components/ConfirmDelete/ConfirmDelete';
+
 import messages from './messages';
 import styles from './styles';
 import schema from './tableSchema';
@@ -61,18 +63,13 @@ export class CronJobsTable extends React.PureComponent {
           label: 'Actions',
           component: (props) => (
             <Fragment>
-              <IconButton
-                aria-label="Delete"
-                onClick={(evt) =>
-                  removeCronJob(props.data.get('id'), {
-                    clusterID,
-                    namespaceID,
-                    url: props.data.getIn(['links', 'remove']),
-                  })
-                }
-              >
-                <DeleteIcon />
-              </IconButton>
+              <ConfirmDelete 
+                  actionName={removeCronJob}
+                  id={props.data.get('id')}
+                  url={props.data.getIn(['links', 'remove'])}
+                  clusterID={clusterID}
+                  namespaceID={namespaceID}
+                />
             </Fragment>
           ),
         },

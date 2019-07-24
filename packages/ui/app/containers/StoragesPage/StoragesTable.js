@@ -28,6 +28,8 @@ import {
   makeSelectStoragesList,
 } from 'ducks/storages/selectors';
 
+import ConfirmDelete from 'components/ConfirmDelete/ConfirmDelete';
+
 import messages from './messages';
 import styles from './styles';
 import schema from './tableSchema';
@@ -64,16 +66,12 @@ export class StoragesTable extends React.PureComponent {
                 <EditIcon />
               </IconButton>
 
-              <IconButton
-                aria-label="Delete"
-                onClick={(evt) => {
-                  const ns = props.data;
-                  const url = ns.getIn(['links', 'remove']);
-                  removeStorage(ns.get('id'), { url, clusterID });
-                }}
-              >
-                <DeleteIcon />
-              </IconButton>
+              <ConfirmDelete 
+                  actionName={removeStorage}
+                  id={props.data.get('id')}
+                  url={props.data.getIn(['links', 'remove'])}
+                  clusterID={clusterID}
+                />
             </Fragment>
           ),
         },

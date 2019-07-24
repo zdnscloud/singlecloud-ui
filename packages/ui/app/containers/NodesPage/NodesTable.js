@@ -24,6 +24,8 @@ import { makeSelectCurrentCluster } from 'ducks/clusters/selectors';
 import { makeSelectNodes, makeSelectNodesList } from 'ducks/nodes/selectors';
 import * as actions from 'ducks/nodes/actions';
 
+import ConfirmDelete from 'components/ConfirmDelete/ConfirmDelete';
+
 import messages from './messages';
 import styles from './styles';
 import schema from './tableSchema';
@@ -45,16 +47,11 @@ export class NodesTable extends React.PureComponent {
           label: 'Actions',
           component: (props) => (
             <Fragment>
-              <IconButton
-                aria-label="Delete"
-                onClick={(evt) =>
-                  removeNode(props.data.get('id'), {
-                    url: props.data.getIn(['links', 'remove']),
-                  })
-                }
-              >
-                <DeleteIcon />
-              </IconButton>
+              <ConfirmDelete 
+                  actionName={removeNode}
+                  id={props.data.get('id')}
+                  url={props.data.getIn(['links', 'remove'])}
+               />
             </Fragment>
           ),
         },

@@ -21,7 +21,7 @@ import AddIcon from '@material-ui/icons/Add';
 import EditIcon from '@material-ui/icons/Edit';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
-
+import ConfirmDelete from 'components/ConfirmDelete/ConfirmDelete';
 import {
   makeSelectClusterID,
   makeSelectNamespaceID,
@@ -58,18 +58,13 @@ export class JobsTable extends React.PureComponent {
           label: 'Actions',
           component: (props) => (
             <Fragment>
-              <IconButton
-                aria-label="Delete"
-                onClick={(evt) =>
-                  removeJob(props.data.get('id'), {
-                    clusterID,
-                    namespaceID,
-                    url: props.data.getIn(['links', 'remove']),
-                  })
-                }
-              >
-                <DeleteIcon />
-              </IconButton>
+              <ConfirmDelete 
+                  actionName={removeJob}
+                  id={props.data.get('id')}
+                  url={props.data.getIn(['links', 'remove'])}
+                  clusterID={clusterID}
+                  namespaceID={namespaceID}
+                />
             </Fragment>
           ),
         },

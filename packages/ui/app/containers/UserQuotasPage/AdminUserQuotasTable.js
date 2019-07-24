@@ -16,25 +16,15 @@ import { Link } from 'react-router-dom';
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
 import { SimpleTable } from '@gsmlg/com';
-import IconButton from '@material-ui/core/IconButton';
-import DeleteIcon from '@material-ui/icons/Delete';
-import EditIcon from '@material-ui/icons/Edit';
-import ShellIcon from 'components/Icons/Shell';
-import SuccessIcon from 'components/Icons/Success';
-import FailureIcon from 'components/Icons/Failure';
-import { openTerminal } from 'containers/TerminalPage/actions';
 
 import * as actions from 'ducks/userQuotas/actions';
 import {
   makeSelectUserQuotas,
   makeSelectUserQuotasList,
 } from 'ducks/userQuotas/selectors';
+
+import ConfirmDelete from 'components/ConfirmDelete/ConfirmDelete';
 
 import messages from './messages';
 import styles from './styles';
@@ -65,16 +55,11 @@ export class AdminUserQuotasTable extends React.PureComponent {
           component: (props) => (
             <Fragment>
               {props.data.get('status') !== 'processing' ? (
-                <IconButton
-                  aria-label="Delete"
-                  onClick={(evt) =>
-                    removeUserQuota(props.data.get('id'), {
-                      url: props.data.getIn(['links', 'remove']),
-                    })
-                  }
-                >
-                  <DeleteIcon />
-                </IconButton>
+                <ConfirmDelete 
+                  actionName={removeUserQuota}
+                  id={props.data.get('id')}
+                  url={props.data.getIn(['links', 'remove'])}
+                />
               ) : null}
             </Fragment>
           ),

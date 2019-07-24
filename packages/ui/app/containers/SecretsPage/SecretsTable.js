@@ -35,6 +35,8 @@ import {
   makeSelectSecretsList,
 } from 'ducks/secrets/selectors';
 
+import ConfirmDelete from 'components/ConfirmDelete/ConfirmDelete';
+
 import messages from './messages';
 import styles from './styles';
 import schema from './tableSchema';
@@ -74,20 +76,13 @@ export class SecretsTable extends React.PureComponent {
           label: 'Actions',
           component: (props) => (
             <Fragment>
-              <IconButton
-                variant="outlined"
-                size="small"
-                className={classes.button}
-                onClick={(evt) =>
-                  removeSecret(props.data.get('id'), {
-                    clusterID,
-                    namespaceID,
-                    url: props.data.getIn(['links', 'remove']),
-                  })
-                }
-              >
-                <DeleteIcon />
-              </IconButton>
+              <ConfirmDelete 
+                  actionName={removeSecret}
+                  id={props.data.get('id')}
+                  url={props.data.getIn(['links', 'remove'])}
+                  clusterID={clusterID}
+                  namespaceID={namespaceID}
+                />
             </Fragment>
           ),
         },

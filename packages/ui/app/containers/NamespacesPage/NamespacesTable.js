@@ -32,6 +32,8 @@ import {
   makeSelectNamespacesList,
 } from 'ducks/namespaces/selectors';
 
+import ConfirmDelete from 'components/ConfirmDelete/ConfirmDelete';
+
 import messages from './messages';
 import styles from './styles';
 import schema from './tableSchema';
@@ -61,16 +63,12 @@ export class NamespacesTable extends React.PureComponent {
           label: 'Actions',
           component: (props) => (
             <Fragment>
-              <IconButton
-                aria-label="Delete"
-                onClick={(evt) => {
-                  const ns = props.data;
-                  const url = ns.getIn(['links', 'remove']);
-                  removeNamespace(ns.get('id'), { url, clusterID });
-                }}
-              >
-                <DeleteIcon />
-              </IconButton>
+              <ConfirmDelete 
+                  actionName={removeNamespace}
+                  id={props.data.get('id')}
+                  url={props.data.getIn(['links', 'remove'])}
+                  clusterID={clusterID}
+               />
               {/* <IconButton
                 aria-label="Edit"
                 to={`${pathname}/${props.data.get('id')}/edit`}

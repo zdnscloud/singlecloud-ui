@@ -15,11 +15,6 @@ import { Link } from 'react-router-dom';
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
 import { SimpleTable } from '@gsmlg/com';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
@@ -27,7 +22,7 @@ import ShellIcon from 'components/Icons/Shell';
 import SuccessIcon from 'components/Icons/Success';
 import FailureIcon from 'components/Icons/Failure';
 import { openTerminal } from 'containers/TerminalPage/actions';
-
+import ConfirmDelete from 'components/ConfirmDelete/ConfirmDelete';
 import * as actions from 'ducks/clusters/actions';
 import {
   makeSelectClusters,
@@ -74,16 +69,11 @@ export class ClustersTable extends React.PureComponent {
                 <ShellIcon />
               </IconButton>
 
-              <IconButton
-                aria-label="Delete"
-                onClick={(evt) =>
-                  removeCluster(props.data.get('id'), {
-                    url: props.data.getIn(['links', 'remove']),
-                  })
-                }
-              >
-                <DeleteIcon />
-              </IconButton>
+              <ConfirmDelete 
+                  actionName={removeCluster}
+                  id={props.data.get('id')}
+                  url={props.data.getIn(['links', 'remove'])}
+              />
             </Fragment>
           ),
         },
