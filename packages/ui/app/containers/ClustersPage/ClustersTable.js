@@ -11,7 +11,6 @@ import { FormattedMessage } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import { bindActionCreators, compose } from 'redux';
 
-import { Link } from 'react-router-dom';
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
@@ -21,8 +20,9 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import ShellIcon from 'components/Icons/Shell';
 import SuccessIcon from 'components/Icons/Success';
 import FailureIcon from 'components/Icons/Failure';
-import { openTerminal } from 'containers/TerminalPage/actions';
 import ConfirmDelete from 'components/ConfirmDelete/ConfirmDelete';
+
+import { openTerminal } from 'containers/TerminalPage/actions';
 import * as actions from 'ducks/clusters/actions';
 import {
   makeSelectClusters,
@@ -32,26 +32,6 @@ import {
 import messages from './messages';
 import styles from './styles';
 import schema from './tableSchema';
-
-const ActionComponent = (props) => (
-  <Fragment>
-    <IconButton
-      variant="outlined"
-      size="small"
-      onClick={(evt) => {
-        props.openTerminal(props.data.get('id'));
-      }}
-    >
-      <ShellIcon />
-    </IconButton>
-
-    <ConfirmDelete
-      actionName={props.removeCluster}
-      id={props.data.get('id')}
-      url={props.data.getIn(['links', 'remove'])}
-    />
-  </Fragment>
-);
 
 /* eslint-disable react/prefer-stateless-function */
 export class ClustersTable extends React.PureComponent {
@@ -72,44 +52,17 @@ export class ClustersTable extends React.PureComponent {
       theme,
     } = this.props;
     const mergedSchema = schema
-      .concat([
-        {
-          id: 'actions',
-          label: 'Actions',
-          component: ActionComponent,
-          props: {
-            openTerminal,
-            removeCluster,
-          },
-        },
-      ])
       .map((sch) => {
+        if (sch.id === 'actions') {
+          return {
+            ...sch,
+            props: { classes, openTerminal, removeCluster },
+          };
+        }
         if (sch.id === 'status') {
           return {
             ...sch,
-            component: (props) =>
-              props.data.get('status') === 'Running' ? (
-                <SuccessIcon style={{ color: theme.palette.icons.a }} />
-              ) : (
-                <FailureIcon style={{ color: theme.palette.icons.b }} />
-              ),
-          };
-        }
-        return sch;
-      })
-      .map((sch) => {
-        if (sch.id === 'name') {
-          return {
-            ...sch,
-            component: (props) => (
-              <Button
-                color="primary"
-                to={`/clusters/${props.data.get('id')}`}
-                component={Link}
-              >
-                {props.data.get('name')}
-              </Button>
-            ),
+            props: { theme },
           };
         }
         return sch;
