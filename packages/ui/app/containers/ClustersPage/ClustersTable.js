@@ -33,6 +33,26 @@ import messages from './messages';
 import styles from './styles';
 import schema from './tableSchema';
 
+const ActionComponent = (props) => (
+  <Fragment>
+    <IconButton
+      variant="outlined"
+      size="small"
+      onClick={(evt) => {
+        props.openTerminal(props.data.get('id'));
+      }}
+    >
+      <ShellIcon />
+    </IconButton>
+
+    <ConfirmDelete
+      actionName={props.removeCluster}
+      id={props.data.get('id')}
+      url={props.data.getIn(['links', 'remove'])}
+    />
+  </Fragment>
+);
+
 /* eslint-disable react/prefer-stateless-function */
 export class ClustersTable extends React.PureComponent {
   static propTypes = {
@@ -56,26 +76,11 @@ export class ClustersTable extends React.PureComponent {
         {
           id: 'actions',
           label: 'Actions',
-          component: (props) => (
-            <Fragment>
-              <IconButton
-                variant="outlined"
-                size="small"
-                className={classes.button}
-                onClick={(evt) => {
-                  openTerminal(props.data.get('id'));
-                }}
-              >
-                <ShellIcon />
-              </IconButton>
-
-              <ConfirmDelete 
-                  actionName={removeCluster}
-                  id={props.data.get('id')}
-                  url={props.data.getIn(['links', 'remove'])}
-              />
-            </Fragment>
-          ),
+          component: ActionComponent,
+          props: {
+            openTerminal,
+            removeCluster,
+          },
         },
       ])
       .map((sch) => {
