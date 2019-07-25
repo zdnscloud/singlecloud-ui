@@ -12,17 +12,13 @@ import { createStructuredSelector } from 'reselect';
 import { bindActionCreators, compose } from 'redux';
 import getByKey from '@gsmlg/utils/getByKey';
 
-import { Link } from 'react-router-dom';
 import { withStyles } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
 import { SimpleTable } from '@gsmlg/com';
 import Dialog from '@material-ui/core/Dialog';
 import AceEditor from 'react-ace';
 import 'brace/mode/yaml';
 import 'brace/theme/github';
-import IconButton from '@material-ui/core/IconButton';
-import DeleteIcon from '@material-ui/icons/Delete';
 
 import {
   makeSelectClusterID,
@@ -34,8 +30,6 @@ import {
   makeSelectConfigMaps,
   makeSelectConfigMapsList,
 } from 'ducks/configMaps/selectors';
-
-import ConfirmDelete from 'components/ConfirmDelete/ConfirmDelete';
 
 import messages from './messages';
 import styles from './styles';
@@ -61,51 +55,21 @@ export class ConfigMapsTable extends React.PureComponent {
     } = this.props;
 
     const mergedSchema = schema
-      .concat([
-        {
-          id: 'configs',
-          label: 'Count',
-          component: (props) => {
-            const configs = props.data.get('configs');
-            if (configs) return configs.size;
-            return 0;
-          },
-        },
-        {
-          id: 'actions',
-          label: 'Actions',
-          component: (props) => (
-            <Fragment>
-              <ConfirmDelete 
-                  actionName={removeConfigMap}
-                  id={props.data.get('id')}
-                  url={props.data.getIn(['links', 'remove'])}
-                  clusterID={clusterID}
-                  namespaceID={namespaceID}
-                />
-            </Fragment>
-          ),
-        },
-      ])
       .map((s) => ({
         ...s,
         label: <FormattedMessage {...messages[`tableTitle${s.label}`]} />,
       }))
       .map((sch) => {
+        if (sch.id === 'actions') {
+          return {
+            ...sch,
+            props: { removeConfigMap, clusterID, namespaceID },
+          };
+        }
         if (sch.id === 'name') {
           return {
             ...sch,
-            component: (props) => (
-              <Button
-                color="primary"
-                to={`/clusters/${clusterID}/namespaces/${namespaceID}/configmaps/${props.data.get(
-                  'id'
-                )}/show`}
-                component={Link}
-              >
-                {props.data.get('name')}
-              </Button>
-            ),
+            props: { clusterID, namespaceID }
           };
         }
         return sch;

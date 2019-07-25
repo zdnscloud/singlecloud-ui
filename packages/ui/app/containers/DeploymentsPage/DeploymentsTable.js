@@ -54,36 +54,18 @@ export class DeploymentsTable extends React.PureComponent {
     } = this.props;
     const pathname = location.get('pathname');
     const mergedSchema = schema
-      .concat([
-        {
-          id: 'actions',
-          label: 'Actions',
-          component: (props) => (
-            <Fragment>
-              <ConfirmDelete 
-                  actionName={removeDeployment}
-                  id={props.data.get('id')}
-                  url={props.data.getIn(['links', 'remove'])}
-                  clusterID={clusterID}
-                  namespaceID={namespaceID}
-                />
-            </Fragment>
-          ),
-        },
-      ])
+    
       .map((sch) => {
+        if (sch.id === 'actions') {
+          return {
+            ...sch,
+            props: { removeDeployment, clusterID, namespaceID },
+          };
+        }
         if (sch.id === 'name') {
           return {
             ...sch,
-            component: (props) => (
-              <Button
-                color="primary"
-                component={Link}
-                to={`${pathname}/${props.data.get('id')}/show`}
-              >
-                {props.data.get('name')}
-              </Button>
-            ),
+            props: { pathname }
           };
         }
         return sch;

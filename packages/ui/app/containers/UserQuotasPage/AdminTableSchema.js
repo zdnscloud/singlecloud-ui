@@ -19,7 +19,7 @@ const schema = [
   'creationTimestamp',
 ];
 
-const tableSchema = schema
+const adminTableSchema = schema
   .map((id) => ({
     id,
     label: ucfirst(id),
@@ -55,7 +55,7 @@ const tableSchema = schema
         component: (props) => (
           <Button
             color="primary"
-            to={`/userQuotas/${props.data.get('id')}`}
+            to={`/userQuotas/${props.data.get('id')}/request`}
             component={Link}
           >
             {props.data.get('name')}
@@ -100,4 +100,4 @@ const tableSchema = schema
   })
   ;
 
-export default tableSchema;
+export default adminTableSchema;

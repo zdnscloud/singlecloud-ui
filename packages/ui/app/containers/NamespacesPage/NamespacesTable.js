@@ -11,15 +11,9 @@ import { FormattedMessage } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import { bindActionCreators, compose } from 'redux';
 
-import { Link } from 'react-router-dom';
 import { withStyles } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
 import { SimpleTable } from '@gsmlg/com';
-
-import IconButton from '@material-ui/core/IconButton';
-import DeleteIcon from '@material-ui/icons/Delete';
-import EditIcon from '@material-ui/icons/Edit';
 
 import {
   makeSelectClusterID,
@@ -31,8 +25,6 @@ import {
   makeSelectNamespaces,
   makeSelectNamespacesList,
 } from 'ducks/namespaces/selectors';
-
-import ConfirmDelete from 'components/ConfirmDelete/ConfirmDelete';
 
 import messages from './messages';
 import styles from './styles';
@@ -57,42 +49,17 @@ export class NamespacesTable extends React.PureComponent {
     } = this.props;
     const pathname = location.get('pathname');
     const mergedSchema = schema
-      .concat([
-        {
-          id: 'actions',
-          label: 'Actions',
-          component: (props) => (
-            <Fragment>
-              <ConfirmDelete 
-                  actionName={removeNamespace}
-                  id={props.data.get('id')}
-                  url={props.data.getIn(['links', 'remove'])}
-                  clusterID={clusterID}
-               />
-              {/* <IconButton
-                aria-label="Edit"
-                to={`${pathname}/${props.data.get('id')}/edit`}
-                component={Link}
-              >
-                <EditIcon />
-              </IconButton> */}
-            </Fragment>
-          ),
-        },
-      ])
       .map((sch) => {
+        if (sch.id === 'actions') {
+          return {
+            ...sch,
+            props: {clusterID, removeNamespace},
+          };
+        }
         if (sch.id === 'name') {
           return {
             ...sch,
-            component: (props) => (
-              <Button
-                color="primary"
-                component={Link}
-                to={`${pathname}/${props.data.get('id')}/show`}
-              >
-                {props.data.get('name')}
-              </Button>
-            ),
+            props: {pathname}
           };
         }
         return sch;

@@ -12,16 +12,10 @@ import { FormattedMessage } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import { bindActionCreators, compose } from 'redux';
 
-import { Link } from 'react-router-dom';
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
 import { SimpleTable } from '@gsmlg/com';
-import IconButton from '@material-ui/core/IconButton';
-import DeleteIcon from '@material-ui/icons/Delete';
-import EditIcon from '@material-ui/icons/Edit';
-
-import ConfirmDelete from 'components/ConfirmDelete/ConfirmDelete';
 
 import * as actions from 'ducks/userQuotas/actions';
 import {
@@ -50,84 +44,11 @@ export class UserQuotasTable extends React.PureComponent {
       theme,
     } = this.props;
     const mergedSchema = schema
-      .concat([
-        {
-          id: 'actions',
-          label: 'Actions',
-          component: (props) =>
-            props.data.get('status') !== 'processing' ? (
-              <Fragment>
-                <ConfirmDelete 
-                  actionName={removeUserQuota}
-                  id={props.data.get('id')}
-                  url={props.data.getIn(['links', 'remove'])}
-                />
-                <IconButton
-                  aria-label="Edit"
-                  to={`/userQuotas/${props.data.get('id')}/edit`}
-                  component={Link}
-                >
-                  <EditIcon />
-                </IconButton>
-              </Fragment>
-            ) : null,
-        },
-      ])
       .map((sch) => {
-        if (sch.id === 'memory') {
+        if (sch.id === 'actions') {
           return {
             ...sch,
-            component: (props) => `${props.data.get('memory')}Gi`,
-          };
-        }
-        return sch;
-      })
-      .map((sch) => {
-        if (sch.id === 'storage') {
-          return {
-            ...sch,
-            component: (props) => `${props.data.get('storage')}Gi`,
-          };
-        }
-        return sch;
-      })
-      .map((sch) => {
-        if (sch.id === 'status') {
-          return {
-            ...sch,
-            component: (props) => {
-              switch (props.data.get('status')) {
-                case 'processing':
-                  return <FormattedMessage {...messages.tableProcessing} />;
-                  break;
-                case 'approval':
-                  return <FormattedMessage {...messages.tableApproval} />;
-                  break;
-                case 'rejection':
-                  return <FormattedMessage {...messages.tableRejection} />;
-                  break;
-                default:
-                  return props.data.get('status');
-                  break;
-              }
-            },
-          };
-        }
-        return sch;
-      })
-      .map((sch) => {
-        if (sch.id === 'name') {
-          return {
-            ...sch,
-            component: (props) => (
-              <Button
-                color="primary"
-                to={`/userQuotas/${props.data.get('id')}`}
-                component={Link}
-              >
-                {props.data.get('name')}
-              </Button>
-            ),
+            props: { classes, removeUserQuota},
           };
         }
         return sch;

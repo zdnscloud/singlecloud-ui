@@ -28,7 +28,7 @@ import ConfirmDelete from 'components/ConfirmDelete/ConfirmDelete';
 
 import messages from './messages';
 import styles from './styles';
-import schema from './tableSchema';
+import schema from './adminTableSchema';
 
 /* eslint-disable react/prefer-stateless-function */
 export class AdminUserQuotasTable extends React.PureComponent {
@@ -48,78 +48,11 @@ export class AdminUserQuotasTable extends React.PureComponent {
       theme,
     } = this.props;
     const mergedSchema = schema
-      .concat([
-        {
-          id: 'actions',
-          label: 'Actions',
-          component: (props) => (
-            <Fragment>
-              {props.data.get('status') !== 'processing' ? (
-                <ConfirmDelete 
-                  actionName={removeUserQuota}
-                  id={props.data.get('id')}
-                  url={props.data.getIn(['links', 'remove'])}
-                />
-              ) : null}
-            </Fragment>
-          ),
-        },
-      ])
       .map((sch) => {
-        if (sch.id === 'memory') {
+        if (sch.id === 'actions') {
           return {
             ...sch,
-            component: (props) => `${props.data.get('memory')}Gi`,
-          };
-        }
-        return sch;
-      })
-      .map((sch) => {
-        if (sch.id === 'storage') {
-          return {
-            ...sch,
-            component: (props) => `${props.data.get('storage')}Gi`,
-          };
-        }
-        return sch;
-      })
-      .map((sch) => {
-        if (sch.id === 'status') {
-          return {
-            ...sch,
-            component: (props) => {
-              switch (props.data.get('status')) {
-                case 'processing':
-                  return <FormattedMessage {...messages.tableProcessing} />;
-                  break;
-                case 'approval':
-                  return <FormattedMessage {...messages.tableApproval} />;
-                  break;
-                case 'rejection':
-                  return <FormattedMessage {...messages.tableRejection} />;
-                  break;
-                default:
-                  return props.data.get('status');
-                  break;
-              }
-            },
-          };
-        }
-        return sch;
-      })
-      .map((sch) => {
-        if (sch.id === 'name') {
-          return {
-            ...sch,
-            component: (props) => (
-              <Button
-                color="primary"
-                to={`/userQuotas/${props.data.get('id')}/request`}
-                component={Link}
-              >
-                {props.data.get('name')}
-              </Button>
-            ),
+            props: { classes, removeUserQuota},
           };
         }
         return sch;
