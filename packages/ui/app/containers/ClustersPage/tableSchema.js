@@ -43,6 +43,28 @@ const tableSchema = schema
             <ShellIcon />
           </IconButton>
 
+          <IconButton
+            variant="outlined"
+            size="small"
+            onClick={(evt) => {
+              props.openClusterLog(props.data.get('id'));
+            }}
+          >
+            <SuccessIcon />
+          </IconButton>
+
+          <IconButton
+            variant="outlined"
+            size="small"
+            onClick={(evt) => {
+              props.cancelCluster(props.data.get('id'), {
+                url: `${props.data.getIn(['links', 'self'])}?action=cancel`
+              });
+            }}
+          >
+            <FailureIcon/>
+          </IconButton>
+
           <ConfirmDelete
             actionName={props.removeCluster}
             id={props.data.get('id')}
@@ -57,11 +79,7 @@ const tableSchema = schema
       return {
         ...sch,
         component: (props) =>
-          props.data.get('status') === 'Running' ? (
-            <SuccessIcon style={{ color: props.theme.palette.icons.a }} />
-          ) : (
-            <FailureIcon style={{ color: props.theme.palette.icons.b }} />
-          ),
+          props.data.get('status')
       };
     }
     return sch;
