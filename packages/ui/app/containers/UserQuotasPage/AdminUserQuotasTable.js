@@ -16,19 +16,7 @@ import { Link } from 'react-router-dom';
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
 import { SimpleTable } from '@gsmlg/com';
-import IconButton from '@material-ui/core/IconButton';
-import DeleteIcon from '@material-ui/icons/Delete';
-import EditIcon from '@material-ui/icons/Edit';
-import ShellIcon from 'components/Icons/Shell';
-import SuccessIcon from 'components/Icons/Success';
-import FailureIcon from 'components/Icons/Failure';
-import { openTerminal } from 'containers/TerminalPage/actions';
 
 import * as actions from 'ducks/userQuotas/actions';
 import {
@@ -36,9 +24,11 @@ import {
   makeSelectUserQuotasList,
 } from 'ducks/userQuotas/selectors';
 
+import ConfirmDelete from 'components/ConfirmDelete/ConfirmDelete';
+
 import messages from './messages';
 import styles from './styles';
-import schema from './tableSchema';
+import schema from './adminTableSchema';
 
 /* eslint-disable react/prefer-stateless-function */
 export class AdminUserQuotasTable extends React.PureComponent {
@@ -58,83 +48,11 @@ export class AdminUserQuotasTable extends React.PureComponent {
       theme,
     } = this.props;
     const mergedSchema = schema
-      .concat([
-        {
-          id: 'actions',
-          label: 'Actions',
-          component: (props) => (
-            <Fragment>
-              {props.data.get('status') !== 'processing' ? (
-                <IconButton
-                  aria-label="Delete"
-                  onClick={(evt) =>
-                    removeUserQuota(props.data.get('id'), {
-                      url: props.data.getIn(['links', 'remove']),
-                    })
-                  }
-                >
-                  <DeleteIcon />
-                </IconButton>
-              ) : null}
-            </Fragment>
-          ),
-        },
-      ])
       .map((sch) => {
-        if (sch.id === 'memory') {
+        if (sch.id === 'actions') {
           return {
             ...sch,
-            component: (props) => `${props.data.get('memory')}Gi`,
-          };
-        }
-        return sch;
-      })
-      .map((sch) => {
-        if (sch.id === 'storage') {
-          return {
-            ...sch,
-            component: (props) => `${props.data.get('storage')}Gi`,
-          };
-        }
-        return sch;
-      })
-      .map((sch) => {
-        if (sch.id === 'status') {
-          return {
-            ...sch,
-            component: (props) => {
-              switch (props.data.get('status')) {
-                case 'processing':
-                  return <FormattedMessage {...messages.tableProcessing} />;
-                  break;
-                case 'approval':
-                  return <FormattedMessage {...messages.tableApproval} />;
-                  break;
-                case 'rejection':
-                  return <FormattedMessage {...messages.tableRejection} />;
-                  break;
-                default:
-                  return props.data.get('status');
-                  break;
-              }
-            },
-          };
-        }
-        return sch;
-      })
-      .map((sch) => {
-        if (sch.id === 'name') {
-          return {
-            ...sch,
-            component: (props) => (
-              <Button
-                color="primary"
-                to={`/userQuotas/${props.data.get('id')}/request`}
-                component={Link}
-              >
-                {props.data.get('name')}
-              </Button>
-            ),
+            props: { classes, removeUserQuota},
           };
         }
         return sch;
