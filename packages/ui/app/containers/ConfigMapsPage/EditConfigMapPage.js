@@ -44,7 +44,7 @@ export const formName = 'createConfigMapForm';
 
 const validate = (values) => {
   const errors = {};
-  const requiredFields = ['name'];
+  const requiredFields = [];
   requiredFields.forEach((field) => {
     if (!values.get(field)) {
       errors[field] = 'Required';
