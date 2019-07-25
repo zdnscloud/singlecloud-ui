@@ -47,6 +47,7 @@ import JobsPage, {
 import ConfigMapsPage, {
   CreateConfigMapPage,
   ShowConfigMapPage,
+  EditConfigMapPage,
 } from 'containers/ConfigMapsPage/Loadable';
 import SecretsPage, {
   CreateSecretPage,
@@ -160,6 +161,12 @@ const appRoutes = [
     name: 'create configmap',
     icon: Dashboard,
     component: CreateConfigMapPage,
+  },
+  {
+    path: '/clusters/:cluster_id/namespaces/:namespace_id/configmaps/:configmap_id/edit',
+    name: 'edit configmap',
+    icon: Dashboard,
+    component: EditConfigMapPage,
   },
   {
     path:

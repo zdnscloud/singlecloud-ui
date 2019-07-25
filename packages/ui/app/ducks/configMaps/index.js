@@ -67,8 +67,14 @@ export const configMapsReducer = (
 
     case c.UPDATE_CONFIG_MAP:
       return state;
-    case c.UPDATE_CONFIG_MAP_SUCCESS:
-      return state;
+    case c.UPDATE_CONFIG_MAP_SUCCESS:{
+      const { clusterID, namespaceID } = meta;
+      const data = payload.response;
+      return state.setIn(
+        ['configMaps', clusterID, namespaceID, data.id],
+        fromJS(data)
+      );
+    }
     case c.UPDATE_CONFIG_MAP_FAILURE:
       return state;
 

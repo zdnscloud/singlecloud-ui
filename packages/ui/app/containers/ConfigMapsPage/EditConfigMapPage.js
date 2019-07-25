@@ -14,19 +14,9 @@ import { fromJS } from 'immutable';
 import { reduxForm, getFormValues } from 'redux-form/immutable';
 import { SubmissionError, submit } from 'redux-form';
 
-import classNames from 'classnames';
 import { withStyles } from '@material-ui/core/styles';
-import Menubar from 'components/Menubar';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import Typography from '@material-ui/core/Typography';
-import TextField from '@material-ui/core/TextField';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
 import Button from '@material-ui/core/Button';
-import Dialog from '@material-ui/core/Dialog';
-import AttachmentIcon from '@material-ui/icons/Attachment';
-import AceEditor from 'react-ace';
 import 'brace/mode/yaml';
 import 'brace/theme/github';
 
@@ -43,7 +33,7 @@ import {
   makeSelectNamespaceID,
 } from 'ducks/app/selectors';
 import * as actions from 'ducks/configMaps/actions';
-import { makeSelectURL } from 'ducks/configMaps/selectors';
+import { makeSelectURL, makeSelectCurrentConfigMap } from 'ducks/configMaps/selectors';
 
 import messages from './messages';
 import ConfigMapsPageHelmet from './helmet';
@@ -88,7 +78,7 @@ const CreateConfigMapForm = reduxForm({
 })(ConfigMapForm);
 
 /* eslint-disable react/prefer-stateless-function */
-export class CreateConfigMap extends React.PureComponent {
+export class EditConfigMap extends React.PureComponent {
   static propTypes = {
     classes: PropTypes.object.isRequired,
   };
@@ -96,17 +86,19 @@ export class CreateConfigMap extends React.PureComponent {
   render() {
     const {
       classes,
-      createConfigMap,
+      updateConfigMap,
       submitForm,
-      url,
       clusterID,
       namespaceID,
+      configMap
     } = this.props;
+  
     async function doSubmit(formValues) {
       try {
         const data = formValues.toJS();
+        const url = configMap.getIn(['links', 'update']);
         await new Promise((resolve, reject) => {
-          createConfigMap(data, {
+          updateConfigMap(data, {
             resolve,
             reject,
             url,
@@ -131,7 +123,7 @@ export class CreateConfigMap extends React.PureComponent {
                 name: <FormattedMessage {...messages.pageTitle} />,
               },
               {
-                name: <FormattedMessage {...messages.createConfigMap} />,
+                name: <FormattedMessage {...messages.editConfigMap} />,
               },
             ]}
           />
@@ -140,15 +132,16 @@ export class CreateConfigMap extends React.PureComponent {
               <Card>
                 <CardHeader color="primary">
                   <h4 className={classes.cardTitleWhite}>
-                    <FormattedMessage {...messages.createConfigMap} />
+                    <FormattedMessage {...messages.editConfigMap} />
                   </h4>
                 </CardHeader>
                 <CardBody>
                   <CreateConfigMapForm
                     classes={classes}
                     onSubmit={doSubmit}
-                    initialValues={fromJS({})}
-                    type="create"
+                    initialValues={configMap}
+                    configMap={configMap}
+                    type="edit"
                   />
                 </CardBody>
                 <CardFooter className={classes.cardFooter}>
@@ -173,6 +166,7 @@ export class CreateConfigMap extends React.PureComponent {
 const mapStateToProps = createStructuredSelector({
   clusterID: makeSelectClusterID(),
   namespaceID: makeSelectNamespaceID(),
+  configMap: makeSelectCurrentConfigMap(),
   url: makeSelectURL(),
 });
 
@@ -193,4 +187,4 @@ const withConnect = connect(
 export default compose(
   withConnect,
   withStyles(styles)
-)(CreateConfigMap);
+)(EditConfigMap);
