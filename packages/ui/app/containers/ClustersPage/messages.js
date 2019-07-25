@@ -167,7 +167,7 @@ export default defineMessages({
   },
   logTitle: {
     id: `${scope}.logTitle`,
-    defaultMessage: 'Container Log',
+    defaultMessage: 'Cluster Log Title',
   },
   logClose: {
     id: `${scope}.logClose`,
