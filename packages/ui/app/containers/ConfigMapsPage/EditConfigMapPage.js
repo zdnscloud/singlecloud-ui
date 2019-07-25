@@ -1,6 +1,6 @@
 /**
  *
- * CreateSecretPage
+ * CreateConfigMapPage
  *
  */
 
@@ -15,11 +15,8 @@ import { reduxForm, getFormValues } from 'redux-form/immutable';
 import { SubmissionError, submit } from 'redux-form';
 
 import { withStyles } from '@material-ui/core/styles';
-
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Button from '@material-ui/core/Button';
-import GridItem from 'components/Grid/GridItem';
-import GridContainer from 'components/Grid/GridContainer';
 import 'brace/mode/yaml';
 import 'brace/theme/github';
 
@@ -27,24 +24,27 @@ import Card from 'components/Card/Card';
 import CardBody from 'components/Card/CardBody';
 import CardHeader from 'components/Card/CardHeader';
 import CardFooter from 'components/Card/CardFooter';
+import GridItem from 'components/Grid/GridItem';
+import GridContainer from 'components/Grid/GridContainer';
+import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
 
 import {
   makeSelectClusterID,
   makeSelectNamespaceID,
 } from 'ducks/app/selectors';
-import * as actions from 'ducks/secrets/actions';
-import { makeSelectURL } from 'ducks/secrets/selectors';
+import * as actions from 'ducks/configMaps/actions';
+import { makeSelectURL, makeSelectCurrentConfigMap } from 'ducks/configMaps/selectors';
 
-import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
 import messages from './messages';
-import SecretsPageHelmet from './helmet';
+import ConfigMapsPageHelmet from './helmet';
 import styles from './styles';
-import SecretForm from './SecretForm';
-export const formName = 'createSecretForm';
+import ConfigMapForm from './ConfigMapForm';
+
+export const formName = 'createConfigMapForm';
 
 const validate = (values) => {
   const errors = {};
-  const requiredFields = ['name'];
+  const requiredFields = [];
   requiredFields.forEach((field) => {
     if (!values.get(field)) {
       errors[field] = 'Required';
@@ -58,7 +58,8 @@ const validate = (values) => {
     errors.configs = [];
     configs.forEach((c) => {
       if (c) {
-        const { name, data } = c;
+        const name = c.get('name');
+        const data = c.get('data');
         const err = {};
         if (!name) err.name = 'Required';
         if (!data) err.data = 'Required';
@@ -71,13 +72,13 @@ const validate = (values) => {
   return errors;
 };
 
-const CreateSecretForm = reduxForm({
+const CreateConfigMapForm = reduxForm({
   form: formName,
   validate,
-})(SecretForm);
+})(ConfigMapForm);
 
 /* eslint-disable react/prefer-stateless-function */
-export class CreateSecret extends React.PureComponent {
+export class EditConfigMap extends React.PureComponent {
   static propTypes = {
     classes: PropTypes.object.isRequired,
   };
@@ -85,17 +86,19 @@ export class CreateSecret extends React.PureComponent {
   render() {
     const {
       classes,
-      createSecret,
+      updateConfigMap,
       submitForm,
-      url,
       clusterID,
       namespaceID,
+      configMap
     } = this.props;
+  
     async function doSubmit(formValues) {
       try {
         const data = formValues.toJS();
+        const url = configMap.getIn(['links', 'update']);
         await new Promise((resolve, reject) => {
-          createSecret(data, {
+          updateConfigMap(data, {
             resolve,
             reject,
             url,
@@ -110,18 +113,17 @@ export class CreateSecret extends React.PureComponent {
 
     return (
       <div className={classes.root}>
-        <SecretsPageHelmet />
+        <ConfigMapsPageHelmet />
         <CssBaseline />
         <div className={classes.content}>
           <Breadcrumbs
             data={[
               {
-                path: `/clusters/${clusterID}/namespaces/${namespaceID}/secrets`,
+                path: `/clusters/${clusterID}/namespaces/${namespaceID}/configmaps`,
                 name: <FormattedMessage {...messages.pageTitle} />,
               },
               {
-                path: `/clusters/${clusterID}/namespaces/${namespaceID}/secrets/create`,
-                name: <FormattedMessage {...messages.createSecret} />,
+                name: <FormattedMessage {...messages.editConfigMap} />,
               },
             ]}
           />
@@ -130,15 +132,16 @@ export class CreateSecret extends React.PureComponent {
               <Card>
                 <CardHeader color="primary">
                   <h4 className={classes.cardTitleWhite}>
-                    <FormattedMessage {...messages.createSecret} />
+                    <FormattedMessage {...messages.editConfigMap} />
                   </h4>
                 </CardHeader>
                 <CardBody>
-                  <CreateSecretForm
+                  <CreateConfigMapForm
                     classes={classes}
                     onSubmit={doSubmit}
-                    initialValues={fromJS({})}
-                    type="create"
+                    initialValues={configMap}
+                    configMap={configMap}
+                    type="edit"
                   />
                 </CardBody>
                 <CardFooter className={classes.cardFooter}>
@@ -163,6 +166,7 @@ export class CreateSecret extends React.PureComponent {
 const mapStateToProps = createStructuredSelector({
   clusterID: makeSelectClusterID(),
   namespaceID: makeSelectNamespaceID(),
+  configMap: makeSelectCurrentConfigMap(),
   url: makeSelectURL(),
 });
 
@@ -183,4 +187,4 @@ const withConnect = connect(
 export default compose(
   withConnect,
   withStyles(styles)
-)(CreateSecret);
+)(EditConfigMap);

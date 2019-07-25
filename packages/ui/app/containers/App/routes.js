@@ -47,10 +47,12 @@ import JobsPage, {
 import ConfigMapsPage, {
   CreateConfigMapPage,
   ShowConfigMapPage,
+  EditConfigMapPage,
 } from 'containers/ConfigMapsPage/Loadable';
 import SecretsPage, {
   CreateSecretPage,
   ShowSecretPage,
+  EditSecretPage
 } from 'containers/SecretsPage/Loadable';
 import ServiceLinkPage from 'containers/ServiceLinkPage/Loadable';
 import StoragesPage, {
@@ -162,6 +164,12 @@ const appRoutes = [
     component: CreateConfigMapPage,
   },
   {
+    path: '/clusters/:cluster_id/namespaces/:namespace_id/configmaps/:configmap_id/edit',
+    name: 'edit configmap',
+    icon: Dashboard,
+    component: EditConfigMapPage,
+  },
+  {
     path:
       '/clusters/:cluster_id/namespaces/:namespace_id/configmaps/:configmap_id/show',
     name: 'show configmap',
@@ -181,6 +189,12 @@ const appRoutes = [
     name: 'create secret',
     icon: Dashboard,
     component: CreateSecretPage,
+  },
+  {
+    path: '/clusters/:cluster_id/namespaces/:namespace_id/secrets/:secret_id/edit',
+    name: 'edit secret',
+    icon: Dashboard,
+    component: EditSecretPage,
   },
   {
     path: '/clusters/:cluster_id/namespaces/:namespace_id/secrets/:secret_id/show',

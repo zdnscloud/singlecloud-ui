@@ -15,7 +15,6 @@ import { reduxForm, getFormValues } from 'redux-form/immutable';
 import { SubmissionError, submit } from 'redux-form';
 
 import { withStyles } from '@material-ui/core/styles';
-
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Button from '@material-ui/core/Button';
 import GridItem from 'components/Grid/GridItem';
@@ -33,7 +32,7 @@ import {
   makeSelectNamespaceID,
 } from 'ducks/app/selectors';
 import * as actions from 'ducks/secrets/actions';
-import { makeSelectURL } from 'ducks/secrets/selectors';
+import { makeSelectURL, makeSelectCurrentSecret } from 'ducks/secrets/selectors';
 
 import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
 import messages from './messages';
@@ -44,7 +43,7 @@ export const formName = 'createSecretForm';
 
 const validate = (values) => {
   const errors = {};
-  const requiredFields = ['name'];
+  const requiredFields = [];
   requiredFields.forEach((field) => {
     if (!values.get(field)) {
       errors[field] = 'Required';
@@ -77,7 +76,7 @@ const CreateSecretForm = reduxForm({
 })(SecretForm);
 
 /* eslint-disable react/prefer-stateless-function */
-export class CreateSecret extends React.PureComponent {
+export class EditSecret extends React.PureComponent {
   static propTypes = {
     classes: PropTypes.object.isRequired,
   };
@@ -85,17 +84,18 @@ export class CreateSecret extends React.PureComponent {
   render() {
     const {
       classes,
-      createSecret,
+      updateSecret,
       submitForm,
-      url,
       clusterID,
       namespaceID,
+      secret
     } = this.props;
     async function doSubmit(formValues) {
       try {
         const data = formValues.toJS();
+        const url = secret.getIn(['links', 'update']);
         await new Promise((resolve, reject) => {
-          createSecret(data, {
+          updateSecret(data, {
             resolve,
             reject,
             url,
@@ -120,8 +120,7 @@ export class CreateSecret extends React.PureComponent {
                 name: <FormattedMessage {...messages.pageTitle} />,
               },
               {
-                path: `/clusters/${clusterID}/namespaces/${namespaceID}/secrets/create`,
-                name: <FormattedMessage {...messages.createSecret} />,
+                name: <FormattedMessage {...messages.editSecret} />,
               },
             ]}
           />
@@ -130,15 +129,16 @@ export class CreateSecret extends React.PureComponent {
               <Card>
                 <CardHeader color="primary">
                   <h4 className={classes.cardTitleWhite}>
-                    <FormattedMessage {...messages.createSecret} />
+                    <FormattedMessage {...messages.editSecret} />
                   </h4>
                 </CardHeader>
                 <CardBody>
                   <CreateSecretForm
                     classes={classes}
                     onSubmit={doSubmit}
-                    initialValues={fromJS({})}
-                    type="create"
+                    initialValues={secret}
+                    secret={secret}
+                    type="edit"
                   />
                 </CardBody>
                 <CardFooter className={classes.cardFooter}>
@@ -163,6 +163,7 @@ export class CreateSecret extends React.PureComponent {
 const mapStateToProps = createStructuredSelector({
   clusterID: makeSelectClusterID(),
   namespaceID: makeSelectNamespaceID(),
+  secret: makeSelectCurrentSecret(),
   url: makeSelectURL(),
 });
 
@@ -183,4 +184,4 @@ const withConnect = connect(
 export default compose(
   withConnect,
   withStyles(styles)
-)(CreateSecret);
+)(EditSecret);

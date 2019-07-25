@@ -41,6 +41,10 @@ export default defineMessages({
     id: `${scope}.createConfigMap`,
     defaultMessage: 'Create Config Map',
   },
+  editConfigMap: {
+    id: `${scope}.editConfigMap`,
+    defaultMessage: 'EditConfigMap',
+  },
   formName: {
     id: `${scope}.formName`,
     defaultMessage: 'Name',

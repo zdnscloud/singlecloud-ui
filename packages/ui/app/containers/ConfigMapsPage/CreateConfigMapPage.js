@@ -148,6 +148,7 @@ export class CreateConfigMap extends React.PureComponent {
                     classes={classes}
                     onSubmit={doSubmit}
                     initialValues={fromJS({})}
+                    type="create"
                   />
                 </CardBody>
                 <CardFooter className={classes.cardFooter}>
