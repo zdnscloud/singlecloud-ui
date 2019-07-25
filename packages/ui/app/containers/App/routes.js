@@ -52,6 +52,7 @@ import ConfigMapsPage, {
 import SecretsPage, {
   CreateSecretPage,
   ShowSecretPage,
+  EditSecretPage
 } from 'containers/SecretsPage/Loadable';
 import ServiceLinkPage from 'containers/ServiceLinkPage/Loadable';
 import StoragesPage, {
@@ -188,6 +189,12 @@ const appRoutes = [
     name: 'create secret',
     icon: Dashboard,
     component: CreateSecretPage,
+  },
+  {
+    path: '/clusters/:cluster_id/namespaces/:namespace_id/secrets/:secret_id/edit',
+    name: 'edit secret',
+    icon: Dashboard,
+    component: EditSecretPage,
   },
   {
     path: '/clusters/:cluster_id/namespaces/:namespace_id/secrets/:secret_id/show',

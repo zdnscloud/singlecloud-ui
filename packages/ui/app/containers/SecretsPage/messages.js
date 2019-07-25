@@ -40,6 +40,10 @@ export default defineMessages({
   createSecret: {
     id: `${scope}.createSecret`,
     defaultMessage: 'Create Config Map',
+  },  
+  editSecret: {
+    id: `${scope}.editSecret`,
+    defaultMessage: 'EditSecret',
   },
   formName: {
     id: `${scope}.formName`,

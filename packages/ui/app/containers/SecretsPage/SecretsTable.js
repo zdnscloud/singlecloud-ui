@@ -23,6 +23,7 @@ import 'brace/mode/yaml';
 import 'brace/theme/github';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
+import EditIcon from 'components/Icons/Edit';
 
 import {
   makeSelectClusterID,
@@ -74,6 +75,15 @@ export class SecretsTable extends React.PureComponent {
           label: 'Actions',
           component: (props) => (
             <Fragment>
+                <IconButton
+                aria-label="Edit"
+                component={Link}
+                to={`/clusters/${clusterID}/namespaces/${namespaceID}/secrets/${props.data.get(
+                  'id'
+                )}/edit`}
+              >
+                <EditIcon />
+              </IconButton>
               <IconButton
                 variant="outlined"
                 size="small"
