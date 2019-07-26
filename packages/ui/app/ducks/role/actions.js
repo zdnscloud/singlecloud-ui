@@ -9,30 +9,35 @@ export const login = (formData, meta) => ({
   meta,
 });
 
-export const loginSuccess = (resp) => ({
+export const loginSuccess = (resp, meta) => ({
   type: c.LOGIN_SUCCESS,
   payload: resp,
+  meta,
 });
 
-export const loginFailure = (errors) => ({
+export const loginFailure = (errors, meta) => ({
   type: c.LOGIN_FAILURE,
   payload: errors,
+  meta,
   error: true,
 });
 
-export const logout = (data) => ({
+export const logout = (data, meta) => ({
   type: c.LOGOUT,
   payload: { data },
+  meta,
 });
 
-export const logoutSuccess = (data) => ({
+export const logoutSuccess = (data, meta) => ({
   type: c.LOGOUT_SUCCESS,
   payload: { data },
+  meta,
 });
 
-export const logoutFailure = (errors) => ({
+export const logoutFailure = (errors, meta) => ({
   type: c.LOGOUT_FAILURE,
   payload: { errors },
+  meta,
 });
 
 export const loadRole = (url, meta) => ({

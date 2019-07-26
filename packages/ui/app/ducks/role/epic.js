@@ -52,7 +52,18 @@ export const loadRoleEpic = (action$, state$, { ajax }) =>
           const authBy = getByKey(resp, ['response', 'authBy']);
           const isLogin = makeSelectIsLogin()(state$.value);
           if (!user) {
-            if (authBy === 'CAS' && !window.location.pathname.include('/login')) {
+            if (meta.logout) {
+              if (meta.isCAS) {
+                window.location.reload();
+              } else {
+                import('store').then((exports) => {
+                  const store = getByKey(exports, ['default', 'instance']);
+                  setTimeout(() => {
+                    store.dispatch(push('/login'));
+                  }, 100);
+                });
+              }
+            } else if (authBy === 'CAS' && !window.location.pathname.include('/login')) {
               window.location.reload();
             } else {
               import('store').then((exports) => {
@@ -61,7 +72,6 @@ export const loadRoleEpic = (action$, state$, { ajax }) =>
                   store.dispatch(push('/login'));
                 }, 100);
               });
-              return a.loadRoleSuccess(resp, meta);
             }
           } else if (!isLogin && window.location.pathname.includes('/login')) {
             import('store').then((exports) => {
@@ -96,7 +106,7 @@ export const logoutEpic = (action$, state$, { ajax }) =>
           map((resp) => a.logoutSuccess(resp)),
           catchError((error) => of(a.logoutFailure(error)))
         )
-        .pipe(mapTo(a.loadRole('/web/role')));
+        .pipe(mapTo(a.loadRole('/web/role', { logout: true, isCAS })));
     })
   );
 

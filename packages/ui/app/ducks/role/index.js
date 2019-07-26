@@ -14,7 +14,10 @@ const { prefix } = c;
 export { prefix };
 
 export const initialState = fromJS({
-  role: {},
+  role: {
+    user: null,
+    authBy: 'JWT',
+  },
 });
 
 export const roleReducer = (
