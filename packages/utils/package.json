@@ -2,7 +2,7 @@
   "name": "@gsmlg/utils",
   "private": false,
   "author": "GSMLG",
-  "version": "4.0.0-alpha.2",
+  "version": "1.0.0-beta.0",
   "description": "Functions of SingleCloud.",
   "keywords": [
     "singlecloud"
