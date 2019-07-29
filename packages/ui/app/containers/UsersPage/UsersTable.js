@@ -11,19 +11,8 @@ import { FormattedMessage } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import { bindActionCreators, compose } from 'redux';
 
-import { Link } from 'react-router-dom';
 import { withStyles } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import IconButton from '@material-ui/core/IconButton';
-import DeleteIcon from '@material-ui/icons/Delete';
-import EditIcon from '@material-ui/icons/Edit';
-import KeyIcon from '@material-ui/icons/VpnKey';
 import { SimpleTable } from '@gsmlg/com';
 
 import { makeSelectUsers, makeSelectUsersList } from 'ducks/users/selectors';
@@ -42,31 +31,17 @@ export class UsersTable extends React.PureComponent {
 
   render() {
     const { classes, usersList, removeUser } = this.props;
+    console.log('usersList',usersList)
     const mergedSchema = schema
-      .concat([
-        {
-          id: 'actions',
-          label: 'Actions',
-          component: (props) => (
-            <Fragment>
-              <Link
-                to={`/users/${props.data.get('id')}/edit`}
-                className={classes.createBtnLink}
-              >
-                <IconButton aria-label="Edit User">
-                  <EditIcon />
-                </IconButton>
-              </Link>
-              <IconButton
-                aria-label="Delete"
-                onClick={(evt) => removeUser(props.data.get('id'))}
-              >
-                <DeleteIcon />
-              </IconButton>
-            </Fragment>
-          ),
-        },
-      ])
+        .map((sch) => {
+        if (sch.id === 'actions') {
+          return {
+            ...sch,
+            props: { classes, removeUser},
+          };
+        }
+        return sch;
+      })
       .map((s) => ({
         ...s,
         label: <FormattedMessage {...messages[`tableTitle${s.label}`]} />,

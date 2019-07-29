@@ -25,6 +25,10 @@ export default defineMessages({
     id: `${scope}.users`,
     defaultMessage: 'Users',
   },
+  usersList: {
+    id: `${scope}.users`,
+    defaultMessage: 'usersList',
+  },
   tableTitleName: {
     id: `${scope}.tableTitleName`,
     defaultMessage: 'Name',

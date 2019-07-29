@@ -5,7 +5,6 @@
  */
 
 import React, { Fragment } from 'react';
-import { findDOMNode } from 'react-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
@@ -14,10 +13,7 @@ import { bindActionCreators, compose } from 'redux';
 import { fromJS } from 'immutable';
 import { reduxForm, getFormValues } from 'redux-form/immutable';
 import { SubmissionError, submit } from 'redux-form';
-import sha1 from 'crypto-js/sha1';
-import encHex from 'crypto-js/enc-hex';
 
-import classNames from 'classnames';
 import { withStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Button from '@material-ui/core/Button';
@@ -26,6 +22,9 @@ import Card from 'components/Card/Card';
 import CardBody from 'components/Card/CardBody';
 import CardHeader from 'components/Card/CardHeader';
 import CardFooter from 'components/Card/CardFooter';
+import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
+import GridItem from 'components/Grid/GridItem';
+import GridContainer from 'components/Grid/GridContainer';
 
 import * as actions from 'ducks/users/actions';
 import { makeSelectEditingUser, makeSelectUID } from 'ducks/users/selectors';
@@ -78,32 +77,43 @@ export class EditUserPage extends React.PureComponent {
         <UsersHelmet />
         <CssBaseline />
         <div className={classes.content}>
-          <Card>
-            <CardHeader color="primary">
-              <h4 className={classes.cardTitleWhite}>
-                <FormattedMessage {...messages.editUser} />
-              </h4>
-            </CardHeader>
-            <CardBody>
-              <EditUserForm
-                edit
-                classes={classes}
-                clusters={clusters}
-                onSubmit={doSubmit}
-                initialValues={user}
-              />
-            </CardBody>
-            <CardFooter className={classes.cardFooter}>
-              <Button
-                variant="contained"
-                color="primary"
-                size="large"
-                onClick={submitForm}
-              >
-                <FormattedMessage {...messages.updateUser} />
-              </Button>
-            </CardFooter>
-          </Card>
+          <Breadcrumbs
+              data={[
+                {
+                  name: <FormattedMessage {...messages.editUser} />,
+                },
+              ]}
+          />
+           <GridContainer className={classes.grid}>
+            <GridItem xs={12} sm={12} md={12}>
+              <Card>
+                <CardHeader color="primary">
+                  <h4 className={classes.cardTitleWhite}>
+                    <FormattedMessage {...messages.editUser} />
+                  </h4>
+                </CardHeader>
+                <CardBody>
+                  <EditUserForm
+                    edit
+                    classes={classes}
+                    clusters={clusters}
+                    onSubmit={doSubmit}
+                    initialValues={user}
+                  />
+                </CardBody>
+                <CardFooter className={classes.cardFooter}>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    size="large"
+                    onClick={submitForm}
+                  >
+                    <FormattedMessage {...messages.updateUser} />
+                  </Button>
+                </CardFooter>
+              </Card>
+            </GridItem>
+          </GridContainer>
         </div>
       </div>
     );

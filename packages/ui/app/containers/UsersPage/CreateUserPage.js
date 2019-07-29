@@ -22,10 +22,13 @@ import { withStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Button from '@material-ui/core/Button';
 
+import GridItem from 'components/Grid/GridItem';
+import GridContainer from 'components/Grid/GridContainer';
 import Card from 'components/Card/Card';
 import CardBody from 'components/Card/CardBody';
 import CardHeader from 'components/Card/CardHeader';
 import CardFooter from 'components/Card/CardFooter';
+import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
 
 import * as actions from 'ducks/users/actions';
 import { makeSelectClustersAndNamespaces } from 'ducks/clusters/selectors';
@@ -79,31 +82,46 @@ export class CreateUserPage extends React.PureComponent {
         <UsersHelmet />
         <CssBaseline />
         <div className={classes.content}>
-          <Card>
-            <CardHeader color="primary">
-              <h4 className={classes.cardTitleWhite}>
-                <FormattedMessage {...messages.createUser} />
-              </h4>
-            </CardHeader>
-            <CardBody>
-              <CreateUserForm
-                classes={classes}
-                clusters={clusters}
-                onSubmit={doSubmit}
-                initialValues={fromJS({ name: '', password: '', projects: [] })}
-              />
-            </CardBody>
-            <CardFooter className={classes.cardFooter}>
-              <Button
-                variant="contained"
-                color="primary"
-                size="large"
-                onClick={submitForm}
-              >
-                <FormattedMessage {...messages.createUserButton} />
-              </Button>
-            </CardFooter>
-          </Card>
+          <Breadcrumbs
+              data={[
+                {
+                  path: '/users',
+                  name: <FormattedMessage {...messages.usersList} />,
+                },
+                {
+                  name: <FormattedMessage {...messages.createUser} />,
+                },
+              ]}
+            />
+            <GridContainer className={classes.grid}>
+              <GridItem xs={12} sm={12} md={12}>
+                <Card>
+                  <CardHeader color="primary">
+                    <h4 className={classes.cardTitleWhite}>
+                      <FormattedMessage {...messages.createUser} />
+                    </h4>
+                  </CardHeader>
+                  <CardBody>
+                    <CreateUserForm
+                      classes={classes}
+                      clusters={clusters}
+                      onSubmit={doSubmit}
+                      initialValues={fromJS({ name: '', password: '', projects: [] })}
+                    />
+                  </CardBody>
+                  <CardFooter className={classes.cardFooter}>
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      size="large"
+                      onClick={submitForm}
+                    >
+                      <FormattedMessage {...messages.createUserButton} />
+                    </Button>
+                  </CardFooter>
+                </Card>
+              </GridItem>
+            </GridContainer>
         </div>
       </div>
     );
