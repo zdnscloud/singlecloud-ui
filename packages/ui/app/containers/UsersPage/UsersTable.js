@@ -31,7 +31,6 @@ export class UsersTable extends React.PureComponent {
 
   render() {
     const { classes, usersList, removeUser } = this.props;
-    console.log('usersList',usersList)
     const mergedSchema = schema
         .map((sch) => {
         if (sch.id === 'actions') {
