@@ -74,14 +74,14 @@ export class NodesPage extends React.PureComponent {
                 <CardHeader color="primary">
                   <h4 className={classes.cardTitleWhite}>
                     <FormattedMessage {...messages.nodes} />
-                    <IconButton
+                    {/* <IconButton
                       aria-label={<FormattedMessage {...messages.nodes} />}
                       className={classes.menuButton}
                       component={Link}
                       to={`/clusters/${clusterID}/nodes/create`}
                     >
                       <AddIcon style={{ color: '#fff' }} />
-                    </IconButton>
+                    </IconButton> */}
                   </h4>
                 </CardHeader>
                 <CardBody>

@@ -18,20 +18,23 @@ import { withStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Typography from '@material-ui/core/Typography';
 import Fab from '@material-ui/core/Fab';
+import IconButton from '@material-ui/core/IconButton';
 import Button from '@material-ui/core/Button';
 import GridItem from 'components/Grid/GridItem';
 import GridContainer from 'components/Grid/GridContainer';
 
-import { makeSelectURL } from 'ducks/clusters/selectors';
-import * as actions from 'ducks/clusters/actions';
+// import { makeSelectURL } from 'ducks/nodes/selectors';
+import { makeSelectURL } from 'ducks/nodes/selectors';
+import * as actions from 'ducks/nodes/actions';
+import { makeSelectClusterID } from 'ducks/app/selectors';
 
 import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
 import messages from './messages';
 import styles from './styles';
-import ClustersPageHelmet from './helmet';
-import ClusterForm from './ClusterForm';
+import NodesPageHelmet from './helmet';
+import NodeForm from './NodeForm';
 
-export const formName = 'createClusterForm';
+export const formName = 'createNodeForm';
 
 const validate = (values) => {
   const errors = {};
@@ -49,34 +52,34 @@ const validate = (values) => {
   return errors;
 };
 
-const CreateClusterForm = reduxForm({
+const CreateNodeForm = reduxForm({
   form: formName,
   validate,
-})(ClusterForm);
+})(NodeForm);
 
 /* eslint-disable react/prefer-stateless-function */
-export class CreateClusterPage extends React.PureComponent {
+export class CreateNodePage extends React.PureComponent {
   static propTypes = {
     classes: PropTypes.object.isRequired,
   };
 
   render() {
-    const { classes, submitForm, createCluster, url, values } = this.props;
+    const {
+      classes,
+      submitForm,
+      createNode,
+      url,
+      values,
+      clusterID,
+    } = this.props;
     async function doSubmit(formValues) {
       try {
-        const {
-          advancedOptions,
-          enableAdvancedOptions,
-          ...formData
-        } = formValues.toJS();
+        const { ...formData } = formValues.toJS();
         const data = {
           ...formData,
-          ...(enableAdvancedOptions ? advancedOptions : {}),
         };
-        // eslint-disable-next-line no-console
-        console.log('data', data, formData);
         await new Promise((resolve, reject) => {
-          createCluster(data, {
+          createNode(data, {
             resolve,
             reject,
             url,
@@ -89,27 +92,27 @@ export class CreateClusterPage extends React.PureComponent {
 
     return (
       <div className={classes.root}>
-        <ClustersPageHelmet />
+        <NodesPageHelmet />
         <CssBaseline />
         <div className={classes.content}>
-          <Breadcrumbs
-            data={[
-              {
-                path: '/clusters/',
-                name: <FormattedMessage {...messages.clusters} />,
-              },
-              {
-                name: <FormattedMessage {...messages.createCluster} />,
-              },
-            ]}
-          />
+            <Breadcrumbs
+              data={[
+                {
+                  path: `/clusters/${clusterID}/manage`,
+                  name: <FormattedMessage {...messages.clusterManage} />,
+                },
+                {
+                  name: <FormattedMessage {...messages.createNode} />,
+                },
+              ]}
+            />
           <Typography component="div" className="">
             <GridContainer className={classes.grid}>
               <GridItem xs={12} sm={12} md={12}>
-                <CreateClusterForm
+                <CreateNodeForm
                   classes={classes}
                   onSubmit={doSubmit}
-                  initialValues={fromJS({ name: '' })}
+                  // initialValues={fromJS({ name: '' })}
                   formValues={values}
                 />
                 <Button
@@ -117,15 +120,16 @@ export class CreateClusterPage extends React.PureComponent {
                   color="primary"
                   onClick={submitForm}
                 >
-                  <FormattedMessage {...messages.createClusterButton} />
+                  <FormattedMessage {...messages.createNodeButton} />
                 </Button>
                 <Button
                   variant="contained"
                   className={classes.cancleBtn}
+                  color="primary"
+                  to={`/clusters/${clusterID}/manage`}
                   component={Link}
-                  to='/clusters'
                 >
-                  <FormattedMessage {...messages.cancleClustersButton} />
+                  <FormattedMessage {...messages.cancleNodesButton} />
                 </Button>
               </GridItem>
             </GridContainer>
@@ -139,6 +143,7 @@ export class CreateClusterPage extends React.PureComponent {
 const mapStateToProps = createStructuredSelector({
   url: makeSelectURL(),
   values: getFormValues(formName),
+  clusterID: makeSelectClusterID(),
 });
 
 const mapDispatchToProps = (dispatch) =>
@@ -158,4 +163,4 @@ const withConnect = connect(
 export default compose(
   withConnect,
   withStyles(styles)
-)(CreateClusterPage);
+)(CreateNodePage);

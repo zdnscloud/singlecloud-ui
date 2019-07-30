@@ -17,19 +17,18 @@ import { Link } from 'react-router-dom';
 import { withStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Typography from '@material-ui/core/Typography';
-import Fab from '@material-ui/core/Fab';
 import Button from '@material-ui/core/Button';
 import GridItem from 'components/Grid/GridItem';
 import GridContainer from 'components/Grid/GridContainer';
 
-import { makeSelectURL } from 'ducks/clusters/selectors';
+import { makeSelectURL, makeSelectCurrentCluster } from 'ducks/clusters/selectors';
 import * as actions from 'ducks/clusters/actions';
 
 import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
 import messages from './messages';
 import styles from './styles';
 import ClustersPageHelmet from './helmet';
-import ClusterForm from './ClusterForm';
+import ClusterManageForm from './ClusterManageForm';
 
 export const formName = 'createClusterForm';
 
@@ -52,16 +51,16 @@ const validate = (values) => {
 const CreateClusterForm = reduxForm({
   form: formName,
   validate,
-})(ClusterForm);
+})(ClusterManageForm);
 
 /* eslint-disable react/prefer-stateless-function */
-export class CreateClusterPage extends React.PureComponent {
+export class ClusterManagePage extends React.PureComponent {
   static propTypes = {
     classes: PropTypes.object.isRequired,
   };
 
   render() {
-    const { classes, submitForm, createCluster, url, values } = this.props;
+    const { classes, submitForm, createCluster, url, values, clusterID, cluster } = this.props;
     async function doSubmit(formValues) {
       try {
         const {
@@ -95,11 +94,7 @@ export class CreateClusterPage extends React.PureComponent {
           <Breadcrumbs
             data={[
               {
-                path: '/clusters/',
-                name: <FormattedMessage {...messages.clusters} />,
-              },
-              {
-                name: <FormattedMessage {...messages.createCluster} />,
+                name: <FormattedMessage {...messages.clusterManage} />,
               },
             ]}
           />
@@ -109,8 +104,10 @@ export class CreateClusterPage extends React.PureComponent {
                 <CreateClusterForm
                   classes={classes}
                   onSubmit={doSubmit}
-                  initialValues={fromJS({ name: '' })}
+                  initialValues={cluster}
                   formValues={values}
+                  clusterID={clusterID}
+                  cluster ={cluster}
                 />
                 <Button
                   variant="contained"
@@ -123,7 +120,7 @@ export class CreateClusterPage extends React.PureComponent {
                   variant="contained"
                   className={classes.cancleBtn}
                   component={Link}
-                  to='/clusters'
+                  to="/clusters"
                 >
                   <FormattedMessage {...messages.cancleClustersButton} />
                 </Button>
@@ -139,6 +136,7 @@ export class CreateClusterPage extends React.PureComponent {
 const mapStateToProps = createStructuredSelector({
   url: makeSelectURL(),
   values: getFormValues(formName),
+  cluster: makeSelectCurrentCluster(),
 });
 
 const mapDispatchToProps = (dispatch) =>
@@ -158,4 +156,4 @@ const withConnect = connect(
 export default compose(
   withConnect,
   withStyles(styles)
-)(CreateClusterPage);
+)(ClusterManagePage);
