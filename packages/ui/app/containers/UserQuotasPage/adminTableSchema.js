@@ -51,7 +51,7 @@ const adminTableSchema = schema
     },
   ])
   .map((sch) => {
-    if (sch.id === 'name') {
+    if (sch.id === 'namespace') {
       return {
         ...sch,
         component: (props) => (
@@ -84,18 +84,6 @@ const adminTableSchema = schema
               break;
           }
         },
-      };
-    }
-    if (sch.id === 'storage') {
-      return {
-        ...sch,
-        component: (props) => `${props.data.get('storage')}Gi`,
-      };
-    }
-    if (sch.id === 'memory') {
-      return {
-        ...sch,
-        component: (props) => `${props.data.get('memory')}Gi`,
       };
     }
     return sch;

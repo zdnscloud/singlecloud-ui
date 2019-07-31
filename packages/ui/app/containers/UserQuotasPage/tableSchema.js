@@ -40,17 +40,12 @@ const tableSchema = schema
       label: 'Actions',
       component: (props) => (
         <Fragment>
-          <ConfirmDelete
-            actionName={props.removeUserQuota}
-            id={props.data.get('id')}
-            url={props.data.getIn(['links', 'remove'])}
-          />
         </Fragment>
       ),
     },
   ])
   .map((sch) => {
-    if (sch.id === 'name') {
+    if (sch.id === 'namespace') {
       return {
         ...sch,
         component: (props) => (
@@ -59,7 +54,7 @@ const tableSchema = schema
             to={`/userQuotas/${props.data.get('id')}`}
             component={Link}
           >
-            {props.data.get('name')}
+            {props.data.get('namespace')}
           </Button>
         ),
       };
@@ -85,20 +80,7 @@ const tableSchema = schema
         },
       };
     }
-    if (sch.id === 'storage') {
-      return {
-        ...sch,
-        component: (props) => `${props.data.get('storage')}Gi`,
-      };
-    }
-    if (sch.id === 'memory') {
-      return {
-        ...sch,
-        component: (props) => `${props.data.get('memory')}Gi`,
-      };
-    }
     return sch;
-  })
-  ;
+  });
 
 export default tableSchema;
