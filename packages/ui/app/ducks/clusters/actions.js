@@ -122,4 +122,21 @@ export const setNodes = (nodes, meta) => ({
   meta,
 });
 
+export const updateCluster = (data, meta) => ({
+  type: c.UPDATE_CLUSTER,
+  payload: data,
+  meta,
+});
+
+export const updateClusterSuccess = (resp) => ({
+  type: c.UPDATE_CLUSTER_SUCCESS,
+  payload: resp,
+});
+
+export const updateClusterFailure = (error) => ({
+  type: c.UPDATE_CLUSTER_FAILURE,
+  payload: error,
+  error: true,
+});
+
 

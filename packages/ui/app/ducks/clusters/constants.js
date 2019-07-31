@@ -29,5 +29,8 @@ export const SET_OPENING_LOG = `${prefix}/SET_OPENING_LOG`;
 
 export const OPEN_NODE = `${prefix}/OPEN_NODE`;
 export const CLOSE_NODE = `${prefix}/CLOSE_NODE`;
-
 export const SET_NODES = `${prefix}/SET_NODES`;
+
+export const UPDATE_CLUSTER = `${prefix}/UPDATE_CLUSTER`;
+export const UPDATE_CLUSTER_SUCCESS = `${prefix}/UPDATE_CLUSTER_SUCCESS`;
+export const UPDATE_CLUSTER_FAILURE = `${prefix}/UPDATE_CLUSTER_FAILURE`;

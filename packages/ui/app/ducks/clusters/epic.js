@@ -103,6 +103,38 @@ export const cancelClusterEpic = (action$, state$, { ajax }) =>
       )
     )
   );
+  
+export const updateClusterEpic = (action$, state$, { ajax }) =>
+  action$.pipe(
+    ofType(c.UPDATE_CLUSTER),
+    mergeMap(
+      ({ payload, meta: { resolve, reject, url, clusterID } }) =>
+        ajax({
+          url,
+          method: 'PUT',
+          body: payload,
+        }).pipe(
+          map((resp) => {
+            debugger
+            resolve(resp);
+            return a.updateClusterSuccess(resp, { clusterID });
+          }),
+          catchError((error) => {
+            debugger
+            reject(error);
+            return of(
+              a.updateClusterFailure(error, { clusterID })
+            );
+          })
+        )
+    )
+  );
+
+export const afterUpdateEpic = (action$) =>
+  action$.pipe(
+    ofType(c.UPDATE_CLUSTER_SUCCESS),
+    mergeMap(({ payload, meta }) => timer(1000).pipe(mapTo(push(`/clusters`))))
+  );
 
 export default combineEpics(
   loadClustersEpic,
@@ -110,5 +142,7 @@ export default combineEpics(
   loadClustersAndNamespacesEpic,
   cancelClusterEpic,
   createClusterEpic,
-  afterCreateEpic
+  afterCreateEpic,
+  updateClusterEpic,
+  afterUpdateEpic
 );

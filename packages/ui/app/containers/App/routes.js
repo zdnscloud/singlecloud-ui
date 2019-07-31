@@ -92,16 +92,16 @@ const appRoutes = [
     component: CreateClusterPage,
   },
   {
-    path: '/clusters/:cluster_id',
-    name: 'Cluster Detail',
-    icon: Dashboard,
-    component: ClusterDetailPage,
-  },
-  {
     path: '/clusters/:cluster_id/manage',
     name: 'Cluster Manage',
     icon: Dashboard,
     component: ClusterManagePage,
+  },
+  {
+    path: '/clusters/:cluster_id',
+    name: 'Cluster Detail',
+    icon: Dashboard,
+    component: ClusterDetailPage,
   },
   {
     path: '/clusters/:cluster_id/nodes',

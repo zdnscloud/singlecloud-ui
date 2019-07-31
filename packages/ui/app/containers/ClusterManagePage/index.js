@@ -22,7 +22,7 @@ import GridItem from 'components/Grid/GridItem';
 import GridContainer from 'components/Grid/GridContainer';
 import { openTerminal } from 'containers/TerminalPage/actions';
 
-import { makeSelectURL, makeSelectCurrentCluster } from 'ducks/clusters/selectors';
+import { makeSelectNodesList, makeSelectCurrentCluster } from 'ducks/clusters/selectors';
 import {
   makeSelectClusterID,
 } from 'ducks/app/selectors';
@@ -58,25 +58,30 @@ export class ClusterManagePage extends React.PureComponent {
   }
 
   render() {
-    const { classes, submitForm, createCluster, url, values, clusterID, cluster } = this.props;
+    const { classes, submitForm, updateCluster, values, clusterID, cluster,nodeList} = this.props;
+    const url = cluster.getIn(['links','update']);
     async function doSubmit(formValues) {
+      console.log('url',url,nodeList);
       try {
         const {
           advancedOptions,
           enableAdvancedOptions,
+          nodes,
           ...formData
         } = formValues.toJS();
         const data = {
+          nodes: nodeList.toJS(),
           ...formData,
           ...(enableAdvancedOptions ? advancedOptions : {}),
         };
         // eslint-disable-next-line no-console
         console.log('data', data, formData);
         await new Promise((resolve, reject) => {
-          createCluster(data, {
+          updateCluster(data, {
             resolve,
             reject,
             url,
+            clusterID
           });
         });
       } catch (error) {
@@ -130,10 +135,10 @@ export class ClusterManagePage extends React.PureComponent {
 }
 
 const mapStateToProps = createStructuredSelector({
-  url: makeSelectURL(),
   values: getFormValues(formName),
   cluster: makeSelectCurrentCluster(),
   clusterID: makeSelectClusterID(),
+  nodeList: makeSelectNodesList(),
 });
 
 const mapDispatchToProps = (dispatch) =>
