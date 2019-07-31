@@ -25,9 +25,13 @@ export default defineMessages({
     id: `${scope}.userQuotas`,
     defaultMessage: 'UserQuotas',
   },
-  tableTitleName: {
-    id: `${scope}.tableTitleName`,
-    defaultMessage: 'Name',
+  tableTitleNamespace: {
+    id: `${scope}.tableTitleNamespace`,
+    defaultMessage: 'Namespace',
+  },
+  tableTitleUserName: {
+    id: `${scope}.tableTitleUserName`,
+    defaultMessage: 'UserName',
   },
   tableTitleStatus: {
     id: `${scope}.tableTitleStatus`,

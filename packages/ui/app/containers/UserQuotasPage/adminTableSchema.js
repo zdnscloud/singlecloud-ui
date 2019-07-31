@@ -12,7 +12,8 @@ import messages from './messages';
 
 const schema = [
   'status',
-  'name',
+  'userName',
+  'namespace',
   'cpu',
   'memory',
   'storage',
