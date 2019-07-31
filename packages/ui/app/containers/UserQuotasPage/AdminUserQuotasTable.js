@@ -69,25 +69,12 @@ export class AdminUserQuotasTable extends React.PureComponent {
           schema={mergedSchema}
           data={data.filter((item) => {
             let flag = true;
-            console.log(filter);
-            if (filter.userName && filter.status) {
-              if (filter.status === 'all') {
-                flag = item.get('name') === filter.userName;
-              } else {
-                flag =
-                  item.get('name') === filter.userName &&
-                  item.get('status') === filter.status;
-              }
+            console.log('filter:', filter);
+            if (filter.userName) {
+              flag = flag && item.get('userName') === filter.userName;
             }
-            if (filter.status && !filter.userName) {
-              if (filter.status === 'all') {
-                flag = true;
-              } else {
-                flag = item.get('status') === filter.status;
-              }
-            }
-            if (filter.userName && !filter.status) {
-              flag = item.get('name') === filter.userName;
+            if (filter.status && filter.status !== 'all') {
+              flag = flag && item.get('status') === filter.status;
             }
             return flag;
           })}
