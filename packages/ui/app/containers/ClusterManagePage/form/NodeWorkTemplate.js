@@ -18,12 +18,12 @@ import MinusIcon from 'components/Icons/Minus';
 
 import messages from '../messages';
 
-const NodeTemplate = ({ fields, classes, meta: { error, submitFailed } }) => (
+const NodeWorkTemplate = ({ fields, classes, meta: { error, submitFailed } }) => (
   <Fragment>
     <GridContainer>
       <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
         <Button color="secondary" onClick={(evt) => fields.push(fromJS({}))}>
-          <FormattedMessage {...messages.formAddNode} />
+          <FormattedMessage {...messages.formAddWorkNode} />
           <PlusIcon />
         </Button>
       </GridItem>
@@ -34,7 +34,7 @@ const NodeTemplate = ({ fields, classes, meta: { error, submitFailed } }) => (
       </ListItem>
     )}
     {fields.map((f, i) => (
-      <GridContainer key={i}>
+      <GridContainer key={i+1}>
         <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
           <InputField
             label={<FormattedMessage {...messages.formHostName} />}
@@ -77,16 +77,8 @@ const NodeTemplate = ({ fields, classes, meta: { error, submitFailed } }) => (
               }}
               options={[
                 {
-                  label: <FormattedMessage {...messages.formMainNode} />,
-                  value: 'controlplane',
-                },
-                {
                   label: <FormattedMessage {...messages.formETCDNode} />,
                   value: 'etcd',
-                },
-                {
-                  label: <FormattedMessage {...messages.formWorkNode} />,
-                  value: 'worker',
                 },
                 {
                   label: <FormattedMessage {...messages.formBoundaryNode} />,
@@ -103,4 +95,4 @@ const NodeTemplate = ({ fields, classes, meta: { error, submitFailed } }) => (
   </Fragment>
 );
 
-export default NodeTemplate;
+export default NodeWorkTemplate;

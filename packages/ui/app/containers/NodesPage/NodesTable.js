@@ -47,12 +47,6 @@ export class NodesTable extends React.PureComponent {
             props: {clusterID}
           };
         }
-        if (sch.id === 'actions') {
-          return {
-            ...sch,
-            props: { removeNode },
-          };
-        }
         return sch;
       });
 

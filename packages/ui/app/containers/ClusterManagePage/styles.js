@@ -172,7 +172,46 @@ const styles = (theme) => ({
   },
   btnGroup: {
     marginBottom: 20
-  }
+  },
+  dialogCard: {
+    margin: 0,
+  },
+  dialogHeader: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  dialogCardBody: {
+    height: 'calc(100vh - 225px)',
+  },
+  dialogCardBodyPaper: {
+    display: 'flex',
+    height: '100%',
+  },
+  logsWrapper: {
+    width: '70vw',
+    backgroundColor: 'black',
+    color: 'white',
+    overflow: 'auto',
+  },
+  nodesWrapper: {
+    width: '70vw',
+    overflow: 'auto',
+    overflowX: 'hidden'
+  },
+  logs: {
+    backgroundColor: 'black',
+    color: 'white',
+    width: 'fit-content',
+  },
+  logTime: {
+    color: 'green',
+  },
+  log: {
+    backgroundColor: 'black',
+    color: 'white',
+    marginLeft: '2em',
+  },
 });
 
 export default styles;

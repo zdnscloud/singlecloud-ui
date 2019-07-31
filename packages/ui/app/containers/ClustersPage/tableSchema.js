@@ -37,16 +37,6 @@ const tableSchema = schema
             variant="outlined"
             size="small"
             className={props.classes.button}
-            onClick={(evt) => {
-              props.openTerminal(props.data.get('id'));
-            }}
-          >
-            <ShellIcon />
-          </IconButton>
-          <IconButton
-            variant="outlined"
-            size="small"
-            className={props.classes.button}
             to={`/clusters/${props.data.get('id')}/manage`}
             component={Link}
             >
@@ -66,11 +56,7 @@ const tableSchema = schema
       return {
         ...sch,
         component: (props) =>
-          props.data.get('status') === 'Running' ? (
-            <SuccessIcon style={{ color: props.theme.palette.icons.a }} />
-          ) : (
-            <FailureIcon style={{ color: props.theme.palette.icons.b }} />
-          ),
+          props.data.get('status')
       };
     }
     return sch;

@@ -42,48 +42,48 @@ class ConfirmDelete extends React.Component {
   render() {
     const { open } = this.state;
     return (
-      <Fragment> 
-         <IconButton
-            aria-label="Delete"
-            onClick={this.handleOpenClick}
-          >
-            <DeleteIcon />
-          </IconButton>
-          <Dialog
-              open={open}
-              onClose={this.handleCloseClick}
-              aria-labelledby="alert-dialog-title"
-              aria-describedby="alert-dialog-description"
-          >
-            <DialogTitle id="alert-dialog-title">
-              {<FormattedMessage {...messages.dialogTitle} />}
-            </DialogTitle>
-            <DialogContent>
-              <DialogContentText id="alert-dialog-description">
-                <img 
-                  src={warningIcon} 
-                  style={{marginRight: 11, verticalAlign: 'middle'}}
-                />
-                <FormattedMessage {...messages.dialogContentText} />
-              </DialogContentText>
-            </DialogContent>
-            <DialogActions>
-              <Button 
-                onClick={this.handleCloseClick}  
-                variant="contained" 
-              >
-                <FormattedMessage {...messages.cancleButton} />
-              </Button>
-              <Button 
-                onClick={this.handleDelete} 
-                color="primary"  
-                variant="contained" 
-                style={{marginLeft: 16, marginRight: 8 }} 
-              >
-                <FormattedMessage {...messages.sureButton} />
-              </Button>
-            </DialogActions>
-          </Dialog>
+      <Fragment>
+        <IconButton
+          aria-label="Delete"
+          onClick={this.handleOpenClick}
+        >
+          <DeleteIcon />
+        </IconButton>
+        <Dialog
+          open={open}
+          onClose={this.handleCloseClick}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+          <DialogTitle id="alert-dialog-title">
+            {<FormattedMessage {...messages.dialogTitle} />}
+          </DialogTitle>
+          <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+              <img
+                src={warningIcon}
+                style={{marginRight: 11, verticalAlign: 'middle'}}
+              />
+              <FormattedMessage {...messages.dialogContentText} />
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button
+              onClick={this.handleCloseClick}
+              variant="contained"
+            >
+              <FormattedMessage {...messages.cancleButton} />
+            </Button>
+            <Button
+              onClick={this.handleDelete}
+              color="primary"
+              variant="contained"
+              style={{marginLeft: 16, marginRight: 8 }}
+            >
+              <FormattedMessage {...messages.sureButton} />
+            </Button>
+          </DialogActions>
+        </Dialog>
       </Fragment>
     )
   }

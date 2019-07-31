@@ -161,4 +161,8 @@ export default defineMessages({
     id: `${scope}.cancleClustersButton`,
     defaultMessage: 'cancleClustersButton',
   },
+  viewLog: {
+    id: `${scope}.viewLog`,
+    defaultMessage: 'View Log',
+  },
 });

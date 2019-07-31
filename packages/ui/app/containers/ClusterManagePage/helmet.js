@@ -5,7 +5,7 @@ import { injectIntl } from 'react-intl';
 
 import messages from './messages';
 
-function ClustersPageHelmet(props) {
+function ClusterManagePageHelmet(props) {
   const { intl } = props;
   return (
     <Helmet>
@@ -18,8 +18,8 @@ function ClustersPageHelmet(props) {
   );
 }
 
-ClustersPageHelmet.propTypes = {
+ClusterManagePageHelmet.propTypes = {
   intl: PropTypes.object.isRequired,
 };
 
-export default injectIntl(ClustersPageHelmet);
+export default injectIntl(ClusterManagePageHelmet);

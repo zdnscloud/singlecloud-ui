@@ -17,13 +17,12 @@ import PlusIcon from 'components/Icons/Plus';
 import MinusIcon from 'components/Icons/Minus';
 
 import messages from '../messages';
-
-const NodeTemplate = ({ fields, classes, meta: { error, submitFailed } }) => (
+const NodeMainTemplate = ({ fields, classes, meta: { error, submitFailed } }) => (
   <Fragment>
     <GridContainer>
       <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
-        <Button color="secondary" onClick={(evt) => fields.push({})}>
-          <FormattedMessage {...messages.formAddNode} />
+        <Button color="secondary" onClick={(evt) => fields.push(fromJS({}))}>
+          <FormattedMessage {...messages.formAddMainNode} />
           <PlusIcon />
         </Button>
       </GridItem>
@@ -34,7 +33,7 @@ const NodeTemplate = ({ fields, classes, meta: { error, submitFailed } }) => (
       </ListItem>
     )}
     {fields.map((f, i) => (
-      <GridContainer key={i}>
+      <GridContainer key={i+1}>
         <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
           <InputField
             label={<FormattedMessage {...messages.formHostName} />}
@@ -65,7 +64,7 @@ const NodeTemplate = ({ fields, classes, meta: { error, submitFailed } }) => (
             <MinusIcon />
           </IconButton>
         </GridItem>
-        <GridContainer key={i}>
+        <GridContainer key={i+i}>
           <GridItem xs={6} sm={6} md={6} className={classes.formLine}>
             <ChexboxesField
               name={`${f}.roles`}
@@ -77,20 +76,8 @@ const NodeTemplate = ({ fields, classes, meta: { error, submitFailed } }) => (
               }}
               options={[
                 {
-                  label: <FormattedMessage {...messages.formMainNode} />,
-                  value: 'controlplane',
-                },
-                {
                   label: <FormattedMessage {...messages.formETCDNode} />,
                   value: 'etcd',
-                },
-                {
-                  label: <FormattedMessage {...messages.formWorkNode} />,
-                  value: 'worker',
-                },
-                {
-                  label: <FormattedMessage {...messages.formBoundaryNode} />,
-                  value: 'edge',
                 },
               ]}
               formControlComponent="div"
@@ -103,4 +90,4 @@ const NodeTemplate = ({ fields, classes, meta: { error, submitFailed } }) => (
   </Fragment>
 );
 
-export default NodeTemplate;
+export default NodeMainTemplate;

@@ -1,91 +1,38 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { PureComponent, Fragment, useState } from 'react';
-import { fromJS, is } from 'immutable';
-import { compose } from 'redux';
 import { FormattedMessage } from 'react-intl';
-import {
-  Field,
-  Fields,
-  FieldArray,
-  reduxForm,
-  FormSection,
-} from 'redux-form/immutable';
 import getByKey from '@gsmlg/utils/getByKey';
 import { Link } from 'react-router-dom';
+import { withStyles } from '@material-ui/core/styles';
+import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
+import { bindActionCreators, compose } from 'redux';
+import { makeSelectURL, makeSelectCurrentCluster } from 'ducks/clusters/selectors';
+import * as actions from 'ducks/clusters/actions';
 
 import Card from 'components/Card/Card';
 import CardBody from 'components/Card/CardBody';
 import CardHeader from 'components/Card/CardHeader';
-import CardFooter from 'components/Card/CardFooter';
 import Danger from 'components/Typography/Danger';
 import GridItem from 'components/Grid/GridItem';
 import GridContainer from 'components/Grid/GridContainer';
 import InputField from 'components/Field/InputField';
 import IconButton from '@material-ui/core/IconButton';
-import FileReaderField from 'components/Field/FileReaderField';
-import Button from '@material-ui/core/Button';
 import AddIcon from 'components/Icons/Add';
+import ReadOnlyInput from 'components/CustomInput/ReadOnlyInput';
+
 import NodesTable from './NodesTable';
 import messages from './messages';
-import checkIcon from 'images/clusters/check.png';
-import failIcon from 'images/clusters/fail.png';
-import loadingIcon from 'images/clusters/loading.png';
-import logIcon from 'images/clusters/log.png';
-import stopIcon from 'images/clusters/stop.png';
-import unableStopIcon from 'images/clusters/unableStop.png';
-import ShellIcon from 'components/Icons/Shell';
-
-import { openTerminal } from 'containers/TerminalPage/actions';
+import ButtonGroup from './ButtonGroup';
+import NodeViewDialog from './NodeViewDialog';
+import styles from './styles';
 
 class ClusterManageForm extends PureComponent {
   state = {};
 
   render() {
-    const { handleSubmit, error, classes, formValues, theme, clusterID, cluster } = this.props;
+    const { handleSubmit, error, classes, cluster, openNode } = this.props;
     console.log('cluster',cluster.toJS())
-    let status = cluster.get('status');
-    let clusterStatus = null;
-    
-    switch (status) {
-      case 'Running':
-        clusterStatus = (<Button className={classes.runningBtn}>
-          <img src={checkIcon} alt="checkIcon" className={classes.buttonIcon}/>
-          <FormattedMessage {...messages.runningStatus} />
-        </Button>);
-        break;
-      case 'Updating':
-          clusterStatus = ( <Button className={classes.loadingBtn}>
-            <img src={loadingIcon} alt="loadingIcon" className={classes.buttonIcon}/>
-            <FormattedMessage {...messages.updatingStatus} />
-          </Button>);
-          break;
-      case 'Connecting':
-          clusterStatus= ( <Button className={classes.loadingBtn}>
-            <img src={loadingIcon} alt="loadingIcon" className={classes.buttonIcon}/>
-            <FormattedMessage {...messages.connectingStatus} />
-          </Button>);
-          break;
-      case 'Creating':
-          clusterStatus= (<Button className={classes.loadingBtn}>
-            <img src={loadingIcon} alt="loadingIcon" className={classes.buttonIcon}/>
-            <FormattedMessage {...messages.creatingStatus} />
-          </Button>);
-          break;
-      case 'Unavailable':
-        clusterStatus= (<Button className={classes.failBtn}>
-          <img src={failIcon} alt="checkIcon" className={classes.buttonIcon}/>
-          <FormattedMessage {...messages.unavailableStatus} />
-        </Button>);
-        break;
-      case 'Unreachable':
-        clusterStatus= ( <Button className={classes.failBtn}>
-          <img src={failIcon} alt="checkIcon" className={classes.buttonIcon}/>
-          <FormattedMessage {...messages.unreachableStatus} />
-        </Button>);
-        break;
-      default:
-         break;
-     }
 
     return (
       <form className={getByKey(classes, 'form')} onSubmit={handleSubmit}>
@@ -102,53 +49,19 @@ class ClusterManageForm extends PureComponent {
               </h4>
             </CardHeader>
             <CardBody>
-                <GridContainer className={classes.btnGroup} >
-                    <GridItem xs={12} sm={12} md={12} className={classes.formLine}>
-                      {clusterStatus}
-                      <Button 
-                        className={ status === "Running" ? classes.handleBtn :  classes.unableBtn }
-                        onClick={(evt) => {
-                          openTerminal(clusterID);
-                        }}
-                      >
-                        <ShellIcon className={classes.shellIcon} />
-                        <FormattedMessage {...messages.shellButton} />
-                      </Button>
-                      <Button 
-                        className={(
-                          status === "Updating" || status === "Creating"
-                          ) ? classes.handleBtn :  classes.unableBtn }
-                        >
-                        <img src={logIcon} alt="logIcon" className={classes.buttonIcon}/>
-                        <FormattedMessage {...messages.updateLogButton} />
-                      </Button>
-                      <Button 
-                        className={(
-                          status === "Updating" || status === "Connecting" || status === "Creating"
-                          ) ? classes.handleBtn :  classes.unableBtn }
-                        >
-                        <img src={stopIcon} alt="stopIcon" className={classes.buttonIcon}/>
-                        <FormattedMessage {...messages.stopButton} />
-                      </Button>
-                    </GridItem>
-                  </GridContainer>
+                <ButtonGroup />
                 <GridContainer>
                   <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
-                    <InputField
-                      label={<FormattedMessage {...messages.formClusterName} />}
-                      name="name"
+                    <ReadOnlyInput
+                      labelText={<FormattedMessage {...messages.formClusterName} />}
                       fullWidth
-                      inputProps={{ type: 'text', autoComplete: 'off' }}
+                      value={cluster.get('name')}
                     />
                   </GridItem>
                   <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
-                    <InputField
-                      label={
-                        <FormattedMessage {...messages.formClusterSuffix} />
-                      }
-                      name="clusterDomain"
-                      fullWidth
-                      inputProps={{ type: 'text', autoComplete: 'off' }}
+                    <ReadOnlyInput
+                      labelText={<FormattedMessage {...messages.formClusterSuffix} />}
+                      value={cluster.get('clusterDomain')}
                     />
                   </GridItem>
                 </GridContainer>
@@ -159,18 +72,17 @@ class ClusterManageForm extends PureComponent {
                       md={3}
                       className={classes.formLine}
                     >
-                      <InputField
-                        label={<FormattedMessage {...messages.formSSHPort} />}
+                      <ReadOnlyInput
+                        labelText={<FormattedMessage {...messages.formSSHPort} />}
                         fullWidth
-                        name="sshPort"
+                        value={cluster.get('sshPort')}
                       />
                     </GridItem>
                   <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
-                    <InputField
-                      label={<FormattedMessage {...messages.formSSHUser} />}
+                    <ReadOnlyInput
+                      labelText={<FormattedMessage {...messages.formSSHUser} />}
                       fullWidth
-                      inputProps={{ type: 'text', autoComplete: 'off' }}
-                      name="sshUser"
+                      value={cluster.get('sshUser')}
                     />
                   </GridItem>
                 </GridContainer>
@@ -181,13 +93,10 @@ class ClusterManageForm extends PureComponent {
                     md={3}
                     className={classes.formLine}
                   >
-                    <InputField
-                      label={
-                        <FormattedMessage {...messages.formServiceIP} />
-                      }
+                    <ReadOnlyInput
+                      labelText={ <FormattedMessage {...messages.formServiceIP} />}
                       fullWidth
-                      inputProps={{ type: 'text', autoComplete: 'off' }}
-                      name="serviceCidr"
+                      value={cluster.get('serviceCidr')}
                     />
                   </GridItem>
                   <GridItem
@@ -196,11 +105,10 @@ class ClusterManageForm extends PureComponent {
                     md={3}
                     className={classes.formLine}
                   >
-                    <InputField
-                      label={<FormattedMessage {...messages.formPodIP} />}
+                    <ReadOnlyInput
+                      labelText={<FormattedMessage {...messages.formPodIP} />}
                       fullWidth
-                      inputProps={{ type: 'text', autoComplete: 'off' }}
-                      name="clusterCidr"
+                      value={cluster.get('clusterCidr')}
                     />
                   </GridItem>
                 </GridContainer>
@@ -211,12 +119,9 @@ class ClusterManageForm extends PureComponent {
                     md={6}
                     className={classes.formLine}
                   >
-                      <InputField
-                      label={
-                        <FormattedMessage {...messages.formClustersNet} />
-                      }
-                      inputProps={{ type: 'text', autoComplete: 'off' }}
-                      name="network.plugin"
+                    <ReadOnlyInput
+                      labelText={<FormattedMessage {...messages.formClustersNet} />}
+                      value={cluster.get('network.plugin')}
                     />
                   </GridItem>
                 </GridContainer>
@@ -227,13 +132,10 @@ class ClusterManageForm extends PureComponent {
                     md={3}
                     className={classes.formLine}
                   >
-                    <InputField
-                      label={
-                        <FormattedMessage {...messages.formClustersDNSIP} />
-                      }
+                    <ReadOnlyInput
+                      labelText={ <FormattedMessage {...messages.formClustersDNSIP} />}
                       fullWidth
-                      inputProps={{ type: 'text', autoComplete: 'off' }}
-                      name="clusterDNSServiceIP"
+                      value={cluster.get('clusterDNSServiceIP')}
                     />
                   </GridItem>
                   <GridItem
@@ -242,13 +144,12 @@ class ClusterManageForm extends PureComponent {
                     md={3}
                     className={classes.formLine}
                   >
-                    <InputField
-                      label={
+                    <ReadOnlyInput
+                      labelText={
                         <FormattedMessage {...messages.formForwardDNS} />
                       }
                       fullWidth
-                      inputProps={{ type: 'text', autoComplete: 'off' }}
-                      name="clusterUpstreamDNS"
+                      value={cluster.get('clusterUpstreamDNS')}
                     />
                   </GridItem>
                 </GridContainer>
@@ -286,7 +187,7 @@ class ClusterManageForm extends PureComponent {
                     md={3}
                     className={classes.formLine}
                   >
-                      <InputField
+                    <InputField
                       label={<FormattedMessage {...messages.formUser} />}
                       fullWidth
                       inputProps={{ type: 'text', autoComplete: 'off' }}
@@ -301,16 +202,16 @@ class ClusterManageForm extends PureComponent {
               <h4 className={classes.cardTitleWhite}>
                 <FormattedMessage {...messages.nodeList} />
                 <IconButton
-                      aria-label={<FormattedMessage {...messages.clusters} />}
-                      className={classes.menuButton}
-                      component={Link}
-                      to={`/clusters/${clusterID}/manage/create`}
-                    >
-                      <AddIcon style={{ color: '#fff' }} />
-                    </IconButton>
+                  aria-label={<FormattedMessage {...messages.clusters} />}
+                  className={classes.menuButton}
+                  onClick={(evt) => {openNode()}}
+                >
+                  <AddIcon style={{ color: '#fff' }} />
+                </IconButton>
               </h4>
             </CardHeader>
             <CardBody>
+              <NodeViewDialog />
               <NodesTable />
             </CardBody>
           </Card>
@@ -320,4 +221,26 @@ class ClusterManageForm extends PureComponent {
   }
 }
 
-export default ClusterManageForm;
+const mapStateToProps = createStructuredSelector({
+  url: makeSelectURL(),
+  cluster: makeSelectCurrentCluster(),
+});
+
+const mapDispatchToProps = (dispatch) =>
+  bindActionCreators(
+    {
+      ...actions,
+      submitForm: () => submit(formName),
+    },
+    dispatch
+  );
+
+const withConnect = connect(
+  mapStateToProps,
+  mapDispatchToProps
+);
+
+export default compose(
+  withConnect,
+  withStyles(styles)
+)(ClusterManageForm);

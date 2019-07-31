@@ -138,6 +138,42 @@ const styles = (theme) => ({
   cancleBtn: {
     marginLeft: '10px',
   },
+  dialogCard: {
+    margin: 0,
+  },
+  dialogHeader: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  dialogCardBody: {
+    height: 'calc(100vh - 225px)',
+  },
+  dialogCardBodyPaper: {
+    display: 'flex',
+    height: '100%',
+  },
+  separateLineWrap: {
+    marginTop: '8px',
+    marginRight: '5px',
+    background: '#eee',
+  },
+  separateLine: {
+    marginTop: '8px',
+    boxShadow: '1px 0px 2px #ccc',
+    border: '1px solid #ccc',
+  },
+  removeBtn: {
+    float: 'right',
+  },
+  createBtnLink: {
+    position: 'absolute',
+    top: '3px',
+    right: '10px',
+  },
+  tableWrapper: {
+    overflow: 'auto',
+  },
 });
 
 export default styles;

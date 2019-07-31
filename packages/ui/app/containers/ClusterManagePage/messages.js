@@ -1,25 +1,21 @@
 /*
- * ClustersPage Messages
+ * ClusterManagePage Messages
  *
- * This contains all the text for the ClustersPage container.
+ * This contains all the text for the ClusterManagePage container.
  */
 
 import { defineMessages } from 'react-intl';
 
-export const scope = 'app.containers.ClustersPage';
+export const scope = 'app.containers.ClusterManagePage';
 
 export default defineMessages({
   pageTitle: {
     id: `${scope}.pageTitle`,
-    defaultMessage: 'This is the ClustersPage title!',
+    defaultMessage: 'This is the ClusterManagePage title!',
   },
   pageDesc: {
     id: `${scope}.pageDesc`,
-    defaultMessage: 'This is the ClustersPage description!',
-  },
-  header: {
-    id: `${scope}.header`,
-    defaultMessage: 'This is the ClustersPage header!',
+    defaultMessage: 'This is the ClusterManagePage description!',
   },
   clusters: {
     id: `${scope}.clusters`,
@@ -41,14 +37,6 @@ export default defineMessages({
     id: `${scope}.tableTitleActions`,
     defaultMessage: 'Actions',
   },
-  createCluster: {
-    id: `${scope}.createCluster`,
-    defaultMessage: 'This is the  createCluster!',
-  },
-  formCreate: {
-    id: `${scope}.formCreate`,
-    defaultMessage: 'formCreate',
-  },
   formNode: {
     id: `${scope}.formNode`,
     defaultMessage: 'formNode',
@@ -61,10 +49,6 @@ export default defineMessages({
     id: `${scope}.formClusterSuffix`,
     defaultMessage: 'formClusterSuffix',
   },
-  formClusterSuffix: {
-    id: `${scope}.formClusterSuffix`,
-    defaultMessage: 'formClusterSuffix',
-  },
   formSSHPort: {
     id: `${scope}.formSSHPort`,
     defaultMessage: 'formSSHPort',
@@ -72,14 +56,6 @@ export default defineMessages({
   formSSHUser: {
     id: `${scope}.formSSHUser`,
     defaultMessage: 'formSSHUser',
-  },
-  formSSHKey: {
-    id: `${scope}.formSSHKey`,
-    defaultMessage: 'formSSHKey',
-  },
-  formAdvancedOptions: {
-    id: `${scope}.formAdvancedOptions`,
-    defaultMessage: 'formAdvancedOptions',
   },
   formServiceIP: {
     id: `${scope}.formServiceIP`,
@@ -109,25 +85,17 @@ export default defineMessages({
     id: `${scope}.formUrl`,
     defaultMessage: 'formUrl',
   },
-  formCACertificate: {
-    id: `${scope}.formCACertificate`,
-    defaultMessage: 'formCACertificate',
-  },
   formUser: {
     id: `${scope}.formUser`,
     defaultMessage: 'formUser',
   },
-  formPwd: {
-    id: `${scope}.formPwd`,
-    defaultMessage: 'formPwd',
+  formAddMainNode: {
+    id: `${scope}.formAddMainNode`,
+    defaultMessage: 'formAddMainNode',
   },
-  formSinglecloudUrl: {
-    id: `${scope}.formSinglecloudUrl`,
-    defaultMessage: 'formSinglecloudUrl',
-  },
-  formAddNode: {
-    id: `${scope}.formAddNode`,
-    defaultMessage: 'formAddNode',
+  formAddWorkNode: {
+    id: `${scope}.formAddWorkNode`,
+    defaultMessage: 'formAddWorkNode',
   },
   formHostName: {
     id: `${scope}.formHostName`,
@@ -151,11 +119,11 @@ export default defineMessages({
   },
   createClusterButton: {
     id: `${scope}.createClusterButton`,
-    defaultMessage: 'createClusterButton',
+    defaultMessage: 'createCluster',
   },
   cancleClustersButton: {
     id: `${scope}.cancleClustersButton`,
-    defaultMessage: 'cancleClustersButton',
+    defaultMessage: 'cancleClusters',
   },
   clusterManage: {
     id: `${scope}.clusterManage`,
@@ -168,10 +136,6 @@ export default defineMessages({
   nodeList: {
     id: `${scope}.nodeList`,
     defaultMessage: 'NodeList',
-  },
-  createNode: {
-    id: `${scope}.createNode`,
-    defaultMessage: 'CreateNode',
   },
   createNodeButton: {
     id: `${scope}.createNodeButton`,
@@ -216,5 +180,25 @@ export default defineMessages({
   stopButton: {
     id: `${scope}.stopButton`,
     defaultMessage: 'Stop',
+  },
+  logTitle: {
+    id: `${scope}.logTitle`,
+    defaultMessage: 'Cluster Log Title',
+  },
+  logClose: {
+    id: `${scope}.logClose`,
+    defaultMessage: 'Close Log',
+  },
+  nodeClose: {
+    id: `${scope}.nodeClose`,
+    defaultMessage: 'Close Node',
+  },
+  nodeSave: {
+    id: `${scope}.nodeSave`,
+    defaultMessage: 'Save Node',
+  },
+  nodeTitle: {
+    id: `${scope}.nodeTitle`,
+    defaultMessage: 'Cluster Node Title',
   },
 });

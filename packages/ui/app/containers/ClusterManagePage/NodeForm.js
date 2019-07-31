@@ -6,13 +6,12 @@ import { FormattedMessage } from 'react-intl';
 import { FieldArray } from 'redux-form/immutable';
 import getByKey from '@gsmlg/utils/getByKey';
 
-import Card from 'components/Card/Card';
-import CardBody from 'components/Card/CardBody';
-import CardHeader from 'components/Card/CardHeader';
 import Danger from 'components/Typography/Danger';
 import GridItem from 'components/Grid/GridItem';
 import GridContainer from 'components/Grid/GridContainer';
-import NodeTemplate from './form/NodeTemplate';
+import NodeMainTemplate from './form/NodeMainTemplate';
+import NodeWorkTemplate from './form/NodeWorkTemplate';
+import InputField from 'components/Field/InputField';
 import messages from './messages';
 
 class ClusterForm extends PureComponent {
@@ -29,22 +28,24 @@ class ClusterForm extends PureComponent {
               <Danger>{getByKey(error, ['response', 'message'])}</Danger>
             </GridItem>
           ) : null}
-          <Card style={{ margin: 0, marginTop: 20 }}>
-            <CardHeader color="primary">
-              <h4 className={classes.cardTitleWhite}>
-                <FormattedMessage {...messages.createNode} />
-              </h4>
-            </CardHeader>
-            <CardBody>
-              <FieldArray
-                name="nodes"
-                classes={classes}
-                component={NodeTemplate}
-                theme={theme}
-                formValues={formValues}
-              />
-            </CardBody>
-          </Card>
+        <GridItem xs={12} sm={12} md={12}>
+          <FieldArray
+              name="nodes.main"
+              classes={classes}
+              component={NodeMainTemplate}
+              theme={theme}
+              formValues={formValues}
+            />
+        </GridItem>
+        <GridItem xs={12} sm={12} md={12}>
+          <FieldArray
+              name="nodes.work"
+              classes={classes}
+              component={NodeWorkTemplate}
+              theme={theme}
+              formValues={formValues}
+            /> 
+            </GridItem>
         </GridContainer>
       </form>
     );

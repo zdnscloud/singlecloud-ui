@@ -20,8 +20,12 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import GridItem from 'components/Grid/GridItem';
 import GridContainer from 'components/Grid/GridContainer';
+import { openTerminal } from 'containers/TerminalPage/actions';
 
 import { makeSelectURL, makeSelectCurrentCluster } from 'ducks/clusters/selectors';
+import {
+  makeSelectClusterID,
+} from 'ducks/app/selectors';
 import * as actions from 'ducks/clusters/actions';
 
 import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
@@ -34,17 +38,6 @@ export const formName = 'createClusterForm';
 
 const validate = (values) => {
   const errors = {};
-  const requiredFields = [
-    'name',
-    'clusterDomain',
-    'singlecloudAddress',
-    'sshUser',
-  ];
-  requiredFields.forEach((field) => {
-    if (!values.get(field)) {
-      errors[field] = 'Required';
-    }
-  });
   return errors;
 };
 
@@ -58,6 +51,11 @@ export class ClusterManagePage extends React.PureComponent {
   static propTypes = {
     classes: PropTypes.object.isRequired,
   };
+
+  componentWillMount() {
+    const { setNodes, cluster } = this.props;
+    setNodes(cluster.get("nodes"));
+  }
 
   render() {
     const { classes, submitForm, createCluster, url, values, clusterID, cluster } = this.props;
@@ -106,8 +104,6 @@ export class ClusterManagePage extends React.PureComponent {
                   onSubmit={doSubmit}
                   initialValues={cluster}
                   formValues={values}
-                  clusterID={clusterID}
-                  cluster ={cluster}
                 />
                 <Button
                   variant="contained"
@@ -137,12 +133,14 @@ const mapStateToProps = createStructuredSelector({
   url: makeSelectURL(),
   values: getFormValues(formName),
   cluster: makeSelectCurrentCluster(),
+  clusterID: makeSelectClusterID(),
 });
 
 const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
       ...actions,
+      openTerminal,
       submitForm: () => submit(formName),
     },
     dispatch

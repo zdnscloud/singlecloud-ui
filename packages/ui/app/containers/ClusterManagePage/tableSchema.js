@@ -1,9 +1,8 @@
 import React, { Fragment } from 'react';
 import { ucfirst } from '@gsmlg/utils';
-import { Link } from 'react-router-dom';
-import Button from '@material-ui/core/Button';
 import Chip from '@material-ui/core/Chip';
 import TimeCell from 'components/Cells/TimeCell';
+import { fromJS } from 'immutable';
 import ConfirmDelete from 'components/ConfirmDelete/ConfirmDelete';
 
 const schema = [
@@ -50,34 +49,16 @@ const tableSchema = schema
     {
       id: 'actions',
       label: 'Actions',
-      component: (props) => (
-        <Fragment>
+      component(props) {
+        return (<Fragment>
           <ConfirmDelete 
-              actionName={props.removeNode}
-              id={props.data.get('id')}
-              url={props.data.getIn(['links', 'remove'])}
+              actionName={props.setNodes}
+              id={fromJS(props.nodes.toJS().filter((v) => v.name !== props.data.get('name')))}
            />
-        </Fragment>
-      ),
+        </Fragment>)
+      },
     },
   ])
-  .map((sch) => {
-    if (sch.id === 'name') {
-      return {
-        ...sch,
-        component: (props) => (
-          <Button
-            color="primary"
-            to={`/clusters/${props.clusterID}/nodes/${props.data.get('id')}/show`}
-            component={Link}
-          >
-            {props.data.get('name')}
-          </Button>
-        ),
-      };
-    }
-    return sch;
-  });
-  ;
+;
 
 export default tableSchema;

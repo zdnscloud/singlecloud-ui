@@ -18,3 +18,16 @@ export const LOAD_CLUSTERS_AND_NAMESPACES = `${prefix}/LOAD_CLUSTERS_AND_NAMESPA
 export const CREATE_CLUSTER = `${prefix}/CREATE_CLUSTER`;
 export const CREATE_CLUSTER_SUCCESS = `${prefix}/CREATE_CLUSTER_SUCCESS`;
 export const CREATE_CLUSTER_FAILURE = `${prefix}/CREATE_CLUSTER_FAILURE`;
+
+export const CANCEL_CLUSTER = `${prefix}/CANCEL_CLUSTER`;
+export const CANCEL_CLUSTER_SUCCESS = `${prefix}/CANCEL_CLUSTER_SUCCESS`;
+export const CANCEL_CLUSTER_FAILURE = `${prefix}/CANCEL_CLUSTER_FAILURE`;
+
+export const OPEN_CLUSTER_LOG = `${prefix}/OPEN_CLUSTER_LOG`;
+export const CLOSE_CLUSTER_LOG = `${prefix}/CLOSE_CLUSTER_LOG`;
+export const SET_OPENING_LOG = `${prefix}/SET_OPENING_LOG`;
+
+export const OPEN_NODE = `${prefix}/OPEN_NODE`;
+export const CLOSE_NODE = `${prefix}/CLOSE_NODE`;
+
+export const SET_NODES = `${prefix}/SET_NODES`;
