@@ -17,6 +17,7 @@ const schema = [
   'memory',
   'storage',
   'creationTimestamp',
+  'responseTimestamp',
 ];
 
 const tableSchema = schema
@@ -25,7 +26,7 @@ const tableSchema = schema
     label: ucfirst(id),
   }))
   .map((item) => {
-    if (item.id === 'creationTimestamp') {
+    if (item.id === 'creationTimestamp' || item.id === 'responseTimestamp') {
       return {
         ...item,
         component: TimeCell,
