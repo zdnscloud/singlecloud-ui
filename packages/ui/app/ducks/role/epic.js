@@ -52,7 +52,7 @@ export const loadRoleEpic = (action$, state$, { ajax }) =>
           const authBy = getByKey(resp, ['response', 'authBy']);
           const isLogin = makeSelectIsLogin()(state$.value);
           if (!user) {
-            if (meta.logout) {
+            if (meta && meta.logout) {
               if (meta.isCAS) {
                 window.location.reload();
               } else {

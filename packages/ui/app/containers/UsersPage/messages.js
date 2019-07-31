@@ -26,7 +26,7 @@ export default defineMessages({
     defaultMessage: 'Users',
   },
   usersList: {
-    id: `${scope}.users`,
+    id: `${scope}.usersList`,
     defaultMessage: 'usersList',
   },
   tableTitleName: {

@@ -44,7 +44,7 @@ const epicMiddleware = createEpicMiddleware({
             import('store').then((exports) => {
               const store = getByKey(exports, ['default', 'instance']);
               setTimeout(() => {
-                store.dispatch(loadRole());
+                store.dispatch(loadRole('/web/role'));
               }, 100);
             });
           }

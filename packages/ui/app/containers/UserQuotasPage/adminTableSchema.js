@@ -12,11 +12,13 @@ import messages from './messages';
 
 const schema = [
   'status',
-  'name',
+  'userName',
+  'namespace',
   'cpu',
   'memory',
   'storage',
   'creationTimestamp',
+  'responseTimestamp',
 ];
 
 const adminTableSchema = schema
@@ -25,7 +27,7 @@ const adminTableSchema = schema
     label: ucfirst(id),
   }))
   .map((item) => {
-    if (item.id === 'creationTimestamp') {
+    if (item.id === 'creationTimestamp' || item.id === 'responseTimestamp') {
       return {
         ...item,
         component: TimeCell,
@@ -49,7 +51,7 @@ const adminTableSchema = schema
     },
   ])
   .map((sch) => {
-    if (sch.id === 'name') {
+    if (sch.id === 'namespace') {
       return {
         ...sch,
         component: (props) => (
@@ -82,18 +84,6 @@ const adminTableSchema = schema
               break;
           }
         },
-      };
-    }
-    if (sch.id === 'storage') {
-      return {
-        ...sch,
-        component: (props) => `${props.data.get('storage')}Gi`,
-      };
-    }
-    if (sch.id === 'memory') {
-      return {
-        ...sch,
-        component: (props) => `${props.data.get('memory')}Gi`,
       };
     }
     return sch;

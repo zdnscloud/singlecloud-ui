@@ -76,7 +76,7 @@ const renderClusters = ({ label, input, meta, clusters, ...custom }) => (
               }
               value={value}
               cluster={name}
-              namespace="_all"
+              namespace="_all_namespaces"
             />
           </FormGroup>
           {ns.size > 0 ? (
