@@ -30,7 +30,7 @@ const tableSchema = schema
       return {
         ...item,
         component({ value }) {
-          return value
+          return value && value
             .map((val, key) => <Chip key={key} label={`${val}`} />)
             .toList();
         },
@@ -40,7 +40,7 @@ const tableSchema = schema
       return {
         ...item,
         component({ value }) {
-          return value
+          return value && value
             .map((val, key) => <Chip key={key} label={`${key}=${val}`} />)
             .toList();
         },
@@ -54,6 +54,21 @@ const tableSchema = schema
     }
     return item;
   })
+  .concat([
+    {
+      id: 'actions',
+      label: 'Actions',
+      component: (props) => (
+        <Fragment>
+          <ConfirmDelete
+              actionName={props.removeNode}
+              id={props.data.get('id')}
+              url={props.data.getIn(['links', 'remove'])}
+           />
+        </Fragment>
+      ),
+    },
+  ])
   .map((sch) => {
     if (sch.id === 'name') {
       return {

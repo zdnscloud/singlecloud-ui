@@ -109,10 +109,10 @@ export class ClusterDetail extends React.PureComponent {
     const cpuRatio = (cluster.get('cpuUsedRatio') * 100).toFixed(0);
     const memoryRatio = (cluster.get('memoryUsedRatio') * 100).toFixed(0);
     const podRatio = (cluster.get('podUsedRatio') * 100).toFixed(0);
-    const cpu = `${cluster.get('cpuUsed')} / ${cluster.get('cpu')}`;
+    const cpu = `${(cluster.get('cpuUsed') / 1000).toFixed(2)} / ${cluster.get('cpu') / 1000}`;
     const memory = `${(cluster.get('memoryUsed') / 1024 ** 3).toFixed(
       2
-    )}GB / ${(cluster.get('memory') / 1024 ** 3).toFixed()}GB`;
+    )}GiB / ${(cluster.get('memory') / 1024 ** 3).toFixed(2)}GiB`;
     const pod = `${cluster.get('podUsed')} / ${cluster.get('pod')}`;
 
     return (
@@ -211,7 +211,10 @@ export class ClusterDetail extends React.PureComponent {
               <CardBody>
                 <h4 className={classes.cardTitle}>
                   <FormattedMessage {...messages.clusterCPU} />
-                  <span className={classes.cardTitleValue}>{cpu}</span>
+                  <span className={classes.cardTitleValue}>
+                    {cpu}
+                    <FormattedMessage {...messages.clusterCPUCore} />
+                  </span>
                 </h4>
                 <p className={classes.cardCategory} />
               </CardBody>
@@ -226,7 +229,9 @@ export class ClusterDetail extends React.PureComponent {
               <CardBody>
                 <h4 className={classes.cardTitle}>
                   <FormattedMessage {...messages.clusterMemory} />
-                  <span className={classes.cardTitleValue}>{memory}</span>
+                  <span className={classes.cardTitleValue}>
+                    {memory}
+                  </span>
                 </h4>
                 <p className={classes.cardCategory} />
               </CardBody>
@@ -241,7 +246,9 @@ export class ClusterDetail extends React.PureComponent {
               <CardBody>
                 <h4 className={classes.cardTitle}>
                   <FormattedMessage {...messages.clusterPods} />
-                  <span className={classes.cardTitleValue}>{pod}</span>
+                  <span className={classes.cardTitleValue}>
+                    {pod}
+                  </span>
                 </h4>
                 <p className={classes.cardCategory} />
               </CardBody>

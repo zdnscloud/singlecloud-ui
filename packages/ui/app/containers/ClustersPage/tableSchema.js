@@ -68,7 +68,7 @@ const tableSchema = schema
         component: (props) => (
           <Button
             color="primary"
-            to={`/clusters/${props.data.get('id')}`}
+            to={`/clusters/${props.data.get('id')}/show`}
             component={Link}
           >
             {props.data.get('name')}
