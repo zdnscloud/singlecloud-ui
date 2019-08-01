@@ -24,7 +24,7 @@ export const makeSelectLocation = () =>
 
 export const makeSelectClusterID = () =>
   createSelector(
-    createMatchSelector('/clusters/:cluster_id'),
+    createMatchSelector('/clusters/:cluster_id/*'),
     (match) => {
       if (match && match.params) {
         return match.params.cluster_id;
