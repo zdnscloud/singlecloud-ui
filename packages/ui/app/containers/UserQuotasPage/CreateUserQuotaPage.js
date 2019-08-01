@@ -112,7 +112,7 @@ export class CreateUserQuotaPage extends React.PureComponent {
                     <CreateUserQuotaForm
                       classes={classes}
                       onSubmit={doSubmit}
-                      // eslint-disable-next-line jsx-a11y/aria-role
+                      userHash={userHash}
                       formRole="create"
                       role={role}
                     />

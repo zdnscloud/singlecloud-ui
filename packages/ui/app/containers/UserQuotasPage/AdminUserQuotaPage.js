@@ -69,6 +69,7 @@ export class AdminUserQuotaPage extends React.PureComponent {
 
   componentWillMount() {
     this.load();
+    this.timer = setInterval(() => this.load(), 3000);
   }
 
   componentWillUnmount() {

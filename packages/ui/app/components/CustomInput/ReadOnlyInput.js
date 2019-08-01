@@ -17,6 +17,7 @@ function ReadOnlyInput({ ...props }) {
     classes,
     formControlProps,
     id,
+    label,
     labelText,
     labelProps,
     inputProps,
@@ -48,19 +49,21 @@ function ReadOnlyInput({ ...props }) {
   } else {
     formControlClasses = classes.formControl;
   }
+  const text = labelText || label;
+
   return (
     <FormControl
       {...formControlProps}
       className={formControlClasses}
       fullWidth={fullWidth}
     >
-      {labelText !== undefined ? (
+      {text !== undefined ? (
         <InputLabel
           className={`${classes.labelRoot} ${labelClasses}`}
           htmlFor={id}
           {...labelProps}
         >
-          {labelText}
+          {text}
         </InputLabel>
       ) : null}
       <Input
