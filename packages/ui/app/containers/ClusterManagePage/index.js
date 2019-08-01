@@ -61,7 +61,6 @@ export class ClusterManagePage extends React.PureComponent {
     const { classes, submitForm, updateCluster, values, clusterID, cluster,nodeList} = this.props;
     const url = cluster.getIn(['links','update']);
     async function doSubmit(formValues) {
-      console.log('url',url,nodeList);
       try {
         const {
           nodes,
@@ -72,7 +71,7 @@ export class ClusterManagePage extends React.PureComponent {
           ...formData,
         };
         // eslint-disable-next-line no-console
-        console.log('data', data, formData);
+        console.log('data', data);
         await new Promise((resolve, reject) => {
           updateCluster(data, {
             resolve,

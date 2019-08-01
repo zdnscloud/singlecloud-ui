@@ -32,11 +32,10 @@ class ClusterManageForm extends PureComponent {
 
   render() {
     const { handleSubmit, error, classes, cluster, openNode } = this.props;
-    console.log('cluster',cluster.toJS())
 
     return (
       <form className={getByKey(classes, 'form')} onSubmit={handleSubmit}>
-        <GridContainer className={classes.grid}>
+        <GridContainer className={classes.formGrid}>
           {error ? (
             <GridItem xs={12} sm={12} md={12}>
               <Danger>{getByKey(error, ['response', 'message'])}</Danger>
@@ -174,11 +173,12 @@ class ClusterManageForm extends PureComponent {
                     md={3}
                     className={classes.formLine}
                   >
-                    <InputField
-                      label={<FormattedMessage {...messages.formUrl} />}
+                    <ReadOnlyInput
+                      labelText={
+                        <FormattedMessage {...messages.formUrl} />
+                      }
                       fullWidth
-                      inputProps={{ type: 'text', autoComplete: 'off' }}
-                      name="privateRegistries[0].url"
+                      value={cluster.get('privateRegistrys[0].url')}
                     />
                   </GridItem>
                   <GridItem
@@ -187,11 +187,13 @@ class ClusterManageForm extends PureComponent {
                     md={3}
                     className={classes.formLine}
                   >
-                    <InputField
-                      label={<FormattedMessage {...messages.formUser} />}
+                   
+                    <ReadOnlyInput
+                      labelText={
+                        <FormattedMessage {...messages.formUser} />
+                      }
                       fullWidth
-                      inputProps={{ type: 'text', autoComplete: 'off' }}
-                      name="privateRegistries[0].user"
+                      value={cluster.get('privateRegistrys[0].user')}
                     />
                   </GridItem>
                 </GridContainer>

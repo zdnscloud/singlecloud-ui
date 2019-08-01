@@ -1,6 +1,10 @@
 import React,{Fragment,useState}from 'react';
-import IconButton from '@material-ui/core/IconButton';
-import DeleteIcon from '@material-ui/icons/Delete';
+// nodejs library that concatenates classes
+import classNames from 'classnames';
+// nodejs library to set properties for components
+import PropTypes from 'prop-types';
+
+// @material-ui/core components
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -11,33 +15,31 @@ import { FormattedMessage, injectIntl } from 'react-intl';
 import warningIcon from 'images/warning.png';
 import messages from './messages';
 
-const ConfirmDelete = (props) => {
-
+const Confirm = (props) => {
+  
+  const { component,handleConfirm } = props;
   const [open, setOpen] = useState(false);
 
-  const handleDelete = () => {
-    const { id, actionName, url, clusterID, namespaceID } =props;
-    actionName(id, { url, clusterID, namespaceID});
-    setOpen(false);
+  const handleConfirmClick = () => { 
+        handleConfirm();
+        setOpen(false);
   }
-
     return (
       <Fragment>
-        <IconButton
+        <div
           aria-label="Delete"
           onClick={() => {
             setOpen(true);
           }}
+          style={{display: "inline"}}
         >
-          <DeleteIcon />
-        </IconButton>
+          {component}
+        </div>
         <Dialog
           open={open}
           onClose={() => {
             setOpen(false);
           }}
-          aria-labelledby="alert-dialog-title"
-          aria-describedby="alert-dialog-description"
         >
           <DialogTitle id="alert-dialog-title">
             {<FormattedMessage {...messages.dialogTitle} />}
@@ -61,7 +63,8 @@ const ConfirmDelete = (props) => {
               <FormattedMessage {...messages.cancleButton} />
             </Button>
             <Button
-              onClick={handleDelete}
+              // onClick={handleConfirm}
+              onClick={handleConfirmClick}
               color="primary"
               variant="contained"
               style={{marginLeft: 16, marginRight: 8 }}
@@ -74,4 +77,5 @@ const ConfirmDelete = (props) => {
     )
   }
 
-export default ConfirmDelete;
+
+export default Confirm;

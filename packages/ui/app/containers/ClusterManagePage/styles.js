@@ -71,6 +71,10 @@ const styles = (theme) => ({
   grid: {
     padding: theme.spacing(2),
   },
+  formGrid: {
+    padding: theme.spacing(2),
+    paddingTop: 0,
+  },
   chartContainer: {
     marginLeft: -22,
   },

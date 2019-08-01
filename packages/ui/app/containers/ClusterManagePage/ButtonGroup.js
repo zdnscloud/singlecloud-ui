@@ -24,17 +24,32 @@ import stopIcon from 'images/clusters/stop.png';
 import unableStopIcon from 'images/clusters/unableStop.png';
 import ShellIcon from 'components/Icons/Shell';
 import LogViewDialog from './LogViewDialog';
+import Confirm from 'components/Confirm/Confirm'
 
 import styles from './styles';
 
 class ButtonGroup extends PureComponent {
   state = {};
 
+  componentWillMount() {
+    this.load();
+    this.timer = setInterval(() => this.load(), 3000);
+  }
+
+  load() {
+    const { loadClusters, url } = this.props;
+    loadClusters(url);
+  }
+
   render() {
     const {  classes, clusterID, cluster, openTerminal,openClusterLog,cancelCluster} = this.props;
     let status = cluster.get('status');
     let clusterStatus = null;
-    
+
+    const handleConfirm  = () => {
+      cancelCluster(clusterID,{url: `${cluster.getIn(['links', 'self'])}?action=cancel`})
+    }
+
     switch (status) {
       case 'Running':
         clusterStatus = (<Button className={classes.runningBtn}>
@@ -103,7 +118,7 @@ class ButtonGroup extends PureComponent {
                 <Button 
                   className={classes.handleBtn}
                   onClick={(evt) => {
-                    openClusterLog(clusterID,{ url: `${cluster.getIn(['links', 'self'])}?action=cancel`});
+                    openClusterLog(clusterID);
                   }}
                 >
                   <img src={logIcon} alt="logIcon" className={classes.buttonIcon}/>
@@ -117,15 +132,16 @@ class ButtonGroup extends PureComponent {
               }
 
               {( status === "Updating" || status === "Connecting" || status === "Creating") ? 
-                <Button 
-                  className={classes.handleBtn}
-                  onClick={()=>{
-                    cancelCluster()
-                  }}
-                >
-                  <img src={stopIcon} alt="stopIcon" className={classes.buttonIcon}/>
-                  <FormattedMessage {...messages.stopButton} />
-                </Button>
+                <Confirm 
+                    handleConfirm={handleConfirm}
+                    component ={(
+                      <Button className={classes.handleBtn}>
+                        <img src={stopIcon} alt="stopIcon" className={classes.buttonIcon}/>
+                        <FormattedMessage {...messages.stopButton} />
+                      </Button>
+                    )
+                  }
+                />
                 : 
                 <Button 
                   className={classes.unableBtn}>
