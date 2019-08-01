@@ -71,7 +71,7 @@ function ReadOnlyInput({ ...props }) {
           underline: underlineClasses,
         }}
         id={id}
-        value={value}
+        value={value || ''}
         disabled
         {...inputProps}
       />

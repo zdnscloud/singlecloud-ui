@@ -78,13 +78,13 @@ export class EditUserPage extends React.PureComponent {
         <CssBaseline />
         <div className={classes.content}>
           <Breadcrumbs
-              data={[
-                {
-                  name: <FormattedMessage {...messages.editUser} />,
-                },
-              ]}
+            data={[
+              {
+                name: <FormattedMessage {...messages.editUser} />,
+              },
+            ]}
           />
-           <GridContainer className={classes.grid}>
+          <GridContainer className={classes.grid}>
             <GridItem xs={12} sm={12} md={12}>
               <Card>
                 <CardHeader color="primary">
@@ -93,13 +93,15 @@ export class EditUserPage extends React.PureComponent {
                   </h4>
                 </CardHeader>
                 <CardBody>
-                  <EditUserForm
-                    edit
-                    classes={classes}
-                    clusters={clusters}
-                    onSubmit={doSubmit}
-                    initialValues={user}
-                  />
+                  {user.size === 0 ? null : (
+                    <EditUserForm
+                      edit
+                      classes={classes}
+                      clusters={clusters}
+                      onSubmit={doSubmit}
+                      initialValues={user}
+                    />
+                  )}
                 </CardBody>
                 <CardFooter className={classes.cardFooter}>
                   <Button

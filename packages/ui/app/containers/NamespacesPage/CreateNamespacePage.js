@@ -81,8 +81,8 @@ export class CreateNamespacePage extends React.PureComponent {
           name,
           limits: {
             'limits.cpu': cpu,
-            'limits.memory': memory,
-            'requests.cpu': storage,
+            'limits.memory': `${memory}Gi`,
+            'requests.storage': `${storage}Gi`,
           },
         };
         console.log('data', data);
