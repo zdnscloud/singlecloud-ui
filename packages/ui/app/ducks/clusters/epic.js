@@ -115,12 +115,10 @@ export const updateClusterEpic = (action$, state$, { ajax }) =>
           body: payload,
         }).pipe(
           map((resp) => {
-            debugger
             resolve(resp);
             return a.updateClusterSuccess(resp, { clusterID });
           }),
           catchError((error) => {
-            debugger
             reject(error);
             return of(
               a.updateClusterFailure(error, { clusterID })

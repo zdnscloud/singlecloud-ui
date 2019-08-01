@@ -64,15 +64,12 @@ export class ClusterManagePage extends React.PureComponent {
       console.log('url',url,nodeList);
       try {
         const {
-          advancedOptions,
-          enableAdvancedOptions,
           nodes,
           ...formData
         } = formValues.toJS();
         const data = {
           nodes: nodeList.toJS(),
           ...formData,
-          ...(enableAdvancedOptions ? advancedOptions : {}),
         };
         // eslint-disable-next-line no-console
         console.log('data', data, formData);
@@ -101,33 +98,31 @@ export class ClusterManagePage extends React.PureComponent {
               },
             ]}
           />
-          <Typography component="div" className="">
-            <GridContainer className={classes.grid}>
-              <GridItem xs={12} sm={12} md={12}>
-                <CreateClusterForm
-                  classes={classes}
-                  onSubmit={doSubmit}
-                  initialValues={cluster}
-                  formValues={values}
-                />
-                <Button
-                  variant="contained"
-                  color="primary"
-                  onClick={submitForm}
-                >
-                  <FormattedMessage {...messages.createClusterButton} />
-                </Button>
-                <Button
-                  variant="contained"
-                  className={classes.cancleBtn}
-                  component={Link}
-                  to="/clusters"
-                >
-                  <FormattedMessage {...messages.cancleClustersButton} />
-                </Button>
-              </GridItem>
-            </GridContainer>
-          </Typography>
+          <GridContainer className={classes.grid}>
+            <GridItem xs={12} sm={12} md={12}>
+              <CreateClusterForm
+                classes={classes}
+                onSubmit={doSubmit}
+                initialValues={cluster}
+                formValues={values}
+              />
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={submitForm}
+              >
+                <FormattedMessage {...messages.createClusterButton} />
+              </Button>
+              <Button
+                variant="contained"
+                className={classes.cancleBtn}
+                component={Link}
+                to="/clusters"
+              >
+                <FormattedMessage {...messages.cancleClustersButton} />
+              </Button>
+            </GridItem>
+          </GridContainer>
         </div>
       </div>
     );
