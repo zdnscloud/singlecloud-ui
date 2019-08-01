@@ -51,7 +51,7 @@ const tableSchema = schema
         component: (props) => (
           <Button
             color="primary"
-            to={`/userQuotas/${props.data.get('id')}`}
+            to={`/userQuotas/${props.data.get('id')}/show`}
             component={Link}
           >
             {props.data.get('namespace')}

@@ -393,7 +393,7 @@ const appRoutes = [
     component: CreateUserQuotaPage,
   },
   {
-    path: '/userQuotas/:userQuota_id',
+    path: '/userQuotas/:userQuota_id/show',
     name: 'UserQuota Detail',
     icon: Dashboard,
     component: UserQuotaDetailPage,
