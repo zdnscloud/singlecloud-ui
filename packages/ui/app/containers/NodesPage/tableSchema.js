@@ -30,7 +30,7 @@ const tableSchema = schema
       return {
         ...item,
         component({ value }) {
-          return value
+          return value && value
             .map((val, key) => <Chip key={key} label={`${val}`} />)
             .toList();
         },
@@ -40,7 +40,7 @@ const tableSchema = schema
       return {
         ...item,
         component({ value }) {
-          return value
+          return value && value
             .map((val, key) => <Chip key={key} label={`${key}=${val}`} />)
             .toList();
         },
@@ -60,7 +60,7 @@ const tableSchema = schema
       label: 'Actions',
       component: (props) => (
         <Fragment>
-          <ConfirmDelete 
+          <ConfirmDelete
               actionName={props.removeNode}
               id={props.data.get('id')}
               url={props.data.getIn(['links', 'remove'])}

@@ -91,7 +91,7 @@ const appRoutes = [
     component: CreateClusterPage,
   },
   {
-    path: '/clusters/:cluster_id',
+    path: '/clusters/:cluster_id/show',
     name: 'Cluster Detail',
     icon: Dashboard,
     component: ClusterDetailPage,
