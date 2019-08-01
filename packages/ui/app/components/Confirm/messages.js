@@ -1,21 +1,17 @@
 /*
  * CommenDeletePage Messages
  *
- * This contains all the text for the CommenDeletePage container.
+ * This contains all the text for the CommenConfirmPage container.
  */
 
 import { defineMessages } from 'react-intl';
 
-export const scope = 'app.containers.CommenDeletePage';
+export const scope = 'app.containers.CommenConfirmPage';
 
 export default defineMessages({
   dialogTitle: {
     id: `${scope}.dialogTitle`,
     defaultMessage: 'Prompt',
-  },
-  dialogContentText: {
-    id: `${scope}.dialogContentText`,
-    defaultMessage: 'This action permanently deletes the content. Continue or not？',
   },
   sureButton: {
     id: `${scope}.sureButton`,

@@ -70,8 +70,6 @@ export class ClusterManagePage extends React.PureComponent {
           nodes: nodeList.toJS(),
           ...formData,
         };
-        // eslint-disable-next-line no-console
-        console.log('data', data);
         await new Promise((resolve, reject) => {
           updateCluster(data, {
             resolve,

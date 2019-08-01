@@ -134,6 +134,7 @@ class ButtonGroup extends PureComponent {
               {( status === "Updating" || status === "Connecting" || status === "Creating") ? 
                 <Confirm 
                     handleConfirm={handleConfirm}
+                    dialogContentText ={messages.stopPromptText}
                     component ={(
                       <Button className={classes.handleBtn}>
                         <img src={stopIcon} alt="stopIcon" className={classes.buttonIcon}/>

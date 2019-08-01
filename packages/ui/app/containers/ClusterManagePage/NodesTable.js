@@ -61,7 +61,6 @@ export class NodesTable extends React.PureComponent {
 
 const mapStateToProps = createStructuredSelector({
   clusterID: makeSelectClusterID(),
-  // nodes: makeSelectNodes(),
   nodes: makeSelectNodesList(),
 });
 

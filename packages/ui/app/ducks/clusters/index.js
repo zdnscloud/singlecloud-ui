@@ -82,11 +82,6 @@ export const clustersReducer = (
     case c.UPDATE_CLUSTER:
       return state;
     case c.UPDATE_CLUSTER_SUCCESS:
-      // // const { clusterID } = meta;
-      // // const data = payload.response;
-      // // return state.setIn(['clusters', clusterID, data.id],fromJS(data));
-      // const data = payload.response;
-      // return state.setIn(['clusters', data.id], fromJS(data));
       return state;
     case c.UPDATE_CLUSTER_FAILURE:
         return state;

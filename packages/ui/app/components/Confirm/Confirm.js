@@ -17,7 +17,7 @@ import messages from './messages';
 
 const Confirm = (props) => {
   
-  const { component,handleConfirm } = props;
+  const { component,handleConfirm,dialogContentText } = props;
   const [open, setOpen] = useState(false);
 
   const handleConfirmClick = () => { 
@@ -50,7 +50,7 @@ const Confirm = (props) => {
                 src={warningIcon}
                 style={{marginRight: 11, verticalAlign: 'middle'}}
               />
-              <FormattedMessage {...messages.dialogContentText} />
+              <FormattedMessage {...dialogContentText} />
             </DialogContentText>
           </DialogContent>
           <DialogActions>

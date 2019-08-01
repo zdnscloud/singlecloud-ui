@@ -201,4 +201,8 @@ export default defineMessages({
     id: `${scope}.nodeTitle`,
     defaultMessage: 'Cluster Node Title',
   },
+  stopPromptText: {
+    id: `${scope}.dialogContentText`,
+    defaultMessage: 'This action  stop the content. Continue or not？',
+  },
 });
