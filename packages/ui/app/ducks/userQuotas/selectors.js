@@ -42,6 +42,12 @@ export const makeSelectCurrentUserQuota = () =>
       substate.getIn(['userQuotas', userQuotaID]) || substate.clear()
   );
 
+export const makeSelectDeleteUserQuotaError = () =>
+  createSelector(
+    selectUserQuotasDomain,
+    (state) => state.get('deleteError')
+  );
+
 /**
  * Default selector used by UserQuotas
  */

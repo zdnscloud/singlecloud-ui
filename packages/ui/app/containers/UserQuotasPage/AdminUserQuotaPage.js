@@ -28,10 +28,12 @@ import CardBody from 'components/Card/CardBody';
 import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
 import IconButton from '@material-ui/core/IconButton';
 import Button from '@material-ui/core/Button';
+import ErrorInfo from 'components/ErrorInfo/ErrorInfo';
 
 import {
   makeSelectURL,
   makeSelectUserQuotasList,
+  makeSelectDeleteUserQuotaError
 } from 'ducks/userQuotas/selectors';
 import * as actions from 'ducks/userQuotas/actions';
 
@@ -82,7 +84,8 @@ export class AdminUserQuotaPage extends React.PureComponent {
   }
 
   render() {
-    const { classes, submitForm } = this.props;
+    const { classes, submitForm, deleteError,clearDeleteErrorInfo } = this.props;
+    console.log('deleteError',deleteError)
     const doSubmit = (formValues) => {
       this.setState({
         filter: formValues.toJS(),
@@ -103,6 +106,12 @@ export class AdminUserQuotaPage extends React.PureComponent {
             ]}
           />
           <GridContainer className={classes.grid}>
+            {deleteError ? (
+              <ErrorInfo 
+                errorText = {deleteError}
+                close = {clearDeleteErrorInfo}
+              />
+            ):null}
             <GridItem xs={12} sm={12} md={12}>
               <Card>
                 <CardHeader color="primary">
@@ -142,6 +151,7 @@ export class AdminUserQuotaPage extends React.PureComponent {
 
 const mapStateToProps = createStructuredSelector({
   url: makeSelectURL(),
+  deleteError: makeSelectDeleteUserQuotaError(),
 });
 
 const mapDispatchToProps = (dispatch) =>
