@@ -67,21 +67,43 @@ export class CreateClusterPage extends React.PureComponent {
         const {
           advancedOptions,
           enableAdvancedOptions,
+          nodes,
           ...formData
         } = formValues.toJS();
+        const { main ,work } = nodes;
+        main.forEach((item) => {
+          if(Object.keys(item).length !== 0 ){
+            if(item.roles){
+              item.roles.push('controlplane');
+            }else {
+              item.roles = ['controlplane'];
+            }
+          }
+        });
+        work.forEach((item) => {
+          if(Object.keys(item).length !== 0){
+            if(item.roles){
+              item.roles.push('worker');
+            }else {
+              item.roles = ['worker'];
+            }
+          }
+        });
+        let nodeArr = main.concat(work).filter((v) => v.roles);
         const data = {
+          nodes: nodeArr,
           ...formData,
           ...(enableAdvancedOptions ? advancedOptions : {}),
         };
         // eslint-disable-next-line no-console
-        console.log('data', data, formData);
-        await new Promise((resolve, reject) => {
-          createCluster(data, {
-            resolve,
-            reject,
-            url,
-          });
-        });
+        console.log('data', data);
+        // await new Promise((resolve, reject) => {
+        //   createCluster(data, {
+        //     resolve,
+        //     reject,
+        //     url,
+        //   });
+        // });
       } catch (error) {
         throw new SubmissionError({ _error: error });
       }

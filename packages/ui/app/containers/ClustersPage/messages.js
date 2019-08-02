@@ -165,4 +165,12 @@ export default defineMessages({
     id: `${scope}.viewLog`,
     defaultMessage: 'View Log',
   },
+  formAddMainNode: {
+    id: `${scope}.formAddMainNode`,
+    defaultMessage: 'formAddMainNode',
+  },
+  formAddWorkNode: {
+    id: `${scope}.formAddWorkNode`,
+    defaultMessage: 'formAddWorkNode',
+  },
 });

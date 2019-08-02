@@ -25,6 +25,8 @@ import RadioField from 'components/Field/RadioField';
 import FileReaderField from 'components/Field/FileReaderField';
 import Button from 'components/CustomButtons/Button';
 import NodeTemplate from './form/NodeTemplate';
+import NodeMainTemplate from './form/NodeMainTemplate';
+import NodeWorkTemplate from './form/NodeWorkTemplate';
 import messages from './messages';
 
 class ClusterForm extends PureComponent {
@@ -297,13 +299,24 @@ class ClusterForm extends PureComponent {
               </h4>
             </CardHeader>
             <CardBody>
-              <FieldArray
-                name="nodes"
-                classes={classes}
-                component={NodeTemplate}
-                theme={theme}
-                formValues={formValues}
-              />
+               <GridItem xs={12} sm={12} md={12}>
+                  <FieldArray
+                      name="nodes.main"
+                      classes={classes}
+                      component={NodeMainTemplate}
+                      theme={theme}
+                      formValues={formValues}
+                    />
+                </GridItem>
+                <GridItem xs={12} sm={12} md={12}>
+                  <FieldArray
+                      name="nodes.work"
+                      classes={classes}
+                      component={NodeWorkTemplate}
+                      theme={theme}
+                      formValues={formValues}
+                    /> 
+                </GridItem>
             </CardBody>
           </Card>
         </GridContainer>
