@@ -5,7 +5,6 @@
  */
 
 import React, { Fragment } from 'react';
-import { findDOMNode } from 'react-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
@@ -17,7 +16,6 @@ import { SubmissionError, submit } from 'redux-form';
 import SHA1 from 'crypto-js/sha1';
 import encHex from 'crypto-js/enc-hex';
 
-import classNames from 'classnames';
 import { withStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Button from '@material-ui/core/Button';
@@ -26,6 +24,9 @@ import Card from 'components/Card/Card';
 import CardBody from 'components/Card/CardBody';
 import CardHeader from 'components/Card/CardHeader';
 import CardFooter from 'components/Card/CardFooter';
+import GridItem from 'components/Grid/GridItem';
+import GridContainer from 'components/Grid/GridContainer';
+import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
 
 import * as actions from 'ducks/users/actions';
 import { makeSelectEditingUser, makeSelectUID } from 'ducks/users/selectors';
@@ -92,31 +93,42 @@ export class PasswordSetupPage extends React.PureComponent {
         <UsersHelmet />
         <CssBaseline />
         <div className={classes.content}>
-          <Card>
-            <CardHeader color="primary">
-              <h4 className={classes.cardTitleWhite}>
-                <FormattedMessage {...messages.passwordSetup} />
-              </h4>
-            </CardHeader>
-            <CardBody>
-              <PasswordSetupForm
-                classes={classes}
-                clusters={clusters}
-                onSubmit={doSubmit}
-                isAdmin={isAdmin}
-              />
-            </CardBody>
-            <CardFooter className={classes.cardFooter}>
-              <Button
-                variant="contained"
-                color="primary"
-                size="large"
-                onClick={submitForm}
-              >
-                <FormattedMessage {...messages.updatePassword} />
-              </Button>
-            </CardFooter>
-          </Card>
+          <Breadcrumbs
+              data={[
+                {
+                  name: <FormattedMessage {...messages.passwordSetup} />,
+                },
+              ]}
+            />
+            <GridContainer className={classes.grid}>
+              <GridItem xs={12} sm={12} md={12}>
+                <Card>
+                  <CardHeader color="primary">
+                    <h4 className={classes.cardTitleWhite}>
+                      <FormattedMessage {...messages.passwordSetup} />
+                    </h4>
+                  </CardHeader>
+                  <CardBody>
+                    <PasswordSetupForm
+                      classes={classes}
+                      clusters={clusters}
+                      onSubmit={doSubmit}
+                      isAdmin={isAdmin}
+                    />
+                  </CardBody>
+                  <CardFooter className={classes.cardFooter}>
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      size="large"
+                      onClick={submitForm}
+                    >
+                      <FormattedMessage {...messages.updatePassword} />
+                    </Button>
+                  </CardFooter>
+                </Card>
+              </GridItem>
+            </GridContainer>
         </div>
       </div>
     );

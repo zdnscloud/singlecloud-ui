@@ -20,6 +20,7 @@ import NodesPage, {
 import NamespacesPage, {
   CreateNamespacePage,
   NamespaceDetailPage,
+  EditNamespacePage,
 } from 'containers/NamespacesPage/Loadable';
 import TerminalPage from 'containers/TerminalPage/Loadable';
 import EventsPage from 'containers/EventsPage/Loadable';
@@ -46,13 +47,19 @@ import JobsPage, {
 import ConfigMapsPage, {
   CreateConfigMapPage,
   ShowConfigMapPage,
+  EditConfigMapPage,
 } from 'containers/ConfigMapsPage/Loadable';
 import SecretsPage, {
   CreateSecretPage,
   ShowSecretPage,
+  EditSecretPage
 } from 'containers/SecretsPage/Loadable';
 import ServiceLinkPage from 'containers/ServiceLinkPage/Loadable';
-import StoragePage from 'containers/StoragePage/Loadable';
+import StoragesPage, {
+  CreateStoragePage,
+  EditStoragePage,
+  StorageDetailPage,
+} from 'containers/StoragesPage/Loadable';
 import NetworkPage from 'containers/NetworkPage/Loadable';
 import UserQuotasPage, {
   CreateUserQuotaPage,
@@ -84,7 +91,7 @@ const appRoutes = [
     component: CreateClusterPage,
   },
   {
-    path: '/clusters/:cluster_id',
+    path: '/clusters/:cluster_id/show',
     name: 'Cluster Detail',
     icon: Dashboard,
     component: ClusterDetailPage,
@@ -102,7 +109,7 @@ const appRoutes = [
     component: CreateNodePage,
   },
   {
-    path: '/clusters/:cluster_id/nodes/:node_id',
+    path: '/clusters/:cluster_id/nodes/:node_id/show',
     name: 'NodeDetail',
     icon: Dashboard,
     component: NodeDetailPage,
@@ -132,10 +139,16 @@ const appRoutes = [
     component: CreateNamespacePage,
   },
   {
-    path: '/clusters/:cluster_id/namespaces/:namespace_id/resourcequotas',
+    path: '/clusters/:cluster_id/namespaces/:namespace_id/show',
     name: 'namespaces',
     icon: Dashboard,
     component: NamespaceDetailPage,
+  },
+  {
+    path: '/clusters/:cluster_id/namespaces/:namespace_id/edit',
+    name: 'namespaces',
+    icon: Dashboard,
+    component: EditNamespacePage,
   },
   // configmap
   {
@@ -151,8 +164,14 @@ const appRoutes = [
     component: CreateConfigMapPage,
   },
   {
+    path: '/clusters/:cluster_id/namespaces/:namespace_id/configmaps/:configmap_id/edit',
+    name: 'edit configmap',
+    icon: Dashboard,
+    component: EditConfigMapPage,
+  },
+  {
     path:
-      '/clusters/:cluster_id/namespaces/:namespace_id/configmaps/:configmap_id',
+      '/clusters/:cluster_id/namespaces/:namespace_id/configmaps/:configmap_id/show',
     name: 'show configmap',
     icon: Dashboard,
     component: ShowConfigMapPage,
@@ -172,7 +191,13 @@ const appRoutes = [
     component: CreateSecretPage,
   },
   {
-    path: '/clusters/:cluster_id/namespaces/:namespace_id/secrets/:secret_id',
+    path: '/clusters/:cluster_id/namespaces/:namespace_id/secrets/:secret_id/edit',
+    name: 'edit secret',
+    icon: Dashboard,
+    component: EditSecretPage,
+  },
+  {
+    path: '/clusters/:cluster_id/namespaces/:namespace_id/secrets/:secret_id/show',
     name: 'show secret',
     icon: Dashboard,
     component: ShowSecretPage,
@@ -193,7 +218,7 @@ const appRoutes = [
   },
   {
     path:
-      '/clusters/:cluster_id/namespaces/:namespace_id/deployments/:deployment_id',
+      '/clusters/:cluster_id/namespaces/:namespace_id/deployments/:deployment_id/show',
     name: 'Deployment Detail',
     icon: Dashboard,
     component: DeploymentDetailPage,
@@ -214,7 +239,7 @@ const appRoutes = [
   },
   {
     path:
-      '/clusters/:cluster_id/namespaces/:namespace_id/statefulSets/:stateful_set_id',
+      '/clusters/:cluster_id/namespaces/:namespace_id/statefulSets/:stateful_set_id/show',
     name: 'StatefulSet Detail',
     icon: Dashboard,
     component: StatefulSetDetailPage,
@@ -235,7 +260,7 @@ const appRoutes = [
   },
   {
     path:
-      '/clusters/:cluster_id/namespaces/:namespace_id/daemonSets/:daemonset_set_id',
+      '/clusters/:cluster_id/namespaces/:namespace_id/daemonSets/:daemonset_set_id/show',
     name: 'DaemonSet Detail',
     icon: Dashboard,
     component: DaemonSetDetailPage,
@@ -256,7 +281,7 @@ const appRoutes = [
   },
   {
     path:
-      '/clusters/:cluster_id/namespaces/:namespace_id/cronJobs/:cron_job_id',
+      '/clusters/:cluster_id/namespaces/:namespace_id/cronJobs/:cron_job_id/show',
     name: 'CronJob Detail',
     icon: Dashboard,
     component: CronJobDetailPage,
@@ -276,7 +301,7 @@ const appRoutes = [
     component: CreateJobPage,
   },
   {
-    path: '/clusters/:cluster_id/namespaces/:namespace_id/jobs/:cron_job_id',
+    path: '/clusters/:cluster_id/namespaces/:namespace_id/jobs/:job_id/show',
     name: 'Job Detail',
     icon: Dashboard,
     component: JobDetailPage,
@@ -289,10 +314,28 @@ const appRoutes = [
     component: ServiceLinkPage,
   },
   {
-    path: '/clusters/:cluster_id/storage',
+    path: '/clusters/:cluster_id/storages',
     name: 'Storage',
     icon: Dashboard,
-    component: StoragePage,
+    component: StoragesPage,
+  },
+  {
+    path: '/clusters/:cluster_id/storages/create',
+    name: 'Create Storage',
+    icon: Dashboard,
+    component: CreateStoragePage,
+  },
+  {
+    path: '/clusters/:cluster_id/storages/:storage_id/edit',
+    name: 'Edit Storage',
+    icon: Dashboard,
+    component: EditStoragePage,
+  },
+  {
+    path: '/clusters/:cluster_id/storages/:storage_id/show',
+    name: 'Show Storage Detail',
+    icon: Dashboard,
+    component: StorageDetailPage,
   },
   {
     path: '/clusters/:cluster_id/network',
@@ -350,7 +393,7 @@ const appRoutes = [
     component: CreateUserQuotaPage,
   },
   {
-    path: '/userQuotas/:userQuota_id',
+    path: '/userQuotas/:userQuota_id/show',
     name: 'UserQuota Detail',
     icon: Dashboard,
     component: UserQuotaDetailPage,

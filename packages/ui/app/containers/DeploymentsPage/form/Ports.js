@@ -61,7 +61,7 @@ const Ports = ({ fields, meta: { error, submitFailed } }) => {
         <ListItemText>
           <Button
             color="secondary"
-            onClick={(evt) => fields.push({ protocol: 'tcp' })}
+            onClick={(evt) => fields.push(fromJS({ protocol: 'tcp' }))}
           >
             <FormattedMessage {...messages.formExposedPorts} />
             <PlusIcon />
@@ -82,7 +82,6 @@ const Ports = ({ fields, meta: { error, submitFailed } }) => {
               options={options}
               formControlProps={{
                 style: {
-                  marginTop: '10px',
                   width: '146px',
                 },
               }}

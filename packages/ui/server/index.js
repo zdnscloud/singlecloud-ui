@@ -19,10 +19,6 @@ app.use(
   proxy({ target: `http://${backend}:8088`, changeOrigin: false, ws: true })
 );
 app.use(
-  '/cas',
-  proxy({ target: `http://${backend}:8088`, changeOrigin: false, ws: true })
-);
-app.use(
   '/web',
   proxy({ target: `http://${backend}:8088`, changeOrigin: false, ws: true })
 );

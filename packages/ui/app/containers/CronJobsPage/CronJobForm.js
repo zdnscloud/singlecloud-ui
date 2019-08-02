@@ -1,51 +1,17 @@
 import React, { PureComponent, Fragment, useState } from 'react';
 import { fromJS, is } from 'immutable';
-import { compose } from 'redux';
 import { FormattedMessage } from 'react-intl';
-import {
-  Field,
-  Fields,
-  FieldArray,
-  reduxForm,
-  FormSection,
-} from 'redux-form/immutable';
+import { FieldArray } from 'redux-form/immutable';
 import getByKey from '@gsmlg/utils/getByKey';
-import AceEditor from 'react-ace';
-import classNames from 'classnames';
-
-import withStyles from '@material-ui/core/styles/withStyles';
-import InputAdornment from '@material-ui/core/InputAdornment';
-import Icon from '@material-ui/core/Icon';
-import Checkbox from '@material-ui/core/Checkbox';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import FormControl from '@material-ui/core/FormControl';
-import InputLabel from '@material-ui/core/InputLabel';
-import FormHelperText from '@material-ui/core/FormHelperText';
-import FormGroup from '@material-ui/core/FormGroup';
-import TextField from '@material-ui/core/TextField';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
-import Button from '@material-ui/core/Button';
-import IconButton from '@material-ui/core/IconButton';
-import AddIcon from '@material-ui/icons/Add';
-import DeleteIcon from '@material-ui/icons/Delete';
 
 import Card from 'components/Card/Card';
 import CardBody from 'components/Card/CardBody';
 import CardHeader from 'components/Card/CardHeader';
-import CardFooter from 'components/Card/CardFooter';
-import CustomInput from 'components/CustomInput/CustomInput';
-import ReadOnlyInput from 'components/CustomInput/ReadOnlyInput';
 import Danger from 'components/Typography/Danger';
 import GridItem from 'components/Grid/GridItem';
 import GridContainer from 'components/Grid/GridContainer';
 import InputField from 'components/Field/InputField';
 import SelectField from 'components/Field/SelectField';
-import SwitchField from 'components/Field/SwitchField';
-import RadioField from 'components/Field/RadioField';
-import PlusIcon from 'components/Icons/Plus';
-import MinusIcon from 'components/Icons/Minus';
 
 import Containers from './form/Containers';
 import messages from './messages';
@@ -55,18 +21,13 @@ class CronJobForm extends PureComponent {
 
   render() {
     const {
-      clusters,
       handleSubmit,
-      pristine,
-      reset,
-      submitting,
       error,
       classes,
-      edit,
-      initialValues,
       configMaps,
       formValues,
       theme,
+      secrets,
     } = this.props;
     const getPorts = (formData) => {
       if (formData && formData.get) {
@@ -100,53 +61,62 @@ class CronJobForm extends PureComponent {
             </GridItem>
           ) : null}
           <GridItem xs={12} sm={12} md={12}>
-            <GridContainer style={{ margin: 0 }}>
-              <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
-                <InputField
-                  label={<FormattedMessage {...messages.formName} />}
-                  name="name"
-                  fullWidth
-                  inputProps={{ type: 'text', autoComplete: 'off' }}
-                  classes={classes}
-                />
-              </GridItem>
-              <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
-                <InputField
-                  label={<FormattedMessage {...messages.formSchedule} />}
-                  name="schedule"
-                  fullWidth
-                  inputProps={{ type: 'text', autoComplete: 'off' }}
-                  classes={classes}
-                />
-              </GridItem>
-              <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
-                <SelectField
-                  label={<FormattedMessage {...messages.formRestartPolicy} />}
-                  name="restartPolicy"
-                  options={[
-                    {
-                      label: 'OnFailure',
-                      value: 'OnFailure',
-                    },
-                    {
-                      label: 'Never',
-                      value: 'Never',
-                    },
-                  ]}
-                  formControlProps={{
-                    style: {
-                      marginTop: 18,
-                      width: '100%',
-                    },
-                  }}
-                />
-              </GridItem>
-            </GridContainer>
+            <Card>
+              <CardHeader color="primary">
+                <h4 className={classes.cardTitleWhite}>
+                  <FormattedMessage {...messages.createCronJob} />
+                </h4>
+              </CardHeader>
+              <CardBody>
+                <GridContainer style={{ margin: 0 }}>
+                  <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
+                    <InputField
+                      label={<FormattedMessage {...messages.formName} />}
+                      name="name"
+                      fullWidth
+                      inputProps={{ type: 'text', autoComplete: 'off' }}
+                    />
+                  </GridItem>
+                  <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
+                    <InputField
+                      label={<FormattedMessage {...messages.formSchedule} />}
+                      name="schedule"
+                      fullWidth
+                      inputProps={{ type: 'text', autoComplete: 'off' }}
+                    />
+                  </GridItem>
+                  <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
+                    <SelectField
+                      label={
+                        <FormattedMessage {...messages.formRestartPolicy} />
+                      }
+                      name="restartPolicy"
+                      options={[
+                        {
+                          label: 'OnFailure',
+                          value: 'OnFailure',
+                        },
+                        {
+                          label: 'Never',
+                          value: 'Never',
+                        },
+                      ]}
+                      formControlProps={{
+                        style: {
+                          width: '100%',
+                        },
+                      }}
+                    />
+                  </GridItem>
+                </GridContainer>
+              </CardBody>
+            </Card>
           </GridItem>
           <GridItem xs={12} sm={12} md={12}>
             <FieldArray
               name="containers"
               classes={classes}
+              secrets={secrets}
               component={Containers}
               configMaps={configMaps}
               theme={theme}

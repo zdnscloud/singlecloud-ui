@@ -31,13 +31,7 @@ class ClusterForm extends PureComponent {
   state = {};
 
   render() {
-    const {
-      handleSubmit,
-      error,
-      classes,
-      formValues,
-      theme,
-    } = this.props;
+    const { handleSubmit, error, classes, formValues, theme } = this.props;
 
     return (
       <form className={getByKey(classes, 'form')} onSubmit={handleSubmit}>
@@ -195,7 +189,9 @@ class ClusterForm extends PureComponent {
                         className={classes.formLine}
                       >
                         <InputField
-                          label={<FormattedMessage {...messages.formClustersDNSIP} />}
+                          label={
+                            <FormattedMessage {...messages.formClustersDNSIP} />
+                          }
                           fullWidth
                           inputProps={{ type: 'text', autoComplete: 'off' }}
                           name="clusterDNSServiceIP"
@@ -208,7 +204,9 @@ class ClusterForm extends PureComponent {
                         className={classes.formLine}
                       >
                         <InputField
-                          label={<FormattedMessage {...messages.formForwardDNS} />}
+                          label={
+                            <FormattedMessage {...messages.formForwardDNS} />
+                          }
                           fullWidth
                           inputProps={{ type: 'text', autoComplete: 'off' }}
                           name="clusterUpstreamDNS"
@@ -250,7 +248,9 @@ class ClusterForm extends PureComponent {
                         className={classes.formLine}
                       >
                         <InputField
-                          label={<FormattedMessage {...messages.formCACertificate} />}
+                          label={
+                            <FormattedMessage {...messages.formCACertificate} />
+                          }
                           fullWidth
                           inputProps={{ type: 'text', autoComplete: 'off' }}
                           name="privateRegistries[0].cacert"

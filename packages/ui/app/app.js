@@ -5,8 +5,9 @@
  * code.
  */
 
-// Needed for redux-saga es2015 generator support
-import '@babel/polyfill';
+// Needed for async function to generator support
+import "core-js/stable";
+import "regenerator-runtime/runtime";
 
 // Import all the third party stuff
 import React from 'react';

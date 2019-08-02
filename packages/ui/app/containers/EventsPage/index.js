@@ -8,9 +8,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
-import { createStructuredSelector } from 'reselect';
+import { createStructuredSelector, createSelector } from 'reselect';
 import { bindActionCreators, compose } from 'redux';
-import SockJS from 'sockjs-client';
+import { reduxForm, getFormValues } from 'redux-form/immutable';
+import { fromJS } from 'immutable';
 
 import { withStyles } from '@material-ui/core/styles';
 import Menubar from 'components/Menubar';
@@ -25,12 +26,28 @@ import CardHeader from 'components/Card/CardHeader';
 import CardBody from 'components/Card/CardBody';
 import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
 
+import { makeSelectNamespaces } from 'ducks/namespaces/selectors';
+import { makeSelectEvents } from 'ducks/events/selectors';
 import * as actions from 'ducks/events/actions';
 
 import messages from './messages';
 import styles from './styles';
 import EventsTable from './EventsTable';
 import EventsPageHelmet from './helmet';
+import FilterForm from './EventsFilterForm';
+
+export const formName = 'eventsFilterForm';
+
+const EventsFilterForm = reduxForm({
+  form: formName,
+})(FilterForm);
+
+const formInitialValues = fromJS({
+  type: '__all__',
+  namespace: '__all__',
+  kind: '__all__',
+  name: '__all__',
+});
 
 /* eslint-disable react/prefer-stateless-function */
 export class EventsPage extends React.PureComponent {
@@ -42,7 +59,26 @@ export class EventsPage extends React.PureComponent {
   };
 
   render() {
-    const { classes, clusterID } = this.props;
+    const { classes, clusterID, events, filters } = this.props;
+    const options = events.reduce(
+      (
+        { types, namespaces, kinds, names },
+        { type, namespace, kind, name }
+      ) => ({
+        types: types.includes(type) ? types : types.concat([type]),
+        namespaces: namespaces.includes(namespace)
+          ? namespaces
+          : namespaces.concat([namespace]),
+        kinds: kinds.includes(kind) ? kinds : kinds.concat([kind]),
+        names: names.includes(name) ? names : names.concat([name]),
+      }),
+      {
+        types: [],
+        namespaces: [],
+        kinds: [],
+        names: [],
+      }
+    );
 
     return (
       <div className={classes.root}>
@@ -67,7 +103,12 @@ export class EventsPage extends React.PureComponent {
                     </h4>
                   </CardHeader>
                   <CardBody>
-                    <EventsTable />
+                    <EventsFilterForm
+                      classes={classes}
+                      initialValues={formInitialValues}
+                      {...options}
+                    />
+                    <EventsTable filters={filters} />
                   </CardBody>
                 </Card>
               </GridItem>
@@ -79,7 +120,14 @@ export class EventsPage extends React.PureComponent {
   }
 }
 
-const mapStateToProps = createStructuredSelector({});
+const mapStateToProps = createStructuredSelector({
+  events: makeSelectEvents(),
+  namespaces: makeSelectNamespaces(),
+  filters: createSelector(
+    getFormValues(formName),
+    (v) => v || formInitialValues
+  ),
+});
 
 const mapDispatchToProps = (dispatch) =>
   bindActionCreators(

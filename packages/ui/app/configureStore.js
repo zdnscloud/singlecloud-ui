@@ -7,9 +7,12 @@ import { fromJS } from 'immutable';
 import { routerMiddleware } from 'connected-react-router/immutable';
 import { createEpicMiddleware } from 'redux-observable';
 import { ajax } from 'rxjs/ajax';
-import { BehaviorSubject } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
+import { BehaviorSubject, concat, of, throwError } from 'rxjs';
+import { catchError, map, switchMap } from 'rxjs/operators';
+import getByKey from '@gsmlg/utils/getByKey';
 // import persistentEnhancer from 'utils/persistentEnhancer';
+
+import { loadRole } from 'ducks/role/actions';
 
 import createReducer from './reducers';
 import createEpic from './epics';
@@ -33,7 +36,21 @@ const epicMiddleware = createEpicMiddleware({
           'Content-Type': 'application/json',
           ...((opt && opt.headers) || {}),
         },
-      });
+      }).pipe(
+        map((resp) => resp),
+        catchError((error) => {
+          if (getByKey(error, 'status') === 401) {
+            console.log('unauthorized', error.status);
+            import('store').then((exports) => {
+              const store = getByKey(exports, ['default', 'instance']);
+              setTimeout(() => {
+                store.dispatch(loadRole('/web/role'));
+              }, 100);
+            });
+          }
+          return throwError(error);
+        })
+      );
     },
     getJSON: (arg) => {
       let opt = arg;

@@ -59,7 +59,7 @@ module.exports = require('./webpack.base.babel')({
           name: 'vendor',
           chunks: 'all',
         },
-        main: {
+        singlecloud: {
           chunks: 'all',
           minChunks: 2,
           reuseExistingChunk: true,
@@ -122,8 +122,8 @@ module.exports = require('./webpack.base.babel')({
 
     new WebpackPwaManifest({
       name: 'SingleCloud UI',
-      short_name: 'React BP',
-      description: 'My SingleCloud UI project!',
+      short_name: 'SingleCloud',
+      description: 'SingleCloud UI project!',
       background_color: '#fafafa',
       theme_color: '#b1624d',
       inject: true,
@@ -148,7 +148,7 @@ module.exports = require('./webpack.base.babel')({
     }),
   ],
 
-  devtool: 'source-map',
+  devtool: false,
 
   performance: {
     assetFilter: (assetFilename) =>

@@ -67,7 +67,6 @@ const styles = (theme) => ({
   },
   grid: {
     padding: theme.spacing(2),
-    paddingTop: theme.spacing(1),
   },
   chartContainer: {
     marginLeft: -22,
@@ -123,8 +122,8 @@ const styles = (theme) => ({
   },
   fileContentButton: {
     display: 'inline-block',
-    height: '79px',
-    paddingTop: '29px',
+    margin: '0 0 17px 0',
+    paddingTop: 16,
   },
   dialogCard: {
     marginTop: 0,

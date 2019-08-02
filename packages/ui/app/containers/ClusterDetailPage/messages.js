@@ -45,6 +45,10 @@ export default defineMessages({
     id: `${scope}.clusterCPU`,
     defaultMessage: 'CPU',
   },
+  clusterCPUCore: {
+    id: `${scope}.clusterCPUCore`,
+    defaultMessage: 'Core',
+  },
   clusterMemory: {
     id: `${scope}.clusterMemory`,
     defaultMessage: 'Memory',

@@ -49,7 +49,7 @@ class RequestUserQuotaForm extends PureComponent {
               fullWidth
             />
           </GridItem>
-          <GridItem xs={3} sm={3} md={3} style={{ paddingTop: 10 }}>
+          <GridItem xs={3} sm={3} md={3}>
             <SelectField
               label={<FormattedMessage {...messages.formClusterName} />}
               name="clusterName"

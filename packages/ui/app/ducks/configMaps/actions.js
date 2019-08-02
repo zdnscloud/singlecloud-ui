@@ -63,9 +63,10 @@ export const updateConfigMap = (data, meta) => ({
   meta,
 });
 
-export const updateConfigMapSuccess = (resp) => ({
+export const updateConfigMapSuccess = (resp,meta) => ({
   type: c.UPDATE_CONFIG_MAP_SUCCESS,
   payload: resp,
+  meta,
 });
 
 export const updateConfigMapFailure = (error) => ({

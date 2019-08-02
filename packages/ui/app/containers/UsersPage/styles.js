@@ -65,10 +65,11 @@ const styles = (theme) => ({
   appBarSpacer: theme.mixins.toolbar,
   content: {
     flexGrow: 1,
-    padding: theme.spacing(3),
-    minHeight: '100vh',
     overflow: 'auto',
     overflowX: 'hidden',
+  },
+  grid: {
+    padding: theme.spacing(2),
   },
   chartContainer: {
     marginLeft: -22,

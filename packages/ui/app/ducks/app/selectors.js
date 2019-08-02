@@ -8,6 +8,7 @@ import OverviewIcon from 'components/Icons/Overview';
 import ManagementIcon from 'components/Icons/Management';
 import ApplicationIcon from 'components/Icons/Application';
 import SystemIcon from 'components/Icons/System';
+import UserQuotasIcon from 'components/Icons/UserQuotas';
 
 import { makeSelectRole, makeSelectIsAdmin } from 'ducks/role/selectors';
 
@@ -23,7 +24,7 @@ export const makeSelectLocation = () =>
 
 export const makeSelectClusterID = () =>
   createSelector(
-    createMatchSelector('/clusters/:cluster_id'),
+    createMatchSelector('/clusters/:cluster_id/*'),
     (match) => {
       if (match && match.params) {
         return match.params.cluster_id;
@@ -104,10 +105,6 @@ export const makeSelectLeftMenus = () =>
               { name: 'Overview', path: `/clusters/${cluster}` },
               { name: 'Namespaces', path: `/clusters/${cluster}/namespaces` },
               { name: 'Nodes', path: `/clusters/${cluster}/nodes` },
-              {
-                name: 'ResourceQuota',
-                path: `/clusters/${cluster}/resourceQuota`,
-              },
             ],
             icon: ManagementIcon,
           },
@@ -149,8 +146,8 @@ export const makeSelectLeftMenus = () =>
             name: 'SystemManagement',
             children: [
               {
-                name: 'Storage',
-                path: `/clusters/${cluster}/storage`,
+                name: 'Storages',
+                path: `/clusters/${cluster}/storages`,
               },
               {
                 name: 'Network',
@@ -169,7 +166,7 @@ export const makeSelectLeftMenus = () =>
         {
           name: 'UserQuotas',
           path: isAdmin ? '/adminUserQuotas' : '/userQuotas',
-          icon: OverviewIcon,
+          icon: UserQuotasIcon,
         },
       ]);
       return menus;

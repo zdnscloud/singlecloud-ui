@@ -1,5 +1,5 @@
 import { push } from 'connected-react-router';
-import { Observable, interval, of, timer } from 'rxjs';
+import { Observable, interval, of, timer, concat } from 'rxjs';
 import {
   mergeMap,
   map,
@@ -11,10 +11,14 @@ import {
   throttleTime,
   throttle,
   catchError,
-  concat,
 } from 'rxjs/operators';
 import { ofType, combineEpics } from 'redux-observable';
-
+import {
+  createResourceQuota,
+  createResourceQuotaFailure,
+  createResourceQuotaSuccess,
+} from 'ducks/resourceQuotas/actions';
+import { makeSelectClusters } from 'ducks/clusters/selectors';
 import * as c from './constants';
 import * as a from './actions';
 
@@ -32,7 +36,7 @@ export const loadNamespacesEpic = (action$, state$, { ajax }) =>
 export const createNamespaceEpic = (action$, state$, { ajax }) =>
   action$.pipe(
     ofType(c.CREATE_NAMESPACE),
-    mergeMap(({ payload, meta: { resolve, reject, url, clusterID } }) =>
+    mergeMap(({ payload, meta: { resolve, reject, url, clusterID, data } }) =>
       ajax({
         url,
         method: 'POST',
@@ -40,7 +44,10 @@ export const createNamespaceEpic = (action$, state$, { ajax }) =>
       }).pipe(
         map((resp) => {
           resolve(resp);
-          return a.createNamespaceSuccess(resp, { clusterID });
+          return a.createNamespaceSuccess(resp, {
+            data,
+            clusterID,
+          });
         }),
         catchError((error) => {
           reject(error);
@@ -50,11 +57,22 @@ export const createNamespaceEpic = (action$, state$, { ajax }) =>
     )
   );
 
-export const afterCreateEpic = (action$) =>
+export const afterCreateEpic = (action$, state$, { ajax }) =>
   action$.pipe(
     ofType(c.CREATE_NAMESPACE_SUCCESS),
-    mergeMap(({ payload, meta }) =>
-      timer(1000).pipe(mapTo(push(`/clusters/${meta.clusterID}/namespaces`)))
+    mergeMap(({ payload, meta: { data, clusterID } }) =>
+      concat(
+        ajax({
+          // url: payload.response.getIn(['links', 'resourcequotas']),
+          url: payload.response.links.resourcequotas,
+          method: 'POST',
+          body: data,
+        }).pipe(
+          map((resp) => createResourceQuotaSuccess(resp, { clusterID })),
+          catchError((error) => of(createResourceQuotaFailure(error)))
+        ),
+        of(push(`/clusters/${clusterID}/namespaces`)),
+      )
     )
   );
 
@@ -79,7 +97,8 @@ export const removeNamespaceEpic = (action$, state$, { ajax }) =>
 export const loadAllNamespacesEpic = (action$, state$, { ajax }) =>
   action$.pipe(
     ofType(c.LOAD_ALL_NAMESPACES),
-    mergeMap(({ payload: { clusters } }) => {
+    mergeMap(() => {
+      const clusters = makeSelectClusters()(state$.value).toList();
       const list = clusters
         .map((c) => ({
           clusterID: c.get('id'),
@@ -92,11 +111,12 @@ export const loadAllNamespacesEpic = (action$, state$, { ajax }) =>
           )
         )
         .toJS();
-      return concat.apply(null, list);
+      return concat(...list);
     })
   );
 
 export default combineEpics(
+  loadAllNamespacesEpic,
   loadNamespacesEpic,
   createNamespaceEpic,
   afterCreateEpic,

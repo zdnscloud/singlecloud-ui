@@ -43,20 +43,15 @@ function BreadcrumbsContainer({ ...props }) {
         <HomeIcon className={classes.icon} />
       </Link>
       {data.map((prop, key) =>
-        key === data.length-1 ?
-          <Typography
-            className={classes.textPrimary}
-            key={key}
-          >
+        key === data.length - 1 ? (
+          <Typography className={classes.textPrimary} key={key}>
             {prop.name}
-          </Typography> :
-          <Link
-            className={classes.inherit}
-            to={prop.path}
-            key={key}
-          >
+          </Typography>
+        ) : (
+          <Link className={classes.inherit} to={prop.path} key={key}>
             {prop.name}
           </Link>
+        )
       )}
     </Breadcrumbs>
   );

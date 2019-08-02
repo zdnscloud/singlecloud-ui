@@ -56,7 +56,7 @@ export const changeNamespaceEpic = (action$, state$, { ajax }) =>
           .join('/');
         return of(push(`/clusters/${clusterID}/namespaces/${ns}/${suffix}`));
       }
-      return of({});
+      return of(push(location));
     })
   );
 

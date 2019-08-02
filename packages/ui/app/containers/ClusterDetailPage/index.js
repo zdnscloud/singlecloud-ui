@@ -10,6 +10,7 @@ import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import { bindActionCreators, compose } from 'redux';
+import { push } from 'connected-react-router';
 
 import { withStyles } from '@material-ui/core/styles';
 import Menubar from 'components/Menubar';
@@ -36,9 +37,13 @@ export class ClusterDetailPage extends React.PureComponent {
   };
 
   componentWillMount() {
-    const { openCluster, closeCluster, cluster } = this.props;
-    closeCluster();
-    openCluster(cluster.get('id'));
+    const { openCluster, closeCluster, cluster, routeTo } = this.props;
+    if (cluster && cluster.size > 0) {
+      closeCluster();
+      openCluster(cluster.get('id'));
+    } else {
+      routeTo('/clusters');
+    }
   }
 
   render() {
@@ -87,6 +92,7 @@ const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
       ...actions,
+      routeTo: push,
     },
     dispatch
   );

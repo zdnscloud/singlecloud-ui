@@ -17,3 +17,7 @@ export const CreateSecretPage = loadable(() =>
 export const ShowSecretPage = loadable(() =>
   import(/* webpackChunkName: "ShowSecretPage" */ './ShowSecretPage')
 );
+
+export const EditSecretPage = loadable(() =>
+  import(/* webpackChunkName: "EditSecretPage" */ './EditSecretPage')
+);

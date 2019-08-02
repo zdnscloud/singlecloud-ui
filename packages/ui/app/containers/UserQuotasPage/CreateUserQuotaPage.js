@@ -13,6 +13,8 @@ import { fromJS } from 'immutable';
 import { reduxForm, getFormValues } from 'redux-form/immutable';
 import { SubmissionError, submit } from 'redux-form';
 import { Link } from 'react-router-dom';
+import sha256 from 'crypto-js/sha256';
+import encHex from 'crypto-js/enc-hex';
 
 import { withStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -64,13 +66,15 @@ export class CreateUserQuotaPage extends React.PureComponent {
 
   render() {
     const { classes, submitForm, createUserQuota, url, role } = this.props;
+    const user = role.get('user');
+    const userHash = sha256(user).toString(encHex).slice(0, 6);
     async function doSubmit(formValues) {
       try {
-        const { ...formData } = formValues.toJS();
+        const { namespace, ...formData } = formValues.toJS();
         const data = {
+          namespace: namespace+"-"+userHash,
           ...formData,
         };
-        console.log('data', data);
         await new Promise((resolve, reject) => {
           createUserQuota({ ...data }, { resolve, reject, url });
         });
@@ -108,7 +112,7 @@ export class CreateUserQuotaPage extends React.PureComponent {
                     <CreateUserQuotaForm
                       classes={classes}
                       onSubmit={doSubmit}
-                      // eslint-disable-next-line jsx-a11y/aria-role
+                      userHash={userHash}
                       formRole="create"
                       role={role}
                     />

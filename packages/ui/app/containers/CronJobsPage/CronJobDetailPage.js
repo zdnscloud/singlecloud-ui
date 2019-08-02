@@ -11,13 +11,7 @@ import { createStructuredSelector } from 'reselect';
 import { bindActionCreators, compose } from 'redux';
 
 import { withStyles } from '@material-ui/core/styles';
-import { Link } from 'react-router-dom';
-import Menubar from 'components/Menubar';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import Typography from '@material-ui/core/Typography';
-import Fab from '@material-ui/core/Fab';
-import AddIcon from '@material-ui/icons/Add';
-import MinimizeIcon from '@material-ui/icons/Minimize';
 import GridItem from 'components/Grid/GridItem';
 import GridContainer from 'components/Grid/GridContainer';
 import Card from 'components/Card/Card';
@@ -101,7 +95,6 @@ export class CronJobDetailPage extends React.PureComponent {
                 name: <FormattedMessage {...messages.pageTitle} />,
               },
               {
-                path: '#',
                 name: <FormattedMessage {...messages.cronJobDetail} />,
               },
             ]}

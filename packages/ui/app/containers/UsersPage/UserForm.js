@@ -4,25 +4,6 @@ import { FormattedMessage } from 'react-intl';
 import { Field, reduxForm } from 'redux-form/immutable';
 import getByKey from '@gsmlg/utils/getByKey';
 
-import withStyles from '@material-ui/core/styles/withStyles';
-import InputAdornment from '@material-ui/core/InputAdornment';
-import Icon from '@material-ui/core/Icon';
-import Checkbox from '@material-ui/core/Checkbox';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import FormControl from '@material-ui/core/FormControl';
-import InputLabel from '@material-ui/core/InputLabel';
-import FormHelperText from '@material-ui/core/FormHelperText';
-import FormGroup from '@material-ui/core/FormGroup';
-
-import People from '@material-ui/icons/People';
-
-import Button from 'components/CustomButtons/Button';
-import Card from 'components/Card/Card';
-import CardBody from 'components/Card/CardBody';
-import CardHeader from 'components/Card/CardHeader';
-import CardFooter from 'components/Card/CardFooter';
-import CustomInput from 'components/CustomInput/CustomInput';
-import Danger from 'components/Typography/Danger';
 import GridItem from 'components/Grid/GridItem';
 import GridContainer from 'components/Grid/GridContainer';
 import InputField from 'components/Field/InputField';
@@ -63,7 +44,6 @@ class UserForm extends PureComponent {
                 autoComplete: 'off',
                 disabled: edit || profile,
               }}
-              classes={classes}
             />
           </GridItem>
           {!(edit || profile) ? (
@@ -75,7 +55,6 @@ class UserForm extends PureComponent {
                   className: classes.passwordControl,
                 }}
                 inputProps={{ type: 'password', autoComplete: 'off' }}
-                classes={classes}
               />
             </GridItem>
           ) : null}

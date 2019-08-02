@@ -22,7 +22,9 @@ export const eventEpic = (action$) =>
       Observable.create((observer) => {
         const { protocol, hostname, port } = window.location;
         const socket = new SockJS(
-          `${protocol}//${hostname}:${port}/apis/ws.zcloud.cn/v1/clusters/${clusterID}/event`
+          `${protocol}//${hostname}:${port}/apis/ws.zcloud.cn/v1/clusters/${clusterID}/event`,
+          null,
+          { transports: 'websocket' }
         );
 
         socket.onopen = () => {};
@@ -36,7 +38,7 @@ export const eventEpic = (action$) =>
           observer.complete();
         };
       })
-        .pipe(scan((acc, event) => acc.concat([event]).slice(-100), []))
+        .pipe(scan((acc, event) => acc.concat([event]).slice(-1000), []))
         .pipe(debounceTime(100))
         .pipe(map((events) => a.setEvents(events, clusterID)))
     )

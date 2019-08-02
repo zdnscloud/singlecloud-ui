@@ -16,9 +16,6 @@ import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
 import { SimpleTable } from '@gsmlg/com';
 
-import Fab from '@material-ui/core/Fab';
-import AddIcon from '@material-ui/icons/Add';
-import EditIcon from '@material-ui/icons/Edit';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
 
@@ -32,6 +29,8 @@ import {
   makeSelectDeploymentsList,
 } from 'ducks/deployments/selectors';
 import * as actions from 'ducks/deployments/actions';
+
+import ConfirmDelete from 'components/ConfirmDelete/ConfirmDelete';
 
 import messages from './messages';
 import styles from './styles';
@@ -55,41 +54,18 @@ export class DeploymentsTable extends React.PureComponent {
     } = this.props;
     const pathname = location.get('pathname');
     const mergedSchema = schema
-      .concat([
-        {
-          id: 'actions',
-          label: 'Actions',
-          component: (props) => (
-            <Fragment>
-              <IconButton
-                aria-label="Delete"
-                onClick={(evt) =>
-                  removeDeployment(props.data.get('id'), {
-                    clusterID,
-                    namespaceID,
-                    url: props.data.getIn(['links', 'remove']),
-                  })
-                }
-              >
-                <DeleteIcon />
-              </IconButton>
-            </Fragment>
-          ),
-        },
-      ])
+    
       .map((sch) => {
+        if (sch.id === 'actions') {
+          return {
+            ...sch,
+            props: { removeDeployment, clusterID, namespaceID },
+          };
+        }
         if (sch.id === 'name') {
           return {
             ...sch,
-            component: (props) => (
-              <Button
-                color="primary"
-                component={Link}
-                to={`${pathname}/${props.data.get('id')}`}
-              >
-                {props.data.get('name')}
-              </Button>
-            ),
+            props: { pathname }
           };
         }
         return sch;

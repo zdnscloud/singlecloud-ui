@@ -4,6 +4,7 @@ import {
   getLocation,
 } from 'connected-react-router/immutable';
 import { makeSelectClusterID } from 'ducks/app/selectors';
+import { makeSelectCurrentCluster } from 'ducks/clusters/selectors';
 import { prefix } from './constants';
 
 /**
@@ -26,6 +27,30 @@ export const makeSelectCurrentStorageClasses = () =>
     makeSelectStorageClasses(),
     makeSelectClusterID(),
     (cs, clusterID) => cs.getIn([clusterID]) || cs.clear()
+  );
+
+export const makeSelectURL = () =>
+  createSelector(
+    makeSelectCurrentCluster(),
+    (ns) => ns.getIn(['links', 'storageclusters'])
+  );
+
+export const makeSelectStorages = () =>
+  createSelector(
+    selectStoragesDomain,
+    makeSelectClusterID(),
+    (substate, clusterID) =>
+      substate.getIn(['storages', clusterID]) || substate.clear()
+  );
+
+export const makeSelectStoragesList = () =>
+  createSelector(
+    selectStoragesDomain,
+    makeSelectStorages(),
+    (substate, storages) =>
+      substate
+        .get('storagesList')
+        .map((id) => storages.get(id) || storages.clear())
   );
 
 export const makeSelectNFSStorages = () =>
@@ -54,14 +79,55 @@ export const makeSelectCurrentLVMStorages = () =>
     (storages, clusterID) => storages.getIn([clusterID]) || storages.clear()
   );
 
-/**
- * Default selector used by LoginPage
- */
+export const makeSelectBlockDevicesURL = () =>
+  createSelector(
+    makeSelectCurrentCluster(),
+    (ns) => ns.getIn(['links', 'blockdevices'])
+  );
 
-const makeSelectStorages = () =>
+export const makeSelectBlockDevices = () =>
+  createSelector(
+    selectStoragesDomain,
+    makeSelectClusterID(),
+    (substate, clusterID) =>
+      substate.getIn(['blockDevices', clusterID]) || substate.clear()
+  );
+
+export const makeSelectBlockDevicesList = () =>
+  createSelector(
+    selectStoragesDomain,
+    makeSelectBlockDevices(),
+    (substate, blockDevices) =>
+      substate
+        .get('blockDevicesList')
+        .map((id) => blockDevices.get(id) || blockDevices.clear())
+  );
+
+export const makeSelectStorageID = () =>
+  createSelector(
+    createMatchSelector('/clusters/:cluster_id/storages/:storage_id'),
+    (match) => {
+      if (match && match.params) {
+        return match.params.storage_id;
+      }
+      return '';
+    }
+  );
+
+export const makeSelectCurrentStorage = () =>
+  createSelector(
+    makeSelectStorages(),
+    makeSelectStorageID(),
+    (storages, id) => storages.get(id) || storages.clear()
+  );
+
+/**
+ * Default selector
+ */
+const makeSelectStoragesState = () =>
   createSelector(
     selectStoragesDomain,
     (substate) => substate
   );
 
-export default makeSelectStorages;
+export default makeSelectStoragesState;

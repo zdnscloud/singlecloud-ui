@@ -25,9 +25,13 @@ export default defineMessages({
     id: `${scope}.userQuotas`,
     defaultMessage: 'UserQuotas',
   },
-  tableTitleName: {
-    id: `${scope}.tableTitleName`,
-    defaultMessage: 'Name',
+  tableTitleNamespace: {
+    id: `${scope}.tableTitleNamespace`,
+    defaultMessage: 'Namespace',
+  },
+  tableTitleUserName: {
+    id: `${scope}.tableTitleUserName`,
+    defaultMessage: 'UserName',
   },
   tableTitleStatus: {
     id: `${scope}.tableTitleStatus`,
@@ -52,6 +56,10 @@ export default defineMessages({
   tableTitleCreationTimestamp: {
     id: `${scope}.tableTitleCreationTimestamp`,
     defaultMessage: 'CreationTimestamp',
+  },
+  tableTitleResponseTimestamp: {
+    id: `${scope}.tableTitleResponseTimestamp`,
+    defaultMessage: 'ResponseTimestamp',
   },
   tableTitleActions: {
     id: `${scope}.tableTitleActions`,
@@ -153,10 +161,6 @@ export default defineMessages({
     id: `${scope}.rejectBtn`,
     defaultMessage: 'Reject',
   },
-  formNone: {
-    id: `${scope}.formNone`,
-    defaultMessage: 'None',
-  },
   adminRequestListPage: {
     id: `${scope}.adminRequestListPage`,
     defaultMessage: 'AdminRequestListPage',
@@ -184,97 +188,5 @@ export default defineMessages({
   edit: {
     id: `${scope}.edit`,
     defaultMessage: 'Edit',
-  },
-  formMountPath: {
-    id: `${scope}.formMountPath`,
-    defaultMessage: 'MountPath',
-  },
-  formExposedPorts: {
-    id: `${scope}.formExposedPorts`,
-    defaultMessage: 'ExposedPorts',
-  },
-  formPortName: {
-    id: `${scope}.formPortName`,
-    defaultMessage: 'PortName',
-  },
-  formPortProtocol: {
-    id: `${scope}.formPortProtocol`,
-    defaultMessage: 'PortProtocol',
-  },
-  formPort: {
-    id: `${scope}.formPort`,
-    defaultMessage: 'Port',
-  },
-  formAdvancedOptions: {
-    id: `${scope}.formAdvancedOptions`,
-    defaultMessage: 'AdvancedOptions',
-  },
-  formReloadWhenConfigChange: {
-    id: `${scope}.formReloadWhenConfigChange`,
-    defaultMessage: 'ReloadWhenConfigChange',
-  },
-  formExposedServiceType: {
-    id: `${scope}.formExposedServiceType`,
-    defaultMessage: 'ExposedServiceType',
-  },
-  formAutoCreateService: {
-    id: `${scope}.formAutoCreateService`,
-    defaultMessage: 'AutoCreateService',
-  },
-  formServicePort: {
-    id: `${scope}.formServicePort`,
-    defaultMessage: 'ServicePort',
-  },
-  formAutoCreateIngress: {
-    id: `${scope}.formAutoCreateIngress`,
-    defaultMessage: 'AutoCreateIngress',
-  },
-  formIngressDomain: {
-    id: `${scope}.formIngressDomain`,
-    defaultMessage: 'IngressDomain',
-  },
-  formIngressPath: {
-    id: `${scope}.formIngressPath`,
-    defaultMessage: 'IngressPath',
-  },
-  formIngressPort: {
-    id: `${scope}.formIngressPort`,
-    defaultMessage: 'IngressPort',
-  },
-  formExposedMetricPath: {
-    id: `${scope}.formExposedMetricPath`,
-    defaultMessage: 'ExposedMetricPath',
-  },
-  formExposedMeticPort: {
-    id: `${scope}.formExposedMeticPort`,
-    defaultMessage: 'ExposedMeticPort',
-  },
-  formVolumes: {
-    id: `${scope}.formVolumes`,
-    defaultMessage: 'Volumes',
-  },
-  formServiceConfig: {
-    id: `${scope}.formServiceConfig`,
-    defaultMessage: 'ServiceConfig',
-  },
-  formAddVolumeClaimTemplate: {
-    id: `${scope}.formAddVolumeClaimTemplate`,
-    defaultMessage: 'Addd Volume Claim Template',
-  },
-  formVolumeClaimTemplate: {
-    id: `${scope}.formVolumeClaimTemplate`,
-    defaultMessage: 'Volume Claim Template',
-  },
-  formVolumeClaimTemplateName: {
-    id: `${scope}.formVolumeClaimTemplateName`,
-    defaultMessage: 'Name',
-  },
-  formVolumeClaimTemplateSize: {
-    id: `${scope}.formVolumeClaimTemplateSize`,
-    defaultMessage: 'Size',
-  },
-  formVolumeClaimTemplateStorageClassName: {
-    id: `${scope}.formVolumeClaimTemplateStorageClassName`,
-    defaultMessage: 'Storage Class Name',
   },
 });

@@ -67,8 +67,14 @@ export const secretsReducer = (
 
     case c.UPDATE_SECRET:
       return state;
-    case c.UPDATE_SECRET_SUCCESS:
-      return state;
+    case c.UPDATE_SECRET_SUCCESS:{    
+      const { clusterID, namespaceID } = meta;
+      const data = payload.response;
+      return state.setIn(
+        ['secrets', clusterID, namespaceID, data.id],
+        fromJS(data)
+      );
+    }
     case c.UPDATE_SECRET_FAILURE:
       return state;
 

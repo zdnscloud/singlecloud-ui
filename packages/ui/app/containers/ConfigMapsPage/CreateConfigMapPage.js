@@ -68,7 +68,8 @@ const validate = (values) => {
     errors.configs = [];
     configs.forEach((c) => {
       if (c) {
-        const { name, data } = c;
+        const name = c.get('name');
+        const data = c.get('data');
         const err = {};
         if (!name) err.name = 'Required';
         if (!data) err.data = 'Required';
@@ -147,6 +148,7 @@ export class CreateConfigMap extends React.PureComponent {
                     classes={classes}
                     onSubmit={doSubmit}
                     initialValues={fromJS({})}
+                    type="create"
                   />
                 </CardBody>
                 <CardFooter className={classes.cardFooter}>

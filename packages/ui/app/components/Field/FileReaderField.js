@@ -5,14 +5,7 @@ import FormControl from '@material-ui/core/FormControl';
 import Button from 'components/CustomButtons/Button';
 import { readAsText } from '@gsmlg/utils/readFile';
 
-const Input = ({
-  label,
-  input,
-  classes,
-  meta,
-  buttonProps,
-  ...custom
-}) => {
+const Input = ({ label, input, classes, meta, buttonProps, ...custom }) => {
   const [node, setNode] = useState(null);
   const measuredRef = useCallback((node) => {
     if (node !== null) {

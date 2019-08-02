@@ -53,7 +53,7 @@ class LogViewDialog extends React.Component {
         open={isOpen}
         onClose={closePodLog}
         onEnter={() => {
-          socket = new SockJS(url);
+          socket = new SockJS(url, null, { transports: 'websocket' });
           const logSource = Observable.create((ob) => {
             observer = ob;
             socket.onmessage = (e) => {

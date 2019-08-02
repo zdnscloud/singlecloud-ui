@@ -95,9 +95,9 @@ export class ShowConfigMap extends React.PureComponent {
                 <CardBody>
                   <GridContainer>
                     <GridItem
-                      xs={12}
-                      sm={12}
-                      md={12}
+                      xs={3}
+                      sm={3}
+                      md={3}
                       className={classes.formLine}
                     >
                       <ReadOnlyInput
@@ -106,6 +106,7 @@ export class ShowConfigMap extends React.PureComponent {
                         formControlProps={{
                           className: classes.nameControl,
                         }}
+                        fullWidth
                       />
                     </GridItem>
                     <GridItem xs={12} sm={12} md={12}>

@@ -51,7 +51,9 @@ export class NamespacesPage extends React.PureComponent {
   load() {
     const { cluster, clusterID, loadNamespaces } = this.props;
     const url = cluster.getIn(['links', 'namespaces']);
-    loadNamespaces(url, clusterID);
+    if (url) {
+      loadNamespaces(url, clusterID);
+    }
   }
 
   render() {

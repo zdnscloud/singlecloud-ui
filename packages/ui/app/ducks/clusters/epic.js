@@ -17,7 +17,6 @@ import { loadAllNamespaces } from 'ducks/namespaces/actions';
 
 import * as c from './constants';
 import * as a from './actions';
-import { makeSelectClusters } from './selectors';
 
 export const loadClustersEpic = (action$, state$, { ajax }) =>
   action$.pipe(
@@ -55,7 +54,7 @@ export const loadClustersAndNamespacesEpic = (action$, state$, { ajax }) =>
           map((resp) => a.loadClustersSuccess(resp)),
           catchError((error) => of(a.loadClustersFailure(error)))
         ),
-        of(loadAllNamespaces(makeSelectClusters()(state$.value).toList()))
+        of(loadAllNamespaces())
       )
     )
   );

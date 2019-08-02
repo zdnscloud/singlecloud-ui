@@ -1,32 +1,21 @@
 import React, { PureComponent, Fragment, useState } from 'react';
 import { compose } from 'redux';
+import { fromJS } from 'immutable';
 import { Field, FieldArray, reduxForm } from 'redux-form/immutable';
 import { FormattedMessage } from 'react-intl';
 import getByKey from '@gsmlg/utils/getByKey';
 import AceEditor from 'react-ace';
 import 'brace/theme/tomorrow_night';
 
-import withStyles from '@material-ui/core/styles/withStyles';
-import InputAdornment from '@material-ui/core/InputAdornment';
-import Icon from '@material-ui/core/Icon';
-import Checkbox from '@material-ui/core/Checkbox';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import FormControl from '@material-ui/core/FormControl';
-import InputLabel from '@material-ui/core/InputLabel';
-import FormHelperText from '@material-ui/core/FormHelperText';
-import FormGroup from '@material-ui/core/FormGroup';
-import TextField from '@material-ui/core/TextField';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import Dialog from '@material-ui/core/Dialog';
-import DialogTitle from '@material-ui/core/DialogTitle';
 import AddIcon from '@material-ui/icons/Add';
 import DeleteIcon from '@material-ui/icons/Delete';
-import AttachmentIcon from '@material-ui/icons/Attachment';
-import People from '@material-ui/icons/People';
+
 
 import Card from 'components/Card/Card';
 import CardBody from 'components/Card/CardBody';
@@ -37,6 +26,7 @@ import Danger from 'components/Typography/Danger';
 import GridItem from 'components/Grid/GridItem';
 import GridContainer from 'components/Grid/GridContainer';
 import InputField from 'components/Field/InputField';
+import ReadOnlyInput from 'components/CustomInput/ReadOnlyInput';
 
 import messages from './messages';
 
@@ -98,7 +88,7 @@ const renderConfigs = ({ fields, meta: { error, submitFailed }, classes }) => (
   <List component="ul" className={classes.filesList}>
     <ListItem>
       <ListItemText primary={<FormattedMessage {...messages.formFiles} />} />
-      <IconButton onClick={(evt) => fields.push({})}>
+      <IconButton onClick={(evt) => fields.push(fromJS({}))}>
         <AddIcon />
       </IconButton>
     </ListItem>
@@ -143,21 +133,34 @@ class ConfigMapForm extends PureComponent {
       classes,
       edit,
       initialValues,
+      type,
+      configMap
     } = this.props;
-
     return (
       <form className={getByKey(classes, 'form')} onSubmit={handleSubmit}>
         <GridContainer>
-          <GridItem xs={12} sm={12} md={12} className={classes.formLine}>
-            <InputField
-              label={<FormattedMessage {...messages.formName} />}
-              name="name"
-              formControlProps={{
-                className: classes.nameControl,
-              }}
-              inputProps={{ type: 'text', autoComplete: 'off', disabled: edit }}
-              classes={classes}
-            />
+          <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
+            {  type === "create" ? (
+              <InputField
+                label={<FormattedMessage {...messages.formName} />}
+                name="name"
+                formControlProps={{
+                  className: classes.nameControl,
+                }}
+                inputProps={{ type: 'text', autoComplete: 'off', disabled: edit }}
+                fullWidth
+              />
+            ):(
+              <ReadOnlyInput
+                labelText={<FormattedMessage {...messages.formName} />}
+                value={configMap ? initialValues.get('name'): ''}
+                formControlProps={{
+                  className: classes.nameControl,
+                }}
+                fullWidth
+              />
+            )
+            }
           </GridItem>
           <GridItem xs={12} sm={12} md={12}>
             <FieldArray

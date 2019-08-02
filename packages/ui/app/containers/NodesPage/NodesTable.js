@@ -11,12 +11,9 @@ import { FormattedMessage } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import { bindActionCreators, compose } from 'redux';
 
-import { Link } from 'react-router-dom';
-import Button from '@material-ui/core/Button';
 import { withStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
-import IconButton from '@material-ui/core/IconButton';
-import DeleteIcon from '@material-ui/icons/Delete';
+
 import { SimpleTable } from '@gsmlg/com';
 
 import { makeSelectClusterID } from 'ducks/app/selectors';
@@ -39,26 +36,6 @@ export class NodesTable extends React.PureComponent {
   render() {
     const { classes, data, clusterID, nodes, removeNode } = this.props;
     const mapedSchema = schema
-      .concat([
-        {
-          id: 'actions',
-          label: 'Actions',
-          component: (props) => (
-            <Fragment>
-              <IconButton
-                aria-label="Delete"
-                onClick={(evt) =>
-                  removeNode(props.data.get('id'), {
-                    url: props.data.getIn(['links', 'remove']),
-                  })
-                }
-              >
-                <DeleteIcon />
-              </IconButton>
-            </Fragment>
-          ),
-        },
-      ])
       .map((sche) => ({
         ...sche,
         label: <FormattedMessage {...messages[`tableTitle${sche.label}`]} />,
@@ -67,15 +44,13 @@ export class NodesTable extends React.PureComponent {
         if (sch.id === 'name') {
           return {
             ...sch,
-            component: (props) => (
-              <Button
-                color="primary"
-                to={`/clusters/${clusterID}/nodes/${props.data.get('id')}`}
-                component={Link}
-              >
-                {props.data.get('name')}
-              </Button>
-            ),
+            props: {clusterID}
+          };
+        }
+        if (sch.id === 'actions') {
+          return {
+            ...sch,
+            props: { removeNode },
           };
         }
         return sch;

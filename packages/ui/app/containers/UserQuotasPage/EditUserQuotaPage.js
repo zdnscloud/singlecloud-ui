@@ -50,7 +50,7 @@ const validate = (values) => {
   return errors;
 };
 
-const CreateUserQuotaForm = reduxForm({
+const EditUserQuotaForm = reduxForm({
   form: formName,
   validate,
 })(UserQuotaForm);
@@ -78,22 +78,8 @@ export class EditUserQuotaPage extends React.PureComponent {
     const url = userQuota.getIn(['links', 'update']);
     async function doSubmit(formValues) {
       try {
-        const {
-          cpu,
-          memory,
-          namespace,
-          storage,
-          purpose,
-          ...formData
-        } = formValues.toJS();
-        const data = {
-          cpu,
-          memory,
-          namespace,
-          storage,
-          purpose,
-        };
-        console.log('data', data, url);
+        const data = formValues.toJS();
+
         await new Promise((resolve, reject) => {
           updateUserQuota({ ...data }, { resolve, reject, url });
         });
@@ -128,13 +114,14 @@ export class EditUserQuotaPage extends React.PureComponent {
                     </h4>
                   </CardHeader>
                   <CardBody>
-                    <CreateUserQuotaForm
-                      classes={classes}
-                      onSubmit={doSubmit}
-                      initialValues={userQuota}
-                      // eslint-disable-next-line jsx-a11y/aria-role
-                      formRole="edit"
-                    />
+                    {userQuota.size === 0 ? null : (
+                      <EditUserQuotaForm
+                        classes={classes}
+                        onSubmit={doSubmit}
+                        initialValues={userQuota}
+                        formRole="edit"
+                      />
+                    )}
                   </CardBody>
                   <CardFooter className={classes.cardFooter}>
                     <GridContainer>

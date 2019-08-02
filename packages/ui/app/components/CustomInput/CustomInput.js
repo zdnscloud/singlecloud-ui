@@ -24,6 +24,7 @@ function CustomInput({ ...props }) {
     inputRootCustomClasses,
     success,
     meta: { touched, invalid, error },
+    fullWidth,
   } = props;
 
   const touchedError = !!(touched && error);
@@ -58,6 +59,7 @@ function CustomInput({ ...props }) {
       {...formControlProps}
       className={formControlClasses}
       error={touchedError}
+      fullWidth={fullWidth}
     >
       {labelText !== undefined ? (
         <InputLabel

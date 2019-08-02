@@ -24,6 +24,7 @@ import GridContainer from 'components/Grid/GridContainer';
 import Card from 'components/Card/Card';
 import CardHeader from 'components/Card/CardHeader';
 import CardBody from 'components/Card/CardBody';
+import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
 
 import { makeSelectLocation } from 'ducks/app/selectors';
 import * as actions from 'ducks/users/actions';
@@ -51,7 +52,14 @@ export class UsersPage extends React.PureComponent {
         <UsersPageHelmet />
         <CssBaseline />
         <div className={classes.content}>
-          <GridContainer>
+          <Breadcrumbs
+            data={[
+              {
+                name: <FormattedMessage {...messages.usersList} />,
+              },
+            ]}
+          />
+          <GridContainer className={classes.grid}>
             <GridItem xs={12} sm={12} md={12}>
               <Card>
                 <CardHeader color="primary">

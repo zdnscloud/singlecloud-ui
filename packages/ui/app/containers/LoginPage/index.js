@@ -52,7 +52,6 @@ export class LoginPage extends React.PureComponent {
   componentWillMount() {
     const { isLogin, history, loadRole } = this.props;
     if (isLogin) {
-      history.replace('/clusters');
     } else {
       loadRole('/web/role');
     }
@@ -61,7 +60,7 @@ export class LoginPage extends React.PureComponent {
   componentWillUpdate(nextProps) {
     const { isLogin, history, loadRole } = nextProps;
     if (isLogin) {
-      history.replace('/clusters');
+      // history.replace('/clusters');
     }
   }
 

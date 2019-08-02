@@ -14,21 +14,12 @@ import { fromJS } from 'immutable';
 import { reduxForm, getFormValues } from 'redux-form/immutable';
 import { SubmissionError, submit } from 'redux-form';
 
-import classNames from 'classnames';
 import { withStyles } from '@material-ui/core/styles';
-import Menubar from 'components/Menubar';
+
 import CssBaseline from '@material-ui/core/CssBaseline';
-import Typography from '@material-ui/core/Typography';
-import TextField from '@material-ui/core/TextField';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
 import Button from '@material-ui/core/Button';
-import Dialog from '@material-ui/core/Dialog';
-import AttachmentIcon from '@material-ui/icons/Attachment';
 import GridItem from 'components/Grid/GridItem';
 import GridContainer from 'components/Grid/GridContainer';
-import AceEditor from 'react-ace';
 import 'brace/mode/yaml';
 import 'brace/theme/github';
 
@@ -147,6 +138,7 @@ export class CreateSecret extends React.PureComponent {
                     classes={classes}
                     onSubmit={doSubmit}
                     initialValues={fromJS({})}
+                    type="create"
                   />
                 </CardBody>
                 <CardFooter className={classes.cardFooter}>

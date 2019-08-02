@@ -9,8 +9,7 @@ import GridItem from 'components/Grid/GridItem';
 import GridContainer from 'components/Grid/GridContainer';
 import InputField from 'components/Field/InputField';
 import TextareaField from 'components/Field/TextareaField';
-
-import { makeSelectRole } from 'ducks/role/selectors';
+import ReadOnlyInput from 'components/CustomInput/ReadOnlyInput';
 
 import messages from './messages';
 
@@ -28,9 +27,9 @@ class UserQuotaForm extends PureComponent {
       profile,
       initialValues,
       formRole,
-      role,
+      userHash,
     } = this.props;
-    // eslint-disable-next-line no-console
+
     return (
       <form className={getByKey(classes, 'form')} onSubmit={handleSubmit}>
         <GridContainer>
@@ -41,9 +40,24 @@ class UserQuotaForm extends PureComponent {
           ) : null}
           {formRole === 'edit' ? (
             <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
-              <InputField
+              <ReadOnlyInput
                 label={<FormattedMessage {...messages.formClusterName} />}
-                name="clusterName"
+                value={initialValues.get('clusterName')}
+                fullWidth
+              />
+            </GridItem>
+          ) : null}
+          <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
+            {formRole === 'edit' ? (
+              <ReadOnlyInput
+                labelText={<FormattedMessage {...messages.formNamespace} />}
+                value={initialValues.get('namespace')}
+                fullWidth
+              />
+            ) : (
+              <InputField
+                label={<FormattedMessage {...messages.formNamespace} />}
+                name="namespace"
                 formControlProps={{
                   className: classes.nameControl,
                 }}
@@ -51,25 +65,13 @@ class UserQuotaForm extends PureComponent {
                   type: 'text',
                   autoComplete: 'off',
                 }}
+                fullWidth
               />
-            </GridItem>
-          ) : null}
-          <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
-            <InputField
-              label={<FormattedMessage {...messages.formNamespace} />}
-              name="namespace"
-              formControlProps={{
-                className: classes.nameControl,
-              }}
-              inputProps={{
-                type: 'text',
-                autoComplete: 'off',
-              }}
-            />
+            )}
           </GridItem>
           {formRole === 'create' ? (
             <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
-              <small className={classes.username}>{role.get('user')}</small>
+              <small className={classes.username}>{userHash}</small>
             </GridItem>
           ) : null}
         </GridContainer>
@@ -88,6 +90,7 @@ class UserQuotaForm extends PureComponent {
                   <FormattedMessage {...messages.formCPUEndAdornment} />
                 ),
               }}
+              fullWidth
             />
           </GridItem>
           <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
@@ -102,6 +105,7 @@ class UserQuotaForm extends PureComponent {
                 autoComplete: 'off',
                 endAdornment: 'Gi',
               }}
+              fullWidth
             />
           </GridItem>
           <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
@@ -116,6 +120,7 @@ class UserQuotaForm extends PureComponent {
                 autoComplete: 'off',
                 endAdornment: 'Gi',
               }}
+              fullWidth
             />
           </GridItem>
         </GridContainer>
