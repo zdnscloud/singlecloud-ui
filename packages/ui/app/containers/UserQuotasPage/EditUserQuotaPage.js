@@ -78,14 +78,24 @@ export class EditUserQuotaPage extends React.PureComponent {
     const url = userQuota.getIn(['links', 'update']);
     async function doSubmit(formValues) {
       try {
-        const data = formValues.toJS();
-
+        const { memory, storage, ...formData } = formValues.toJS();
+        const data = {
+          memory: `${memory}Gi`,
+          storage: `${storage}Gi`,
+          ...formData,
+        };
         await new Promise((resolve, reject) => {
           updateUserQuota({ ...data }, { resolve, reject, url });
         });
       } catch (error) {
         throw new SubmissionError({ _error: error });
       }
+    }
+    const reg = /^(\d+)([a-zA-Z]+)?$/;
+    const initUserQuota ={
+      ...userQuota.toJS(),
+      memory: (reg.exec(userQuota.get('memory')) || [])[1],
+      storage: (reg.exec(userQuota.get('storage')) || [])[1]
     }
 
     return (
@@ -118,7 +128,7 @@ export class EditUserQuotaPage extends React.PureComponent {
                       <EditUserQuotaForm
                         classes={classes}
                         onSubmit={doSubmit}
-                        initialValues={userQuota}
+                        initialValues={initUserQuota}
                         formRole="edit"
                       />
                     )}

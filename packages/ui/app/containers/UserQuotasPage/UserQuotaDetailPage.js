@@ -54,6 +54,9 @@ export class UserQuotaDetailPage extends React.PureComponent {
 
   render() {
     const { classes, userQuota } = this.props;
+    const reg = /^(\d+)([a-zA-Z]+)?$/;
+    const memory = userQuota.get('memory')
+    const storage = userQuota.get('storage')
     return (
       <div className={classes.root}>
         <UserQuotaDetailPageHelmet />
@@ -121,9 +124,9 @@ export class UserQuotaDetailPage extends React.PureComponent {
                         }
                         fullWidth
                         inputProps={{
-                          endAdornment: 'Gi',
+                          endAdornment: (reg.exec(memory) || [])[2],
                         }}
-                        value={userQuota.get('memory')}
+                        value={(reg.exec(memory) || [])[1]}
                       />
                     </GridItem>
                     <GridItem xs={3} sm={3} md={3}>
@@ -133,9 +136,9 @@ export class UserQuotaDetailPage extends React.PureComponent {
                         }
                         fullWidth
                         inputProps={{
-                          endAdornment: 'Gi',
+                          endAdornment: (reg.exec(storage) || [])[2],
                         }}
-                        value={userQuota.get('storage')}
+                        value={(reg.exec(storage) || [])[1]}
                       />
                     </GridItem>
                   </GridContainer>

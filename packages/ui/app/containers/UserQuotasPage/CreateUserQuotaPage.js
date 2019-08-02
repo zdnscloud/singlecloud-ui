@@ -70,9 +70,11 @@ export class CreateUserQuotaPage extends React.PureComponent {
     const userHash = sha256(user).toString(encHex).slice(0, 6);
     async function doSubmit(formValues) {
       try {
-        const { namespace, ...formData } = formValues.toJS();
+        const { memory, storage, namespace, ...formData } = formValues.toJS();
         const data = {
           namespace: namespace+"-"+userHash,
+          memory: `${memory}Gi`,
+          storage: `${storage}Gi`,
           ...formData,
         };
         await new Promise((resolve, reject) => {

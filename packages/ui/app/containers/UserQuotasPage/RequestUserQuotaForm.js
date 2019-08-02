@@ -34,6 +34,9 @@ class RequestUserQuotaForm extends PureComponent {
       label: sc.get('name'),
       value: sc.get('name'),
     }));
+    const reg = /^(\d+)([a-zA-Z]+)?$/;
+    const memory = userQuota.get('memory')
+    const storage = userQuota.get('storage')
     return (
       <form className={getByKey(classes, 'form')} onSubmit={handleSubmit}>
         <GridContainer>
@@ -84,22 +87,22 @@ class RequestUserQuotaForm extends PureComponent {
           </GridItem>
           <GridItem xs={3} sm={3} md={3}>
             <ReadOnlyInput
-              value={userQuota.get('memory')}
               labelText={<FormattedMessage {...messages.formMemory} />}
               fullWidth
               inputProps={{
-                endAdornment: 'Gi',
+                endAdornment: (reg.exec(memory) || [])[2],
               }}
+              value={(reg.exec(memory) || [])[1]}
             />
           </GridItem>
           <GridItem xs={3} sm={3} md={3}>
             <ReadOnlyInput
-              value={userQuota.get('storage')}
               labelText={<FormattedMessage {...messages.formStorage} />}
               fullWidth
               inputProps={{
-                endAdornment: 'Gi',
+                endAdornment: (reg.exec(storage) || [])[2],
               }}
+              value={(reg.exec(storage) || [])[1]}
             />
           </GridItem>
         </GridContainer>

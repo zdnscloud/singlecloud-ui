@@ -40,19 +40,17 @@ const tableSchema = schema
       label: 'Actions',
       component: (props) => (
         <Fragment>
-          {props.data.get('status') === 'approval' || props.data.get('status') === 'rejection' ? (
             <Button
               variant="contained"
               color="primary"
               to={`/userQuotas/${props.data.get('id')}/edit`}
               component={Link}
+              disabled ={ props.data.get('status') == 'processing'}
             >
               <FormattedMessage
                 {...messages.quotaAdjustmentBtn}
               />
-            </Button>
-          ): null}
-          
+            </Button>   
         </Fragment>
       ),
     },
