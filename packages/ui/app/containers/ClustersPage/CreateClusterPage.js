@@ -96,14 +96,13 @@ export class CreateClusterPage extends React.PureComponent {
           ...(enableAdvancedOptions ? advancedOptions : {}),
         };
         // eslint-disable-next-line no-console
-        console.log('data', data);
-        // await new Promise((resolve, reject) => {
-        //   createCluster(data, {
-        //     resolve,
-        //     reject,
-        //     url,
-        //   });
-        // });
+        await new Promise((resolve, reject) => {
+          createCluster(data, {
+            resolve,
+            reject,
+            url,
+          });
+        });
       } catch (error) {
         throw new SubmissionError({ _error: error });
       }
