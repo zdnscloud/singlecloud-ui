@@ -205,11 +205,26 @@ class ClusterForm extends PureComponent {
                       >
                         <InputField
                           label={
-                            <FormattedMessage {...messages.formForwardDNS} />
+                            <FormattedMessage {...messages.formForwardDNSFirst} />
                           }
                           fullWidth
                           inputProps={{ type: 'text', autoComplete: 'off' }}
-                          name="clusterUpstreamDNS"
+                          name="clusterUpstreamDNS[0]"
+                        />
+                      </GridItem>
+                      <GridItem
+                        xs={3}
+                        sm={3}
+                        md={3}
+                        className={classes.formLine}
+                      >
+                        <InputField
+                          label={
+                            <FormattedMessage {...messages.formForwardDNSSecond} />
+                          }
+                          fullWidth
+                          inputProps={{ type: 'text', autoComplete: 'off' }}
+                          name="clusterUpstreamDNS[1]"
                         />
                       </GridItem>
                     </GridContainer>
