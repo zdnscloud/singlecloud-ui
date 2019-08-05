@@ -169,6 +169,13 @@ export const makeSelectLeftMenus = () =>
           icon: UserQuotasIcon,
         },
       ]);
+      menus = menus.concat([
+        {
+          name: 'ApplicationStore',
+          path: '/applicationStore',
+          icon: UserQuotasIcon,
+        },
+      ]);
       return menus;
     }
   );

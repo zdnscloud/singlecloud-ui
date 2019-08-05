@@ -129,4 +129,8 @@ export default defineMessages({
     id: `${scope}.leftMenuUserQuotas`,
     defaultMessage: 'UserQuotas',
   },
+  leftMenuApplicationStore: {
+    id: `${scope}.leftMenuApplicationStore`,
+    defaultMessage: 'ApplicationStore',
+  },
 });
