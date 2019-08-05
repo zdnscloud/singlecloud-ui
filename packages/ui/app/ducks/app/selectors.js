@@ -102,7 +102,7 @@ export const makeSelectLeftMenus = () =>
           {
             name: 'ClusterManagement',
             children: [
-              { name: 'Overview', path: `/clusters/${cluster}` },
+              { name: 'Overview', path: `/clusters/${cluster}/show` },
               { name: 'Namespaces', path: `/clusters/${cluster}/namespaces` },
               { name: 'Nodes', path: `/clusters/${cluster}/nodes` },
             ],
