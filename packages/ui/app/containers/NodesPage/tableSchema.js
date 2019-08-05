@@ -26,13 +26,27 @@ const tableSchema = schema
     label: ucfirst(id),
   }))
   .map((item) => {
+    if (item.id === 'name') {
+      return {
+        ...item,
+        component: (props) => (
+          <Button
+            color="primary"
+            to={`/clusters/${props.clusterID}/nodes/${props.data.get('id')}/show`}
+            component={Link}
+          >
+            {props.data.get('name')}
+          </Button>
+        ),
+      };
+    }
     if (item.id === 'roles') {
       return {
         ...item,
         component({ value }) {
-          return value && value
+          return value != null ? value
             .map((val, key) => <Chip key={key} label={`${val}`} />)
-            .toList();
+            .toList() : null;
         },
       };
     }
@@ -40,9 +54,9 @@ const tableSchema = schema
       return {
         ...item,
         component({ value }) {
-          return value && value
+          return value != null ? value
             .map((val, key) => <Chip key={key} label={`${key}=${val}`} />)
-            .toList();
+            .toList() : null;
         },
       };
     }
@@ -68,24 +82,6 @@ const tableSchema = schema
         </Fragment>
       ),
     },
-  ])
-  .map((sch) => {
-    if (sch.id === 'name') {
-      return {
-        ...sch,
-        component: (props) => (
-          <Button
-            color="primary"
-            to={`/clusters/${props.clusterID}/nodes/${props.data.get('id')}/show`}
-            component={Link}
-          >
-            {props.data.get('name')}
-          </Button>
-        ),
-      };
-    }
-    return sch;
-  });
-  ;
+  ]);
 
 export default tableSchema;
