@@ -130,7 +130,7 @@ export class CreateClusterPage extends React.PureComponent {
                 <CreateClusterForm
                   classes={classes}
                   onSubmit={doSubmit}
-                  initialValues={fromJS({ name: '' })}
+                  initialValues={fromJS({ name: '', nodes: {main:[],work:[]}})}
                   formValues={values}
                 />
                 <Button
