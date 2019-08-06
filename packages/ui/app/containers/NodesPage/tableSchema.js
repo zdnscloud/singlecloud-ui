@@ -67,21 +67,6 @@ const tableSchema = schema
       };
     }
     return item;
-  })
-  .concat([
-    {
-      id: 'actions',
-      label: 'Actions',
-      component: (props) => (
-        <Fragment>
-          <ConfirmDelete
-              actionName={props.removeNode}
-              id={props.data.get('id')}
-              url={props.data.getIn(['links', 'remove'])}
-           />
-        </Fragment>
-      ),
-    },
-  ]);
+  });
 
 export default tableSchema;
