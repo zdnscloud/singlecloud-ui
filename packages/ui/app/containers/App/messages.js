@@ -133,4 +133,12 @@ export default defineMessages({
     id: `${scope}.leftMenuApplicationStore`,
     defaultMessage: 'ApplicationStore',
   },
+  leftMenuApplications: {
+    id: `${scope}.leftMenuApplications`,
+    defaultMessage: 'Applications',
+  },
+  leftMenuApplicationManagement: {
+    id: `${scope}.leftMenuApplicationManagement`,
+    defaultMessage: 'AppManagement',
+  }
 });

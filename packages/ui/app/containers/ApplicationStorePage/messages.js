@@ -25,22 +25,6 @@ export default defineMessages({
     id: `${scope}.applicationStore`,
     defaultMessage: 'ApplicationStore',
   },
-  tableTitleNamespace: {
-    id: `${scope}.tableTitleNamespace`,
-    defaultMessage: 'Namespace',
-  },
-  createApplication: {
-    id: `${scope}.createApplication`,
-    defaultMessage: 'Create Application',
-  },
-  createApplicationButton: {
-    id: `${scope}.createApplicationButton`,
-    defaultMessage: 'Save',
-  },
-  cancleApplicationButton: {
-    id: `${scope}.cancleApplicationButton`,
-    defaultMessage: 'Cancle',
-  },
   searchApplicationsButton: {
     id: `${scope}.searchApplicationsButton`,
     defaultMessage: 'Search',
@@ -49,17 +33,52 @@ export default defineMessages({
     id: `${scope}.searchFormApplicationName`,
     defaultMessage: 'ApplicationName',
   },
-  save: {
-    id: `${scope}.save`,
-    defaultMessage: 'Save',
+  viewDetailButton: {
+    id: `${scope}.viewDetailButton`,
+    defaultMessage: 'ViewDetail',
   },
-  formAddContainer: {
-    id: `${scope}.formAddContainer`,
-    defaultMessage: 'AddContainer',
+  createApplication: {
+    id: `${scope}.createApplication`,
+    defaultMessage: 'Create Application',
   },
-  formNamespace: {
-    id: `${scope}.formNamespace`,
+  createApplicationButton: {
+    id: `${scope}.createApplicationButton`,
+    defaultMessage: 'Create',
+  },
+  cancleApplicationButton: {
+    id: `${scope}.cancleApplicationButton`,
+    defaultMessage: 'Cancle',
+  },
+  detailedDesc: {
+    id: `${scope}.detailedDesc`,
+    defaultMessage: 'Detailed Descriptions',
+  },
+  configurationOptions: {
+    id: `${scope}.configurationOptions`,
+    defaultMessage: 'Configuration Options',
+  },
+  formClusterName: {
+    id: `${scope}.formClusterName`,
+    defaultMessage: 'Cluster',
+  },
+  formNamespaceName: {
+    id: `${scope}.formNamespaceName`,
     defaultMessage: 'Namespace',
   },
-
+  formChartName: {
+    id: `${scope}.formChartName`,
+    defaultMessage: 'ChartName',
+  },
+  formChartVersion: {
+    id: `${scope}.formChartVersion`,
+    defaultMessage: 'ChartVersion',
+  },
+  formDBUserName: {
+    id: `${scope}.formDBUserName`,
+    defaultMessage: 'DB UserName',
+  },
+  formDBPwd: {
+    id: `${scope}.formDBPwd`,
+    defaultMessage: 'DB Pwd',
+  },
 });

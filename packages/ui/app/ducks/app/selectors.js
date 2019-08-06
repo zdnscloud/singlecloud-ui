@@ -176,6 +176,18 @@ export const makeSelectLeftMenus = () =>
           icon: ApplicationStoreIcon,
         },
       ]);
+      menus = menus.concat([
+        {
+          name: 'ApplicationManagement',
+          children: [
+            {
+              name: 'Applications',
+              path: '/applications',
+            }
+          ],
+          icon: ApplicationStoreIcon,
+        },
+      ]);
       return menus;
     }
   );

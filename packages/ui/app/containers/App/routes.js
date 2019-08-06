@@ -71,6 +71,9 @@ import UserQuotasPage, {
 import ApplicationStorePage, {
   CreateApplicationPage,
 } from 'containers/ApplicationStorePage/Loadable';
+import ApplicationsPage, {
+  ApplicationDetailPage,
+} from 'containers/ApplicationsPage/Loadable';
 
 import UsersPage, {
   CreateUserPage,
@@ -428,6 +431,20 @@ const appRoutes = [
     component: CreateApplicationPage,
   },
   // applicationStore end
+  // applications
+  {
+    path: '/applications',
+    name: 'Applications',
+    icon: Dashboard,
+    component: ApplicationsPage,
+  },
+  {
+    path: '/applications/show',
+    name: 'Application Detail',
+    icon: Dashboard,
+    component: ApplicationDetailPage,
+  },
+  // applications end
 ];
 
 export default appRoutes;
