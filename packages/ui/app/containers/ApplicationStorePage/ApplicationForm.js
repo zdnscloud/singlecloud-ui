@@ -8,12 +8,14 @@ import Danger from 'components/Typography/Danger';
 import GridItem from 'components/Grid/GridItem';
 import GridContainer from 'components/Grid/GridContainer';
 import InputField from 'components/Field/InputField';
-import TextareaField from 'components/Field/TextareaField';
-import ReadOnlyInput from 'components/CustomInput/ReadOnlyInput';
+import Card from 'components/Card/Card';
+import CardHeader from 'components/Card/CardHeader';
+import CardBody from 'components/Card/CardBody';
+import SelectField from 'components/Field/SelectField';
 
 import messages from './messages';
 
-class UserQuotaForm extends PureComponent {
+class ApplicationForm extends PureComponent {
   state = {};
 
   render() {
@@ -26,123 +28,159 @@ class UserQuotaForm extends PureComponent {
       classes,
       profile,
       initialValues,
-      formRole,
       userHash,
+      clusters,
+      namespaces,
     } = this.props;
-
+    const clustersOptions = clusters.toList().map((sc) => ({
+      label: sc.get('name'),
+      value: sc.get('name'),
+    }));
+    const namespacesOptions = namespaces.toList().map((sc) => ({
+      label: sc.get('name'),
+      value: sc.get('name'),
+    }));
     return (
       <form className={getByKey(classes, 'form')} onSubmit={handleSubmit}>
-        <GridContainer>
+        <GridContainer className={classes.contentGrid}>
           {error ? (
             <GridItem xs={12} sm={12} md={12}>
               <Danger>{getByKey(error, ['response', 'message'])}</Danger>
             </GridItem>
           ) : null}
-          {formRole === 'edit' ? (
-            <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
-              <ReadOnlyInput
-                label={<FormattedMessage {...messages.formClusterName} />}
-                value={initialValues.get('clusterName')}
-                fullWidth
-              />
-            </GridItem>
-          ) : null}
-          <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
-            {formRole === 'edit' ? (
-              <ReadOnlyInput
-                labelText={<FormattedMessage {...messages.formNamespace} />}
-                value={initialValues.get('namespace')}
-                fullWidth
-              />
-            ) : (
-              <InputField
-                label={<FormattedMessage {...messages.formNamespace} />}
-                name="namespace"
-                formControlProps={{
-                  className: classes.nameControl,
-                }}
-                inputProps={{
-                  type: 'text',
-                  autoComplete: 'off',
-                }}
-                fullWidth
-              />
-            )}
-          </GridItem>
-          {formRole === 'create' ? (
-            <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
-              <small className={classes.username}>{userHash}</small>
-            </GridItem>
-          ) : null}
-        </GridContainer>
-        <GridContainer>
-          <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
-            <InputField
-              label={<FormattedMessage {...messages.formCPU} />}
-              name="cpu"
-              formControlProps={{
-                className: classes.nameControl,
-              }}
-              inputProps={{
-                type: 'text',
-                autoComplete: 'off',
-                endAdornment: (
-                  <FormattedMessage {...messages.formCPUEndAdornment} />
-                ),
-              }}
-              fullWidth
-            />
-          </GridItem>
-          <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
-            <InputField
-              label={<FormattedMessage {...messages.formMemory} />}
-              name="memory"
-              formControlProps={{
-                className: classes.nameControl,
-              }}
-              inputProps={{
-                type: 'text',
-                autoComplete: 'off',
-                endAdornment: 'Gi',
-              }}
-              fullWidth
-            />
-          </GridItem>
-          <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
-            <InputField
-              label={<FormattedMessage {...messages.formStorage} />}
-              name="storage"
-              formControlProps={{
-                className: classes.nameControl,
-              }}
-              inputProps={{
-                type: 'text',
-                autoComplete: 'off',
-                endAdornment: 'Gi',
-              }}
-              fullWidth
-            />
-          </GridItem>
-        </GridContainer>
-        <GridContainer style={{ marginTop: '20px' }}>
-          <GridItem xs={9} sm={9} md={9} className={classes.formLine}>
-            <TextareaField
-              name="purpose"
-              label={<FormattedMessage {...messages.formPurpose} />}
-              formControlProps={{
-                className: classes.textareaControl,
-              }}
-              inputProps={{
-                type: 'text',
-                autoComplete: 'off',
-                rows: '4',
-              }}
-            />
-          </GridItem>
+          <Card>
+            <CardHeader color="primary">
+              <h4 className={classes.cardTitleWhite}>
+                <FormattedMessage {...messages.createApplication} />
+              </h4>
+            </CardHeader>
+            <CardBody>
+              <GridContainer>
+                <GridItem xs={2} sm={2} md={2}>
+                  <img alt="applicatio logo"  src='' className={classes.appLogo} />
+                </GridItem>
+                <GridItem xs={10} sm={10} md={10}>
+                  <p className={classes.title}>jd</p>
+                  <p className={classes.description}>a</p>
+                </GridItem>
+              </GridContainer>
+            </CardBody>
+         </Card>
+
+         <Card>
+            <CardHeader color="primary">
+              <h4 className={classes.cardTitleWhite}>
+                <FormattedMessage {...messages.detailedDesc} />
+              </h4>
+            </CardHeader>
+            <CardBody>
+              <p className={classes.detailedDesc}>detailedDesc</p>
+            </CardBody>
+         </Card>
+
+         <Card>
+            <CardHeader color="primary">
+              <h4 className={classes.cardTitleWhite}>
+                <FormattedMessage {...messages.configurationOptions} />
+              </h4>
+            </CardHeader>
+            <CardBody>
+              <GridContainer>
+                <GridItem xs={3} sm={3} md={3}>
+                  <SelectField
+                    label={<FormattedMessage {...messages.formClusterName} />}
+                    name="clusterName"
+                    formControlProps={{
+                      style: {
+                        width: '100%',
+                        marginBottom: 17,
+                      },
+                    }}
+                    options={clustersOptions}
+                  />
+                </GridItem>
+                <GridItem xs={3} sm={3} md={3}>
+                  <SelectField
+                    label={<FormattedMessage {...messages.formNamespaceName} />}
+                    name="clusterName"
+                    formControlProps={{
+                      style: {
+                        width: '100%',
+                      },
+                    }}
+                    options={namespacesOptions}
+                  />
+                </GridItem>
+              </GridContainer>
+              <GridContainer>
+                <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
+                  <InputField
+                      label={<FormattedMessage {...messages.formChartName} />}
+                      name="chartName"
+                      formControlProps={{
+                        className: classes.nameControl,
+                      }}
+                      inputProps={{
+                        type: 'text',
+                        autoComplete: 'off',
+                      }}
+                      fullWidth
+                    />
+                  </GridItem>
+                  <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
+                    <SelectField
+                      label={<FormattedMessage {...messages.formChartVersion} />}
+                      name="chartVersion"
+                      formControlProps={{
+                        style: {
+                          width: '100%',
+                        },
+                      }}
+                      options={[
+                        {
+                          label: '0.0.1',
+                          value: '0.0.1',
+                        },
+                      ]}
+                    />
+                  </GridItem>
+              </GridContainer>
+              <GridContainer>
+                <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
+                  <InputField
+                    label={<FormattedMessage {...messages.formDBUserName} />}
+                    name="name"
+                    formControlProps={{
+                      className: classes.nameControl,
+                    }}
+                    inputProps={{
+                      type: 'text',
+                      autoComplete: 'off',
+                    }}
+                    fullWidth
+                  />
+                </GridItem>
+                <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
+                  <InputField
+                    label={<FormattedMessage {...messages.formDBPwd} />}
+                    name="pwd"
+                    formControlProps={{
+                      className: classes.nameControl,
+                    }}
+                    inputProps={{
+                      type: 'text',
+                      autoComplete: 'off',
+                    }}
+                    fullWidth
+                  />
+                </GridItem>
+              </GridContainer>
+            </CardBody>
+         </Card>
         </GridContainer>
       </form>
     );
   }
 }
 
-export default UserQuotaForm;
+export default ApplicationForm;

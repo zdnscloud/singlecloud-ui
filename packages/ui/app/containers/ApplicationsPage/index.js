@@ -1,6 +1,6 @@
 /**
  *
- * ApplicationStorePage
+ * ApplicationsPage
  *
  */
 
@@ -34,7 +34,7 @@ import * as actions from 'ducks/applicationStore/actions';
 import messages from './messages';
 import styles from './styles';
 import ApplicationsList from './ApplicationsList';
-import ApplicationStorePageHelmet from './helmet';
+import ApplicationsPageHelmet from './helmet';
 import SearchForm from './form/searchForm';
 
 
@@ -51,7 +51,7 @@ const SearchApplicationsForm = reduxForm({
 })(SearchForm);
 
 /* eslint-disable react/prefer-stateless-function */
-export class ApplicationStorePage extends React.PureComponent {
+export class ApplicationsPage extends React.PureComponent {
 
   componentWillMount() {
     this.load();
@@ -72,7 +72,7 @@ export class ApplicationStorePage extends React.PureComponent {
 
     return (
       <div className={classes.root}>
-        <ApplicationStorePageHelmet />
+        <ApplicationsPageHelmet />
         <CssBaseline />
         <div className={classes.content}>
           <Breadcrumbs
@@ -135,4 +135,4 @@ const withConnect = connect(
 export default compose(
   withConnect,
   withStyles(styles)
-)(ApplicationStorePage);
+)(ApplicationsPage);

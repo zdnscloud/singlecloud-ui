@@ -196,41 +196,37 @@ const styles = (theme) => ({
   },
   appWrap: {
     border: '1px solid #DFE0DF',
-    padding: '20px 13px',
+    padding: 10,
   },
   aapName: {
     color: '#1B9CCE',
-    width: '100%',
-    textAlign: 'center'
+    margin: 0,
   },
   appLogo: {
     margin: '0 auto',  
     width: '80%', 
     display: 'block'
   },
-  appDiscribe: {
-    color: '#4A4A4A',
-    marginBottom: 20,
-  },
-  appDetailBtn: {
+  appDeleteBtn: {
     background: '#1B9CCE',
     color: '#fff',
-    width: '100px',
-    height: '35px',
-    margin: '0 auto',  
+    width: '24px',
+    height: '24px',
+    display: 'block',
+    padding: 0,
+    borderRadius: 2,
+    position: 'relative',
+    marginTop: 10,
+  },
+  deleteIcon: {
+    position: 'absolute',
+    left: 4,
+    top: 4,
   },
   appDetailBtn: {
-    background: '#1B9CCE',
-    color: '#fff',
-    width: '100px',
-    height: '35px',
-    margin: '0 auto', 
-    display: 'block' 
-  },
-  line: {
-    borderBottom : '1px solid #DFE0DF',
-    marginTop: 20,
-  },
+    padding:0,
+    minWidth:0 
+  }
 });
 
 export default styles;
