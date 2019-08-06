@@ -170,14 +170,10 @@ const styles = (theme) => ({
   cancleBtn: {
     marginLeft: '10px',
   },
-  textareaControl: {
-    width: '100%',
-  },
-  username: {
-    fontSize: '14px',
-    display: 'block',
-    marginTop: '20px',
-  },
+  card:{
+    padding:'20px',
+    margin: 0,
+  }
 });
 
 export default styles;

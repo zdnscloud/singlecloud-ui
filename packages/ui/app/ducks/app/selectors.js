@@ -9,7 +9,7 @@ import ManagementIcon from 'components/Icons/Management';
 import ApplicationIcon from 'components/Icons/Application';
 import SystemIcon from 'components/Icons/System';
 import UserQuotasIcon from 'components/Icons/UserQuotas';
-
+import ApplicationStoreIcon from 'components/Icons/ApplicationStore';
 import { makeSelectRole, makeSelectIsAdmin } from 'ducks/role/selectors';
 
 import { makeSelectCurrentNamespaceID } from 'ducks/namespaces/selectors';
@@ -173,7 +173,7 @@ export const makeSelectLeftMenus = () =>
         {
           name: 'ApplicationStore',
           path: '/applicationStore',
-          icon: UserQuotasIcon,
+          icon: ApplicationStoreIcon,
         },
       ]);
       return menus;

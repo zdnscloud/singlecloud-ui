@@ -26,13 +26,14 @@ import CardBody from 'components/Card/CardBody';
 import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
 import IconButton from '@material-ui/core/IconButton';
 import AddIcon from 'components/Icons/Add';
+import Button from '@material-ui/core/Button';
 
 import { makeSelectURL } from 'ducks/userQuotas/selectors';
 import * as actions from 'ducks/userQuotas/actions';
 
 import messages from './messages';
 import styles from './styles';
-// import ApplicationsTable from './ApplicationsTable';
+//import ApplicationsTable from './ApplicationsTable';
 import ApplicationStorePageHelmet from './helmet';
 import SearchForm from './form/searchForm';
 
@@ -51,9 +52,6 @@ const SearchApplicationsForm = reduxForm({
 
 /* eslint-disable react/prefer-stateless-function */
 export class ApplicationStorePage extends React.PureComponent {
-  static propTypes = {};
-
-
 
   componentWillMount() {
     // this.load();
@@ -70,7 +68,7 @@ export class ApplicationStorePage extends React.PureComponent {
   }
 
   render() {
-    const { classes } = this.props;
+    const { classes, submitForm } = this.props;
     const doSubmit = (formValues) => {
       this.setState({
         filter: formValues.toJS(),
@@ -86,16 +84,32 @@ export class ApplicationStorePage extends React.PureComponent {
             data={[
               {
                 path: '/applicationStore',
-                name: <FormattedMessage {...messages.applicationStore} />,
+                name: <FormattedMessage {...messages.pageTitle} />,
               },
             ]}
           />
           <GridContainer className={classes.grid}>
             <GridItem xs={12} sm={12} md={12}>
-              <SearchApplicationsForm   
-                classes={classes}
-                onSubmit={doSubmit}
-              />
+              <Card className={classes.card}>
+                <GridContainer style={{ marginBottom: '20px' }}>
+                  <GridItem xs={3} sm={3} md={3}>
+                      <SearchApplicationsForm   
+                        classes={classes}
+                        onSubmit={doSubmit}
+                      />
+                    </GridItem>
+                    <GridItem xs={6} sm={6} md={6}>
+                      <Button
+                        variant="contained"
+                        color="primary"
+                        onClick={submitForm}
+                        style={{ marginTop: '10px'}}
+                      >
+                        <FormattedMessage {...messages.searchApplicationsButton} />
+                      </Button>
+                    </GridItem>
+                  </GridContainer>
+              </Card>
             </GridItem>
           </GridContainer>
         </div>

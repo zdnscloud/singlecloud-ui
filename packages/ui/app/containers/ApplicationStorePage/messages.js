@@ -41,6 +41,10 @@ export default defineMessages({
     id: `${scope}.cancleApplicationButton`,
     defaultMessage: 'Cancle',
   },
+  searchApplicationsButton: {
+    id: `${scope}.searchApplicationsButton`,
+    defaultMessage: 'Search',
+  },
   searchFormApplicationName: {
     id: `${scope}.searchFormApplicationName`,
     defaultMessage: 'ApplicationName',

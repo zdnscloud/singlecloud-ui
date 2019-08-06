@@ -36,7 +36,7 @@ class SearchForm extends PureComponent {
               <Danger>{getByKey(error, ['response', 'message'])}</Danger>
             </GridItem>
           ) : null}
-          <GridItem xs={6} sm={6} md={6} className={classes.formLine}>
+          <GridItem xs={12} sm={12} md={12} className={classes.formLine}>
             <InputField
               label={<FormattedMessage {...messages.searchFormApplicationName} />}
               name="userName"
