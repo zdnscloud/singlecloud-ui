@@ -101,9 +101,13 @@ export default defineMessages({
     id: `${scope}.formClustersDNSIP`,
     defaultMessage: 'formClustersDNSIP',
   },
-  formForwardDNS: {
-    id: `${scope}.formForwardDNS`,
-    defaultMessage: 'formForwardDNS',
+  formForwardDNSFirst: {
+    id: `${scope}.formForwardDNSFirst`,
+    defaultMessage: 'formForwardDNSFirst',
+  },
+  formForwardDNSSecond: {
+    id: `${scope}.formForwardDNSSecond`,
+    defaultMessage: 'formForwardDNSSecond',
   },
   formPrivateWarehouses: {
     id: `${scope}.formPrivateWarehouses`,

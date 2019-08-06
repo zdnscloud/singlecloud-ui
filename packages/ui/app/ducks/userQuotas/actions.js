@@ -45,6 +45,7 @@ export const removeUserQuota = (id, meta) => ({
   type: c.REMOVE_USER_QUOTA,
   payload: id,
   meta,
+  error: true,
 });
 
 export const removeUserQuotaSuccess = (resp, meta) => ({
@@ -97,4 +98,9 @@ export const requestUserQuotaFailure = (error) => ({
 export const changeUserQuota = (userQuotaID) => ({
   type: c.CHANGE_USER_QUOTA,
   payload: { userQuotaID },
+});
+
+export const clearDeleteErrorInfo = () => ({
+  type: c.CLEAR_DELETE_ERROR_INFO,
+  payload: { },
 });

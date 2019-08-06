@@ -19,6 +19,7 @@ export const initialState = fromJS({
   userQuotas: {},
   list: [],
   selectedUserQuota: {},
+  deleteError:""
 });
 
 const c = constants;
@@ -55,7 +56,11 @@ export const userQuotasReducer = (
         .update('list', (l) => l.filterNot((i) => i === id));
     }
     case c.REMOVE_USER_QUOTA_FAILURE:
-      return state;
+      const data = payload.response.message;
+      return state.set('deleteError', data);
+
+    case c.CLEAR_DELETE_ERROR_INFO:
+        return state.set('deleteError', '');
 
     case c.UPDATE_USER_QUOTA:
       return state;

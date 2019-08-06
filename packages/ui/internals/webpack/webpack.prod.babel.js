@@ -148,7 +148,7 @@ module.exports = require('./webpack.base.babel')({
     }),
   ],
 
-  devtool: false,
+  devtool: 'source-map',
 
   performance: {
     assetFilter: (assetFilename) =>

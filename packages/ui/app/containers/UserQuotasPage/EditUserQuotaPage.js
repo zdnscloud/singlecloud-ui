@@ -50,7 +50,7 @@ const validate = (values) => {
   return errors;
 };
 
-const CreateUserQuotaForm = reduxForm({
+const EditUserQuotaForm = reduxForm({
   form: formName,
   validate,
 })(UserQuotaForm);
@@ -78,28 +78,24 @@ export class EditUserQuotaPage extends React.PureComponent {
     const url = userQuota.getIn(['links', 'update']);
     async function doSubmit(formValues) {
       try {
-        const {
-          cpu,
-          memory,
-          namespace,
-          storage,
-          purpose,
-          ...formData
-        } = formValues.toJS();
+        const { memory, storage, ...formData } = formValues.toJS();
         const data = {
-          cpu,
-          memory,
-          namespace,
-          storage,
-          purpose,
+          memory: `${memory}Gi`,
+          storage: `${storage}Gi`,
+          ...formData,
         };
-        console.log('data', data, url);
         await new Promise((resolve, reject) => {
           updateUserQuota({ ...data }, { resolve, reject, url });
         });
       } catch (error) {
         throw new SubmissionError({ _error: error });
       }
+    }
+    const reg = /^(\d+)([a-zA-Z]+)?$/;
+    const initUserQuota ={
+      ...userQuota.toJS(),
+      memory: (reg.exec(userQuota.get('memory')) || [])[1],
+      storage: (reg.exec(userQuota.get('storage')) || [])[1]
     }
 
     return (
@@ -128,13 +124,14 @@ export class EditUserQuotaPage extends React.PureComponent {
                     </h4>
                   </CardHeader>
                   <CardBody>
-                    <CreateUserQuotaForm
-                      classes={classes}
-                      onSubmit={doSubmit}
-                      initialValues={userQuota}
-                      // eslint-disable-next-line jsx-a11y/aria-role
-                      formRole="edit"
-                    />
+                    {userQuota.size === 0 ? null : (
+                      <EditUserQuotaForm
+                        classes={classes}
+                        onSubmit={doSubmit}
+                        initialValues={initUserQuota}
+                        formRole="edit"
+                      />
+                    )}
                   </CardBody>
                   <CardFooter className={classes.cardFooter}>
                     <GridContainer>
