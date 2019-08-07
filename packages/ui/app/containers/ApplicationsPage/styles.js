@@ -152,28 +152,6 @@ const styles = (theme) => ({
     boxShadow: '1px 0px 2px #ccc',
     border: '1px solid #ccc',
   },
-  removeBtn: {
-    float: 'right',
-  },
-  createBtnLink: {
-    position: 'absolute',
-    top: '3px',
-    right: '10px',
-  },
-  radioControl: {
-    flexDirection: 'row',
-  },
-  radioLabel: {
-    flexDirection: 'row',
-    lineHeight: 3,
-  },
-  radioGroup: {
-    flexDirection: 'row',
-    marginLeft: '2rem',
-  },
-  cancleBtn: {
-    marginLeft: '10px',
-  },
   card:{
     padding:'20px',
     margin: 0,
@@ -226,6 +204,19 @@ const styles = (theme) => ({
   appDetailBtn: {
     padding:0,
     minWidth:0 
+  },
+  tag: {
+    width: '100%',
+    background: 'rgba(27,156,206,0.3)',
+    border: '1px solid  #1B9CCE',
+    borderRadius: 2,
+    textAlign: 'center',
+    marginBottom: 0,
+    padding: '15px 0'
+  },
+  tagWrap: {
+    paddingLeft: theme.spacing(2),
+    paddingRight: theme.spacing(2)
   }
 });
 

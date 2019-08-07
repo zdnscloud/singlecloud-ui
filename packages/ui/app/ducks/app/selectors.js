@@ -164,13 +164,6 @@ export const makeSelectLeftMenus = () =>
       }
       menus = menus.concat([
         {
-          name: 'UserQuotas',
-          path: isAdmin ? '/adminUserQuotas' : '/userQuotas',
-          icon: UserQuotasIcon,
-        },
-      ]);
-      menus = menus.concat([
-        {
           name: 'ApplicationStore',
           path: '/applicationStore',
           icon: ApplicationStoreIcon,
@@ -182,10 +175,18 @@ export const makeSelectLeftMenus = () =>
           children: [
             {
               name: 'Applications',
-              path: '/applications',
+              path: `/clusters/${cluster}/namespaces/${namespace}/applications`,
+              // path: '/applications',
             }
           ],
           icon: ApplicationStoreIcon,
+        },
+      ]);
+      menus = menus.concat([
+        {
+          name: 'UserQuotas',
+          path: isAdmin ? '/adminUserQuotas' : '/userQuotas',
+          icon: UserQuotasIcon,
         },
       ]);
       return menus;

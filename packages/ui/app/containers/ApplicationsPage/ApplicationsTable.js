@@ -1,7 +1,7 @@
 /* eslint-disable no-unreachable */
 /**
  *
- * User Quotas Table
+ * Applications Table
  *
  */
 
@@ -13,42 +13,41 @@ import { createStructuredSelector } from 'reselect';
 import { bindActionCreators, compose } from 'redux';
 
 import { withStyles } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
 import { SimpleTable } from '@gsmlg/com';
 
-import * as actions from 'ducks/userQuotas/actions';
+import * as actions from 'ducks/applications/actions';
 import {
-  makeSelectUserQuotas,
-  makeSelectUserQuotasList,
-} from 'ducks/userQuotas/selectors';
+  makeSelectApplications,
+  makeSelectApplicationsList,
+} from 'ducks/applications/selectors';
+import { makeSelectLocation} from 'ducks/app/selectors';
 
 import messages from './messages';
 import styles from './styles';
 import schema from './tableSchema';
 
-/* eslint-disable react/prefer-stateless-function */
-export class UserQuotasTable extends React.PureComponent {
+export class ApplicationsTable extends React.PureComponent {
   static propTypes = {
     classes: PropTypes.object.isRequired,
     data: PropTypes.object.isRequired,
-    userQuotas: PropTypes.object.isRequired,
+    applications: PropTypes.object.isRequired,
   };
 
   render() {
     const {
       classes,
       data,
-      // eslint-disable-next-line no-shadow
-      removeUserQuota,
+      location,
       theme,
     } = this.props;
+    const pathname = location.get('pathname');
     const mergedSchema = schema
       .map((sch) => {
-        if (sch.id === 'actions') {
+        if (sch.id === 'name') {
           return {
             ...sch,
-            props: { classes, removeUserQuota},
+            props: { pathname },
           };
         }
         return sch;
@@ -71,8 +70,9 @@ export class UserQuotasTable extends React.PureComponent {
 }
 
 const mapStateToProps = createStructuredSelector({
-  userQuotas: makeSelectUserQuotas(),
-  data: makeSelectUserQuotasList(),
+  location: makeSelectLocation(),
+  applications: makeSelectApplications(),
+  data: makeSelectApplicationsList(),
 });
 
 const mapDispatchToProps = (dispatch) =>
@@ -91,4 +91,4 @@ const withConnect = connect(
 export default compose(
   withConnect,
   withStyles(styles, { withTheme: true })
-)(UserQuotasTable);
+)(ApplicationsTable);

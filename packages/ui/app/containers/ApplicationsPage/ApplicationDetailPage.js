@@ -9,36 +9,27 @@ import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import { bindActionCreators, compose } from 'redux';
-import { fromJS } from 'immutable';
-import { reduxForm, getFormValues } from 'redux-form/immutable';
-import { SubmissionError, submit } from 'redux-form';
-import { Link } from 'react-router-dom';
-import sha256 from 'crypto-js/sha256';
-import encHex from 'crypto-js/enc-hex';
-
 import { withStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
 import GridItem from 'components/Grid/GridItem';
 import GridContainer from 'components/Grid/GridContainer';
 import Card from 'components/Card/Card';
 import CardHeader from 'components/Card/CardHeader';
 import CardBody from 'components/Card/CardBody';
-import CardFooter from 'components/Card/CardFooter';
 
-import { makeSelectURL } from 'ducks/userQuotas/selectors';
-import { makeSelectClusters } from 'ducks/clusters/selectors';
-import { makeSelectNamespaces } from 'ducks/namespaces/selectors';
-import * as actions from 'ducks/userQuotas/actions';
+import { makeSelectURL,makeSelectApplicationID, makeSelectCurrentApplication } from 'ducks/applications/selectors';
+import {
+  makeSelectClusterID,
+  makeSelectNamespaceID,
+} from 'ducks/app/selectors';
+import * as actions from 'ducks/applications/actions';
 
 import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
 import messages from './messages';
 import styles from './styles';
 import ApplicationsPageHelmet from './helmet';
 import ApplicationsTable from './ApplicationsTable';
-
-export const formName = 'createApplicationForm';
 
 /* eslint-disable react/prefer-stateless-function */
 export class ApplicationDetailPage extends React.PureComponent {
@@ -49,22 +40,14 @@ export class ApplicationDetailPage extends React.PureComponent {
     location: PropTypes.object,
   };
 
-  render() {
-    const { classes, submitForm, createApplication, url, clusters, namespaces } = this.props;
-    async function doSubmit(formValues) {
-      try {
-        const { memory, storage, namespace, ...formData } = formValues.toJS();
-        const data = {
-          ...formData,
-        };
-        await new Promise((resolve, reject) => {
-          createApplication({ ...data }, { resolve, reject, url });
-        });
-      } catch (error) {
-        throw new SubmissionError({ _error: error });
-      }
-    }
+  componentWillMount() {
+    const { clusterID, namespaceID, url,loadApplications } = this.props;
+    loadApplications({url, clusterID, namespaceID});
+  }
 
+  render() {
+    const { classes, clusterID, namespaceID } = this.props;
+ 
     return (
       <div className={classes.root}>
         <ApplicationsPageHelmet />
@@ -73,7 +56,7 @@ export class ApplicationDetailPage extends React.PureComponent {
           <Breadcrumbs
             data={[
               {
-                path: `/applications`,
+                path: `/clusters/${clusterID}/namespaces/${namespaceID}/applications`,
                 name: <FormattedMessage {...messages.pageTitle} />,
               },
               {
@@ -82,6 +65,14 @@ export class ApplicationDetailPage extends React.PureComponent {
             ]}
           />
           <Typography component="div" className="">
+            <GridContainer className={classes.tagWrap}>
+                <GridItem xs={6} sm={6} md={6}>
+                    <p className={classes.tag}>Version</p>
+                </GridItem>
+                <GridItem xs={6} sm={6} md={6}>
+                    <p className={classes.tag}>Creaced</p>
+                </GridItem>
+            </GridContainer>
             <GridContainer className={classes.grid}>
               <GridItem xs={12} sm={12} md={12}>
                 <Card>
@@ -105,8 +96,10 @@ export class ApplicationDetailPage extends React.PureComponent {
 
 const mapStateToProps = createStructuredSelector({
   url: makeSelectURL(),
-  clusters: makeSelectClusters(),
-  namespaces: makeSelectNamespaces(),
+  clusterID: makeSelectClusterID(),
+  namespaceID: makeSelectNamespaceID(),
+  applicationID: makeSelectApplicationID(),
+  application: makeSelectCurrentApplication(),
 });
 
 const mapDispatchToProps = (dispatch) =>

@@ -3,21 +3,22 @@ import * as c from './constants';
 /*
   actions
 */
-export const loadApplications = (url) => ({
+export const loadApplications = (meta) => ({
   type: c.LOAD_APPLICATIONS,
-  payload: url,
+  payload: {},
+  meta
 });
 
-export const loadApplicationsSuccess = (resp, applicationID) => ({
+export const loadApplicationsSuccess = (resp, meta) => ({
   type: c.LOAD_APPLICATIONS_SUCCESS,
   payload: resp,
-  meta: { applicationID },
+  meta,
 });
 
-export const loadApplicationsFailure = (error, applicationID) => ({
+export const loadApplicationsFailure = (error, meta) => ({
   type: c.LOAD_APPLICATIONS_FAILURE,
   payload: error,
-  meta: { applicationID },
+  meta,
   error: true,
 });
 
@@ -44,6 +45,11 @@ export const removeApplicationFailure = (error, meta) => ({
 export const changeApplication = (applicationID) => ({
   type: c.CHANGE_APPLICATION,
   payload: { applicationID },
+});
+
+export const clearDeleteErrorInfo = () => ({
+  type: c.CLEAR_DELETE_ERROR_INFO,
+  payload: {},
 });
 
 

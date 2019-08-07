@@ -14,22 +14,19 @@ import { Link } from 'react-router-dom';
 import { SubmissionError, submit } from 'redux-form';
 import { reduxForm, getFormValues } from 'redux-form/immutable';
 import { withStyles } from '@material-ui/core/styles';
-import Menubar from 'components/Menubar';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import Typography from '@material-ui/core/Typography';
-import Fab from '@material-ui/core/Fab';
 import GridItem from 'components/Grid/GridItem';
 import GridContainer from 'components/Grid/GridContainer';
 import Card from 'components/Card/Card';
-import CardHeader from 'components/Card/CardHeader';
-import CardBody from 'components/Card/CardBody';
 import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
-import IconButton from '@material-ui/core/IconButton';
-import AddIcon from 'components/Icons/Add';
 import Button from '@material-ui/core/Button';
-
-import { makeSelectURL } from 'ducks/applicationStore/selectors';
-import * as actions from 'ducks/applicationStore/actions';
+import {
+  makeSelectClusterID,
+  makeSelectNamespaceID,
+} from 'ducks/app/selectors';
+import { makeSelectURL,makeSelectDeleteUserQuotaError } from 'ducks/applications/selectors';
+import * as actions from 'ducks/applications/actions';
+import ErrorInfo from 'components/ErrorInfo/ErrorInfo';
 
 import messages from './messages';
 import styles from './styles';
@@ -52,18 +49,32 @@ const SearchApplicationsForm = reduxForm({
 
 /* eslint-disable react/prefer-stateless-function */
 export class ApplicationsPage extends React.PureComponent {
+  state = {
+    filter: {},
+  };
 
   componentWillMount() {
     this.load();
   }
 
+  componentDidUpdate(prevProps) {
+    const {
+      clusterID: prevClusterID,
+      namespaceID: prevNamespaceID,
+    } = prevProps;
+    const { clusterID, namespaceID } = this.props;
+    if (prevClusterID !== clusterID || prevNamespaceID !== namespaceID) {
+      this.load();
+    }
+  }
+
   load() {
-    const { loadCharts, url } = this.props;
-    loadCharts(url);
+    const { loadApplications, url, clusterID, namespaceID } = this.props;
+    loadApplications({url, clusterID, namespaceID});
   }
 
   render() {
-    const { classes, submitForm } = this.props;
+    const { classes, submitForm, deleteError, clearDeleteErrorInfo } = this.props;
     const doSubmit = (formValues) => {
       this.setState({
         filter: formValues.toJS(),
@@ -78,12 +89,17 @@ export class ApplicationsPage extends React.PureComponent {
           <Breadcrumbs
             data={[
               {
-                path: '/applicationStore',
                 name: <FormattedMessage {...messages.pageTitle} />,
               },
             ]}
           />
           <GridContainer className={classes.grid}>
+            {deleteError ? (
+              <ErrorInfo 
+                errorText = {deleteError}
+                close = {clearDeleteErrorInfo}
+              />
+            ):null}
             <GridItem xs={12} sm={12} md={12}>
               <Card className={classes.card}>
                 <GridContainer style={{ marginBottom: '20px' }}>
@@ -104,7 +120,7 @@ export class ApplicationsPage extends React.PureComponent {
                       </Button>
                     </GridItem>
                   </GridContainer>
-                  <ApplicationsList />
+                  <ApplicationsList filter={this.state.filter}/>
               </Card>
             </GridItem>
           </GridContainer>
@@ -115,7 +131,10 @@ export class ApplicationsPage extends React.PureComponent {
 }
 
 const mapStateToProps = createStructuredSelector({
+  clusterID: makeSelectClusterID(),
+  namespaceID: makeSelectNamespaceID(),
   url: makeSelectURL(),
+  deleteError: makeSelectDeleteUserQuotaError(),
 });
 
 const mapDispatchToProps = (dispatch) =>

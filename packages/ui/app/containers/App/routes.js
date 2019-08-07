@@ -433,13 +433,13 @@ const appRoutes = [
   // applicationStore end
   // applications
   {
-    path: '/applications',
+    path: '/clusters/:cluster_id/namespaces/:namespace_id/applications',
     name: 'Applications',
     icon: Dashboard,
     component: ApplicationsPage,
   },
   {
-    path: '/applications/show',
+    path: '/clusters/:cluster_id/namespaces/:namespace_id/applications/:application_id/show',
     name: 'Application Detail',
     icon: Dashboard,
     component: ApplicationDetailPage,

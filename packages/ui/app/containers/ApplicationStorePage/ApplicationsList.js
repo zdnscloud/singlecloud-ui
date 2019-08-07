@@ -14,11 +14,11 @@ import { bindActionCreators, compose } from 'redux';
 
 import { withStyles } from '@material-ui/core/styles';
 import GridContainer from 'components/Grid/GridContainer';
-import * as actions from 'ducks/userQuotas/actions';
+import * as actions from 'ducks/applicationStore/actions';
 import {
-  makeSelectApplications,
-  makeSelectApplicationsList,
-} from 'ducks/userQuotas/selectors';
+  makeSelectCharts,
+  makeSelectChartsList,
+} from 'ducks/applicationStore/selectors';
 
 import messages from './messages';
 import styles from './styles';
@@ -29,29 +29,43 @@ import ApplicationTemplate from './application/applicationTemplate'
 export class ApplicationsList extends React.PureComponent {
   static propTypes = {
     classes: PropTypes.object.isRequired,
-    // data: PropTypes.object.isRequired,
-    // userQuotas: PropTypes.object.isRequired,
+    data: PropTypes.object.isRequired,
+    charts: PropTypes.object.isRequired,
   };
 
   render() {
     const {
       classes,
-      // data,
-      // eslint-disable-next-line no-shadow
-      // removeUserQuota,
+      data,
       theme,
+      filter
     } = this.props;
+    let chartData = data.filter((item) => {
+      let flag = true;
+      if (filter.name) {
+        flag = flag && item.get('name') === filter.name;
+      }
+      return flag;
+    })
     return (
       <GridContainer>
-          <ApplicationTemplate classes={classes}/>
+          {chartData.map((item, key) => {
+              return (
+                <ApplicationTemplate
+                  classes={classes}
+                  key={key}
+                  item={item}
+                />
+              );
+            })}
       </GridContainer>
     );
   }
 }
 
 const mapStateToProps = createStructuredSelector({
-  // userQuotas: makeSelectApplications(),
-  // data: makeSelectApplicationsList(),
+  charts: makeSelectCharts(),
+  data: makeSelectChartsList(),
 });
 
 const mapDispatchToProps = (dispatch) =>
