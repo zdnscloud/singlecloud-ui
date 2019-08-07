@@ -24,8 +24,6 @@ class SearchForm extends PureComponent {
       classes,
       profile,
       initialValues,
-      formRole,
-      role,
     } = this.props;
     // eslint-disable-next-line no-console
     return (
@@ -39,7 +37,7 @@ class SearchForm extends PureComponent {
           <GridItem xs={12} sm={12} md={12} className={classes.formLine}>
             <InputField
               label={<FormattedMessage {...messages.searchFormApplicationName} />}
-              name="userName"
+              name="name"
               formControlProps={{
                 className: classes.nameControl,
                 style: {

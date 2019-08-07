@@ -225,12 +225,19 @@ const styles = (theme) => ({
     width: '100px',
     height: '35px',
     margin: '0 auto', 
-    display: 'block' 
+    display: 'block' ,
+    position: 'relative',
+    padding:'6px 16px'
   },
   line: {
     borderBottom : '1px solid #DFE0DF',
     marginTop: 20,
   },
+  rightArrowIcon:{
+    position: 'absolute',
+    right:0,
+    top:12
+  }
 });
 
 export default styles;

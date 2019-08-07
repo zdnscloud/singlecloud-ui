@@ -19,7 +19,7 @@ export const initialState = fromJS({
   applications: {},
   list: [],
   selectedApplication: {},
-  deleteError:""
+  deleteError: '',
 });
 
 const c = constants;
@@ -32,8 +32,9 @@ export const applicationsReducer = (
     case c.LOAD_APPLICATIONS:
       return state;
     case c.LOAD_APPLICATIONS_SUCCESS: {
+      const { clusterID, namespaceID } = meta;
       const { data, list } = procCollectionData(payload);
-      return state.set('applications', fromJS(data)).set('list', fromJS(list));
+      return state.setIn(['applications',clusterID, namespaceID], fromJS(data)).set('list', fromJS(list));
     }
     case c.LOAD_APPLICATIONS_FAILURE:
       return state;

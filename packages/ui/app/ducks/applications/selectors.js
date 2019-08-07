@@ -41,17 +41,17 @@ export const makeSelectApplicationsList = () =>
 export const makeSelectURL = () =>
   createSelector(
     makeSelectCurrentNamespace(),
-    (ns) => ns.getIn(['links', 'configmaps'])
+    (ns) => ns.getIn(['links', 'applications'])
   );
 
 export const makeSelectApplicationID = () =>
   createSelector(
     createMatchSelector(
-      '/clusters/:cluster_id/namespaces/:namespace_id/configmaps/:configmap_id'
+      '/clusters/:cluster_id/namespaces/:namespace_id/applications/:application_id'
     ),
     (match) => {
       if (match && match.params) {
-        return match.params.configmap_id;
+        return match.params.application_id;
       }
       return '';
     }
@@ -59,9 +59,19 @@ export const makeSelectApplicationID = () =>
 
 export const makeSelectCurrentApplication = () =>
   createSelector(
-    makeSelectApplications(),
+    selectApplicationsDomain,
+    makeSelectClusterID(),
+    makeSelectNamespaceID(),
     makeSelectApplicationID(),
-    (maps, id) => maps.get(id)
+    (substate, clusterID, namespaceID, applicationID) =>
+    substate.getIn(['applications', clusterID, namespaceID, applicationID]) ||
+    substate.clear()
+  );
+
+export const makeSelectDeleteUserQuotaError = () =>
+  createSelector(
+    selectApplicationsDomain,
+    (state) => state.get('deleteError')
   );
 
 /**

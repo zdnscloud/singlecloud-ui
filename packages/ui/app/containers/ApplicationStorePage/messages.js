@@ -35,7 +35,7 @@ export default defineMessages({
   },
   viewDetailButton: {
     id: `${scope}.viewDetailButton`,
-    defaultMessage: 'ViewDetail',
+    defaultMessage: 'detailed',
   },
   createApplication: {
     id: `${scope}.createApplication`,

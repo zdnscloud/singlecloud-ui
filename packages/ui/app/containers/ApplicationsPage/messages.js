@@ -21,10 +21,6 @@ export default defineMessages({
     id: `${scope}.header`,
     defaultMessage: 'This is the ApplicationsPage container!',
   },
-  applicationStore: {
-    id: `${scope}.applicationStore`,
-    defaultMessage: 'ApplicationStore',
-  },
   searchApplicationsButton: {
     id: `${scope}.searchApplicationsButton`,
     defaultMessage: 'Search',
@@ -36,14 +32,6 @@ export default defineMessages({
   applicationDetail: {
     id: `${scope}.applicationDetail`,
     defaultMessage: 'Application Detail',
-  },
-  createApplicationButton: {
-    id: `${scope}.createApplicationButton`,
-    defaultMessage: 'Create',
-  },
-  cancleApplicationButton: {
-    id: `${scope}.cancleApplicationButton`,
-    defaultMessage: 'Cancle',
   },
   detailedDesc: {
     id: `${scope}.detailedDesc`,

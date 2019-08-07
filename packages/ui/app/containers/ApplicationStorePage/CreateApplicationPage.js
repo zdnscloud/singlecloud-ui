@@ -115,7 +115,7 @@ export class CreateApplicationPage extends React.PureComponent {
                   <Button
                     variant="contained"
                     className={classes.cancleBtn}
-                    to="/userQuotas"
+                    to="/applicationStore"
                     component={Link}
                   >
                     <FormattedMessage

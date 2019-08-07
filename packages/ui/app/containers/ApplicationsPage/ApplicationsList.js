@@ -13,48 +13,60 @@ import { createStructuredSelector } from 'reselect';
 import { bindActionCreators, compose } from 'redux';
 
 import { withStyles } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
-import Paper from '@material-ui/core/Paper';
-import GridItem from 'components/Grid/GridItem';
 import GridContainer from 'components/Grid/GridContainer';
-import * as actions from 'ducks/userQuotas/actions';
+import * as actions from 'ducks/applications/actions';
 import {
   makeSelectApplications,
   makeSelectApplicationsList,
-} from 'ducks/userQuotas/selectors';
+} from 'ducks/applications/selectors';
 
 import messages from './messages';
 import styles from './styles';
 import ApplicationTemplate from './application/applicationTemplate'
 
-
 /* eslint-disable react/prefer-stateless-function */
 export class ApplicationsList extends React.PureComponent {
   static propTypes = {
     classes: PropTypes.object.isRequired,
-    // data: PropTypes.object.isRequired,
-    // userQuotas: PropTypes.object.isRequired,
+    data: PropTypes.object.isRequired,
+    applications: PropTypes.object.isRequired,
   };
 
   render() {
     const {
       classes,
-      // data,
-      // eslint-disable-next-line no-shadow
-      // removeUserQuota,
+      data,
+      removeApplication,
       theme,
+      filter
     } = this.props;
+    let appData = data.filter((item) => {
+      let flag = true;
+      if (filter.name) {
+        flag = flag && item.get('name') === filter.name;
+      }
+      return flag;
+    })
     return (
       <GridContainer>
-          <ApplicationTemplate classes={classes}/>
+          {appData.map((item, key) => {
+              return (
+                <ApplicationTemplate
+                  classes={classes}
+                  key={key}
+                  item={item}
+                  removeApplication={removeApplication}
+                />
+              );
+            })}
       </GridContainer>
     );
   }
 }
 
 const mapStateToProps = createStructuredSelector({
-  // userQuotas: makeSelectApplications(),
-  // data: makeSelectApplicationsList(),
+  applications: makeSelectApplications(),
+  data: makeSelectApplicationsList(),
 });
 
 const mapDispatchToProps = (dispatch) =>

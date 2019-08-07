@@ -26,9 +26,7 @@ class ApplicationForm extends PureComponent {
       submitting,
       error,
       classes,
-      profile,
       initialValues,
-      userHash,
       clusters,
       namespaces,
     } = this.props;
@@ -57,7 +55,7 @@ class ApplicationForm extends PureComponent {
             <CardBody>
               <GridContainer>
                 <GridItem xs={2} sm={2} md={2}>
-                  <img alt="applicatio logo"  src='' className={classes.appLogo} />
+                  <img alt="application logo"  src='' className={classes.appLogo} />
                 </GridItem>
                 <GridItem xs={10} sm={10} md={10}>
                   <p className={classes.title}>jd</p>

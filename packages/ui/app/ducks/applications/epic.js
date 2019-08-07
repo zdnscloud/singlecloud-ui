@@ -20,10 +20,10 @@ import * as a from './actions';
 export const loadApplicationsEpic = (action$, state$, { ajax }) =>
   action$.pipe(
     ofType(c.LOAD_APPLICATIONS),
-    mergeMap(({ payload }) =>
-      ajax(payload).pipe(
-        map((resp) => a.loadApplicationsSuccess(resp)),
-        catchError((error) => of(a.loadApplicationsFailure(error)))
+    mergeMap(({ meta: { url, clusterID, namespaceID } }) =>
+      ajax(url).pipe(
+        map((resp) => a.loadApplicationsSuccess(resp,{ clusterID, namespaceID })),
+        catchError((error) => of(a.loadApplicationsFailure(error,{ clusterID, namespaceID })))
       )
     )
   );

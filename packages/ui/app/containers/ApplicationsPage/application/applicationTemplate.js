@@ -2,9 +2,7 @@ import React, { PureComponent ,Fragment} from 'react';
 import { compose } from 'redux';
 import { FormattedMessage } from 'react-intl';
 import { Field, reduxForm } from 'redux-form/immutable';
-import getByKey from '@gsmlg/utils/getByKey';
 import { Link } from 'react-router-dom';
-import Danger from 'components/Typography/Danger';
 import GridItem from 'components/Grid/GridItem';
 import GridContainer from 'components/Grid/GridContainer';
 import InputField from 'components/Field/InputField';
@@ -18,16 +16,9 @@ class ApplicationTemplate extends PureComponent {
 
   render() {
     const {
-      handleSubmit,
-      pristine,
-      reset,
-      submitting,
-      error,
       classes,
-      profile,
-      initialValues,
-      formRole,
-      role,
+      item,
+      removeApplication,
     } = this.props;
     // eslint-disable-next-line no-console
     return (
@@ -53,8 +44,6 @@ class ApplicationTemplate extends PureComponent {
                       </IconButton>
                     </GridItem>
                   </GridContainer>
-                 
-                  
               </div>
           </GridItem>
       </Fragment> 

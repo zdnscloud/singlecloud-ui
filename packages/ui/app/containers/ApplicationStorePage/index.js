@@ -14,18 +14,11 @@ import { Link } from 'react-router-dom';
 import { SubmissionError, submit } from 'redux-form';
 import { reduxForm, getFormValues } from 'redux-form/immutable';
 import { withStyles } from '@material-ui/core/styles';
-import Menubar from 'components/Menubar';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import Typography from '@material-ui/core/Typography';
-import Fab from '@material-ui/core/Fab';
 import GridItem from 'components/Grid/GridItem';
 import GridContainer from 'components/Grid/GridContainer';
 import Card from 'components/Card/Card';
-import CardHeader from 'components/Card/CardHeader';
-import CardBody from 'components/Card/CardBody';
 import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
-import IconButton from '@material-ui/core/IconButton';
-import AddIcon from 'components/Icons/Add';
 import Button from '@material-ui/core/Button';
 
 import { makeSelectURL } from 'ducks/applicationStore/selectors';
@@ -52,7 +45,9 @@ const SearchApplicationsForm = reduxForm({
 
 /* eslint-disable react/prefer-stateless-function */
 export class ApplicationStorePage extends React.PureComponent {
-
+  state={
+    filter:{}
+  }
   componentWillMount() {
     this.load();
   }
@@ -104,7 +99,7 @@ export class ApplicationStorePage extends React.PureComponent {
                       </Button>
                     </GridItem>
                   </GridContainer>
-                  <ApplicationsList />
+                  <ApplicationsList filter={this.state.filter} />
               </Card>
             </GridItem>
           </GridContainer>
