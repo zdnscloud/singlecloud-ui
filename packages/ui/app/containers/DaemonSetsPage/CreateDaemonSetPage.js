@@ -122,7 +122,7 @@ export class CreateDaemonSet extends React.PureComponent {
     async function doSubmit(formValues) {
       try {
         const data = formValues.toJS();
-        const { containers } = data;
+        const { containers,persistentVolumes } = data;
         containers.forEach((item) => {
           if (item && item.args) {
             item.args = item.args.split(' ');
@@ -131,6 +131,11 @@ export class CreateDaemonSet extends React.PureComponent {
             item.command = item.command.split(' ');
           }
         });
+        persistentVolumes.forEach((item)=>{
+          if (item && item.size) {
+            item.size = `${item.size}Gi`;
+          }
+        })
         await new Promise((resolve, reject) => {
           createDaemonSet(data, {
             resolve,
@@ -172,7 +177,7 @@ export class CreateDaemonSet extends React.PureComponent {
                 storageClasses={storageClasses}
                 initialValues={fromJS({
                   replicas: 1,
-                  containers: [{ name: '' }],
+                  containers: [{ name: '',persistentVolumes:[] }],
                 })}
                 formValues={values}
                 theme={theme}
