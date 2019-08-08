@@ -71,6 +71,10 @@ const styles = (theme) => ({
   grid: {
     padding: theme.spacing(2),
   },
+  contentGrid: {
+    padding: theme.spacing(2),
+    paddingTop:0
+  },
   chartContainer: {
     marginLeft: -22,
   },
@@ -114,14 +118,16 @@ const styles = (theme) => ({
   },
   radioControl: {
     flexDirection: 'row',
+    marginTop: '10px',
   },
   radioLabel: {
     flexDirection: 'row',
-    lineHeight: 3,
+    lineHeight: 3.5,
+    
   },
   radioGroup: {
     flexDirection: 'row',
-    marginLeft: '2rem',
+    marginLeft: '1.5rem',
   },
   chexboxesControl: {
     flexDirection: 'row',

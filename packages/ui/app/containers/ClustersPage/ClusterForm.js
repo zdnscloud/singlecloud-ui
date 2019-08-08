@@ -37,7 +37,7 @@ class ClusterForm extends PureComponent {
 
     return (
       <form className={getByKey(classes, 'form')} onSubmit={handleSubmit}>
-        <GridContainer className={classes.grid}>
+        <GridContainer className={classes.contentGrid}>
           {error ? (
             <GridItem xs={12} sm={12} md={12}>
               <Danger>{getByKey(error, ['response', 'message'])}</Danger>
@@ -159,9 +159,9 @@ class ClusterForm extends PureComponent {
                     </GridContainer>
                     <GridContainer>
                       <GridItem
-                        xs={6}
-                        sm={6}
-                        md={6}
+                        xs={3}
+                        sm={3}
+                        md={3}
                         className={classes.formLine}
                       >
                         <RadioField
@@ -180,6 +180,19 @@ class ClusterForm extends PureComponent {
                           ]}
                           formControlComponent="div"
                           formLabelComponent="div"
+                        />
+                      </GridItem>
+                      <GridItem
+                        xs={3}
+                        sm={3}
+                        md={3}
+                        className={classes.formLine}
+                      >
+                        <InputField
+                          label={<FormattedMessage {...messages.formNetIface} />}
+                          fullWidth
+                          inputProps={{ type: 'text', autoComplete: 'off' }}
+                          name="network.iface"
                         />
                       </GridItem>
                     </GridContainer>
