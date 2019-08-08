@@ -1,5 +1,5 @@
 ---
-to: app/ducks/<%= name %>/index.js
+to: <%= h.src() %>/app/ducks/<%= name %>/index.js
 ---
 <%
   pname = h.inflection.pluralize(name);

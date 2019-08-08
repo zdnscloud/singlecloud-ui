@@ -1,5 +1,5 @@
 ---
-to: app/ducks/<%= name %>/constants.js
+to: <%= h.src() %>/app/ducks/<%= name %>/constants.js
 ---
 <%
   pname = h.inflection.pluralize(name);
