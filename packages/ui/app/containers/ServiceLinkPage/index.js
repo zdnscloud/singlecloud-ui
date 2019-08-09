@@ -41,6 +41,7 @@ import ServiceLinkPageHelmet from './helmet';
 import styles from './styles';
 import InnerCharts from './InnerCharts';
 import OuterCharts from './OuterCharts';
+
 /* eslint-disable react/prefer-stateless-function */
 export class ServiceLinkPage extends React.PureComponent {
   static propTypes = {
@@ -86,8 +87,8 @@ export class ServiceLinkPage extends React.PureComponent {
       loadInnerServices,
     } = this.props;
     if (namespace && namespace.size > 0) {
-      const ourl = `/apis/agent.zcloud.cn/v1/clusters/${clusterID}/namespaces/${namespaceID}/outerservices`;
-      const iurl = `/apis/agent.zcloud.cn/v1/clusters/${clusterID}/namespaces/${namespaceID}/innerservices`;
+      const ourl = namespace.getIn(['links', 'outerservices']);
+      const iurl = namespace.getIn(['links', 'innerservices']);
       loadOuterServices(ourl, clusterID, namespaceID);
       loadInnerServices(iurl, clusterID, namespaceID);
     }

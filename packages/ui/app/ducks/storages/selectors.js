@@ -105,7 +105,7 @@ export const makeSelectBlockDevicesList = () =>
 
 export const makeSelectStorageID = () =>
   createSelector(
-    createMatchSelector('/clusters/:cluster_id/storages/:storage_id'),
+    createMatchSelector('*/clusters/:cluster_id/storages/:storage_id/*'),
     (match) => {
       if (match && match.params) {
         return match.params.storage_id;
