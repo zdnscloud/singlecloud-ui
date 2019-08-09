@@ -232,8 +232,7 @@ const appRoutes = [
     component: StatefulSetsPage,
   },
   {
-    // path: '/clusters/:cluster_id/namespaces/:namespace_id/statefulSets/create',
-    path: '/statefulSets/create',
+    path: '/clusters/:cluster_id/namespaces/:namespace_id/statefulSets/create',
     name: 'Create StatefulSet',
     icon: Dashboard,
     component: CreateStatefulSetPage,
