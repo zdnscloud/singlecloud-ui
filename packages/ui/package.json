@@ -100,7 +100,7 @@
     "react-app-polyfill": "1",
     "react-dom": "^16.8.0",
     "react-helmet": "5.2.1",
-    "react-intl": "2.9.0",
+    "react-intl": "^3.0.0",
     "react-move": "^6.0.0",
     "react-redux": "7",
     "react-router": "5",

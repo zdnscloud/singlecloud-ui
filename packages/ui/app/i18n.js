@@ -8,14 +8,9 @@
  *   You CANNOT use import/export in this file.
  */
 const addLocaleData = require('react-intl').addLocaleData; //eslint-disable-line
-const enLocaleData = require('react-intl/locale-data/en');
-const zhLocaleData = require('react-intl/locale-data/zh');
 
 const enTranslationMessages = require('./translations/en.json');
 const zhTranslationMessages = require('./translations/zh.json');
-
-addLocaleData(enLocaleData);
-addLocaleData(zhLocaleData);
 
 const DEFAULT_LOCALE = 'zh';
 
