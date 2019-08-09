@@ -152,7 +152,8 @@ export class CreateStatefulSet extends React.PureComponent {
     async function doSubmit(formValues) {
       try {
         const data = formValues.toJS();
-        const { containers,persistentVolumes } = data;
+        const { containers,persistentVolumes,advancedOptions } = data;
+        let exposedPortsArrr = [];
         containers.forEach((item) => {
           if (item && item.args) {
             item.args = item.args.split(' ');
@@ -160,7 +161,20 @@ export class CreateStatefulSet extends React.PureComponent {
           if (item && item.command) {
             item.command = item.command.split(' ');
           }
+          exposedPortsArrr.push(...item.exposedPorts)
         });
+        let { exposedServices } = advancedOptions;
+        let esArr = [];
+        if(exposedPortsArrr.length>0){
+          exposedPortsArrr.forEach((i) => {
+            exposedServices.forEach((j) => {
+              if(i.name === j.name){
+                esArr.push(j)
+              }
+            })
+          })
+        };
+           advancedOptions.exposedServices = esArr;
         persistentVolumes.forEach((item)=>{
           if (item && item.size) {
             item.size = `${item.size}Gi`;
@@ -206,7 +220,11 @@ export class CreateStatefulSet extends React.PureComponent {
                 storageClasses={storageClasses}
                 initialValues={fromJS({
                   replicas: 1,
-                  containers: [{ name: '' ,persistentVolumes:[]}],
+                  containers: [{ name: '',exposedPorts:[]}],
+                  persistentVolumes:[],
+                  advancedOptions:{
+                    exposedServices:[]
+                  }
                 })}
                 formValues={values}
               />
