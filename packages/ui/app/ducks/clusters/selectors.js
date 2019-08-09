@@ -57,6 +57,45 @@ export const makeSelectClustersAndNamespaces = () =>
         )
   );
 
+export const makeSelectPodLogIsOpening = () =>
+  createSelector(
+    selectClustersDomain,
+    (state) => !!state.get('openedLog')
+  );
+
+export const makeSelectLoggingCluster = () =>
+  createSelector(
+    selectClustersDomain,
+    (state) => state.get('openedLog')
+  );
+
+export const makeSelectOpeningLogs = () =>
+  createSelector(
+    selectClustersDomain,
+    (state) => state.get('logs')
+  );
+
+export const makeSelectLogURL = () =>
+  createSelector(
+    selectClustersDomain,
+    (state) =>
+      `${window.location.protocol}//${window.location.hostname}:${
+        window.location.port
+      }/apis/ws.zcloud.cn/v1/clusters/${state.get('openedLog')}/zkelog`
+  );
+
+export const makeSelectNodeIsOpening = () =>
+  createSelector(
+    selectClustersDomain,
+    (state) => !!state.get('openedNode')
+  );
+  
+export const makeSelectNodesList = () =>
+  createSelector(
+    selectClustersDomain,
+    (state) => state.get('nodes')
+  );
+
 /**
  * Default selector used by Clusters
  */

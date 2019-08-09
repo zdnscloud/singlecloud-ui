@@ -13,13 +13,11 @@ import { bindActionCreators, compose } from 'redux';
 
 import { withStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
-
 import { SimpleTable } from '@gsmlg/com';
 
 import { makeSelectClusterID } from 'ducks/app/selectors';
-import { makeSelectCurrentCluster } from 'ducks/clusters/selectors';
-import { makeSelectNodes, makeSelectNodesList } from 'ducks/nodes/selectors';
-import * as actions from 'ducks/nodes/actions';
+import { makeSelectNodesList } from 'ducks/clusters/selectors';
+import * as actions from 'ducks/clusters/actions';
 
 import messages from './messages';
 import styles from './styles';
@@ -29,22 +27,21 @@ import schema from './tableSchema';
 export class NodesTable extends React.PureComponent {
   static propTypes = {
     classes: PropTypes.object.isRequired,
-    data: PropTypes.object.isRequired,
-    nodes: PropTypes.object,
+    nodes: PropTypes.object.isRequired,
   };
 
   render() {
-    const { classes, data, clusterID, nodes, removeNode } = this.props;
+    const { classes, data, clusterID , setNodes, nodes } = this.props;
     const mapedSchema = schema
       .map((sche) => ({
         ...sche,
         label: <FormattedMessage {...messages[`tableTitle${sche.label}`]} />,
       }))
       .map((sch) => {
-        if (sch.id === 'name') {
+        if (sch.id === 'actions') {
           return {
             ...sch,
-            props: { clusterID }
+            props: { nodes , setNodes },
           };
         }
         return sch;
@@ -55,7 +52,7 @@ export class NodesTable extends React.PureComponent {
         <SimpleTable
           className={classes.table}
           schema={mapedSchema}
-          data={data}
+          data={nodes}
         />
       </Paper>
     );
@@ -64,8 +61,7 @@ export class NodesTable extends React.PureComponent {
 
 const mapStateToProps = createStructuredSelector({
   clusterID: makeSelectClusterID(),
-  nodes: makeSelectNodes(),
-  data: makeSelectNodesList(),
+  nodes: makeSelectNodesList(),
 });
 
 const mapDispatchToProps = (dispatch) =>

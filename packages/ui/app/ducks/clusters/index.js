@@ -19,6 +19,10 @@ export const initialState = fromJS({
   clusters: {},
   list: [],
   selectedCluster: {},
+  openedLog: null,
+  logs: [],
+  openedNode: false,
+  nodes: [],
 });
 
 const c = constants;
@@ -59,6 +63,28 @@ export const clustersReducer = (
     }
     case c.CREATE_CLUSTER_FAILURE:
       return state;
+
+    case c.OPEN_CLUSTER_LOG:
+      return state.set('openedLog', payload).set('logs', []);
+    case c.CLOSE_CLUSTER_LOG:
+      return state.set('openedLog', null);
+    case c.SET_OPENING_LOG:
+      return state.set('logs', payload);
+
+    case c.OPEN_NODE:
+      return state.set('openedNode', true);
+    case c.CLOSE_NODE:
+      return state.set('openedNode', false);
+
+    case c.SET_NODES:
+      return state.set('nodes', payload);
+
+    case c.UPDATE_CLUSTER:
+      return state;
+    case c.UPDATE_CLUSTER_SUCCESS:
+      return state;
+    case c.UPDATE_CLUSTER_FAILURE:
+        return state;
 
     default:
       return state;

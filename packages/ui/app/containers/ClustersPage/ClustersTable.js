@@ -49,6 +49,7 @@ export class ClustersTable extends React.PureComponent {
       // eslint-disable-next-line no-shadow
       openTerminal,
       removeCluster,
+      cancelCluster,
       theme,
     } = this.props;
     const mergedSchema = schema
@@ -56,7 +57,7 @@ export class ClustersTable extends React.PureComponent {
         if (sch.id === 'actions') {
           return {
             ...sch,
-            props: { classes, openTerminal, removeCluster },
+            props: { classes, openTerminal, removeCluster, cancelCluster },
           };
         }
         if (sch.id === 'status') {
