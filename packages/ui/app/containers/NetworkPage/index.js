@@ -31,6 +31,7 @@ import ReadOnlyInput from 'components/CustomInput/ReadOnlyInput';
 
 import * as actions from 'ducks/networks/actions';
 import { makeSelectClusterID } from 'ducks/app/selectors';
+import { makeSelectCurrentCluster } from 'ducks/clusters/selectors';
 import {
   makeSelectServiceNetworks,
   makeSelectPodNetworks,
@@ -69,9 +70,9 @@ export class NetworkPage extends React.PureComponent {
   }
 
   load() {
-    const { clusterID, loadPodNetworks, loadServiceNetworks } = this.props;
-    const podurl = `/apis/agent.zcloud.cn/v1/clusters/${clusterID}/podnetworks`;
-    const serviceurl = `/apis/agent.zcloud.cn/v1/clusters/${clusterID}/servicenetworks`;
+    const { clusterID, cluster, loadPodNetworks, loadServiceNetworks } = this.props;
+    const podurl = cluster.getIn(['links', 'podnetworks']);
+    const serviceurl = cluster.getIn(['links', 'servicenetworks']);
     loadPodNetworks(podurl, clusterID);
     loadServiceNetworks(serviceurl, clusterID);
   }
@@ -138,6 +139,7 @@ export class NetworkPage extends React.PureComponent {
 
 const mapStateToProps = createStructuredSelector({
   clusterID: makeSelectClusterID(),
+  cluster: makeSelectCurrentCluster(),
   services: makeSelectCurrentServiceNetworks(),
   pods: makeSelectCurrentPodNetworks(),
 });
