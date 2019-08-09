@@ -98,17 +98,17 @@ export const read<%= csname %>Epic = (action$, state$, { ajax }) =>
     )
   );
 
-export const remove<%= csname %>Epic = (action$, state$, { ajax }) =>
+export const delete<%= csname %>Epic = (action$, state$, { ajax }) =>
   action$.pipe(
-    ofType(c.REMOVE_<%= SN %>),
+    ofType(c.DELETE_<%= SN %>),
     mergeMap(({ payload, meta: { url } }) =>
       ajax({
         url: `${url}`,
         method: 'DELETE',
       }).pipe(
-        map((resp) => a.remove<%= csname %>Success(resp, { id: payload })),
+        map((resp) => a.delete<%= csname %>Success(resp, { id: payload })),
         catchError((error) =>
-          of(a.remove<%= csname %>Failure(error, { id: payload }))
+          of(a.delete<%= csname %>Failure(error, { id: payload }))
         )
       )
     )
@@ -125,6 +125,6 @@ export default combineEpics(
   create<%= csname %>Epic,
   update<%= csname %>Epic,
   read<%= csname %>Epic,
-  remove<%= csname %>Epic,
+  delete<%= csname %>Epic,
   afterCreate<%= csname %>Epic
 );

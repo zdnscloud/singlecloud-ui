@@ -83,15 +83,15 @@ export const reducer = (
     case c.READ_<%= SN %>_FAILURE:
       return state;
 
-    case c.REMOVE_<%= SN %>:
+    case c.DELETE_<%= SN %>:
       return state;
-    case c.REMOVE_<%= SN %>_SUCCESS: {
+    case c.DELETE_<%= SN %>_SUCCESS: {
       const { id } = meta;
       return state
         .deleteIn(['data', id])
         .update('list', (l) => l.filterNot((i) => i === id));
     }
-    case c.REMOVE_<%= SN %>_FAILURE:
+    case c.DELETE_<%= SN %>_FAILURE:
       return state;
 
     default:

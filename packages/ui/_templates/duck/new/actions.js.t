@@ -95,20 +95,20 @@ export const read<%= csname %>Failure = (error, meta) => ({
   error: true,
 });
 
-export const remove<%= csname %> = (id, meta) => ({
-  type: c.REMOVE_<%= SN %>,
+export const delete<%= csname %> = (id, meta) => ({
+  type: c.DELETE_<%= SN %>,
   payload: id,
   meta,
 });
 
-export const remove<%= csname %>Success = (resp, meta) => ({
-  type: c.REMOVE_<%= SN %>_SUCCESS,
+export const delete<%= csname %>Success = (resp, meta) => ({
+  type: c.DELETE_<%= SN %>_SUCCESS,
   payload: resp,
   meta,
 });
 
-export const remove<%= csname %>Failure = (error, meta) => ({
-  type: c.REMOVE_<%= SN %>_FAILURE,
+export const delete<%= csname %>Failure = (error, meta) => ({
+  type: c.DELETE_<%= SN %>_FAILURE,
   payload: error,
   meta,
   error: true,
