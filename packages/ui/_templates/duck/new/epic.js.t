@@ -43,7 +43,7 @@ export const load<%= cpname %>Epic = (action$, state$, { ajax }) =>
       )
     )
   );
-
+<% if (wannaCreateAction) {%>
 export const create<%= csname %>Epic = (action$, state$, { ajax }) =>
   action$.pipe(
     ofType(c.CREATE_<%= SN %>),
@@ -64,7 +64,8 @@ export const create<%= csname %>Epic = (action$, state$, { ajax }) =>
       )
     )
   );
-
+<% }
+if (wannaUpdateAction) {%>
 export const update<%= csname %>Epic = (action$, state$, { ajax }) =>
   action$.pipe(
     ofType(c.UPDATE_<%= SN %>),
@@ -81,7 +82,8 @@ export const update<%= csname %>Epic = (action$, state$, { ajax }) =>
       )
     )
   );
-
+<% }
+if (wannaReadOneAction) {%>
 export const read<%= csname %>Epic = (action$, state$, { ajax }) =>
   action$.pipe(
     ofType(c.READ_<%= SN %>),
@@ -97,7 +99,8 @@ export const read<%= csname %>Epic = (action$, state$, { ajax }) =>
       )
     )
   );
-
+<% }
+if (wannaDeleteAction) {%>
 export const delete<%= csname %>Epic = (action$, state$, { ajax }) =>
   action$.pipe(
     ofType(c.DELETE_<%= SN %>),
@@ -113,18 +116,23 @@ export const delete<%= csname %>Epic = (action$, state$, { ajax }) =>
       )
     )
   );
-
+<% }
+if (wannaCreateAction) {%>
 export const afterCreate<%= csname %>Epic = (action$) =>
   action$.pipe(
     ofType(c.CREATE_<%= SN %>_SUCCESS),
     mergeMap(({ payload, meta }) => mapTo(push(`/<%= name %>`)))
   );
-
+<% } %>
 export default combineEpics(
-  load<%= cpname %>Epic,
-  create<%= csname %>Epic,
-  update<%= csname %>Epic,
-  read<%= csname %>Epic,
-  delete<%= csname %>Epic,
-  afterCreate<%= csname %>Epic
+  load<%= cpname %>Epic,<% if (wannaCreateAction) {%>
+  create<%= csname %>Epic,<% }
+if (wannaUpdateAction) {%>
+  update<%= csname %>Epic,<% }
+if (wannaReadOneAction) {%>
+  read<%= csname %>Epic,<% }
+if (wannaDeleteAction) {%>
+  delete<%= csname %>Epic,<% }
+if (wannaCreateAction) {%>
+  afterCreate<%= csname %>Epic,<% } %>
 );

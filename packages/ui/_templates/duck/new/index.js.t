@@ -48,6 +48,7 @@ export const reducer = (
     case c.LOAD_<%= PN %>_FAILURE:
       return state;
 
+<% if (wannaCreateAction) {%>
     case c.CREATE_<%= SN %>:
       return state;
     case c.CREATE_<%= SN %>_SUCCESS: {
@@ -56,7 +57,8 @@ export const reducer = (
     }
     case c.CREATE_<%= SN %>_FAILURE:
       return state;
-
+<% }
+if (wannaUpdateAction) {%>
     case c.UPDATE_<%= SN %>:
       return state;
     case c.UPDATE_<%= SN %>_SUCCESS: {
@@ -69,7 +71,8 @@ export const reducer = (
     }
     case c.UPDATE_<%= SN %>_FAILURE:
       return state;
-
+<% }
+if (wannaReadOneAction) {%>
     case c.READ_<%= SN %>:
       return state;
     case c.READ_<%= SN %>_SUCCESS: {
@@ -82,7 +85,8 @@ export const reducer = (
     }
     case c.READ_<%= SN %>_FAILURE:
       return state;
-
+<% }
+if (wannaDeleteAction) {%>
     case c.DELETE_<%= SN %>:
       return state;
     case c.DELETE_<%= SN %>_SUCCESS: {
@@ -93,7 +97,7 @@ export const reducer = (
     }
     case c.DELETE_<%= SN %>_FAILURE:
       return state;
-
+<% } %>
     default:
       return state;
   }

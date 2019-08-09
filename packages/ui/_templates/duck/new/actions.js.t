@@ -37,7 +37,7 @@ export const load<%= cpname %>Failure = (error, meta) => ({
   meta,
   error: true,
 });
-
+<% if (wannaCreateAction) {%>
 export const create<%= csname %> = (data, meta) => ({
   type: c.CREATE_<%= SN %>,
   payload: data,
@@ -56,7 +56,8 @@ export const create<%= csname %>Failure = (error, meta) => ({
   meta,
   error: true,
 });
-
+<% }
+if (wannaUpdateAction) {%>
 export const update<%= csname %> = (data, meta) => ({
   type: c.UPDATE_<%= SN %>,
   payload: data,
@@ -75,7 +76,8 @@ export const update<%= csname %>Failure = (error, meta) => ({
   meta,
   error: true,
 });
-
+<% }
+if (wannaReadOneAction) {%>
 export const read<%= csname %> = (id, meta) => ({
   type: c.READ_<%= SN %>,
   payload: id,
@@ -94,7 +96,8 @@ export const read<%= csname %>Failure = (error, meta) => ({
   meta,
   error: true,
 });
-
+<% }
+if (wannaDeleteAction) {%>
 export const delete<%= csname %> = (id, meta) => ({
   type: c.DELETE_<%= SN %>,
   payload: id,
@@ -113,3 +116,4 @@ export const delete<%= csname %>Failure = (error, meta) => ({
   meta,
   error: true,
 });
+<% } %>

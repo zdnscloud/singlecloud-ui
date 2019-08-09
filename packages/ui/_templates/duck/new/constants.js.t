@@ -22,19 +22,23 @@ export const prefix = '<%= name %>';
 export const LOAD_<%= PN %> = `${prefix}/LOAD_<%= PN %>`;
 export const LOAD_<%= PN %>_SUCCESS = `${prefix}/LOAD_<%= PN %>_SUCCESS`;
 export const LOAD_<%= PN %>_FAILURE = `${prefix}/LOAD_<%= PN %>_FAILURE`;
-
+<% if (wannaCreateAction) {%>
 export const CREATE_<%= SN %> = `${prefix}/CREATE_<%= SN %>`;
 export const CREATE_<%= SN %>_SUCCESS = `${prefix}/CREATE_<%= SN %>_SUCCESS`;
 export const CREATE_<%= SN %>_FAILURE = `${prefix}/CREATE_<%= SN %>_FAILURE`;
-
+<% }
+   if (wannaUpdateAction) {%>
 export const UPDATE_<%= SN %> = `${prefix}/UPDATE_<%= SN %>`;
 export const UPDATE_<%= SN %>_SUCCESS = `${prefix}/UPDATE_<%= SN %>_SUCCESS`;
 export const UPDATE_<%= SN %>_FAILURE = `${prefix}/UPDATE_<%= SN %>_FAILURE`;
-
+<% }
+   if (wannaReadOneAction) {%>
 export const READ_<%= SN %> = `${prefix}/READ_<%= SN %>`;
 export const READ_<%= SN %>_SUCCESS = `${prefix}/READ_<%= SN %>_SUCCESS`;
 export const READ_<%= SN %>_FAILURE = `${prefix}/READ_<%= SN %>_FAILURE`;
-
+<% }
+   if (wannaDeleteAction) {%>
 export const DELETE_<%= SN %> = `${prefix}/DELETE_<%= SN %>`;
 export const DELETE_<%= SN %>_SUCCESS = `${prefix}/DELETE_<%= SN %>_SUCCESS`;
 export const DELETE_<%= SN %>_FAILURE = `${prefix}/DELETE_<%= SN %>_FAILURE`;
+<% } %>

@@ -1,12 +1,38 @@
 module.exports = {
   prompt: ({ prompter, args }) => {
-    if (args.name) {
-      return Promise.resolve({ allow: true });
-    }
-    return prompter.prompt({
-      type: 'input',
-      name: 'name',
-      message: 'Please input duck name:'
-    });
+    const questions = [
+      {
+        type: 'input',
+        name: 'name',
+        skip: !!args.name,
+        message: 'Please input duck name:'
+      },
+      {
+        type: 'confirm',
+        name: 'wannaCreateAction',
+        initial: true,
+        message: 'Wanna add create action?',
+      },
+      {
+        type: 'confirm',
+        name: 'wannaUpdateAction',
+        initial: true,
+        message: 'Wanna add update action?',
+      },
+      {
+        type: 'confirm',
+        name: 'wannaReadOneAction',
+        initial: true,
+        message: 'Wanna add readOne action?',
+      },
+      {
+        type: 'confirm',
+        name: 'wannaDeleteAction',
+        initial: true,
+        message: 'Wanna add delete action?',
+      },
+    ];
+
+    return prompter.prompt(questions);
   },
 };
