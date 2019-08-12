@@ -27,9 +27,9 @@ module.exports = {
       },
       {
         type: 'confirm',
-        name: 'wannaDeleteAction',
+        name: 'wannaRemoveAction',
         initial: true,
-        message: 'Wanna add delete action?',
+        message: 'Wanna add remove action?',
       },
     ];
 

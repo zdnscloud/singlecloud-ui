@@ -37,8 +37,8 @@ export const READ_<%= SN %> = `${prefix}/READ_<%= SN %>`;
 export const READ_<%= SN %>_SUCCESS = `${prefix}/READ_<%= SN %>_SUCCESS`;
 export const READ_<%= SN %>_FAILURE = `${prefix}/READ_<%= SN %>_FAILURE`;
 <% }
-   if (wannaDeleteAction) {%>
-export const DELETE_<%= SN %> = `${prefix}/DELETE_<%= SN %>`;
-export const DELETE_<%= SN %>_SUCCESS = `${prefix}/DELETE_<%= SN %>_SUCCESS`;
-export const DELETE_<%= SN %>_FAILURE = `${prefix}/DELETE_<%= SN %>_FAILURE`;
+   if (wannaRemoveAction) {%>
+export const REMOVE_<%= SN %> = `${prefix}/REMOVE_<%= SN %>`;
+export const REMOVE_<%= SN %>_SUCCESS = `${prefix}/REMOVE_<%= SN %>_SUCCESS`;
+export const REMOVE_<%= SN %>_FAILURE = `${prefix}/REMOVE_<%= SN %>_FAILURE`;
 <% } %>

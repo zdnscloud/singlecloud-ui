@@ -97,21 +97,21 @@ export const read<%= csname %>Failure = (error, meta) => ({
   error: true,
 });
 <% }
-if (wannaDeleteAction) {%>
-export const delete<%= csname %> = (id, meta) => ({
-  type: c.DELETE_<%= SN %>,
+if (wannaRemoveAction) {%>
+export const remove<%= csname %> = (id, meta) => ({
+  type: c.REMOVE_<%= SN %>,
   payload: id,
   meta,
 });
 
-export const delete<%= csname %>Success = (resp, meta) => ({
-  type: c.DELETE_<%= SN %>_SUCCESS,
+export const remove<%= csname %>Success = (resp, meta) => ({
+  type: c.REMOVE_<%= SN %>_SUCCESS,
   payload: resp,
   meta,
 });
 
-export const delete<%= csname %>Failure = (error, meta) => ({
-  type: c.DELETE_<%= SN %>_FAILURE,
+export const remove<%= csname %>Failure = (error, meta) => ({
+  type: c.REMOVE_<%= SN %>_FAILURE,
   payload: error,
   meta,
   error: true,

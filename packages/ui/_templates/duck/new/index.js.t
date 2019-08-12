@@ -86,16 +86,16 @@ if (wannaReadOneAction) {%>
     case c.READ_<%= SN %>_FAILURE:
       return state;
 <% }
-if (wannaDeleteAction) {%>
-    case c.DELETE_<%= SN %>:
+if (wannaRemoveAction) {%>
+    case c.REMOVE_<%= SN %>:
       return state;
-    case c.DELETE_<%= SN %>_SUCCESS: {
+    case c.REMOVE_<%= SN %>_SUCCESS: {
       const { id } = meta;
       return state
-        .deleteIn(['data', id])
+        .removeIn(['data', id])
         .update('list', (l) => l.filterNot((i) => i === id));
     }
-    case c.DELETE_<%= SN %>_FAILURE:
+    case c.REMOVE_<%= SN %>_FAILURE:
       return state;
 <% } %>
     default:

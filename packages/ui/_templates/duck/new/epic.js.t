@@ -100,18 +100,18 @@ export const read<%= csname %>Epic = (action$, state$, { ajax }) =>
     )
   );
 <% }
-if (wannaDeleteAction) {%>
-export const delete<%= csname %>Epic = (action$, state$, { ajax }) =>
+if (wannaRemoveAction) {%>
+export const remove<%= csname %>Epic = (action$, state$, { ajax }) =>
   action$.pipe(
-    ofType(c.DELETE_<%= SN %>),
+    ofType(c.REMOVE_<%= SN %>),
     mergeMap(({ payload, meta: { url } }) =>
       ajax({
         url: `${url}`,
-        method: 'DELETE',
+        method: 'REMOVE',
       }).pipe(
-        map((resp) => a.delete<%= csname %>Success(resp, { id: payload })),
+        map((resp) => a.remove<%= csname %>Success(resp, { id: payload })),
         catchError((error) =>
-          of(a.delete<%= csname %>Failure(error, { id: payload }))
+          of(a.remove<%= csname %>Failure(error, { id: payload }))
         )
       )
     )
@@ -131,8 +131,8 @@ if (wannaUpdateAction) {%>
   update<%= csname %>Epic,<% }
 if (wannaReadOneAction) {%>
   read<%= csname %>Epic,<% }
-if (wannaDeleteAction) {%>
-  delete<%= csname %>Epic,<% }
+if (wannaRemoveAction) {%>
+  remove<%= csname %>Epic,<% }
 if (wannaCreateAction) {%>
   afterCreate<%= csname %>Epic,<% } %>
 );
