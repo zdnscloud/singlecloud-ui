@@ -35,12 +35,12 @@ class ApplicationForm extends PureComponent {
       formValues
     } = this.props;
 
-    const clusterName = formValues && formValues.get('clusterName');
+    const clusterID = formValues && formValues.get('clusterID');
     const clustersOptions = clusters.toList().map((sc) => ({
       label: sc.get('name'),
       value: sc.get('name'),
     }));
-    const namespacesOptions = namespaces.get(clusterName) ? (namespaces.get(clusterName).toList().map((sc) => ({
+    const namespacesOptions = namespaces.get(clusterID) ? (namespaces.get(clusterID).toList().map((sc) => ({
       label: sc.get('name'),
       value: sc.get('name'),
     }))) : []
@@ -100,7 +100,7 @@ class ApplicationForm extends PureComponent {
                 <GridItem xs={3} sm={3} md={3}>
                   <SelectField
                     label={<FormattedMessage {...messages.formClusterName} />}
-                    name="clusterName"
+                    name="clusterID"
                     formControlProps={{
                       style: {
                         width: '100%',
@@ -113,7 +113,7 @@ class ApplicationForm extends PureComponent {
                 <GridItem xs={3} sm={3} md={3}>
                   <SelectField
                     label={<FormattedMessage {...messages.formNamespaceName} />}
-                    name="namespaceName"
+                    name="namespaceID"
                     formControlProps={{
                       style: {
                         width: '100%',

@@ -30,6 +30,7 @@ import messages from './messages';
 import styles from './styles';
 import ApplicationsPageHelmet from './helmet';
 import ApplicationsTable from './ApplicationsTable';
+import moment from 'moment';
 
 /* eslint-disable react/prefer-stateless-function */
 export class ApplicationDetailPage extends React.PureComponent {
@@ -46,7 +47,7 @@ export class ApplicationDetailPage extends React.PureComponent {
   }
 
   render() {
-    const { classes, clusterID, namespaceID } = this.props;
+    const { classes, clusterID, namespaceID, application} = this.props;
  
     return (
       <div className={classes.root}>
@@ -67,10 +68,10 @@ export class ApplicationDetailPage extends React.PureComponent {
           <Typography component="div" className="">
             <GridContainer className={classes.tagWrap}>
                 <GridItem xs={6} sm={6} md={6}>
-                    <p className={classes.tag}>Version</p>
+                    <p className={classes.tag}>Version {application.get('chartVersion')}</p>
                 </GridItem>
                 <GridItem xs={6} sm={6} md={6}>
-                    <p className={classes.tag}>Creaced</p>
+                    <p className={classes.tag}>Creaced {moment(application.get('creationTimestamp')).format('YYYY-MM-DD HH:mm:ss')} </p>
                 </GridItem>
             </GridContainer>
             <GridContainer className={classes.grid}>

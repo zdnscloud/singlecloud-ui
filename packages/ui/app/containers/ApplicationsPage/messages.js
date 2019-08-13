@@ -45,8 +45,12 @@ export default defineMessages({
     id: `${scope}.tableTitleName`,
     defaultMessage: 'Name',
   },
-  tableTitleKind: {
+  tableTitleType: {
     id: `${scope}.tableTitleKind`,
     defaultMessage: 'Kind',
   },
+  removeAppText: {
+    id: `${scope}.removeAppText`,
+    defaultMessage: 'This action permanently deletes the content. Continue or not？',
+  }
 });

@@ -10,6 +10,7 @@ import IconButton from '@material-ui/core/IconButton';
 import Button from '@material-ui/core/Button';
 import DeleteIcon from 'components/Icons/Delete'
 import messages from '../messages';
+import Confirm from 'components/Confirm/Confirm'
 
 class ApplicationTemplate extends PureComponent {
   state = {};
@@ -19,31 +20,40 @@ class ApplicationTemplate extends PureComponent {
       classes,
       item,
       removeApplication,
+      clusterID,
+      namespaceID
     } = this.props;
-    // eslint-disable-next-line no-console
+
+    const handleConfirm  = () => {
+      removeApplication(item.get('id'),{url: item.getIn(['links', 'remove'])})
+    }
+
     return (
       <Fragment>
           <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
               <div className={classes.appWrap}>
-                  <GridContainer>
-                    <GridItem xs={4} sm={4} md={4}>
-                      <img alt="icon"  src={item.get('icon')} className={classes.appLogo} />
-                    </GridItem>
-                    <GridItem xs={8} sm={8} md={8}>
-                      <Button
-                        to="/applications/show"
-                        component={Link}
-                        className={classes.appDetailBtn}
-                      >
-                        <p className={classes.aapName}>{item.get('chartName')}</p>
-                      </Button>
+                 <img alt="icon"  src={item.get('icon')} className={classes.appLogo} />
+                <div className={classes.appContent}>
+                  <Button
+                    to={`/clusters/${clusterID}/namespaces/${namespaceID}/applications/${item.get('id')}/show`}
+                    component={Link}
+                    className={classes.appDetailBtn}
+                  >
+                    <p className={classes.aapName}>{item.get('name')}</p>
+                  </Button>
+                  <Confirm 
+                    handleConfirm={handleConfirm}
+                    dialogContentText ={messages.removeAppText}
+                    component ={(
                       <IconButton
-                          className={classes.appDeleteBtn}
-                        >
-                          <DeleteIcon className={classes.deleteIcon} />
+                        className={classes.appDeleteBtn}
+                      >
+                        <DeleteIcon className={classes.deleteIcon} />
                       </IconButton>
-                    </GridItem>
-                  </GridContainer>
+                    )
+                  }
+                />
+                </div>
               </div>
           </GridItem>
       </Fragment> 

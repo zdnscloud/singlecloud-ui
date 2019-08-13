@@ -168,6 +168,10 @@ export const makeSelectLeftMenus = () =>
                 name: 'ServiceLink',
                 path: `/clusters/${cluster}/namespaces/${namespace}/serviceLink`,
               },
+              {
+                name: 'Applications',
+                path: `/clusters/${cluster}/namespaces/${namespace}/applications`,
+              }
             ],
             icon: SystemIcon,
           },
@@ -177,19 +181,6 @@ export const makeSelectLeftMenus = () =>
         {
           name: 'ApplicationStore',
           path: '/applicationStore',
-          icon: ApplicationStoreIcon,
-        },
-      ]);
-      menus = menus.concat([
-        {
-          name: 'ApplicationManagement',
-          children: [
-            {
-              name: 'Applications',
-              path: `/clusters/${cluster}/namespaces/${namespace}/applications`,
-              // path: '/applications',
-            }
-          ],
           icon: ApplicationStoreIcon,
         },
       ]);

@@ -219,8 +219,9 @@ const styles = (theme) => ({
   },
   appLogo: {
     margin: '0 auto',  
-    width: '80%', 
-    display: 'block'
+    width: 200, 
+    display: 'block',
+    height:80
   },
   appDiscribe: {
     color: '#4A4A4A',

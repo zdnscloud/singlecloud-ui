@@ -42,7 +42,7 @@ export const loadChartEpic = (action$, state$, { ajax }) =>
 export const createChartEpic = (action$, state$, { ajax }) =>
   action$.pipe(
     ofType(c.CREATE_CHART),
-    mergeMap(({ payload, meta: { resolve, reject, url } }) =>
+    mergeMap(({ payload, meta: { resolve, reject, url ,clusterID, namespaceID} }) =>
       ajax({
         url,
         method: 'POST',
@@ -50,7 +50,7 @@ export const createChartEpic = (action$, state$, { ajax }) =>
       }).pipe(
         map((resp) => {
           resolve(resp);
-          return a.createChartSuccess(resp);
+          return a.createChartSuccess(resp ,{ clusterID, namespaceID });
         }),
         catchError((error) => {
           reject(error);
@@ -64,7 +64,7 @@ export const afterCreateEpic = (action$) =>
   action$.pipe(
     ofType(c.CREATE_CHART_SUCCESS),
     mergeMap(({ payload, meta }) =>
-      timer(1000).pipe(mapTo(push(`/applicationStore`)))
+      timer(1000).pipe(mapTo(push( `/clusters/${meta.clusterID}/namespaces/${meta.namespaceID}/applications`)))
     )
   );
 

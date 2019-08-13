@@ -20,6 +20,11 @@ import {
   makeSelectApplicationsList,
 } from 'ducks/applications/selectors';
 
+import {
+  makeSelectClusterID,
+  makeSelectNamespaceID,
+} from 'ducks/app/selectors';
+
 import messages from './messages';
 import styles from './styles';
 import ApplicationTemplate from './application/applicationTemplate'
@@ -38,7 +43,9 @@ export class ApplicationsList extends React.PureComponent {
       data,
       removeApplication,
       theme,
-      filter
+      filter,
+      clusterID,
+      namespaceID
     } = this.props;
     let appData = data.filter((item) => {
       let flag = true;
@@ -56,6 +63,8 @@ export class ApplicationsList extends React.PureComponent {
                   key={key}
                   item={item}
                   removeApplication={removeApplication}
+                  namespaceID={namespaceID}
+                  clusterID={clusterID}
                 />
               );
             })}
@@ -67,6 +76,8 @@ export class ApplicationsList extends React.PureComponent {
 const mapStateToProps = createStructuredSelector({
   applications: makeSelectApplications(),
   data: makeSelectApplicationsList(),
+  clusterID: makeSelectClusterID(),
+  namespaceID: makeSelectNamespaceID(),
 });
 
 const mapDispatchToProps = (dispatch) =>

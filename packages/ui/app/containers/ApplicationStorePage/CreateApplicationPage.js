@@ -68,21 +68,22 @@ export class CreateApplicationPage extends React.PureComponent {
   }
 
   render() {
-    const { classes, submitForm, createApplication, url, clusters, namespaces, chart, chartID, values } = this.props;
+    const { classes, submitForm, createChart, clusters, namespaces, chart, chartID, values } = this.props;
     async function doSubmit(formValues) {
-      
       try {
-        const { name,chartVersion,...formData } = formValues.toJS();
+        const { name,chartVersion,clusterID,namespaceID,...formData } = formValues.toJS();
+        const url = `/apis/zcloud.cn/v1/clusters/${clusterID}/namespaces/${namespaceID}/applications`
         const data = {
           name,
           chartVersion,
           chartName:chartID,
-          configs:[ ...formData]
+          // configs: JSON.stringify(formData)
+          configs: formData
         };
-        console.log('data',data)
-        // await new Promise((resolve, reject) => {
-        //   createApplication({ ...data }, { resolve, reject, url });
-        // });
+        console.log('data',data,'url',url)
+        await new Promise((resolve, reject) => {
+          createChart({ ...data }, { resolve, reject, url ,clusterID, namespaceID});
+        });
       } catch (error) {
         throw new SubmissionError({ _error: error });
       }

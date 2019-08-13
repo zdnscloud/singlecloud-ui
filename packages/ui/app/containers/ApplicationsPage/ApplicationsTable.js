@@ -20,8 +20,10 @@ import * as actions from 'ducks/applications/actions';
 import {
   makeSelectApplications,
   makeSelectApplicationsList,
+  makeSelectCurrentApplication
 } from 'ducks/applications/selectors';
 import { makeSelectLocation} from 'ducks/app/selectors';
+import { Map, List } from 'immutable';
 
 import messages from './messages';
 import styles from './styles';
@@ -37,11 +39,13 @@ export class ApplicationsTable extends React.PureComponent {
   render() {
     const {
       classes,
-      data,
       location,
       theme,
+      application
     } = this.props;
     const pathname = location.get('pathname');
+    const data = application.get('appResources') || List([]);
+    console.log('pathname',pathname,'data',data)
     const mergedSchema = schema
       .map((sch) => {
         if (sch.id === 'name') {
@@ -72,7 +76,8 @@ export class ApplicationsTable extends React.PureComponent {
 const mapStateToProps = createStructuredSelector({
   location: makeSelectLocation(),
   applications: makeSelectApplications(),
-  data: makeSelectApplicationsList(),
+  // data: makeSelectApplicationsList(),
+  application: makeSelectCurrentApplication()
 });
 
 const mapDispatchToProps = (dispatch) =>

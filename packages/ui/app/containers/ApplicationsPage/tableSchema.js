@@ -5,7 +5,7 @@ import Button from '@material-ui/core/Button';
 
 const schema = [
   'name',
-  'kind',
+  'type',
 ];
 
 const tableSchema = schema

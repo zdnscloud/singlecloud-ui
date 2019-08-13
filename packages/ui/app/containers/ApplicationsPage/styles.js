@@ -182,8 +182,14 @@ const styles = (theme) => ({
   },
   appLogo: {
     margin: '0 auto',  
-    width: '80%', 
-    display: 'block'
+    display: 'inline-block',
+    width: 100, 
+    height:100,
+    verticalAlign:'middle',
+    marginRight: 20
+  },
+  appContent: {
+    display: 'inline-block',
   },
   appDeleteBtn: {
     background: '#1B9CCE',

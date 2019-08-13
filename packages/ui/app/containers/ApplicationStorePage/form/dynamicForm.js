@@ -28,8 +28,28 @@ const DynamicForm = ({
       value: sc,
     })):null;
 
-    switch (true) {
-      case item.get('type')==='int' || item.get('type')==='string':
+    switch (item.get('type')) {
+      case 'int':
+        return <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
+            <InputField
+              label={item.get('label')}
+              name={item.get('jsonKey')}
+              formControlProps={{
+                className: classes.nameControl,
+                style: {
+                  width: '100%',
+                },
+              }}
+              inputProps={{
+                type: 'number',
+                autoComplete: 'off',
+            }}
+            normalize={(val) => Number(val)}
+            />
+          </GridItem>
+        break; 
+
+        case 'string':
         return <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
             <InputField
               label={item.get('label')}
@@ -48,7 +68,7 @@ const DynamicForm = ({
           </GridItem>
         break; 
 
-      case item.get('type')=== 'bool':
+      case 'bool':
         return  <GridItem xs={12} sm={12} md={12} className={classes.formLine}>
             <SwitchField
               label={item.get('label')}
@@ -58,7 +78,7 @@ const DynamicForm = ({
           </GridItem>
         break; 
 
-      case item.get('type')==='enum':  
+      case 'enum':  
         return  <GridItem xs={12} sm={12} md={12} className={classes.formLine}>
             <RadioField
               label={item.get('label')}
@@ -75,7 +95,7 @@ const DynamicForm = ({
           </GridItem>
         break;
 
-        case item.get('type')==='array':  
+        case 'array':  
         return  <GridItem xs={12} sm={12} md={12} className={classes.formLine}>
             <ChexboxesField
               label={item.get('label')}
