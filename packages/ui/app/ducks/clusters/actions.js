@@ -69,3 +69,74 @@ export const createClusterFailure = (error, meta) => ({
   meta,
   error: true,
 });
+
+export const cancelCluster = (data, meta) => ({
+  type: c.CANCEL_CLUSTER,
+  payload: data,
+  meta,
+});
+
+export const cancelClusterSuccess = (resp, meta) => ({
+  type: c.CANCEL_CLUSTER_SUCCESS,
+  payload: resp,
+  meta,
+});
+
+export const cancelClusterFailure = (error, meta) => ({
+  type: c.CANCEL_CLUSTER_FAILURE,
+  payload: error,
+  meta,
+  error: true,
+});
+
+export const openClusterLog = (id, meta) => ({
+  type: c.OPEN_CLUSTER_LOG,
+  payload: id,
+  meta,
+});
+
+export const closeClusterLog = () => ({
+  type: c.CLOSE_CLUSTER_LOG,
+  payload: {},
+});
+
+export const setOpeningLogs = (logs, meta) => ({
+  type: c.SET_OPENING_LOG,
+  payload: logs,
+  meta,
+});
+
+export const openNode = () => ({
+  type: c.OPEN_NODE,
+  payload: {},
+});
+
+export const closeNode = () => ({
+  type: c.CLOSE_NODE,
+  payload: {},
+});
+
+export const setNodes = (nodes, meta) => ({
+  type: c.SET_NODES,
+  payload: nodes,
+  meta,
+});
+
+export const updateCluster = (data, meta) => ({
+  type: c.UPDATE_CLUSTER,
+  payload: data,
+  meta,
+});
+
+export const updateClusterSuccess = (resp) => ({
+  type: c.UPDATE_CLUSTER_SUCCESS,
+  payload: resp,
+});
+
+export const updateClusterFailure = (error) => ({
+  type: c.UPDATE_CLUSTER_FAILURE,
+  payload: error,
+  error: true,
+});
+
+

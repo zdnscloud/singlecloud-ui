@@ -9,6 +9,7 @@ import ShellIcon from 'components/Icons/Shell';
 import SuccessIcon from 'components/Icons/Success';
 import FailureIcon from 'components/Icons/Failure';
 import ConfirmDelete from 'components/ConfirmDelete/ConfirmDelete';
+import manageIcon from 'images/clusters/manage.png';
 
 const schema = ['status', 'name', 'nodeCount', 'creationTimestamp'];
 
@@ -36,13 +37,11 @@ const tableSchema = schema
             variant="outlined"
             size="small"
             className={props.classes.button}
-            onClick={(evt) => {
-              props.openTerminal(props.data.get('id'));
-            }}
-          >
-            <ShellIcon />
+            to={`/clusters/${props.data.get('id')}/manage`}
+            component={Link}
+            >
+            <img src={manageIcon} alt="manageIcon"  />
           </IconButton>
-
           <ConfirmDelete
             actionName={props.removeCluster}
             id={props.data.get('id')}
@@ -57,11 +56,7 @@ const tableSchema = schema
       return {
         ...sch,
         component: (props) =>
-          props.data.get('status') === 'Running' ? (
-            <SuccessIcon style={{ color: props.theme.palette.icons.a }} />
-          ) : (
-            <FailureIcon style={{ color: props.theme.palette.icons.b }} />
-          ),
+          props.data.get('status')
       };
     }
     return sch;

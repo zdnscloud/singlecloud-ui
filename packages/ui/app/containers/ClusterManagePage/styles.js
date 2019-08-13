@@ -71,9 +71,9 @@ const styles = (theme) => ({
   grid: {
     padding: theme.spacing(2),
   },
-  contentGrid: {
+  formGrid: {
     padding: theme.spacing(2),
-    paddingTop:0
+    paddingTop: 0,
   },
   chartContainer: {
     marginLeft: -22,
@@ -118,16 +118,14 @@ const styles = (theme) => ({
   },
   radioControl: {
     flexDirection: 'row',
-    marginTop: '10px',
   },
   radioLabel: {
     flexDirection: 'row',
-    lineHeight: 3.5,
-    
+    lineHeight: 3,
   },
   radioGroup: {
     flexDirection: 'row',
-    marginLeft: '1.5rem',
+    marginLeft: '2rem',
   },
   chexboxesControl: {
     flexDirection: 'row',
@@ -144,6 +142,41 @@ const styles = (theme) => ({
   cancleBtn: {
     marginLeft: '10px',
   },
+  buttonIcon: {
+    marginRight: 5,
+  },
+  shellIcon: {
+    marginRight: 5,
+    width: 14,
+    height: 14,
+  },
+  runningBtn: {
+    background: 'rgba(56,158,13,0.2)',
+    color: '#389E0D',
+    marginRight: 10
+  },
+  loadingBtn: {
+    background: 'rgba(247,181,0,0.2)',
+    color: '#F7B500',
+    marginRight: 10
+  },
+  failBtn: {
+    background: 'rgba(224,32,32,0.2)',
+    color: '#E02020',
+    marginRight: 10
+  },
+  unableBtn:{
+    background: 'rgba(217,217,217,0.2)',
+    color: '#D9D9D9',
+    marginRight: 10
+  },
+  handleBtn: {
+    marginRight: 10,
+    border: '1px solid rgba(217,217,217,1)',
+  },
+  btnGroup: {
+    marginBottom: 20
+  },
   dialogCard: {
     margin: 0,
   },
@@ -159,26 +192,29 @@ const styles = (theme) => ({
     display: 'flex',
     height: '100%',
   },
-  separateLineWrap: {
-    marginTop: '8px',
-    marginRight: '5px',
-    background: '#eee',
-  },
-  separateLine: {
-    marginTop: '8px',
-    boxShadow: '1px 0px 2px #ccc',
-    border: '1px solid #ccc',
-  },
-  removeBtn: {
-    float: 'right',
-  },
-  createBtnLink: {
-    position: 'absolute',
-    top: '3px',
-    right: '10px',
-  },
-  tableWrapper: {
+  logsWrapper: {
+    width: '70vw',
+    backgroundColor: 'black',
+    color: 'white',
     overflow: 'auto',
+  },
+  nodesWrapper: {
+    width: '70vw',
+    overflow: 'auto',
+    overflowX: 'hidden'
+  },
+  logs: {
+    backgroundColor: 'black',
+    color: 'white',
+    width: 'fit-content',
+  },
+  logTime: {
+    color: 'green',
+  },
+  log: {
+    backgroundColor: 'black',
+    color: 'white',
+    marginLeft: '2em',
   },
 });
 

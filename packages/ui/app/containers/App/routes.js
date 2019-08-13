@@ -12,10 +12,11 @@ import Language from '@material-ui/icons/Language';
 import ClustersPage, {
   CreateClusterPage,
 } from 'containers/ClustersPage/Loadable';
+import ClusterManagePage, {
+} from 'containers/ClusterManagePage/Loadable';
 import ClusterDetailPage from 'containers/ClusterDetailPage/Loadable';
 import NodesPage, {
   NodeDetailPage,
-  CreateNodePage,
 } from 'containers/NodesPage/Loadable';
 import NamespacesPage, {
   CreateNamespacePage,
@@ -96,6 +97,13 @@ const appRoutes = [
     component: CreateClusterPage,
   },
   {
+    path: '/clusters/:cluster_id/manage',
+    name: 'Cluster Manage',
+    icon: Dashboard,
+    component: ClusterManagePage,
+  },
+  {
+    path: '/clusters/:cluster_id',
     path: '/clusters/:cluster_id/show',
     name: 'Cluster Detail',
     icon: Dashboard,
@@ -106,12 +114,6 @@ const appRoutes = [
     name: 'Nodes',
     icon: Dashboard,
     component: NodesPage,
-  },
-  {
-    path: '/clusters/:cluster_id/nodes/create',
-    name: 'CreateNode',
-    icon: Dashboard,
-    component: CreateNodePage,
   },
   {
     path: '/clusters/:cluster_id/nodes/:node_id/show',

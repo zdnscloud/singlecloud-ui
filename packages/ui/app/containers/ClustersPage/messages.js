@@ -97,6 +97,10 @@ export default defineMessages({
     id: `${scope}.formClustersNet`,
     defaultMessage: 'formClustersNet',
   },
+  formNetIface:{
+    id: `${scope}.formNetIface`,
+    defaultMessage: 'formNetIface',
+  },
   formClustersDNSIP: {
     id: `${scope}.formClustersDNSIP`,
     defaultMessage: 'formClustersDNSIP',
@@ -164,5 +168,17 @@ export default defineMessages({
   cancleClustersButton: {
     id: `${scope}.cancleClustersButton`,
     defaultMessage: 'cancleClustersButton',
+  },
+  viewLog: {
+    id: `${scope}.viewLog`,
+    defaultMessage: 'View Log',
+  },
+  formAddMainNode: {
+    id: `${scope}.formAddMainNode`,
+    defaultMessage: 'formAddMainNode',
+  },
+  formAddWorkNode: {
+    id: `${scope}.formAddWorkNode`,
+    defaultMessage: 'formAddWorkNode',
   },
 });

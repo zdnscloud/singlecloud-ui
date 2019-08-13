@@ -12,12 +12,12 @@ import { bindActionCreators, compose } from 'redux';
 import { fromJS } from 'immutable';
 import { reduxForm, getFormValues } from 'redux-form/immutable';
 import { SubmissionError, submit } from 'redux-form';
+import { Link } from 'react-router-dom';
 
 import { withStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Typography from '@material-ui/core/Typography';
 import Fab from '@material-ui/core/Fab';
-import IconButton from '@material-ui/core/IconButton';
 import Button from '@material-ui/core/Button';
 import GridItem from 'components/Grid/GridItem';
 import GridContainer from 'components/Grid/GridContainer';
@@ -67,14 +67,35 @@ export class CreateClusterPage extends React.PureComponent {
         const {
           advancedOptions,
           enableAdvancedOptions,
+          nodes,
           ...formData
         } = formValues.toJS();
+        const { main ,work } = nodes;
+        main.forEach((item) => {
+          if(Object.keys(item).length !== 0 ){
+            if(item.roles){
+              item.roles.push('controlplane');
+            }else {
+              item.roles = ['controlplane'];
+            }
+          }
+        });
+        work.forEach((item) => {
+          if(Object.keys(item).length !== 0){
+            if(item.roles){
+              item.roles.push('worker');
+            }else {
+              item.roles = ['worker'];
+            }
+          }
+        });
+        let nodeArr = main.concat(work).filter((v) => v.roles);
         const data = {
+          nodes: nodeArr,
           ...formData,
           ...(enableAdvancedOptions ? advancedOptions : {}),
         };
         // eslint-disable-next-line no-console
-        console.log('data', data, formData);
         await new Promise((resolve, reject) => {
           createCluster(data, {
             resolve,
@@ -109,7 +130,7 @@ export class CreateClusterPage extends React.PureComponent {
                 <CreateClusterForm
                   classes={classes}
                   onSubmit={doSubmit}
-                  initialValues={fromJS({ name: '' })}
+                  initialValues={fromJS({ name: '', nodes: {main:[],work:[]}})}
                   formValues={values}
                 />
                 <Button
@@ -122,7 +143,8 @@ export class CreateClusterPage extends React.PureComponent {
                 <Button
                   variant="contained"
                   className={classes.cancleBtn}
-                  // onClick={submitForm}
+                  component={Link}
+                  to='/clusters'
                 >
                   <FormattedMessage {...messages.cancleClustersButton} />
                 </Button>
