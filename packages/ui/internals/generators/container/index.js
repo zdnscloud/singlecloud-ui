@@ -3,6 +3,7 @@
  */
 
 const componentExists = require('../utils/componentExists');
+const duckExists = require('../utils/duckExists');
 
 module.exports = {
   description: 'Add a container component',
@@ -22,7 +23,7 @@ module.exports = {
       type: 'input',
       name: 'name',
       message: 'What should it be called?',
-      default: 'Form',
+      default: 'K8sPage',
       validate: (value) => {
         if (/.+/.test(value)) {
           return componentExists(value)
@@ -34,23 +35,25 @@ module.exports = {
       },
     },
     {
+      type: 'input',
+      name: 'duck',
+      message: 'Input duck name for Page',
+      default: '',
+      validate: (value) => {
+        if (/.+/.test(value)) {
+          return duckExists(value)
+            ? true
+            : 'Must have a duck that exists in ducks';
+        }
+
+        return 'The duck is required';
+      },
+    },
+    {
       type: 'confirm',
       name: 'wantHeaders',
       default: false,
       message: 'Do you want headers?',
-    },
-    {
-      type: 'confirm',
-      name: 'wantActionsAndReducer',
-      default: true,
-      message:
-        'Do you want an actions/constants/selectors/reducer tuple for this container?',
-    },
-    {
-      type: 'confirm',
-      name: 'wantSaga',
-      default: true,
-      message: 'Do you want sagas for asynchronous flows? (e.g. fetching data)',
     },
     {
       type: 'confirm',
@@ -92,17 +95,13 @@ module.exports = {
         templateFile: './container/test.js.hbs',
         abortOnFail: true,
       },
-    ];
-
-    // If component wants headers
-    if (data.wantHeaders) {
-      actions.push({
+      {
         type: 'add',
-        path: '../../app/containers/{{properCase name}}/helmet.js',
-        templateFile: './container/helmet.js.hbs',
+        path: '../../app/containers/{{properCase name}}/styles.js',
+        templateFile: './container/styles.js.hbs',
         abortOnFail: true,
-      });
-    }
+      },
+    ];
 
     // If component wants messages
     if (data.wantMessages) {
@@ -110,77 +109,6 @@ module.exports = {
         type: 'add',
         path: '../../app/containers/{{properCase name}}/messages.js',
         templateFile: './container/messages.js.hbs',
-        abortOnFail: true,
-      });
-    }
-
-    // If they want actions and a reducer, generate actions.js, constants.js,
-    // reducer.js and the corresponding tests for actions and the reducer
-    if (data.wantActionsAndReducer) {
-      // Actions
-      actions.push({
-        type: 'add',
-        path: '../../app/containers/{{properCase name}}/actions.js',
-        templateFile: './container/actions.js.hbs',
-        abortOnFail: true,
-      });
-      actions.push({
-        type: 'add',
-        path: '../../app/containers/{{properCase name}}/tests/actions.test.js',
-        templateFile: './container/actions.test.js.hbs',
-        abortOnFail: true,
-      });
-
-      // Constants
-      actions.push({
-        type: 'add',
-        path: '../../app/containers/{{properCase name}}/constants.js',
-        templateFile: './container/constants.js.hbs',
-        abortOnFail: true,
-      });
-
-      // Selectors
-      actions.push({
-        type: 'add',
-        path: '../../app/containers/{{properCase name}}/selectors.js',
-        templateFile: './container/selectors.js.hbs',
-        abortOnFail: true,
-      });
-      actions.push({
-        type: 'add',
-        path:
-          '../../app/containers/{{properCase name}}/tests/selectors.test.js',
-        templateFile: './container/selectors.test.js.hbs',
-        abortOnFail: true,
-      });
-
-      // Reducer
-      actions.push({
-        type: 'add',
-        path: '../../app/containers/{{properCase name}}/reducer.js',
-        templateFile: './container/reducer.js.hbs',
-        abortOnFail: true,
-      });
-      actions.push({
-        type: 'add',
-        path: '../../app/containers/{{properCase name}}/tests/reducer.test.js',
-        templateFile: './container/reducer.test.js.hbs',
-        abortOnFail: true,
-      });
-    }
-
-    // Sagas
-    if (data.wantSaga) {
-      actions.push({
-        type: 'add',
-        path: '../../app/containers/{{properCase name}}/saga.js',
-        templateFile: './container/saga.js.hbs',
-        abortOnFail: true,
-      });
-      actions.push({
-        type: 'add',
-        path: '../../app/containers/{{properCase name}}/tests/saga.test.js',
-        templateFile: './container/saga.test.js.hbs',
         abortOnFail: true,
       });
     }

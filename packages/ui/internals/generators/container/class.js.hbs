@@ -3,36 +3,28 @@
  * {{properCase name }}
  *
  */
-
 import React from 'react';
 import PropTypes from 'prop-types';
+import { createStructuredSelector } from 'reselect';
+import { bindActionCreators, compose } from 'redux';
 import { connect } from 'react-redux';
+import { withStyles } from '@material-ui/core/styles';
+
+{{#if wantHeaders}}
+import {{ properCase name }}Helmet from 'components/Helmet/Helmet';
+{{/if}}
 {{#if wantMessages}}
 import { FormattedMessage } from 'react-intl';
 {{/if}}
-{{#if wantActionsAndReducer}}
-import { createStructuredSelector } from 'reselect';
-{{/if}}
-import { bindActionCreators, compose } from 'redux';
+import CssBaseline from '@material-ui/core/CssBaseline';
 
-{{#if wantSaga}}
-import injectSaga from 'utils/injectSaga';
-{{/if}}
-{{#if wantActionsAndReducer}}
-import injectReducer from 'utils/injectReducer';
-import makeSelect{{properCase name}} from './selectors';
-import reducer from './reducer';
-{{/if}}
-import * as actions from './actions';
-{{#if wantSaga}}
-import saga from './saga';
-{{/if}}
+import { makeSelect{{ duck }} } from 'ducks/{{ duck }}/selectors';
+import * as actions from 'ducks/{{ duck }}/actions';
+
 {{#if wantMessages}}
 import messages from './messages';
 {{/if}}
-{{#if wantHeaders}}
-import {{ properCase name }}Helmet from './helmet';
-{{/if}}
+import { styles } from './styles';
 
 /* eslint-disable react/prefer-stateless-function */
 export class {{ properCase name }} extends {{{ type }}} {
@@ -41,25 +33,25 @@ export class {{ properCase name }} extends {{{ type }}} {
 
   render() {
     return (
-      <div>
+      <div className={classes.root}>
       {{#if wantHeaders}}
         <{{ properCase name }}Helmet />
       {{/if}}
-      {{#if wantMessages}}
-        <FormattedMessage {...messages.header} />
-      {{/if}}
+        <CssBaseline />
+        <div className={classes.content}>
+        {{#if wantMessages}}
+          <FormattedMessage {...messages.header} />
+        {{/if}}
+        </div>
       </div>
     );
   }
 }
 
-{{#if wantActionsAndReducer}}
 const mapStateToProps = createStructuredSelector({
-  {{ camelCase name }}: makeSelect{{properCase name}}(),
 });
-{{/if}}
 
-const mapDispatchToProps = dispatch =>
+const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
       ...actions,
@@ -67,26 +59,9 @@ const mapDispatchToProps = dispatch =>
     dispatch,
   );
 
-{{#if wantActionsAndReducer}}
-const withConnect = connect(
-  mapStateToProps,
-  mapDispatchToProps
-);
-
-const withReducer = injectReducer({ key: '{{ camelCase name }}', reducer });
-{{else}}
-const withConnect = connect(null, mapDispatchToProps);
-{{/if}}
-{{#if wantSaga}}
-const withSaga = injectSaga({ key: '{{ camelCase name }}', saga });
-{{/if}}
+const withConnect = connect(mapStateToProps, mapDispatchToProps);
 
 export default compose(
-{{#if wantActionsAndReducer}}
-  withReducer,
-{{/if}}
-{{#if wantSaga}}
-  withSaga,
-{{/if}}
-  withConnect
+  withConnect,
+  withStyles(styles),
 )({{ properCase name }});

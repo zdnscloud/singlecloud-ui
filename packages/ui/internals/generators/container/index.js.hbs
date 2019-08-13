@@ -1,54 +1,57 @@
-/*
+/**
  *
- * {{properCase name }}
+ * {{ properCase name }}
  *
  */
-
 import React from 'react';
 import PropTypes from 'prop-types';
-import { bindActionCreators } from 'redux';
+import { createStructuredSelector } from 'reselect';
+import { bindActionCreators, compose } from 'redux';
 import { connect } from 'react-redux';
+import { withStyles } from '@material-ui/core/styles';
+
+{{#if wantHeaders}}
+import {{ properCase name }}Helmet from 'components/Helmet/Helmet';
+{{/if}}
 {{#if wantMessages}}
 import { FormattedMessage } from 'react-intl';
 {{/if}}
-{{#if wantActionsAndReducer}}
-import { createStructuredSelector } from 'reselect';
-import makeSelect{{properCase name}} from './selectors';
-{{/if}}
-import * as actions from './actions';
+import CssBaseline from '@material-ui/core/CssBaseline';
+
+import { makeSelect{{ duck }} } from 'ducks/{{ duck }}/selectors';
+import * as actions from 'ducks/{{ duck }}/actions';
+
 {{#if wantMessages}}
 import messages from './messages';
 {{/if}}
-{{#if wantHeaders}}
-import {{ properCase name }}Helmet from './helmet';
-{{/if}}
+import { styles } from './styles';
 
 /* eslint-disable react/prefer-stateless-function */
-export class {{ properCase name }} extends React.{{{ component }}} {
+export class {{ properCase name }} extends {{{ type }}} {
   static propTypes = {
   };
 
   render() {
     return (
-      <div>
+      <div className={classes.root}>
       {{#if wantHeaders}}
-      <{{ properCase name }}Helmet />
+        <{{ properCase name }}Helmet />
       {{/if}}
-      {{#if wantMessages}}
-        <FormattedMessage {...messages.header} />
-      {{/if}}
+        <CssBaseline />
+        <div className={classes.content}>
+        {{#if wantMessages}}
+          <FormattedMessage {...messages.header} />
+        {{/if}}
+        </div>
       </div>
     );
   }
 }
 
-{{#if wantActionsAndReducer}}
 const mapStateToProps = createStructuredSelector({
-  {{camelCase name}}: makeSelect{{properCase name}}(),
 });
-{{/if}}
 
-const mapDispatchToProps = dispatch =>
+const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
       ...actions,
@@ -56,8 +59,9 @@ const mapDispatchToProps = dispatch =>
     dispatch,
   );
 
-{{#if wantActionsAndReducer}}
-export default connect(mapStateToProps, mapDispatchToProps)({{ properCase name }});
-{{else}}
-export default connect(null, mapDispatchToProps)({{ properCase name }});
-{{/if}}
+const withConnect = connect(mapStateToProps, mapDispatchToProps);
+
+export default compose(
+  withConnect,
+  withStyles(styles),
+)({{ properCase name }});
