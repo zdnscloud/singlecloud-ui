@@ -93,7 +93,7 @@ export const makeSelectNodeIsOpening = () =>
 export const makeSelectNodesList = () =>
   createSelector(
     selectClustersDomain,
-    (state) => state.get('nodes')
+    (state) => state.get('nodes')|| state.clear()
   );
 
 /**
