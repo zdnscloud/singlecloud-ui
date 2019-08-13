@@ -1,10 +1,13 @@
 module.exports = {
-  prompt: ({ prompter, args }) => {
+  prompt: async ({ prompter, args }) => {
+    let data = {};
+
     const questions = [
       {
         type: 'input',
         name: 'name',
         skip: !!args.name,
+        initial: args.name,
         message: 'Please input duck name:'
       },
       {
@@ -31,8 +34,29 @@ module.exports = {
         initial: true,
         message: 'Wanna add remove action?',
       },
+      {
+        type: 'confirm',
+        name: 'hasParents',
+        initial: false,
+        message: 'Does this resource have parents resources?'
+      },
     ];
 
-    return prompter.prompt(questions);
+    data = await prompter.prompt(questions);
+
+    if (data.hasParents) {
+      const parentQuestions = [
+        {
+          type: 'list',
+          name: 'parents',
+          initial: [],
+          message: 'Please enter resource\'s parents, type comma-separated keywords: '
+        },
+      ];
+      const d = await prompter.prompt(parentQuestions);
+      data = { ...data, ...d };
+    }
+    console.log(data);
+    return data;
   },
 };

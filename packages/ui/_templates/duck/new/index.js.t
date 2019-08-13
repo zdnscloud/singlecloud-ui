@@ -9,6 +9,12 @@ to: <%= h.src() %>/app/ducks/<%= name %>/index.js
   sname = h.inflection.singularize(name);
   SN = h.inflection.underscore(sname).toUpperCase();
   csname = h.inflection.camelize(sname);
+
+  pt = parents[parents.length - 1];
+  sp = h.inflection.singularize(pt);
+  csp = h.inflection.camelize(sp);
+  spList = parents.map((p) => h.inflection.singularize(p));
+  spIDs = spList.map((p) => `${p}ID`).join(', ');
 %>/**
  * Duck: <%= h.inflection.titleize(name) %>
  * reducer: <%= name %>
@@ -43,7 +49,12 @@ export const reducer = (
       return state;
     case c.LOAD_<%= PN %>_SUCCESS: {
       const { data, list } = procCollectionData(payload);
-      return state.set('data', fromJS(data)).set('list', fromJS(list));
+      <%if (hasParents) { %>const {
+        <%= spIDs %>,
+      } = meta;<% } %>
+      return state
+        .setIn(['data'<%if (hasParents) { %>, <%= spIDs %><% } %>], fromJS(data))
+        .setIn(['list'<%if (hasParents) { %>, <%= spIDs %><% } %>], fromJS(list));
     }
     case c.LOAD_<%= PN %>_FAILURE:
       return state;
@@ -53,7 +64,10 @@ export const reducer = (
       return state;
     case c.CREATE_<%= SN %>_SUCCESS: {
       const data = payload.response;
-      return state.setIn(['data', data.id], fromJS(data));
+      <%if (hasParents) { %>const {
+        <%= spIDs %>,
+      } = meta;<% } %>
+      return state.setIn(['data'<%if (hasParents) { %>, <%= spIDs %><% } %>, data.id], fromJS(data));
     }
     case c.CREATE_<%= SN %>_FAILURE:
       return state;
@@ -64,8 +78,11 @@ if (wannaUpdateAction) {%>
     case c.UPDATE_<%= SN %>_SUCCESS: {
       const id = getByKey(payload, ['reponse', 'id']);
       const data = getByKey(payload, ['reponse']);
+      <%if (hasParents) { %>const {
+        <%= spIDs %>,
+      } = meta;<% } %>
       if (id) {
-        return state.setIn(['data', id], fromJS(data));
+        return state.setIn(['data'<%if (hasParents) { %>, <%= spIDs %><% } %>, id], fromJS(data));
       }
       return state;
     }
@@ -78,8 +95,11 @@ if (wannaReadOneAction) {%>
     case c.READ_<%= SN %>_SUCCESS: {
       const id = getByKey(payload, ['reponse', 'id']);
       const data = getByKey(payload, ['reponse']);
+      <%if (hasParents) { %>const {
+        <%= spIDs %>,
+      } = meta;<% } %>
       if (id) {
-        return state.setIn(['data', id], fromJS(data));
+        return state.setIn(['data'<%if (hasParents) { %>, <%= spIDs %><% } %>, id], fromJS(data));
       }
       return state;
     }
@@ -91,9 +111,12 @@ if (wannaRemoveAction) {%>
       return state;
     case c.REMOVE_<%= SN %>_SUCCESS: {
       const { id } = meta;
+      <%if (hasParents) { %>const {
+        <%= spIDs %>,
+      } = meta;<% } %>
       return state
-        .removeIn(['data', id])
-        .update('list', (l) => l.filterNot((i) => i === id));
+        .removeIn(['data'<%if (hasParents) { %>, <%= spIDs %><% } %>, id])
+        .updateIn(['list'<%if (hasParents) { %>, <%= spIDs %><% } %>], (l) => l.filterNot((i) => i === id));
     }
     case c.REMOVE_<%= SN %>_FAILURE:
       return state;
