@@ -43,7 +43,7 @@ export class ApplicationsList extends React.PureComponent {
     let chartData = data.filter((item) => {
       let flag = true;
       if (filter.name) {
-        flag = flag && item.get('name') === filter.name;
+        flag = flag && item.get('name').includes(filter.name);
       }
       return flag;
     })

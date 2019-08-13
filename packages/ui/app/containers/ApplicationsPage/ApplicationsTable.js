@@ -45,7 +45,7 @@ export class ApplicationsTable extends React.PureComponent {
     } = this.props;
     const pathname = location.get('pathname');
     const data = application.get('appResources') || List([]);
-    console.log('pathname',pathname,'data',data)
+    // console.log('pathname',pathname,'data',data)
     const mergedSchema = schema
       .map((sch) => {
         if (sch.id === 'name') {

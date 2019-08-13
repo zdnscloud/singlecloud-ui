@@ -34,13 +34,17 @@ class ApplicationTemplate extends PureComponent {
               <div className={classes.appWrap}>
                  <img alt="icon"  src={item.get('icon')} className={classes.appLogo} />
                 <div className={classes.appContent}>
-                  <Button
-                    to={`/clusters/${clusterID}/namespaces/${namespaceID}/applications/${item.get('id')}/show`}
-                    component={Link}
-                    className={classes.appDetailBtn}
-                  >
-                    <p className={classes.aapName}>{item.get('name')}</p>
-                  </Button>
+                  { item.get('status') === 'failed' ? 
+                     <p className={classes.aapName}>{item.get('name')}</p>
+                     :
+                    <Button
+                      to={`/clusters/${clusterID}/namespaces/${namespaceID}/applications/${item.get('id')}/show`}
+                      component={Link}
+                      className={classes.appDetailBtn}
+                    >
+                      <p className={classes.aapName}>{item.get('name')}</p>
+                    </Button>
+                  }
                   <Confirm 
                     handleConfirm={handleConfirm}
                     dialogContentText ={messages.removeAppText}
