@@ -16,7 +16,7 @@ import CardBody from 'components/Card/CardBody';
 import SelectField from 'components/Field/SelectField';
 import ReadOnlyInput from 'components/CustomInput/ReadOnlyInput';
 import messages from './messages';
-import DynamicForm from './form/DynamicForm';
+import DynamicForm from './form/dynamicForm';
 
 class ApplicationForm extends PureComponent {
 
@@ -125,10 +125,17 @@ class ApplicationForm extends PureComponent {
               </GridContainer>
               <GridContainer>
                 <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
-                    <ReadOnlyInput
-                      label={<FormattedMessage {...messages.formChartName} />}
+                  <InputField
+                      label={<FormattedMessage {...messages.formName} />}
+                      name="name"
+                      formControlProps={{
+                        className: classes.nameControl,
+                      }}
+                      inputProps={{
+                        type: 'text',
+                        autoComplete: 'off',
+                      }}
                       fullWidth
-                      value={chart.get('id')}
                     />
                   </GridItem>
                   <GridItem xs={3} sm={3} md={3} className={classes.formLine}>

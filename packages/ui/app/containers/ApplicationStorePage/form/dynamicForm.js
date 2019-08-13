@@ -10,6 +10,7 @@ import GridContainer from 'components/Grid/GridContainer';
 import InputField from 'components/Field/InputField';
 import SwitchField from 'components/Field/SwitchField';
 import RadioField from 'components/Field/RadioField';
+import ChexboxesField from 'components/Field/ChexboxesField';
 import messages from '../messages';
 
 const DynamicForm = ({ 
@@ -57,7 +58,7 @@ const DynamicForm = ({
           </GridItem>
         break; 
 
-      case item.get('type')==='enum' || item.get('type')==='array':  
+      case item.get('type')==='enum':  
         return  <GridItem xs={12} sm={12} md={12} className={classes.formLine}>
             <RadioField
               label={item.get('label')}
@@ -71,6 +72,23 @@ const DynamicForm = ({
               formControlComponent="div"
               formLabelComponent="div"
           />
+          </GridItem>
+        break;
+
+        case item.get('type')==='array':  
+        return  <GridItem xs={12} sm={12} md={12} className={classes.formLine}>
+            <ChexboxesField
+              label={item.get('label')}
+              name={item.get('jsonKey')}
+              classes={{
+                formControl: classes.chexboxesControl,
+                formLabel: classes.chexboxesLabel,
+                group: classes.chexboxesGroup,
+              }}
+              options={radioOptions}
+              formControlComponent="div"
+              formLabelComponent="div"
+            />
           </GridItem>
         break;
     }

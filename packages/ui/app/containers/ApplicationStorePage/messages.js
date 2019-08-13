@@ -65,20 +65,13 @@ export default defineMessages({
     id: `${scope}.formNamespaceName`,
     defaultMessage: 'Namespace',
   },
-  formChartName: {
-    id: `${scope}.formChartName`,
-    defaultMessage: 'ChartName',
+  formName: {
+    id: `${scope}.formName`,
+    defaultMessage: 'Name',
   },
   formChartVersion: {
     id: `${scope}.formChartVersion`,
     defaultMessage: 'ChartVersion',
   },
-  formDBUserName: {
-    id: `${scope}.formDBUserName`,
-    defaultMessage: 'DB UserName',
-  },
-  formDBPwd: {
-    id: `${scope}.formDBPwd`,
-    defaultMessage: 'DB Pwd',
-  },
+
 });

@@ -173,6 +173,18 @@ const styles = (theme) => ({
     flexDirection: 'row',
     marginLeft: '2rem',
   },
+  chexboxesControl: {
+    flexDirection: 'row',
+  },
+  chexboxesLabel: {
+    flexDirection: 'row',
+    lineHeight: 3,
+  },
+  chexboxesGroup: {
+    width: 600,
+    flexDirection: 'row',
+    marginLeft: '0.8rem',
+  },
   cancleBtn: {
     marginLeft: '10px',
   },

@@ -38,12 +38,12 @@ export const formName = 'createApplicationForm';
 
 const validate = (values) => {
   const errors = {};
-  // const requiredFields = ['name'];
-  // requiredFields.forEach((field) => {
-  //   if (!values.get(field)) {
-  //     errors[field] = 'Required';
-  //   }
-  // });
+  const requiredFields = ['name'];
+  requiredFields.forEach((field) => {
+    if (!values.get(field)) {
+      errors[field] = 'Required';
+    }
+  });
   return errors;
 };
 
@@ -72,11 +72,13 @@ export class CreateApplicationPage extends React.PureComponent {
     async function doSubmit(formValues) {
       
       try {
-        const { ...formData } = formValues.toJS();
+        const { name,chartVersion,...formData } = formValues.toJS();
         const data = {
-          ...formData,
+          name,
+          chartVersion,
+          chartName:chartID,
+          configs:[ ...formData]
         };
-        debugger
         console.log('data',data)
         // await new Promise((resolve, reject) => {
         //   createApplication({ ...data }, { resolve, reject, url });
@@ -110,6 +112,7 @@ export class CreateApplicationPage extends React.PureComponent {
                   onSubmit={doSubmit}
                   clusters={clusters}
                   namespaces={namespaces}
+                  initialValues={fromJS({ name: chartID })}
                   chart={chart}
                   formValues={values}
                 />
