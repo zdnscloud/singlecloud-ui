@@ -1,6 +1,6 @@
 VERSION=`git describe --tags`
-BUILD=`date +%FT%T%z
-VERSION=$${VERSION:-dev}
+BUILD=`date +%FT%T%z`
+BRANCH=`git branch | sed -n '/\* /s///p'`
 
 default:
 	@echo "try make build or test"
@@ -15,15 +15,14 @@ bootstrap:
 	yarn && npm run bootstrap
 
 docker: build-image
-	docker push zdnscloud/singlecloud-ui:${VERSION}
-	docker push zdnscloud/singlecloud-ui:latest
+	docker push zdnscloud/singlecloud-ui:${BRANCH}
 
 build-image:
-	docker build -t zdnscloud/singlecloud-ui:${VERSION} .
-	docker tag zdnscloud/singlecloud-ui:${VERSION} zdnscloud/singlecloud-ui:latest
+	docker build -t zdnscloud/singlecloud-ui:${BRANCH} --build-arg version=${VERSION} --build-arg buildtime=${BUILD} --build-arg branch=${BRANCH} .
+	docker image prune -f
 
 clean-image:
-	docker rmi zdnscloud/singlecloud-ui:${VERSION}
+	docker rmi zdnscloud/singlecloud-ui:${BRANCH}
 
 lint-staged:
 	npm run lint:staged
