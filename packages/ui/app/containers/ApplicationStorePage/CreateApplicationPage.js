@@ -21,27 +21,29 @@ import Button from '@material-ui/core/Button';
 import GridItem from 'components/Grid/GridItem';
 import GridContainer from 'components/Grid/GridContainer';
 
-import { makeSelectURL } from 'ducks/userQuotas/selectors';
+import { makeSelectURL,makeSelectCurrentChart } from 'ducks/applicationStore/selectors';
 import { makeSelectClusters } from 'ducks/clusters/selectors';
-import { makeSelectNamespaces } from 'ducks/namespaces/selectors';
-import * as actions from 'ducks/userQuotas/actions';
+import { makeSelectNamespacesWithoutClusterID } from 'ducks/namespaces/selectors';
+import { makeSelectChartID} from 'ducks/app/selectors';
+import * as actions from 'ducks/applicationStore/actions';
 
 import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
 import messages from './messages';
 import styles from './styles';
 import ApplicationsPageHelmet from './helmet';
 import ApplicationForm from './ApplicationForm';
+import { from } from 'rxjs';
 
 export const formName = 'createApplicationForm';
 
 const validate = (values) => {
   const errors = {};
-  const requiredFields = ['name'];
-  requiredFields.forEach((field) => {
-    if (!values.get(field)) {
-      errors[field] = 'Required';
-    }
-  });
+  // const requiredFields = ['name'];
+  // requiredFields.forEach((field) => {
+  //   if (!values.get(field)) {
+  //     errors[field] = 'Required';
+  //   }
+  // });
   return errors;
 };
 
@@ -49,6 +51,7 @@ const CreateApplicationForm = reduxForm({
   form: formName,
   validate,
 })(ApplicationForm);
+
 
 /* eslint-disable react/prefer-stateless-function */
 export class CreateApplicationPage extends React.PureComponent {
@@ -59,17 +62,25 @@ export class CreateApplicationPage extends React.PureComponent {
     location: PropTypes.object,
   };
 
+  componentDidMount() {
+    const { loadChart, url, chartID } = this.props;
+    loadChart(url+'/'+chartID);
+  }
+
   render() {
-    const { classes, submitForm, createApplication, url, clusters, namespaces } = this.props;
+    const { classes, submitForm, createApplication, url, clusters, namespaces, chart, chartID, values } = this.props;
     async function doSubmit(formValues) {
+      
       try {
-        const { memory, storage, namespace, ...formData } = formValues.toJS();
+        const { ...formData } = formValues.toJS();
         const data = {
           ...formData,
         };
-        await new Promise((resolve, reject) => {
-          createApplication({ ...data }, { resolve, reject, url });
-        });
+        debugger
+        console.log('data',data)
+        // await new Promise((resolve, reject) => {
+        //   createApplication({ ...data }, { resolve, reject, url });
+        // });
       } catch (error) {
         throw new SubmissionError({ _error: error });
       }
@@ -99,7 +110,9 @@ export class CreateApplicationPage extends React.PureComponent {
                   onSubmit={doSubmit}
                   clusters={clusters}
                   namespaces={namespaces}
-                  // userHash={userHash}
+                  initialValues={fromJS({ chartName: chartID })}
+                  chart={chart}
+                  formValues={values}
                 />
                 </GridItem>
                 <GridItem xs={12} sm={12} md={12}>
@@ -134,7 +147,10 @@ export class CreateApplicationPage extends React.PureComponent {
 const mapStateToProps = createStructuredSelector({
   url: makeSelectURL(),
   clusters: makeSelectClusters(),
-  namespaces: makeSelectNamespaces(),
+  namespaces: makeSelectNamespacesWithoutClusterID(),
+  chart: makeSelectCurrentChart(),
+  chartID: makeSelectChartID(),
+  values: getFormValues(formName),
 });
 
 const mapDispatchToProps = (dispatch) =>

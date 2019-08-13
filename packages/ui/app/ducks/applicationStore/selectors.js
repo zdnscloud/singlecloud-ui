@@ -37,9 +37,7 @@ export const makeSelectChartsList = () =>
 export const makeSelectCurrentChart = () =>
   createSelector(
     selectChartsDomain,
-    makeSelectChartID(),
-    (substate, chartID) =>
-      substate.getIn(['charts', chartID]) || substate.clear()
+    (substate) => substate.get('chart') || substate.clear()
   );
 /**
  * Default selector used by Charts

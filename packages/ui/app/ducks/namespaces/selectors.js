@@ -25,6 +25,12 @@ export const makeSelectNamespaces = () =>
       substate.getIn(['namespaces', clusterID]) || substate.clear()
   );
 
+export const makeSelectNamespacesWithoutClusterID = () =>
+  createSelector(
+    selectNamespacesDomain,
+    (substate) => substate.get('namespaces') || substate.clear()
+  );
+
 export const makeSelectNamespacesList = () =>
   createSelector(
     selectNamespacesDomain,

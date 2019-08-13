@@ -28,6 +28,17 @@ export const loadChartsEpic = (action$, state$, { ajax }) =>
     )
   );
 
+export const loadChartEpic = (action$, state$, { ajax }) =>
+  action$.pipe(
+    ofType(c.LOAD_CHARTS),
+    mergeMap(({ payload }) =>
+      ajax(payload).pipe(
+        map((resp) => a.loadChartSuccess(resp)),
+        catchError((error) => of(a.loadChartFailure(error)))
+      )
+    )
+  );
+
 export const createChartEpic = (action$, state$, { ajax }) =>
   action$.pipe(
     ofType(c.CREATE_CHART),
@@ -61,4 +72,5 @@ export default combineEpics(
   loadChartsEpic,
   createChartEpic,
   afterCreateEpic,
+  loadChartEpic,
 );

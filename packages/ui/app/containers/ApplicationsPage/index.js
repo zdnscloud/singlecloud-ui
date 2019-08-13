@@ -53,7 +53,7 @@ export class ApplicationsPage extends React.PureComponent {
     filter: {},
   };
 
-  componentWillMount() {
+  componentDidMount() {
     this.load();
   }
 

@@ -48,7 +48,7 @@ export class ApplicationStorePage extends React.PureComponent {
   state={
     filter:{}
   }
-  componentWillMount() {
+  componentDidMount() {
     this.load();
   }
 

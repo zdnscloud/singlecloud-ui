@@ -17,12 +17,12 @@ class ApplicationTemplate extends PureComponent {
       <Fragment>
           <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
               <div className={classes.appWrap}>
-                  <img alt="icon"  src='' className={classes.appLogo} />
+                  <img alt="icon"  src={item.get('icon')} className={classes.appLogo} />
                   <div className={classes.line}></div>
-                  <p className={classes.aapName}>name</p>
-                  <p className={classes.appDiscribe}>discribe</p>
+                  <p className={classes.aapName}>{item.get('name')}</p>
+                  <p className={classes.appDiscribe}>{item.get('description')}</p>
                   <Button
-                      to="/applicationStore/create"
+                      to={`/applicationStore/${item.get('id')}/create`}
                       component={Link}
                       className={classes.appDetailBtn}
                     >

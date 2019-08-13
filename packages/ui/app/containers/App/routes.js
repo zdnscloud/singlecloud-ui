@@ -425,7 +425,7 @@ const appRoutes = [
     component: ApplicationStorePage,
   },
   {
-    path: '/applicationStore/create',
+    path: '/applicationStore/:chart_id/create',
     name: 'Create Application',
     icon: Dashboard,
     component: CreateApplicationPage,

@@ -162,10 +162,12 @@ const styles = (theme) => ({
   },
   radioControl: {
     flexDirection: 'row',
+    margin:'4px 0'
+
   },
   radioLabel: {
     flexDirection: 'row',
-    lineHeight: 3,
+    lineHeight: 3.5,
   },
   radioGroup: {
     flexDirection: 'row',
@@ -211,6 +213,12 @@ const styles = (theme) => ({
   appDiscribe: {
     color: '#4A4A4A',
     marginBottom: 20,
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    display: '-webkit-box',
+    '-webkitLineClamp':2,
+    '-webkitBoxOrient': 'vertical',
+    height: 42,
   },
   appDetailBtn: {
     background: '#1B9CCE',
@@ -237,6 +245,9 @@ const styles = (theme) => ({
     position: 'absolute',
     right:0,
     top:12
+  },
+  singleField: {
+    margin:'6px 0'
   }
 });
 

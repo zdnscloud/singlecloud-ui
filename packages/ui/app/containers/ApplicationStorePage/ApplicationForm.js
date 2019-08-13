@@ -3,6 +3,8 @@ import { compose } from 'redux';
 import { FormattedMessage } from 'react-intl';
 import { Field, reduxForm } from 'redux-form/immutable';
 import getByKey from '@gsmlg/utils/getByKey';
+import { FieldArray } from 'redux-form/immutable';
+import { fromJS } from 'immutable';
 
 import Danger from 'components/Typography/Danger';
 import GridItem from 'components/Grid/GridItem';
@@ -14,9 +16,9 @@ import CardBody from 'components/Card/CardBody';
 import SelectField from 'components/Field/SelectField';
 
 import messages from './messages';
+import DynamicForm from './form/DynamicForm';
 
 class ApplicationForm extends PureComponent {
-  state = {};
 
   render() {
     const {
@@ -29,15 +31,24 @@ class ApplicationForm extends PureComponent {
       initialValues,
       clusters,
       namespaces,
+      chart,
+      formValues
     } = this.props;
+    const clusterName = formValues && formValues.get('clusterName');
     const clustersOptions = clusters.toList().map((sc) => ({
       label: sc.get('name'),
       value: sc.get('name'),
     }));
-    const namespacesOptions = namespaces.toList().map((sc) => ({
+    const namespacesOptions = namespaces.get(clusterName) ? (namespaces.get(clusterName).toList().map((sc) => ({
       label: sc.get('name'),
       value: sc.get('name'),
-    }));
+    }))) : []
+    const versionsOptions = chart.get('versions') ? (chart.get('versions').toList().map((sc) => ({
+      label: sc.get('version'),
+      value: sc.get('version'),
+    }))) : []
+    const chartVersion = formValues && formValues.get('chartVersion');
+    const config = chartVersion ? (chart.get('versions').filter((v) => v.version !== chartVersion).getIn([0,'config'])) : []
     return (
       <form className={getByKey(classes, 'form')} onSubmit={handleSubmit}>
         <GridContainer className={classes.contentGrid}>
@@ -55,11 +66,11 @@ class ApplicationForm extends PureComponent {
             <CardBody>
               <GridContainer>
                 <GridItem xs={2} sm={2} md={2}>
-                  <img alt="application logo"  src='' className={classes.appLogo} />
+                  <img alt="application logo"  src={chart.get('icon')} className={classes.appLogo} />
                 </GridItem>
                 <GridItem xs={10} sm={10} md={10}>
-                  <p className={classes.title}>jd</p>
-                  <p className={classes.description}>a</p>
+                  <p className={classes.title}>{chart.get('id')}</p>
+                  <p className={classes.description}>{chart.get('description')}</p>
                 </GridItem>
               </GridContainer>
             </CardBody>
@@ -100,7 +111,7 @@ class ApplicationForm extends PureComponent {
                 <GridItem xs={3} sm={3} md={3}>
                   <SelectField
                     label={<FormattedMessage {...messages.formNamespaceName} />}
-                    name="clusterName"
+                    name="namespaceName"
                     formControlProps={{
                       style: {
                         width: '100%',
@@ -134,47 +145,30 @@ class ApplicationForm extends PureComponent {
                           width: '100%',
                         },
                       }}
-                      options={[
-                        {
-                          label: '0.0.1',
-                          value: '0.0.1',
-                        },
-                      ]}
+                      options={versionsOptions}
                     />
                   </GridItem>
               </GridContainer>
-              <GridContainer>
-                <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
-                  <InputField
-                    label={<FormattedMessage {...messages.formDBUserName} />}
-                    name="name"
-                    formControlProps={{
-                      className: classes.nameControl,
-                    }}
-                    inputProps={{
-                      type: 'text',
-                      autoComplete: 'off',
-                    }}
-                    fullWidth
-                  />
-                </GridItem>
-                <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
-                  <InputField
-                    label={<FormattedMessage {...messages.formDBPwd} />}
-                    name="pwd"
-                    formControlProps={{
-                      className: classes.nameControl,
-                    }}
-                    inputProps={{
-                      type: 'text',
-                      autoComplete: 'off',
-                    }}
-                    fullWidth
-                  />
-                </GridItem>
-              </GridContainer>
+             
             </CardBody>
          </Card>
+         {chartVersion ? <Card>
+              <CardHeader color="primary">
+                <h4 className={classes.cardTitleWhite}>
+                  <FormattedMessage {...messages.configurationOptions} />
+                </h4>
+              </CardHeader>
+              <CardBody>
+               <FieldArray
+                  name="config"
+                  classes={classes}
+                  component={DynamicForm}
+                  config={config}
+                  formValues={formValues}
+                />
+              </CardBody>
+            </Card>
+         : null}
         </GridContainer>
       </form>
     );

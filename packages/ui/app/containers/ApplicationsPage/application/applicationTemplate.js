@@ -27,7 +27,7 @@ class ApplicationTemplate extends PureComponent {
               <div className={classes.appWrap}>
                   <GridContainer>
                     <GridItem xs={4} sm={4} md={4}>
-                      <img alt="icon"  src='' className={classes.appLogo} />
+                      <img alt="icon"  src={item.get('icon')} className={classes.appLogo} />
                     </GridItem>
                     <GridItem xs={8} sm={8} md={8}>
                       <Button
@@ -35,7 +35,7 @@ class ApplicationTemplate extends PureComponent {
                         component={Link}
                         className={classes.appDetailBtn}
                       >
-                        <p className={classes.aapName}>name</p>
+                        <p className={classes.aapName}>{item.get('chartName')}</p>
                       </Button>
                       <IconButton
                           className={classes.appDeleteBtn}

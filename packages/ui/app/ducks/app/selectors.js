@@ -35,10 +35,21 @@ export const makeSelectClusterID = () =>
 
 export const makeSelectUserQuotaID = () =>
   createSelector(
-    createMatchSelector('/userQuotas/:userQuotas_id'),
+    createMatchSelector('/userQuotas/:userQuota_id'),
     (match) => {
       if (match && match.params) {
-        return match.params.userQuotas_id;
+        return match.params.userQuota_id;
+      }
+      return '';
+    }
+  );
+
+export const makeSelectChartID = () =>
+  createSelector(
+    createMatchSelector('/applicationStore/:chart_id'),
+    (match) => {
+      if (match && match.params) {
+        return match.params.chart_id;
       }
       return '';
     }
