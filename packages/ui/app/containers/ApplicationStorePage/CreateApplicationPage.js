@@ -110,7 +110,6 @@ export class CreateApplicationPage extends React.PureComponent {
                   onSubmit={doSubmit}
                   clusters={clusters}
                   namespaces={namespaces}
-                  initialValues={fromJS({ chartName: chartID })}
                   chart={chart}
                   formValues={values}
                 />

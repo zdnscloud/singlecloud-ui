@@ -14,7 +14,7 @@ import Card from 'components/Card/Card';
 import CardHeader from 'components/Card/CardHeader';
 import CardBody from 'components/Card/CardBody';
 import SelectField from 'components/Field/SelectField';
-
+import ReadOnlyInput from 'components/CustomInput/ReadOnlyInput';
 import messages from './messages';
 import DynamicForm from './form/DynamicForm';
 
@@ -34,6 +34,7 @@ class ApplicationForm extends PureComponent {
       chart,
       formValues
     } = this.props;
+
     const clusterName = formValues && formValues.get('clusterName');
     const clustersOptions = clusters.toList().map((sc) => ({
       label: sc.get('name'),
@@ -49,6 +50,7 @@ class ApplicationForm extends PureComponent {
     }))) : []
     const chartVersion = formValues && formValues.get('chartVersion');
     const config = chartVersion ? (chart.get('versions').filter((v) => v.version !== chartVersion).getIn([0,'config'])) : []
+  
     return (
       <form className={getByKey(classes, 'form')} onSubmit={handleSubmit}>
         <GridContainer className={classes.contentGrid}>
@@ -123,17 +125,10 @@ class ApplicationForm extends PureComponent {
               </GridContainer>
               <GridContainer>
                 <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
-                  <InputField
+                    <ReadOnlyInput
                       label={<FormattedMessage {...messages.formChartName} />}
-                      name="chartName"
-                      formControlProps={{
-                        className: classes.nameControl,
-                      }}
-                      inputProps={{
-                        type: 'text',
-                        autoComplete: 'off',
-                      }}
                       fullWidth
+                      value={chart.get('id')}
                     />
                   </GridItem>
                   <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
@@ -152,7 +147,7 @@ class ApplicationForm extends PureComponent {
              
             </CardBody>
          </Card>
-         {chartVersion ? <Card>
+          {chartVersion ? <Card>
               <CardHeader color="primary">
                 <h4 className={classes.cardTitleWhite}>
                   <FormattedMessage {...messages.configurationOptions} />
@@ -168,7 +163,7 @@ class ApplicationForm extends PureComponent {
                 />
               </CardBody>
             </Card>
-         : null}
+         : null} 
         </GridContainer>
       </form>
     );

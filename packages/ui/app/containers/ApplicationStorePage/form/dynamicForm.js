@@ -18,7 +18,7 @@ const DynamicForm = ({
   classes,
   formValues
 }) => { 
-  console.log('config',config,'fields',fields,formValues)
+  // console.log('config',config,'fields',fields)
  
   const renderItem= (item)=>{
     
@@ -26,8 +26,9 @@ const DynamicForm = ({
       label: sc,
       value: sc,
     })):null;
-    switch (item.get('type')) {
-      case 'int':
+
+    switch (true) {
+      case item.get('type')==='int' || item.get('type')==='string':
         return <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
             <InputField
               label={item.get('label')}
@@ -46,7 +47,7 @@ const DynamicForm = ({
           </GridItem>
         break; 
 
-      case 'bool':
+      case item.get('type')=== 'bool':
         return  <GridItem xs={12} sm={12} md={12} className={classes.formLine}>
             <SwitchField
               label={item.get('label')}
@@ -56,7 +57,7 @@ const DynamicForm = ({
           </GridItem>
         break; 
 
-      case 'enum':  
+      case item.get('type')==='enum' || item.get('type')==='array':  
         return  <GridItem xs={12} sm={12} md={12} className={classes.formLine}>
             <RadioField
               label={item.get('label')}
@@ -72,26 +73,6 @@ const DynamicForm = ({
           />
           </GridItem>
         break;
-
-        case 'array':  
-        return  <GridItem xs={12} sm={12} md={12} className={classes.formLine}>
-            <RadioField
-              label={item.get('label')}
-              name={item.get('jsonKey')}
-              classes={{
-                formControl: classes.radioControl,
-                formLabel: classes.radioLabel,
-                group: classes.radioGroup,
-              }}
-              options={radioOptions}
-              formControlComponent="div"
-              formLabelComponent="div"
-          />
-          </GridItem>
-        break;
-
-        case 'array':  
-        return  <GridItem xs={6} sm={6} md={6} className={classes.formLine}></GridItem>
     }
   }
 
