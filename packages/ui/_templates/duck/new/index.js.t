@@ -34,8 +34,8 @@ export { constants, actions, prefix };
 
 export const initialState = fromJS({
   data: {},
-  list: [],
-  selectedData: '',
+  list: <%= hasParents ? '{}' : '[]' %>,
+  selectedData: null,
 });
 
 const c = constants;
