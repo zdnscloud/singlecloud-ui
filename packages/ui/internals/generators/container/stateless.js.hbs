@@ -31,7 +31,7 @@ const {{ properCase name }} = (props) => {
   return (
     <div className={classes.root}>
     {{#if wantHeaders}}
-      <{{ properCase name }}Helmet />
+      <{{ properCase name }}Helmet title={messages.pageTitle} description={messages.pageDesc} />
     {{/if}}
       <CssBaseline />
       <div className={classes.content}>

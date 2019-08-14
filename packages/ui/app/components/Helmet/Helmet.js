@@ -1,10 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
-
 import { useIntl } from 'react-intl';
-
-import messages from './messages';
 
 const SingleCloudHelmet = ({ title, description }) => {
   const intl = useIntl();
