@@ -23,7 +23,7 @@ module.exports = {
       type: 'input',
       name: 'name',
       message: 'What should it be called?',
-      default: 'K8sPage',
+      default: 'HomePage',
       validate: (value) => {
         if (/.+/.test(value)) {
           return componentExists(value)
@@ -37,13 +37,26 @@ module.exports = {
     {
       type: 'input',
       name: 'duck',
-      message: 'Input duck name for Page',
+      message: 'Input duck pluralize name for Page',
       default: '',
       validate: (value) => {
         if (/.+/.test(value)) {
           return duckExists(value)
             ? true
             : 'Must have a duck that exists in ducks';
+        }
+
+        return 'The duck is required';
+      },
+    },
+    {
+      type: 'input',
+      name: 'singular',
+      message: 'Input duck singularize name',
+      default: '',
+      validate: (value) => {
+        if (/.+/.test(value)) {
+          return true;
         }
 
         return 'The duck is required';
@@ -66,6 +79,30 @@ module.exports = {
       name: 'wantLoadable',
       default: true,
       message: 'Do you want to load resources asynchronously?',
+    },
+    {
+      type: 'confirm',
+      name: 'wantTable',
+      default: true,
+      message: 'Do you want Table Componet?',
+    },
+    {
+      type: 'confirm',
+      name: 'wantCreatePage',
+      default: true,
+      message: 'Do you want to have create action?',
+    },
+    {
+      type: 'confirm',
+      name: 'wantUpdatePage',
+      default: true,
+      message: 'Do you want to have update action?',
+    },
+    {
+      type: 'confirm',
+      name: 'wantShowItemPage',
+      default: true,
+      message: 'Do you want to have show action?',
     },
   ],
   actions: (data) => {
@@ -118,6 +155,54 @@ module.exports = {
         type: 'add',
         path: '../../app/containers/{{properCase name}}/Loadable.js',
         templateFile: './component/loadable.js.hbs',
+        abortOnFail: true,
+      });
+    }
+
+    // If component wants table
+    if (data.wantTable) {
+      actions.push([
+        {
+          type: 'add',
+          path: '../../app/containers/{{properCase name}}/Table.js',
+          templateFile: './container/table.js.hbs',
+          abortOnFail: true,
+        },
+        {
+          type: 'add',
+          path: '../../app/containers/{{properCase name}}/tableSchema.js',
+          templateFile: './container/tableSchema.js.hbs',
+          abortOnFail: true,
+        },
+      ]);
+    }
+
+    // If component wants create
+    if (data.wantCreatePage) {
+      actions.push({
+        type: 'add',
+        path: '../../app/containers/{{properCase name}}/CreatePage.js',
+        templateFile: './container/create.js.hbs',
+        abortOnFail: true,
+      });
+    }
+
+    // If component wants update
+    if (data.wantUpdatePage) {
+      actions.push({
+        type: 'add',
+        path: '../../app/containers/{{properCase name}}/EditPage.js',
+        templateFile: './container/update.js.hbs',
+        abortOnFail: true,
+      });
+    }
+
+    // If component wants showItem
+    if (data.wantShowItemPage) {
+      actions.push({
+        type: 'add',
+        path: '../../app/containers/{{properCase name}}/ShowItemPage.js',
+        templateFile: './container/showItem.js.hbs',
         abortOnFail: true,
       });
     }

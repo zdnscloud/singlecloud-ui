@@ -16,8 +16,23 @@ import {{ properCase name }}Helmet from 'components/Helmet/Helmet';
 import { FormattedMessage } from 'react-intl';
 {{/if}}
 import CssBaseline from '@material-ui/core/CssBaseline';
+{{#if wantTable}}
+import { Link } from 'react-router-dom';
+import Typography from '@material-ui/core/Typography';
+import Fab from '@material-ui/core/Fab';
+import IconButton from '@material-ui/core/IconButton';
+import AddIcon from 'components/Icons/Add';
+import GridItem from 'components/Grid/GridItem';
+import GridContainer from 'components/Grid/GridContainer';
+import Card from 'components/Card/Card';
+import CardHeader from 'components/Card/CardHeader';
+import CardBody from 'components/Card/CardBody';
+import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
+{{/if}}
 
-import { makeSelect{{ duck }} } from 'ducks/{{ duck }}/selectors';
+import { makeSelectCurrentID as makeSelectClusterID } from 'ducks/clusters/selectors';
+import { makeSelectCurrentID as makeSelectNamespaceID } from 'ducks/namespaces/selectors';
+import { makeSelectURL } from 'ducks/{{ duck }}/selectors';
 import * as actions from 'ducks/{{ duck }}/actions';
 
 import useStyles from './styles';
@@ -25,8 +40,25 @@ import useStyles from './styles';
 import messages from './messages';
 {{/if}}
 
-const {{ properCase name }} = (props) => {
-  const classes = useStyles(props);
+const {{ properCase name }} = ({
+  // clusterID,
+  // namespaceID,
+  location,
+  url,
+  load{{ duck }},
+}) => {
+  const classes = useStyles();
+  useEffect(() => {
+    if (url) {
+      load{{ duck }}(url, {
+        // clusterID,
+        // namespaceID,
+      });
+    }
+    return () => {
+      // try cancel something when unmount
+    };
+  }, [url]);
 
   return (
     <div className={classes.root}>
@@ -35,8 +67,39 @@ const {{ properCase name }} = (props) => {
     {{/if}}
       <CssBaseline />
       <div className={classes.content}>
-      {{#if wantMessages}}
-        <FormattedMessage {...messages.header} />
+      {{#if wantTable}}
+        <Breadcrumbs
+          data={[
+            {
+              path: `/clusters`,
+              name: <FormattedMessage {...messages.pageTitle} />,
+            },
+          ]}
+        />
+        <GridContainer className={classes.grid}>
+          <GridItem xs={12} sm={12} md={12}>
+            <Card>
+              <CardHeader color="primary">
+                <h4 className={classes.cardTitleWhite}>
+                  <FormattedMessage {...messages.{{ duck }}} />
+                  {{#if wantCreatePage }}
+                  <Link
+                    to={`${location.pathname}/create`}
+                    className={classes.createBtnLink}
+                  >
+                    <IconButton>
+                      <AddIcon style=\{\{ color: '#fff' \}\} />
+                    </IconButton>
+                  </Link>
+                  {{/if}}
+                </h4>
+              </CardHeader>
+              <CardBody>
+                <ServicesTable />
+              </CardBody>
+            </Card>
+          </GridItem>
+        </GridContainer>
       {{/if}}
       </div>
     </div>
@@ -44,6 +107,9 @@ const {{ properCase name }} = (props) => {
 }
 
 const mapStateToProps = createStructuredSelector({
+  // clusterID: makeSelectClusterID(),
+  // namespaceID: makeSelectNamespaceID(),
+  url: makeSelectURL(),
 });
 
 const mapDispatchToProps = (dispatch) =>
