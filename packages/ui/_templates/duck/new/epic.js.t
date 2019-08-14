@@ -49,7 +49,7 @@ export const create<%= csname %>Epic = (action$, state$, { ajax }) =>
     ofType(c.CREATE_<%= SN %>),
     mergeMap(({ payload, meta }) =>
       ajax({
-        meta.url,
+        url: `${meta.url}`,
         method: 'POST',
         body: payload,
       }).pipe(
@@ -77,8 +77,8 @@ export const update<%= csname %>Epic = (action$, state$, { ajax }) =>
       }).pipe(
         map((resp) => {
           meta.resolve && meta.resolve(resp);
-          return a.update<%= csname %>Success(resp, meta));
-        },
+          return a.update<%= csname %>Success(resp, meta);
+        }),
         catchError((error) => {
           meta.reject && meta.reject(error);
           return of(a.update<%= csname %>Failure(error, meta))

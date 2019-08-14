@@ -48,7 +48,7 @@ export const selectDomain = (state) => state.get(prefix) || initialState;
  */
 <% if (hasParents) { %>export const makeSelectURL = () =>
   createSelector(
-    makeSelectCurrent<%= csp %>,
+    makeSelectCurrent<%= csp %>(),
     (pt) => pt.getIn(['links', '<%= pname.toLowerCase() %>'])
   );
 <% } else { %>export const makeSelectURL = () =>
