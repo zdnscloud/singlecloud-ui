@@ -36,19 +36,19 @@ export const loadServicesEpic = (action$, state$, { ajax }) =>
 export const createServiceEpic = (action$, state$, { ajax }) =>
   action$.pipe(
     ofType(c.CREATE_SERVICE),
-    mergeMap(({ payload, meta: { resolve, reject, url } }) =>
+    mergeMap(({ payload, meta }) =>
       ajax({
-        url,
+        url: `${meta.url}`,
         method: 'POST',
         body: payload,
       }).pipe(
         map((resp) => {
-          resolve(resp);
-          return a.createServiceSuccess(resp);
+          meta.resolve && meta.resolve(resp);
+          return a.createServiceSuccess(resp, meta);
         }),
         catchError((error) => {
-          reject(error);
-          return of(a.createServiceFailure(error));
+          meta.reject && meta.reject(error);
+          return of(a.createServiceFailure(error, meta));
         })
       )
     )
@@ -57,16 +57,20 @@ export const createServiceEpic = (action$, state$, { ajax }) =>
 export const updateServiceEpic = (action$, state$, { ajax }) =>
   action$.pipe(
     ofType(c.UPDATE_SERVICE),
-    mergeMap(({ payload, meta: { url, id } }) =>
+    mergeMap(({ payload, meta }) =>
       ajax({
-        url: `${url}`,
+        url: `${meta.url}`,
         method: 'PUT',
         body: payload
       }).pipe(
-        map((resp) => a.updateServiceSuccess(resp, { id })),
-        catchError((error) =>
-          of(a.updateServiceFailure(error, { id }))
-        )
+        map((resp) => {
+          meta.resolve && meta.resolve(resp);
+          return a.updateServiceSuccess(resp, meta);
+        }),
+        catchError((error) => {
+          meta.reject && meta.reject(error);
+          return of(a.updateServiceFailure(error, meta))
+        })
       )
     )
   );
@@ -74,14 +78,14 @@ export const updateServiceEpic = (action$, state$, { ajax }) =>
 export const readServiceEpic = (action$, state$, { ajax }) =>
   action$.pipe(
     ofType(c.READ_SERVICE),
-    mergeMap(({ payload, meta: { url } }) =>
+    mergeMap(({ payload, meta }) =>
       ajax({
-        url: `${url}`,
+        url: `${meta.url}`,
         method: 'GET',
       }).pipe(
-        map((resp) => a.readServiceSuccess(resp, { id: payload })),
+        map((resp) => a.readServiceSuccess(resp, { ...meta, id: payload })),
         catchError((error) =>
-          of(a.readServiceFailure(error, { id: payload }))
+          of(a.readServiceFailure(error, { ...meta, id: payload }))
         )
       )
     )
@@ -90,14 +94,14 @@ export const readServiceEpic = (action$, state$, { ajax }) =>
 export const removeServiceEpic = (action$, state$, { ajax }) =>
   action$.pipe(
     ofType(c.REMOVE_SERVICE),
-    mergeMap(({ payload, meta: { url } }) =>
+    mergeMap(({ payload, meta }) =>
       ajax({
-        url: `${url}`,
+        url: `${meta.url}`,
         method: 'REMOVE',
       }).pipe(
-        map((resp) => a.removeServiceSuccess(resp, { id: payload })),
+        map((resp) => a.removeServiceSuccess(resp, { ...meta, id: payload })),
         catchError((error) =>
-          of(a.removeServiceFailure(error, { id: payload }))
+          of(a.removeServiceFailure(error, { ...meta, id: payload }))
         )
       )
     )

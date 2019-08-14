@@ -18,7 +18,7 @@ export { constants, actions, prefix };
 export const initialState = fromJS({
   data: {},
   list: {},
-  selectedData: '',
+  selectedData: null,
 });
 
 const c = constants;

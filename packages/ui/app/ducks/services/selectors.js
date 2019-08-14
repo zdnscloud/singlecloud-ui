@@ -13,7 +13,9 @@ import {
 import {
   makeSelectCurrent as makeSelectCurrentNamespace,
 } from 'ducks/namespaces/selectors';
+
 import { makeSelectCurrentID as makeSelectCurrentClusterID } from 'ducks/clusters/selectors';
+
 import { makeSelectCurrentID as makeSelectCurrentNamespaceID } from 'ducks/namespaces/selectors';
 
 import { prefix } from './constants';
@@ -38,7 +40,10 @@ export const makeSelectServices = () =>
     selectDomain,
     makeSelectCurrentClusterID(),
     makeSelectCurrentNamespaceID(),
-    (substate, clusterID, namespaceID) => substate.getIn(['data', clusterID, namespaceID]) || substate.clear()
+
+    (substate, clusterID, namespaceID) =>
+      substate.getIn(['data', clusterID, namespaceID])
+        || substate.clear()
   );
 
 export const makeSelectServicesList = () =>
@@ -47,8 +52,10 @@ export const makeSelectServicesList = () =>
     makeSelectServices(),
     makeSelectCurrentClusterID(),
     makeSelectCurrentNamespaceID(),
+
     (substate, data, clusterID, namespaceID) =>
-      (substate.getIn(['list', clusterID, namespaceID]) || fromJS([])).map((id) => data.get(id)) || fromJS([])
+      (substate.getIn(['list', clusterID, namespaceID]) || fromJS([]))
+        .map((id) => data.get(id)) || fromJS([])
   );
 
 export const makeSelectCurrentID = () =>
@@ -67,6 +74,7 @@ export const makeSelectCurrent = () =>
     selectDomain,
     makeSelectCurrentClusterID(),
     makeSelectCurrentNamespaceID(),
+
     makeSelectCurrentID(),
     (substate, clusterID, namespaceID, id) =>
       substate.getIn(['data', clusterID, namespaceID, id]) || substate.clear()
