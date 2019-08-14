@@ -84,7 +84,7 @@ export const makeSelect<%= cpname %>List = () =>
 
 export const makeSelectCurrentID = () =>
    createSelector(
-     createMatchSelector('/<%= name %>/:id/*'),
+     createMatchSelector('*/<%= name %>/:id/*'),
      (match) => {
        if (match && match.params) {
          return match.params.id;
