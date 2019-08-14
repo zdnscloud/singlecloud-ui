@@ -26,7 +26,7 @@ const appLocales = [
 const formatTranslationMessages = (locale, messages) => {
   const defaultFormattedMessages =
     locale !== DEFAULT_LOCALE
-      ? formatTranslationMessages(DEFAULT_LOCALE, enTranslationMessages)
+      ? formatTranslationMessages(DEFAULT_LOCALE, zhTranslationMessages)
       : {};
   const flattenFormattedMessages = (formattedMessages, key) => {
     const formattedMessage =
