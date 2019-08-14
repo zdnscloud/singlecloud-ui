@@ -21,11 +21,12 @@ import Button from '@material-ui/core/Button';
 import GridItem from 'components/Grid/GridItem';
 import GridContainer from 'components/Grid/GridContainer';
 
-import { makeSelectURL,makeSelectCurrentChart } from 'ducks/applicationStore/selectors';
+import { makeSelectURL } from 'ducks/applicationStore/selectors';
+import { makeSelectCurrentChart } from 'ducks/applications/selectors';
 import { makeSelectClusters } from 'ducks/clusters/selectors';
 import { makeSelectNamespacesWithoutClusterID } from 'ducks/namespaces/selectors';
 import { makeSelectChartID} from 'ducks/app/selectors';
-import * as actions from 'ducks/applicationStore/actions';
+import * as actions from 'ducks/applications/actions';
 
 import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
 import messages from './messages';
@@ -52,7 +53,6 @@ const CreateApplicationForm = reduxForm({
   validate,
 })(ApplicationForm);
 
-
 /* eslint-disable react/prefer-stateless-function */
 export class CreateApplicationPage extends React.PureComponent {
   static propTypes = {
@@ -68,7 +68,7 @@ export class CreateApplicationPage extends React.PureComponent {
   }
 
   render() {
-    const { classes, submitForm, createChart, clusters, namespaces, chart, chartID, values } = this.props;
+    const { classes, submitForm, createApplication, clusters, namespaces, chart, chartID, values } = this.props;
     async function doSubmit(formValues) {
       try {
         const { name,chartVersion,clusterID,namespaceID,...formData } = formValues.toJS();
@@ -77,12 +77,10 @@ export class CreateApplicationPage extends React.PureComponent {
           name,
           chartVersion,
           chartName:chartID,
-          // configs: JSON.stringify(formData)
           configs: formData
         };
-        console.log('data',data,'url',url)
         await new Promise((resolve, reject) => {
-          createChart({ ...data }, { resolve, reject, url ,clusterID, namespaceID});
+          createApplication({ ...data }, { resolve, reject, url ,clusterID, namespaceID});
         });
       } catch (error) {
         throw new SubmissionError({ _error: error });
@@ -98,7 +96,7 @@ export class CreateApplicationPage extends React.PureComponent {
             data={[
               {
                 path: `/applicationStore`,
-                name: <FormattedMessage {...messages.pageTitle} />,
+                name: <FormattedMessage {...messages.applicationStorePage} />,
               },
               {
                 name: <FormattedMessage {...messages.createApplication} />,

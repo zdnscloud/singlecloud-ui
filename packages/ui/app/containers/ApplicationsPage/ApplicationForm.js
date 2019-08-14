@@ -67,10 +67,10 @@ class ApplicationForm extends PureComponent {
             </CardHeader>
             <CardBody>
               <GridContainer>
-                <GridItem xs={2} sm={2} md={2}>
+                <GridItem xs={3} sm={3} md={3}>
                   <img alt="application logo"  src={chart.get('icon')} className={classes.appLogo} />
                 </GridItem>
-                <GridItem xs={10} sm={10} md={10}>
+                <GridItem xs={9} sm={9} md={9}>
                   <p className={classes.title}>{chart.get('id')}</p>
                   <p className={classes.description}>{chart.get('description')}</p>
                 </GridItem>

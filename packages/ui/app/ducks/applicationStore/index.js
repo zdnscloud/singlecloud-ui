@@ -20,7 +20,6 @@ export const initialState = fromJS({
   list: [],
   selectedChart: {},
   deleteError:"",
-  chart:{}
 });
 
 const c = constants;
@@ -37,24 +36,6 @@ export const chartsReducer = (
       return state.set('charts', fromJS(data)).set('list', fromJS(list));
     }
     case c.LOAD_CHARTS_FAILURE:
-      return state;
-
-    case c.LOAD_CHART:
-      return state;
-    case c.LOAD_CHART_SUCCESS: {
-      const data = payload.response;
-      return state.set('chart', fromJS(data));
-    }
-    case c.LOAD_CHART_FAILURE:
-      return state;
-
-    case c.CREATE_CHART:
-      return state;
-    case c.CREATE_CHART_SUCCESS: {
-      const data = payload.response;
-      return state.setIn(['charts', data.id], fromJS(data));
-    }
-    case c.CREATE_CHART_FAILURE:
       return state;
 
     case c.CHANGE_CHART:

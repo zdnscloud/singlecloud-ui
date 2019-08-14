@@ -24,7 +24,7 @@ import {
   makeSelectClusterID,
   makeSelectNamespaceID,
 } from 'ducks/app/selectors';
-import { makeSelectURL,makeSelectDeleteUserQuotaError } from 'ducks/applications/selectors';
+import { makeSelectURL,makeSelectDeleteApplicationError } from 'ducks/applications/selectors';
 import * as actions from 'ducks/applications/actions';
 import ErrorInfo from 'components/ErrorInfo/ErrorInfo';
 
@@ -134,7 +134,7 @@ const mapStateToProps = createStructuredSelector({
   clusterID: makeSelectClusterID(),
   namespaceID: makeSelectNamespaceID(),
   url: makeSelectURL(),
-  deleteError: makeSelectDeleteUserQuotaError(),
+  deleteError: makeSelectDeleteApplicationError(),
 });
 
 const mapDispatchToProps = (dispatch) =>

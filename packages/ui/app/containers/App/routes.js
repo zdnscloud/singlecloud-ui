@@ -70,10 +70,11 @@ import UserQuotasPage, {
   EditUserQuotaPage,
 } from 'containers/UserQuotasPage/Loadable';
 import ApplicationStorePage, {
-  CreateApplicationPage,
+
 } from 'containers/ApplicationStorePage/Loadable';
 import ApplicationsPage, {
   ApplicationDetailPage,
+  CreateApplicationPage,
 } from 'containers/ApplicationsPage/Loadable';
 
 import UsersPage, {
@@ -426,12 +427,6 @@ const appRoutes = [
     icon: Dashboard,
     component: ApplicationStorePage,
   },
-  {
-    path: '/applicationStore/:chart_id/create',
-    name: 'Create Application',
-    icon: Dashboard,
-    component: CreateApplicationPage,
-  },
   // applicationStore end
   // applications
   {
@@ -439,6 +434,12 @@ const appRoutes = [
     name: 'Applications',
     icon: Dashboard,
     component: ApplicationsPage,
+  },
+  {
+    path: '/applications/:chart_id/create',
+    name: 'Create Application',
+    icon: Dashboard,
+    component: CreateApplicationPage,
   },
   {
     path: '/clusters/:cluster_id/namespaces/:namespace_id/applications/:application_id/show',

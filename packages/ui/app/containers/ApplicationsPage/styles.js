@@ -175,6 +175,7 @@ const styles = (theme) => ({
   appWrap: {
     border: '1px solid #DFE0DF',
     padding: 10,
+    marginBottom: 25
   },
   aapName: {
     color: '#1B9CCE',
@@ -223,7 +224,37 @@ const styles = (theme) => ({
   tagWrap: {
     paddingLeft: theme.spacing(2),
     paddingRight: theme.spacing(2)
-  }
+  },
+  singleField: {
+    margin:'6px 0'
+  },
+  radioControl: {
+    flexDirection: 'row',
+    margin:'4px 0'
+  },
+  radioLabel: {
+    flexDirection: 'row',
+    lineHeight: 3.5,
+  },
+  radioGroup: {
+    flexDirection: 'row',
+    marginLeft: '2rem',
+  },
+  chexboxesControl: {
+    flexDirection: 'row',
+  },
+  chexboxesLabel: {
+    flexDirection: 'row',
+    lineHeight: 3,
+  },
+  chexboxesGroup: {
+    width: 600,
+    flexDirection: 'row',
+    marginLeft: '0.8rem',
+  },
+  cancleBtn: {
+    marginLeft: '10px',
+  },
 });
 
 export default styles;

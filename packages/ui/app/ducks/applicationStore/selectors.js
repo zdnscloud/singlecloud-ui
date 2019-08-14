@@ -34,11 +34,6 @@ export const makeSelectChartsList = () =>
       substate.get('list').map((id) => charts.get(id))
   );
 
-export const makeSelectCurrentChart = () =>
-  createSelector(
-    selectChartsDomain,
-    (substate) => substate.get('chart') || substate.clear()
-  );
 /**
  * Default selector used by Charts
  */

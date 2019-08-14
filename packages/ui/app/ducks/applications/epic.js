@@ -28,6 +28,18 @@ export const loadApplicationsEpic = (action$, state$, { ajax }) =>
     )
   );
 
+export const loadChartEpic = (action$, state$, { ajax }) =>
+  action$.pipe(
+    ofType(c.LOAD_CHART),
+    mergeMap(({ payload }) =>
+      ajax(payload).pipe(
+        map((resp) => a.loadChartSuccess(resp)),
+        catchError((error) => of(a.loadChartFailure(error)))
+      )
+    )
+  );
+
+
 export const removeApplicationEpic = (action$, state$, { ajax }) =>
   action$.pipe(
     ofType(c.REMOVE_APPLICATION),
@@ -45,7 +57,39 @@ export const removeApplicationEpic = (action$, state$, { ajax }) =>
     )
   );
 
+export const createApplicationEpic = (action$, state$, { ajax }) =>
+  action$.pipe(
+    ofType(c.CREATE_APPLICATION),
+    mergeMap(({ payload, meta: { resolve, reject, url ,clusterID, namespaceID} }) =>
+      ajax({
+        url,
+        method: 'POST',
+        body: payload,
+      }).pipe(
+        map((resp) => {
+          resolve(resp);
+          return a.createApplicationSuccess(resp ,{ clusterID, namespaceID });
+        }),
+        catchError((error) => {
+          reject(error);
+          return of(a.createApplicationFailure(error));
+        })
+      )
+    )
+  );
+
+export const afterCreateEpic = (action$) =>
+  action$.pipe(
+    ofType(c.CREATE_APPLICATION_SUCCESS),
+    mergeMap(({ payload, meta }) =>
+      timer(1000).pipe(mapTo(push( `/clusters/${meta.clusterID}/namespaces/${meta.namespaceID}/applications`)))
+    )
+  );
+
 export default combineEpics(
   loadApplicationsEpic,
   removeApplicationEpic,
+  loadChartEpic,
+  createApplicationEpic,
+  afterCreateEpic,
 );

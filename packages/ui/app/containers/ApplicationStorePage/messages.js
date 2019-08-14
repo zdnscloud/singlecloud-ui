@@ -37,45 +37,5 @@ export default defineMessages({
     id: `${scope}.viewDetailButton`,
     defaultMessage: 'detailed',
   },
-  createApplication: {
-    id: `${scope}.createApplication`,
-    defaultMessage: 'Create Application',
-  },
-  createApplicationButton: {
-    id: `${scope}.createApplicationButton`,
-    defaultMessage: 'Create',
-  },
-  cancleApplicationButton: {
-    id: `${scope}.cancleApplicationButton`,
-    defaultMessage: 'Cancle',
-  },
-  detailedDesc: {
-    id: `${scope}.detailedDesc`,
-    defaultMessage: 'Detailed Descriptions',
-  },
-  configurationOptions: {
-    id: `${scope}.configurationOptions`,
-    defaultMessage: 'Configuration Options',
-  },
-  dynamicOptions: {
-    id: `${scope}.dynamicOptions`,
-    defaultMessage: 'Options',
-  },
-  formClusterName: {
-    id: `${scope}.formClusterName`,
-    defaultMessage: 'Cluster',
-  },
-  formNamespaceName: {
-    id: `${scope}.formNamespaceName`,
-    defaultMessage: 'Namespace',
-  },
-  formName: {
-    id: `${scope}.formName`,
-    defaultMessage: 'Name',
-  },
-  formChartVersion: {
-    id: `${scope}.formChartVersion`,
-    defaultMessage: 'ChartVersion',
-  },
-
+  
 });

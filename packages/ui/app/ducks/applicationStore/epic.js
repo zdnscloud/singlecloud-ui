@@ -28,49 +28,6 @@ export const loadChartsEpic = (action$, state$, { ajax }) =>
     )
   );
 
-export const loadChartEpic = (action$, state$, { ajax }) =>
-  action$.pipe(
-    ofType(c.LOAD_CHARTS),
-    mergeMap(({ payload }) =>
-      ajax(payload).pipe(
-        map((resp) => a.loadChartSuccess(resp)),
-        catchError((error) => of(a.loadChartFailure(error)))
-      )
-    )
-  );
-
-export const createChartEpic = (action$, state$, { ajax }) =>
-  action$.pipe(
-    ofType(c.CREATE_CHART),
-    mergeMap(({ payload, meta: { resolve, reject, url ,clusterID, namespaceID} }) =>
-      ajax({
-        url,
-        method: 'POST',
-        body: payload,
-      }).pipe(
-        map((resp) => {
-          resolve(resp);
-          return a.createChartSuccess(resp ,{ clusterID, namespaceID });
-        }),
-        catchError((error) => {
-          reject(error);
-          return of(a.createChartFailure(error));
-        })
-      )
-    )
-  );
-
-export const afterCreateEpic = (action$) =>
-  action$.pipe(
-    ofType(c.CREATE_CHART_SUCCESS),
-    mergeMap(({ payload, meta }) =>
-      timer(1000).pipe(mapTo(push( `/clusters/${meta.clusterID}/namespaces/${meta.namespaceID}/applications`)))
-    )
-  );
-
 export default combineEpics(
   loadChartsEpic,
-  createChartEpic,
-  afterCreateEpic,
-  loadChartEpic,
 );

@@ -68,10 +68,16 @@ export const makeSelectCurrentApplication = () =>
     substate.clear()
   );
 
-export const makeSelectDeleteUserQuotaError = () =>
+export const makeSelectDeleteApplicationError = () =>
   createSelector(
     selectApplicationsDomain,
     (state) => state.get('deleteError')
+  );
+
+export const makeSelectCurrentChart = () =>
+  createSelector(
+    selectApplicationsDomain,
+    (substate) => substate.get('chart') || substate.clear()
   );
 
 /**

@@ -20,6 +20,7 @@ export const initialState = fromJS({
   list: [],
   selectedApplication: {},
   deleteError: '',
+  chart:{}
 });
 
 const c = constants;
@@ -37,6 +38,24 @@ export const applicationsReducer = (
       return state.setIn(['applications',clusterID, namespaceID], fromJS(data)).set('list', fromJS(list));
     }
     case c.LOAD_APPLICATIONS_FAILURE:
+      return state;
+
+    case c.LOAD_CHART:
+        return state;
+    case c.LOAD_CHART_SUCCESS: {
+        const data = payload.response;
+        return state.set('chart', fromJS(data));
+      }
+    case c.LOAD_CHART_FAILURE:
+        return state;
+
+    case c.CREATE_APPLICATION:
+      return state;
+    case c.CREATE_APPLICATION_SUCCESS: {
+      const data = payload.response;
+      return state.setIn(['charts', data.id], fromJS(data));
+    }
+    case c.CREATE_APPLICATION_FAILURE:
       return state;
 
     case c.REMOVE_APPLICATION:

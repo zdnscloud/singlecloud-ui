@@ -46,7 +46,7 @@ export const makeSelectUserQuotaID = () =>
 
 export const makeSelectChartID = () =>
   createSelector(
-    createMatchSelector('/applicationStore/:chart_id'),
+    createMatchSelector('/applications/:chart_id'),
     (match) => {
       if (match && match.params) {
         return match.params.chart_id;

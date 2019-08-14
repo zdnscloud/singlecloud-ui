@@ -160,44 +160,12 @@ const styles = (theme) => ({
     top: '3px',
     right: '10px',
   },
-  radioControl: {
-    flexDirection: 'row',
-    margin:'4px 0'
-
-  },
-  radioLabel: {
-    flexDirection: 'row',
-    lineHeight: 3.5,
-  },
-  radioGroup: {
-    flexDirection: 'row',
-    marginLeft: '2rem',
-  },
-  chexboxesControl: {
-    flexDirection: 'row',
-  },
-  chexboxesLabel: {
-    flexDirection: 'row',
-    lineHeight: 3,
-  },
-  chexboxesGroup: {
-    width: 600,
-    flexDirection: 'row',
-    marginLeft: '0.8rem',
-  },
-  cancleBtn: {
-    marginLeft: '10px',
-  },
   card:{
     padding:'20px',
     margin: 0,
   },
   detailedDesc: {
     margin: 0,
-  },
-  logo: {
-    width: 'auto',
-    height: 'auto',
   },
   title: {
     fontSize: 14,
@@ -211,6 +179,7 @@ const styles = (theme) => ({
   appWrap: {
     border: '1px solid #DFE0DF',
     padding: '20px 13px',
+    marginBottom: 25
   },
   aapName: {
     color: '#1B9CCE',
@@ -259,9 +228,6 @@ const styles = (theme) => ({
     right:0,
     top:12
   },
-  singleField: {
-    margin:'6px 0'
-  }
 });
 
 export default styles;

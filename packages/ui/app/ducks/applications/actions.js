@@ -22,6 +22,43 @@ export const loadApplicationsFailure = (error, meta) => ({
   error: true,
 });
 
+export const loadChart = (url) => ({
+  type: c.LOAD_CHART,
+  payload: url,
+});
+
+export const loadChartSuccess = (resp, chartID) => ({
+  type: c.LOAD_CHART_SUCCESS,
+  payload: resp,
+  meta: { chartID },
+});
+
+export const loadChartFailure = (error, chartID) => ({
+  type: c.LOAD_CHART_FAILURE,
+  payload: error,
+  meta: { chartID },
+  error: true,
+});
+
+export const createApplication = (id, meta) => ({
+  type: c.CREATE_APPLICATION,
+  payload: id,
+  meta,
+});
+
+export const createApplicationSuccess = (resp, meta) => ({
+  type: c.CREATE_APPLICATION_SUCCESS,
+  payload: resp,
+  meta,
+});
+
+export const createApplicationFailure = (error, meta) => ({
+  type: c.CREATE_APPLICATION_FAILURE,
+  payload: error,
+  meta,
+  error: true,
+});
+
 export const removeApplication = (id, meta) => ({
   type: c.REMOVE_APPLICATION,
   payload: id,

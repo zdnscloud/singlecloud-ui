@@ -22,7 +22,7 @@ class ApplicationTemplate extends PureComponent {
                   <p className={classes.aapName}>{item.get('name')}</p>
                   <p className={classes.appDiscribe}>{item.get('description')}</p>
                   <Button
-                      to={`/applicationStore/${item.get('id')}/create`}
+                      to={`/applications/${item.get('id')}/create`}
                       component={Link}
                       className={classes.appDetailBtn}
                     >
