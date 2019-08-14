@@ -10,6 +10,7 @@ import history from 'utils/history';
 import languageProviderReducer from 'containers/LanguageProvider/reducer';
 import terminalPageReducer from 'containers/TerminalPage/reducer';
 
+// import reducers start
 import appReducer from 'ducks/app';
 import roleReducer, { prefix as rolePrefix } from 'ducks/role';
 import usersReducer, { prefix as usersPrefix } from 'ducks/users';
@@ -44,12 +45,15 @@ import nodesReducer, { prefix as nodesPrefix } from 'ducks/nodes';
 import clustersReducer, { prefix as clustersPrefix } from 'ducks/clusters';
 import eventsReducer, { prefix as eventsPrefix } from 'ducks/events';
 import userQuotasReducer, { prefix as userQuotasPrefix } from 'ducks/userQuotas';
+// import reducers end
 
 /**
  * Merges the main reducer with the router state and dynamically injected reducers
  */
 export default function createReducer(injectedReducers = {}) {
   const rootReducer = combineReducers({
+    // combine reducers start
+    terminalPage: terminalPageReducer,
     language: languageProviderReducer,
     router: connectRouter(history),
     form: formReducer,
@@ -73,7 +77,7 @@ export default function createReducer(injectedReducers = {}) {
     [clustersPrefix]: clustersReducer,
     [eventsPrefix]: eventsReducer,
     [userQuotasPrefix]: userQuotasReducer,
-    terminalPage: terminalPageReducer,
+    // combine reducers end
     ...injectedReducers,
   });
 
