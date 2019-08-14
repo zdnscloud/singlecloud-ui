@@ -23,4 +23,22 @@ export default defineMessages({
     id: `${scope}.header`,
     defaultMessage: 'This is the {{ properCase name }} container!',
   },
+  {{duck}}: {
+    id: `${scope}.{{duck}}`,
+    defaultMessage: '{{duck}}',
+  },
+  {{#if wantTable}}
+    tableTitleName: {
+    id: `${scope}.tableTitleName`,
+    defaultMessage: 'Name',
+  },
+  tableTitleCreationTimestamp: {
+    id: `${scope}.tableTitleCreationTimestamp`,
+    defaultMessage: 'CreationTimestamp',
+  },
+  tableTitleActions: {
+    id: `${scope}.tableTitleActions`,
+    defaultMessage: 'Actions',
+  },
+  {{/if}}
 });
