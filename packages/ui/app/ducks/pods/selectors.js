@@ -4,10 +4,8 @@ import {
   getLocation,
 } from 'connected-react-router/immutable';
 
-import {
-  makeSelectClusterID,
-  makeSelectNamespaceID,
-} from 'ducks/app/selectors';
+import { makeSelectCurrentID as makeSelectClusterID } from 'ducks/clusters/selectors';
+import { makeSelectCurrentID as makeSelectNamespaceID } from 'ducks/namespaces/selectors';
 import { makeSelectCurrentNamespace } from 'ducks/namespaces/selectors';
 import {
   makeSelectDeploymentID,

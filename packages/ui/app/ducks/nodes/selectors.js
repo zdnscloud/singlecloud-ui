@@ -3,7 +3,7 @@ import {
   createMatchSelector,
   getLocation,
 } from 'connected-react-router/immutable';
-import { makeSelectClusterID } from 'ducks/app/selectors';
+import { makeSelectCurrentID as makeSelectClusterID } from 'ducks/clusters/selectors';
 import { makeSelectCurrentCluster } from 'ducks/clusters/selectors';
 import { prefix } from './constants';
 

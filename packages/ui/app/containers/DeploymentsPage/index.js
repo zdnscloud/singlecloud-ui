@@ -13,7 +13,6 @@ import { bindActionCreators, compose } from 'redux';
 
 import { withStyles } from '@material-ui/core/styles';
 import { Link } from 'react-router-dom';
-import Menubar from 'components/Menubar';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Typography from '@material-ui/core/Typography';
 import Fab from '@material-ui/core/Fab';
@@ -24,6 +23,7 @@ import GridContainer from 'components/Grid/GridContainer';
 import Card from 'components/Card/Card';
 import CardHeader from 'components/Card/CardHeader';
 import CardBody from 'components/Card/CardBody';
+import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
 
 import {
   makeSelectClusterID,
@@ -32,7 +32,6 @@ import {
 import * as actions from 'ducks/deployments/actions';
 import { makeSelectURL } from 'ducks/deployments/selectors';
 
-import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
 import messages from './messages';
 import DeploymentsPageHelmet from './helmet';
 import styles from './styles';

@@ -31,7 +31,7 @@ import CardFooter from 'components/Card/CardFooter';
 import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
 
 import * as actions from 'ducks/users/actions';
-import { makeSelectClustersAndNamespaces } from 'ducks/clusters/selectors';
+import { makeSelectClustersAndNamespaces } from 'ducks/namespaces/selectors';
 
 import messages from './messages';
 import UsersHelmet from './helmet';

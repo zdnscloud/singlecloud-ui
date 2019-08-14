@@ -129,4 +129,12 @@ export default defineMessages({
     id: `${scope}.leftMenuUserQuotas`,
     defaultMessage: 'UserQuotas',
   },
+  leftMenuServices: {
+    id: `${scope}.leftMenuServices`,
+    defaultMessage: 'Services',
+  },
+  leftMenuIngresses: {
+    id: `${scope}.leftMenuIngresses`,
+    defaultMessage: 'Ingresses',
+  },
 });

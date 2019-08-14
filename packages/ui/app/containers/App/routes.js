@@ -55,6 +55,11 @@ import SecretsPage, {
   ShowSecretPage,
   EditSecretPage
 } from 'containers/SecretsPage/Loadable';
+import ServicesPage, {
+  CreateServicePage,
+  ShowServicePage,
+  EditServicePage
+} from 'containers/ServicesPage/Loadable';
 import ServiceLinkPage from 'containers/ServiceLinkPage/Loadable';
 import StoragesPage, {
   CreateStoragePage,
@@ -309,6 +314,16 @@ const appRoutes = [
     component: JobDetailPage,
   },
   // job end
+  // services start
+  {
+    path: '/clusters/:cluster_id/namespaces/:namespace_id/services',
+    name: 'Services',
+    icon: Dashboard,
+    component: ServicesPage,
+  },
+  // services end
+  // ingresses start
+  // ingresses end
   {
     path: '/clusters/:cluster_id/namespaces/:namespace_id/serviceLink',
     name: 'ServiceLink',

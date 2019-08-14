@@ -31,7 +31,7 @@ import GridContainer from 'components/Grid/GridContainer';
 import * as actions from 'ducks/users/actions';
 import { makeSelectEditingUser, makeSelectUID } from 'ducks/users/selectors';
 import { makeSelectLocation } from 'ducks/app/selectors';
-import { makeSelectClustersAndNamespaces } from 'ducks/clusters/selectors';
+import { makeSelectClustersAndNamespaces } from 'ducks/namespaces/selectors';
 
 import messages from './messages';
 import UsersHelmet from './helmet';

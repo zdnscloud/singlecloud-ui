@@ -139,6 +139,14 @@ export const makeSelectLeftMenus = () =>
                 name: 'Secrets',
                 path: `/clusters/${cluster}/namespaces/${namespace}/secrets`,
               },
+              {
+                name: 'Services',
+                path: `/clusters/${cluster}/namespaces/${namespace}/services`,
+              },
+              {
+                name: 'Ingresses',
+                path: `/clusters/${cluster}/namespaces/${namespace}/ingresses`,
+              },
             ],
             icon: ApplicationIcon,
           },

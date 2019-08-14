@@ -45,6 +45,7 @@ import nodesReducer, { prefix as nodesPrefix } from 'ducks/nodes';
 import clustersReducer, { prefix as clustersPrefix } from 'ducks/clusters';
 import eventsReducer, { prefix as eventsPrefix } from 'ducks/events';
 import userQuotasReducer, { prefix as userQuotasPrefix } from 'ducks/userQuotas';
+import servicesReducer, { prefix as servicesPrefix } from 'ducks/services';
 // import reducers end
 
 /**
@@ -77,6 +78,7 @@ export default function createReducer(injectedReducers = {}) {
     [clustersPrefix]: clustersReducer,
     [eventsPrefix]: eventsReducer,
     [userQuotasPrefix]: userQuotasReducer,
+    [servicesPrefix]: servicesReducer,
     // combine reducers end
     ...injectedReducers,
   });
