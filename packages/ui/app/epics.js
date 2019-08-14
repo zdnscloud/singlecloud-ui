@@ -4,6 +4,7 @@
 
 import { combineEpics } from 'redux-observable';
 
+// import epics start
 import appEpic from 'ducks/app/epic';
 import eventsEpic from 'ducks/events/epic';
 import roleEpic from 'ducks/role/epic';
@@ -26,12 +27,14 @@ import resourceQuotasEpic from 'ducks/resourceQuotas/epic';
 import userQuotasEpic from 'ducks/userQuotas/epic';
 import applicationStoreEpic from 'ducks/applicationStore/epic';
 import applicationsEpic from 'ducks/applications/epic';
+// import epics end
 
 /**
  * Create root Epic
  */
 export default function createEpic(injectedEpics = {}) {
   const rootEpic = combineEpics(
+    // combine epics start
     appEpic,
     clustersEpic,
     eventsEpic,
@@ -54,6 +57,7 @@ export default function createEpic(injectedEpics = {}) {
     resourceQuotasEpic,
     applicationStoreEpic,
     applicationsEpic
+    // combine epics end
   );
 
   return rootEpic;

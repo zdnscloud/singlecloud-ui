@@ -10,6 +10,7 @@ import history from 'utils/history';
 import languageProviderReducer from 'containers/LanguageProvider/reducer';
 import terminalPageReducer from 'containers/TerminalPage/reducer';
 
+// import reducers start
 import appReducer from 'ducks/app';
 import roleReducer, { prefix as rolePrefix } from 'ducks/role';
 import usersReducer, { prefix as usersPrefix } from 'ducks/users';
@@ -46,12 +47,15 @@ import eventsReducer, { prefix as eventsPrefix } from 'ducks/events';
 import userQuotasReducer, { prefix as userQuotasPrefix } from 'ducks/userQuotas';
 import applicationStoreReducer, { prefix as applicationStorePrefix } from 'ducks/applicationStore';
 import applicationsReducer, { prefix as applicationsPrefix } from 'ducks/applications';
+// import reducers end
 
 /**
  * Merges the main reducer with the router state and dynamically injected reducers
  */
 export default function createReducer(injectedReducers = {}) {
   const rootReducer = combineReducers({
+    // combine reducers start
+    terminalPage: terminalPageReducer,
     language: languageProviderReducer,
     router: connectRouter(history),
     form: formReducer,
@@ -78,6 +82,7 @@ export default function createReducer(injectedReducers = {}) {
     [applicationStorePrefix]: applicationStoreReducer,
     [applicationsPrefix]: applicationsReducer,
     terminalPage: terminalPageReducer,
+    // combine reducers end
     ...injectedReducers,
   });
 
