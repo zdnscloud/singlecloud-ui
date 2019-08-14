@@ -161,20 +161,18 @@ module.exports = {
 
     // If component wants table
     if (data.wantTable) {
-      actions.push([
-        {
-          type: 'add',
-          path: '../../app/containers/{{properCase name}}/Table.js',
-          templateFile: './container/table.js.hbs',
-          abortOnFail: true,
-        },
-        {
-          type: 'add',
-          path: '../../app/containers/{{properCase name}}/tableSchema.js',
-          templateFile: './container/tableSchema.js.hbs',
-          abortOnFail: true,
-        },
-      ]);
+      actions.push({
+        type: 'add',
+        path: '../../app/containers/{{properCase name}}/Table.js',
+        templateFile: './container/table.js.hbs',
+        abortOnFail: true,
+      });
+      actions.push({
+        type: 'add',
+        path: '../../app/containers/{{properCase name}}/tableSchema.js',
+        templateFile: './container/tableSchema.js.hbs',
+        abortOnFail: true,
+      });
     }
 
     // If component wants create

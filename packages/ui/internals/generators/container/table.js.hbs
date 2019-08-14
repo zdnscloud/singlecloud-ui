@@ -82,7 +82,7 @@ const mapStateToProps = createStructuredSelector({
   location: makeSelectLocation(),
   // clusterID: makeSelectClusterID(),
   // namespaceID: makeSelectNamespaceID(),
-  data: makeSelectServicesList(),
+  data: makeSelect{{properCase duck}}List(),
 });
 
 const mapDispatchToProps = (dispatch) =>
@@ -100,4 +100,4 @@ const withConnect = connect(
 
 export default compose(
   withConnect,
-)(ServicesTable);
+)({{ properCase duck }}Table);

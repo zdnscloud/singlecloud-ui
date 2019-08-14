@@ -39,18 +39,19 @@ import useStyles from './styles';
 {{#if wantMessages}}
 import messages from './messages';
 {{/if}}
+import {{ properCase duck }}Table from './Table';
 
 const {{ properCase name }} = ({
   // clusterID,
   // namespaceID,
   location,
   url,
-  load{{ duck }},
+  load{{ properCase duck }},
 }) => {
   const classes = useStyles();
   useEffect(() => {
     if (url) {
-      load{{ duck }}(url, {
+      load{{ properCase duck }}(url, {
         // clusterID,
         // namespaceID,
       });
@@ -81,21 +82,21 @@ const {{ properCase name }} = ({
             <Card>
               <CardHeader color="primary">
                 <h4 className={classes.cardTitleWhite}>
-                  <FormattedMessage {...messages.{{ duck }} />
+                  <FormattedMessage {...messages.{{ duck }} } />
                   {{#if wantCreatePage }}
                   <Link
                     to={`${location.pathname}/create`}
                     className={classes.createBtnLink}
                   >
                     <IconButton>
-                      <AddIcon style=\{\{ color: '#fff' \}\} />
+                      <AddIcon style={ { color: '#fff' } } />
                     </IconButton>
                   </Link>
                   {{/if}}
                 </h4>
               </CardHeader>
               <CardBody>
-                <ServicesTable />
+                <{{ properCase duck }}Table />
               </CardBody>
             </Card>
           </GridItem>
