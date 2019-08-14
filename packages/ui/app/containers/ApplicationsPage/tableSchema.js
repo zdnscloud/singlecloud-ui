@@ -17,15 +17,29 @@ const tableSchema = schema
     if (sch.id === 'name') {
       return {
         ...sch,
-        component: (props) => (
-          <Button
-            color="primary"
-            to={`${props.pathname}/${props.data.get('id')}/show`}
-            component={Link}
-          >
-            {props.data.get('name')}
-          </Button>
-        ),
+        component: (props) => {
+          switch (props.data.get('type')) {
+            case 'service':
+              return <Button
+              color="primary"
+              to={`/clusters/${props.clusterID}/namespaces/${props.namespaceID}/${props.data.get('type')}Link`}
+              component={Link}
+            >
+              {props.data.get('name')}
+            </Button>;
+              break;
+            default:
+              return  <Button
+              color="primary"
+              to={`/clusters/${props.clusterID}/namespaces/${props.namespaceID}/${props.data.get('type')}s`}
+              component={Link}
+            >
+              {props.data.get('name')}
+            </Button>
+              break;
+           }
+         
+        },
       };
     }
     return sch;

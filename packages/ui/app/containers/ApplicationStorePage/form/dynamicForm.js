@@ -1,17 +1,10 @@
 import React, { PureComponent ,Fragment} from 'react';
-import { compose } from 'redux';
-import { FormattedMessage } from 'react-intl';
-import { Field, reduxForm } from 'redux-form/immutable';
-import getByKey from '@gsmlg/utils/getByKey';
-
-import Danger from 'components/Typography/Danger';
 import GridItem from 'components/Grid/GridItem';
 import GridContainer from 'components/Grid/GridContainer';
 import InputField from 'components/Field/InputField';
 import SwitchField from 'components/Field/SwitchField';
 import RadioField from 'components/Field/RadioField';
 import ChexboxesField from 'components/Field/ChexboxesField';
-import messages from '../messages';
 
 const DynamicForm = ({ 
   fields,
@@ -19,8 +12,7 @@ const DynamicForm = ({
   classes,
   formValues
 }) => { 
-  // console.log('config',config,'fields',fields)
- 
+
   const renderItem= (item)=>{
     
     const radioOptions =  item.get('validValues') ? item.get('validValues').toList().map((sc) => ({

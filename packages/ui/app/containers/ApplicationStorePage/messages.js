@@ -57,6 +57,10 @@ export default defineMessages({
     id: `${scope}.configurationOptions`,
     defaultMessage: 'Configuration Options',
   },
+  dynamicOptions: {
+    id: `${scope}.dynamicOptions`,
+    defaultMessage: 'Options',
+  },
   formClusterName: {
     id: `${scope}.formClusterName`,
     defaultMessage: 'Cluster',

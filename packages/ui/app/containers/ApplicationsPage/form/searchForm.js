@@ -1,7 +1,5 @@
 import React, { PureComponent } from 'react';
-import { compose } from 'redux';
 import { FormattedMessage } from 'react-intl';
-import { Field, reduxForm } from 'redux-form/immutable';
 import getByKey from '@gsmlg/utils/getByKey';
 
 import Danger from 'components/Typography/Danger';
@@ -17,15 +15,11 @@ class SearchForm extends PureComponent {
   render() {
     const {
       handleSubmit,
-      pristine,
-      reset,
-      submitting,
       error,
       classes,
-      profile,
       initialValues,
     } = this.props;
-    // eslint-disable-next-line no-console
+
     return (
       <form className={getByKey(classes, 'form')} onSubmit={handleSubmit}>
         <GridContainer>

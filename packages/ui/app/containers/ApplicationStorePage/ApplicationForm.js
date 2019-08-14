@@ -157,7 +157,7 @@ class ApplicationForm extends PureComponent {
           {chartVersion ? <Card>
               <CardHeader color="primary">
                 <h4 className={classes.cardTitleWhite}>
-                  <FormattedMessage {...messages.configurationOptions} />
+                  <FormattedMessage {...messages.dynamicOptions} />
                 </h4>
               </CardHeader>
               <CardBody>

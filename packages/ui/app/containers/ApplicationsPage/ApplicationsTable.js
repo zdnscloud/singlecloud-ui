@@ -17,12 +17,11 @@ import Paper from '@material-ui/core/Paper';
 import { SimpleTable } from '@gsmlg/com';
 
 import * as actions from 'ducks/applications/actions';
+import { makeSelectCurrentApplication} from 'ducks/applications/selectors';
 import {
-  makeSelectApplications,
-  makeSelectApplicationsList,
-  makeSelectCurrentApplication
-} from 'ducks/applications/selectors';
-import { makeSelectLocation} from 'ducks/app/selectors';
+  makeSelectClusterID,
+  makeSelectNamespaceID,
+} from 'ducks/app/selectors';
 import { Map, List } from 'immutable';
 
 import messages from './messages';
@@ -32,26 +31,24 @@ import schema from './tableSchema';
 export class ApplicationsTable extends React.PureComponent {
   static propTypes = {
     classes: PropTypes.object.isRequired,
-    data: PropTypes.object.isRequired,
-    applications: PropTypes.object.isRequired,
+    application: PropTypes.object.isRequired,
   };
 
   render() {
     const {
       classes,
-      location,
       theme,
+      clusterID,
+      namespaceID,
       application
     } = this.props;
-    const pathname = location.get('pathname');
     const data = application.get('appResources') || List([]);
-    // console.log('pathname',pathname,'data',data)
     const mergedSchema = schema
       .map((sch) => {
         if (sch.id === 'name') {
           return {
             ...sch,
-            props: { pathname },
+            props: { clusterID, namespaceID },
           };
         }
         return sch;
@@ -74,10 +71,9 @@ export class ApplicationsTable extends React.PureComponent {
 }
 
 const mapStateToProps = createStructuredSelector({
-  location: makeSelectLocation(),
-  applications: makeSelectApplications(),
-  // data: makeSelectApplicationsList(),
-  application: makeSelectCurrentApplication()
+  application: makeSelectCurrentApplication(),
+  clusterID: makeSelectClusterID(),
+  namespaceID: makeSelectNamespaceID(),
 });
 
 const mapDispatchToProps = (dispatch) =>
