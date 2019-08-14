@@ -7,7 +7,10 @@
  *   script `extract-intl`, and must use CommonJS module syntax
  *   You CANNOT use import/export in this file.
  */
-const addLocaleData = require('react-intl').addLocaleData; //eslint-disable-line
+require('@formatjs/intl-relativetimeformat/polyfill');
+require('@formatjs/intl-relativetimeformat/dist/include-aliases'); // Optional, if you care about edge cases in locale resolution, e.g zh-CN -> zh-Hans-CN
+require('@formatjs/intl-relativetimeformat/dist/locale-data/en'); // Add locale data for en
+require('@formatjs/intl-relativetimeformat/dist/locale-data/zh'); // Add locale data for zh
 
 const enTranslationMessages = require('./translations/en.json');
 const zhTranslationMessages = require('./translations/zh.json');
