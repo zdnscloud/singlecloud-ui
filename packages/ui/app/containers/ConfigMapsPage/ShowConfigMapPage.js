@@ -102,7 +102,7 @@ export class ShowConfigMap extends React.PureComponent {
                     >
                       <ReadOnlyInput
                         labelText={<FormattedMessage {...messages.formName} />}
-                        value={configMap.get('name')}
+                        value={configMap && configMap.get('name')}
                         formControlProps={{
                           className: classes.nameControl,
                         }}
@@ -111,7 +111,7 @@ export class ShowConfigMap extends React.PureComponent {
                     </GridItem>
                     <GridItem xs={12} sm={12} md={12}>
                       <GridContainer>
-                        {configMap.get('configs').map((cfg, idx) => (
+                        {configMap && configMap.get('configs') && configMap.get('configs').map((cfg, idx) => (
                           <GridItem
                             xs={3}
                             sm={3}
@@ -173,7 +173,7 @@ export class ShowConfigMap extends React.PureComponent {
                   focus
                   mode="yaml"
                   theme="tomorrow_night"
-                  value={configMap.getIn([
+                  value={configMap && configMap.getIn([
                     'configs',
                     this.state.fileIndex,
                     'data',
