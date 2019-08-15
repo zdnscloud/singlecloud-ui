@@ -8,8 +8,8 @@ import { makeSelectCurrentID as makeSelectClusterID } from 'ducks/clusters/selec
 import { makeSelectCurrentID as makeSelectNamespaceID } from 'ducks/namespaces/selectors';
 import { makeSelectCurrentNamespace } from 'ducks/namespaces/selectors';
 import {
-  makeSelectDeploymentID,
-  makeSelectCurrentDeployment,
+  makeSelectCurrentID as makeSelectDeploymentID,
+  makeSelectCurrent as makeSelectCurrentDeployment,
 } from 'ducks/deployments/selectors';
 import {
   makeSelectStatefulSetID,

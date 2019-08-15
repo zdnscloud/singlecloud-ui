@@ -24,13 +24,11 @@ import Card from 'components/Card/Card';
 import CardHeader from 'components/Card/CardHeader';
 import CardBody from 'components/Card/CardBody';
 
+import { makeSelectCurrentID as makeSelectClusterID } from 'ducks/clusters/selectors';
+import { makeSelectCurrentID as makeSelectNamespaceID } from 'ducks/namespaces/selectors';
 import {
-  makeSelectClusterID,
-  makeSelectNamespaceID,
-} from 'ducks/app/selectors';
-import {
-  makeSelectDeploymentID,
-  makeSelectCurrentDeployment,
+  makeSelectCurrentID,
+  makeSelectCurrent,
   makeSelectURL,
 } from 'ducks/deployments/selectors';
 import * as podsActions from 'ducks/pods/actions';
@@ -76,16 +74,17 @@ export class DeploymentDetailPage extends React.PureComponent {
       namespaceID,
       deploymentID,
       deployment,
-      podsUrl: url,
+      url,
+      podsUrl,
       loadPods,
-      loadDeployment,
+      readDeployment,
     } = this.props;
-    loadDeployment(deploymentID, {
+    readDeployment(deploymentID, {
       clusterID,
       namespaceID,
-      url: deployment.getIn(['links', 'self']),
+      url: `${url}/${deploymentID}`,
     });
-    loadPods({ url, clusterID, namespaceID, deploymentID });
+    loadPods({ url: deployment.getIn(['links', 'pods']), clusterID, namespaceID, deploymentID });
   }
 
   render() {
@@ -131,10 +130,10 @@ export class DeploymentDetailPage extends React.PureComponent {
 const mapStateToProps = createStructuredSelector({
   clusterID: makeSelectClusterID(),
   namespaceID: makeSelectNamespaceID(),
-  deploymentID: makeSelectDeploymentID(),
+  deploymentID: makeSelectCurrentID(),
   url: makeSelectURL(),
   podsUrl: makeSelectPodsURL(),
-  deployment: makeSelectCurrentDeployment(),
+  deployment: makeSelectCurrent(),
 });
 
 const mapDispatchToProps = (dispatch) =>
