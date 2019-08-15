@@ -40,8 +40,8 @@ export const load<%= cpname %>Epic = (action$, state$, { ajax }) =>
       ajax(payload).pipe(
         map((resp) => {
           meta.resolve && meta.resolve(resp);
-          return a.load<%= cpname %>Success(resp, meta));
-        },
+          return a.load<%= cpname %>Success(resp, meta);
+        }),
         catchError((error) => {
           meta.reject && meta.reject(error);
           return of(a.load<%= cpname %>Failure(error, meta));
@@ -104,8 +104,8 @@ export const read<%= csname %>Epic = (action$, state$, { ajax }) =>
       }).pipe(
         map((resp) => {
           meta.resolve && meta.resolve(resp);
-          return a.read<%= csname %>Success(resp, { ...meta, id: payload }));
-        },
+          return a.read<%= csname %>Success(resp, { ...meta, id: payload });
+        }),
         catchError((error) => {
           meta.reject && meta.reject(error);
           return of(a.read<%= csname %>Failure(error, { ...meta, id: payload }));
@@ -125,11 +125,11 @@ export const remove<%= csname %>Epic = (action$, state$, { ajax }) =>
       }).pipe(
         map((resp) => {
           meta.resolve && meta.resolve(resp);
-          return a.remove<%= csname %>Success(resp, { ...meta, id: payload }));
-        },
+          return a.remove<%= csname %>Success(resp, { ...meta, id: payload });
+        }),
         catchError((error) => {
           meta.reject && meta.reject(error);
-          return of(a.remove<%= csname %>Failure(error, { ...meta, id: payload }))
+          return of(a.remove<%= csname %>Failure(error, { ...meta, id: payload }));
         })
       )
     )
