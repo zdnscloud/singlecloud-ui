@@ -38,8 +38,14 @@ export const load<%= cpname %>Epic = (action$, state$, { ajax }) =>
     ofType(c.LOAD_<%= PN %>),
     mergeMap(({ payload, meta }) =>
       ajax(payload).pipe(
-        map((resp) => a.load<%= cpname %>Success(resp, meta)),
-        catchError((error) => of(a.load<%= cpname %>Failure(error, meta)))
+        map((resp) => {
+          meta.resolve && meta.resolve(resp);
+          return a.load<%= cpname %>Success(resp, meta));
+        },
+        catchError((error) => {
+          meta.reject && meta.reject(error);
+          return of(a.load<%= cpname %>Failure(error, meta));
+        })
       )
     )
   );
@@ -96,10 +102,14 @@ export const read<%= csname %>Epic = (action$, state$, { ajax }) =>
         url: `${meta.url}`,
         method: 'GET',
       }).pipe(
-        map((resp) => a.read<%= csname %>Success(resp, { ...meta, id: payload })),
-        catchError((error) =>
-          of(a.read<%= csname %>Failure(error, { ...meta, id: payload }))
-        )
+        map((resp) => {
+          meta.resolve && meta.resolve(resp);
+          return a.read<%= csname %>Success(resp, { ...meta, id: payload }));
+        },
+        catchError((error) => {
+          meta.reject && meta.reject(error);
+          return of(a.read<%= csname %>Failure(error, { ...meta, id: payload }));
+        })
       )
     )
   );
@@ -113,10 +123,14 @@ export const remove<%= csname %>Epic = (action$, state$, { ajax }) =>
         url: `${meta.url}`,
         method: 'REMOVE',
       }).pipe(
-        map((resp) => a.remove<%= csname %>Success(resp, { ...meta, id: payload })),
-        catchError((error) =>
-          of(a.remove<%= csname %>Failure(error, { ...meta, id: payload }))
-        )
+        map((resp) => {
+          meta.resolve && meta.resolve(resp);
+          return a.remove<%= csname %>Success(resp, { ...meta, id: payload }));
+        },
+        catchError((error) => {
+          meta.reject && meta.reject(error);
+          return of(a.remove<%= csname %>Failure(error, { ...meta, id: payload }))
+        })
       )
     )
   );
