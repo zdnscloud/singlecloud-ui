@@ -21,7 +21,6 @@ import InputField from 'components/Field/InputField';
 import SwitchField from 'components/Field/SwitchField';
 import RadioField from 'components/Field/RadioField';
 
-import AdvanceServices from './form/AdvanceServices';
 import Containers from './form/Containers';
 import VolumeClaimTemplate from './form/VolumeClaimTemplate';
 import messages from './messages';
@@ -133,117 +132,67 @@ class StatefulSetForm extends PureComponent {
                 </h4>
               </CardHeader>
               <CardBody>
-                <GridContainer>
-                  <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
-                    <SwitchField
-                      name="enableAdvancedOptions"
-                      label={
-                        <FormattedMessage {...messages.formAdvancedOptions} />
-                      }
-                    />
-                  </GridItem>
-                </GridContainer>
-                {formValues && formValues.get('enableAdvancedOptions') ? (
-                  <Fragment>
-                    <FormSection name="advancedOptions">
-                      <GridContainer>
-                        <GridItem
-                          xs={12}
-                          sm={12}
-                          md={12}
-                          className={classes.formLine}
-                        >
-                          <SwitchField
-                            name="reloadWhenConfigChange"
-                            label={
-                              <FormattedMessage
-                                {...messages.formReloadWhenConfigChange}
-                              />
-                            }
+                <FormSection name="advancedOptions">
+                  <GridContainer>
+                    <GridItem
+                      xs={12}
+                      sm={12}
+                      md={12}
+                      className={classes.formLine}
+                    >
+                      <SwitchField
+                        name="reloadWhenConfigChange"
+                        label={
+                          <FormattedMessage
+                            {...messages.formReloadWhenConfigChange}
                           />
-                        </GridItem>
-                      </GridContainer>
-                      <GridContainer>
-                        <GridItem
-                          xs={12}
-                          sm={12}
-                          md={12}
-                          className={classes.formLine}
-                        >
-                          <RadioField
-                            name="exposedServiceType"
-                            label={
-                              <FormattedMessage
-                                {...messages.formExposedServiceType}
-                              />
-                            }
-                            classes={{
-                              formControl: classes.radioControl,
-                              formLabel: classes.radioLabel,
-                              group: classes.radioGroup,
-                            }}
-                            options={[
-                              { label: 'Cluster IP', value: 'clusterip' },
-                              { label: 'Node Port', value: 'nodeport' },
-                            ]}
-                            formControlComponent="div"
-                            formLabelComponent="div"
-                          />
-                        </GridItem>
-                      </GridContainer>
-                      <Field
-                        name="exposedServices"
-                        label="Exposed Services"
-                        ports={fromJS(ports.toJS())}
-                        component={AdvanceServices}
+                        }
                       />
-                      <GridContainer>
-                        <GridItem
-                          xs={3}
-                          sm={3}
-                          md={3}
-                          className={classes.formLine}
-                        >
-                          <InputField
-                            label={
-                              <FormattedMessage
-                                {...messages.formExposedMetricPath}
-                              />
-                            }
-                            fullWidth
-                            inputProps={{ type: 'text', autoComplete: 'off' }}
-                            classes={classes}
-                            name="exposedMetric.path"
+                    </GridItem>
+                  </GridContainer>
+                  <GridContainer>
+                    <GridItem
+                      xs={3}
+                      sm={3}
+                      md={3}
+                      className={classes.formLine}
+                    >
+                      <InputField
+                        label={
+                          <FormattedMessage
+                            {...messages.formExposedMetricPath}
                           />
-                        </GridItem>
-                        <GridItem
-                          xs={3}
-                          sm={3}
-                          md={3}
-                          className={classes.formLine}
-                        >
-                          <InputField
-                            label={
-                              <FormattedMessage
-                                {...messages.formExposedMeticPort}
-                              />
-                            }
-                            normalize={(val) => Number(val)}
-                            fullWidth
-                            inputProps={{
-                              type: 'number',
-                              autoComplete: 'off',
-                              min: 1,
-                              max: 65535,
-                            }}
-                            classes={classes}
-                            name="exposedMetric.port"
+                        }
+                        fullWidth
+                        inputProps={{ type: 'text', autoComplete: 'off' }}
+                        name="exposedMetric.path"
+                      />
+                    </GridItem>
+                    <GridItem
+                      xs={3}
+                      sm={3}
+                      md={3}
+                      className={classes.formLine}
+                    >
+                      <InputField
+                        label={
+                          <FormattedMessage
+                            {...messages.formExposedMeticPort}
                           />
-                        </GridItem>
-                      </GridContainer>
-                    </FormSection>
-                  </Fragment>
-                ) : null}
+                        }
+                        normalize={(val) => Number(val)}
+                        fullWidth
+                        inputProps={{
+                          type: 'number',
+                          autoComplete: 'off',
+                          min: 1,
+                          max: 65535,
+                        }}
+                        name="exposedMetric.port"
+                      />
+                    </GridItem>
+                  </GridContainer>
+                </FormSection>
               </CardBody>
             </Card>
           </GridItem>

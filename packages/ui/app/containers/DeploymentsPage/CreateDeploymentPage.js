@@ -120,34 +120,12 @@ export class CreateDeployment extends React.PureComponent {
     async function doSubmit(formValues) {
       try {
         const data = formValues.toJS();
-        const {containers,persistentVolumes,advancedOptions} = data;
-        let exposedPortsArrr = [];
-        containers.forEach((item) => {
-          if (item && item.args) {
-            item.args = item.args.split(' ');
-          }
-          if (item && item.command) {
-            item.command = item.command.split(' ');
-          }
-          exposedPortsArrr.push(...item.exposedPorts)
-        });
-        let { exposedServices } = advancedOptions;
-        let esArr = [];
-        if(exposedPortsArrr.length>0){
-          exposedPortsArrr.forEach((i) => {
-            exposedServices.forEach((j) => {
-              if(i.name === j.name){
-                esArr.push(j)
-              }
-            })
-          })
-        }
-        advancedOptions.exposedServices = esArr;
+        const { persistentVolumes } = data;
         persistentVolumes.forEach((item)=>{
           if (item && item.size) {
             item.size = `${item.size}Gi`;
           }
-        })
+        });
         await new Promise((resolve, reject) => {
           createDeployment(data, {
             resolve,
@@ -190,9 +168,7 @@ export class CreateDeployment extends React.PureComponent {
                   replicas: 1,
                   containers: [{ name: '',exposedPorts:[]}],
                   persistentVolumes:[],
-                  advancedOptions:{
-                    exposedServices:[]
-                  }
+                  advancedOptions: {}
                 })}
                 formValues={values}
                 theme={theme}
