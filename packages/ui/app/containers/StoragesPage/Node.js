@@ -22,8 +22,6 @@ import { Group } from '@vx/group';
 import { GradientPinkBlue } from '@vx/gradient';
 import { letterFrequency, browserUsage } from '@vx/mock-data';
 
-import WraningIcon from 'components/Icons/storageWarning.js'
-
 import messages from './messages';
 import styles from './styles';
 
