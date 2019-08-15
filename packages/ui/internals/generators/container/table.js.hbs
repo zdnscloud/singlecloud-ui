@@ -1,6 +1,6 @@
 /**
  *
- * ServicesPage
+ * {{ properCase duck }} Table
  *
  */
 import React, { Fragment } from 'react';
@@ -38,7 +38,7 @@ const {{ properCase duck }}Table = ({
   data,
   // clusterID,
   // namespaceID,
-  removeService,
+  remove{{properCase singular}},
 }) => {
   const classes = useStyles();
   const pathname = location.get('pathname');
@@ -48,7 +48,7 @@ const {{ properCase duck }}Table = ({
             return {
               ...sch,
               props: {
-                removeService,
+                remove{{properCase singular}},
                 // clusterID,
                 // namespaceID,
               },

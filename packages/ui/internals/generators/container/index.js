@@ -183,14 +183,26 @@ module.exports = {
         templateFile: './container/create.js.hbs',
         abortOnFail: true,
       });
+      actions.push({
+        type: 'add',
+        path: '../../app/containers/{{properCase name}}/CreateForm.js',
+        templateFile: './container/createForm.js.hbs',
+        abortOnFail: true,
+      });
     }
 
     // If component wants update
     if (data.wantUpdatePage) {
       actions.push({
         type: 'add',
-        path: '../../app/containers/{{properCase name}}/EditPage.js',
+        path: '../../app/containers/{{properCase name}}/UpdatePage.js',
         templateFile: './container/update.js.hbs',
+        abortOnFail: true,
+      });
+      actions.push({
+        type: 'add',
+        path: '../../app/containers/{{properCase name}}/UpdateForm.js',
+        templateFile: './container/updateForm.js.hbs',
         abortOnFail: true,
       });
     }

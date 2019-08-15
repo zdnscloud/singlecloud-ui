@@ -19,10 +19,6 @@ export default defineMessages({
     defaultMessage: 'Description of {{ properCase name }}',
   },
   {{/if}}
-  header: {
-    id: `${scope}.header`,
-    defaultMessage: 'This is the {{ properCase name }} container!',
-  },
   {{duck}}: {
     id: `${scope}.{{duck}}`,
     defaultMessage: '{{duck}}',
@@ -39,6 +35,46 @@ export default defineMessages({
   tableTitleActions: {
     id: `${scope}.tableTitleActions`,
     defaultMessage: 'Actions',
+  },
+  {{/if}}
+  {{#if wantCreatePage}}
+  createPageTitle: {
+    id: `${scope}.createPageTitle`,
+    defaultMessage: 'Create {{ properCase singular }}',
+  },
+  createPageDesc: {
+    id: `${scope}.createPageDesc`,
+    defaultMessage: 'Description of Create {{ properCase singular }}',
+  },
+  create{{properCase singular}}: {
+    id: `${scope}.create{{properCase singular}}`,
+    defaultMessage: 'Create {{properCase singular}}',
+  },
+  save: {
+    id: `${scope}.save`,
+    defaultMessage: 'Save',
+  },
+  formName: {
+    id: `${scope}.formName`,
+    defaultMessage: 'Name',
+  },
+  {{/if}}
+  {{#if wantUpdatePage}}
+  updatePageTitle: {
+    id: `${scope}.updatePageTitle`,
+    defaultMessage: 'Update {{ properCase singular }}',
+  },
+  updatePageDesc: {
+    id: `${scope}.updatePageDesc`,
+    defaultMessage: 'Description of Update {{ properCase singular }}',
+  },
+  update{{properCase singular}}: {
+    id: `${scope}.update{{properCase singular}}`,
+    defaultMessage: 'Update {{properCase singular}}',
+  },
+  update: {
+    id: `${scope}.update`,
+    defaultMessage: 'Update',
   },
   {{/if}}
 });

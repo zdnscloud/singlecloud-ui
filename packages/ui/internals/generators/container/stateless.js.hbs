@@ -10,11 +10,9 @@ import { bindActionCreators, compose } from 'redux';
 import { connect } from 'react-redux';
 
 {{#if wantHeaders}}
-import {{ properCase name }}Helmet from 'components/Helmet/Helmet';
+import Helmet from 'components/Helmet/Helmet';
 {{/if}}
-{{#if wantMessages}}
 import { FormattedMessage } from 'react-intl';
-{{/if}}
 import CssBaseline from '@material-ui/core/CssBaseline';
 {{#if wantTable}}
 import { Link } from 'react-router-dom';
@@ -30,8 +28,8 @@ import CardBody from 'components/Card/CardBody';
 import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
 {{/if}}
 
-import { makeSelectCurrentID as makeSelectClusterID } from 'ducks/clusters/selectors';
-import { makeSelectCurrentID as makeSelectNamespaceID } from 'ducks/namespaces/selectors';
+// import { makeSelectCurrentID as makeSelectClusterID } from 'ducks/clusters/selectors';
+// import { makeSelectCurrentID as makeSelectNamespaceID } from 'ducks/namespaces/selectors';
 import { makeSelectURL } from 'ducks/{{ duck }}/selectors';
 import * as actions from 'ducks/{{ duck }}/actions';
 
@@ -64,7 +62,7 @@ const {{ properCase name }} = ({
   return (
     <div className={classes.root}>
     {{#if wantHeaders}}
-      <{{ properCase name }}Helmet title={messages.pageTitle} description={messages.pageDesc} />
+      <Helmet title={messages.pageTitle} description={messages.pageDesc} />
     {{/if}}
       <CssBaseline />
       <div className={classes.content}>
