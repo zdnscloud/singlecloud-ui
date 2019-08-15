@@ -1,6 +1,6 @@
 /**
  *
- * ServicesPage
+ * IngressesPage
  *
  */
 import React, { useEffect, useState, memo } from 'react';
@@ -26,24 +26,24 @@ import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
 
 // import { makeSelectCurrentID as makeSelectClusterID } from 'ducks/clusters/selectors';
 // import { makeSelectCurrentID as makeSelectNamespaceID } from 'ducks/namespaces/selectors';
-import { makeSelectURL } from 'ducks/services/selectors';
-import * as actions from 'ducks/services/actions';
+import { makeSelectURL } from 'ducks/ingresses/selectors';
+import * as actions from 'ducks/ingresses/actions';
 
 import useStyles from './styles';
 import messages from './messages';
-import ServicesTable from './Table';
+import IngressesTable from './Table';
 
-const ServicesPage = ({
+const IngressesPage = ({
   // clusterID,
   // namespaceID,
   location,
   url,
-  loadServices,
+  loadIngresses,
 }) => {
   const classes = useStyles();
   useEffect(() => {
     if (url) {
-      loadServices(url, {
+      loadIngresses(url, {
         // clusterID,
         // namespaceID,
       });
@@ -71,7 +71,7 @@ const ServicesPage = ({
             <Card>
               <CardHeader color="primary">
                 <h4 className={classes.cardTitleWhite}>
-                  <FormattedMessage {...messages.services} />
+                  <FormattedMessage {...messages.ingresses} />
                   <Link
                     to={`${location.pathname}/create`}
                     className={classes.createBtnLink}
@@ -83,7 +83,7 @@ const ServicesPage = ({
                 </h4>
               </CardHeader>
               <CardBody>
-                <ServicesTable />
+                <IngressesTable />
               </CardBody>
             </Card>
           </GridItem>
@@ -115,4 +115,4 @@ const withConnect = connect(
 export default compose(
   withConnect,
   memo
-)(ServicesPage);
+)(IngressesPage);

@@ -1,25 +1,25 @@
 /*
- * ServicesPage Messages
+ * IngressesPage Messages
  *
- * This contains all the text for the ServicesPage container.
+ * This contains all the text for the IngressesPage container.
  */
 
 import { defineMessages } from 'react-intl';
 
-export const scope = 'app.containers.ServicesPage';
+export const scope = 'app.containers.IngressesPage';
 
 export default defineMessages({
   pageTitle: {
     id: `${scope}.pageTitle`,
-    defaultMessage: 'ServicesPage',
+    defaultMessage: 'IngressesPage',
   },
   pageDesc: {
     id: `${scope}.pageDesc`,
-    defaultMessage: 'Description of ServicesPage',
+    defaultMessage: 'Description of IngressesPage',
   },
-  services: {
-    id: `${scope}.services`,
-    defaultMessage: 'services',
+  ingresses: {
+    id: `${scope}.ingresses`,
+    defaultMessage: 'ingresses',
   },
   tableTitleName: {
     id: `${scope}.tableTitleName`,
@@ -35,15 +35,15 @@ export default defineMessages({
   },
   createPageTitle: {
     id: `${scope}.createPageTitle`,
-    defaultMessage: 'Create Service',
+    defaultMessage: 'Create Ingress',
   },
   createPageDesc: {
     id: `${scope}.createPageDesc`,
-    defaultMessage: 'Description of Create Service',
+    defaultMessage: 'Description of Create Ingress',
   },
-  createService: {
-    id: `${scope}.createService`,
-    defaultMessage: 'Create Service',
+  createIngress: {
+    id: `${scope}.createIngress`,
+    defaultMessage: 'Create Ingress',
   },
   save: {
     id: `${scope}.save`,
@@ -55,15 +55,15 @@ export default defineMessages({
   },
   updatePageTitle: {
     id: `${scope}.updatePageTitle`,
-    defaultMessage: 'Update Service',
+    defaultMessage: 'Update Ingress',
   },
   updatePageDesc: {
     id: `${scope}.updatePageDesc`,
-    defaultMessage: 'Description of Update Service',
+    defaultMessage: 'Description of Update Ingress',
   },
-  updateService: {
-    id: `${scope}.updateService`,
-    defaultMessage: 'Update Service',
+  updateIngress: {
+    id: `${scope}.updateIngress`,
+    defaultMessage: 'Update Ingress',
   },
   update: {
     id: `${scope}.update`,

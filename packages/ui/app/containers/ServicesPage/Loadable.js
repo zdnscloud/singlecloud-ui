@@ -9,3 +9,15 @@ import loadable from '@loadable/component';
 export default loadable(() =>
   import(/* webpackChunkName: "ServicesPage" */ './index')
 );
+
+export const CreateServicePage = loadable(() =>
+  import(/* webpackChunkName: "CreateServicePage" */ './CreatePage')
+);
+
+export const UpdateServicePage = loadable(() =>
+  import(/* webpackChunkName: "UpdateServicePage" */ './UpdatePage')
+);
+
+export const ShowServicePage = loadable(() =>
+  import(/* webpackChunkName: "ShowServicePage" */ './ShowItemPage')
+);

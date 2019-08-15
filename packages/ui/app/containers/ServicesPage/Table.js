@@ -1,6 +1,6 @@
 /**
  *
- * ServicesPage
+ * Services Table
  *
  */
 import React, { Fragment } from 'react';
@@ -14,22 +14,15 @@ import { Link } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
 import { SimpleTable } from '@gsmlg/com';
-
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
-
-import {
-  makeSelectLocation,
-} from 'ducks/app/selectors';
-import { makeSelectCurrentID as makeSelectClusterID } from 'ducks/clusters/selectors';
-import { makeSelectCurrentID as makeSelectNamespaceID } from 'ducks/namespaces/selectors';
-import {
-  makeSelectServices,
-  makeSelectServicesList,
-} from 'ducks/services/selectors';
-import * as actions from 'ducks/services/actions';
-
 import ConfirmDelete from 'components/ConfirmDelete/ConfirmDelete';
+
+import { makeSelectLocation } from 'ducks/app/selectors';
+// import { makeSelectCurrentID as makeSelectClusterID } from 'ducks/clusters/selectors';
+// import { makeSelectCurrentID as makeSelectNamespaceID } from 'ducks/namespaces/selectors';
+import { makeSelectServicesList } from 'ducks/services/selectors';
+import * as actions from 'ducks/services/actions';
 
 import messages from './messages';
 import useStyles from './styles';
@@ -39,33 +32,36 @@ import schema from './tableSchema';
 const ServicesTable = ({
   location,
   data,
-  services,
-  clusterID,
-  namespaceID,
+  // clusterID,
+  // namespaceID,
   removeService,
 }) => {
   const classes = useStyles();
   const pathname = location.get('pathname');
   const mergedSchema = schema
-        .map((sch) => {
-          if (sch.id === 'actions') {
-            return {
-              ...sch,
-              props: { removeService, clusterID, namespaceID },
-            };
-          }
-          if (sch.id === 'name') {
-            return {
-              ...sch,
-              props: { pathname }
-            };
-          }
-          return sch;
-        })
-        .map((s) => ({
-          ...s,
-          label: <FormattedMessage {...messages[`tableTitle${s.label}`]} />,
-        }));
+    .map((sch) => {
+      if (sch.id === 'actions') {
+        return {
+          ...sch,
+          props: {
+            removeService,
+            // clusterID,
+            // namespaceID,
+          },
+        };
+      }
+      if (sch.id === 'name') {
+        return {
+          ...sch,
+          props: { pathname },
+        };
+      }
+      return sch;
+    })
+    .map((s) => ({
+      ...s,
+      label: <FormattedMessage {...messages[`tableTitle${s.label}`]} />,
+    }));
 
   return (
     <Paper className={classes.tableWrapper}>
@@ -80,9 +76,8 @@ const ServicesTable = ({
 
 const mapStateToProps = createStructuredSelector({
   location: makeSelectLocation(),
-  clusterID: makeSelectClusterID(),
-  namespaceID: makeSelectNamespaceID(),
-  services: makeSelectServices(),
+  // clusterID: makeSelectClusterID(),
+  // namespaceID: makeSelectNamespaceID(),
   data: makeSelectServicesList(),
 });
 
@@ -99,6 +94,4 @@ const withConnect = connect(
   mapDispatchToProps
 );
 
-export default compose(
-  withConnect,
-)(ServicesTable);
+export default compose(withConnect)(ServicesTable);

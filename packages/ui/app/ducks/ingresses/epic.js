@@ -1,6 +1,6 @@
 /**
- * Duck: Services
- * epic: services
+ * Duck: Ingresses
+ * epic: ingresses
  *
  */
 import { push } from 'connected-react-router';
@@ -22,26 +22,26 @@ import { ofType, combineEpics } from 'redux-observable';
 import * as c from './constants';
 import * as a from './actions';
 
-export const loadServicesEpic = (action$, state$, { ajax }) =>
+export const loadIngressesEpic = (action$, state$, { ajax }) =>
   action$.pipe(
-    ofType(c.LOAD_SERVICES),
+    ofType(c.LOAD_INGRESSES),
     mergeMap(({ payload, meta }) =>
       ajax(payload).pipe(
         map((resp) => {
           meta.resolve && meta.resolve(resp);
-          return a.loadServicesSuccess(resp, meta);
+          return a.loadIngressesSuccess(resp, meta);
         }),
         catchError((error) => {
           meta.reject && meta.reject(error);
-          return of(a.loadServicesFailure(error, meta));
+          return of(a.loadIngressesFailure(error, meta));
         })
       )
     )
   );
 
-export const createServiceEpic = (action$, state$, { ajax }) =>
+export const createIngressEpic = (action$, state$, { ajax }) =>
   action$.pipe(
-    ofType(c.CREATE_SERVICE),
+    ofType(c.CREATE_INGRESS),
     mergeMap(({ payload, meta }) =>
       ajax({
         url: `${meta.url}`,
@@ -50,19 +50,19 @@ export const createServiceEpic = (action$, state$, { ajax }) =>
       }).pipe(
         map((resp) => {
           meta.resolve && meta.resolve(resp);
-          return a.createServiceSuccess(resp, meta);
+          return a.createIngressSuccess(resp, meta);
         }),
         catchError((error) => {
           meta.reject && meta.reject(error);
-          return of(a.createServiceFailure(error, meta));
+          return of(a.createIngressFailure(error, meta));
         })
       )
     )
   );
 
-export const updateServiceEpic = (action$, state$, { ajax }) =>
+export const updateIngressEpic = (action$, state$, { ajax }) =>
   action$.pipe(
-    ofType(c.UPDATE_SERVICE),
+    ofType(c.UPDATE_INGRESS),
     mergeMap(({ payload, meta }) =>
       ajax({
         url: `${meta.url}`,
@@ -71,19 +71,19 @@ export const updateServiceEpic = (action$, state$, { ajax }) =>
       }).pipe(
         map((resp) => {
           meta.resolve && meta.resolve(resp);
-          return a.updateServiceSuccess(resp, meta);
+          return a.updateIngressSuccess(resp, meta);
         }),
         catchError((error) => {
           meta.reject && meta.reject(error);
-          return of(a.updateServiceFailure(error, meta))
+          return of(a.updateIngressFailure(error, meta))
         })
       )
     )
   );
 
-export const readServiceEpic = (action$, state$, { ajax }) =>
+export const readIngressEpic = (action$, state$, { ajax }) =>
   action$.pipe(
-    ofType(c.READ_SERVICE),
+    ofType(c.READ_INGRESS),
     mergeMap(({ payload, meta }) =>
       ajax({
         url: `${meta.url}`,
@@ -91,19 +91,19 @@ export const readServiceEpic = (action$, state$, { ajax }) =>
       }).pipe(
         map((resp) => {
           meta.resolve && meta.resolve(resp);
-          return a.readServiceSuccess(resp, { ...meta, id: payload });
+          return a.readIngressSuccess(resp, { ...meta, id: payload });
         }),
         catchError((error) => {
           meta.reject && meta.reject(error);
-          return of(a.readServiceFailure(error, { ...meta, id: payload }));
+          return of(a.readIngressFailure(error, { ...meta, id: payload }));
         })
       )
     )
   );
 
-export const removeServiceEpic = (action$, state$, { ajax }) =>
+export const removeIngressEpic = (action$, state$, { ajax }) =>
   action$.pipe(
-    ofType(c.REMOVE_SERVICE),
+    ofType(c.REMOVE_INGRESS),
     mergeMap(({ payload, meta }) =>
       ajax({
         url: `${meta.url}`,
@@ -111,27 +111,27 @@ export const removeServiceEpic = (action$, state$, { ajax }) =>
       }).pipe(
         map((resp) => {
           meta.resolve && meta.resolve(resp);
-          return a.removeServiceSuccess(resp, { ...meta, id: payload });
+          return a.removeIngressSuccess(resp, { ...meta, id: payload });
         }),
         catchError((error) => {
           meta.reject && meta.reject(error);
-          return of(a.removeServiceFailure(error, { ...meta, id: payload }));
+          return of(a.removeIngressFailure(error, { ...meta, id: payload }));
         })
       )
     )
   );
 
-export const afterCreateServiceEpic = (action$) =>
+export const afterCreateIngressEpic = (action$) =>
   action$.pipe(
-    ofType(c.CREATE_SERVICE_SUCCESS),
-    mergeMap(({ payload, meta }) => mapTo(push(`/services`)))
+    ofType(c.CREATE_INGRESS_SUCCESS),
+    mergeMap(({ payload, meta }) => mapTo(push(`/ingresses`)))
   );
 
 export default combineEpics(
-  loadServicesEpic,
-  createServiceEpic,
-  updateServiceEpic,
-  readServiceEpic,
-  removeServiceEpic,
-  afterCreateServiceEpic,
+  loadIngressesEpic,
+  createIngressEpic,
+  updateIngressEpic,
+  readIngressEpic,
+  removeIngressEpic,
+  afterCreateIngressEpic,
 );

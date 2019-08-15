@@ -58,7 +58,7 @@ import SecretsPage, {
 import ServicesPage, {
   CreateServicePage,
   ShowServicePage,
-  EditServicePage
+  UpdateServicePage
 } from 'containers/ServicesPage/Loadable';
 // import IngressesPage, {
 //   CreateIngressPage,
@@ -325,6 +325,24 @@ const appRoutes = [
     name: 'Services',
     icon: Dashboard,
     component: ServicesPage,
+  },
+  {
+    path: '/clusters/:cluster_id/namespaces/:namespace_id/services/create',
+    name: 'Create Service',
+    icon: Dashboard,
+    component: CreateServicePage,
+  },
+  {
+    path: '/clusters/:cluster_id/namespaces/:namespace_id/services/:service_id/update',
+    name: 'Update Service',
+    icon: Dashboard,
+    component: UpdateServicePage,
+  },
+  {
+    path: '/clusters/:cluster_id/namespaces/:namespace_id/services/:service_id/show',
+    name: 'Show Service',
+    icon: Dashboard,
+    component: ShowServicePage,
   },
   // services end
   // ingresses start
