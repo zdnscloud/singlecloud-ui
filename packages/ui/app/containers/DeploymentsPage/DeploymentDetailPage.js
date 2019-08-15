@@ -46,7 +46,6 @@ import styles from './styles';
 /* eslint-disable react/prefer-stateless-function */
 export class DeploymentDetailPage extends React.PureComponent {
   static propTypes = {
-    initAction: PropTypes.func,
     classes: PropTypes.object.isRequired,
     match: PropTypes.object,
     location: PropTypes.object,
