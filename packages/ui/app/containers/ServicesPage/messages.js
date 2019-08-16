@@ -53,20 +53,52 @@ export default defineMessages({
     id: `${scope}.formName`,
     defaultMessage: 'Name',
   },
-  updatePageTitle: {
-    id: `${scope}.updatePageTitle`,
-    defaultMessage: 'Update Service',
+  formTargetResourceType: {
+    id: `${scope}.formTargetResourceType`,
+    defaultMessage: 'TargetResourceType',
   },
-  updatePageDesc: {
-    id: `${scope}.updatePageDesc`,
-    defaultMessage: 'Description of Update Service',
+  formTargetName: {
+    id: `${scope}.formTargetName`,
+    defaultMessage: 'TargetName',
   },
-  updateService: {
-    id: `${scope}.updateService`,
-    defaultMessage: 'Update Service',
+  formServiceType: {
+    id: `${scope}.formServiceType`,
+    defaultMessage: 'ServiceType',
   },
-  update: {
-    id: `${scope}.update`,
-    defaultMessage: 'Update',
+  formExposedPorts: {
+    id: `${scope}.formExposedPorts`,
+    defaultMessage: 'ExposedPorts',
+  },
+  formExposedPortEnable: {
+    id: `${scope}.formExposedPortEnable`,
+    defaultMessage: 'ExposedPortEnable',
+  },
+  formExposedPort: {
+    id: `${scope}.formExposedPort`,
+    defaultMessage: 'ExposedPort',
+  },
+  formExposedPortName: {
+    id: `${scope}.formExposedPortName`,
+    defaultMessage: 'ExposedPortName',
+  },
+  formExposedPortTarget: {
+    id: `${scope}.formExposedPortTarget`,
+    defaultMessage: 'ExposedPortTarget',
+  },
+  formExposedPortProtocol: {
+    id: `${scope}.formExposedPortProtocol`,
+    defaultMessage: 'ExposedPortProtocol',
+  },
+  showItemPageTitle: {
+    id: `${scope}.showItemPageTitle`,
+    defaultMessage: 'Show Service',
+  },
+  showItemPageDesc: {
+    id: `${scope}.showItemPageDesc`,
+    defaultMessage: 'Description of Show Service',
+  },
+  showService: {
+    id: `${scope}.showService`,
+    defaultMessage: 'Show Service',
   },
 });

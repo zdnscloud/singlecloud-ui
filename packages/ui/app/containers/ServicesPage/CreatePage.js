@@ -14,6 +14,7 @@ import {
   getFormValues,
   SubmissionError,
   submit,
+  change,
 } from 'redux-form/immutable';
 
 import Helmet from 'components/Helmet/Helmet';
@@ -28,6 +29,12 @@ import { makeSelectCurrentID as makeSelectClusterID } from 'ducks/clusters/selec
 import { makeSelectCurrentID as makeSelectNamespaceID } from 'ducks/namespaces/selectors';
 import { makeSelectURL } from 'ducks/services/selectors';
 import * as actions from 'ducks/services/actions';
+import { makeSelectURL as makeSelectDeploymentsURL, makeSelectDeploymentsList, } from 'ducks/deployments/selectors';
+import { makeSelectURL as makeSelectDaemonSetsURL, makeSelectDaemonSetsList } from 'ducks/daemonSets/selectors';
+import { makeSelectURL as makeSelectStatefulSetsURL, makeSelectStatefulSetsList } from 'ducks/statefulSets/selectors';
+import * as deployActions from 'ducks/deployments/actions';
+import * as dsActions from 'ducks/daemonSets/actions';
+import * as stsActions from 'ducks/statefulSets/actions';
 
 import messages from './messages';
 import useStyles from './styles';
@@ -36,16 +43,38 @@ import CreateServiceForm, { formName } from './CreateForm';
 export const CreateServicePage = ({
   createService,
   submitForm,
+  changeFormValue,
   url,
   clusterID,
   namespaceID,
   values,
+  deployURL,
+  dsURL,
+  stsURL,
+  loadDeployments,
+  loadDaemonSets,
+  loadStatefulSets,
+  deployList,
+  dsList,
+  stsList,
 }) => {
   const classes = useStyles();
+  useEffect(() => {
+    loadDeployments(deployURL, { clusterID, namespaceID });
+    loadDaemonSets(dsURL, { clusterID, namespaceID });
+    loadStatefulSets(stsURL, { clusterID, namespaceID });
+  }, [deployURL, dsURL, stsURL]);
+  const initialValues =  fromJS({
+    targetResourceType: 'deployments',
+    serviceType: 'clusterip',
+    exposedPorts: [],
+  });
 
   async function doSubmit(formValues) {
     try {
-      const data = formValues.toJS();
+      const data = formValues.update('exposedPorts', (ports) => (
+        ports.filter((p) => p.get('enable'))
+      )).toJS();
 
       await new Promise((resolve, reject) => {
         createService(data, {
@@ -72,7 +101,7 @@ export const CreateServicePage = ({
         <Breadcrumbs
           data={[
             {
-              path: `/clusters`,
+              path: `/clusters/${clusterID}/namespaces/${namespaceID}/services`,
               name: <FormattedMessage {...messages.pageTitle} />,
             },
             {
@@ -84,8 +113,12 @@ export const CreateServicePage = ({
           <GridItem xs={12} sm={12} md={12}>
             <CreateServiceForm
               onSubmit={doSubmit}
-              formValues={values}
-              initialValues={fromJS({})}
+              formValues={values || initialValues}
+              initialValues={initialValues}
+              deployments={deployList}
+              daemonSets={dsList}
+              statefulSets={stsList}
+              changeFormValue={changeFormValue}
             />
             <Button
               variant="contained"
@@ -107,12 +140,22 @@ const mapStateToProps = createStructuredSelector({
   namespaceID: makeSelectNamespaceID(),
   url: makeSelectURL(),
   values: getFormValues(formName),
+  deployURL: makeSelectDeploymentsURL(),
+  dsURL: makeSelectDaemonSetsURL(),
+  stsURL: makeSelectStatefulSetsURL(),
+  deployList: makeSelectDeploymentsList(),
+  dsList: makeSelectDaemonSetsList(),
+  stsList: makeSelectStatefulSetsList(),
 });
 
 const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
       ...actions,
+      loadDeployments: deployActions.loadDeployments,
+      loadDaemonSets: dsActions.loadDaemonSets,
+      loadStatefulSets: stsActions.loadStatefulSets,
+      changeFormValue: (...args) => change(formName, ...args),
       submitForm: () => submit(formName),
     },
     dispatch
