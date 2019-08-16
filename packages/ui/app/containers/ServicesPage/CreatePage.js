@@ -24,8 +24,8 @@ import GridItem from 'components/Grid/GridItem';
 import GridContainer from 'components/Grid/GridContainer';
 import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
 
-// import { makeSelectCurrentID as makeSelectClusterID } from 'ducks/clusters/selectors';
-// import { makeSelectCurrentID as makeSelectNamespaceID } from 'ducks/namespaces/selectors';
+import { makeSelectCurrentID as makeSelectClusterID } from 'ducks/clusters/selectors';
+import { makeSelectCurrentID as makeSelectNamespaceID } from 'ducks/namespaces/selectors';
 import { makeSelectURL } from 'ducks/services/selectors';
 import * as actions from 'ducks/services/actions';
 
@@ -37,8 +37,8 @@ export const CreateServicePage = ({
   createService,
   submitForm,
   url,
-  // clusterID,
-  // namespaceID,
+  clusterID,
+  namespaceID,
   values,
 }) => {
   const classes = useStyles();
@@ -52,8 +52,8 @@ export const CreateServicePage = ({
           resolve,
           reject,
           url,
-          // clusterID,
-          // namespaceID,
+          clusterID,
+          namespaceID,
         });
       });
     } catch (error) {
@@ -103,8 +103,8 @@ export const CreateServicePage = ({
 };
 
 const mapStateToProps = createStructuredSelector({
-  // clusterID: makeSelectClusterID(),
-  // namespaceID: makeSelectNamespaceID(),
+  clusterID: makeSelectClusterID(),
+  namespaceID: makeSelectNamespaceID(),
   url: makeSelectURL(),
   values: getFormValues(formName),
 });

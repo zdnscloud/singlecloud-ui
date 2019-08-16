@@ -24,8 +24,8 @@ import CardHeader from 'components/Card/CardHeader';
 import CardBody from 'components/Card/CardBody';
 import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
 
-// import { makeSelectCurrentID as makeSelectClusterID } from 'ducks/clusters/selectors';
-// import { makeSelectCurrentID as makeSelectNamespaceID } from 'ducks/namespaces/selectors';
+import { makeSelectCurrentID as makeSelectClusterID } from 'ducks/clusters/selectors';
+import { makeSelectCurrentID as makeSelectNamespaceID } from 'ducks/namespaces/selectors';
 import { makeSelectURL } from 'ducks/services/selectors';
 import * as actions from 'ducks/services/actions';
 
@@ -34,8 +34,8 @@ import messages from './messages';
 import ServicesTable from './Table';
 
 const ServicesPage = ({
-  // clusterID,
-  // namespaceID,
+  clusterID,
+  namespaceID,
   location,
   url,
   loadServices,
@@ -44,8 +44,8 @@ const ServicesPage = ({
   useEffect(() => {
     if (url) {
       loadServices(url, {
-        // clusterID,
-        // namespaceID,
+        clusterID,
+        namespaceID,
       });
     }
     return () => {
@@ -94,8 +94,8 @@ const ServicesPage = ({
 };
 
 const mapStateToProps = createStructuredSelector({
-  // clusterID: makeSelectClusterID(),
-  // namespaceID: makeSelectNamespaceID(),
+  clusterID: makeSelectClusterID(),
+  namespaceID: makeSelectNamespaceID(),
   url: makeSelectURL(),
 });
 

@@ -31,8 +31,8 @@ const tableSchema = schema
             actionName={props.removeService}
             id={props.data.get('id')}
             url={props.data.getIn(['links', 'remove'])}
-            // clusterID={props.clusterID}
-            // namespaceID={props.namespaceID}
+            clusterID={props.clusterID}
+            namespaceID={props.namespaceID}
           />
         </Fragment>
       ),

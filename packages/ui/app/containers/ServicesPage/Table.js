@@ -19,8 +19,8 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import ConfirmDelete from 'components/ConfirmDelete/ConfirmDelete';
 
 import { makeSelectLocation } from 'ducks/app/selectors';
-// import { makeSelectCurrentID as makeSelectClusterID } from 'ducks/clusters/selectors';
-// import { makeSelectCurrentID as makeSelectNamespaceID } from 'ducks/namespaces/selectors';
+import { makeSelectCurrentID as makeSelectClusterID } from 'ducks/clusters/selectors';
+import { makeSelectCurrentID as makeSelectNamespaceID } from 'ducks/namespaces/selectors';
 import { makeSelectServicesList } from 'ducks/services/selectors';
 import * as actions from 'ducks/services/actions';
 
@@ -32,8 +32,8 @@ import schema from './tableSchema';
 const ServicesTable = ({
   location,
   data,
-  // clusterID,
-  // namespaceID,
+  clusterID,
+  namespaceID,
   removeService,
 }) => {
   const classes = useStyles();
@@ -45,8 +45,8 @@ const ServicesTable = ({
           ...sch,
           props: {
             removeService,
-            // clusterID,
-            // namespaceID,
+            clusterID,
+            namespaceID,
           },
         };
       }
@@ -76,8 +76,8 @@ const ServicesTable = ({
 
 const mapStateToProps = createStructuredSelector({
   location: makeSelectLocation(),
-  // clusterID: makeSelectClusterID(),
-  // namespaceID: makeSelectNamespaceID(),
+  clusterID: makeSelectClusterID(),
+  namespaceID: makeSelectNamespaceID(),
   data: makeSelectServicesList(),
 });
 
