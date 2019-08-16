@@ -139,7 +139,7 @@ if (wannaCreateAction) {%>
 export const afterCreate<%= csname %>Epic = (action$) =>
   action$.pipe(
     ofType(c.CREATE_<%= SN %>_SUCCESS),
-    mergeMap(({ payload, meta }) => mapTo(push(`/<%= name %>`)))
+    mergeMap(({ payload, meta }) => of(push(`/<%= name %>`)))
   );
 <% } %>
 export default combineEpics(
