@@ -68,21 +68,22 @@ const CreateDaemonSetForm = reduxForm({
 
 /* eslint-disable react/prefer-stateless-function */
 export const CreateDaemonSet = ({
-      clusterID,
-      namespaceID,
-      cluster,
-      configMapURL,
-      loadConfigMaps,
-      secretURL,
-      loadSecrets,
-      loadStorageClasses,
-      createDaemonSet,
-      submitForm,
-      url,
-      configMaps,
-      secrets,
-      storageClasses,
-      values,
+  clusterID,
+  namespaceID,
+  cluster,
+  configMapURL,
+  loadConfigMaps,
+  secretURL,
+  loadSecrets,
+  loadStorageClasses,
+  createDaemonSet,
+  submitForm,
+  url,
+  configMaps,
+  secrets,
+  storageClasses,
+  values,
+  routeTo,
 }) => {
   const classes = useStyles();
   useEffect(() => {
