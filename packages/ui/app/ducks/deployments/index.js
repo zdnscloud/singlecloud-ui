@@ -58,8 +58,8 @@ export const reducer = (
     case c.UPDATE_DEPLOYMENT:
       return state;
     case c.UPDATE_DEPLOYMENT_SUCCESS: {
-      const id = getByKey(payload, ['reponse', 'id']);
-      const data = getByKey(payload, ['reponse']);
+      const id = getByKey(payload, ['response', 'id']);
+      const data = getByKey(payload, ['response']);
       const {
         clusterID, namespaceID,
       } = meta;
@@ -74,8 +74,8 @@ export const reducer = (
     case c.READ_DEPLOYMENT:
       return state;
     case c.READ_DEPLOYMENT_SUCCESS: {
-      const id = getByKey(payload, ['reponse', 'id']);
-      const data = getByKey(payload, ['reponse']);
+      const id = getByKey(payload, ['response', 'id']);
+      const data = getByKey(payload, ['response']);
       const {
         clusterID, namespaceID,
       } = meta;

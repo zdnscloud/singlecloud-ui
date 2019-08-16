@@ -75,7 +75,7 @@ export const updateDeploymentEpic = (action$, state$, { ajax }) =>
         }),
         catchError((error) => {
           meta.reject && meta.reject(error);
-          return of(a.updateDeploymentFailure(error, meta))
+          return of(a.updateDeploymentFailure(error, meta));
         })
       )
     )
@@ -107,7 +107,7 @@ export const removeDeploymentEpic = (action$, state$, { ajax }) =>
     mergeMap(({ payload, meta }) =>
       ajax({
         url: `${meta.url}`,
-        method: 'REMOVE',
+        method: 'DELETE',
       }).pipe(
         map((resp) => {
           meta.resolve && meta.resolve(resp);
@@ -124,7 +124,7 @@ export const removeDeploymentEpic = (action$, state$, { ajax }) =>
 export const afterCreateDeploymentEpic = (action$) =>
   action$.pipe(
     ofType(c.CREATE_DEPLOYMENT_SUCCESS),
-    mergeMap(({ payload, meta }) => mapTo(push(`/deployments`)))
+    mergeMap(({ payload, meta }) => of(push(`/clusters/${meta.clusterID}/namespaces/${meta.namespaceID}/deployments`)))
   );
 
 export default combineEpics(

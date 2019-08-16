@@ -6,11 +6,11 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { FormattedMessage, injectIntl } from 'react-intl';
+import { useIntl } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import { bindActionCreators, compose } from 'redux';
 
-import { withStyles } from '@material-ui/core/styles';
+import { FormattedMessage } from 'react-intl';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import ButtonBase from '@material-ui/core/ButtonBase';
 import AddIcon from '@material-ui/icons/Add';
@@ -32,17 +32,17 @@ import { makeSelectCurrentID as makeSelectNamespaceID } from 'ducks/namespaces/s
 import { makeSelectConfigMaps } from 'ducks/configMaps/selectors';
 
 import messages from './messages';
-import styles from './styles';
+import useStyles from './styles';
 
 /* eslint-disable react/prefer-stateless-function */
 export const Deployment = ({
-  classes,
   updateDeployment,
   deployment,
   clusterID,
   namespaceID,
-  intl,
 }) => {
+  const classes = useStyles();
+  const intl = useIntl();
   const replicas = deployment.get('replicas');
   const updateUrl = deployment.getIn(['links', 'update']);
   const typeMap = {
@@ -527,7 +527,5 @@ const withConnect = connect(
 );
 
 export default compose(
-  injectIntl,
   withConnect,
-  withStyles(styles)
 )(Deployment);

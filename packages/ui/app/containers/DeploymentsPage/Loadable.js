@@ -12,12 +12,12 @@ export default loadable(() =>
 
 export const CreateDeploymentPage = loadable(() =>
   import(
-    /* webpackChunkName: "CreateDeploymentPage" */ './CreateDeploymentPage'
+    /* webpackChunkName: "CreateDeploymentPage" */ './CreatePage'
   )
 );
 
 export const DeploymentDetailPage = loadable(() =>
   import(
-    /* webpackChunkName: "DeploymentDetailPage" */ './DeploymentDetailPage'
+    /* webpackChunkName: "DeploymentDetailPage" */ './ShowItemPage'
   )
 );
