@@ -221,4 +221,12 @@ export default defineMessages({
     id: `${scope}.formVolumeClaimTemplateStorageClassName`,
     defaultMessage: 'Storage Class Name',
   },
+  successTitle: {
+    id: `${scope}.successTitle`,
+    defaultMessage: 'Notice',
+  },
+  successContent: {
+    id: `${scope}.successContent`,
+    defaultMessage: 'StatefulSet has been created, would you like to create a service for it?',
+  },
 });
