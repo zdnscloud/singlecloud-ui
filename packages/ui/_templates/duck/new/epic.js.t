@@ -121,7 +121,7 @@ export const remove<%= csname %>Epic = (action$, state$, { ajax }) =>
     mergeMap(({ payload, meta }) =>
       ajax({
         url: `${meta.url}`,
-        method: 'REMOVE',
+        method: 'DELETE',
       }).pipe(
         map((resp) => {
           meta.resolve && meta.resolve(resp);
