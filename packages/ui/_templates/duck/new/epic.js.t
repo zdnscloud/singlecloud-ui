@@ -87,7 +87,7 @@ export const update<%= csname %>Epic = (action$, state$, { ajax }) =>
         }),
         catchError((error) => {
           meta.reject && meta.reject(error);
-          return of(a.update<%= csname %>Failure(error, meta))
+          return of(a.update<%= csname %>Failure(error, meta));
         })
       )
     )
