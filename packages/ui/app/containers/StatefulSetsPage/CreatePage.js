@@ -15,6 +15,7 @@ import {
   SubmissionError,
   submit,
 } from 'redux-form/immutable';
+import { push } from 'connected-react-router';
 
 import Helmet from 'components/Helmet/Helmet';
 import { FormattedMessage } from 'react-intl';
@@ -67,21 +68,22 @@ const CreateStatefulSetForm = reduxForm({
 
 /* eslint-disable react/prefer-stateless-function */
 export const CreateStatefulSet = ({
-      clusterID,
-      namespaceID,
-      cluster,
-      configMapURL,
-      loadConfigMaps,
-      secretURL,
-      loadSecrets,
-      loadStorageClasses,
-      createStatefulSet,
-      submitForm,
-      url,
-      configMaps,
-      secrets,
-      storageClasses,
-      values,
+  clusterID,
+  namespaceID,
+  cluster,
+  configMapURL,
+  loadConfigMaps,
+  secretURL,
+  loadSecrets,
+  loadStorageClasses,
+  createStatefulSet,
+  submitForm,
+  url,
+  configMaps,
+  secrets,
+  storageClasses,
+  values,
+  routeTo,
 }) => {
   const classes = useStyles();
   useEffect(() => {
@@ -196,6 +198,7 @@ const mapDispatchToProps = (dispatch) =>
       loadSecrets: sActions.loadSecrets,
       loadStorageClasses: storagesAction.loadStorageClasses,
       submitForm: () => submit(formName),
+      routeTo: push,
     },
     dispatch
   );

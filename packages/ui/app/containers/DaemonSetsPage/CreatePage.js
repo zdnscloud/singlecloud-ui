@@ -15,6 +15,7 @@ import {
   SubmissionError,
   submit,
 } from 'redux-form/immutable';
+import { push } from 'connected-react-router';
 
 import Helmet from 'components/Helmet/Helmet';
 import { FormattedMessage } from 'react-intl';
@@ -195,6 +196,7 @@ const mapDispatchToProps = (dispatch) =>
       loadSecrets: sActions.loadSecrets,
       loadStorageClasses: storagesAction.loadStorageClasses,
       submitForm: () => submit(formName),
+      routeTo: push,
     },
     dispatch
   );
