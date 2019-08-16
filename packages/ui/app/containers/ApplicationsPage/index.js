@@ -55,17 +55,11 @@ export class ApplicationsPage extends React.PureComponent {
 
   componentDidMount() {
     this.load();
+    this.timer = setInterval(() => this.load(), 3000);
   }
 
-  componentDidUpdate(prevProps) {
-    const {
-      clusterID: prevClusterID,
-      namespaceID: prevNamespaceID,
-    } = prevProps;
-    const { clusterID, namespaceID } = this.props;
-    if (prevClusterID !== clusterID || prevNamespaceID !== namespaceID) {
-      this.load();
-    }
+  componentWillUnmount() {
+    clearInterval(this.timer);
   }
 
   load() {

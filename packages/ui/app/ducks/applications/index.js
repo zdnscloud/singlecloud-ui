@@ -61,10 +61,7 @@ export const applicationsReducer = (
     case c.REMOVE_APPLICATION:
       return state;
     case c.REMOVE_APPLICATION_SUCCESS: {
-      const { id } = meta;
       return state
-        .deleteIn(['applications', id])
-        .update('list', (l) => l.filterNot((i) => i === id));
     }
     case c.REMOVE_APPLICATION_FAILURE:
       const data = payload.response.message;
