@@ -1,23 +1,23 @@
- /**
+/**
  *
- * StatefulSetsPage
+ * DaemonSetDetailPage
  *
  */
-
-import React, { useEffect, useState, memo } from 'react';
+import React, { Fragment, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { bindActionCreators, compose } from 'redux';
-import { connect } from 'react-redux';
 
 import Helmet from 'components/Helmet/Helmet';
 import { FormattedMessage } from 'react-intl';
-import CssBaseline from '@material-ui/core/CssBaseline';
 import { Link } from 'react-router-dom';
+import Menubar from 'components/Menubar';
+import CssBaseline from '@material-ui/core/CssBaseline';
 import Typography from '@material-ui/core/Typography';
 import Fab from '@material-ui/core/Fab';
-import IconButton from '@material-ui/core/IconButton';
-import AddIcon from 'components/Icons/Add';
+import AddIcon from '@material-ui/icons/Add';
+import MinimizeIcon from '@material-ui/icons/Minimize';
 import GridItem from 'components/Grid/GridItem';
 import GridContainer from 'components/Grid/GridContainer';
 import Card from 'components/Card/Card';
@@ -25,35 +25,48 @@ import CardHeader from 'components/Card/CardHeader';
 import CardBody from 'components/Card/CardBody';
 import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
 
-import { makeSelectCurrentID as makeSelectCurrentClusterID } from 'ducks/clusters/selectors';
-import { makeSelectCurrentID as makeSelectCurrentNamespaceID } from 'ducks/namespaces/selectors';
-import * as actions from 'ducks/statefulSets/actions';
-import { makeSelectURL } from 'ducks/statefulSets/selectors';
+import { makeSelectCurrentID as makeSelectClusterID } from 'ducks/clusters/selectors';
+import { makeSelectCurrentID as makeSelectNamespaceID } from 'ducks/namespaces/selectors';
+import {
+  makeSelectCurrentID,
+  makeSelectCurrent,
+  makeSelectURL,
+} from 'ducks/daemonSets/selectors';
+import * as podsActions from 'ducks/pods/actions';
+import * as actions from 'ducks/daemonSets/actions';
+import PodsTable from 'containers/PodsPage/PodsTable';
 
-import useStyles from './styles';
+import DaemonSet from './Item';
 import messages from './messages';
-import StatefulSetsTable from './Table';
+import useStyles from './styles';
 
-/* eslint-disable react/prefer-stateless-function */
-export const StatefulSetsPage = ({
+export const DaemonSetDetailPage = ({
   clusterID,
-  loadStatefulSets,
-  location,
   namespaceID,
+  daemonSetID,
+  daemonSet,
   url,
+  loadDSPods: loadPods,
+  readDaemonSet,
 }) => {
   const classes = useStyles();
+  const podUrl = daemonSet.getIn(['links', 'pods']);
   useEffect(() => {
-    if (url) {
-      loadStatefulSets(url, {
+    const loadDaemonSetAndPods = () => {
+      readDaemonSet(daemonSetID, {
         clusterID,
         namespaceID,
+        url: `${url}/${daemonSetID}`,
       });
-    }
-    return () => {
-      // try cancel something when unmount
+      if (podUrl) {
+        loadPods({ url: podUrl, clusterID, namespaceID, daemonSetID });
+      }
     };
-  }, [url]);
+    loadDaemonSetAndPods();
+    const timer = setInterval(loadDaemonSetAndPods, 3000);
+
+    return () => clearInterval(timer);
+  }, [url, podUrl]);
 
   return (
     <div className={classes.root}>
@@ -63,29 +76,25 @@ export const StatefulSetsPage = ({
         <Breadcrumbs
           data={[
             {
-              path: `/clusters/${clusterID}/namespaces/${namespaceID}/statefulSets`,
+              path: `/clusters/${clusterID}/namespaces/${namespaceID}/daemonSets`,
               name: <FormattedMessage {...messages.pageTitle} />,
+            },
+            {
+              name: <FormattedMessage {...messages.daemonSetDetail} />,
             },
           ]}
         />
+        <DaemonSet daemonSet={daemonSet} />
         <GridContainer className={classes.grid}>
           <GridItem xs={12} sm={12} md={12}>
             <Card>
               <CardHeader color="primary">
                 <h4 className={classes.cardTitleWhite}>
-                  <FormattedMessage {...messages.statefulSets} />
-                  <Link
-                    to={`${location.pathname}/create`}
-                    className={classes.createBtnLink}
-                  >
-                    <IconButton>
-                      <AddIcon style={{ color: '#fff' }} />
-                    </IconButton>
-                  </Link>
+                  <FormattedMessage {...messages.pods} />
                 </h4>
               </CardHeader>
               <CardBody>
-                <StatefulSetsTable />
+                <PodsTable parentType="ds" />
               </CardBody>
             </Card>
           </GridItem>
@@ -95,17 +104,19 @@ export const StatefulSetsPage = ({
   );
 };
 
-
 const mapStateToProps = createStructuredSelector({
-  clusterID: makeSelectCurrentClusterID(),
-  namespaceID: makeSelectCurrentNamespaceID(),
+  clusterID: makeSelectClusterID(),
+  namespaceID: makeSelectNamespaceID(),
+  daemonSetID: makeSelectCurrentID(),
   url: makeSelectURL(),
+  daemonSet: makeSelectCurrent(),
 });
 
 const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
       ...actions,
+      ...podsActions,
     },
     dispatch
   );
@@ -117,4 +128,4 @@ const withConnect = connect(
 
 export default compose(
   withConnect,
-)(StatefulSetsPage);
+)(DaemonSetDetailPage);

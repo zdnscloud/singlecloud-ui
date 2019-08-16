@@ -21,12 +21,6 @@ import configMapsReducer, {
   prefix as configMapsPrefix,
 } from 'ducks/configMaps';
 import secretsReducer, { prefix as secretsPrefix } from 'ducks/secrets';
-import statefulSetsReducer, {
-  prefix as statefulSetsPrefix,
-} from 'ducks/statefulSets';
-import daemonSetsReducer, {
-  prefix as daemonSetsPrefix,
-} from 'ducks/daemonSets';
 import cronJobsReducer, { prefix as cronJobsPrefix } from 'ducks/cronJobs';
 import jobsReducer, { prefix as jobsPrefix } from 'ducks/jobs';
 import podsReducer, { prefix as podsPrefix } from 'ducks/pods';
@@ -45,6 +39,8 @@ import userQuotasReducer, { prefix as userQuotasPrefix } from 'ducks/userQuotas'
 import servicesReducer, { prefix as servicesPrefix } from 'ducks/services';
 import ingressesReducer, { prefix as ingressesPrefix } from 'ducks/ingresses';
 import deploymentsReducer, { prefix as deploymentsPrefix } from 'ducks/deployments';
+import statefulSetsReducer, { prefix as statefulSetsPrefix } from 'ducks/statefulSets';
+import daemonSetsReducer, { prefix as daemonSetsPrefix } from 'ducks/daemonSets';
 // import reducers end
 
 /**

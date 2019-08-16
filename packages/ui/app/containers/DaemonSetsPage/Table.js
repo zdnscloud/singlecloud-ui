@@ -10,9 +10,13 @@ import { FormattedMessage } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import { bindActionCreators, compose } from 'redux';
 
-import { withStyles } from '@material-ui/core/styles';
+import { Link } from 'react-router-dom';
+import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
 import { SimpleTable } from '@gsmlg/com';
+import IconButton from '@material-ui/core/IconButton';
+import DeleteIcon from '@material-ui/icons/Delete';
+import ConfirmDelete from 'components/ConfirmDelete/ConfirmDelete';
 
 import {
   makeSelectClusterID,
@@ -26,64 +30,55 @@ import {
 import * as actions from 'ducks/daemonSets/actions';
 
 import messages from './messages';
-import styles from './styles';
+import useStyles from './styles';
 import schema from './tableSchema';
 
 /* eslint-disable react/prefer-stateless-function */
-export class DaemonSetsTable extends React.PureComponent {
-  static propTypes = {
-    classes: PropTypes.object.isRequired,
-  };
+export const DaemonSetsTable = ({
+  location,
+  data,
+  clusterID,
+  namespaceID,
+  removeDaemonSet,
+}) => {
+  const classes = useStyles();
+  const pathname = location.get('pathname');
+  const mergedSchema = schema
+        .map((sch) => {
+          if (sch.id === 'actions') {
+            return {
+              ...sch,
+              props: { removeDaemonSet, clusterID, namespaceID },
+            };
+          }
+          if (sch.id === 'name') {
+            return {
+              ...sch,
+              props: { pathname }
+            };
+          }
+          return sch;
+        })
+        .map((s) => ({
+          ...s,
+          label: <FormattedMessage {...messages[`tableTitle${s.label}`]} />,
+        }));
 
-  render() {
-    const {
-      classes,
-      location,
-      data,
-      daemonSets,
-      clusterID,
-      namespaceID,
-      removeDaemonSet,
-    } = this.props;
-    const pathname = location.get('pathname');
-    const mergedSchema = schema
-      .map((sch) => {
-        if (sch.id === 'actions') {
-          return {
-            ...sch,
-            props: { removeDaemonSet, clusterID, namespaceID },
-          };
-        }
-        if (sch.id === 'name') {
-          return {
-            ...sch,
-            props: { pathname }
-          };
-        }
-        return sch;
-      })
-      .map((s) => ({
-        ...s,
-        label: <FormattedMessage {...messages[`tableTitle${s.label}`]} />,
-      }));
-
-    return (
-      <Paper className={classes.tableWrapper}>
-        <SimpleTable
-          className={classes.table}
-          schema={mergedSchema}
-          data={data}
-        />
-      </Paper>
-    );
-  }
-}
+  return (
+    <Paper className={classes.tableWrapper}>
+      <SimpleTable
+        className={classes.table}
+        schema={mergedSchema}
+        data={data}
+      />
+    </Paper>
+  );
+};
 
 const mapStateToProps = createStructuredSelector({
   location: makeSelectLocation(),
   clusterID: makeSelectClusterID(),
   namespaceID: makeSelectNamespaceID(),
-  daemonSets: makeSelectDaemonSets(),
   data: makeSelectDaemonSetsList(),
 });
 
@@ -102,5 +97,4 @@ const withConnect = connect(
 
 export default compose(
   withConnect,
-  withStyles(styles)
 )(DaemonSetsTable);

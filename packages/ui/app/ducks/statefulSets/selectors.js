@@ -1,80 +1,81 @@
+/**
+ * Duck: Statefulsets
+ * selectors: statefulSets
+ *
+ */
+import { fromJS } from 'immutable';
 import { createSelector } from 'reselect';
 import {
   createMatchSelector,
   getLocation,
 } from 'connected-react-router/immutable';
 
-import { makeSelectCurrentID as makeSelectClusterID } from 'ducks/clusters/selectors';
-import { makeSelectCurrentID as makeSelectNamespaceID } from 'ducks/namespaces/selectors';
-import { makeSelectCurrentNamespace } from 'ducks/namespaces/selectors';
+import {
+  makeSelectCurrent as makeSelectCurrentNamespace,
+} from 'ducks/namespaces/selectors';
+
+import { makeSelectCurrentID as makeSelectCurrentClusterID } from 'ducks/clusters/selectors';
+
+import { makeSelectCurrentID as makeSelectCurrentNamespaceID } from 'ducks/namespaces/selectors';
 
 import { prefix } from './constants';
+import { initialState } from './index';
 
 /**
- * Direct selector to the statefulSets duck
+ * Direct selector to the statefulSets domain
  */
-
-const selectStatefulSetsDomain = (state) => state.get(prefix);
+export const selectDomain = (state) => state.get(prefix) || initialState;
 
 /**
  * Other specific selectors
  */
+export const makeSelectURL = () =>
+  createSelector(
+    makeSelectCurrentNamespace(),
+    (pt) => pt.getIn(['links', 'statefulsets'])
+  );
+
 export const makeSelectStatefulSets = () =>
   createSelector(
-    selectStatefulSetsDomain,
-    makeSelectClusterID(),
-    makeSelectNamespaceID(),
+    selectDomain,
+    makeSelectCurrentClusterID(),
+    makeSelectCurrentNamespaceID(),
+
     (substate, clusterID, namespaceID) =>
-      substate.getIn(['statefulSets', clusterID, namespaceID]) ||
-      substate.clear()
+      substate.getIn(['data', clusterID, namespaceID])
+        || substate.clear()
   );
 
 export const makeSelectStatefulSetsList = () =>
   createSelector(
-    selectStatefulSetsDomain,
+    selectDomain,
     makeSelectStatefulSets(),
-    (substate, statefulSets) =>
-      substate.get('list').map((id) => statefulSets.get(id))
+    makeSelectCurrentClusterID(),
+    makeSelectCurrentNamespaceID(),
+
+    (substate, data, clusterID, namespaceID) =>
+      (substate.getIn(['list', clusterID, namespaceID]) || fromJS([]))
+        .map((id) => data.get(id)) || fromJS([])
   );
 
-export const makeSelectURL = () =>
+export const makeSelectCurrentID = () =>
+   createSelector(
+     createMatchSelector('*/statefulSets/:id/*'),
+     (match) => {
+       if (match && match.params) {
+         return match.params.id;
+       }
+       return '';
+     }
+   );
+
+export const makeSelectCurrent = () =>
   createSelector(
-    makeSelectCurrentNamespace(),
-    (ns) => ns.getIn(['links', 'statefulsets'])
+    selectDomain,
+    makeSelectCurrentClusterID(),
+    makeSelectCurrentNamespaceID(),
+
+    makeSelectCurrentID(),
+    (substate, clusterID, namespaceID, id) =>
+      substate.getIn(['data', clusterID, namespaceID, id]) || substate.clear()
   );
-
-export const makeSelectStatefulSetID = () =>
-  createSelector(
-    createMatchSelector(
-      '/clusters/:cluster_id/namespaces/:namespace_id/statefulSets/:statefulSet_id'
-    ),
-    (match) => {
-      if (match && match.params) {
-        return match.params.statefulSet_id;
-      }
-      return '';
-    }
-  );
-
-export const makeSelectCurrentStatefulSet = () =>
-  createSelector(
-    selectStatefulSetsDomain,
-    makeSelectClusterID(),
-    makeSelectNamespaceID(),
-    makeSelectStatefulSetID(),
-    (substate, clusterID, namespaceID, statefulSetID) =>
-      substate.getIn(['statefulSets', clusterID, namespaceID, statefulSetID]) ||
-      substate.clear()
-  );
-
-/**
- * Default selector used by LoginPage
- */
-
-const makeSelectStatefulSetsDomain = () =>
-  createSelector(
-    selectStatefulSetsDomain,
-    (substate) => substate
-  );
-
-export default makeSelectStatefulSetsDomain;

@@ -1,20 +1,19 @@
-/**
+ /**
  *
  * DaemonSetsPage
  *
  */
 
-import React from 'react';
+import React, { useEffect, useState, memo } from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { FormattedMessage } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import { bindActionCreators, compose } from 'redux';
+import { connect } from 'react-redux';
 
-import { withStyles } from '@material-ui/core/styles';
-import { Link } from 'react-router-dom';
-import Menubar from 'components/Menubar';
+import Helmet from 'components/Helmet/Helmet';
+import { FormattedMessage } from 'react-intl';
 import CssBaseline from '@material-ui/core/CssBaseline';
+import { Link } from 'react-router-dom';
 import Typography from '@material-ui/core/Typography';
 import Fab from '@material-ui/core/Fab';
 import IconButton from '@material-ui/core/IconButton';
@@ -26,87 +25,80 @@ import CardHeader from 'components/Card/CardHeader';
 import CardBody from 'components/Card/CardBody';
 import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
 
-import {
-  makeSelectClusterID,
-  makeSelectNamespaceID,
-} from 'ducks/app/selectors';
+import { makeSelectCurrentID as makeSelectCurrentClusterID } from 'ducks/clusters/selectors';
+import { makeSelectCurrentID as makeSelectCurrentNamespaceID } from 'ducks/namespaces/selectors';
 import * as actions from 'ducks/daemonSets/actions';
 import { makeSelectURL } from 'ducks/daemonSets/selectors';
 
+import useStyles from './styles';
 import messages from './messages';
-import DaemonSetsPageHelmet from './helmet';
-import styles from './styles';
-import DaemonSetsTable from './DaemonSetsTable';
+import DaemonSetsTable from './Table';
 
 /* eslint-disable react/prefer-stateless-function */
-export class DaemonSetsPage extends React.PureComponent {
-  static propTypes = {
-    classes: PropTypes.object.isRequired,
-  };
-
-  componentWillMount() {
-    const { clusterID, namespaceID, url, loadDaemonSets } = this.props;
-    loadDaemonSets({ url, clusterID, namespaceID });
-  }
-
-  componentDidUpdate(prevProps) {
-    const {
-      clusterID: prevClusterID,
-      namespaceID: prevNamespaceID,
-    } = prevProps;
-    const { clusterID, namespaceID, url, loadDaemonSets } = this.props;
-    if (prevClusterID !== clusterID || prevNamespaceID !== namespaceID) {
-      loadDaemonSets({ url, clusterID, namespaceID });
+export const DaemonSetsPage = ({
+  clusterID,
+  loadDaemonSets,
+  location,
+  namespaceID,
+  url,
+}) => {
+  const classes = useStyles();
+  useEffect(() => {
+    if (url) {
+      loadDaemonSets(url, {
+        clusterID,
+        namespaceID,
+      });
     }
-  }
+    return () => {
+      // try cancel something when unmount
+    };
+  }, [url]);
 
-  render() {
-    const { classes, clusterID, namespaceID } = this.props;
-
-    return (
-      <div className={classes.root}>
-        <DaemonSetsPageHelmet />
-        <CssBaseline />
-        <div className={classes.content}>
-          <Breadcrumbs
-            data={[
-              {
-                path: `/clusters/${clusterID}/namespaces/${namespaceID}/daemonSets`,
-                name: <FormattedMessage {...messages.pageTitle} />,
-              },
-            ]}
-          />
-          <GridContainer className={classes.grid}>
-            <GridItem xs={12} sm={12} md={12}>
-              <Card>
-                <CardHeader color="primary">
-                  <h4 className={classes.cardTitleWhite}>
-                    <FormattedMessage {...messages.daemonSets} />
-                    <Link
-                      to={`${this.props.location.pathname}/create`}
-                      className={classes.createBtnLink}
-                    >
-                      <IconButton>
-                        <AddIcon style={{ color: '#fff' }} />
-                      </IconButton>
-                    </Link>
-                  </h4>
-                </CardHeader>
-                <CardBody>
-                  <DaemonSetsTable location={this.props.location} />
-                </CardBody>
-              </Card>
-            </GridItem>
-          </GridContainer>
-        </div>
+  return (
+    <div className={classes.root}>
+      <Helmet title={messages.pageTitle} description={messages.pageDesc} />
+      <CssBaseline />
+      <div className={classes.content}>
+        <Breadcrumbs
+          data={[
+            {
+              path: `/clusters/${clusterID}/namespaces/${namespaceID}/daemonSets`,
+              name: <FormattedMessage {...messages.pageTitle} />,
+            },
+          ]}
+        />
+        <GridContainer className={classes.grid}>
+          <GridItem xs={12} sm={12} md={12}>
+            <Card>
+              <CardHeader color="primary">
+                <h4 className={classes.cardTitleWhite}>
+                  <FormattedMessage {...messages.daemonSets} />
+                  <Link
+                    to={`${location.pathname}/create`}
+                    className={classes.createBtnLink}
+                  >
+                    <IconButton>
+                      <AddIcon style={{ color: '#fff' }} />
+                    </IconButton>
+                  </Link>
+                </h4>
+              </CardHeader>
+              <CardBody>
+                <DaemonSetsTable />
+              </CardBody>
+            </Card>
+          </GridItem>
+        </GridContainer>
       </div>
-    );
-  }
-}
+    </div>
+  );
+};
+
 
 const mapStateToProps = createStructuredSelector({
-  clusterID: makeSelectClusterID(),
-  namespaceID: makeSelectNamespaceID(),
+  clusterID: makeSelectCurrentClusterID(),
+  namespaceID: makeSelectCurrentNamespaceID(),
   url: makeSelectURL(),
 });
 
@@ -125,5 +117,4 @@ const withConnect = connect(
 
 export default compose(
   withConnect,
-  withStyles(styles)
 )(DaemonSetsPage);

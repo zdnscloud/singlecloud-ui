@@ -1,8 +1,9 @@
 /**
- *
- * DaemonSets Duck
+ * Duck: Daemonsets
+ * reducer: daemonSets
  *
  */
+import _ from 'lodash';
 import { fromJS } from 'immutable';
 import getByKey from '@gsmlg/utils/getByKey';
 import { procCollectionData } from '@gsmlg/utils/procData';
@@ -15,96 +16,89 @@ const { prefix } = constants;
 export { constants, actions, prefix };
 
 export const initialState = fromJS({
-  daemonSets: {},
-  list: [],
+  data: {},
+  list: {},
+  selectedData: null,
 });
 
 const c = constants;
 
-export const daemonSetsReducer = (
+export const reducer = (
   state = initialState,
   { type, payload, error, meta }
 ) => {
   switch (type) {
-    case c.LOAD_DAEMONSETS:
+    case c.LOAD_DAEMON_SETS:
       return state;
-    case c.LOAD_DAEMONSETS_SUCCESS: {
-      const { clusterID, namespaceID } = meta;
+    case c.LOAD_DAEMON_SETS_SUCCESS: {
       const { data, list } = procCollectionData(payload);
+      const {
+        clusterID, namespaceID,
+      } = meta;
       return state
-        .setIn(['daemonSets', clusterID, namespaceID], fromJS(data))
-        .set('list', fromJS(list));
+        .setIn(['data', clusterID, namespaceID], fromJS(data))
+        .setIn(['list', clusterID, namespaceID], fromJS(list));
     }
-    case c.LOAD_DAEMONSETS_FAILURE:
+    case c.LOAD_DAEMON_SETS_FAILURE:
       return state;
 
-    case c.LOAD_DAEMONSET:
+
+    case c.CREATE_DAEMON_SET:
       return state;
-    case c.LOAD_DAEMONSET_SUCCESS: {
-      const { clusterID, namespaceID } = meta;
-      const daemonSet = payload.response;
-      // temporary add, may remove when support cancel load data
-      if (daemonSet && daemonSet.id) {
-        const { containers } = daemonSet;
-        containers.forEach((item) => {
-          if (item && item.args) {
-            item.args = item.args.join(' ');
-          }
-          if (item && item.command) {
-            item.command = item.command.join(' ');
-          }
-        });
-        return state.setIn(
-          ['daemonSets', clusterID, namespaceID, daemonSet.id],
-          fromJS(daemonSet)
-        );
+    case c.CREATE_DAEMON_SET_SUCCESS: {
+      const data = payload.response;
+      const {
+        clusterID, namespaceID,
+      } = meta;
+      return state.setIn(['data', clusterID, namespaceID, data.id], fromJS(data));
+    }
+    case c.CREATE_DAEMON_SET_FAILURE:
+      return state;
+
+    case c.UPDATE_DAEMON_SET:
+      return state;
+    case c.UPDATE_DAEMON_SET_SUCCESS: {
+      const id = getByKey(payload, ['response', 'id']);
+      const data = getByKey(payload, ['response']);
+      const {
+        clusterID, namespaceID,
+      } = meta;
+      if (id) {
+        return state.setIn(['data', clusterID, namespaceID, id], fromJS(data));
       }
       return state;
     }
-    case c.LOAD_DAEMONSET_FAILURE:
+    case c.UPDATE_DAEMON_SET_FAILURE:
       return state;
 
-    case c.CREATE_DAEMONSET:
+    case c.READ_DAEMON_SET:
       return state;
-    case c.CREATE_DAEMONSET_SUCCESS: {
-      const { clusterID, namespaceID } = meta;
-      const data = payload.response;
-      return state.setIn(
-        ['daemonSets', clusterID, namespaceID, data.id],
-        fromJS(data)
-      );
+    case c.READ_DAEMON_SET_SUCCESS: {
+      const id = getByKey(payload, ['response', 'id']);
+      const data = getByKey(payload, ['response']);
+      const {
+        clusterID, namespaceID,
+      } = meta;
+      if (id) {
+        return state.setIn(['data', clusterID, namespaceID, id], fromJS(data));
+      }
+      return state;
     }
-
-    case c.CREATE_DAEMONSET_FAILURE:
+    case c.READ_DAEMON_SET_FAILURE:
       return state;
 
-    case c.UPDATE_DAEMONSET:
+    case c.REMOVE_DAEMON_SET:
       return state;
-    case c.UPDATE_DAEMONSET_SUCCESS:
-      return state;
-    case c.UPDATE_DAEMONSET_FAILURE:
-      return state;
-
-    case c.REMOVE_DAEMONSET:
-      return state;
-    case c.REMOVE_DAEMONSET_SUCCESS:
+    case c.REMOVE_DAEMON_SET_SUCCESS: {
+      const { id } = meta;
+      const {
+        clusterID, namespaceID,
+      } = meta;
       return state
-        .deleteIn(['daemonSets', meta.id])
-        .update('list', (l) => l.filterNot((id) => id === meta.id));
-    case c.REMOVE_DAEMONSET_FAILURE:
-      return state;
-
-    case c.SCALE_DAEMONSET:
-      return state;
-    case c.SCALE_DAEMONSET_SUCCESS: {
-      const { clusterID, namespaceID } = meta;
-      const data = payload.response;
-      return state.setIn(
-        ['daemonSets', clusterID, namespaceID, data.id, 'replicas'],
-        data.replicas
-      );
+        .removeIn(['data', clusterID, namespaceID, id])
+        .updateIn(['list', clusterID, namespaceID], (l) => l.filterNot((i) => i === id));
     }
-    case c.SCALE_DAEMONSET_FAILURE:
+    case c.REMOVE_DAEMON_SET_FAILURE:
       return state;
 
     default:
@@ -112,4 +106,4 @@ export const daemonSetsReducer = (
   }
 };
 
-export default daemonSetsReducer;
+export default reducer;

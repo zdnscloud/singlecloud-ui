@@ -12,12 +12,12 @@ import {
   makeSelectCurrent as makeSelectCurrentDeployment,
 } from 'ducks/deployments/selectors';
 import {
-  makeSelectStatefulSetID,
-  makeSelectCurrentStatefulSet,
+  makeSelectCurrentID as makeSelectStatefulSetID,
+  makeSelectCurrent as makeSelectCurrentStatefulSet,
 } from 'ducks/statefulSets/selectors';
 import {
-  makeSelectDaemonSetID,
-  makeSelectCurrentDaemonSet,
+  makeSelectCurrentID as makeSelectDaemonSetID,
+  makeSelectCurrent as makeSelectCurrentDaemonSet,
 } from 'ducks/daemonSets/selectors';
 import {
   makeSelectCronJobID,
