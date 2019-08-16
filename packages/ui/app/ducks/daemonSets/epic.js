@@ -124,7 +124,7 @@ export const removeDaemonSetEpic = (action$, state$, { ajax }) =>
 export const afterCreateDaemonSetEpic = (action$) =>
   action$.pipe(
     ofType(c.CREATE_DAEMON_SET_SUCCESS),
-    mergeMap(({ payload, meta }) => of(push(`/daemonSets`)))
+    mergeMap(({ payload, meta }) => of(push(`/clusters/${meta.clusterID}/namespaces/${meta.namespaceID}/daemonSets`)))
   );
 
 export default combineEpics(
