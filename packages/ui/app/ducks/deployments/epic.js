@@ -121,17 +121,10 @@ export const removeDeploymentEpic = (action$, state$, { ajax }) =>
     )
   );
 
-export const afterCreateDeploymentEpic = (action$) =>
-  action$.pipe(
-    ofType(c.CREATE_DEPLOYMENT_SUCCESS),
-    mergeMap(({ payload, meta }) => of(push(`/clusters/${meta.clusterID}/namespaces/${meta.namespaceID}/deployments`)))
-  );
-
 export default combineEpics(
   loadDeploymentsEpic,
   createDeploymentEpic,
   updateDeploymentEpic,
   readDeploymentEpic,
   removeDeploymentEpic,
-  afterCreateDeploymentEpic,
 );
