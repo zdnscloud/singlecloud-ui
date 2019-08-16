@@ -26,7 +26,6 @@ import clustersEpic from 'ducks/clusters/epic';
 import resourceQuotasEpic from 'ducks/resourceQuotas/epic';
 import userQuotasEpic from 'ducks/userQuotas/epic';
 import servicesEpic from 'ducks/services/epic';
-import ingressesEpic from 'ducks/ingresses/epic';
 // import epics end
 
 /**
@@ -56,7 +55,6 @@ export default function createEpic(injectedEpics = {}) {
     networksEpic,
     resourceQuotasEpic,
     servicesEpic,
-    ingressesEpic,
     // combine epics end
   );
 

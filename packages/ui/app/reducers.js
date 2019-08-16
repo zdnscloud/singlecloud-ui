@@ -37,7 +37,6 @@ import clustersReducer, { prefix as clustersPrefix } from 'ducks/clusters';
 import eventsReducer, { prefix as eventsPrefix } from 'ducks/events';
 import userQuotasReducer, { prefix as userQuotasPrefix } from 'ducks/userQuotas';
 import servicesReducer, { prefix as servicesPrefix } from 'ducks/services';
-import ingressesReducer, { prefix as ingressesPrefix } from 'ducks/ingresses';
 import deploymentsReducer, { prefix as deploymentsPrefix } from 'ducks/deployments';
 import statefulSetsReducer, { prefix as statefulSetsPrefix } from 'ducks/statefulSets';
 import daemonSetsReducer, { prefix as daemonSetsPrefix } from 'ducks/daemonSets';
@@ -74,7 +73,6 @@ export default function createReducer(injectedReducers = {}) {
     [eventsPrefix]: eventsReducer,
     [userQuotasPrefix]: userQuotasReducer,
     [servicesPrefix]: servicesReducer,
-    [ingressesPrefix]: ingressesReducer,
     // combine reducers end
     ...injectedReducers,
   });
