@@ -20,6 +20,10 @@ const styles = (theme) => ({
   grid: {
     padding: theme.spacing(2),
   },
+  contentGrid: {
+    padding: theme.spacing(2),
+    paddingTop:0
+  },
   appContainer: {},
   advanceContainer: {},
   actionContainer: {

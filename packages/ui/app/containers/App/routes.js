@@ -60,11 +60,10 @@ import ServicesPage, {
   ShowServicePage,
   UpdateServicePage
 } from 'containers/ServicesPage/Loadable';
-// import IngressesPage, {
-//   CreateIngressPage,
-//   ShowIngressPage,
-//   EditIngressPage
-// } from 'containers/IngressesPage/Loadable';
+import IngressesPage, {
+  CreateIngressPage,
+  ShowIngressPage,
+} from 'containers/IngressesPage/Loadable';
 import ServiceLinkPage from 'containers/ServiceLinkPage/Loadable';
 import StoragesPage, {
   CreateStoragePage,
@@ -346,19 +345,25 @@ const appRoutes = [
   },
   // services end
   // ingresses start
-  // {
-  //   path: '/clusters/:cluster_id/namespaces/:namespace_id/ingresses',
-  //   name: 'Ingresses',
-  //   icon: Dashboard,
-  //   component: IngressesPage,
-  // },
-  // {
-  //   path: '/clusters/:cluster_id/namespaces/:namespace_id/ingresses/create',
-  //   name: 'Create Ingress',
-  //   icon: Dashboard,
-  //   component: CreateIngressPage,
-  // },
-  // // ingresses end
+  {
+    path: '/clusters/:cluster_id/namespaces/:namespace_id/ingresses',
+    name: 'Ingresses',
+    icon: Dashboard,
+    component: IngressesPage,
+  },
+  {
+    path: '/clusters/:cluster_id/namespaces/:namespace_id/ingresses/create',
+    name: 'Create Ingress',
+    icon: Dashboard,
+    component: CreateIngressPage,
+  },
+  {
+    path: '/clusters/:cluster_id/namespaces/:namespace_id/ingresses/:ingress_id/create',
+    name: 'Show Ingress',
+    icon: Dashboard,
+    component: ShowIngressPage,
+  },
+  // ingresses end
   {
     path: '/clusters/:cluster_id/namespaces/:namespace_id/serviceLink',
     name: 'ServiceLink',
