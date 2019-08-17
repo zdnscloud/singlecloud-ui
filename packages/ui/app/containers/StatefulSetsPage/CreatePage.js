@@ -15,6 +15,7 @@ import {
   SubmissionError,
   submit,
 } from 'redux-form/immutable';
+import { push } from 'connected-react-router';
 
 import Helmet from 'components/Helmet/Helmet';
 import { FormattedMessage } from 'react-intl';
@@ -23,6 +24,7 @@ import Button from '@material-ui/core/Button';
 import GridItem from 'components/Grid/GridItem';
 import GridContainer from 'components/Grid/GridContainer';
 import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
+import ConfirmDialog from 'components/Confirm/ConfirmDialog';
 
 import { makeSelectCurrentID as makeSelectCurrentClusterID } from 'ducks/clusters/selectors';
 import { makeSelectCurrentID as makeSelectCurrentNamespaceID } from 'ducks/namespaces/selectors';
@@ -66,21 +68,22 @@ const CreateStatefulSetForm = reduxForm({
 
 /* eslint-disable react/prefer-stateless-function */
 export const CreateStatefulSet = ({
-      clusterID,
-      namespaceID,
-      cluster,
-      configMapURL,
-      loadConfigMaps,
-      secretURL,
-      loadSecrets,
-      loadStorageClasses,
-      createStatefulSet,
-      submitForm,
-      url,
-      configMaps,
-      secrets,
-      storageClasses,
-      values,
+  clusterID,
+  namespaceID,
+  cluster,
+  configMapURL,
+  loadConfigMaps,
+  secretURL,
+  loadSecrets,
+  loadStorageClasses,
+  createStatefulSet,
+  submitForm,
+  url,
+  configMaps,
+  secrets,
+  storageClasses,
+  values,
+  routeTo,
 }) => {
   const classes = useStyles();
   useEffect(() => {
@@ -90,6 +93,7 @@ export const CreateStatefulSet = ({
     loadConfigMaps({ url: configMapURL, clusterID, namespaceID });
     loadSecrets({ url: secretURL, clusterID, namespaceID });
   }, [clusterID, namespaceID]);
+  const [open, setOpen] = useState(false);
 
   async function doSubmit(formValues) {
     try {
@@ -100,7 +104,7 @@ export const CreateStatefulSet = ({
           item.size = `${item.size}Gi`;
         }
       });
-      await new Promise((resolve, reject) => {
+      const { response } = await new Promise((resolve, reject) => {
         createStatefulSet(data, {
           resolve,
           reject,
@@ -109,6 +113,7 @@ export const CreateStatefulSet = ({
           namespaceID,
         });
       });
+      setOpen(response.name);
     } catch (error) {
       throw new SubmissionError({ _error: error });
     }
@@ -118,6 +123,17 @@ export const CreateStatefulSet = ({
     <div className={classes.root}>
       <Helmet title={messages.pageTitle} description={messages.pageDesc} />
       <CssBaseline />
+      <ConfirmDialog
+        open={!!open}
+        onClose={() => {
+          routeTo(`/clusters/${clusterID}/namespaces/${namespaceID}/deployments`);
+        }}
+        onAction={() => {
+          routeTo(`/clusters/${clusterID}/namespaces/${namespaceID}/services/create?from=true&targetResourceType=deployments&TargetName=${open}`);
+        }}
+        title={<FormattedMessage {...messages.successTitle} />}
+        content={<FormattedMessage {...messages.successContent} />}
+      />
       <div className={classes.content}>
         <Breadcrumbs
           data={[
@@ -182,6 +198,7 @@ const mapDispatchToProps = (dispatch) =>
       loadSecrets: sActions.loadSecrets,
       loadStorageClasses: storagesAction.loadStorageClasses,
       submitForm: () => submit(formName),
+      routeTo: push,
     },
     dispatch
   );

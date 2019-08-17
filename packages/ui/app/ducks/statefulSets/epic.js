@@ -121,17 +121,10 @@ export const removeStatefulSetEpic = (action$, state$, { ajax }) =>
     )
   );
 
-export const afterCreateStatefulSetEpic = (action$) =>
-  action$.pipe(
-    ofType(c.CREATE_STATEFUL_SET_SUCCESS),
-    mergeMap(({ payload, meta }) => of(push(`/clusters/${meta.clusterID}/namespaces/${meta.namespaceID}/statefulSets`)))
-  );
-
 export default combineEpics(
   loadStatefulSetsEpic,
   createStatefulSetEpic,
   updateStatefulSetEpic,
   readStatefulSetEpic,
   removeStatefulSetEpic,
-  afterCreateStatefulSetEpic,
 );
