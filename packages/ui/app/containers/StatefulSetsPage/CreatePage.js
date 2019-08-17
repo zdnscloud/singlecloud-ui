@@ -126,10 +126,10 @@ export const CreateStatefulSet = ({
       <ConfirmDialog
         open={!!open}
         onClose={() => {
-          routeTo(`/clusters/${clusterID}/namespaces/${namespaceID}/deployments`);
+          routeTo(`/clusters/${clusterID}/namespaces/${namespaceID}/statefulSets`);
         }}
         onAction={() => {
-          routeTo(`/clusters/${clusterID}/namespaces/${namespaceID}/services/create?from=true&targetResourceType=deployments&TargetName=${open}`);
+          routeTo(`/clusters/${clusterID}/namespaces/${namespaceID}/services/create?from=true&targetResourceType=statefulSets&TargetName=${open}`);
         }}
         title={<FormattedMessage {...messages.successTitle} />}
         content={<FormattedMessage {...messages.successContent} />}
