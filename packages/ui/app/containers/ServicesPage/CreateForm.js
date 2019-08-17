@@ -48,6 +48,7 @@ const Form = ({
   deployments,
   daemonSets,
   statefulSets,
+  target,
 }) => {
   const classes = useStyles();
   const targetResourceType = formValues.get('targetResourceType');
@@ -56,6 +57,7 @@ const Form = ({
     daemonSets,
     statefulSets,
   }[targetResourceType];
+  const exposedPorts = formValues.get('exposedPorts');
 
   return (
     <form className={classes.form} onSubmit={handleSubmit}>
@@ -79,6 +81,11 @@ const Form = ({
                     label={<FormattedMessage {...messages.formTargetResourceType} />}
                     name="targetResourceType"
                     options={['deployments', 'statefulSets', 'daemonSets']}
+                    onChange={(evt) => {
+                      changeFormValue('targetName', '');
+                      changeFormValue('name', '');
+                      changeFormValue('exposedPorts', fromJS([]));
+                    }}
                     fullWidth
                   />
                 </GridItem>
@@ -149,7 +156,7 @@ const Form = ({
                   <FormattedMessage {...messages.formExposedPorts} />
                 </GridItem>
               </GridContainer>
-              {formValues.get('exposedPorts').map((exposedPort, i) => (
+              {exposedPorts.map((exposedPort, i) => (
                 <GridContainer key={i}>
                   <GridItem
                     xs={12}

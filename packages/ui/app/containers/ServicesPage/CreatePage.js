@@ -30,9 +30,9 @@ import { makeSelectCurrentID as makeSelectClusterID } from 'ducks/clusters/selec
 import { makeSelectCurrentID as makeSelectNamespaceID } from 'ducks/namespaces/selectors';
 import { makeSelectURL } from 'ducks/services/selectors';
 import * as actions from 'ducks/services/actions';
-import { makeSelectURL as makeSelectDeploymentsURL, makeSelectDeploymentsList, } from 'ducks/deployments/selectors';
-import { makeSelectURL as makeSelectDaemonSetsURL, makeSelectDaemonSetsList } from 'ducks/daemonSets/selectors';
-import { makeSelectURL as makeSelectStatefulSetsURL, makeSelectStatefulSetsList } from 'ducks/statefulSets/selectors';
+import { makeSelectURL as makeSelectDeploymentsURL, makeSelectDeployments, } from 'ducks/deployments/selectors';
+import { makeSelectURL as makeSelectDaemonSetsURL, makeSelectDaemonSets } from 'ducks/daemonSets/selectors';
+import { makeSelectURL as makeSelectStatefulSetsURL, makeSelectStatefulSets } from 'ducks/statefulSets/selectors';
 import * as deployActions from 'ducks/deployments/actions';
 import * as dsActions from 'ducks/daemonSets/actions';
 import * as stsActions from 'ducks/statefulSets/actions';
@@ -55,9 +55,9 @@ export const CreateServicePage = ({
   loadDeployments,
   loadDaemonSets,
   loadStatefulSets,
-  deployList,
-  dsList,
-  stsList,
+  deployments,
+  daemonSets,
+  statefulSets,
   location,
 }) => {
   const classes = useStyles();
@@ -79,21 +79,26 @@ export const CreateServicePage = ({
   }, [deployURL, dsURL, stsURL]);
   let exposedPorts = [];
   if (from) {
-    let l = [];
-    if (targetResourceType === 'deployments') l = deployList;
-    if (targetResourceType === 'daemonSets') l = dsList;
-    if (targetResourceType === 'statefulSets') l = stsList;
-    const item = l.find((i) => i.get('name') === targetName);
-    if (item) {
-      exposedPorts = item.get('exposedPorts');
+    let l = fromJS({});
+    if (targetResourceType === 'deployments') l = deployments;
+    if (targetResourceType === 'daemonSets') l = daemonSets;
+    if (targetResourceType === 'statefulSets') l = statefulSets;
+    const target = l.get(targetName);
+    if (target) {
+      exposedPorts = target
+        .get('containers')
+        .reduce((meno, c) => meno.concat(c.get('exposedPorts') || fromJS([])), fromJS([]))
+        .map((exposedPort) => exposedPort.set('targetPort', exposedPort.get('port'))).toJS();
     }
   }
+
+  window.changeFormValue = changeFormValue;
   const initialValues =  fromJS({
     targetResourceType: from ? targetResourceType : 'deployments',
     targetName: from ? targetName : '',
     name: from ? targetName : '',
     serviceType: 'clusterip',
-    exposedPorts: [],
+    exposedPorts,
   });
 
   async function doSubmit(formValues) {
@@ -141,9 +146,9 @@ export const CreateServicePage = ({
               onSubmit={doSubmit}
               formValues={values || initialValues}
               initialValues={initialValues}
-              deployments={deployList}
-              daemonSets={dsList}
-              statefulSets={stsList}
+              deployments={deployments.toList()}
+              daemonSets={daemonSets.toList()}
+              statefulSets={statefulSets.toList()}
               changeFormValue={changeFormValue}
             />
             <Button
@@ -169,9 +174,9 @@ const mapStateToProps = createStructuredSelector({
   deployURL: makeSelectDeploymentsURL(),
   dsURL: makeSelectDaemonSetsURL(),
   stsURL: makeSelectStatefulSetsURL(),
-  deployList: makeSelectDeploymentsList(),
-  dsList: makeSelectDaemonSetsList(),
-  stsList: makeSelectStatefulSetsList(),
+  deployments: makeSelectDeployments(),
+  daemonSets: makeSelectDaemonSets(),
+  statefulSets: makeSelectStatefulSets(),
   location: makeSelectLocation(),
 });
 
