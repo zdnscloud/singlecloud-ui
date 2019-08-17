@@ -30,34 +30,22 @@ const RuleTemplate = ({
 }) => {
   const classes = useStyles();
   const serviceName = formValues && formValues.get('serviceName');
-  const serviceProtocol =  services && services.getIn([serviceName,'exposedPorts','0','protocol']);
-  const port = services && services.getIn([serviceName,'exposedPorts','0','port']);
-  const protocol = () => {
-    switch (serviceProtocol) {
-      case 'tcp':
-        return 'HTTP';
-        break;
-      case 'udp':
-        return 'UDP';
-        break;
-      default:
-        return '';
-        break;
-    }
-  }
+  const exposedPorts =  services && services.getIn([serviceName,'exposedPorts']);
 
   return (
     <Fragment>
       <Button 
         color="secondary" 
-        onClick={(evt) => fields.push(fromJS(
-          {
-            'serviceName':serviceName,
-            'serviceProtocol':serviceProtocol,
-            'port': port,
-            'protocol': protocol()
-          }
-        ))}
+        onClick={(evt) => exposedPorts.filter((p) => p.get('protocol') === 'tcp').forEach((p) => {
+          fields.push(fromJS(
+            {
+              'serviceName':serviceName,
+              'serviceProtocol':'tcp',
+              'servicePort': p.get('port'),
+              'protocol': 'HTTP'
+            }
+          ))
+        })}
         className={classes.plusIcon}
         >
         <PlusIcon />
@@ -75,9 +63,6 @@ const RuleTemplate = ({
              </TableCell>
              <TableCell className={`${classes.tableCell} ${classes.tableHeadCell}`}>
                  <FormattedMessage {...messages.formPath} />
-             </TableCell>
-             <TableCell className={`${classes.tableCell} ${classes.tableHeadCell}`}>
-                 <FormattedMessage {...messages.formPort} />
              </TableCell>
              <TableCell className={`${classes.tableCell} ${classes.tableHeadCell}`}>
                  <FormattedMessage {...messages.formProtocol} />
@@ -115,14 +100,6 @@ const RuleTemplate = ({
                 </TableCell>
                 <TableCell className={classes.tableCell}>
                   <InputField
-                    name={`${f}.servicePort`}
-                    fullWidth 
-                    normalize={(val) => Number(val)}
-                    inputProps={{ type: 'number', autoComplete: 'off' }}
-                  />
-                </TableCell>
-                <TableCell className={classes.tableCell}>
-                  <InputField
                       name={`${f}.protocol`}
                       fullWidth
                       inputProps={{ type: 'text', autoComplete: 'off' }}
@@ -136,14 +113,10 @@ const RuleTemplate = ({
                     inputProps={{ type: 'text', autoComplete: 'off' }}
                     disabled
                   />
-                  {/* <ReadOnlyInput
-                    value={`${f}.serviceName`}
-                    fullWidth
-                  /> */}
                 </TableCell>
                 <TableCell className={classes.tableCell}>
                   <InputField
-                      name={`${f}.port`}
+                      name={`${f}.servicePort`}
                       fullWidth
                       inputProps={{ type: 'text', autoComplete: 'off' }}
                       disabled

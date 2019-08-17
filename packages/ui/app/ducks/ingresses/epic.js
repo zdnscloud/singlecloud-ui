@@ -103,7 +103,7 @@ export const removeIngressEpic = (action$, state$, { ajax }) =>
 export const afterCreateIngressEpic = (action$) =>
   action$.pipe(
     ofType(c.CREATE_INGRESS_SUCCESS),
-    mergeMap(({ payload, meta }) => of(push(`/ingress`)))
+    mergeMap(({ payload, meta }) => of(push(`/clusters/${meta.clusterID}/namespaces/${meta.namespaceID}/ingresses`)))
   );
 
 export default combineEpics(

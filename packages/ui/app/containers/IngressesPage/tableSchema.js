@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 import ConfirmDelete from 'components/ConfirmDelete/ConfirmDelete';
 
-const schema = ['name', 'port','creationTimestamp'];
+const schema = ['name','creationTimestamp'];
 
 const tableSchema = schema
   .map((id) => ({

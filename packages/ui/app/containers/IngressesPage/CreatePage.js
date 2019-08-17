@@ -68,8 +68,8 @@ export const CreateIngressPage = ({
       const { name, rules } = formValues.toJS();
       const rulesArr = [];
       rules.forEach((item)=>{
-        const {host,path,port,servicePort,protocol,serviceName} = item;
-        const rule = {host,path,port,servicePort,protocol,serviceName,}
+        const {host,path,servicePort,serviceName} = item;
+        const rule = {host,path,servicePort,serviceName,}
         rulesArr.push(rule)
       });
       const data = {

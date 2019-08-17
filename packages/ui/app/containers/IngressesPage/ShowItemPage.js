@@ -49,7 +49,7 @@ export const IngressDetailPage = ({
   readIngress,
 }) => {
   const classes = useStyles();
-
+  console.log('ingressID',ingressID)
   useEffect(() => {
     if(url){
       readIngress(ingressID, {
@@ -111,7 +111,7 @@ export const IngressDetailPage = ({
                 </h4>
               </CardHeader>
               <CardBody>
-                <IngressRuleTable />
+                <IngressRuleTable ingress={ingress}/>
               </CardBody>
             </Card>
           </GridItem>

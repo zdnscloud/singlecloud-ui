@@ -73,10 +73,6 @@ export default defineMessages({
     id: `${scope}.formPath`,
     defaultMessage: 'Path',
   },
-  formPort: {
-    id: `${scope}.formPort`,
-    defaultMessage: 'Port',
-  },
   formProtocol: {
     id: `${scope}.formProtocol`,
     defaultMessage: 'Protocol',

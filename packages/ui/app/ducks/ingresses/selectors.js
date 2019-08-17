@@ -66,10 +66,10 @@ export const makeSelectIngressesList = () =>
 
 export const makeSelectCurrentID = () =>
    createSelector(
-     createMatchSelector('*/ingress/:id/*'),
+     createMatchSelector('/clusters/:cluster_id/namespaces/:namespace_id/ingresses/:ingress_id/*'),
      (match) => {
        if (match && match.params) {
-         return match.params.id;
+         return match.params.ingress_id;
        }
        return '';
      }
