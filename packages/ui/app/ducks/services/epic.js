@@ -121,17 +121,10 @@ export const removeServiceEpic = (action$, state$, { ajax }) =>
     )
   );
 
-export const afterCreateServiceEpic = (action$) =>
-  action$.pipe(
-    ofType(c.CREATE_SERVICE_SUCCESS),
-    mergeMap(({ payload, meta }) => of(push(`/clusters/${meta.clusterID}/namespaces/${meta.namespaceID}/services`)))
-  );
-
 export default combineEpics(
   loadServicesEpic,
   createServiceEpic,
   updateServiceEpic,
   readServiceEpic,
   removeServiceEpic,
-  afterCreateServiceEpic,
 );

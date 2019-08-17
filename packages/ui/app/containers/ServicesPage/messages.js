@@ -101,4 +101,12 @@ export default defineMessages({
     id: `${scope}.showService`,
     defaultMessage: 'Show Service',
   },
+  successTitle: {
+    id: `${scope}.successTitle`,
+    defaultMessage: 'Notice',
+  },
+  successContent: {
+    id: `${scope}.successContent`,
+    defaultMessage: 'Service has been created, would you like to create a ingress for it?',
+  },
 });

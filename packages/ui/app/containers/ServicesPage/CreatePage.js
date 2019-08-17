@@ -16,6 +16,7 @@ import {
   submit,
   change,
 } from 'redux-form/immutable';
+import { push } from 'connected-react-router';
 
 import Helmet from 'components/Helmet/Helmet';
 import { FormattedMessage } from 'react-intl';
@@ -24,6 +25,7 @@ import Button from '@material-ui/core/Button';
 import GridItem from 'components/Grid/GridItem';
 import GridContainer from 'components/Grid/GridContainer';
 import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
+import ConfirmDialog from 'components/Confirm/ConfirmDialog';
 
 import { makeSelectLocation } from 'ducks/app/selectors';
 import { makeSelectCurrentID as makeSelectClusterID } from 'ducks/clusters/selectors';
@@ -59,6 +61,7 @@ export const CreateServicePage = ({
   daemonSets,
   statefulSets,
   location,
+  routeTo,
 }) => {
   const classes = useStyles();
   const search = location.get('search');
@@ -91,8 +94,6 @@ export const CreateServicePage = ({
         .map((exposedPort) => exposedPort.set('targetPort', exposedPort.get('port'))).toJS();
     }
   }
-
-  window.changeFormValue = changeFormValue;
   const initialValues =  fromJS({
     targetResourceType: from ? targetResourceType : 'deployments',
     targetName: from ? targetName : '',
@@ -101,13 +102,14 @@ export const CreateServicePage = ({
     exposedPorts,
   });
 
+  const [open, setOpen] = useState(false);
   async function doSubmit(formValues) {
     try {
       const data = formValues.update('exposedPorts', (ports) => (
         ports.filter((p) => p.get('enable'))
       )).toJS();
 
-      await new Promise((resolve, reject) => {
+      const { response } = await new Promise((resolve, reject) => {
         createService(data, {
           resolve,
           reject,
@@ -116,6 +118,7 @@ export const CreateServicePage = ({
           namespaceID,
         });
       });
+      setOpen(response.name);
     } catch (error) {
       throw new SubmissionError({ _error: error });
     }
@@ -128,6 +131,17 @@ export const CreateServicePage = ({
         description={messages.createPageDesc}
       />
       <CssBaseline />
+      <ConfirmDialog
+        open={!!open}
+        onClose={() => {
+          routeTo(`/clusters/${clusterID}/namespaces/${namespaceID}/services`);
+        }}
+        onAction={() => {
+          routeTo(`/clusters/${clusterID}/namespaces/${namespaceID}/ingresses/create?from=true&targetResourceType=services&TargetName=${open}`);
+        }}
+        title={<FormattedMessage {...messages.successTitle} />}
+        content={<FormattedMessage {...messages.successContent} />}
+      />
       <div className={classes.content}>
         <Breadcrumbs
           data={[
@@ -189,6 +203,7 @@ const mapDispatchToProps = (dispatch) =>
       loadStatefulSets: stsActions.loadStatefulSets,
       changeFormValue: (...args) => change(formName, ...args),
       submitForm: () => submit(formName),
+      routeTo: push,
     },
     dispatch
   );
