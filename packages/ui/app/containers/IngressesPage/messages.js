@@ -25,6 +25,10 @@ export default defineMessages({
     id: `${scope}.tableTitleName`,
     defaultMessage: 'Name',
   },
+  tableTitlePort: {
+    id: `${scope}.tableTitlePort`,
+    defaultMessage: 'Port',
+  },
   tableTitleCreationTimestamp: {
     id: `${scope}.tableTitleCreationTimestamp`,
     defaultMessage: 'CreationTimestamp',
@@ -45,9 +49,9 @@ export default defineMessages({
     id: `${scope}.createIngress`,
     defaultMessage: 'Create Ingress',
   },
-  httpProtocol: {
-    id: `${scope}.httpProtocol`,
-    defaultMessage: 'Http Protocol ',
+  configurationDetails: {
+    id: `${scope}.configurationDetails`,
+    defaultMessage: 'Configuration Details',
   },
   save: {
     id: `${scope}.save`,
@@ -88,5 +92,9 @@ export default defineMessages({
   formActions: {
     id: `${scope}.formActions`,
     defaultMessage: 'Actions',
+  },
+  ingressDetail: {
+    id: `${scope}.ingressDetail`,
+    defaultMessage: 'Ingress Detail',
   },
 });

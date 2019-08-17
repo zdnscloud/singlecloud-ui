@@ -77,7 +77,7 @@ const Form = ({ formValues, handleSubmit, error,services }) => {
           <Card style={{ margin: 0, marginTop: 20 }}>
             <CardHeader color="primary">
               <h4 className={classes.cardTitleWhite}>
-                <FormattedMessage {...messages.httpProtocol} />
+                <FormattedMessage {...messages.configurationDetails} />
               </h4>
             </CardHeader>
             <CardBody>

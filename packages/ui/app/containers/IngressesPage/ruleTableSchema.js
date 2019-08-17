@@ -5,9 +5,9 @@ import { Link } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 import ConfirmDelete from 'components/ConfirmDelete/ConfirmDelete';
 
-const schema = ['name', 'port','creationTimestamp'];
+const schema = ['host','path', 'port','protocol','serviceName','servicePort','serviceProtocol'];
 
-const tableSchema = schema
+const ruleTableSchema = schema
   .map((id) => ({
     id,
     label: ucfirst(id),
@@ -21,23 +21,6 @@ const tableSchema = schema
     }
     return item;
   })
-  .concat([
-    {
-      id: 'actions',
-      label: 'Actions',
-      component: (props) => (
-        <Fragment>
-          <ConfirmDelete
-            actionName={props.removeIngress}
-            id={props.data.get('id')}
-            url={props.data.getIn(['links', 'remove'])}
-            clusterID={props.clusterID}
-            namespaceID={props.namespaceID}
-          />
-        </Fragment>
-      ),
-    },
-  ])
   .map((sch) => {
     if (sch.id === 'name') {
       return {
@@ -55,4 +38,4 @@ const tableSchema = schema
     }
     return sch;
   });
-export default tableSchema;
+export default ruleTableSchema;

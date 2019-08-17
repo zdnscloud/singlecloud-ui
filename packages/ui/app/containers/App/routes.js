@@ -351,7 +351,7 @@ const appRoutes = [
     component: CreateIngressPage,
   },
   {
-    path: '/clusters/:cluster_id/namespaces/:namespace_id/ingresses/:ingress_id/create',
+    path: '/clusters/:cluster_id/namespaces/:namespace_id/ingresses/:ingress_id/show',
     name: 'Show Ingress',
     icon: Dashboard,
     component: ShowIngressPage,

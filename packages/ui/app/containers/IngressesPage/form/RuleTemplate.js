@@ -41,7 +41,7 @@ const RuleTemplate = ({
         return 'UDP';
         break;
       default:
-        return 'aa';
+        return '';
         break;
     }
   }
@@ -116,8 +116,9 @@ const RuleTemplate = ({
                 <TableCell className={classes.tableCell}>
                   <InputField
                     name={`${f}.servicePort`}
-                    fullWidth
-                    inputProps={{ type: 'text', autoComplete: 'off' }}
+                    fullWidth 
+                    normalize={(val) => Number(val)}
+                    inputProps={{ type: 'number', autoComplete: 'off' }}
                   />
                 </TableCell>
                 <TableCell className={classes.tableCell}>

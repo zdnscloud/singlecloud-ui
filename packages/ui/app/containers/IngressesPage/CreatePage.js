@@ -102,7 +102,7 @@ export const CreateIngressPage = ({
         <Breadcrumbs
           data={[
             {
-              path: `/clusters`,
+              path: `/clusters/${clusterID}/namespaces/${namespaceID}/ingresses`,
               name: <FormattedMessage {...messages.pageTitle} />,
             },
             {
