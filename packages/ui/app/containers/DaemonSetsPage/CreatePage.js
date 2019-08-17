@@ -129,7 +129,7 @@ export const CreateDaemonSet = ({
           routeTo(`/clusters/${clusterID}/namespaces/${namespaceID}/daemonSets`);
         }}
         onAction={() => {
-          routeTo(`/clusters/${clusterID}/namespaces/${namespaceID}/services/create?from=true&targetResourceType=daemonSets&TargetName=${open}`);
+          routeTo(`/clusters/${clusterID}/namespaces/${namespaceID}/services/create?from=true&targetResourceType=daemonSets&targetName=${open}`);
         }}
         title={<FormattedMessage {...messages.successTitle} />}
         content={<FormattedMessage {...messages.successContent} />}

@@ -129,7 +129,7 @@ export const CreateStatefulSet = ({
           routeTo(`/clusters/${clusterID}/namespaces/${namespaceID}/statefulSets`);
         }}
         onAction={() => {
-          routeTo(`/clusters/${clusterID}/namespaces/${namespaceID}/services/create?from=true&targetResourceType=statefulSets&TargetName=${open}`);
+          routeTo(`/clusters/${clusterID}/namespaces/${namespaceID}/services/create?from=true&targetResourceType=statefulSets&targetName=${open}`);
         }}
         title={<FormattedMessage {...messages.successTitle} />}
         content={<FormattedMessage {...messages.successContent} />}
