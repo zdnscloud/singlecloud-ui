@@ -24,6 +24,7 @@ import GridItem from 'components/Grid/GridItem';
 import GridContainer from 'components/Grid/GridContainer';
 import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
 
+import { makeSelectLocation } from 'ducks/app/selectors';
 import { makeSelectCurrentID as makeSelectClusterID } from 'ducks/clusters/selectors';
 import { makeSelectCurrentID as makeSelectNamespaceID } from 'ducks/namespaces/selectors';
 import { makeSelectServices } from 'ducks/services/selectors';
@@ -46,10 +47,17 @@ export const CreateIngressPage = ({
   services,
   values,
   loadServices,
-  surl
+  surl,
+  location,
 }) => {
   const classes = useStyles();
-
+  const search = location.get('search');
+  let targetName='';
+  if (search && search.includes('from=true')) {
+    const [tn, name] = /targetName=([a-zA-Z0-9-]+)/i.exec(search);
+    targetName = name;
+  }
+  console.log('targetName',targetName)
   useEffect(() => {
     if (url) {
       loadServices(surl, {
@@ -61,6 +69,7 @@ export const CreateIngressPage = ({
       // try cancel something when unmount
     };
   }, [url]);
+
   
 
   async function doSubmit(formValues) {
@@ -116,7 +125,7 @@ export const CreateIngressPage = ({
               onSubmit={doSubmit}
               formValues={values}
               services={services}
-              initialValues={fromJS({})}
+              initialValues={fromJS({'serviceName':targetName})}
             />
             <Button
               variant="contained"
@@ -140,6 +149,7 @@ const mapStateToProps = createStructuredSelector({
   values: getFormValues(formName),
   services: makeSelectServices(),
   surl: makeSelectServicesURL(), 
+  location: makeSelectLocation(),
 });
 
 const mapDispatchToProps = (dispatch) =>
