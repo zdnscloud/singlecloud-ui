@@ -137,7 +137,7 @@ export const CreateServicePage = ({
           routeTo(`/clusters/${clusterID}/namespaces/${namespaceID}/services`);
         }}
         onAction={() => {
-          routeTo(`/clusters/${clusterID}/namespaces/${namespaceID}/ingresses/create?from=true&targetResourceType=services&TargetName=${open}`);
+          routeTo(`/clusters/${clusterID}/namespaces/${namespaceID}/ingresses/create?from=true&targetResourceType=services&targetName=${open}`);
         }}
         title={<FormattedMessage {...messages.successTitle} />}
         content={<FormattedMessage {...messages.successContent} />}

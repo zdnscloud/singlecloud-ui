@@ -129,7 +129,7 @@ export const CreateDeployment = ({
           routeTo(`/clusters/${clusterID}/namespaces/${namespaceID}/deployments`);
         }}
         onAction={() => {
-          routeTo(`/clusters/${clusterID}/namespaces/${namespaceID}/services/create?from=true&targetResourceType=deployments&TargetName=${open}`);
+          routeTo(`/clusters/${clusterID}/namespaces/${namespaceID}/services/create?from=true&targetResourceType=deployments&targetName=${open}`);
         }}
         title={<FormattedMessage {...messages.successTitle} />}
         content={<FormattedMessage {...messages.successContent} />}
