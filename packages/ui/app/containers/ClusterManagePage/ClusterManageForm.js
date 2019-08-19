@@ -148,7 +148,7 @@ class ClusterManageForm extends PureComponent {
                         <FormattedMessage {...messages.formForwardDNS} />
                       }
                       fullWidth
-                      value={cluster.get('clusterUpstreamDNS')}
+                      value={cluster.get('clusterUpstreamDNS') && cluster.get('clusterUpstreamDNS').toJS()}
                     />
                   </GridItem>
                 </GridContainer>
