@@ -89,14 +89,14 @@ class StorageForm extends PureComponent {
                       <GridItem xs={3} sm={3} md={3}>
                         {edit ? (
                           <ReadOnlyInput
-                            labelText={<FormattedMessage {...messages.formStoragetype} />}
-                            value={initialValues.get('storagetype')}
+                            labelText={<FormattedMessage {...messages.formStorageType} />}
+                            value={initialValues.get('storageType')}
                             fullWidth
                           />
                         ) : (
                           <SelectField
-                            label={<FormattedMessage {...messages.formStoragetype} />}
-                            name="storagetype"
+                            label={<FormattedMessage {...messages.formStorageType} />}
+                            name="storageType"
                             fullWidth
                             options={['lvm', 'ceph']}
                           />

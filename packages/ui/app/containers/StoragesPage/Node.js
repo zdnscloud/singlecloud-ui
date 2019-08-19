@@ -41,10 +41,10 @@ export const Node = (props) => {
   const centerY = height / 2;
   const centerX = width / 2;
   const data = [
-    { label: 'used', value: node.get('stat') ? node.get('usedsize') : 0 },
-    { label: 'free', value: node.get('stat') ? node.get('freesize') : 1 },
+    { label: 'used', value: node.get('stat') ? node.get('usedSize') : 0 },
+    { label: 'free', value: node.get('stat') ? node.get('freeSize') : 1 },
   ];
-  const percent = Math.round((node.get('usedsize') / node.get('size')) * 100);
+  const percent = Math.round((node.get('usedSize') / node.get('size')) * 100);
 
   return (
     <Paper elevation={0} className={classes.node} ref={measuredRef} onClick={onClick}>
@@ -132,7 +132,7 @@ export const Node = (props) => {
             {node.get('name')}
           </Typography>
         </Typography>
-        {['size', 'freesize', 'usedsize'].map((s) => (
+        {['size', 'freeSize', 'usedSize'].map((s) => (
           <Typography className={classes.nodeInfoLine} component="div" key={s}>
             <Typography className={classes.nodeInfoLineLabel} component="div">
               <FormattedMessage {...messages[s]} />

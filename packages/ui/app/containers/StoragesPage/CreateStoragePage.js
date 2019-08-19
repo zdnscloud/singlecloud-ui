@@ -61,7 +61,7 @@ const CreateStorageForm = reduxForm({
   validate,
 })(StorageForm);
 
-const initFormValue = fromJS({ name: '', storagetype: '', hosts: [] });
+const initFormValue = fromJS({ name: '', storageType: '', hosts: [] });
 
 /* eslint-disable react/prefer-stateless-function */
 export class CreateStoragePage extends React.PureComponent {

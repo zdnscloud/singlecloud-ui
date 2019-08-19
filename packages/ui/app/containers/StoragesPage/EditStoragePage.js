@@ -132,7 +132,7 @@ export class EditStoragePage extends React.PureComponent {
               classes={classes}
               onSubmit={doSubmit}
               initialValues={storage}
-              blockDevices={blockDevices}
+              blockDevices={blockDevices.concat(storage.get('config'))}
               formValues={values || storage}
               edit={true}
             />
