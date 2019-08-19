@@ -9,7 +9,7 @@ import EditIcon from 'components/Icons/Edit';
 import IconButton from '@material-ui/core/IconButton';
 import ConfirmDelete from 'components/ConfirmDelete/ConfirmDelete';
 
-const schema = ['name', 'storagetype', 'nodes', 'size', 'usedsize', 'freesize'];
+const schema = ['name', 'storageType', 'nodes', 'size', 'usedSize', 'freeSize'];
 
 const tableSchema = schema
   .map((id) => {

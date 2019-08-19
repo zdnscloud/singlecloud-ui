@@ -77,11 +77,11 @@ export class StoragePage extends React.PureComponent {
     const { classes, theme, storage, clusterID } = this.props;
     const name = storage.get('name');
     const totalSize = storage.get('size');
-    const freeSize = storage.get('freesize');
-    const usedSize = storage.get('usedsize');
+    const freeSize = storage.get('freeSize');
+    const usedSize = storage.get('usedSize');
     const nodes = storage.get('nodes');
     const pvs = storage.get('pvs');
-    const enableFilter = storage.get('storagetype') === 'lvm';
+    const enableFilter = storage.get('storageType') === 'lvm';
 
     return (
       <div className={classes.root}>
@@ -120,7 +120,7 @@ export class StoragePage extends React.PureComponent {
                     </GridItem>
                     <GridItem xs={2} sm={2} md={2}>
                       <ReadOnlyInput
-                        labelText={<FormattedMessage {...messages.freesize} />}
+                        labelText={<FormattedMessage {...messages.freeSize} />}
                         value={`${freeSize}`}
                         inputProps={{
                           endAdornment: <span className={classes.text}>G</span>,
@@ -129,7 +129,7 @@ export class StoragePage extends React.PureComponent {
                     </GridItem>
                     <GridItem xs={2} sm={2} md={2}>
                       <ReadOnlyInput
-                        labelText={<FormattedMessage {...messages.usedsize} />}
+                        labelText={<FormattedMessage {...messages.usedSize} />}
                         value={`${usedSize}`}
                         inputProps={{
                           endAdornment: <span className={classes.text}>G</span>,

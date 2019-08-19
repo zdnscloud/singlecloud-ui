@@ -87,17 +87,17 @@ const Hosts = ({
             <TableRow key={i}>
               <TableCell className={classes.tableCell}>
                 <Checkbox
-                  checked={input.value.includes(b.get('nodeName'))}
+                  checked={input.value.includes(b && b.get('nodeName'))}
                   onChange={onChange}
-                  value={b.get('nodeName')}
+                  value={b && b.get('nodeName')}
                   color="primary"
                 />
               </TableCell>
               <TableCell className={`${classes.tableCell}`}>
-                {b.get('nodeName')}
+                {b && b.get('nodeName')}
               </TableCell>
               <TableCell className={`${classes.tableCell}`}>
-                {b.get('blockDevices').map((bd) => (
+                {b && b.get('blockDevices') && b.get('blockDevices').map((bd) => (
                   <span style={{ marginRight: 18 }}>
                     <span>{bd.get('name')}</span>
                     <span>({bd.get('size')}GiB)</span>

@@ -57,9 +57,9 @@ export default defineMessages({
     id: `${scope}.tableTitleName`,
     defaultMessage: 'Name',
   },
-  tableTitleStoragetype: {
-    id: `${scope}.tableTitleStoragetype`,
-    defaultMessage: 'Storagetype',
+  tableTitleStorageType: {
+    id: `${scope}.tableTitleStorageType`,
+    defaultMessage: 'StorageType',
   },
   tableTitleNodes: {
     id: `${scope}.tableTitleNodes`,
@@ -69,13 +69,13 @@ export default defineMessages({
     id: `${scope}.tableTitleSize`,
     defaultMessage: 'Size',
   },
-  tableTitleUsedsize: {
-    id: `${scope}.tableTitleUsedsize`,
-    defaultMessage: 'Usedsize',
+  tableTitleUsedSize: {
+    id: `${scope}.tableTitleUsedSize`,
+    defaultMessage: 'UsedSize',
   },
-  tableTitleFreesize: {
-    id: `${scope}.tableTitleFreesize`,
-    defaultMessage: 'Freesize',
+  tableTitleFreeSize: {
+    id: `${scope}.tableTitleFreeSize`,
+    defaultMessage: 'FreeSize',
   },
   tableTitleActions: {
     id: `${scope}.tableTitleActions`,
@@ -97,12 +97,12 @@ export default defineMessages({
     id: `${scope}.size`,
     defaultMessage: 'Total',
   },
-  freesize: {
-    id: `${scope}.freesize`,
+  freeSize: {
+    id: `${scope}.freeSize`,
     defaultMessage: 'Free',
   },
-  usedsize: {
-    id: `${scope}.usedsize`,
+  usedSize: {
+    id: `${scope}.usedSize`,
     defaultMessage: 'Used',
   },
   createStorageButton: {
@@ -121,9 +121,9 @@ export default defineMessages({
     id: `${scope}.formName`,
     defaultMessage: 'formName',
   },
-  formStoragetype: {
-    id: `${scope}.formStoragetype`,
-    defaultMessage: 'formStoragetype',
+  formStorageType: {
+    id: `${scope}.formStorageType`,
+    defaultMessage: 'formStorageType',
   },
   formHostnames: {
     id: `${scope}.formHostnames`,
