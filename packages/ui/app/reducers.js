@@ -41,6 +41,7 @@ import deploymentsReducer, { prefix as deploymentsPrefix } from 'ducks/deploymen
 import statefulSetsReducer, { prefix as statefulSetsPrefix } from 'ducks/statefulSets';
 import daemonSetsReducer, { prefix as daemonSetsPrefix } from 'ducks/daemonSets';
 import ingressesReducer, { prefix as ingressesPrefix } from 'ducks/ingresses';
+import udpingressesReducer, { prefix as udpingressesPrefix } from 'ducks/udpingresses';
 // import reducers end
 
 /**
@@ -75,6 +76,7 @@ export default function createReducer(injectedReducers = {}) {
     [userQuotasPrefix]: userQuotasReducer,
     [servicesPrefix]: servicesReducer,
     [ingressesPrefix]: ingressesReducer,
+    [udpingressesPrefix]: udpingressesReducer,
     // combine reducers end
     ...injectedReducers,
   });

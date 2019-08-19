@@ -1,61 +1,51 @@
 /**
  *
- * IngressDetailPage
+ * Udpingresses
  *
  */
-import React, { Fragment, useState, useEffect } from 'react';
+import React, { useEffect, useState, memo } from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { bindActionCreators, compose } from 'redux';
+import { connect } from 'react-redux';
 
 import Helmet from 'components/Helmet/Helmet';
 import { FormattedMessage } from 'react-intl';
-import { Link } from 'react-router-dom';
-import Menubar from 'components/Menubar';
 import CssBaseline from '@material-ui/core/CssBaseline';
+import { Link } from 'react-router-dom';
 import Typography from '@material-ui/core/Typography';
 import Fab from '@material-ui/core/Fab';
-import AddIcon from '@material-ui/icons/Add';
-import MinimizeIcon from '@material-ui/icons/Minimize';
+import IconButton from '@material-ui/core/IconButton';
+import AddIcon from 'components/Icons/Add';
 import GridItem from 'components/Grid/GridItem';
 import GridContainer from 'components/Grid/GridContainer';
 import Card from 'components/Card/Card';
 import CardHeader from 'components/Card/CardHeader';
 import CardBody from 'components/Card/CardBody';
 import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
-import ReadOnlyInput from 'components/CustomInput/ReadOnlyInput';
 
 import { makeSelectCurrentID as makeSelectClusterID } from 'ducks/clusters/selectors';
 import { makeSelectCurrentID as makeSelectNamespaceID } from 'ducks/namespaces/selectors';
-import {
-  makeSelectCurrentID,
-  makeSelectCurrent,
-  makeSelectURL,
-} from 'ducks/ingresses/selectors';
+import { makeSelectURL } from 'ducks/udpingresses/selectors';
+import * as actions from 'ducks/udpingresses/actions';
 
-import * as actions from 'ducks/ingresses/actions';
-
-import IngressRuleTable from './IngressRuleTable';
-import messages from './messages';
 import useStyles from './styles';
+import messages from './messages';
+import UdpingressesTable from './Table';
 
-export const IngressDetailPage = ({
+const UdpingressesPage = ({
   clusterID,
   namespaceID,
-  ingressID,
-  ingress,
+  location,
   url,
-  readIngress,
+  loadUdpingresses,
 }) => {
   const classes = useStyles();
-  console.log('ingressID',ingressID)
   useEffect(() => {
-    if(url){
-      readIngress(ingressID, {
+    if (url) {
+      loadUdpingresses(url, {
         clusterID,
         namespaceID,
-        url: `${url}/${ingressID}`,
       });
     }
     return () => {
@@ -71,11 +61,8 @@ export const IngressDetailPage = ({
         <Breadcrumbs
           data={[
             {
-              path: `/clusters/${clusterID}/namespaces/${namespaceID}/ingresses`,
+              path: `/clusters`,
               name: <FormattedMessage {...messages.pageTitle} />,
-            },
-            {
-              name: <FormattedMessage {...messages.ingressDetail} />,
             },
           ]}
         />
@@ -84,34 +71,19 @@ export const IngressDetailPage = ({
             <Card>
               <CardHeader color="primary">
                 <h4 className={classes.cardTitleWhite}>
-                  <FormattedMessage {...messages.ingressDetail} />
+                  <FormattedMessage {...messages.udpingresses} />
+                  <Link
+                    to={`${location.pathname}/create`}
+                    className={classes.createBtnLink}
+                  >
+                    <IconButton>
+                      <AddIcon style={{ color: '#fff' }} />
+                    </IconButton>
+                  </Link>
                 </h4>
               </CardHeader>
               <CardBody>
-              <GridContainer style={{ margin: 0 }}>
-                <GridItem xs={3} sm={3} md={3}>
-                  <ReadOnlyInput
-                    labelText={<FormattedMessage {...messages.formName} />}
-                    value={ingress.get('name')}
-                    fullWidth
-                  />
-                 </GridItem>
-              </GridContainer>
-              </CardBody>
-            </Card>
-          </GridItem>
-        </GridContainer>
-
-        <GridContainer className={classes.grid} style={{paddingTop:0}}>
-          <GridItem xs={12} sm={12} md={12}>
-            <Card>
-              <CardHeader color="primary">
-                <h4 className={classes.cardTitleWhite}>
-                  <FormattedMessage {...messages.configurationDetails} />
-                </h4>
-              </CardHeader>
-              <CardBody>
-                <IngressRuleTable ingress={ingress}/>
+                <UdpingressesTable />
               </CardBody>
             </Card>
           </GridItem>
@@ -124,9 +96,7 @@ export const IngressDetailPage = ({
 const mapStateToProps = createStructuredSelector({
   clusterID: makeSelectClusterID(),
   namespaceID: makeSelectNamespaceID(),
-  ingressID: makeSelectCurrentID(),
   url: makeSelectURL(),
-  ingress: makeSelectCurrent(),
 });
 
 const mapDispatchToProps = (dispatch) =>
@@ -144,4 +114,5 @@ const withConnect = connect(
 
 export default compose(
   withConnect,
-)(IngressDetailPage);
+  memo
+)(UdpingressesPage);

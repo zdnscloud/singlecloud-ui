@@ -137,4 +137,8 @@ export default defineMessages({
     id: `${scope}.leftMenuIngresses`,
     defaultMessage: 'Ingresses',
   },
+  leftMenuUdpingresses: {
+    id: `${scope}.leftMenuUdpingresses`,
+    defaultMessage: 'Udpingresses',
+  },
 });

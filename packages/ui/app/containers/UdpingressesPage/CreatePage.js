@@ -1,6 +1,6 @@
 /**
  *
- * Create Ingress Page
+ * Create Udpingress Page
  *
  */
 import React, { Fragment, useState, useEffect } from 'react';
@@ -24,39 +24,29 @@ import GridItem from 'components/Grid/GridItem';
 import GridContainer from 'components/Grid/GridContainer';
 import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
 
-import { makeSelectLocation } from 'ducks/app/selectors';
 import { makeSelectCurrentID as makeSelectClusterID } from 'ducks/clusters/selectors';
 import { makeSelectCurrentID as makeSelectNamespaceID } from 'ducks/namespaces/selectors';
 import { makeSelectServices } from 'ducks/services/selectors';
-
-import { makeSelectURL,makeSelectServicesURL } from 'ducks/ingresses/selectors';
-import * as actions from 'ducks/ingresses/actions';
-
+import { makeSelectURL,makeSelectServicesURL } from 'ducks/udpingresses/selectors';
+import * as actions from 'ducks/udpingresses/actions';
 import { loadServices } from 'ducks/services/actions';
 
 import messages from './messages';
 import useStyles from './styles';
-import CreateIngressForm, { formName } from './CreateForm';
+import CreateUdpingressForm, { formName } from './CreateForm';
 
-export const CreateIngressPage = ({
-  createIngress,
+export const CreateUdpingressPage = ({
+  createUdpingress,
   submitForm,
   url,
   clusterID,
   namespaceID,
-  services,
   values,
+  services,
   loadServices,
-  surl,
-  location,
+  surl
 }) => {
   const classes = useStyles();
-  const search = location.get('search');
-  let targetName='';
-  if (search && search.includes('from=true')) {
-    const [tn, name] = /targetName=([a-zA-Z0-9-]+)/i.exec(search);
-    targetName = name;
-  }
 
   useEffect(() => {
     if (url) {
@@ -70,24 +60,21 @@ export const CreateIngressPage = ({
     };
   }, [url]);
 
-  
-
   async function doSubmit(formValues) {
     try {
-      const { name, rules } = formValues.toJS();
-      const rulesArr = [];
+      const { rules } = formValues.toJS();
+      let rulesArr =[];
       rules.forEach((item)=>{
-        const {host,path,servicePort,serviceName} = item;
-        const rule = {host,path,servicePort,serviceName,}
+        const {port,servicePort,serviceName} = item;
+        const rule = {port,servicePort,serviceName,}
         rulesArr.push(rule)
       });
       const data = {
-        name,
-        rules: rulesArr
+        ...rulesArr[0]
       }
-      console.log('data',data,'url',url)
+      console.log('data',data)
       await new Promise((resolve, reject) => {
-        createIngress(data, {
+        createUdpingress(data, {
           resolve,
           reject,
           url,
@@ -111,7 +98,7 @@ export const CreateIngressPage = ({
         <Breadcrumbs
           data={[
             {
-              path: `/clusters/${clusterID}/namespaces/${namespaceID}/ingresses`,
+              path: `/clusters/${clusterID}/namespaces/${namespaceID}/udpingresses`,
               name: <FormattedMessage {...messages.pageTitle} />,
             },
             {
@@ -121,11 +108,11 @@ export const CreateIngressPage = ({
         />
         <GridContainer className={classes.grid}>
           <GridItem xs={12} sm={12} md={12}>
-            <CreateIngressForm
+            <CreateUdpingressForm
               onSubmit={doSubmit}
               formValues={values}
               services={services}
-              initialValues={fromJS({'serviceName':targetName})}
+              initialValues={fromJS({})}
             />
             <Button
               variant="contained"
@@ -149,7 +136,6 @@ const mapStateToProps = createStructuredSelector({
   values: getFormValues(formName),
   services: makeSelectServices(),
   surl: makeSelectServicesURL(), 
-  location: makeSelectLocation(),
 });
 
 const mapDispatchToProps = (dispatch) =>
@@ -167,4 +153,4 @@ const withConnect = connect(
   mapDispatchToProps
 );
 
-export default compose(withConnect)(CreateIngressPage);
+export default compose(withConnect)(CreateUdpingressPage);

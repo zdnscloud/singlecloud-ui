@@ -63,6 +63,10 @@ import IngressesPage, {
   CreateIngressPage,
   ShowIngressPage,
 } from 'containers/IngressesPage/Loadable';
+import UdpingressesPage, {
+  CreateUdpingressPage,
+  ShowUdpingressPage,
+} from 'containers/UdpingressesPage/Loadable';
 import ServiceLinkPage from 'containers/ServiceLinkPage/Loadable';
 import StoragesPage, {
   CreateStoragePage,
@@ -357,6 +361,26 @@ const appRoutes = [
     component: ShowIngressPage,
   },
   // ingresses end
+  // udpingresses start
+   {
+    path: '/clusters/:cluster_id/namespaces/:namespace_id/udpingresses',
+    name: 'Udpingresses',
+    icon: Dashboard,
+    component: UdpingressesPage,
+  },
+  {
+    path: '/clusters/:cluster_id/namespaces/:namespace_id/udpingresses/create',
+    name: 'Create Udpingress',
+    icon: Dashboard,
+    component: CreateUdpingressPage,
+  },
+  {
+    path: '/clusters/:cluster_id/namespaces/:namespace_id/udpingresses/:udpingress_id/show',
+    name: 'Show Udpingress',
+    icon: Dashboard,
+    component: ShowUdpingressPage,
+  },
+  // udpingresses end
   {
     path: '/clusters/:cluster_id/namespaces/:namespace_id/serviceLink',
     name: 'ServiceLink',

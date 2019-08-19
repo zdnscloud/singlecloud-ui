@@ -1,6 +1,6 @@
 /**
  *
- * IngressDetailPage
+ * UdpingressDetailPage
  *
  */
 import React, { Fragment, useState, useEffect } from 'react';
@@ -32,19 +32,19 @@ import {
   makeSelectCurrentID,
   makeSelectCurrent,
   makeSelectURL,
-} from 'ducks/ingresses/selectors';
+} from 'ducks/udpingresses/selectors';
 
-import * as actions from 'ducks/ingresses/actions';
+import * as actions from 'ducks/udpingresses/actions';
 
-import IngressRuleTable from './IngressRuleTable';
+import UdpingressRuleTable from './UdpingressRuleTable';
 import messages from './messages';
 import useStyles from './styles';
 
-export const IngressDetailPage = ({
+export const UdpingressDetailPage = ({
   clusterID,
   namespaceID,
   ingressID,
-  ingress,
+  udpingress,
   url,
   readIngress,
 }) => {
@@ -71,47 +71,25 @@ export const IngressDetailPage = ({
         <Breadcrumbs
           data={[
             {
-              path: `/clusters/${clusterID}/namespaces/${namespaceID}/ingresses`,
+              path: `/clusters/${clusterID}/namespaces/${namespaceID}/udpingresses`,
               name: <FormattedMessage {...messages.pageTitle} />,
             },
             {
-              name: <FormattedMessage {...messages.ingressDetail} />,
+              name: <FormattedMessage {...messages.udpingressDetail} />,
             },
           ]}
         />
+       
         <GridContainer className={classes.grid}>
           <GridItem xs={12} sm={12} md={12}>
             <Card>
               <CardHeader color="primary">
                 <h4 className={classes.cardTitleWhite}>
-                  <FormattedMessage {...messages.ingressDetail} />
+                  <FormattedMessage {...messages.udpingressDetail} />
                 </h4>
               </CardHeader>
               <CardBody>
-              <GridContainer style={{ margin: 0 }}>
-                <GridItem xs={3} sm={3} md={3}>
-                  <ReadOnlyInput
-                    labelText={<FormattedMessage {...messages.formName} />}
-                    value={ingress.get('name')}
-                    fullWidth
-                  />
-                 </GridItem>
-              </GridContainer>
-              </CardBody>
-            </Card>
-          </GridItem>
-        </GridContainer>
-
-        <GridContainer className={classes.grid} style={{paddingTop:0}}>
-          <GridItem xs={12} sm={12} md={12}>
-            <Card>
-              <CardHeader color="primary">
-                <h4 className={classes.cardTitleWhite}>
-                  <FormattedMessage {...messages.configurationDetails} />
-                </h4>
-              </CardHeader>
-              <CardBody>
-                <IngressRuleTable ingress={ingress}/>
+                <UdpingressRuleTable udpingress={udpingress}/>
               </CardBody>
             </Card>
           </GridItem>
@@ -126,13 +104,14 @@ const mapStateToProps = createStructuredSelector({
   namespaceID: makeSelectNamespaceID(),
   ingressID: makeSelectCurrentID(),
   url: makeSelectURL(),
-  ingress: makeSelectCurrent(),
+  udpingress: makeSelectCurrent(),
 });
 
 const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
       ...actions,
+      ...podsActions,
     },
     dispatch
   );
@@ -144,4 +123,4 @@ const withConnect = connect(
 
 export default compose(
   withConnect,
-)(IngressDetailPage);
+)(UdpingressDetailPage);
