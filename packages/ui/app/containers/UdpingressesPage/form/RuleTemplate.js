@@ -43,7 +43,7 @@ const RuleTemplate = ({
                 'serviceName':serviceName,
                 'serviceProtocol':'udp',
                 'servicePort': p.get('port'),
-                'protocol': 'HTTP'
+                'protocol': 'UDP'
               }
             ))
           }

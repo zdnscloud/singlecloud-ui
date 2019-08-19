@@ -5,22 +5,22 @@ import { Link } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 import ConfirmDelete from 'components/ConfirmDelete/ConfirmDelete';
 
-const schema = ['serviceName', 'creationTimestamp'];
+const schema = ['serviceName'];
 
 const tableSchema = schema
   .map((id) => ({
     id,
     label: ucfirst(id),
   }))
-  .map((item) => {
-    if (item.id === 'creationTimestamp') {
-      return {
-        ...item,
-        component: TimeCell,
-      };
-    }
-    return item;
-  })
+  // .map((item) => {
+  //   if (item.id === 'creationTimestamp') {
+  //     return {
+  //       ...item,
+  //       component: TimeCell,
+  //     };
+  //   }
+  //   return item;
+  // })
   .concat([
     {
       id: 'actions',
@@ -39,7 +39,7 @@ const tableSchema = schema
     },
   ])
   .map((sch) => {
-    if (sch.id === 'name') {
+    if (sch.id === 'serviceName') {
       return {
         ...sch,
         component: (props) => (
@@ -48,7 +48,7 @@ const tableSchema = schema
             component={Link}
             to={`${props.pathname}/${props.data.get('id')}/show`}
           >
-            {props.data.get('name')}
+            {props.data.get('serviceName')}
           </Button>
         ),
       };

@@ -1,6 +1,6 @@
 /**
  *
- * Ingress Table
+ * udpingress Table
  *
  */
 import React, { Fragment } from 'react';
@@ -21,8 +21,9 @@ import schema from './ruleTableSchema';
 
 /* eslint-disable react/prefer-stateless-function */
 const UdpingressRuleTable = ({
-  ingress,
+  udpingress,
 }) => {
+ 
   const classes = useStyles();
   const mergedSchema = schema
     .map((s) => ({
@@ -35,7 +36,7 @@ const UdpingressRuleTable = ({
       <SimpleTable
         className={classes.table}
         schema={mergedSchema}
-        data={ingress || []}
+        data={[udpingress] || []}
       />
     </Paper>
   );

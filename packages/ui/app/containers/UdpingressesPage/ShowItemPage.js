@@ -43,19 +43,18 @@ import useStyles from './styles';
 export const UdpingressDetailPage = ({
   clusterID,
   namespaceID,
-  ingressID,
+  udpingressID,
   udpingress,
   url,
-  readIngress,
+  readUdpingress,
 }) => {
   const classes = useStyles();
-  console.log('ingressID',ingressID)
   useEffect(() => {
     if(url){
-      readIngress(ingressID, {
+      readUdpingress(udpingressID, {
         clusterID,
         namespaceID,
-        url: `${url}/${ingressID}`,
+        url: `${url}/${udpingressID}`,
       });
     }
     return () => {
@@ -102,7 +101,7 @@ export const UdpingressDetailPage = ({
 const mapStateToProps = createStructuredSelector({
   clusterID: makeSelectClusterID(),
   namespaceID: makeSelectNamespaceID(),
-  ingressID: makeSelectCurrentID(),
+  udpingressID: makeSelectCurrentID(),
   url: makeSelectURL(),
   udpingress: makeSelectCurrent(),
 });
@@ -111,7 +110,6 @@ const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
       ...actions,
-      ...podsActions,
     },
     dispatch
   );

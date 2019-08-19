@@ -21,7 +21,7 @@ const ruleTableSchema = schema
     id: 'protocol',
     label: 'Protocol',
     component: (props) => (
-      <span>HTTP</span>
+      <span>UDP</span>
     ),
   })
 export default ruleTableSchema;
