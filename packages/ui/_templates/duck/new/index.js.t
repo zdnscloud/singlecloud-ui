@@ -34,8 +34,8 @@ export { constants, actions, prefix };
 
 export const initialState = fromJS({
   data: {},
-  list: [],
-  selectedData: '',
+  list: <%= hasParents ? '{}' : '[]' %>,
+  selectedData: null,
 });
 
 const c = constants;
@@ -76,8 +76,8 @@ if (wannaUpdateAction) {%>
     case c.UPDATE_<%= SN %>:
       return state;
     case c.UPDATE_<%= SN %>_SUCCESS: {
-      const id = getByKey(payload, ['reponse', 'id']);
-      const data = getByKey(payload, ['reponse']);
+      const id = getByKey(payload, ['response', 'id']);
+      const data = getByKey(payload, ['response']);
       <%if (hasParents) { %>const {
         <%= spIDs %>,
       } = meta;<% } %>
@@ -93,8 +93,8 @@ if (wannaReadOneAction) {%>
     case c.READ_<%= SN %>:
       return state;
     case c.READ_<%= SN %>_SUCCESS: {
-      const id = getByKey(payload, ['reponse', 'id']);
-      const data = getByKey(payload, ['reponse']);
+      const id = getByKey(payload, ['response', 'id']);
+      const data = getByKey(payload, ['response']);
       <%if (hasParents) { %>const {
         <%= spIDs %>,
       } = meta;<% } %>

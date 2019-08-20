@@ -96,7 +96,16 @@ export const makeSelectLeftMenus = () =>
     makeSelectCurrentNamespaceID(),
     makeSelectIsAdmin(),
     (appState, cluster, namespace, isAdmin) => {
-      let menus = [{ name: 'Global', path: '/clusters', icon: OverviewIcon }];
+      let menus = [
+        {
+          name: 'Global',
+          children: [ 
+            { name: 'Global', path: '/clusters' },
+            { name: 'GlobalConfiguration', path: '/registries' },
+          ],
+          icon: OverviewIcon 
+        }
+      ];
       if (cluster !== '') {
         menus = menus.concat([
           {

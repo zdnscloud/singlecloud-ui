@@ -36,10 +36,16 @@ import * as a from './actions';
 export const load<%= cpname %>Epic = (action$, state$, { ajax }) =>
   action$.pipe(
     ofType(c.LOAD_<%= PN %>),
-    mergeMap(({ payload }) =>
+    mergeMap(({ payload, meta }) =>
       ajax(payload).pipe(
-        map((resp) => a.load<%= cpname %>Success(resp)),
-        catchError((error) => of(a.load<%= cpname %>Failure(error)))
+        map((resp) => {
+          meta.resolve && meta.resolve(resp);
+          return a.load<%= cpname %>Success(resp, meta);
+        }),
+        catchError((error) => {
+          meta.reject && meta.reject(error);
+          return of(a.load<%= cpname %>Failure(error, meta));
+        })
       )
     )
   );
@@ -47,19 +53,19 @@ export const load<%= cpname %>Epic = (action$, state$, { ajax }) =>
 export const create<%= csname %>Epic = (action$, state$, { ajax }) =>
   action$.pipe(
     ofType(c.CREATE_<%= SN %>),
-    mergeMap(({ payload, meta: { resolve, reject, url } }) =>
+    mergeMap(({ payload, meta }) =>
       ajax({
-        url,
+        url: `${meta.url}`,
         method: 'POST',
         body: payload,
       }).pipe(
         map((resp) => {
-          resolve(resp);
-          return a.create<%= csname %>Success(resp);
+          meta.resolve && meta.resolve(resp);
+          return a.create<%= csname %>Success(resp, meta);
         }),
         catchError((error) => {
-          reject(error);
-          return of(a.create<%= csname %>Failure(error));
+          meta.reject && meta.reject(error);
+          return of(a.create<%= csname %>Failure(error, meta));
         })
       )
     )
@@ -69,16 +75,20 @@ if (wannaUpdateAction) {%>
 export const update<%= csname %>Epic = (action$, state$, { ajax }) =>
   action$.pipe(
     ofType(c.UPDATE_<%= SN %>),
-    mergeMap(({ payload, meta: { url, id } }) =>
+    mergeMap(({ payload, meta }) =>
       ajax({
-        url: `${url}`,
+        url: `${meta.url}`,
         method: 'PUT',
         body: payload
       }).pipe(
-        map((resp) => a.update<%= csname %>Success(resp, { id })),
-        catchError((error) =>
-          of(a.update<%= csname %>Failure(error, { id }))
-        )
+        map((resp) => {
+          meta.resolve && meta.resolve(resp);
+          return a.update<%= csname %>Success(resp, meta);
+        }),
+        catchError((error) => {
+          meta.reject && meta.reject(error);
+          return of(a.update<%= csname %>Failure(error, meta));
+        })
       )
     )
   );
@@ -87,15 +97,19 @@ if (wannaReadOneAction) {%>
 export const read<%= csname %>Epic = (action$, state$, { ajax }) =>
   action$.pipe(
     ofType(c.READ_<%= SN %>),
-    mergeMap(({ payload, meta: { url } }) =>
+    mergeMap(({ payload, meta }) =>
       ajax({
-        url: `${url}`,
+        url: `${meta.url}`,
         method: 'GET',
       }).pipe(
-        map((resp) => a.read<%= csname %>Success(resp, { id: payload })),
-        catchError((error) =>
-          of(a.read<%= csname %>Failure(error, { id: payload }))
-        )
+        map((resp) => {
+          meta.resolve && meta.resolve(resp);
+          return a.read<%= csname %>Success(resp, { ...meta, id: payload });
+        }),
+        catchError((error) => {
+          meta.reject && meta.reject(error);
+          return of(a.read<%= csname %>Failure(error, { ...meta, id: payload }));
+        })
       )
     )
   );
@@ -104,15 +118,19 @@ if (wannaRemoveAction) {%>
 export const remove<%= csname %>Epic = (action$, state$, { ajax }) =>
   action$.pipe(
     ofType(c.REMOVE_<%= SN %>),
-    mergeMap(({ payload, meta: { url } }) =>
+    mergeMap(({ payload, meta }) =>
       ajax({
-        url: `${url}`,
-        method: 'REMOVE',
+        url: `${meta.url}`,
+        method: 'DELETE',
       }).pipe(
-        map((resp) => a.remove<%= csname %>Success(resp, { id: payload })),
-        catchError((error) =>
-          of(a.remove<%= csname %>Failure(error, { id: payload }))
-        )
+        map((resp) => {
+          meta.resolve && meta.resolve(resp);
+          return a.remove<%= csname %>Success(resp, { ...meta, id: payload });
+        }),
+        catchError((error) => {
+          meta.reject && meta.reject(error);
+          return of(a.remove<%= csname %>Failure(error, { ...meta, id: payload }));
+        })
       )
     )
   );
@@ -121,7 +139,7 @@ if (wannaCreateAction) {%>
 export const afterCreate<%= csname %>Epic = (action$) =>
   action$.pipe(
     ofType(c.CREATE_<%= SN %>_SUCCESS),
-    mergeMap(({ payload, meta }) => mapTo(push(`/<%= name %>`)))
+    mergeMap(({ payload, meta }) => of(push(`/<%= name %>`)))
   );
 <% } %>
 export default combineEpics(

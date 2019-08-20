@@ -57,6 +57,10 @@ export default defineMessages({
     id: `${scope}.leftMenuGlobal`,
     defaultMessage: 'Global',
   },
+  leftMenuGlobalConfiguration: {
+    id: `${scope}.leftMenuGlobalConfiguration`,
+    defaultMessage: 'Global Configuration',
+  },
   leftMenuClusterManagement: {
     id: `${scope}.leftMenuClusterManagement`,
     defaultMessage: 'ClusterManagement',

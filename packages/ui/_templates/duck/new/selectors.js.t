@@ -21,6 +21,7 @@ to: <%= h.src() %>/app/ducks/<%= name %>/selectors.js
  * selectors: <%= name %>
  *
  */
+import { fromJS } from 'immutable';
 import { createSelector } from 'reselect';
 import {
   createMatchSelector,
@@ -47,7 +48,7 @@ export const selectDomain = (state) => state.get(prefix) || initialState;
  */
 <% if (hasParents) { %>export const makeSelectURL = () =>
   createSelector(
-    makeSelectCurrent<%= csp %>,
+    makeSelectCurrent<%= csp %>(),
     (pt) => pt.getIn(['links', '<%= pname.toLowerCase() %>'])
   );
 <% } else { %>export const makeSelectURL = () =>
@@ -60,11 +61,12 @@ export const makeSelect<%= cpname %> = () =>
   createSelector(
     selectDomain,
 <% if (hasParents) {
-  cspList.forEach((p) => {%>
-    makeSelectCurrent<%= p %>ID(),
+  cspList.forEach((p) => {%>    makeSelectCurrent<%= p %>ID(),
 <% })
 } %>
-    (substate<%= hasParents ? `, ${spIDs}` : '' %>) => substate.getIn(['data'<%= hasParents ? `, ${spIDs}` : '' %>])
+    (substate<%= hasParents ? `, ${spIDs}` : '' %>) =>
+      substate.getIn(['data'<%= hasParents ? `, ${spIDs}` : '' %>])
+        || substate.clear()
   );
 
 export const makeSelect<%= cpname %>List = () =>
@@ -72,16 +74,17 @@ export const makeSelect<%= cpname %>List = () =>
     selectDomain,
     makeSelect<%= cpname %>(),
 <% if (hasParents) {
-  cspList.forEach((p) => {%>
-    makeSelectCurrent<%= p %>ID(),
+  cspList.forEach((p) => {%>    makeSelectCurrent<%= p %>ID(),
 <% })
 } %>
-    (substate, data<%= hasParents ? `, ${spIDs}` : '' %>) => substate.getIn(['list'<%= hasParents ? `, ${spIDs}` : '' %>]).map((id) => data.get(id))
+    (substate, data<%= hasParents ? `, ${spIDs}` : '' %>) =>
+      (substate.getIn(['list'<%= hasParents ? `, ${spIDs}` : '' %>]) || fromJS([]))
+        .map((id) => data.get(id)) || fromJS([])
   );
 
 export const makeSelectCurrentID = () =>
    createSelector(
-     createMatchSelector('/<%= name %>/:id/*'),
+     createMatchSelector('*/<%= name %>/:id/*'),
      (match) => {
        if (match && match.params) {
          return match.params.id;
@@ -93,7 +96,11 @@ export const makeSelectCurrentID = () =>
 export const makeSelectCurrent = () =>
   createSelector(
     selectDomain,
+<% if (hasParents) {
+  cspList.forEach((p) => {%>    makeSelectCurrent<%= p %>ID(),
+<% })
+} %>
     makeSelectCurrentID(),
-    (substate, id) =>
-      substate.getIn(['data', id])
+    (substate<%= hasParents ? `, ${spIDs}` : '' %>, id) =>
+      substate.getIn(['data'<%= hasParents ? `, ${spIDs}` : '' %>, id]) || substate.clear()
   );
