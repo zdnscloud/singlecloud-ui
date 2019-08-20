@@ -192,5 +192,5 @@ export default defineMessages({
   quotaAdjustmentBtn: {
     id: `${scope}.quotaAdjustmentBtn`,
     defaultMessage: 'QuotaAdjustment',
-  }
+  },
 });

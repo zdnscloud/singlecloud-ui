@@ -17,26 +17,14 @@ import { bindActionCreators, compose } from 'redux';
 import { Switch, Route, Redirect, Link } from 'react-router-dom';
 import { withRouter } from 'react-router';
 
-// creates a beautiful scrollbar
-import PerfectScrollbar from 'perfect-scrollbar';
-import 'perfect-scrollbar/css/perfect-scrollbar.css';
 // @material-ui/core components
 import withStyles from '@material-ui/core/styles/withStyles';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import Fab from '@material-ui/core/Fab';
 import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
-import AccountCircleIcon from '@material-ui/icons/AccountCircle';
-import ExpansionPanel from '@material-ui/core/ExpansionPanel';
-import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
-import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
-import Typography from '@material-ui/core/Typography';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 import Divider from '@material-ui/core/Divider';
 // core components
-import Footer from 'components/Footer/Footer';
-import Sidebar from 'components/Sidebar/Sidebar';
 import Menubar from 'components/Menubar';
 import DownIcon from 'components/Icons/Down';
 import ShellIcon from 'components/Icons/Shell';

@@ -18,7 +18,11 @@ import MinusIcon from 'components/Icons/Minus';
 
 import messages from '../messages';
 
-const NodeWorkTemplate = ({ fields, classes, meta: { error, submitFailed } }) => (
+const NodeWorkTemplate = ({
+  fields,
+  classes,
+  meta: { error, submitFailed },
+}) => (
   <Fragment>
     <GridContainer>
       <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
@@ -34,7 +38,7 @@ const NodeWorkTemplate = ({ fields, classes, meta: { error, submitFailed } }) =>
       </ListItem>
     )}
     {fields.map((f, i) => (
-      <GridContainer key={i+1}>
+      <GridContainer key={i + 1}>
         <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
           <InputField
             label={<FormattedMessage {...messages.formHostName} />}

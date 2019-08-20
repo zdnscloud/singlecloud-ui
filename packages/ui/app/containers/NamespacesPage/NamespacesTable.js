@@ -53,13 +53,13 @@ export class NamespacesTable extends React.PureComponent {
         if (sch.id === 'actions') {
           return {
             ...sch,
-            props: {clusterID, removeNamespace},
+            props: { clusterID, removeNamespace },
           };
         }
         if (sch.id === 'name') {
           return {
             ...sch,
-            props: {pathname}
+            props: { pathname },
           };
         }
         return sch;

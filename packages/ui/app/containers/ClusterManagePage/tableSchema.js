@@ -5,11 +5,7 @@ import TimeCell from 'components/Cells/TimeCell';
 import { fromJS } from 'immutable';
 import ConfirmDelete from 'components/ConfirmDelete/ConfirmDelete';
 
-const schema = [
-  'name',
-  'address',
-  'roles',
-];
+const schema = ['name', 'address', 'roles'];
 
 const tableSchema = schema
   .map((id) => ({
@@ -50,15 +46,19 @@ const tableSchema = schema
       id: 'actions',
       label: 'Actions',
       component(props) {
-        return (<Fragment>
-          <ConfirmDelete 
+        return (
+          <Fragment>
+            <ConfirmDelete
               actionName={props.setNodes}
-              id={fromJS(props.nodes.toJS().filter((v) => v.name !== props.data.get('name')))}
-           />
-        </Fragment>)
+              id={fromJS(
+                props.nodes
+                  .toJS()
+                  .filter((v) => v.name !== props.data.get('name'))
+              )}
+            />
+          </Fragment>
+        );
       },
     },
-  ])
-;
-
+  ]);
 export default tableSchema;

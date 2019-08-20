@@ -73,7 +73,7 @@ const styles = (theme) => ({
   },
   contentGrid: {
     padding: theme.spacing(2),
-    paddingTop:0
+    paddingTop: 0,
   },
   chartContainer: {
     marginLeft: -22,
@@ -123,7 +123,6 @@ const styles = (theme) => ({
   radioLabel: {
     flexDirection: 'row',
     lineHeight: 3.5,
-    
   },
   radioGroup: {
     flexDirection: 'row',

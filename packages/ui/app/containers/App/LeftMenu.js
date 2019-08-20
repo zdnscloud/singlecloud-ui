@@ -10,19 +10,12 @@ import { NavLink } from 'react-router-dom';
 // @material-ui/core components
 import withStyles from '@material-ui/core/styles/withStyles';
 import Drawer from '@material-ui/core/Drawer';
-import Hidden from '@material-ui/core/Hidden';
-import Popover from '@material-ui/core/Popover';
 import Popper from '@material-ui/core/Popper';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
-import Collapse from '@material-ui/core/Collapse';
-import IconButton from '@material-ui/core/IconButton';
-import Icon from '@material-ui/core/Icon';
-import ExpandLess from '@material-ui/icons/ExpandLess';
-import ExpandMore from '@material-ui/icons/ExpandMore';
 import ChevronRight from 'components/Icons/ChevronRight';
 
 import * as actions from 'ducks/app/actions';

@@ -122,7 +122,9 @@ export class EditStoragePage extends React.PureComponent {
                 name: <FormattedMessage {...messages.pageTitle} />,
               },
               {
-                path: `/clusters/${clusterID}/storages/${storage.get('id')}/edit`,
+                path: `/clusters/${clusterID}/storages/${storage.get(
+                  'id'
+                )}/edit`,
                 name: <FormattedMessage {...messages.editStorage} />,
               },
             ]}
@@ -134,7 +136,7 @@ export class EditStoragePage extends React.PureComponent {
               initialValues={storage}
               blockDevices={blockDevices.concat(storage.get('config'))}
               formValues={values || storage}
-              edit={true}
+              edit
             />
             <GridContainer className={classes.grid}>
               <GridItem xs={12} sm={12} md={12}>

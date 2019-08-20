@@ -17,7 +17,11 @@ import PlusIcon from 'components/Icons/Plus';
 import MinusIcon from 'components/Icons/Minus';
 
 import messages from '../messages';
-const NodeMainTemplate = ({ fields, classes, meta: { error, submitFailed } }) => (
+const NodeMainTemplate = ({
+  fields,
+  classes,
+  meta: { error, submitFailed },
+}) => (
   <Fragment>
     <GridContainer>
       <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
@@ -33,7 +37,7 @@ const NodeMainTemplate = ({ fields, classes, meta: { error, submitFailed } }) =>
       </ListItem>
     )}
     {fields.map((f, i) => (
-      <GridContainer key={i+1}>
+      <GridContainer key={i + 1}>
         <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
           <InputField
             label={<FormattedMessage {...messages.formHostName} />}
@@ -64,7 +68,7 @@ const NodeMainTemplate = ({ fields, classes, meta: { error, submitFailed } }) =>
             <MinusIcon />
           </IconButton>
         </GridItem>
-        <GridContainer key={i+i}>
+        <GridContainer key={i + i}>
           <GridItem xs={6} sm={6} md={6} className={classes.formLine}>
             <ChexboxesField
               name={`${f}.roles`}

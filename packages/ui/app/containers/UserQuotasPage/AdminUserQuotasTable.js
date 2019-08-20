@@ -52,7 +52,7 @@ export class AdminUserQuotasTable extends React.PureComponent {
         if (sch.id === 'actions') {
           return {
             ...sch,
-            props: { classes, removeUserQuota},
+            props: { classes, removeUserQuota },
           };
         }
         return sch;

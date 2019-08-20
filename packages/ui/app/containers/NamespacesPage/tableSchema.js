@@ -29,12 +29,12 @@ const tableSchema = schema
       label: 'Actions',
       component: (props) => (
         <Fragment>
-          <ConfirmDelete 
-              actionName={props.removeNamespace}
-              id={props.data.get('id')}
-              url={props.data.getIn(['links', 'remove'])}
-              clusterID={props.clusterID}
-           />
+          <ConfirmDelete
+            actionName={props.removeNamespace}
+            id={props.data.get('id')}
+            url={props.data.getIn(['links', 'remove'])}
+            clusterID={props.clusterID}
+          />
           {/* <IconButton
             aria-label="Edit"
             to={`${props.pathname}/${props.data.get('id')}/edit`}
@@ -62,7 +62,5 @@ const tableSchema = schema
       };
     }
     return sch;
-  })
-  ;
-
+  });
 export default tableSchema;

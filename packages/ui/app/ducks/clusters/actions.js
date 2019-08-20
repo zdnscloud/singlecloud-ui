@@ -138,5 +138,3 @@ export const updateClusterFailure = (error) => ({
   payload: error,
   error: true,
 });
-
-

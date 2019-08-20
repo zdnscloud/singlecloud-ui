@@ -76,34 +76,37 @@ class SecretForm extends PureComponent {
       edit,
       initialValues,
       secret,
-      type
+      type,
     } = this.props;
 
     return (
       <form className={getByKey(classes, 'form')} onSubmit={handleSubmit}>
         <GridContainer>
           <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
-            { type === "create" ? ( 
+            {type === 'create' ? (
               <InputField
                 label={<FormattedMessage {...messages.formName} />}
                 name="name"
                 formControlProps={{
                   className: classes.nameControl,
                 }}
-                inputProps={{ type: 'text', autoComplete: 'off', disabled: edit }}
+                inputProps={{
+                  type: 'text',
+                  autoComplete: 'off',
+                  disabled: edit,
+                }}
                 fullWidth
               />
-            ) :(
+            ) : (
               <ReadOnlyInput
                 labelText={<FormattedMessage {...messages.formName} />}
-                value={ secret ? secret.get('name'): ''}
+                value={secret ? secret.get('name') : ''}
                 formControlProps={{
                   className: classes.nameControl,
                 }}
                 fullWidth
               />
             )}
-           
           </GridItem>
           <GridItem xs={12} sm={12} md={12}>
             <FieldArray

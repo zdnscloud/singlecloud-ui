@@ -54,7 +54,7 @@ export class StoragesTable extends React.PureComponent {
         if (sch.id === 'name') {
           return {
             ...sch,
-            props: { pathname}
+            props: { pathname },
           };
         }
         return sch;

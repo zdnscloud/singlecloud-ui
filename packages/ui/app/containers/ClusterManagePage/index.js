@@ -22,10 +22,11 @@ import GridItem from 'components/Grid/GridItem';
 import GridContainer from 'components/Grid/GridContainer';
 import { openTerminal } from 'containers/TerminalPage/actions';
 
-import { makeSelectNodesList, makeSelectCurrentCluster } from 'ducks/clusters/selectors';
 import {
-  makeSelectClusterID,
-} from 'ducks/app/selectors';
+  makeSelectNodesList,
+  makeSelectCurrentCluster,
+} from 'ducks/clusters/selectors';
+import { makeSelectClusterID } from 'ducks/app/selectors';
 import * as actions from 'ducks/clusters/actions';
 
 import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
@@ -54,18 +55,23 @@ export class ClusterManagePage extends React.PureComponent {
 
   componentWillMount() {
     const { setNodes, cluster } = this.props;
-    setNodes(cluster.get("nodes"));
+    setNodes(cluster.get('nodes'));
   }
 
   render() {
-    const { classes, submitForm, updateCluster, values, clusterID, cluster,nodeList} = this.props;
-    const url = cluster.getIn(['links','update']);
+    const {
+      classes,
+      submitForm,
+      updateCluster,
+      values,
+      clusterID,
+      cluster,
+      nodeList,
+    } = this.props;
+    const url = cluster.getIn(['links', 'update']);
     async function doSubmit(formValues) {
       try {
-        const {
-          nodes,
-          ...formData
-        } = formValues.toJS();
+        const { nodes, ...formData } = formValues.toJS();
         const data = {
           nodes: nodeList.toJS(),
           ...formData,
@@ -75,7 +81,7 @@ export class ClusterManagePage extends React.PureComponent {
             resolve,
             reject,
             url,
-            clusterID
+            clusterID,
           });
         });
       } catch (error) {
@@ -103,11 +109,7 @@ export class ClusterManagePage extends React.PureComponent {
                 initialValues={cluster}
                 formValues={values}
               />
-              <Button
-                variant="contained"
-                color="primary"
-                onClick={submitForm}
-              >
+              <Button variant="contained" color="primary" onClick={submitForm}>
                 <FormattedMessage {...messages.createClusterButton} />
               </Button>
               <Button

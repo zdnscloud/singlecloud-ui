@@ -12,8 +12,7 @@ import Language from '@material-ui/icons/Language';
 import ClustersPage, {
   CreateClusterPage,
 } from 'containers/ClustersPage/Loadable';
-import ClusterManagePage, {
-} from 'containers/ClusterManagePage/Loadable';
+import ClusterManagePage from 'containers/ClusterManagePage/Loadable';
 import ClusterDetailPage from 'containers/ClusterDetailPage/Loadable';
 import NodesPage, {
   NodeDetailPage,
@@ -56,7 +55,7 @@ import ConfigMapsPage, {
 import SecretsPage, {
   CreateSecretPage,
   ShowSecretPage,
-  EditSecretPage
+  EditSecretPage,
 } from 'containers/SecretsPage/Loadable';
 import ServiceLinkPage from 'containers/ServiceLinkPage/Loadable';
 import StoragesPage, {
@@ -101,7 +100,6 @@ const appRoutes = [
     component: ClusterManagePage,
   },
   {
-    path: '/clusters/:cluster_id',
     path: '/clusters/:cluster_id/show',
     name: 'Cluster Detail',
     icon: Dashboard,
@@ -183,7 +181,8 @@ const appRoutes = [
     component: CreateConfigMapPage,
   },
   {
-    path: '/clusters/:cluster_id/namespaces/:namespace_id/configmaps/:configmap_id/edit',
+    path:
+      '/clusters/:cluster_id/namespaces/:namespace_id/configmaps/:configmap_id/edit',
     name: 'edit configmap',
     icon: Dashboard,
     component: EditConfigMapPage,
@@ -210,13 +209,15 @@ const appRoutes = [
     component: CreateSecretPage,
   },
   {
-    path: '/clusters/:cluster_id/namespaces/:namespace_id/secrets/:secret_id/edit',
+    path:
+      '/clusters/:cluster_id/namespaces/:namespace_id/secrets/:secret_id/edit',
     name: 'edit secret',
     icon: Dashboard,
     component: EditSecretPage,
   },
   {
-    path: '/clusters/:cluster_id/namespaces/:namespace_id/secrets/:secret_id/show',
+    path:
+      '/clusters/:cluster_id/namespaces/:namespace_id/secrets/:secret_id/show',
     name: 'show secret',
     icon: Dashboard,
     component: ShowSecretPage,

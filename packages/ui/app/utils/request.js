@@ -41,13 +41,11 @@ function checkStatus(response) {
  */
 export default function request(url, options = {}) {
   const auth = authProvider();
-  const headers = Object.assign(
-    {
-      ...auth,
-      Accept: 'application/json',
-    },
-    options.headers
-  );
+  const headers = {
+    ...auth,
+    Accept: 'application/json',
+    ...options.headers,
+  };
   return fetch(url, {
     ...options,
     headers,

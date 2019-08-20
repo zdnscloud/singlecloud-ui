@@ -215,7 +215,7 @@ export const makeSelectLeftMenus = () =>
             {
               name: 'UserQuotasList',
               path: isAdmin ? '/adminUserQuotas' : '/userQuotas',
-            }
+            },
           ],
           icon: UserQuotasIcon,
         },

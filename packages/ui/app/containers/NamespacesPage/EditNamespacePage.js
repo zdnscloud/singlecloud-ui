@@ -28,10 +28,10 @@ import CardHeader from 'components/Card/CardHeader';
 import CardBody from 'components/Card/CardBody';
 import CardFooter from 'components/Card/CardFooter';
 
-import { 
+import {
   makeSelectClusterID,
   makeSelectNamespaceID,
- } from 'ducks/app/selectors';
+} from 'ducks/app/selectors';
 import { makeSelectCurrentCluster } from 'ducks/clusters/selectors';
 import * as actions from 'ducks/resourceQuotas/actions';
 

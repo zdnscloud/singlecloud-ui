@@ -72,7 +72,14 @@ export class CreateJob extends React.PureComponent {
   };
 
   componentWillMount() {
-    const { clusterID, namespaceID, configMapURL, loadConfigMaps, secretURL, loadSecrets} = this.props;
+    const {
+      clusterID,
+      namespaceID,
+      configMapURL,
+      loadConfigMaps,
+      secretURL,
+      loadSecrets,
+    } = this.props;
     loadConfigMaps({ url: configMapURL, clusterID, namespaceID });
     loadSecrets({ url: secretURL, clusterID, namespaceID });
   }
@@ -82,7 +89,14 @@ export class CreateJob extends React.PureComponent {
       clusterID: prevClusterID,
       namespaceID: prevNamespaceID,
     } = prevProps;
-    const { clusterID, namespaceID, configMapURL, loadConfigMaps, secretURL, loadSecrets } = this.props;
+    const {
+      clusterID,
+      namespaceID,
+      configMapURL,
+      loadConfigMaps,
+      secretURL,
+      loadSecrets,
+    } = this.props;
     if (prevClusterID !== clusterID || prevNamespaceID !== namespaceID) {
       loadConfigMaps({ url: configMapURL, clusterID, namespaceID });
       loadSecrets({ url: secretURL, clusterID, namespaceID });

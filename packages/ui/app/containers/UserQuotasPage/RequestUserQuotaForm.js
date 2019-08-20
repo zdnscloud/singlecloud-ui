@@ -35,8 +35,8 @@ class RequestUserQuotaForm extends PureComponent {
       value: sc.get('name'),
     }));
     const reg = /^(\d+)([a-zA-Z]+)?$/;
-    const memory = userQuota.get('memory')
-    const storage = userQuota.get('storage')
+    const memory = userQuota.get('memory');
+    const storage = userQuota.get('storage');
     return (
       <form className={getByKey(classes, 'form')} onSubmit={handleSubmit}>
         <GridContainer>

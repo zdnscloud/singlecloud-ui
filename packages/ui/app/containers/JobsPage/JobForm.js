@@ -34,7 +34,7 @@ class JobForm extends PureComponent {
       configMaps,
       formValues,
       theme,
-      secrets
+      secrets,
     } = this.props;
     const getPorts = (formData) => {
       if (formData && formData.get) {

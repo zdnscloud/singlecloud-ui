@@ -31,7 +31,7 @@ import {
 } from 'ducks/clusters/selectors';
 import * as actions from 'ducks/clusters/actions';
 
-import styles from './/styles';
+import styles from './styles';
 import messages from './messages';
 
 let socket = null;
@@ -102,11 +102,11 @@ const LogViewDialog = ({
             <div className={classes.logsWrapper}>
               <pre className={classes.logs}>
                 {logs &&
-                 logs.map((log, i) => (
-                   <div key={i}>
-                     <span className={classes.log}>{log}</span>
-                   </div>
-                 ))}
+                  logs.map((log, i) => (
+                    <div key={i}>
+                      <span className={classes.log}>{log}</span>
+                    </div>
+                  ))}
               </pre>
             </div>
           </Paper>

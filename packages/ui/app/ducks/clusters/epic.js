@@ -94,37 +94,30 @@ export const cancelClusterEpic = (action$, state$, { ajax }) =>
         url,
         method: 'POST',
       }).pipe(
-        map((resp) => {
-          return a.cancelClusterSuccess(resp);
-        }),
-        catchError((error) => {
-          return of(a.cancelClusterFailure(error));
-        })
+        map((resp) => a.cancelClusterSuccess(resp)),
+        catchError((error) => of(a.cancelClusterFailure(error)))
       )
     )
   );
-  
+
 export const updateClusterEpic = (action$, state$, { ajax }) =>
   action$.pipe(
     ofType(c.UPDATE_CLUSTER),
-    mergeMap(
-      ({ payload, meta: { resolve, reject, url, clusterID } }) =>
-        ajax({
-          url,
-          method: 'PUT',
-          body: payload,
-        }).pipe(
-          map((resp) => {
-            resolve(resp);
-            return a.updateClusterSuccess(resp, { clusterID });
-          }),
-          catchError((error) => {
-            reject(error);
-            return of(
-              a.updateClusterFailure(error, { clusterID })
-            );
-          })
-        )
+    mergeMap(({ payload, meta: { resolve, reject, url, clusterID } }) =>
+      ajax({
+        url,
+        method: 'PUT',
+        body: payload,
+      }).pipe(
+        map((resp) => {
+          resolve(resp);
+          return a.updateClusterSuccess(resp, { clusterID });
+        }),
+        catchError((error) => {
+          reject(error);
+          return of(a.updateClusterFailure(error, { clusterID }));
+        })
+      )
     )
   );
 

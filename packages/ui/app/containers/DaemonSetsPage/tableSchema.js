@@ -27,13 +27,13 @@ const tableSchema = schema
       label: 'Actions',
       component: (props) => (
         <Fragment>
-          <ConfirmDelete 
-              actionName={props.removeDaemonSet}
-              id={props.data.get('id')}
-              url={props.data.getIn(['links', 'remove'])}
-              clusterID={props.clusterID}
-              namespaceID={props.namespaceID}
-            />
+          <ConfirmDelete
+            actionName={props.removeDaemonSet}
+            id={props.data.get('id')}
+            url={props.data.getIn(['links', 'remove'])}
+            clusterID={props.clusterID}
+            namespaceID={props.namespaceID}
+          />
         </Fragment>
       ),
     },
@@ -54,7 +54,5 @@ const tableSchema = schema
       };
     }
     return sch;
-  })
-  ;
-
+  });
 export default tableSchema;

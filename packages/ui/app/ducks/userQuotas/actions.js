@@ -102,5 +102,5 @@ export const changeUserQuota = (userQuotaID) => ({
 
 export const clearDeleteErrorInfo = () => ({
   type: c.CLEAR_DELETE_ERROR_INFO,
-  payload: { },
+  payload: {},
 });

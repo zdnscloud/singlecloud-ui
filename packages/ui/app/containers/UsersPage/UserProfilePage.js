@@ -14,7 +14,6 @@ import { fromJS } from 'immutable';
 import { reduxForm, getFormValues } from 'redux-form/immutable';
 import { Link } from 'react-router-dom';
 
-
 import { withStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Fab from '@material-ui/core/Fab';
@@ -68,11 +67,11 @@ export class UserProfilePage extends React.PureComponent {
         <CssBaseline />
         <div className={classes.content}>
           <Breadcrumbs
-              data={[
-                {
-                  name: <FormattedMessage {...messages.userProfile} />,
-                },
-              ]}
+            data={[
+              {
+                name: <FormattedMessage {...messages.userProfile} />,
+              },
+            ]}
           />
           <GridContainer className={classes.grid}>
             <GridItem xs={12} sm={12} md={12}>

@@ -15,7 +15,8 @@ export default defineMessages({
   },
   dialogContentText: {
     id: `${scope}.dialogContentText`,
-    defaultMessage: 'This action permanently deletes the content. Continue or not？',
+    defaultMessage:
+      'This action permanently deletes the content. Continue or not？',
   },
   sureButton: {
     id: `${scope}.sureButton`,

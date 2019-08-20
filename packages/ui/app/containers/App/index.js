@@ -89,11 +89,11 @@ const theme = createMuiTheme({
         height: '1.1875em',
       },
     },
-    MuiFormControlLabel:{
+    MuiFormControlLabel: {
       label: {
         fontSize: '14px',
-      }
-    }
+      },
+    },
   },
 });
 

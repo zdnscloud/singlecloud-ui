@@ -94,41 +94,41 @@ export class PasswordSetupPage extends React.PureComponent {
         <CssBaseline />
         <div className={classes.content}>
           <Breadcrumbs
-              data={[
-                {
-                  name: <FormattedMessage {...messages.passwordSetup} />,
-                },
-              ]}
-            />
-            <GridContainer className={classes.grid}>
-              <GridItem xs={12} sm={12} md={12}>
-                <Card>
-                  <CardHeader color="primary">
-                    <h4 className={classes.cardTitleWhite}>
-                      <FormattedMessage {...messages.passwordSetup} />
-                    </h4>
-                  </CardHeader>
-                  <CardBody>
-                    <PasswordSetupForm
-                      classes={classes}
-                      clusters={clusters}
-                      onSubmit={doSubmit}
-                      isAdmin={isAdmin}
-                    />
-                  </CardBody>
-                  <CardFooter className={classes.cardFooter}>
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      size="large"
-                      onClick={submitForm}
-                    >
-                      <FormattedMessage {...messages.updatePassword} />
-                    </Button>
-                  </CardFooter>
-                </Card>
-              </GridItem>
-            </GridContainer>
+            data={[
+              {
+                name: <FormattedMessage {...messages.passwordSetup} />,
+              },
+            ]}
+          />
+          <GridContainer className={classes.grid}>
+            <GridItem xs={12} sm={12} md={12}>
+              <Card>
+                <CardHeader color="primary">
+                  <h4 className={classes.cardTitleWhite}>
+                    <FormattedMessage {...messages.passwordSetup} />
+                  </h4>
+                </CardHeader>
+                <CardBody>
+                  <PasswordSetupForm
+                    classes={classes}
+                    clusters={clusters}
+                    onSubmit={doSubmit}
+                    isAdmin={isAdmin}
+                  />
+                </CardBody>
+                <CardFooter className={classes.cardFooter}>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    size="large"
+                    onClick={submitForm}
+                  >
+                    <FormattedMessage {...messages.updatePassword} />
+                  </Button>
+                </CardFooter>
+              </Card>
+            </GridItem>
+          </GridContainer>
         </div>
       </div>
     );

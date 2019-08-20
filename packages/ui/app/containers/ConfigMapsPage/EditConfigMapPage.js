@@ -33,7 +33,10 @@ import {
   makeSelectNamespaceID,
 } from 'ducks/app/selectors';
 import * as actions from 'ducks/configMaps/actions';
-import { makeSelectURL, makeSelectCurrentConfigMap } from 'ducks/configMaps/selectors';
+import {
+  makeSelectURL,
+  makeSelectCurrentConfigMap,
+} from 'ducks/configMaps/selectors';
 
 import messages from './messages';
 import ConfigMapsPageHelmet from './helmet';
@@ -90,9 +93,9 @@ export class EditConfigMap extends React.PureComponent {
       submitForm,
       clusterID,
       namespaceID,
-      configMap
+      configMap,
     } = this.props;
-  
+
     async function doSubmit(formValues) {
       try {
         const data = formValues.toJS();

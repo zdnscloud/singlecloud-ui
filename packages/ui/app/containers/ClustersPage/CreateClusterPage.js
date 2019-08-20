@@ -70,26 +70,26 @@ export class CreateClusterPage extends React.PureComponent {
           nodes,
           ...formData
         } = formValues.toJS();
-        const { main ,work } = nodes;
+        const { main, work } = nodes;
         main.forEach((item) => {
-          if(Object.keys(item).length !== 0 ){
-            if(item.roles){
+          if (Object.keys(item).length !== 0) {
+            if (item.roles) {
               item.roles.push('controlplane');
-            }else {
+            } else {
               item.roles = ['controlplane'];
             }
           }
         });
         work.forEach((item) => {
-          if(Object.keys(item).length !== 0){
-            if(item.roles){
+          if (Object.keys(item).length !== 0) {
+            if (item.roles) {
               item.roles.push('worker');
-            }else {
+            } else {
               item.roles = ['worker'];
             }
           }
         });
-        let nodeArr = main.concat(work).filter((v) => v.roles);
+        const nodeArr = main.concat(work).filter((v) => v.roles);
         const data = {
           nodes: nodeArr,
           ...formData,
@@ -130,7 +130,10 @@ export class CreateClusterPage extends React.PureComponent {
                 <CreateClusterForm
                   classes={classes}
                   onSubmit={doSubmit}
-                  initialValues={fromJS({ name: '', nodes: {main:[],work:[]}})}
+                  initialValues={fromJS({
+                    name: '',
+                    nodes: { main: [], work: [] },
+                  })}
                   formValues={values}
                 />
                 <Button
@@ -144,7 +147,7 @@ export class CreateClusterPage extends React.PureComponent {
                   variant="contained"
                   className={classes.cancleBtn}
                   component={Link}
-                  to='/clusters'
+                  to="/clusters"
                 >
                   <FormattedMessage {...messages.cancleClustersButton} />
                 </Button>

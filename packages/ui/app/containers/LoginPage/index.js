@@ -17,17 +17,10 @@ import encHex from 'crypto-js/enc-hex';
 
 import withStyles from '@material-ui/core/styles/withStyles';
 
-import Header from 'components/Header/Header';
-import HeaderLinks from 'components/Header/HeaderLinks';
-import Footer from 'components/Footer/Footer';
 import GridContainer from 'components/Grid/GridContainer';
 import GridItem from 'components/Grid/GridItem';
 import Button from 'components/CustomButtons/Button';
 import Card from 'components/Card/Card';
-import CardBody from 'components/Card/CardBody';
-import CardHeader from 'components/Card/CardHeader';
-import CardFooter from 'components/Card/CardFooter';
-import CustomInput from 'components/CustomInput/CustomInput';
 
 import * as roleActions from 'ducks/role/actions';
 import { makeSelectIsLogin } from 'ducks/role/selectors';
