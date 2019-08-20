@@ -20,7 +20,6 @@ import * as actions from 'ducks/registries/actions';
 
 import useStyles from './styles';
 import messages from './messages';
-import RegistriesTable from './Table';
 
 const Registries = ({
   // clusterID,

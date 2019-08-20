@@ -18,6 +18,9 @@ import ClusterDetailPage from 'containers/ClusterDetailPage/Loadable';
 import NodesPage, {
   NodeDetailPage,
 } from 'containers/NodesPage/Loadable';
+import RegistriesPage, {
+  UpdateRegistryPage,
+} from 'containers/RegistriesPage/Loadable';
 import NamespacesPage, {
   CreateNamespacePage,
   NamespaceDetailPage,
@@ -128,6 +131,20 @@ const appRoutes = [
     icon: Dashboard,
     component: EventsPage,
   },
+  //registry
+  {
+    path: '/registries',
+    name: 'Registries',
+    icon: Dashboard,
+    component: RegistriesPage,
+  },
+  {
+    path: '/registries/update',
+    name: 'Registry Update',
+    icon: Dashboard,
+    component: UpdateRegistryPage,
+  },
+  //registry end
   {
     path: '/clusters/:cluster_id/namespaces',
     name: 'namespaces',

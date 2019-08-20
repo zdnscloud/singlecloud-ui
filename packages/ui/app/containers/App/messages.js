@@ -57,10 +57,6 @@ export default defineMessages({
     id: `${scope}.leftMenuGlobal`,
     defaultMessage: 'Global',
   },
-  leftMenuGlobalConfiguration: {
-    id: `${scope}.leftMenuGlobalConfiguration`,
-    defaultMessage: 'Global Configuration',
-  },
   leftMenuClusterManagement: {
     id: `${scope}.leftMenuClusterManagement`,
     defaultMessage: 'ClusterManagement',
@@ -133,4 +129,56 @@ export default defineMessages({
     id: `${scope}.leftMenuUserQuotas`,
     defaultMessage: 'UserQuotas',
   },
+  leftMenuUserQuotasList: {
+    id: `${scope}.leftMenuUserQuotasList`,
+    defaultMessage: 'UserQuotasList',
+  },
+  leftMenuImageRegistry: {
+    id: `${scope}.leftMenuImageRegistry`,
+    defaultMessage: 'ImageRegistry',
+  },
+  leftMenuClusterWatch: {
+    id: `${scope}.leftMenuClusterWatch`,
+    defaultMessage: 'ClusterWatch',
+  },
+  leftMenuBasicResources: {
+    id: `${scope}.leftMenuBasicResources`,
+    defaultMessage: 'BasicResources',
+  },
+  leftMenuApplications: {
+    id: `${scope}.leftMenuApplications`,
+    defaultMessage: 'Applications',
+  },
+  leftMenuAppStore: {
+    id: `${scope}.leftMenuAppStore`,
+    defaultMessage: 'AppStore',
+  },
+  leftMenuLocalAppTemplates: {
+    id: `${scope}.leftMenuLocalAppTemplates`,
+    defaultMessage: 'LocalAppTemplates',
+  },
+  leftMenuClusterList: {
+    id: `${scope}.leftMenuClusterList`,
+    defaultMessage: 'ClusterList',
+  },
+  leftMenuGlobalConfig: {
+    id: `${scope}.leftMenuGlobalConfig`,
+    defaultMessage: 'GlobalConfig',
+  },
+  leftMenuClusterOverview: {
+    id: `${scope}.leftMenuClusterOverview`,
+    defaultMessage: 'ClusterOverview',
+  },
+  // leftMenuContainerManagement: {
+  //   id: `${scope}.leftMenuContainerManagement`,
+  //   defaultMessage: 'ContainerManagement',
+  // },
+  // leftMenuContainerWatch: {
+  //   id: `${scope}.leftMenuContainerWatch`,
+  //   defaultMessage: 'ContainerWatch',
+  // },
+  // leftMenuImageManagement: {
+  //   id: `${scope}.leftMenuImageManagement`,
+  //   defaultMessage: 'ImageManagement',
+  // },
 });

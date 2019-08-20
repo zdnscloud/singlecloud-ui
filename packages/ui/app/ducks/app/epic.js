@@ -35,7 +35,7 @@ export const changeClusterEpic = (action$, state$, { ajax }) =>
     ofType(c.CHANGE_CLUSTER),
     mergeMap(({ payload: { clusterID } }) => {
       if (clusterID) {
-        return of(push(`/clusters/${clusterID}`));
+        return of(push(`/clusters/${clusterID}/show`));
       }
       return of(push('/clusters'));
     })
