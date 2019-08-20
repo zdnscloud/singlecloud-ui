@@ -96,20 +96,83 @@ export const makeSelectLeftMenus = () =>
     makeSelectCurrentNamespaceID(),
     makeSelectIsAdmin(),
     (appState, cluster, namespace, isAdmin) => {
-      let menus = [{ name: 'Global', path: '/clusters', icon: OverviewIcon }];
+      let menus = [
+        {
+          name: 'Global',
+          children: [
+            { name: 'ClusterList', path: `/clusters` },
+            { name: 'GlobalConfig', path: `/globalConfig` },
+          ],
+          icon: OverviewIcon,
+        },
+      ];
       if (cluster !== '') {
         menus = menus.concat([
           {
             name: 'ClusterManagement',
             children: [
-              { name: 'Overview', path: `/clusters/${cluster}/show` },
+              { name: 'ClusterOverview', path: `/clusters/${cluster}/show` },
               { name: 'Namespaces', path: `/clusters/${cluster}/namespaces` },
               { name: 'Nodes', path: `/clusters/${cluster}/nodes` },
+              {
+                name: 'Storages',
+                path: `/clusters/${cluster}/storages`,
+              },
+              {
+                name: 'Network',
+                path: `/clusters/${cluster}/network`,
+              },
             ],
             icon: ManagementIcon,
           },
+          // {
+          //   name: 'ContainerManagement',
+          //   children: [
+          //     {
+          //       name: 'ContainerWatch',
+          //       path: `/clusters/${cluster}/container-watch`,
+          //     },
+          //     {
+          //       name: 'ImageManagement',
+          //       path: `/clusters/${cluster}/image-management`,
+          //     },
+          //   ],
+          //   icon: SystemIcon,
+          // },
+        ]);
+      }
+
+      menus = menus.concat([
+        {
+          name: 'AppStore',
+          children: [
+            {
+              name: 'LocalAppTemplates',
+              path: `/helm-templates`,
+            },
+          ],
+          icon: SystemIcon,
+        },
+      ]);
+
+      if (cluster !== '') {
+        menus = menus.concat([
           {
             name: 'AppManagement',
+            children: [
+              {
+                name: 'Applications',
+                path: `/clusters/${cluster}/namespaces/${namespace}/applications`,
+              },
+              {
+                name: 'ServiceLink',
+                path: `/clusters/${cluster}/namespaces/${namespace}/serviceLink`,
+              },
+            ],
+            icon: SystemIcon,
+          },
+          {
+            name: 'BasicResources',
             children: [
               {
                 name: 'Deployments',
@@ -142,33 +205,38 @@ export const makeSelectLeftMenus = () =>
             ],
             icon: ApplicationIcon,
           },
-          {
-            name: 'SystemManagement',
-            children: [
-              {
-                name: 'Storages',
-                path: `/clusters/${cluster}/storages`,
-              },
-              {
-                name: 'Network',
-                path: `/clusters/${cluster}/network`,
-              },
-              {
-                name: 'ServiceLink',
-                path: `/clusters/${cluster}/namespaces/${namespace}/serviceLink`,
-              },
-            ],
-            icon: SystemIcon,
-          },
         ]);
       }
+
       menus = menus.concat([
         {
           name: 'UserQuotas',
-          path: isAdmin ? '/adminUserQuotas' : '/userQuotas',
+          children: [
+            {
+              name: 'UserQuotasList',
+              path: isAdmin ? '/adminUserQuotas' : '/userQuotas',
+            }
+          ],
           icon: UserQuotasIcon,
         },
       ]);
+
+      menus = menus.concat([
+        {
+          name: 'ImageRegistry',
+          icon: UserQuotasIcon,
+        },
+      ]);
+
+      if (cluster !== '') {
+        menus = menus.concat([
+          {
+            name: 'ClusterWatch',
+            icon: UserQuotasIcon,
+          },
+        ]);
+      }
+
       return menus;
     }
   );
