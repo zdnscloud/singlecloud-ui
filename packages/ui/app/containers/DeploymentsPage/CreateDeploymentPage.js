@@ -121,7 +121,7 @@ export class CreateDeployment extends React.PureComponent {
       try {
         const data = formValues.toJS();
         const { containers, persistentVolumes, advancedOptions } = data;
-        let exposedPortsArrr = [];
+        const exposedPortsArrr = [];
         containers.forEach((item) => {
           if (item && item.args) {
             item.args = item.args.split(' ');
@@ -131,8 +131,8 @@ export class CreateDeployment extends React.PureComponent {
           }
           exposedPortsArrr.push(...item.exposedPorts);
         });
-        let { exposedServices } = advancedOptions;
-        let esArr = [];
+        const { exposedServices } = advancedOptions;
+        const esArr = [];
         if (exposedPortsArrr.length > 0) {
           exposedPortsArrr.forEach((i) => {
             exposedServices.forEach((j) => {

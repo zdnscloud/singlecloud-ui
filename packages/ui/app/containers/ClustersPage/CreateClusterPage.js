@@ -89,7 +89,7 @@ export class CreateClusterPage extends React.PureComponent {
             }
           }
         });
-        let nodeArr = main.concat(work).filter((v) => v.roles);
+        const nodeArr = main.concat(work).filter((v) => v.roles);
         const data = {
           nodes: nodeArr,
           ...formData,

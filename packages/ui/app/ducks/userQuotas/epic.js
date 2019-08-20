@@ -66,9 +66,9 @@ export const removeUserQuotaEpic = (action$, state$, { ajax }) =>
         method: 'DELETE',
       }).pipe(
         map((resp) => a.removeUserQuotaSuccess(resp, { id: payload })),
-        catchError((error) => {
-          return of(a.removeUserQuotaFailure(error, { id: payload }));
-        })
+        catchError((error) =>
+          of(a.removeUserQuotaFailure(error, { id: payload }))
+        )
       )
     )
   );

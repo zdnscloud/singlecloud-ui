@@ -144,7 +144,7 @@ export const Node = (props) => {
               <FormattedMessage {...messages[s]} />
             </Typography>
             <Typography className={classes.nodeInfoLineValue} component="div">
-              {node.get(s) ? node.get(s) + 'G' : '--'}
+              {node.get(s) ? `${node.get(s)}G` : '--'}
             </Typography>
           </Typography>
         ))}

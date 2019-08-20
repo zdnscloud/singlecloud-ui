@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { reduxForm, getFormValues } from 'redux-form/immutable';
 import { SubmissionError, submit } from 'redux-form';
 import { createStructuredSelector } from 'reselect';
-import { fromJS } from 'immutable';
+import { fromJS, Map, List } from 'immutable';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import Button from '@material-ui/core/Button';
@@ -18,14 +18,15 @@ import CardFooter from 'components/Card/CardFooter';
 import Paper from '@material-ui/core/Paper';
 import GridItem from 'components/Grid/GridItem';
 import GridContainer from 'components/Grid/GridContainer';
-import { makeSelectNodesList } from 'ducks/clusters/selectors';
-import { Map, List } from 'immutable';
+import {
+  makeSelectNodesList,
+  makeSelectNodeIsOpening,
+} from 'ducks/clusters/selectors';
 
 import { withStyles } from '@material-ui/core/styles';
 import { Observable } from 'rxjs';
 import { map, scan, throttleTime, debounceTime } from 'rxjs/operators';
 
-import { makeSelectNodeIsOpening } from 'ducks/clusters/selectors';
 import * as actions from 'ducks/clusters/actions';
 
 import styles from './styles';
@@ -80,7 +81,7 @@ export class NodeViewDialog extends React.PureComponent {
           }
         }
       });
-      let nodeArr = main.concat(work).filter((v) => v.roles);
+      const nodeArr = main.concat(work).filter((v) => v.roles);
       if (nodeArr.length > 0) {
         setNodes(nodeList.concat(fromJS(nodeArr)));
         closeNode();

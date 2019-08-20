@@ -94,12 +94,8 @@ export const cancelClusterEpic = (action$, state$, { ajax }) =>
         url,
         method: 'POST',
       }).pipe(
-        map((resp) => {
-          return a.cancelClusterSuccess(resp);
-        }),
-        catchError((error) => {
-          return of(a.cancelClusterFailure(error));
-        })
+        map((resp) => a.cancelClusterSuccess(resp)),
+        catchError((error) => of(a.cancelClusterFailure(error)))
       )
     )
   );

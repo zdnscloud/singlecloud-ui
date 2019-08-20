@@ -31,7 +31,7 @@ import {
 } from 'ducks/clusters/selectors';
 import * as actions from 'ducks/clusters/actions';
 
-import styles from './/styles';
+import styles from './styles';
 import messages from './messages';
 
 let socket = null;

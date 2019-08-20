@@ -4,12 +4,12 @@ import PropTypes from 'prop-types';
 // @material-ui/core components
 import withStyles from '@material-ui/core/styles/withStyles';
 import GridItem from 'components/Grid/GridItem';
-import customErrorStyle from './styles';
 import WarningIcon from 'components/Icons/ErrorWarning';
 import { FormattedMessage } from 'react-intl';
 import IconButton from '@material-ui/core/IconButton';
-import messages from './messages';
 import closeIcon from 'images/close.png';
+import messages from './messages';
+import customErrorStyle from './styles';
 
 function ErrorInfo({ ...props }) {
   const { classes, errorText, close } = props;

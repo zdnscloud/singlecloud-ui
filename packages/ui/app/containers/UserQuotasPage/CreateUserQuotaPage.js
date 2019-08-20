@@ -74,7 +74,7 @@ export class CreateUserQuotaPage extends React.PureComponent {
       try {
         const { memory, storage, namespace, ...formData } = formValues.toJS();
         const data = {
-          namespace: namespace + '-' + userHash,
+          namespace: `${namespace}-${userHash}`,
           memory: `${memory}Gi`,
           storage: `${storage}Gi`,
           ...formData,

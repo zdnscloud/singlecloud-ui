@@ -136,7 +136,7 @@ export class EditStoragePage extends React.PureComponent {
               initialValues={storage}
               blockDevices={blockDevices.concat(storage.get('config'))}
               formValues={values || storage}
-              edit={true}
+              edit
             />
             <GridContainer className={classes.grid}>
               <GridItem xs={12} sm={12} md={12}>

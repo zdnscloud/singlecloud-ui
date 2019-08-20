@@ -16,7 +16,6 @@ import { openTerminal } from 'containers/TerminalPage/actions';
 import GridItem from 'components/Grid/GridItem';
 import GridContainer from 'components/Grid/GridContainer';
 import Button from '@material-ui/core/Button';
-import messages from './messages';
 import checkIcon from 'images/clusters/check.png';
 import failIcon from 'images/clusters/fail.png';
 import loadingIcon from 'images/clusters/loading.png';
@@ -24,8 +23,9 @@ import logIcon from 'images/clusters/log.png';
 import stopIcon from 'images/clusters/stop.png';
 import unableStopIcon from 'images/clusters/unableStop.png';
 import ShellIcon from 'components/Icons/Shell';
-import LogViewDialog from './LogViewDialog';
 import Confirm from 'components/Confirm/Confirm';
+import LogViewDialog from './LogViewDialog';
+import messages from './messages';
 
 import styles from './styles';
 
@@ -51,7 +51,7 @@ class ButtonGroup extends PureComponent {
       openClusterLog,
       cancelCluster,
     } = this.props;
-    let status = cluster.get('status');
+    const status = cluster.get('status');
     let clusterStatus = null;
 
     const handleConfirm = () => {
