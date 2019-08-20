@@ -55,6 +55,8 @@ module.exports = {
       ];
       const d = await prompter.prompt(parentQuestions);
       data = { ...data, ...d };
+    } else {
+      data = { ...data, parents: [] };
     }
     console.log(data);
     return data;
