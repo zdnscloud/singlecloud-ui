@@ -45,7 +45,7 @@ export const updateRegistryEpic = (action$, state$, { ajax }) =>
     mergeMap(({ payload, meta }) =>
       ajax({
         url: `${meta.url}`,
-        method: 'PUT',
+        method: 'POST',
         body: payload
       }).pipe(
         map((resp) => {
@@ -60,28 +60,16 @@ export const updateRegistryEpic = (action$, state$, { ajax }) =>
     )
   );
 
-export const readRegistryEpic = (action$, state$, { ajax }) =>
+export const afterUpdateEpic = (action$) =>
   action$.pipe(
-    ofType(c.READ_REGISTRY),
+    ofType(c.UPDATE_REGISTRY_SUCCESS),
     mergeMap(({ payload, meta }) =>
-      ajax({
-        url: `${meta.url}`,
-        method: 'GET',
-      }).pipe(
-        map((resp) => {
-          meta.resolve && meta.resolve(resp);
-          return a.readRegistrySuccess(resp, { ...meta, id: payload });
-        }),
-        catchError((error) => {
-          meta.reject && meta.reject(error);
-          return of(a.readRegistryFailure(error, { ...meta, id: payload }));
-        })
-      )
+      timer(1000).pipe(mapTo(push(`/registries`)))
     )
   );
 
 export default combineEpics(
   loadRegistriesEpic,
   updateRegistryEpic,
-  readRegistryEpic,
+  afterUpdateEpic,
 );

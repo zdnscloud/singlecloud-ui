@@ -101,7 +101,7 @@ export const makeSelectLeftMenus = () =>
           name: 'Global',
           children: [
             { name: 'ClusterList', path: `/clusters` },
-            { name: 'GlobalConfig', path: `/registies` },
+            { name: 'GlobalConfig', path: `/registries` },
           ],
           icon: OverviewIcon,
         },

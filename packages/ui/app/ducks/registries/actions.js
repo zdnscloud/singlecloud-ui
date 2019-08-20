@@ -46,22 +46,4 @@ export const updateRegistryFailure = (error, meta = {}) => ({
   error: true,
 });
 
-export const readRegistry = (id, meta = {}) => ({
-  type: c.READ_REGISTRY,
-  payload: id,
-  meta,
-});
-
-export const readRegistrySuccess = (resp, meta = {}) => ({
-  type: c.READ_REGISTRY_SUCCESS,
-  payload: resp,
-  meta,
-});
-
-export const readRegistryFailure = (error, meta = {}) => ({
-  type: c.READ_REGISTRY_FAILURE,
-  payload: error,
-  meta,
-  error: true,
-});
 

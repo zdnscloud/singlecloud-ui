@@ -37,4 +37,16 @@ export default defineMessages({
     id: `${scope}.update`,
     defaultMessage: 'Update',
   },
+  formIngressDomain: {
+    id: `${scope}.formIngressDomain`,
+    defaultMessage: 'IngressDomain',
+  },
+  formCluster: {
+    id: `${scope}.formCluster`,
+    defaultMessage: 'Cluster',
+  },
+  formUser: {
+    id: `${scope}.formUser`,
+    defaultMessage: 'User',
+  },
 });

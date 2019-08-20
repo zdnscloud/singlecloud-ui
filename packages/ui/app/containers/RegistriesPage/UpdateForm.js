@@ -18,8 +18,7 @@ import Danger from 'components/Typography/Danger';
 import GridItem from 'components/Grid/GridItem';
 import GridContainer from 'components/Grid/GridContainer';
 import InputField from 'components/Field/InputField';
-import SwitchField from 'components/Field/SwitchField';
-import RadioField from 'components/Field/RadioField';
+import SelectField from 'components/Field/SelectField';
 
 import useStyles from './styles';
 import messages from './messages';
@@ -38,8 +37,12 @@ const validate = (values) => {
   return errors;
 };
 
-const Form = ({ formValues, handleSubmit, error }) => {
+const Form = ({ formValues, handleSubmit, error, clusters,initialValues}) => {
   const classes = useStyles();
+  const clustersOptions = clusters.toList().map((sc) => ({
+    label: sc.get('name'),
+    value: sc.get('name'),
+  }));
 
   return (
     <form className={classes.form} onSubmit={handleSubmit}>
@@ -60,10 +63,27 @@ const Form = ({ formValues, handleSubmit, error }) => {
               <GridContainer style={{ margin: 0 }}>
                 <GridItem xs={3} sm={3} md={3}>
                   <InputField
-                    label={<FormattedMessage {...messages.formName} />}
-                    name="name"
+                    label={<FormattedMessage {...messages.formIngressDomain} />}
+                    name="ingressDomain"
                     fullWidth
                     inputProps={{ type: 'text', autoComplete: 'off' }}
+                  />
+                </GridItem>
+                <GridItem xs={3} sm={3} md={3}>
+                  <SelectField
+                    label={
+                      <FormattedMessage
+                        {...messages.formCluster}
+                      />
+                    }
+                    name='cluster'
+                    formControlProps={{
+                      style: {
+                        width: '100%',
+                      },
+                    }}
+                    classes={classes}
+                    options={clustersOptions}
                   />
                 </GridItem>
               </GridContainer>

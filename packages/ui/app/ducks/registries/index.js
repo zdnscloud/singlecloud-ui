@@ -55,20 +55,6 @@ export const reducer = (
     case c.UPDATE_REGISTRY_FAILURE:
       return state;
 
-    case c.READ_REGISTRY:
-      return state;
-    case c.READ_REGISTRY_SUCCESS: {
-      const id = getByKey(payload, ['response', 'id']);
-      const data = getByKey(payload, ['response']);
-      
-      if (id) {
-        return state.setIn(['data', id], fromJS(data));
-      }
-      return state;
-    }
-    case c.READ_REGISTRY_FAILURE:
-      return state;
-
     default:
       return state;
   }

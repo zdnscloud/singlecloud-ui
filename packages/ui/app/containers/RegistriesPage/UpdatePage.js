@@ -24,14 +24,12 @@ import GridItem from 'components/Grid/GridItem';
 import GridContainer from 'components/Grid/GridContainer';
 import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
 
-// import { makeSelectCurrentID as makeSelectClusterID } from 'ducks/clusters/selectors';
-// import { makeSelectCurrentID as makeSelectNamespaceID } from 'ducks/namespaces/selectors';
 import {
   makeSelectURL,
-  makeSelectCurrent,
-  makeSelectCurrentID,
+  makeSelectRegistriesList
 } from 'ducks/registries/selectors';
 import * as actions from 'ducks/registries/actions';
+import { makeSelectClusters } from 'ducks/clusters/selectors';
 
 import messages from './messages';
 import useStyles from './styles';
@@ -39,32 +37,22 @@ import UpdateRegistryForm, { formName } from './UpdateForm';
 
 export const UpdateRegistryPage = ({
   updateRegistry,
-  readRegistry,
+  loadRegistries,
   submitForm,
   url,
-  // clusterID,
-  // namespaceID,
-  id,
-  current,
+  clusters,
   values,
+  list,
 }) => {
   const classes = useStyles();
   useEffect(() => {
-    if (current.size === 0) {
-      readRegistry(id, {
-        url: `${url}/${id}`,
-        // clusterID,
-        // namespaceID,
-      });
+    if (url) {
+      loadRegistries(url);
     }
     return () => {
-      // cancel someThing
+      // try cancel something when unmount
     };
-  }, [
-    // clusterID,
-    // namespaceID,
-    id,
-  ]);
+  }, [url]);
 
   async function doSubmit(formValues) {
     try {
@@ -75,8 +63,6 @@ export const UpdateRegistryPage = ({
           resolve,
           reject,
           url,
-          // clusterID,
-          // namespaceID,
         });
       });
     } catch (error) {
@@ -95,7 +81,7 @@ export const UpdateRegistryPage = ({
         <Breadcrumbs
           data={[
             {
-              path: `/clusters`,
+              path: `/registries`,
               name: <FormattedMessage {...messages.pageTitle} />,
             },
             {
@@ -105,13 +91,12 @@ export const UpdateRegistryPage = ({
         />
         <GridContainer className={classes.grid}>
           <GridItem xs={12} sm={12} md={12}>
-            {current.size === 0 ? null : (
-              <UpdateRegistryForm
-                onSubmit={doSubmit}
-                formValues={values}
-                initialValues={current}
-              />
-            )}
+            <UpdateRegistryForm
+              onSubmit={doSubmit}
+              formValues={values}
+              clusters={clusters}
+              initialValues={list && list.getIn([0])}
+            />
             <Button
               variant="contained"
               color="primary"
@@ -128,12 +113,10 @@ export const UpdateRegistryPage = ({
 };
 
 const mapStateToProps = createStructuredSelector({
-  // clusterID: makeSelectClusterID(),
-  // namespaceID: makeSelectNamespaceID(),
   url: makeSelectURL(),
-  current: makeSelectCurrent(),
-  id: makeSelectCurrentID(),
   values: getFormValues(formName),
+  clusters: makeSelectClusters(),
+  list: makeSelectRegistriesList(),
 });
 
 const mapDispatchToProps = (dispatch) =>
