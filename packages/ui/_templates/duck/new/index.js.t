@@ -10,11 +10,13 @@ to: <%= h.src() %>/app/ducks/<%= name %>/index.js
   SN = h.inflection.underscore(sname).toUpperCase();
   csname = h.inflection.camelize(sname);
 
-  pt = parents[parents.length - 1];
-  sp = h.inflection.singularize(pt);
-  csp = h.inflection.camelize(sp);
-  spList = parents.map((p) => h.inflection.singularize(p));
-  spIDs = spList.map((p) => `${p}ID`).join(', ');
+  if (hasParents) {
+    pt = parents[parents.length - 1];
+    sp = h.inflection.singularize(pt);
+    csp = h.inflection.camelize(sp);
+    spList = parents.map((p) => h.inflection.singularize(p));
+    spIDs = spList.map((p) => `${p}ID`).join(', ');
+  }
 %>/**
  * Duck: <%= h.inflection.titleize(name) %>
  * reducer: <%= name %>
