@@ -71,7 +71,7 @@ export const afterCreateEpic = (action$, state$, { ajax }) =>
           map((resp) => createResourceQuotaSuccess(resp, { clusterID })),
           catchError((error) => of(createResourceQuotaFailure(error)))
         ),
-        of(push(`/clusters/${clusterID}/namespaces`)),
+        of(push(`/clusters/${clusterID}/namespaces`))
       )
     )
   );

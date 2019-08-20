@@ -66,7 +66,7 @@ export const updateSecret = (data, meta) => ({
   meta,
 });
 
-export const updateSecretSuccess = (resp,meta) => ({
+export const updateSecretSuccess = (resp, meta) => ({
   type: c.UPDATE_SECRET_SUCCESS,
   payload: resp,
   meta,

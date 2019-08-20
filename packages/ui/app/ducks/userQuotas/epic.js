@@ -60,16 +60,15 @@ export const afterCreateEpic = (action$) =>
 export const removeUserQuotaEpic = (action$, state$, { ajax }) =>
   action$.pipe(
     ofType(c.REMOVE_USER_QUOTA),
-    mergeMap(({ payload, meta: { url} }) =>
+    mergeMap(({ payload, meta: { url } }) =>
       ajax({
         url: `${url}`,
         method: 'DELETE',
       }).pipe(
         map((resp) => a.removeUserQuotaSuccess(resp, { id: payload })),
-        catchError((error) =>{
-          return of(a.removeUserQuotaFailure(error, { id: payload }))
-        }
-        )
+        catchError((error) => {
+          return of(a.removeUserQuotaFailure(error, { id: payload }));
+        })
       )
     )
   );

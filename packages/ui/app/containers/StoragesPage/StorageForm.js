@@ -62,15 +62,24 @@ class StorageForm extends PureComponent {
                 <GridContainer>
                   {error ? (
                     <GridItem xs={12} sm={12} md={12}>
-                      <Danger>{getByKey(error, ['response', 'message'])}</Danger>
+                      <Danger>
+                        {getByKey(error, ['response', 'message'])}
+                      </Danger>
                     </GridItem>
                   ) : null}
-                  <GridItem xs={12} sm={12} md={12} className={classes.formLine}>
+                  <GridItem
+                    xs={12}
+                    sm={12}
+                    md={12}
+                    className={classes.formLine}
+                  >
                     <GridContainer>
                       <GridItem xs={3} sm={3} md={3}>
                         {edit ? (
                           <ReadOnlyInput
-                            labelText={<FormattedMessage {...messages.formName} />}
+                            labelText={
+                              <FormattedMessage {...messages.formName} />
+                            }
                             value={initialValues.get('name')}
                             fullWidth
                           />
@@ -89,13 +98,17 @@ class StorageForm extends PureComponent {
                       <GridItem xs={3} sm={3} md={3}>
                         {edit ? (
                           <ReadOnlyInput
-                            labelText={<FormattedMessage {...messages.formStorageType} />}
+                            labelText={
+                              <FormattedMessage {...messages.formStorageType} />
+                            }
                             value={initialValues.get('storageType')}
                             fullWidth
                           />
                         ) : (
                           <SelectField
-                            label={<FormattedMessage {...messages.formStorageType} />}
+                            label={
+                              <FormattedMessage {...messages.formStorageType} />
+                            }
                             name="storageType"
                             fullWidth
                             options={['lvm', 'ceph']}
@@ -117,7 +130,12 @@ class StorageForm extends PureComponent {
               </CardHeader>
               <CardBody>
                 <GridContainer>
-                  <GridItem xs={12} sm={12} md={12} className={classes.formLine}>
+                  <GridItem
+                    xs={12}
+                    sm={12}
+                    md={12}
+                    className={classes.formLine}
+                  >
                     <Field
                       name="hosts"
                       classes={classes}

@@ -39,8 +39,8 @@ const tableSchema = schema
             className={props.classes.button}
             to={`/clusters/${props.data.get('id')}/manage`}
             component={Link}
-            >
-            <img src={manageIcon} alt="manageIcon"  />
+          >
+            <img src={manageIcon} alt="manageIcon" />
           </IconButton>
           <ConfirmDelete
             actionName={props.removeCluster}
@@ -55,8 +55,7 @@ const tableSchema = schema
     if (sch.id === 'status') {
       return {
         ...sch,
-        component: (props) =>
-          props.data.get('status')
+        component: (props) => props.data.get('status'),
       };
     }
     return sch;

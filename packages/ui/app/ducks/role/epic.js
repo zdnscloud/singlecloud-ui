@@ -63,7 +63,10 @@ export const loadRoleEpic = (action$, state$, { ajax }) =>
                   }, 100);
                 });
               }
-            } else if (authBy === 'CAS' && !window.location.pathname.include('/login')) {
+            } else if (
+              authBy === 'CAS' &&
+              !window.location.pathname.include('/login')
+            ) {
               window.location.reload();
             } else {
               import('store').then((exports) => {

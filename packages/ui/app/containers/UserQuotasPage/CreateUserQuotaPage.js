@@ -67,12 +67,14 @@ export class CreateUserQuotaPage extends React.PureComponent {
   render() {
     const { classes, submitForm, createUserQuota, url, role } = this.props;
     const user = role.get('user');
-    const userHash = sha256(user).toString(encHex).slice(0, 6);
+    const userHash = sha256(user)
+      .toString(encHex)
+      .slice(0, 6);
     async function doSubmit(formValues) {
       try {
         const { memory, storage, namespace, ...formData } = formValues.toJS();
         const data = {
-          namespace: namespace+"-"+userHash,
+          namespace: namespace + '-' + userHash,
           memory: `${memory}Gi`,
           storage: `${storage}Gi`,
           ...formData,

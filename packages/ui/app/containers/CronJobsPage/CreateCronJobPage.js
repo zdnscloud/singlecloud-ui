@@ -72,7 +72,14 @@ export class CreateCronJob extends React.PureComponent {
   };
 
   componentWillMount() {
-    const { clusterID, namespaceID, configMapURL, loadConfigMaps, loadSecrets, secretURL } = this.props;
+    const {
+      clusterID,
+      namespaceID,
+      configMapURL,
+      loadConfigMaps,
+      loadSecrets,
+      secretURL,
+    } = this.props;
     loadSecrets({ url: secretURL, clusterID, namespaceID });
     loadConfigMaps({ url: configMapURL, clusterID, namespaceID });
   }
@@ -80,7 +87,9 @@ export class CreateCronJob extends React.PureComponent {
   componentDidUpdate(prevProps) {
     const {
       clusterID: prevClusterID,
-      namespaceID: prevNamespaceID,loadSecrets,secretURL
+      namespaceID: prevNamespaceID,
+      loadSecrets,
+      secretURL,
     } = prevProps;
     const { clusterID, namespaceID, configMapURL, loadConfigMaps } = this.props;
     if (prevClusterID !== clusterID || prevNamespaceID !== namespaceID) {

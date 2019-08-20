@@ -68,7 +68,7 @@ export class ConfigMapsTable extends React.PureComponent {
         if (sch.id === 'name') {
           return {
             ...sch,
-            props: { clusterID, namespaceID }
+            props: { clusterID, namespaceID },
           };
         }
         return sch;

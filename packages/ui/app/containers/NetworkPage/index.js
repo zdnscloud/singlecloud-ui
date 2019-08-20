@@ -70,7 +70,12 @@ export class NetworkPage extends React.PureComponent {
   }
 
   load() {
-    const { clusterID, cluster, loadPodNetworks, loadServiceNetworks } = this.props;
+    const {
+      clusterID,
+      cluster,
+      loadPodNetworks,
+      loadServiceNetworks,
+    } = this.props;
     const podurl = cluster.getIn(['links', 'podnetworks']);
     const serviceurl = cluster.getIn(['links', 'servicenetworks']);
     loadPodNetworks(podurl, clusterID);

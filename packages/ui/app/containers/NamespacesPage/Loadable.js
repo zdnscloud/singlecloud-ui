@@ -21,4 +21,3 @@ export const NamespaceDetailPage = loadable(() =>
 export const EditNamespacePage = loadable(() =>
   import(/* webpackChunkName: "EditNamespacePage" */ './EditNamespacePage')
 );
-

@@ -189,7 +189,9 @@ class ClusterForm extends PureComponent {
                         className={classes.formLine}
                       >
                         <InputField
-                          label={<FormattedMessage {...messages.formNetIface} />}
+                          label={
+                            <FormattedMessage {...messages.formNetIface} />
+                          }
                           fullWidth
                           inputProps={{ type: 'text', autoComplete: 'off' }}
                           name="network.iface"
@@ -220,7 +222,9 @@ class ClusterForm extends PureComponent {
                       >
                         <InputField
                           label={
-                            <FormattedMessage {...messages.formForwardDNSFirst} />
+                            <FormattedMessage
+                              {...messages.formForwardDNSFirst}
+                            />
                           }
                           fullWidth
                           inputProps={{ type: 'text', autoComplete: 'off' }}
@@ -235,7 +239,9 @@ class ClusterForm extends PureComponent {
                       >
                         <InputField
                           label={
-                            <FormattedMessage {...messages.formForwardDNSSecond} />
+                            <FormattedMessage
+                              {...messages.formForwardDNSSecond}
+                            />
                           }
                           fullWidth
                           inputProps={{ type: 'text', autoComplete: 'off' }}
@@ -327,24 +333,24 @@ class ClusterForm extends PureComponent {
               </h4>
             </CardHeader>
             <CardBody>
-               <GridItem xs={12} sm={12} md={12}>
-                  <FieldArray
-                      name="nodes.main"
-                      classes={classes}
-                      component={NodeMainTemplate}
-                      theme={theme}
-                      formValues={formValues}
-                    />
-                </GridItem>
-                <GridItem xs={12} sm={12} md={12}>
-                  <FieldArray
-                      name="nodes.work"
-                      classes={classes}
-                      component={NodeWorkTemplate}
-                      theme={theme}
-                      formValues={formValues}
-                    /> 
-                </GridItem>
+              <GridItem xs={12} sm={12} md={12}>
+                <FieldArray
+                  name="nodes.main"
+                  classes={classes}
+                  component={NodeMainTemplate}
+                  theme={theme}
+                  formValues={formValues}
+                />
+              </GridItem>
+              <GridItem xs={12} sm={12} md={12}>
+                <FieldArray
+                  name="nodes.work"
+                  classes={classes}
+                  component={NodeWorkTemplate}
+                  theme={theme}
+                  formValues={formValues}
+                />
+              </GridItem>
             </CardBody>
           </Card>
         </GridContainer>

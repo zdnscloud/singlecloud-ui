@@ -44,7 +44,7 @@ export class NodesTable extends React.PureComponent {
         if (sch.id === 'name') {
           return {
             ...sch,
-            props: { clusterID }
+            props: { clusterID },
           };
         }
         return sch;

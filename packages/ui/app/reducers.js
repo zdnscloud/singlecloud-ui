@@ -44,7 +44,9 @@ import resourceQuotasReducer, {
 import nodesReducer, { prefix as nodesPrefix } from 'ducks/nodes';
 import clustersReducer, { prefix as clustersPrefix } from 'ducks/clusters';
 import eventsReducer, { prefix as eventsPrefix } from 'ducks/events';
-import userQuotasReducer, { prefix as userQuotasPrefix } from 'ducks/userQuotas';
+import userQuotasReducer, {
+  prefix as userQuotasPrefix,
+} from 'ducks/userQuotas';
 // import reducers end
 
 /**

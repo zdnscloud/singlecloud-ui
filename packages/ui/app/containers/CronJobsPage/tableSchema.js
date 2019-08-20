@@ -27,13 +27,13 @@ const tableSchema = schema
       label: 'Actions',
       component: (props) => (
         <Fragment>
-          <ConfirmDelete 
-              actionName={props.removeCronJob}
-              id={props.data.get('id')}
-              url={props.data.getIn(['links', 'remove'])}
-              clusterID={props.clusterID}
-              namespaceID={props.namespaceID}
-            />
+          <ConfirmDelete
+            actionName={props.removeCronJob}
+            id={props.data.get('id')}
+            url={props.data.getIn(['links', 'remove'])}
+            clusterID={props.clusterID}
+            namespaceID={props.namespaceID}
+          />
         </Fragment>
       ),
     },

@@ -47,7 +47,7 @@ export class StatefulSetsTable extends React.PureComponent {
     } = this.props;
     const pathname = location.get('pathname');
     const mergedSchema = schema
-   
+
       .map((sch) => {
         if (sch.id === 'actions') {
           return {
@@ -58,7 +58,7 @@ export class StatefulSetsTable extends React.PureComponent {
         if (sch.id === 'name') {
           return {
             ...sch,
-            props: { pathname }
+            props: { pathname },
           };
         }
         return sch;

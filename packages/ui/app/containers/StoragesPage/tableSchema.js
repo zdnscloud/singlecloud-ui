@@ -18,10 +18,7 @@ const tableSchema = schema
         id,
         label: ucfirst(id),
         component: (props) => (
-          <span>
-            {props.data.get('nodes') && props.data.get('nodes').size}
-          </span>
-
+          <span>{props.data.get('nodes') && props.data.get('nodes').size}</span>
         ),
       };
     }
@@ -44,12 +41,12 @@ const tableSchema = schema
             <EditIcon />
           </IconButton>
 
-          <ConfirmDelete 
-              actionName={props.removeStorage}
-              id={props.data.get('id')}
-              url={props.data.getIn(['links', 'remove'])}
-              clusterID={props.clusterID}
-            />
+          <ConfirmDelete
+            actionName={props.removeStorage}
+            id={props.data.get('id')}
+            url={props.data.getIn(['links', 'remove'])}
+            clusterID={props.clusterID}
+          />
         </Fragment>
       ),
     },
@@ -70,7 +67,5 @@ const tableSchema = schema
       };
     }
     return sch;
-  })
-;
-
+  });
 export default tableSchema;

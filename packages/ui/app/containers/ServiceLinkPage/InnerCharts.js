@@ -14,23 +14,11 @@ import { bindActionCreators, compose } from 'redux';
 import moment from 'moment';
 import _ from 'lodash';
 
-import { Link } from 'react-router-dom';
 import { withStyles } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
-import Paper from '@material-ui/core/Paper';
-import Icon from '@material-ui/core/Icon';
-import teal from '@material-ui/core/colors/teal';
-import BubbleChartIcon from '@material-ui/icons/BubbleChart';
-import red from '@material-ui/core/colors/red';
 import GridItem from 'components/Grid/GridItem';
 import GridContainer from 'components/Grid/GridContainer';
-import GridList from '@material-ui/core/GridList';
-import GridListTile from '@material-ui/core/GridListTile';
-import Tasks from 'components/Tasks/Tasks';
-import CustomTabs from 'components/CustomTabs/CustomTabs';
 import Card from 'components/Card/Card';
 import CardHeader from 'components/Card/CardHeader';
-import CardIcon from 'components/Card/CardIcon';
 import CardBody from 'components/Card/CardBody';
 import CardFooter from 'components/Card/CardFooter';
 

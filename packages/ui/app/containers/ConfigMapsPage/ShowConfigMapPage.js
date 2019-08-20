@@ -94,12 +94,7 @@ export class ShowConfigMap extends React.PureComponent {
                 </CardHeader>
                 <CardBody>
                   <GridContainer>
-                    <GridItem
-                      xs={3}
-                      sm={3}
-                      md={3}
-                      className={classes.formLine}
-                    >
+                    <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
                       <ReadOnlyInput
                         labelText={<FormattedMessage {...messages.formName} />}
                         value={configMap.get('name')}

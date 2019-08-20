@@ -19,7 +19,7 @@ export const initialState = fromJS({
   userQuotas: {},
   list: [],
   selectedUserQuota: {},
-  deleteError:""
+  deleteError: '',
 });
 
 const c = constants;
@@ -60,7 +60,7 @@ export const userQuotasReducer = (
       return state.set('deleteError', data);
 
     case c.CLEAR_DELETE_ERROR_INFO:
-        return state.set('deleteError', '');
+      return state.set('deleteError', '');
 
     case c.UPDATE_USER_QUOTA:
       return state;

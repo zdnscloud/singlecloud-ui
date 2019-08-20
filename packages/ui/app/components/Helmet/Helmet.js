@@ -9,12 +9,9 @@ const SingleCloudHelmet = ({ title, description }) => {
   return (
     <Helmet>
       <title>{intl.formatMessage(title)}</title>
-      <meta
-        name="description"
-        content={intl.formatMessage(description)}
-      />
+      <meta name="description" content={intl.formatMessage(description)} />
     </Helmet>
   );
-}
+};
 
 export default SingleCloudHelmet;

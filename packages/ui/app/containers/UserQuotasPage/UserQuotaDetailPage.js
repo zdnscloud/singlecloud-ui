@@ -55,8 +55,8 @@ export class UserQuotaDetailPage extends React.PureComponent {
   render() {
     const { classes, userQuota } = this.props;
     const reg = /^(\d+)([a-zA-Z]+)?$/;
-    const memory = userQuota.get('memory')
-    const storage = userQuota.get('storage')
+    const memory = userQuota.get('memory');
+    const storage = userQuota.get('storage');
     return (
       <div className={classes.root}>
         <UserQuotaDetailPageHelmet />

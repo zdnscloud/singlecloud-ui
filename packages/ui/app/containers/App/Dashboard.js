@@ -8,33 +8,19 @@
  */
 
 import React, { PureComponent, Fragment } from 'react';
-import { findDOMNode } from 'react-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import { bindActionCreators, compose } from 'redux';
 import { Switch, Route, Redirect } from 'react-router-dom';
-import { withRouter } from 'react-router';
 import classNames from 'classnames';
 
-// creates a beautiful scrollbar
-import PerfectScrollbar from 'perfect-scrollbar';
-import 'perfect-scrollbar/css/perfect-scrollbar.css';
 // @material-ui/core components
 import withStyles from '@material-ui/core/styles/withStyles';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import Fab from '@material-ui/core/Fab';
-import IconButton from '@material-ui/core/IconButton';
-import EventIcon from '@material-ui/icons/Event';
-import ExpansionPanel from '@material-ui/core/ExpansionPanel';
-import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
-import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
-import Typography from '@material-ui/core/Typography';
 // core components
 import Footer from 'components/Footer/Footer';
-import Sidebar from 'components/Sidebar/Sidebar';
-import Menubar from 'components/Menubar';
 import TerminalDialog from 'containers/TerminalPage/TerminalDialog';
 import GlobalStyle from 'global-styles';
 

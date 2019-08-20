@@ -33,7 +33,7 @@ import ErrorInfo from 'components/ErrorInfo/ErrorInfo';
 import {
   makeSelectURL,
   makeSelectUserQuotasList,
-  makeSelectDeleteUserQuotaError
+  makeSelectDeleteUserQuotaError,
 } from 'ducks/userQuotas/selectors';
 import * as actions from 'ducks/userQuotas/actions';
 
@@ -84,8 +84,13 @@ export class AdminUserQuotaPage extends React.PureComponent {
   }
 
   render() {
-    const { classes, submitForm, deleteError,clearDeleteErrorInfo } = this.props;
-    console.log('deleteError',deleteError)
+    const {
+      classes,
+      submitForm,
+      deleteError,
+      clearDeleteErrorInfo,
+    } = this.props;
+    console.log('deleteError', deleteError);
     const doSubmit = (formValues) => {
       this.setState({
         filter: formValues.toJS(),
@@ -107,11 +112,8 @@ export class AdminUserQuotaPage extends React.PureComponent {
           />
           <GridContainer className={classes.grid}>
             {deleteError ? (
-              <ErrorInfo 
-                errorText = {deleteError}
-                close = {clearDeleteErrorInfo}
-              />
-            ):null}
+              <ErrorInfo errorText={deleteError} close={clearDeleteErrorInfo} />
+            ) : null}
             <GridItem xs={12} sm={12} md={12}>
               <Card>
                 <CardHeader color="primary">

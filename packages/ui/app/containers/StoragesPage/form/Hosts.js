@@ -68,8 +68,7 @@ const Hosts = ({
             <TableCell
               style={{ width: 80 }}
               className={`${classes.tableCell} ${classes.tableHeadCell}`}
-            >
-            </TableCell>
+            ></TableCell>
             <TableCell
               className={`${classes.tableCell} ${classes.tableHeadCell}`}
             >
@@ -97,12 +96,14 @@ const Hosts = ({
                 {b && b.get('nodeName')}
               </TableCell>
               <TableCell className={`${classes.tableCell}`}>
-                {b && b.get('blockDevices') && b.get('blockDevices').map((bd) => (
-                  <span style={{ marginRight: 18 }}>
-                    <span>{bd.get('name')}</span>
-                    <span>({bd.get('size')}GiB)</span>
-                  </span>
-                ))}
+                {b &&
+                  b.get('blockDevices') &&
+                  b.get('blockDevices').map((bd) => (
+                    <span style={{ marginRight: 18 }}>
+                      <span>{bd.get('name')}</span>
+                      <span>({bd.get('size')}GiB)</span>
+                    </span>
+                  ))}
               </TableCell>
             </TableRow>
           ))}

@@ -31,7 +31,7 @@ export class NodesTable extends React.PureComponent {
   };
 
   render() {
-    const { classes, data, clusterID , setNodes, nodes } = this.props;
+    const { classes, data, clusterID, setNodes, nodes } = this.props;
     const mapedSchema = schema
       .map((sche) => ({
         ...sche,
@@ -41,7 +41,7 @@ export class NodesTable extends React.PureComponent {
         if (sch.id === 'actions') {
           return {
             ...sch,
-            props: { nodes , setNodes },
+            props: { nodes, setNodes },
           };
         }
         return sch;

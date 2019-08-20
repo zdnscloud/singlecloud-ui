@@ -97,7 +97,7 @@ export default defineMessages({
     id: `${scope}.formClustersNet`,
     defaultMessage: 'formClustersNet',
   },
-  formNetIface:{
+  formNetIface: {
     id: `${scope}.formNetIface`,
     defaultMessage: 'formNetIface',
   },

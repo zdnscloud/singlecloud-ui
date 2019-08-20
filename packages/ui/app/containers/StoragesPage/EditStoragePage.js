@@ -122,7 +122,9 @@ export class EditStoragePage extends React.PureComponent {
                 name: <FormattedMessage {...messages.pageTitle} />,
               },
               {
-                path: `/clusters/${clusterID}/storages/${storage.get('id')}/edit`,
+                path: `/clusters/${clusterID}/storages/${storage.get(
+                  'id'
+                )}/edit`,
                 name: <FormattedMessage {...messages.editStorage} />,
               },
             ]}

@@ -52,7 +52,7 @@ export default function createEpic(injectedEpics = {}) {
     serviceLinksEpic,
     storagesEpic,
     networksEpic,
-    resourceQuotasEpic,
+    resourceQuotasEpic
     // combine epics end
   );
 

@@ -87,7 +87,5 @@ const adminTableSchema = schema
       };
     }
     return sch;
-  })
-  ;
-
+  });
 export default adminTableSchema;

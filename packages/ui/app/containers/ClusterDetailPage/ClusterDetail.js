@@ -13,24 +13,10 @@ import { createStructuredSelector } from 'reselect';
 import { bindActionCreators, compose } from 'redux';
 import moment from 'moment';
 
-import { Link } from 'react-router-dom';
 import { withStyles } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
-import Paper from '@material-ui/core/Paper';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-// @material-ui/core
-import Icon from '@material-ui/core/Icon';
-import teal from '@material-ui/core/colors/teal';
 // core components
 import GridItem from 'components/Grid/GridItem';
 import GridContainer from 'components/Grid/GridContainer';
-import Tasks from 'components/Tasks/Tasks';
-import CustomTabs from 'components/CustomTabs/CustomTabs';
-import Danger from 'components/Typography/Danger';
 import Card from 'components/Card/Card';
 import CardHeader from 'components/Card/CardHeader';
 import CardIcon from 'components/Card/CardIcon';
@@ -109,7 +95,9 @@ export class ClusterDetail extends React.PureComponent {
     const cpuRatio = (cluster.get('cpuUsedRatio') * 100).toFixed(0);
     const memoryRatio = (cluster.get('memoryUsedRatio') * 100).toFixed(0);
     const podRatio = (cluster.get('podUsedRatio') * 100).toFixed(0);
-    const cpu = `${(cluster.get('cpuUsed') / 1000).toFixed(2)} / ${cluster.get('cpu') / 1000}`;
+    const cpu = `${(cluster.get('cpuUsed') / 1000).toFixed(2)} / ${cluster.get(
+      'cpu'
+    ) / 1000}`;
     const memory = `${(cluster.get('memoryUsed') / 1024 ** 3).toFixed(
       2
     )}GiB / ${(cluster.get('memory') / 1024 ** 3).toFixed(2)}GiB`;
@@ -229,9 +217,7 @@ export class ClusterDetail extends React.PureComponent {
               <CardBody>
                 <h4 className={classes.cardTitle}>
                   <FormattedMessage {...messages.clusterMemory} />
-                  <span className={classes.cardTitleValue}>
-                    {memory}
-                  </span>
+                  <span className={classes.cardTitleValue}>{memory}</span>
                 </h4>
                 <p className={classes.cardCategory} />
               </CardBody>
@@ -246,9 +232,7 @@ export class ClusterDetail extends React.PureComponent {
               <CardBody>
                 <h4 className={classes.cardTitle}>
                   <FormattedMessage {...messages.clusterPods} />
-                  <span className={classes.cardTitleValue}>
-                    {pod}
-                  </span>
+                  <span className={classes.cardTitleValue}>{pod}</span>
                 </h4>
                 <p className={classes.cardCategory} />
               </CardBody>

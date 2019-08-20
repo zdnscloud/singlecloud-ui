@@ -103,9 +103,7 @@ export class StoragePage extends React.PureComponent {
             <GridItem xs={12} sm={12} md={12}>
               <Card>
                 <CardHeader color="primary">
-                  <h4 className={classes.cardTitleWhite}>
-                    {name}
-                  </h4>
+                  <h4 className={classes.cardTitleWhite}>{name}</h4>
                 </CardHeader>
                 <CardBody>
                   <GridContainer>
@@ -139,22 +137,26 @@ export class StoragePage extends React.PureComponent {
                   </GridContainer>
                   <GridContainer>
                     {nodes &&
-                     nodes.map((node, i) => (
-                       <GridItem key={i} xs={3} sm={3} md={3}>
-                         <Node
-                           node={node}
-                           checkedNode={this.state.checkedNode}
-                           onClick={enableFilter ? (evt) => {
-                             const name = node.get('name');
-                             if (name === this.state.checkedNode) {
-                               this.setState({ checkedNode: null });
-                             } else {
-                               this.setState({ checkedNode: name });
-                             }
-                           } : null}
-                         />
-                       </GridItem>
-                     ))}
+                      nodes.map((node, i) => (
+                        <GridItem key={i} xs={3} sm={3} md={3}>
+                          <Node
+                            node={node}
+                            checkedNode={this.state.checkedNode}
+                            onClick={
+                              enableFilter
+                                ? (evt) => {
+                                    const name = node.get('name');
+                                    if (name === this.state.checkedNode) {
+                                      this.setState({ checkedNode: null });
+                                    } else {
+                                      this.setState({ checkedNode: name });
+                                    }
+                                  }
+                                : null
+                            }
+                          />
+                        </GridItem>
+                      ))}
                   </GridContainer>
                 </CardBody>
               </Card>

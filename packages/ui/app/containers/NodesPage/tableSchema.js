@@ -32,7 +32,9 @@ const tableSchema = schema
         component: (props) => (
           <Button
             color="primary"
-            to={`/clusters/${props.clusterID}/nodes/${props.data.get('id')}/show`}
+            to={`/clusters/${props.clusterID}/nodes/${props.data.get(
+              'id'
+            )}/show`}
             component={Link}
           >
             {props.data.get('name')}
@@ -44,9 +46,11 @@ const tableSchema = schema
       return {
         ...item,
         component({ value }) {
-          return value != null ? value
-            .map((val, key) => <Chip key={key} label={`${val}`} />)
-            .toList() : null;
+          return value != null
+            ? value
+                .map((val, key) => <Chip key={key} label={`${val}`} />)
+                .toList()
+            : null;
         },
       };
     }
@@ -54,9 +58,11 @@ const tableSchema = schema
       return {
         ...item,
         component({ value }) {
-          return value != null ? value
-            .map((val, key) => <Chip key={key} label={`${key}=${val}`} />)
-            .toList() : null;
+          return value != null
+            ? value
+                .map((val, key) => <Chip key={key} label={`${key}=${val}`} />)
+                .toList()
+            : null;
         },
       };
     }

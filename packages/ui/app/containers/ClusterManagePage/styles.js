@@ -153,29 +153,29 @@ const styles = (theme) => ({
   runningBtn: {
     background: 'rgba(56,158,13,0.2)',
     color: '#389E0D',
-    marginRight: 10
+    marginRight: 10,
   },
   loadingBtn: {
     background: 'rgba(247,181,0,0.2)',
     color: '#F7B500',
-    marginRight: 10
+    marginRight: 10,
   },
   failBtn: {
     background: 'rgba(224,32,32,0.2)',
     color: '#E02020',
-    marginRight: 10
+    marginRight: 10,
   },
-  unableBtn:{
+  unableBtn: {
     background: 'rgba(217,217,217,0.2)',
     color: '#D9D9D9',
-    marginRight: 10
+    marginRight: 10,
   },
   handleBtn: {
     marginRight: 10,
     border: '1px solid rgba(217,217,217,1)',
   },
   btnGroup: {
-    marginBottom: 20
+    marginBottom: 20,
   },
   dialogCard: {
     margin: 0,
@@ -201,7 +201,7 @@ const styles = (theme) => ({
   nodesWrapper: {
     width: '70vw',
     overflow: 'auto',
-    overflowX: 'hidden'
+    overflowX: 'hidden',
   },
   logs: {
     backgroundColor: 'black',

@@ -6,8 +6,8 @@
  */
 
 // Needed for async function to generator support
-import "core-js/stable";
-import "regenerator-runtime/runtime";
+import 'core-js/stable';
+import 'regenerator-runtime/runtime';
 
 // Import all the third party stuff
 import React from 'react';

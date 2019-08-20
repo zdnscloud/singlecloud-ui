@@ -63,7 +63,10 @@ const Containers = ({
         <List component="ul">
           <ListItem>
             <ListItemText>
-              <Button color="secondary" onClick={(evt) => fields.push(fromJS({}))}>
+              <Button
+                color="secondary"
+                onClick={(evt) => fields.push(fromJS({}))}
+              >
                 <FormattedMessage {...messages.formAddContainer} />
                 <PlusIcon />
               </Button>

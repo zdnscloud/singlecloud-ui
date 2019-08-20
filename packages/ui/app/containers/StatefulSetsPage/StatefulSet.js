@@ -150,284 +150,256 @@ export class StatefulSet extends React.PureComponent {
             <CardBody>
               <List component="ul">
                 {statefulSet &&
-                          statefulSet.get('containers') &&
-                          statefulSet.get('containers').map((c, i) => (
-                            <Card key={i}>
-                              <CardBody>
-                                <ListItem key={i}>
-                                  <ListItemText>
-                                    <GridContainer>
-                                      <GridItem xs={3} sm={3} md={3}>
-                                        <ReadOnlyInput
-                                          labelText={
-                                            <FormattedMessage
-                                              {...messages.formContainerName}
-                                            />
-                                          }
-                                          fullWidth
-                                          value={c.get('name')}
-                                        />
-                                      </GridItem>
-                                      <GridItem xs={3} sm={3} md={3}>
-                                        <ReadOnlyInput
-                                          labelText={
-                                            <FormattedMessage
-                                              {...messages.formImage}
-                                            />
-                                          }
-                                          fullWidth
-                                          value={c.get('image')}
-                                        />
-                                      </GridItem>
-                                    </GridContainer>
-                                    <GridContainer>
-                                      <GridItem xs={3} sm={3} md={3}>
-                                        <ReadOnlyInput
-                                          labelText={
-                                            <FormattedMessage
-                                              {...messages.formCommand}
-                                            />
-                                          }
-                                          fullWidth
-                                          value={c.get('command')}
-                                        />
-                                      </GridItem>
-                                      <GridItem xs={3} sm={3} md={3}>
-                                        <ReadOnlyInput
-                                          labelText={
-                                            <FormattedMessage
-                                              {...messages.formArgs}
-                                            />
-                                          }
-                                          fullWidth
-                                          value={c.get('args')}
-                                        />
-                                      </GridItem>
-                                    </GridContainer>
-                                    {c.get('env') ? (
-                                      <GridContainer>
-                                        <GridItem>
-                                          <List component="ul">
-                                            <ListItem>
-                                              <ListItemText
-                                                primary={
+                  statefulSet.get('containers') &&
+                  statefulSet.get('containers').map((c, i) => (
+                    <Card key={i}>
+                      <CardBody>
+                        <ListItem key={i}>
+                          <ListItemText>
+                            <GridContainer>
+                              <GridItem xs={3} sm={3} md={3}>
+                                <ReadOnlyInput
+                                  labelText={
+                                    <FormattedMessage
+                                      {...messages.formContainerName}
+                                    />
+                                  }
+                                  fullWidth
+                                  value={c.get('name')}
+                                />
+                              </GridItem>
+                              <GridItem xs={3} sm={3} md={3}>
+                                <ReadOnlyInput
+                                  labelText={
+                                    <FormattedMessage {...messages.formImage} />
+                                  }
+                                  fullWidth
+                                  value={c.get('image')}
+                                />
+                              </GridItem>
+                            </GridContainer>
+                            <GridContainer>
+                              <GridItem xs={3} sm={3} md={3}>
+                                <ReadOnlyInput
+                                  labelText={
+                                    <FormattedMessage
+                                      {...messages.formCommand}
+                                    />
+                                  }
+                                  fullWidth
+                                  value={c.get('command')}
+                                />
+                              </GridItem>
+                              <GridItem xs={3} sm={3} md={3}>
+                                <ReadOnlyInput
+                                  labelText={
+                                    <FormattedMessage {...messages.formArgs} />
+                                  }
+                                  fullWidth
+                                  value={c.get('args')}
+                                />
+                              </GridItem>
+                            </GridContainer>
+                            {c.get('env') ? (
+                              <GridContainer>
+                                <GridItem>
+                                  <List component="ul">
+                                    <ListItem>
+                                      <ListItemText
+                                        primary={
+                                          <FormattedMessage
+                                            {...messages.formENV}
+                                          />
+                                        }
+                                      />
+                                    </ListItem>
+                                    {c.get('env').map((p, i) => (
+                                      <ListItem key={i}>
+                                        <ListItemText>
+                                          <GridContainer>
+                                            <GridItem
+                                              xs={3}
+                                              sm={3}
+                                              md={3}
+                                              className={classes.formLine}
+                                            >
+                                              <ReadOnlyInput
+                                                labelText={
                                                   <FormattedMessage
-                                                    {...messages.formENV}
+                                                    {...messages.formENVName}
                                                   />
                                                 }
+                                                value={p.get('name')}
                                               />
-                                            </ListItem>
-                                            {c.get('env').map((p, i) => (
-                                              <ListItem key={i}>
-                                                <ListItemText>
-                                                  <GridContainer>
-                                                    <GridItem
-                                                      xs={3}
-                                                      sm={3}
-                                                      md={3}
-                                                      className={
-                                                        classes.formLine
-                                                      }
-                                                    >
-                                                      <ReadOnlyInput
-                                                        labelText={
-                                                          <FormattedMessage
-                                                            {...messages.formENVName}
-                                                          />
-                                                        }
-                                                        value={p.get('name')}
-                                                      />
-                                                    </GridItem>
-                                                    <GridItem
-                                                      xs={3}
-                                                      sm={3}
-                                                      md={3}
-                                                      className={
-                                                        classes.formLine
-                                                      }
-                                                    >
-                                                      <ReadOnlyInput
-                                                        labelText={
-                                                          <FormattedMessage
-                                                            {...messages.formENVValue}
-                                                          />
-                                                        }
-                                                        value={p.get('value')}
-                                                      />
-                                                    </GridItem>
-                                                  </GridContainer>
-                                                </ListItemText>
-                                              </ListItem>
-                                            ))}
-                                          </List>
-                                        </GridItem>
-                                      </GridContainer>
-                                    ) : null}
-                                    {c.get('volumes') ? (
-                                      <GridContainer>
-                                        <GridItem>
-                                          <List component="ul">
-                                            <ListItem>
-                                              <ListItemText
-                                                primary={
+                                            </GridItem>
+                                            <GridItem
+                                              xs={3}
+                                              sm={3}
+                                              md={3}
+                                              className={classes.formLine}
+                                            >
+                                              <ReadOnlyInput
+                                                labelText={
                                                   <FormattedMessage
-                                                    {...messages.formVolumes}
+                                                    {...messages.formENVValue}
                                                   />
                                                 }
+                                                value={p.get('value')}
                                               />
-                                            </ListItem>
-                                            {c.get('volumes').map((p, i) => (
-                                              <ListItem key={i}>
-                                                <ListItemText>
-                                                  <GridContainer>
-                                                    <GridItem
-                                                      xs={3}
-                                                      sm={3}
-                                                      md={3}
-                                                      className={
-                                                        classes.formLine
-                                                      }
-                                                    >
-                                                      <ReadOnlyInput
-                                                        labelText={
-                                                          <FormattedMessage
-                                                            {...messages.formVolumeType}
-                                                          />
-                                                        }
-                                                        value={
-                                                          typeMap[p.get('type')]
-                                                        }
-                                                      />
-                                                    </GridItem>
-                                                    <GridItem
-                                                      xs={3}
-                                                      sm={3}
-                                                      md={3}
-                                                      className={
-                                                        classes.formLine
-                                                      }
-                                                    >
-                                                      <ReadOnlyInput
-                                                        labelText={
-                                                          <FormattedMessage
-                                                            {...messages.formVolumeName}
-                                                          />
-                                                        }
-                                                        value={p.get('name')}
-                                                      />
-                                                    </GridItem>
-                                                    <GridItem
-                                                      xs={3}
-                                                      sm={3}
-                                                      md={3}
-                                                      className={
-                                                        classes.formLine
-                                                      }
-                                                    >
-                                                      <ReadOnlyInput
-                                                        labelText={
-                                                          <FormattedMessage
-                                                            {...messages.formMountPath}
-                                                          />
-                                                        }
-                                                        value={p.get(
-                                                          'mountPath'
-                                                        )}
-                                                      />
-                                                    </GridItem>
-                                                  </GridContainer>
-                                                </ListItemText>
-                                              </ListItem>
-                                            ))}
-                                          </List>
-                                        </GridItem>
-                                      </GridContainer>
-                                    ) : null}
-                                    {c.get('exposedPorts') ? (
-                                      <GridContainer>
-                                        <GridItem>
-                                          <List component="ul">
-                                            <ListItem>
-                                              <ListItemText
-                                                primary={
+                                            </GridItem>
+                                          </GridContainer>
+                                        </ListItemText>
+                                      </ListItem>
+                                    ))}
+                                  </List>
+                                </GridItem>
+                              </GridContainer>
+                            ) : null}
+                            {c.get('volumes') ? (
+                              <GridContainer>
+                                <GridItem>
+                                  <List component="ul">
+                                    <ListItem>
+                                      <ListItemText
+                                        primary={
+                                          <FormattedMessage
+                                            {...messages.formVolumes}
+                                          />
+                                        }
+                                      />
+                                    </ListItem>
+                                    {c.get('volumes').map((p, i) => (
+                                      <ListItem key={i}>
+                                        <ListItemText>
+                                          <GridContainer>
+                                            <GridItem
+                                              xs={3}
+                                              sm={3}
+                                              md={3}
+                                              className={classes.formLine}
+                                            >
+                                              <ReadOnlyInput
+                                                labelText={
                                                   <FormattedMessage
-                                                    {...messages.formExposedPorts}
+                                                    {...messages.formVolumeType}
                                                   />
                                                 }
+                                                value={typeMap[p.get('type')]}
                                               />
-                                            </ListItem>
-                                            {c
-                                              .get('exposedPorts')
-                                              .map((p, i) => (
-                                                <ListItem key={i}>
-                                                  <ListItemText>
-                                                    <GridContainer>
-                                                      <GridItem
-                                                        xs={3}
-                                                        sm={3}
-                                                        md={3}
-                                                        className={
-                                                          classes.formLine
-                                                        }
-                                                      >
-                                                        <ReadOnlyInput
-                                                          labelText={
-                                                            <FormattedMessage
-                                                              {...messages.formPortName}
-                                                            />
-                                                          }
-                                                          value={p.get('name')}
-                                                        />
-                                                      </GridItem>
-                                                      <GridItem
-                                                        xs={3}
-                                                        sm={3}
-                                                        md={3}
-                                                        className={
-                                                          classes.formLine
-                                                        }
-                                                      >
-                                                        <ReadOnlyInput
-                                                          labelText={
-                                                            <FormattedMessage
-                                                              {...messages.formPortProtocol}
-                                                            />
-                                                          }
-                                                          value={p.get(
-                                                            'protocol'
-                                                          )}
-                                                        />
-                                                      </GridItem>
-                                                      <GridItem
-                                                        xs={3}
-                                                        sm={3}
-                                                        md={3}
-                                                        className={
-                                                          classes.formLine
-                                                        }
-                                                      >
-                                                        <ReadOnlyInput
-                                                          labelText={
-                                                            <FormattedMessage
-                                                              {...messages.formPort}
-                                                            />
-                                                          }
-                                                          value={p.get('port')}
-                                                        />
-                                                      </GridItem>
-                                                    </GridContainer>
-                                                  </ListItemText>
-                                                </ListItem>
-                                              ))}
-                                          </List>
-                                        </GridItem>
-                                      </GridContainer>
-                                    ) : null}
-                                  </ListItemText>
-                                </ListItem>
-                              </CardBody>
-                            </Card>
-                          ))}
+                                            </GridItem>
+                                            <GridItem
+                                              xs={3}
+                                              sm={3}
+                                              md={3}
+                                              className={classes.formLine}
+                                            >
+                                              <ReadOnlyInput
+                                                labelText={
+                                                  <FormattedMessage
+                                                    {...messages.formVolumeName}
+                                                  />
+                                                }
+                                                value={p.get('name')}
+                                              />
+                                            </GridItem>
+                                            <GridItem
+                                              xs={3}
+                                              sm={3}
+                                              md={3}
+                                              className={classes.formLine}
+                                            >
+                                              <ReadOnlyInput
+                                                labelText={
+                                                  <FormattedMessage
+                                                    {...messages.formMountPath}
+                                                  />
+                                                }
+                                                value={p.get('mountPath')}
+                                              />
+                                            </GridItem>
+                                          </GridContainer>
+                                        </ListItemText>
+                                      </ListItem>
+                                    ))}
+                                  </List>
+                                </GridItem>
+                              </GridContainer>
+                            ) : null}
+                            {c.get('exposedPorts') ? (
+                              <GridContainer>
+                                <GridItem>
+                                  <List component="ul">
+                                    <ListItem>
+                                      <ListItemText
+                                        primary={
+                                          <FormattedMessage
+                                            {...messages.formExposedPorts}
+                                          />
+                                        }
+                                      />
+                                    </ListItem>
+                                    {c.get('exposedPorts').map((p, i) => (
+                                      <ListItem key={i}>
+                                        <ListItemText>
+                                          <GridContainer>
+                                            <GridItem
+                                              xs={3}
+                                              sm={3}
+                                              md={3}
+                                              className={classes.formLine}
+                                            >
+                                              <ReadOnlyInput
+                                                labelText={
+                                                  <FormattedMessage
+                                                    {...messages.formPortName}
+                                                  />
+                                                }
+                                                value={p.get('name')}
+                                              />
+                                            </GridItem>
+                                            <GridItem
+                                              xs={3}
+                                              sm={3}
+                                              md={3}
+                                              className={classes.formLine}
+                                            >
+                                              <ReadOnlyInput
+                                                labelText={
+                                                  <FormattedMessage
+                                                    {...messages.formPortProtocol}
+                                                  />
+                                                }
+                                                value={p.get('protocol')}
+                                              />
+                                            </GridItem>
+                                            <GridItem
+                                              xs={3}
+                                              sm={3}
+                                              md={3}
+                                              className={classes.formLine}
+                                            >
+                                              <ReadOnlyInput
+                                                labelText={
+                                                  <FormattedMessage
+                                                    {...messages.formPort}
+                                                  />
+                                                }
+                                                value={p.get('port')}
+                                              />
+                                            </GridItem>
+                                          </GridContainer>
+                                        </ListItemText>
+                                      </ListItem>
+                                    ))}
+                                  </List>
+                                </GridItem>
+                              </GridContainer>
+                            ) : null}
+                          </ListItemText>
+                        </ListItem>
+                      </CardBody>
+                    </Card>
+                  ))}
               </List>
             </CardBody>
           </Card>
@@ -443,12 +415,7 @@ export class StatefulSet extends React.PureComponent {
               {statefulSet.get('advancedOptions') ? (
                 <Fragment>
                   <GridContainer>
-                    <GridItem
-                      xs={3}
-                      sm={3}
-                      md={3}
-                      className={classes.formLine}
-                    >
+                    <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
                       <ReadOnlyInput
                         labelText={
                           <FormattedMessage
@@ -481,103 +448,85 @@ export class StatefulSet extends React.PureComponent {
                           'advancedOptions',
                           'exposedServices',
                         ]) &&
-                                  statefulSet
-                                    .getIn([
-                                      'advancedOptions',
-                                      'exposedServices',
-                                    ])
-                                    .map((port, i) => (
-                                      <ListItem key={i}>
-                                        <ListItemText>
-                                          <GridContainer>
-                                            <GridItem xs={2} sm={2} md={2}>
-                                              <ReadOnlyInput
-                                                labelText={
-                                                  <FormattedMessage
-                                                    {...messages.formPortName}
-                                                  />
-                                                }
-                                                value={port.get(
-                                                  'containerPortName'
-                                                )}
+                          statefulSet
+                            .getIn(['advancedOptions', 'exposedServices'])
+                            .map((port, i) => (
+                              <ListItem key={i}>
+                                <ListItemText>
+                                  <GridContainer>
+                                    <GridItem xs={2} sm={2} md={2}>
+                                      <ReadOnlyInput
+                                        labelText={
+                                          <FormattedMessage
+                                            {...messages.formPortName}
+                                          />
+                                        }
+                                        value={port.get('containerPortName')}
+                                      />
+                                    </GridItem>
+                                    <GridItem xs={2} sm={2} md={2}>
+                                      <ReadOnlyInput
+                                        labelText={
+                                          <FormattedMessage
+                                            {...messages.formServicePort}
+                                          />
+                                        }
+                                        value={port.get('servicePort')}
+                                      />
+                                    </GridItem>
+                                    {port.get('autoCreateIngress') ? (
+                                      <Fragment>
+                                        <GridItem xs={2} sm={2} md={2}>
+                                          <ReadOnlyInput
+                                            labelText={
+                                              <FormattedMessage
+                                                {...messages.formPortProtocol}
                                               />
-                                            </GridItem>
-                                            <GridItem xs={2} sm={2} md={2}>
-                                              <ReadOnlyInput
-                                                labelText={
-                                                  <FormattedMessage
-                                                    {...messages.formServicePort}
-                                                  />
-                                                }
-                                                value={port.get('servicePort')}
+                                            }
+                                            value={port.get('ingressProtocol')}
+                                          />
+                                        </GridItem>
+                                        <GridItem xs={2} sm={2} md={2}>
+                                          <ReadOnlyInput
+                                            labelText={
+                                              <FormattedMessage
+                                                {...messages.formIngressPort}
                                               />
-                                            </GridItem>
-                                            {port.get('autoCreateIngress') ? (
-                                              <Fragment>
-                                                <GridItem xs={2} sm={2} md={2}>
-                                                  <ReadOnlyInput
-                                                    labelText={
-                                                      <FormattedMessage
-                                                        {...messages.formPortProtocol}
-                                                      />
-                                                    }
-                                                    value={port.get(
-                                                      'ingressProtocol'
-                                                    )}
-                                                  />
-                                                </GridItem>
-                                                <GridItem xs={2} sm={2} md={2}>
-                                                  <ReadOnlyInput
-                                                    labelText={
-                                                      <FormattedMessage
-                                                        {...messages.formIngressPort}
-                                                      />
-                                                    }
-                                                    value={port.get(
-                                                      'ingressPort'
-                                                    )}
-                                                  />
-                                                </GridItem>
-                                                <GridItem xs={2} sm={2} md={2}>
-                                                  <ReadOnlyInput
-                                                    labelText={
-                                                      <FormattedMessage
-                                                        {...messages.formIngressDomain}
-                                                      />
-                                                    }
-                                                    value={port.get(
-                                                      'ingressHost'
-                                                    )}
-                                                  />
-                                                </GridItem>
-                                                <GridItem xs={2} sm={2} md={2}>
-                                                  <ReadOnlyInput
-                                                    labelText={
-                                                      <FormattedMessage
-                                                        {...messages.formIngressPath}
-                                                      />
-                                                    }
-                                                    value={port.get(
-                                                      'ingressPath'
-                                                    )}
-                                                  />
-                                                </GridItem>
-                                              </Fragment>
-                                            ) : null}
-                                          </GridContainer>
-                                        </ListItemText>
-                                      </ListItem>
-                                    ))}
+                                            }
+                                            value={port.get('ingressPort')}
+                                          />
+                                        </GridItem>
+                                        <GridItem xs={2} sm={2} md={2}>
+                                          <ReadOnlyInput
+                                            labelText={
+                                              <FormattedMessage
+                                                {...messages.formIngressDomain}
+                                              />
+                                            }
+                                            value={port.get('ingressHost')}
+                                          />
+                                        </GridItem>
+                                        <GridItem xs={2} sm={2} md={2}>
+                                          <ReadOnlyInput
+                                            labelText={
+                                              <FormattedMessage
+                                                {...messages.formIngressPath}
+                                              />
+                                            }
+                                            value={port.get('ingressPath')}
+                                          />
+                                        </GridItem>
+                                      </Fragment>
+                                    ) : null}
+                                  </GridContainer>
+                                </ListItemText>
+                              </ListItem>
+                            ))}
                       </List>
                     </GridItem>
                   </GridContainer>
                   <GridContainer>
-                    <GridItem
-                      xs={3}
-                      sm={3}
-                      md={3}
-                      className={classes.formLine}
-                    >
+                    <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
                       <ReadOnlyInput
                         labelText={
                           <FormattedMessage
@@ -591,12 +540,7 @@ export class StatefulSet extends React.PureComponent {
                         ])}
                       />
                     </GridItem>
-                    <GridItem
-                      xs={3}
-                      sm={3}
-                      md={3}
-                      className={classes.formLine}
-                    >
+                    <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
                       <ReadOnlyInput
                         labelText={
                           <FormattedMessage
@@ -620,62 +564,45 @@ export class StatefulSet extends React.PureComponent {
           <Card style={{ marginTop: 20, marginBottom: 0 }}>
             <CardHeader color="primary">
               <h4 className={classes.cardTitleWhite}>
-                <FormattedMessage
-                  {...messages.formVolumeClaimTemplate}
-                />
+                <FormattedMessage {...messages.formVolumeClaimTemplate} />
               </h4>
             </CardHeader>
             <CardBody>
               {statefulSet.get('persistentVolumes') &&
-                        statefulSet.get('persistentVolumes').map((pv) => (
-                          <GridContainer>
-                            <GridItem
-                              xs={3}
-                              sm={3}
-                              md={3}
-                              className={classes.formLine}
-                            >
-                              <ReadOnlyInput
-                                labelText={
-                                  <FormattedMessage
-                                    {...messages.formVolumeClaimTemplateName}
-                                  />
-                                }
-                                value={pv.get('name')}
-                              />
-                            </GridItem>
-                            <GridItem
-                              xs={3}
-                              sm={3}
-                              md={3}
-                              className={classes.formLine}
-                            >
-                              <ReadOnlyInput
-                                labelText={
-                                  <FormattedMessage
-                                    {...messages.formVolumeClaimTemplateSize}
-                                  />
-                                }
-                                value={pv.get('size')}
-                              />
-                            </GridItem>
-                            <GridItem
-                              xs={3}
-                              sm={3}
-                              md={3}
-                              className={classes.formLine}
-                            >
-                              <ReadOnlyInput
-                                labelText={
-                                  <FormattedMessage
-                                    {...messages.formVolumeClaimTemplateStorageClassName}
-                                  />
-                                }
-                                value={pv.get('storageClassName')}
-                              />
-                            </GridItem>
-                          </GridContainer>
-                        ))}
+                statefulSet.get('persistentVolumes').map((pv) => (
+                  <GridContainer>
+                    <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
+                      <ReadOnlyInput
+                        labelText={
+                          <FormattedMessage
+                            {...messages.formVolumeClaimTemplateName}
+                          />
+                        }
+                        value={pv.get('name')}
+                      />
+                    </GridItem>
+                    <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
+                      <ReadOnlyInput
+                        labelText={
+                          <FormattedMessage
+                            {...messages.formVolumeClaimTemplateSize}
+                          />
+                        }
+                        value={pv.get('size')}
+                      />
+                    </GridItem>
+                    <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
+                      <ReadOnlyInput
+                        labelText={
+                          <FormattedMessage
+                            {...messages.formVolumeClaimTemplateStorageClassName}
+                          />
+                        }
+                        value={pv.get('storageClassName')}
+                      />
+                    </GridItem>
+                  </GridContainer>
+                ))}
             </CardBody>
           </Card>
         </GridItem>

@@ -80,6 +80,10 @@ module.exports = {
     'react/require-extension': 0,
     'react/self-closing-comp': 0,
     'react/sort-comp': 0,
+    'react/jsx-props-no-spreading': 0,
+    'react/static-property-placement': 0,
+    'react/jsx-fragments': 0,
+    'react/state-in-constructor': 0,
     'require-yield': 0,
     "react-hooks/rules-of-hooks": "error", // Checks rules of Hooks
     "react-hooks/exhaustive-deps": "warn", // Checks effect dependencies

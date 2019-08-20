@@ -120,7 +120,7 @@ export class CreateDeployment extends React.PureComponent {
     async function doSubmit(formValues) {
       try {
         const data = formValues.toJS();
-        const {containers,persistentVolumes,advancedOptions} = data;
+        const { containers, persistentVolumes, advancedOptions } = data;
         let exposedPortsArrr = [];
         containers.forEach((item) => {
           if (item && item.args) {
@@ -129,25 +129,25 @@ export class CreateDeployment extends React.PureComponent {
           if (item && item.command) {
             item.command = item.command.split(' ');
           }
-          exposedPortsArrr.push(...item.exposedPorts)
+          exposedPortsArrr.push(...item.exposedPorts);
         });
         let { exposedServices } = advancedOptions;
         let esArr = [];
-        if(exposedPortsArrr.length>0){
+        if (exposedPortsArrr.length > 0) {
           exposedPortsArrr.forEach((i) => {
             exposedServices.forEach((j) => {
-              if(i.name === j.name){
-                esArr.push(j)
+              if (i.name === j.name) {
+                esArr.push(j);
               }
-            })
-          })
+            });
+          });
         }
         advancedOptions.exposedServices = esArr;
-        persistentVolumes.forEach((item)=>{
+        persistentVolumes.forEach((item) => {
           if (item && item.size) {
             item.size = `${item.size}Gi`;
           }
-        })
+        });
         await new Promise((resolve, reject) => {
           createDeployment(data, {
             resolve,
@@ -188,11 +188,11 @@ export class CreateDeployment extends React.PureComponent {
                 storageClasses={storageClasses}
                 initialValues={fromJS({
                   replicas: 1,
-                  containers: [{ name: '',exposedPorts:[]}],
-                  persistentVolumes:[],
-                  advancedOptions:{
-                    exposedServices:[]
-                  }
+                  containers: [{ name: '', exposedPorts: [] }],
+                  persistentVolumes: [],
+                  advancedOptions: {
+                    exposedServices: [],
+                  },
                 })}
                 formValues={values}
                 theme={theme}

@@ -84,7 +84,7 @@ export const clustersReducer = (
     case c.UPDATE_CLUSTER_SUCCESS:
       return state;
     case c.UPDATE_CLUSTER_FAILURE:
-        return state;
+      return state;
 
     default:
       return state;

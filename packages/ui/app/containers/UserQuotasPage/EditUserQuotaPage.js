@@ -92,11 +92,11 @@ export class EditUserQuotaPage extends React.PureComponent {
       }
     }
     const reg = /^(\d+)([a-zA-Z]+)?$/;
-    const initUserQuota ={
+    const initUserQuota = {
       ...userQuota.toJS(),
       memory: (reg.exec(userQuota.get('memory')) || [])[1],
-      storage: (reg.exec(userQuota.get('storage')) || [])[1]
-    }
+      storage: (reg.exec(userQuota.get('storage')) || [])[1],
+    };
 
     return (
       <div className={classes.root}>

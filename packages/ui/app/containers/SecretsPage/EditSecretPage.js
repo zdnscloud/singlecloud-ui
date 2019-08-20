@@ -32,7 +32,10 @@ import {
   makeSelectNamespaceID,
 } from 'ducks/app/selectors';
 import * as actions from 'ducks/secrets/actions';
-import { makeSelectURL, makeSelectCurrentSecret } from 'ducks/secrets/selectors';
+import {
+  makeSelectURL,
+  makeSelectCurrentSecret,
+} from 'ducks/secrets/selectors';
 
 import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
 import messages from './messages';
@@ -88,7 +91,7 @@ export class EditSecret extends React.PureComponent {
       submitForm,
       clusterID,
       namespaceID,
-      secret
+      secret,
     } = this.props;
     async function doSubmit(formValues) {
       try {
