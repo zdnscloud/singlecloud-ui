@@ -100,8 +100,8 @@ export const makeSelectLeftMenus = () =>
         {
           name: 'Global',
           children: [
-            { name: 'Overview', path: `/clusters` },
-            { name: 'GlobalConfigs', path: `/clusters` },
+            { name: 'ClusterList', path: `/clusters` },
+            { name: 'GlobalConfig', path: `/globalConfig` },
           ],
           icon: OverviewIcon,
         },
@@ -111,7 +111,7 @@ export const makeSelectLeftMenus = () =>
           {
             name: 'ClusterManagement',
             children: [
-              { name: 'Overview', path: `/clusters/${cluster}/show` },
+              { name: 'ClusterOverview', path: `/clusters/${cluster}/show` },
               { name: 'Namespaces', path: `/clusters/${cluster}/namespaces` },
               { name: 'Nodes', path: `/clusters/${cluster}/nodes` },
               {
@@ -125,20 +125,20 @@ export const makeSelectLeftMenus = () =>
             ],
             icon: ManagementIcon,
           },
-          {
-            name: 'ContainerManagement',
-            children: [
-              {
-                name: 'ContainerWatch',
-                path: `/clusters/${cluster}/container-watch`,
-              },
-              {
-                name: 'ImageManagement',
-                path: `/clusters/${cluster}/image-management`,
-              },
-            ],
-            icon: SystemIcon,
-          },
+          // {
+          //   name: 'ContainerManagement',
+          //   children: [
+          //     {
+          //       name: 'ContainerWatch',
+          //       path: `/clusters/${cluster}/container-watch`,
+          //     },
+          //     {
+          //       name: 'ImageManagement',
+          //       path: `/clusters/${cluster}/image-management`,
+          //     },
+          //   ],
+          //   icon: SystemIcon,
+          // },
         ]);
       }
 
@@ -148,7 +148,7 @@ export const makeSelectLeftMenus = () =>
           children: [
             {
               name: 'LocalAppTemplates',
-              path: `/clusters/helm-templates`,
+              path: `/helm-templates`,
             },
           ],
           icon: SystemIcon,
@@ -207,25 +207,35 @@ export const makeSelectLeftMenus = () =>
           },
         ]);
       }
+
       menus = menus.concat([
         {
           name: 'UserQuotas',
-          path: isAdmin ? '/adminUserQuotas' : '/userQuotas',
+          children: [
+            {
+              name: 'UserQuotasList',
+              path: isAdmin ? '/adminUserQuotas' : '/userQuotas',
+            }
+          ],
           icon: UserQuotasIcon,
         },
       ]);
-
 
       menus = menus.concat([
         {
           name: 'ImageRegistry',
           icon: UserQuotasIcon,
         },
-        {
-          name: 'CloudWatch',
-          icon: UserQuotasIcon,
-        },
       ]);
+
+      if (cluster !== '') {
+        menus = menus.concat([
+          {
+            name: 'ClusterWatch',
+            icon: UserQuotasIcon,
+          },
+        ]);
+      }
 
       return menus;
     }
