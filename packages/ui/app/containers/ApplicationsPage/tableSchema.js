@@ -31,7 +31,7 @@ const tableSchema = schema
             default:
               return  <Button
               color="primary"
-              to={`/clusters/${props.clusterID}/namespaces/${props.namespaceID}/${props.data.get('type')}s`}
+              to={`/clusters/${props.clusterID}/namespaces/${props.namespaceID}/${props.data.get('type')}s/${props.data.get('name')}/show`}
               component={Link}
             >
               {props.data.get('name')}
