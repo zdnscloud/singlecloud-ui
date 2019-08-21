@@ -25,6 +25,18 @@ export default defineMessages({
     id: `${scope}.tableTitleName`,
     defaultMessage: 'Name',
   },
+  tableTitleServiceType: {
+    id: `${scope}.tableTitleServiceType`,
+    defaultMessage: 'ServiceType',
+  },
+  tableTitleClusterIP: {
+    id: `${scope}.tableTitleClusterIP`,
+    defaultMessage: 'ClusterIP',
+  },
+  tableTitleExposedPorts: {
+    id: `${scope}.tableTitleExposedPorts`,
+    defaultMessage: 'ExposedPorts',
+  },
   tableTitleCreationTimestamp: {
     id: `${scope}.tableTitleCreationTimestamp`,
     defaultMessage: 'CreationTimestamp',

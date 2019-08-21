@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 import ConfirmDelete from 'components/ConfirmDelete/ConfirmDelete';
 
-const schema = ['name', 'creationTimestamp'];
+const schema = ['name', 'serviceType', 'clusterIP', 'exposedPorts', 'creationTimestamp'];
 
 const tableSchema = schema
   .map((id) => ({
@@ -13,6 +13,16 @@ const tableSchema = schema
     label: ucfirst(id),
   }))
   .map((item) => {
+    if (item.id === 'exposedPorts') {
+      return {
+        ...item,
+        component: ({ data, value }) => (
+          <Fragment>
+            { value.map((p) => `${p.get('port')}/${p.get('protocol')}`).join(', ') }
+          </Fragment>
+        ),
+      };
+    }
     if (item.id === 'creationTimestamp') {
       return {
         ...item,
