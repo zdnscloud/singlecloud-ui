@@ -1,6 +1,6 @@
 /**
  *
- * Registries
+ * GlobalConfigPage
  *
  */
 import React, { useEffect, useState, memo } from 'react';
@@ -9,15 +9,21 @@ import { createStructuredSelector } from 'reselect';
 import { bindActionCreators, compose } from 'redux';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import {
+  reduxForm,
+  getFormValues,
+  SubmissionError,
+  submit,
+} from 'redux-form/immutable';
 
 import Helmet from 'components/Helmet/Helmet';
 import { FormattedMessage } from 'react-intl';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import IconButton from '@material-ui/core/IconButton';
-import EditIcon from 'components/Icons/Edit';
 
-import { makeSelectURL ,makeSelectRegistriesList} from 'ducks/registries/selectors';
-import * as actions from 'ducks/registries/actions';
+import { makeSelectURL ,makeSelectRegistriesList} from 'ducks/globalConfig/selectors';
+import { makeSelectClustersList } from 'ducks/clusters/selectors';
+
+import * as actions from 'ducks/globalConfig/actions';
 import { makeSelectRole } from 'ducks/role/selectors';
 
 import GridItem from 'components/Grid/GridItem';
@@ -26,18 +32,28 @@ import Card from 'components/Card/Card';
 import CardHeader from 'components/Card/CardHeader';
 import CardBody from 'components/Card/CardBody';
 import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
-import ReadOnlyInput from 'components/CustomInput/ReadOnlyInput';
+import Switch from 'components/CustomSwitch/IOSSwitch';
 
 import useStyles from './styles';
 import messages from './messages';
+import UpdateRegistryForm, { formName } from './UpdateForm';
 
-const Registries = ({
+const GlobalConfigPage = ({
   url,
   loadRegistries,
   list,
-  role
+  role,
+  values,
+  removeRegistry,
+  createRegistry,
+  clusters,
+  submitForm
 }) => {
   const classes = useStyles();
+  const runningClusters = clusters && clusters.filter((d) => d.get('status') === 'Running'); 
+  const [check, setCheck] = useState(false);
+  const id = list && list.getIn([0,'id']);
+
   useEffect(() => {
     if (url) {
       loadRegistries(url);
@@ -45,7 +61,36 @@ const Registries = ({
     return () => {
       // try cancel something when unmount
     };
-  }, [url]);
+  }, [check]);
+
+  async function doSubmit(formValues) {
+    try {
+      const data = formValues.toJS();
+      await new Promise((resolve, reject) => {
+        if(!check){
+          createRegistry(data, {
+            resolve,
+            reject,
+            url,
+          });
+        } else {
+          const rurl = list && list.getIn([0,'links','remove']);
+          removeRegistry(id, {
+            url:rurl, 
+            resolve,
+            reject
+          })
+        }
+      });
+    } catch (error) {
+      throw new SubmissionError({ _error: error });
+    }
+  }
+
+  const handleChange = () => () => {
+    setCheck(!check);
+    submitForm()
+  }
 
   return (
     <div className={classes.root}>
@@ -65,36 +110,29 @@ const Registries = ({
               <CardHeader color="primary">
                 <h4 className={classes.cardTitleWhite}>
                     <FormattedMessage {...messages.registries} />
-                    <IconButton
-                      className={classes.menuButton}
-                      component={Link}
-                      to="/registries/update"
-                    >
-                      <EditIcon style={{ color: '#fff' }} />
-                    </IconButton>
                   </h4>
               </CardHeader>
               <CardBody>
                 <GridContainer>
-                  <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
-                    <ReadOnlyInput
-                      label={<FormattedMessage {...messages.formIngressDomain} />}
-                      value={list && list.getIn([0,'ingressDomain'])}
-                      fullWidth                    
+                  <GridItem>
+                    <Switch
+                      onChange={handleChange()}
+                      checked={check}
+                      label={
+                        <FormattedMessage
+                          {...messages.repositoryServise}
+                        />
+                      }
                     />
                   </GridItem>
-                  <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
-                    <ReadOnlyInput
-                      label={<FormattedMessage {...messages.formCluster} />}
-                      value={list && list.getIn([0,'cluster'])}
-                      fullWidth                    
-                    />
-                  </GridItem>
-                  <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
-                    <ReadOnlyInput
-                      label={<FormattedMessage {...messages.formUser} />}
-                      value={role.get('user')}
-                      fullWidth                    
+                  <GridItem xs={12} sm={12} md={12}>
+                    <UpdateRegistryForm
+                      onSubmit={doSubmit}
+                      formValues={values}
+                      clusters={runningClusters}
+                      role={role}
+                      initialValues={list && list.getIn([0])}
+                      check={check}
                     />
                   </GridItem>
                 </GridContainer>
@@ -110,12 +148,15 @@ const mapStateToProps = createStructuredSelector({
   url: makeSelectURL(),
   list: makeSelectRegistriesList(),
   role: makeSelectRole(),
+  values: getFormValues(formName),
+  clusters: makeSelectClustersList(),
 });
 
 const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
       ...actions,
+      submitForm: () => submit(formName),
     },
     dispatch
   );
@@ -128,4 +169,4 @@ const withConnect = connect(
 export default compose(
   withConnect,
   memo
-)(Registries);
+)(GlobalConfigPage);

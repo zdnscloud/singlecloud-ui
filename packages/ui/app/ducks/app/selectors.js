@@ -101,7 +101,7 @@ export const makeSelectLeftMenus = () =>
           name: 'Global',
           children: [
             { name: 'ClusterList', path: `/clusters` },
-            { name: 'GlobalConfig', path: `/registries` },
+            { name: 'GlobalConfig', path: `/globalConfig` },
           ],
           icon: OverviewIcon,
         },
@@ -233,6 +233,7 @@ export const makeSelectLeftMenus = () =>
           {
             name: 'ClusterWatch',
             icon: UserQuotasIcon,
+            path: `/clusters/${cluster}/monitors`,
           },
         ]);
       }

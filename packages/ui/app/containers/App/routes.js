@@ -17,9 +17,7 @@ import ClusterDetailPage from 'containers/ClusterDetailPage/Loadable';
 import NodesPage, {
   NodeDetailPage,
 } from 'containers/NodesPage/Loadable';
-import RegistriesPage, {
-  UpdateRegistryPage,
-} from 'containers/RegistriesPage/Loadable';
+import GlobalConfigPage from 'containers/GlobalConfigPage/Loadable';
 import NamespacesPage, {
   CreateNamespacePage,
   NamespaceDetailPage,
@@ -72,6 +70,8 @@ import UserQuotasPage, {
   EditUserQuotaPage,
 } from 'containers/UserQuotasPage/Loadable';
 // UserQuotasPage
+
+import MonitorsPage from 'containers/MonitorsPage/Loadable';
 
 import UsersPage, {
   CreateUserPage,
@@ -131,16 +131,10 @@ const appRoutes = [
   },
   //registry
   {
-    path: '/registries',
-    name: 'Registries',
+    path: '/globalConfig',
+    name: 'GlobalConfig',
     icon: Dashboard,
-    component: RegistriesPage,
-  },
-  {
-    path: '/registries/update',
-    name: 'Registry Update',
-    icon: Dashboard,
-    component: UpdateRegistryPage,
+    component: GlobalConfigPage,
   },
   //registry end
   {
@@ -431,6 +425,14 @@ const appRoutes = [
     component: EditUserQuotaPage,
   },
   // userQuotas end
+  // monitors
+  {
+    path: '/clusters/:cluster_id/monitors',
+    name: 'Monitors',
+    icon: Dashboard,
+    component: MonitorsPage,
+  },
+  // monitors end
 ];
 
 export default appRoutes;

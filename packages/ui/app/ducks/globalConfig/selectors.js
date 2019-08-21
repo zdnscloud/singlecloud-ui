@@ -1,6 +1,6 @@
 /**
- * Duck: Registries
- * selectors: registries
+ * Duck: GlobalConfig
+ * selectors: globalConfig
  *
  */
 import { fromJS } from 'immutable';
@@ -36,6 +36,15 @@ export const makeSelectRegistries = () =>
         || substate.clear()
   );
 
+export const makeSelectMonitors = () =>
+  createSelector(
+    selectDomain,
+
+    (substate, clusterID) =>
+      substate.getIn(['monitordata', clusterID])
+        || substate.clear()
+  );
+
 export const makeSelectRegistriesList = () =>
   createSelector(
     selectDomain,
@@ -48,7 +57,7 @@ export const makeSelectRegistriesList = () =>
 
 export const makeSelectCurrentID = () =>
    createSelector(
-     createMatchSelector('*/registries/:id/*'),
+     createMatchSelector('*/globalConfig/:id/*'),
      (match) => {
        if (match && match.params) {
          return match.params.id;
