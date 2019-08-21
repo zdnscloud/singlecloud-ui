@@ -36,15 +36,6 @@ export const makeSelectRegistries = () =>
         || substate.clear()
   );
 
-export const makeSelectMonitors = () =>
-  createSelector(
-    selectDomain,
-
-    (substate, clusterID) =>
-      substate.getIn(['monitordata', clusterID])
-        || substate.clear()
-  );
-
 export const makeSelectRegistriesList = () =>
   createSelector(
     selectDomain,

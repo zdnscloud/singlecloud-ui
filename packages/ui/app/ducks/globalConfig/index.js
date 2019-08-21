@@ -19,8 +19,6 @@ export const initialState = fromJS({
   data: {},
   list: [],
   selectedData: null,
-  monitordata:{},
-  monitorlist:[]
 });
 
 const c = constants;
@@ -65,45 +63,6 @@ export const reducer = (
     case c.REMOVE_REGISTRY_FAILURE:
       return state;
     
-    case c.LOAD_MONITORS:
-      return state;
-    case c.LOAD_MONITORS_SUCCESS: {
-      const { data, list } = procCollectionData(payload);
-      const {
-        clusterID,
-      } = meta;
-      return state
-        .setIn(['monitordata', clusterID], fromJS(data))
-        .setIn(['monitorlist', clusterID], fromJS(list));
-    }
-    case c.LOAD_MONITORS_FAILURE:
-      return state;  
-
-    case c.CREATE_MONITOR:
-      return state;
-      case c.CREATE_MONITOR_SUCCESS: {
-        const data = payload.response;
-        const {
-          clusterID,
-        } = meta;
-        return state.setIn(['monitordata', clusterID, data.id], fromJS(data));
-      }
-    case c.CREATE_MONITOR_FAILURE:
-      return state;
-
-    case c.REMOVE_MONITOR:
-      return state;
-    case c.REMOVE_MONITOR_SUCCESS: {
-      const { id } = meta;
-      const {
-        clusterID,
-      } = meta;
-      return state
-        .removeIn(['monitordata', clusterID, id])
-    }
-    case c.REMOVE_MONITOR_FAILURE:
-      return state;
-
     default:
       return state;
   }

@@ -58,10 +58,13 @@ const GlobalConfigPage = ({
     if (url) {
       loadRegistries(url);
     }
+    if(id){
+      setCheck(true)
+    }
     return () => {
       // try cancel something when unmount
     };
-  }, [check]);
+  }, []);
 
   async function doSubmit(formValues) {
     try {
@@ -83,6 +86,7 @@ const GlobalConfigPage = ({
         }
       });
     } catch (error) {
+      setCheck(false)
       throw new SubmissionError({ _error: error });
     }
   }
