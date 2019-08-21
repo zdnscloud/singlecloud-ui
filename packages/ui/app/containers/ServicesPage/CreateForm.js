@@ -225,6 +225,7 @@ const Form = ({
                     <InputField
                       label={<FormattedMessage {...messages.formExposedPort} />}
                       name={`exposedPorts.${i}.port`}
+                      normalize={(val) => Number(val)}
                       fullWidth
                       inputProps={{ type: 'number' }}
                     />
