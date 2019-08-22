@@ -52,6 +52,18 @@ import SecretsPage, {
   ShowSecretPage,
   EditSecretPage,
 } from 'containers/SecretsPage/Loadable';
+import ServicesPage, {
+  CreateServicePage,
+  ShowServicePage,
+} from 'containers/ServicesPage/Loadable';
+import IngressesPage, {
+  CreateIngressPage,
+  ShowIngressPage,
+} from 'containers/IngressesPage/Loadable';
+import UdpingressesPage, {
+  CreateUdpingressPage,
+  ShowUdpingressPage,
+} from 'containers/UdpingressesPage/Loadable';
 import ServiceLinkPage from 'containers/ServiceLinkPage/Loadable';
 import StoragesPage, {
   CreateStoragePage,
@@ -308,6 +320,66 @@ const appRoutes = [
     component: JobDetailPage,
   },
   // job end
+  // services start
+  {
+    path: '/clusters/:cluster_id/namespaces/:namespace_id/services',
+    name: 'Services',
+    icon: Dashboard,
+    component: ServicesPage,
+  },
+  {
+    path: '/clusters/:cluster_id/namespaces/:namespace_id/services/create',
+    name: 'Create Service',
+    icon: Dashboard,
+    component: CreateServicePage,
+  },
+  {
+    path: '/clusters/:cluster_id/namespaces/:namespace_id/services/:service_id/show',
+    name: 'Show Service',
+    icon: Dashboard,
+    component: ShowServicePage,
+  },
+  // services end
+  // ingresses start
+  {
+    path: '/clusters/:cluster_id/namespaces/:namespace_id/ingresses',
+    name: 'Ingresses',
+    icon: Dashboard,
+    component: IngressesPage,
+  },
+  {
+    path: '/clusters/:cluster_id/namespaces/:namespace_id/ingresses/create',
+    name: 'Create Ingress',
+    icon: Dashboard,
+    component: CreateIngressPage,
+  },
+  {
+    path: '/clusters/:cluster_id/namespaces/:namespace_id/ingresses/:ingress_id/show',
+    name: 'Show Ingress',
+    icon: Dashboard,
+    component: ShowIngressPage,
+  },
+  // ingresses end
+  // udpingresses start
+   {
+    path: '/clusters/:cluster_id/namespaces/:namespace_id/udpingresses',
+    name: 'Udpingresses',
+    icon: Dashboard,
+    component: UdpingressesPage,
+  },
+  {
+    path: '/clusters/:cluster_id/namespaces/:namespace_id/udpingresses/create',
+    name: 'Create Udpingress',
+    icon: Dashboard,
+    component: CreateUdpingressPage,
+  },
+  {
+    path: '/clusters/:cluster_id/namespaces/:namespace_id/udpingresses/:udpingress_id/show',
+    name: 'Show Udpingress',
+    icon: Dashboard,
+    component: ShowUdpingressPage,
+  },
+  // udpingresses end
   {
     path: '/clusters/:cluster_id/namespaces/:namespace_id/serviceLink',
     name: 'ServiceLink',

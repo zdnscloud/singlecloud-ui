@@ -12,16 +12,17 @@ import SelectField from 'components/Field/SelectField';
 import PlusIcon from 'components/Icons/Plus';
 import MinusIcon from 'components/Icons/Minus';
 
+import useStyles from '../styles';
 import messages from '../messages';
 
 const VolumeClaimTemplate = ({
   fields,
-  classes,
   storageClasses,
   meta: { error, submitFailed },
 }) => {
+  const classes = useStyles();
   const storageClassesOptions = storageClasses.toList().map((sc) => ({
-    label: sc.get('name'),
+  label: sc.get('name'),
     value: sc.get('name'),
   }));
 

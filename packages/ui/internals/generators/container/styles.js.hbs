@@ -1,9 +1,8 @@
 import { makeStyles } from '@material-ui/styles';
+import pageStyles from 'jss/page';
 
 export const styles = (theme) => ({
-  root: {
-    display: 'flex',
-  },
+  ...pageStyles(theme),
 });
 
 export default makeStyles(styles);

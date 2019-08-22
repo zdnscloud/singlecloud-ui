@@ -21,15 +21,6 @@ import configMapsReducer, {
   prefix as configMapsPrefix,
 } from 'ducks/configMaps';
 import secretsReducer, { prefix as secretsPrefix } from 'ducks/secrets';
-import deploymentsReducer, {
-  prefix as deploymentsPrefix,
-} from 'ducks/deployments';
-import statefulSetsReducer, {
-  prefix as statefulSetsPrefix,
-} from 'ducks/statefulSets';
-import daemonSetsReducer, {
-  prefix as daemonSetsPrefix,
-} from 'ducks/daemonSets';
 import cronJobsReducer, { prefix as cronJobsPrefix } from 'ducks/cronJobs';
 import jobsReducer, { prefix as jobsPrefix } from 'ducks/jobs';
 import podsReducer, { prefix as podsPrefix } from 'ducks/pods';
@@ -44,9 +35,13 @@ import resourceQuotasReducer, {
 import nodesReducer, { prefix as nodesPrefix } from 'ducks/nodes';
 import clustersReducer, { prefix as clustersPrefix } from 'ducks/clusters';
 import eventsReducer, { prefix as eventsPrefix } from 'ducks/events';
-import userQuotasReducer, {
-  prefix as userQuotasPrefix,
-} from 'ducks/userQuotas';
+import userQuotasReducer, { prefix as userQuotasPrefix } from 'ducks/userQuotas';
+import servicesReducer, { prefix as servicesPrefix } from 'ducks/services';
+import deploymentsReducer, { prefix as deploymentsPrefix } from 'ducks/deployments';
+import statefulSetsReducer, { prefix as statefulSetsPrefix } from 'ducks/statefulSets';
+import daemonSetsReducer, { prefix as daemonSetsPrefix } from 'ducks/daemonSets';
+import ingressesReducer, { prefix as ingressesPrefix } from 'ducks/ingresses';
+import udpingressesReducer, { prefix as udpingressesPrefix } from 'ducks/udpingresses';
 // import reducers end
 
 /**
@@ -79,6 +74,9 @@ export default function createReducer(injectedReducers = {}) {
     [clustersPrefix]: clustersReducer,
     [eventsPrefix]: eventsReducer,
     [userQuotasPrefix]: userQuotasReducer,
+    [servicesPrefix]: servicesReducer,
+    [ingressesPrefix]: ingressesReducer,
+    [udpingressesPrefix]: udpingressesReducer,
     // combine reducers end
     ...injectedReducers,
   });

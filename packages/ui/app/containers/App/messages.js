@@ -181,4 +181,16 @@ export default defineMessages({
   //   id: `${scope}.leftMenuImageManagement`,
   //   defaultMessage: 'ImageManagement',
   // },
+  leftMenuServices: {
+    id: `${scope}.leftMenuServices`,
+    defaultMessage: 'Services',
+  },
+  leftMenuIngresses: {
+    id: `${scope}.leftMenuIngresses`,
+    defaultMessage: 'Ingresses',
+  },
+  leftMenuUdpingresses: {
+    id: `${scope}.leftMenuUdpingresses`,
+    defaultMessage: 'Udpingresses',
+  },
 });

@@ -68,6 +68,8 @@ export class ShowConfigMap extends React.PureComponent {
   render() {
     const { classes, clusterID, namespaceID, configMap } = this.props;
 
+    const configs = configMap.get('configs') || [];
+
     return (
       <div className={classes.root}>
         <ConfigMapsPageHelmet />
@@ -106,7 +108,7 @@ export class ShowConfigMap extends React.PureComponent {
                     </GridItem>
                     <GridItem xs={12} sm={12} md={12}>
                       <GridContainer>
-                        {configMap.get('configs').map((cfg, idx) => (
+                        {configs.map((cfg, idx) => (
                           <GridItem
                             xs={3}
                             sm={3}

@@ -7,3 +7,16 @@
 import loadable from '@loadable/component';
 
 export default loadable(() => import(/* webpackChunkName: "{{ properCase name }}" */'./index'));
+
+{{#if wantCreatePage}}
+export const Create{{properCase singular}}Page = loadable(() => import(/* webpackChunkName: "Create{{properCase singular}}Page" */'./CreatePage'));
+{{/if}}
+
+{{#if wantUpdatePage}}
+export const Update{{properCase singular}}Page = loadable(() => import(/* webpackChunkName: "Update{{properCase singular}}Page" */'./UpdatePage'));
+{{/if}}
+
+{{#if wantShowItemPage}}
+export const Show{{properCase singular}}Page = loadable(() => import(/* webpackChunkName: "Show{{properCase singular}}Page" */'./ShowItemPage'));
+{{/if}}
+

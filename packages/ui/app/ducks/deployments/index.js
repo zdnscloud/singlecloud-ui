@@ -1,8 +1,9 @@
 /**
- *
- * Deployments Duck
+ * Duck: Deployments
+ * reducer: deployments
  *
  */
+import _ from 'lodash';
 import { fromJS } from 'immutable';
 import getByKey from '@gsmlg/utils/getByKey';
 import { procCollectionData } from '@gsmlg/utils/procData';
@@ -15,13 +16,14 @@ const { prefix } = constants;
 export { constants, actions, prefix };
 
 export const initialState = fromJS({
-  deployments: {},
-  list: [],
+  data: {},
+  list: {},
+  selectedData: null,
 });
 
 const c = constants;
 
-export const deploymentsReducer = (
+export const reducer = (
   state = initialState,
   { type, payload, error, meta }
 ) => {
@@ -29,82 +31,74 @@ export const deploymentsReducer = (
     case c.LOAD_DEPLOYMENTS:
       return state;
     case c.LOAD_DEPLOYMENTS_SUCCESS: {
-      const { clusterID, namespaceID } = meta;
       const { data, list } = procCollectionData(payload);
+      const {
+        clusterID, namespaceID,
+      } = meta;
       return state
-        .setIn(['deployments', clusterID, namespaceID], fromJS(data))
-        .set('list', fromJS(list));
+        .setIn(['data', clusterID, namespaceID], fromJS(data))
+        .setIn(['list', clusterID, namespaceID], fromJS(list));
     }
     case c.LOAD_DEPLOYMENTS_FAILURE:
       return state;
 
-    case c.LOAD_DEPLOYMENT:
-      return state;
-    case c.LOAD_DEPLOYMENT_SUCCESS: {
-      const { clusterID, namespaceID } = meta;
-      const deployment = payload.response;
-      // temporary add, may remove when support cancel load data
-      if (deployment && deployment.id) {
-        const { containers } = deployment;
-        containers.forEach((item) => {
-          if (item && item.args) {
-            item.args = item.args.join(' ');
-          }
-          if (item && item.command) {
-            item.command = item.command.join(' ');
-          }
-        });
-        return state.setIn(
-          ['deployments', clusterID, namespaceID, deployment.id],
-          fromJS(deployment)
-        );
-      }
-      return state;
-    }
-    case c.LOAD_DEPLOYMENT_FAILURE:
-      return state;
 
     case c.CREATE_DEPLOYMENT:
       return state;
     case c.CREATE_DEPLOYMENT_SUCCESS: {
-      const { clusterID, namespaceID } = meta;
       const data = payload.response;
-      return state.setIn(
-        ['deployments', clusterID, namespaceID, data.id],
-        fromJS(data)
-      );
+      const {
+        clusterID, namespaceID,
+      } = meta;
+      return state.setIn(['data', clusterID, namespaceID, data.id], fromJS(data));
     }
-
     case c.CREATE_DEPLOYMENT_FAILURE:
       return state;
 
     case c.UPDATE_DEPLOYMENT:
       return state;
-    case c.UPDATE_DEPLOYMENT_SUCCESS:
+    case c.UPDATE_DEPLOYMENT_SUCCESS: {
+      const id = getByKey(payload, ['response', 'id']);
+      const data = getByKey(payload, ['response']);
+      const {
+        clusterID, namespaceID,
+      } = meta;
+      if (id) {
+        return state.setIn(['data', clusterID, namespaceID, id], fromJS(data));
+      }
       return state;
+    }
     case c.UPDATE_DEPLOYMENT_FAILURE:
+      return state;
+
+    case c.READ_DEPLOYMENT:
+      return state;
+    case c.READ_DEPLOYMENT_SUCCESS: {
+      const id = getByKey(payload, ['response', 'id']);
+      const data = getByKey(payload, ['response']);
+      const {
+        clusterID, namespaceID,
+      } = meta;
+      if (id) {
+        return state.setIn(['data', clusterID, namespaceID, id], fromJS(data));
+      }
+      return state;
+    }
+    case c.READ_DEPLOYMENT_FAILURE:
       return state;
 
     case c.REMOVE_DEPLOYMENT:
       return state;
-    case c.REMOVE_DEPLOYMENT_SUCCESS:
+    case c.REMOVE_DEPLOYMENT_SUCCESS: {
+      const { id } = meta;
+      const {
+        clusterID, namespaceID,
+      } = meta;
       return state
-        .deleteIn(['deployments', meta.id])
-        .update('list', (l) => l.filterNot((id) => id === meta.id));
-    case c.REMOVE_DEPLOYMENT_FAILURE:
-      return state;
-
-    case c.SCALE_DEPLOYMENT:
-      return state;
-    case c.SCALE_DEPLOYMENT_SUCCESS: {
-      const { clusterID, namespaceID } = meta;
-      const data = payload.response;
-      return state.setIn(
-        ['deployments', clusterID, namespaceID, data.id, 'replicas'],
-        data.replicas
-      );
+        .removeIn(['data', clusterID, namespaceID, id])
+        .updateIn(['list', clusterID, namespaceID], (l) => l.filterNot((i) => i === id));
     }
-    case c.SCALE_DEPLOYMENT_FAILURE:
+    case c.REMOVE_DEPLOYMENT_FAILURE:
       return state;
 
     default:
@@ -112,4 +106,4 @@ export const deploymentsReducer = (
   }
 };
 
-export default deploymentsReducer;
+export default reducer;

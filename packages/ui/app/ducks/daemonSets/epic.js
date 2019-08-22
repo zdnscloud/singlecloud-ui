@@ -1,5 +1,10 @@
+/**
+ * Duck: Daemonsets
+ * epic: daemonSets
+ *
+ */
 import { push } from 'connected-react-router';
-import { Observable, interval, of, timer } from 'rxjs';
+import { Observable, interval, of, timer, concat } from 'rxjs';
 import {
   mergeMap,
   map,
@@ -19,171 +24,107 @@ import * as a from './actions';
 
 export const loadDaemonSetsEpic = (action$, state$, { ajax }) =>
   action$.pipe(
-    ofType(c.LOAD_DAEMONSETS),
-    mergeMap(({ meta: { url, clusterID, namespaceID } }) =>
-      ajax(url).pipe(
-        map((resp) =>
-          a.loadDaemonSetsSuccess(resp, { clusterID, namespaceID })
-        ),
-        catchError((error) =>
-          of(a.loadDaemonSetsFailure(error, { clusterID, namespaceID }))
-        )
-      )
-    )
-  );
-
-export const loadDaemonSetEpic = (action$, state$, { ajax }) =>
-  action$.pipe(
-    ofType(c.LOAD_DAEMONSET),
-    mergeMap(({ payload, meta: { url, clusterID, namespaceID } }) =>
-      ajax(`${url}`).pipe(
-        map((resp) => a.loadDaemonSetSuccess(resp, { clusterID, namespaceID })),
-        catchError((error) =>
-          of(a.loadDaemonSetFailure(error, { clusterID, namespaceID }))
-        )
+    ofType(c.LOAD_DAEMON_SETS),
+    mergeMap(({ payload, meta }) =>
+      ajax(payload).pipe(
+        map((resp) => {
+          meta.resolve && meta.resolve(resp);
+          return a.loadDaemonSetsSuccess(resp, meta);
+        }),
+        catchError((error) => {
+          meta.reject && meta.reject(error);
+          return of(a.loadDaemonSetsFailure(error, meta));
+        })
       )
     )
   );
 
 export const createDaemonSetEpic = (action$, state$, { ajax }) =>
   action$.pipe(
-    ofType(c.CREATE_DAEMONSET),
-    mergeMap(
-      ({ payload, meta: { resolve, reject, url, clusterID, namespaceID } }) =>
-        ajax({
-          url,
-          method: 'POST',
-          body: payload,
-        }).pipe(
-          map((resp) => {
-            resolve(resp);
-            return a.createDaemonSetSuccess(resp, { clusterID, namespaceID });
-          }),
-          catchError((error) => {
-            reject(error);
-            return of(
-              a.createDaemonSetFailure(error, { clusterID, namespaceID })
-            );
-          })
-        )
-    )
-  );
-
-export const afterCreateEpic = (action$) =>
-  action$.pipe(
-    ofType(c.CREATE_DAEMONSET_SUCCESS),
+    ofType(c.CREATE_DAEMON_SET),
     mergeMap(({ payload, meta }) =>
-      timer(1000).pipe(
-        mapTo(
-          push(
-            `/clusters/${meta.clusterID}/namespaces/${meta.namespaceID}/daemonSets`
-          )
-        )
+      ajax({
+        url: `${meta.url}`,
+        method: 'POST',
+        body: payload,
+      }).pipe(
+        map((resp) => {
+          meta.resolve && meta.resolve(resp);
+          return a.createDaemonSetSuccess(resp, meta);
+        }),
+        catchError((error) => {
+          meta.reject && meta.reject(error);
+          return of(a.createDaemonSetFailure(error, meta));
+        })
       )
     )
   );
 
 export const updateDaemonSetEpic = (action$, state$, { ajax }) =>
   action$.pipe(
-    ofType(c.UPDATE_DAEMONSET),
-    mergeMap(
-      ({ payload, meta: { resolve, reject, url, clusterID, namespaceID } }) =>
-        ajax({
-          url,
-          method: 'PUT',
-          body: payload,
-        }).pipe(
-          map((resp) => {
-            resolve(resp);
-            return a.updateDaemonSetSuccess(resp, { clusterID, namespaceID });
-          }),
-          catchError((error) => {
-            reject(error);
-            return of(
-              a.updateDaemonSetFailure(error, { clusterID, namespaceID })
-            );
-          })
-        )
+    ofType(c.UPDATE_DAEMON_SET),
+    mergeMap(({ payload, meta }) =>
+      ajax({
+        url: `${meta.url}`,
+        method: 'PUT',
+        body: payload
+      }).pipe(
+        map((resp) => {
+          meta.resolve && meta.resolve(resp);
+          return a.updateDaemonSetSuccess(resp, meta);
+        }),
+        catchError((error) => {
+          meta.reject && meta.reject(error);
+          return of(a.updateDaemonSetFailure(error, meta));
+        })
+      )
     )
   );
 
-export const afterUpdateEpic = (action$) =>
+export const readDaemonSetEpic = (action$, state$, { ajax }) =>
   action$.pipe(
-    ofType(c.UPDATE_DAEMONSET_SUCCESS),
+    ofType(c.READ_DAEMON_SET),
     mergeMap(({ payload, meta }) =>
-      timer(1000).pipe(
-        mapTo(
-          push(
-            `/clusters/${meta.clusterID}/namespaces/${meta.namespaceID}/daemonSets`
-          )
-        )
+      ajax({
+        url: `${meta.url}`,
+        method: 'GET',
+      }).pipe(
+        map((resp) => {
+          meta.resolve && meta.resolve(resp);
+          return a.readDaemonSetSuccess(resp, { ...meta, id: payload });
+        }),
+        catchError((error) => {
+          meta.reject && meta.reject(error);
+          return of(a.readDaemonSetFailure(error, { ...meta, id: payload }));
+        })
       )
     )
   );
 
 export const removeDaemonSetEpic = (action$, state$, { ajax }) =>
   action$.pipe(
-    ofType(c.REMOVE_DAEMONSET),
-    mergeMap(({ payload, meta: { url, clusterID, namespaceID } }) =>
+    ofType(c.REMOVE_DAEMON_SET),
+    mergeMap(({ payload, meta }) =>
       ajax({
-        url: `${url}`,
+        url: `${meta.url}`,
         method: 'DELETE',
       }).pipe(
-        map((resp) =>
-          a.removeDaemonSetSuccess(resp, {
-            id: payload,
-            clusterID,
-            namespaceID,
-          })
-        ),
-        catchError((error) =>
-          of(
-            a.removeDaemonSetFailure(error, {
-              id: payload,
-              clusterID,
-              namespaceID,
-            })
-          )
-        )
+        map((resp) => {
+          meta.resolve && meta.resolve(resp);
+          return a.removeDaemonSetSuccess(resp, { ...meta, id: payload });
+        }),
+        catchError((error) => {
+          meta.reject && meta.reject(error);
+          return of(a.removeDaemonSetFailure(error, { ...meta, id: payload }));
+        })
       )
-    )
-  );
-
-export const scaleDaemonSetEpic = (action$, state$, { ajax }) =>
-  action$.pipe(
-    ofType(c.SCALE_DAEMONSET),
-    mergeMap(({ payload, meta: { url, clusterID, namespaceID } }) =>
-      ajax({
-        url,
-        method: 'PUT',
-        body: payload,
-      }).pipe(
-        map((resp) =>
-          a.scaleDaemonSetSuccess(resp, { clusterID, namespaceID })
-        ),
-        catchError((error) =>
-          of(a.scaleDaemonSetFailure(error, { clusterID, namespaceID }))
-        )
-      )
-    )
-  );
-
-export const afterScaleEpic = (action$) =>
-  action$.pipe(
-    ofType(c.SCALE_DAEMONSET_SUCCESS),
-    mergeMap(({ payload, meta }) =>
-      timer(1000).pipe(mapTo({ type: 'Woooo', payload: null }))
     )
   );
 
 export default combineEpics(
   loadDaemonSetsEpic,
-  loadDaemonSetEpic,
   createDaemonSetEpic,
-  afterCreateEpic,
   updateDaemonSetEpic,
-  afterUpdateEpic,
-  scaleDaemonSetEpic,
-  afterScaleEpic,
-  removeDaemonSetEpic
+  readDaemonSetEpic,
+  removeDaemonSetEpic,
 );

@@ -1,3 +1,9 @@
+/**
+ * Duck: Daemonsets
+ * selectors: daemonSets
+ *
+ */
+import { fromJS } from 'immutable';
 import { createSelector } from 'reselect';
 import {
   createMatchSelector,
@@ -5,77 +11,71 @@ import {
 } from 'connected-react-router/immutable';
 
 import {
-  makeSelectClusterID,
-  makeSelectNamespaceID,
-} from 'ducks/app/selectors';
-import { makeSelectCurrentNamespace } from 'ducks/namespaces/selectors';
+  makeSelectCurrent as makeSelectCurrentNamespace,
+} from 'ducks/namespaces/selectors';
+
+import { makeSelectCurrentID as makeSelectCurrentClusterID } from 'ducks/clusters/selectors';
+
+import { makeSelectCurrentID as makeSelectCurrentNamespaceID } from 'ducks/namespaces/selectors';
 
 import { prefix } from './constants';
+import { initialState } from './index';
 
 /**
- * Direct selector to the daemonSets duck
+ * Direct selector to the daemonSets domain
  */
-
-const selectDaemonSetsDomain = (state) => state.get(prefix);
+export const selectDomain = (state) => state.get(prefix) || initialState;
 
 /**
  * Other specific selectors
  */
+export const makeSelectURL = () =>
+  createSelector(
+    makeSelectCurrentNamespace(),
+    (pt) => pt.getIn(['links', 'daemonsets'])
+  );
+
 export const makeSelectDaemonSets = () =>
   createSelector(
-    selectDaemonSetsDomain,
-    makeSelectClusterID(),
-    makeSelectNamespaceID(),
+    selectDomain,
+    makeSelectCurrentClusterID(),
+    makeSelectCurrentNamespaceID(),
+
     (substate, clusterID, namespaceID) =>
-      substate.getIn(['daemonSets', clusterID, namespaceID]) || substate.clear()
+      substate.getIn(['data', clusterID, namespaceID])
+        || substate.clear()
   );
 
 export const makeSelectDaemonSetsList = () =>
   createSelector(
-    selectDaemonSetsDomain,
+    selectDomain,
     makeSelectDaemonSets(),
-    (substate, daemonSets) =>
-      substate.get('list').map((id) => daemonSets.get(id))
+    makeSelectCurrentClusterID(),
+    makeSelectCurrentNamespaceID(),
+
+    (substate, data, clusterID, namespaceID) =>
+      (substate.getIn(['list', clusterID, namespaceID]) || fromJS([]))
+        .map((id) => data.get(id)) || fromJS([])
   );
 
-export const makeSelectURL = () =>
+export const makeSelectCurrentID = () =>
+   createSelector(
+     createMatchSelector('*/daemonSets/:id/*'),
+     (match) => {
+       if (match && match.params) {
+         return match.params.id;
+       }
+       return '';
+     }
+   );
+
+export const makeSelectCurrent = () =>
   createSelector(
-    makeSelectCurrentNamespace(),
-    (ns) => ns.getIn(['links', 'daemonsets'])
+    selectDomain,
+    makeSelectCurrentClusterID(),
+    makeSelectCurrentNamespaceID(),
+
+    makeSelectCurrentID(),
+    (substate, clusterID, namespaceID, id) =>
+      substate.getIn(['data', clusterID, namespaceID, id]) || substate.clear()
   );
-
-export const makeSelectDaemonSetID = () =>
-  createSelector(
-    createMatchSelector(
-      '/clusters/:cluster_id/namespaces/:namespace_id/daemonSets/:daemonSet_id'
-    ),
-    (match) => {
-      if (match && match.params) {
-        return match.params.daemonSet_id;
-      }
-      return '';
-    }
-  );
-
-export const makeSelectCurrentDaemonSet = () =>
-  createSelector(
-    selectDaemonSetsDomain,
-    makeSelectClusterID(),
-    makeSelectNamespaceID(),
-    makeSelectDaemonSetID(),
-    (substate, clusterID, namespaceID, daemonSetID) =>
-      substate.getIn(['daemonSets', clusterID, namespaceID, daemonSetID]) ||
-      substate.clear()
-  );
-
-/**
- * Default selector used by LoginPage
- */
-
-const makeSelectDaemonSetsDomain = () =>
-  createSelector(
-    selectDaemonSetsDomain,
-    (substate) => substate
-  );
-
-export default makeSelectDaemonSetsDomain;

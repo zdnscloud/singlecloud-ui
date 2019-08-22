@@ -3,15 +3,13 @@ import {
   createMatchSelector,
   getLocation,
 } from 'connected-react-router/immutable';
-import { makeSelectClusterID } from 'ducks/app/selectors';
-import { selectNamespacesDomain } from 'ducks/namespaces/selectors';
 import { prefix } from './constants';
 
 /**
  * Direct selector to the clusters duck
  */
 export const selectClustersDomain = (state) => state.get(prefix);
-
+export const selectDomain = (state) => state.get(prefix);
 /**
  * Other specific selectors
  */
@@ -34,27 +32,31 @@ export const makeSelectClustersList = () =>
     (substate, clusters) => substate.get('list').map((id) => clusters.get(id))
   );
 
+export const makeSelectCurrentID = () =>
+   createSelector(
+     createMatchSelector('*/clusters/:id/*'),
+     (match) => {
+       if (match && match.params) {
+         return match.params.id;
+       }
+       return '';
+     }
+   );
+
+export const makeSelectCurrent = () =>
+  createSelector(
+    selectDomain,
+    makeSelectCurrentID(),
+    (substate, id) =>
+      substate.getIn(['clusters', id]) || substate.clear()
+  );
+
 export const makeSelectCurrentCluster = () =>
   createSelector(
     selectClustersDomain,
-    makeSelectClusterID(),
+    makeSelectCurrentID(),
     (substate, clusterID) =>
       substate.getIn(['clusters', clusterID]) || substate.clear()
-  );
-
-export const makeSelectClustersAndNamespaces = () =>
-  createSelector(
-    selectClustersDomain,
-    selectNamespacesDomain,
-    (cstate, nsstate) =>
-      cstate
-        .get('clusters')
-        .map((c) =>
-          c.set(
-            'namespaces',
-            nsstate.getIn(['namespaces', c.get('id')], c.clear())
-          )
-        )
   );
 
 export const makeSelectPodLogIsOpening = () =>

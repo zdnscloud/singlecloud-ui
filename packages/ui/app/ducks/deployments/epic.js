@@ -1,5 +1,10 @@
+/**
+ * Duck: Deployments
+ * epic: deployments
+ *
+ */
 import { push } from 'connected-react-router';
-import { Observable, interval, of, timer } from 'rxjs';
+import { Observable, interval, of, timer, concat } from 'rxjs';
 import {
   mergeMap,
   map,
@@ -20,29 +25,16 @@ import * as a from './actions';
 export const loadDeploymentsEpic = (action$, state$, { ajax }) =>
   action$.pipe(
     ofType(c.LOAD_DEPLOYMENTS),
-    mergeMap(({ meta: { url, clusterID, namespaceID } }) =>
-      ajax(url).pipe(
-        map((resp) =>
-          a.loadDeploymentsSuccess(resp, { clusterID, namespaceID })
-        ),
-        catchError((error) =>
-          of(a.loadDeploymentsFailure(error, { clusterID, namespaceID }))
-        )
-      )
-    )
-  );
-
-export const loadDeploymentEpic = (action$, state$, { ajax }) =>
-  action$.pipe(
-    ofType(c.LOAD_DEPLOYMENT),
-    mergeMap(({ payload, meta: { url, clusterID, namespaceID } }) =>
-      ajax(`${url}`).pipe(
-        map((resp) =>
-          a.loadDeploymentSuccess(resp, { clusterID, namespaceID })
-        ),
-        catchError((error) =>
-          of(a.loadDeploymentFailure(error, { clusterID, namespaceID }))
-        )
+    mergeMap(({ payload, meta }) =>
+      ajax(payload).pipe(
+        map((resp) => {
+          meta.resolve && meta.resolve(resp);
+          return a.loadDeploymentsSuccess(resp, meta);
+        }),
+        catchError((error) => {
+          meta.reject && meta.reject(error);
+          return of(a.loadDeploymentsFailure(error, meta));
+        })
       )
     )
   );
@@ -50,37 +42,20 @@ export const loadDeploymentEpic = (action$, state$, { ajax }) =>
 export const createDeploymentEpic = (action$, state$, { ajax }) =>
   action$.pipe(
     ofType(c.CREATE_DEPLOYMENT),
-    mergeMap(
-      ({ payload, meta: { resolve, reject, url, clusterID, namespaceID } }) =>
-        ajax({
-          url,
-          method: 'POST',
-          body: payload,
-        }).pipe(
-          map((resp) => {
-            resolve(resp);
-            return a.createDeploymentSuccess(resp, { clusterID, namespaceID });
-          }),
-          catchError((error) => {
-            reject(error);
-            return of(
-              a.createDeploymentFailure(error, { clusterID, namespaceID })
-            );
-          })
-        )
-    )
-  );
-
-export const afterCreateEpic = (action$) =>
-  action$.pipe(
-    ofType(c.CREATE_DEPLOYMENT_SUCCESS),
     mergeMap(({ payload, meta }) =>
-      timer(1000).pipe(
-        mapTo(
-          push(
-            `/clusters/${meta.clusterID}/namespaces/${meta.namespaceID}/deployments`
-          )
-        )
+      ajax({
+        url: `${meta.url}`,
+        method: 'POST',
+        body: payload,
+      }).pipe(
+        map((resp) => {
+          meta.resolve && meta.resolve(resp);
+          return a.createDeploymentSuccess(resp, meta);
+        }),
+        catchError((error) => {
+          meta.reject && meta.reject(error);
+          return of(a.createDeploymentFailure(error, meta));
+        })
       )
     )
   );
@@ -88,37 +63,40 @@ export const afterCreateEpic = (action$) =>
 export const updateDeploymentEpic = (action$, state$, { ajax }) =>
   action$.pipe(
     ofType(c.UPDATE_DEPLOYMENT),
-    mergeMap(
-      ({ payload, meta: { resolve, reject, url, clusterID, namespaceID } }) =>
-        ajax({
-          url,
-          method: 'PUT',
-          body: payload,
-        }).pipe(
-          map((resp) => {
-            resolve(resp);
-            return a.updateDeploymentSuccess(resp, { clusterID, namespaceID });
-          }),
-          catchError((error) => {
-            reject(error);
-            return of(
-              a.updateDeploymentFailure(error, { clusterID, namespaceID })
-            );
-          })
-        )
+    mergeMap(({ payload, meta }) =>
+      ajax({
+        url: `${meta.url}`,
+        method: 'PUT',
+        body: payload
+      }).pipe(
+        map((resp) => {
+          meta.resolve && meta.resolve(resp);
+          return a.updateDeploymentSuccess(resp, meta);
+        }),
+        catchError((error) => {
+          meta.reject && meta.reject(error);
+          return of(a.updateDeploymentFailure(error, meta));
+        })
+      )
     )
   );
 
-export const afterUpdateEpic = (action$) =>
+export const readDeploymentEpic = (action$, state$, { ajax }) =>
   action$.pipe(
-    ofType(c.UPDATE_DEPLOYMENT_SUCCESS),
+    ofType(c.READ_DEPLOYMENT),
     mergeMap(({ payload, meta }) =>
-      timer(1000).pipe(
-        mapTo(
-          push(
-            `/clusters/${meta.clusterID}/namespaces/${meta.namespaceID}/deployments`
-          )
-        )
+      ajax({
+        url: `${meta.url}`,
+        method: 'GET',
+      }).pipe(
+        map((resp) => {
+          meta.resolve && meta.resolve(resp);
+          return a.readDeploymentSuccess(resp, { ...meta, id: payload });
+        }),
+        catchError((error) => {
+          meta.reject && meta.reject(error);
+          return of(a.readDeploymentFailure(error, { ...meta, id: payload }));
+        })
       )
     )
   );
@@ -126,66 +104,27 @@ export const afterUpdateEpic = (action$) =>
 export const removeDeploymentEpic = (action$, state$, { ajax }) =>
   action$.pipe(
     ofType(c.REMOVE_DEPLOYMENT),
-    mergeMap(({ payload, meta: { url, clusterID, namespaceID } }) =>
+    mergeMap(({ payload, meta }) =>
       ajax({
-        url: `${url}`,
+        url: `${meta.url}`,
         method: 'DELETE',
       }).pipe(
-        map((resp) =>
-          a.removeDeploymentSuccess(resp, {
-            id: payload,
-            clusterID,
-            namespaceID,
-          })
-        ),
-        catchError((error) =>
-          of(
-            a.removeDeploymentFailure(error, {
-              id: payload,
-              clusterID,
-              namespaceID,
-            })
-          )
-        )
+        map((resp) => {
+          meta.resolve && meta.resolve(resp);
+          return a.removeDeploymentSuccess(resp, { ...meta, id: payload });
+        }),
+        catchError((error) => {
+          meta.reject && meta.reject(error);
+          return of(a.removeDeploymentFailure(error, { ...meta, id: payload }));
+        })
       )
-    )
-  );
-
-export const scaleDeploymentEpic = (action$, state$, { ajax }) =>
-  action$.pipe(
-    ofType(c.SCALE_DEPLOYMENT),
-    mergeMap(({ payload, meta: { url, clusterID, namespaceID } }) =>
-      ajax({
-        url,
-        method: 'PUT',
-        body: payload,
-      }).pipe(
-        map((resp) =>
-          a.scaleDeploymentSuccess(resp, { clusterID, namespaceID })
-        ),
-        catchError((error) =>
-          of(a.scaleDeploymentFailure(error, { clusterID, namespaceID }))
-        )
-      )
-    )
-  );
-
-export const afterScaleEpic = (action$) =>
-  action$.pipe(
-    ofType(c.SCALE_DEPLOYMENT_SUCCESS),
-    mergeMap(({ payload, meta }) =>
-      timer(1000).pipe(mapTo({ type: 'Woooo', payload: null }))
     )
   );
 
 export default combineEpics(
   loadDeploymentsEpic,
-  loadDeploymentEpic,
   createDeploymentEpic,
-  afterCreateEpic,
   updateDeploymentEpic,
-  afterUpdateEpic,
-  scaleDeploymentEpic,
-  afterScaleEpic,
-  removeDeploymentEpic
+  readDeploymentEpic,
+  removeDeploymentEpic,
 );

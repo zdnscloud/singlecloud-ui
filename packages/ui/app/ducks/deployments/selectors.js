@@ -1,3 +1,9 @@
+/**
+ * Duck: Deployments
+ * selectors: deployments
+ *
+ */
+import { fromJS } from 'immutable';
 import { createSelector } from 'reselect';
 import {
   createMatchSelector,
@@ -5,78 +11,70 @@ import {
 } from 'connected-react-router/immutable';
 
 import {
-  makeSelectClusterID,
-  makeSelectNamespaceID,
-} from 'ducks/app/selectors';
-import { makeSelectCurrentNamespace } from 'ducks/namespaces/selectors';
+  makeSelectCurrent as makeSelectCurrentNamespace,
+} from 'ducks/namespaces/selectors';
+
+import { makeSelectCurrentID as makeSelectCurrentClusterID } from 'ducks/clusters/selectors';
+import { makeSelectCurrentID as makeSelectCurrentNamespaceID } from 'ducks/namespaces/selectors';
 
 import { prefix } from './constants';
+import { initialState } from './index';
 
 /**
- * Direct selector to the deployments duck
+ * Direct selector to the deployments domain
  */
-
-const selectDeploymentsDomain = (state) => state.get(prefix);
+export const selectDomain = (state) => state.get(prefix) || initialState;
 
 /**
  * Other specific selectors
  */
+export const makeSelectURL = () =>
+  createSelector(
+    makeSelectCurrentNamespace(),
+    (pt) => pt.getIn(['links', 'deployments'])
+  );
+
 export const makeSelectDeployments = () =>
   createSelector(
-    selectDeploymentsDomain,
-    makeSelectClusterID(),
-    makeSelectNamespaceID(),
+    selectDomain,
+    makeSelectCurrentClusterID(),
+    makeSelectCurrentNamespaceID(),
+
     (substate, clusterID, namespaceID) =>
-      substate.getIn(['deployments', clusterID, namespaceID]) ||
-      substate.clear()
+      substate.getIn(['data', clusterID, namespaceID])
+        || substate.clear()
   );
 
 export const makeSelectDeploymentsList = () =>
   createSelector(
-    selectDeploymentsDomain,
+    selectDomain,
     makeSelectDeployments(),
-    (substate, deployments) =>
-      substate.get('list').map((id) => deployments.get(id))
+    makeSelectCurrentClusterID(),
+    makeSelectCurrentNamespaceID(),
+
+    (substate, data, clusterID, namespaceID) =>
+      (substate.getIn(['list', clusterID, namespaceID]) || fromJS([]))
+        .map((id) => data.get(id)) || fromJS([])
   );
 
-export const makeSelectURL = () =>
+export const makeSelectCurrentID = () =>
+   createSelector(
+     createMatchSelector('*/deployments/:id/*'),
+     (match) => {
+       if (match && match.params) {
+         return match.params.id;
+       }
+       return '';
+     }
+   );
+
+export const makeSelectCurrent = () =>
   createSelector(
-    makeSelectCurrentNamespace(),
-    (ns) => ns.getIn(['links', 'deployments'])
+    selectDomain,
+    makeSelectCurrentClusterID(),
+    makeSelectCurrentNamespaceID(),
+
+    makeSelectCurrentID(),
+    (substate, clusterID, namespaceID, id) =>
+      substate.getIn(['data', clusterID, namespaceID, id]) || substate.clear()
   );
-
-export const makeSelectDeploymentID = () =>
-  createSelector(
-    createMatchSelector(
-      '/clusters/:cluster_id/namespaces/:namespace_id/deployments/:deployment_id'
-    ),
-    (match) => {
-      if (match && match.params) {
-        return match.params.deployment_id;
-      }
-      return '';
-    }
-  );
-
-export const makeSelectCurrentDeployment = () =>
-  createSelector(
-    selectDeploymentsDomain,
-    makeSelectClusterID(),
-    makeSelectNamespaceID(),
-    makeSelectDeploymentID(),
-    (substate, clusterID, namespaceID, deploymentID) =>
-      substate.getIn(['deployments', clusterID, namespaceID, deploymentID]) ||
-      substate.clear()
-  );
-
-/**
- * Default selector used by LoginPage
- */
-
-const makeSelectDeploymentsDomain = () =>
-  createSelector(
-    selectDeploymentsDomain,
-    (substate) => substate
-  );
-
-export default makeSelectDeploymentsDomain;

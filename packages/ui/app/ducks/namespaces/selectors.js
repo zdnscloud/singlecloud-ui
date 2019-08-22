@@ -4,15 +4,16 @@ import {
   getLocation,
 } from 'connected-react-router/immutable';
 import {
-  makeSelectClusterID,
-  makeSelectNamespaceID,
-} from 'ducks/app/selectors';
+  makeSelectCurrentID as makeSelectCurrentClusterID,
+  selectDomain as selectClusterDomain
+} from 'ducks/clusters/selectors';
 import { prefix } from './constants';
 
 /**
  * Direct selector to the namespaces duck
  */
 export const selectNamespacesDomain = (state) => state.get(prefix);
+export const selectDomain = (state) => state.get(prefix);
 
 /**
  * Other specific selectors
@@ -20,7 +21,7 @@ export const selectNamespacesDomain = (state) => state.get(prefix);
 export const makeSelectNamespaces = () =>
   createSelector(
     selectNamespacesDomain,
-    makeSelectClusterID(),
+    makeSelectCurrentClusterID(),
     (substate, clusterID) =>
       substate.getIn(['namespaces', clusterID]) || substate.clear()
   );
@@ -33,11 +34,31 @@ export const makeSelectNamespacesList = () =>
       substate.get('list').map((id) => namespaces.get(id))
   );
 
+export const makeSelectCurrentID = () =>
+   createSelector(
+     createMatchSelector('*/namespaces/:id/*'),
+     (match) => {
+       if (match && match.params) {
+         return match.params.id;
+       }
+       return '';
+     }
+   );
+
+export const makeSelectCurrent = () =>
+  createSelector(
+    selectDomain,
+    makeSelectCurrentClusterID(),
+    makeSelectCurrentID(),
+    (substate, clusterID, id) =>
+      substate.getIn(['namespaces', clusterID, id]) || substate.clear()
+  );
+
 export const makeSelectCurrentNamespaceID = () =>
   createSelector(
     selectNamespacesDomain,
-    makeSelectClusterID(),
-    makeSelectNamespaceID(),
+    makeSelectCurrentClusterID(),
+    makeSelectCurrentID(),
     makeSelectNamespacesList(),
     (substate, clusterID, nid, ns) =>
       substate.getIn(['selectedNamespace', clusterID]) ||
@@ -49,10 +70,25 @@ export const makeSelectCurrentNamespaceID = () =>
 export const makeSelectCurrentNamespace = () =>
   createSelector(
     selectNamespacesDomain,
-    makeSelectClusterID(),
+    makeSelectCurrentClusterID(),
     makeSelectCurrentNamespaceID(),
     (substate, clusterID, nid) =>
       substate.getIn(['namespaces', clusterID, nid]) || substate.clear()
+  );
+
+export const makeSelectClustersAndNamespaces = () =>
+  createSelector(
+    selectClustersDomain,
+    selectNamespacesDomain,
+    (cstate, nsstate) =>
+      cstate
+        .get('clusters')
+        .map((c) =>
+          c.set(
+            'namespaces',
+            nsstate.getIn(['namespaces', c.get('id')], c.clear())
+          )
+        )
   );
 
 /**

@@ -5,39 +5,44 @@ import FormControl from '@material-ui/core/FormControl';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormLabel from '@material-ui/core/FormLabel';
 import Switch from '@material-ui/core/Switch';
-
-import styles from './styles';
+import Danger from 'components/Typography/Danger';
 
 const IOSSwitch = ({ ...props }) => {
   const {
     label,
+    disabled,
     checked,
     onChange,
     value,
     classes,
     inputProps,
+    meta,
     ...custom
   } = props;
+  const { touched, invalid, error } = meta || {};
 
   return (
-    <FormControlLabel
-      {...custom}
-      control={
-        <Switch
-          {...inputProps}
-          classes={{
-            switchBase: classes.iOSSwitchBase,
-            checked: classes.iOSChecked,
-          }}
-          disableRipple
-          checked={checked}
-          onChange={onChange}
-          value={value}
-        />
-      }
-      label={label}
-    />
+    <>
+      <FormControlLabel
+        {...custom}
+        disabled={disabled}
+        control={
+          <Switch
+            {...inputProps}
+            disabled={disabled}
+            disableRipple
+            checked={checked}
+            onChange={onChange}
+            value={value}
+          />
+        }
+        label={label}
+      />
+      {touched && error && (
+        <Danger>{error}</Danger>
+      )}
+    </>
   );
 };
 
-export default withStyles(styles)(IOSSwitch);
+export default IOSSwitch;
