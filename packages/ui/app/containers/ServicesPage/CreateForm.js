@@ -28,6 +28,24 @@ import messages from './messages';
 
 export const formName = 'createServiceForm';
 
+const ExposedPortsComponent = ({ meta: { touched, error, invalid }}) => {
+  console.log('meta: ', { touched, error, invalid });
+  return (
+    <>
+      <FormattedMessage {...messages.formExposedPorts} />
+      {touched && (typeof error === 'string') && (
+        <Danger>{error}</Danger>
+      )}
+    </>
+  );
+};
+
+const ExposedPortsField = (props) => {
+  const { component, ...rest } = props;
+
+  return <Field {...rest} component={ExposedPortsComponent} />;
+};
+
 const validate = (values) => {
   const errors = {};
   const requiredFields = ['name'];
@@ -36,6 +54,21 @@ const validate = (values) => {
       errors[field] = 'Required';
     }
   });
+  const exposedPorts = values.get('exposedPorts') || [];
+  const enabled = exposedPorts.reduce((enabled, p) => enabled || p.get('enable'), false);
+  exposedPorts.forEach((port, i) => {
+    if (!enabled) {
+      errors.exposedPorts = errors.exposedPorts || [];
+      errors.exposedPorts[i] = { ...(errors.exposedPorts[i] || {}), enable: 'Required' };
+    }
+    if (!port.get('port')) {
+      errors.exposedPorts = errors.exposedPorts || [];
+      errors.exposedPorts[i] = { ...(errors.exposedPorts[i] || {}), port: 'Required' };
+    }
+  });
+  if (exposedPorts.size === 0) {
+    errors.exposedPorts = 'Required';
+  }
 
   return errors;
 };
@@ -153,7 +186,7 @@ const Form = ({
                   md={12}
                   className={classes.formLine}
                 >
-                  <FormattedMessage {...messages.formExposedPorts} />
+                  <ExposedPortsField name="exposedPorts" />
                 </GridItem>
               </GridContainer>
               {exposedPorts.map((exposedPort, i) => (
