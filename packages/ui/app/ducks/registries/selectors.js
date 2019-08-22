@@ -1,6 +1,6 @@
 /**
- * Duck: GlobalConfig
- * selectors: globalConfig
+ * Duck: Registries
+ * selectors: registries
  *
  */
 import { fromJS } from 'immutable';

@@ -45,7 +45,7 @@ import nodesReducer, { prefix as nodesPrefix } from 'ducks/nodes';
 import clustersReducer, { prefix as clustersPrefix } from 'ducks/clusters';
 import eventsReducer, { prefix as eventsPrefix } from 'ducks/events';
 import userQuotasReducer, { prefix as userQuotasPrefix } from 'ducks/userQuotas';
-import globalConfigReducer, { prefix as globalConfigPrefix } from 'ducks/globalConfig';
+import registriesReducer, { prefix as registriesPrefix } from 'ducks/registries';
 import monitorsReducer, { prefix as monitorsPrefix } from 'ducks/monitors';
 // import reducers end
 
@@ -79,7 +79,7 @@ export default function createReducer(injectedReducers = {}) {
     [clustersPrefix]: clustersReducer,
     [eventsPrefix]: eventsReducer,
     [userQuotasPrefix]: userQuotasReducer,
-    [globalConfigPrefix]: globalConfigReducer,
+    [registriesPrefix]: registriesReducer,
     [monitorsPrefix]: monitorsReducer,
     // combine reducers end
     ...injectedReducers,

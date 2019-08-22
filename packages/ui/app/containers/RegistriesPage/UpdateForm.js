@@ -17,6 +17,7 @@ import GridContainer from 'components/Grid/GridContainer';
 import InputField from 'components/Field/InputField';
 import SelectField from 'components/Field/SelectField';
 import ReadOnlyInput from 'components/CustomInput/ReadOnlyInput';
+import Button from '@material-ui/core/Button';
 
 import useStyles from './styles';
 import messages from './messages';
@@ -34,12 +35,13 @@ const validate = (values) => {
   return errors;
 };
 
-const Form = ({ formValues, handleSubmit, error, clusters,initialValues,role ,check}) => {
+const Form = ({ formValues, handleSubmit, error, clusters,role ,check,registry}) => {
   const classes = useStyles();
   const clustersOptions = clusters.toList().map((sc) => ({
     label: sc.get('name'),
     value: sc.get('name'),
   }));
+  const redirectUrl = registry && registry.getIn(['redirectUrl']);
 
   return (
     <form className={classes.form} onSubmit={handleSubmit}>
@@ -56,21 +58,31 @@ const Form = ({ formValues, handleSubmit, error, clusters,initialValues,role ,ch
             fullWidth                    
           />
         </GridItem>
-        {check ? (
+        {check && registry ? (
             <Fragment>
                 <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
                 <ReadOnlyInput
                   label={<FormattedMessage {...messages.formIngressDomain} />}
-                  value={initialValues && initialValues.get('ingressDomain')}
+                  value={registry.get('ingressDomain')}
                   fullWidth                    
                 />
               </GridItem>
               <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
                 <ReadOnlyInput
                   label={<FormattedMessage {...messages.formCluster} />}
-                  value={initialValues && initialValues.get('cluster')}
+                  value={registry.get('cluster')}
                   fullWidth                    
                 />
+              </GridItem>
+              <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={()=>window.open(redirectUrl)}
+                    disabled={!redirectUrl}
+                  >
+                    <FormattedMessage {...messages.openRegistry} />
+                  </Button>
               </GridItem>
             </Fragment>) : (
             <Fragment>

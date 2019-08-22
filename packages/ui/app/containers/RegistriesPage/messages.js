@@ -1,21 +1,21 @@
 /*
- * GlobalConfig Messages
+ * Registries Messages
  *
- * This contains all the text for the GlobalConfig container.
+ * This contains all the text for the Registries container.
  */
 
 import { defineMessages } from 'react-intl';
 
-export const scope = 'app.containers.GlobalConfig';
+export const scope = 'app.containers.Registries';
 
 export default defineMessages({
   pageTitle: {
     id: `${scope}.pageTitle`,
-    defaultMessage: 'GlobalConfig',
+    defaultMessage: 'Registries',
   },
   pageDesc: {
     id: `${scope}.pageDesc`,
-    defaultMessage: 'Description of GlobalConfig',
+    defaultMessage: 'Description of Registries',
   },
   registries: {
     id: `${scope}.registries`,
@@ -37,4 +37,12 @@ export default defineMessages({
     id: `${scope}.repositoryServise`,
     defaultMessage: 'repositoryServise',
   },
+  openRegistry: {
+    id: `${scope}.openRegistry`,
+    defaultMessage: 'Open Registry',
+  },
+  pending: {
+    id: `${scope}.pending`,
+    defaultMessage: 'Pending',
+  }
 });

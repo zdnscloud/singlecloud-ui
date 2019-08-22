@@ -1,6 +1,6 @@
 /**
- * Duck: GlobalConfig
- * actions: globalConfig
+ * Duck: Registries
+ * actions: registries
  *
  */
 import * as c from './constants';

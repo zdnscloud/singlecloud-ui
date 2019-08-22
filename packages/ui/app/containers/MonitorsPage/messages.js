@@ -32,5 +32,9 @@ export default defineMessages({
   openMonitor :{
     id: `${scope}.openMonitor`,
     defaultMessage: 'Open Monitor',
+  },
+  pending: {
+    id: `${scope}.pending`,
+    defaultMessage: 'Pending',
   }
 });

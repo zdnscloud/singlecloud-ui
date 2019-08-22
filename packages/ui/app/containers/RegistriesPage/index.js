@@ -1,6 +1,6 @@
 /**
  *
- * GlobalConfigPage
+ * RegistriesPage
  *
  */
 import React, { useEffect, useState, memo } from 'react';
@@ -20,10 +20,10 @@ import Helmet from 'components/Helmet/Helmet';
 import { FormattedMessage } from 'react-intl';
 import CssBaseline from '@material-ui/core/CssBaseline';
 
-import { makeSelectURL ,makeSelectRegistriesList} from 'ducks/globalConfig/selectors';
+import { makeSelectURL ,makeSelectRegistries} from 'ducks/registries/selectors';
 import { makeSelectClustersList } from 'ducks/clusters/selectors';
 
-import * as actions from 'ducks/globalConfig/actions';
+import * as actions from 'ducks/registries/actions';
 import { makeSelectRole } from 'ducks/role/selectors';
 
 import GridItem from 'components/Grid/GridItem';
@@ -38,10 +38,10 @@ import useStyles from './styles';
 import messages from './messages';
 import UpdateRegistryForm, { formName } from './UpdateForm';
 
-const GlobalConfigPage = ({
+const RegistriesPage = ({
   url,
   loadRegistries,
-  list,
+  registries,
   role,
   values,
   removeRegistry,
@@ -50,9 +50,19 @@ const GlobalConfigPage = ({
   submitForm
 }) => {
   const classes = useStyles();
-  const runningClusters = clusters && clusters.filter((d) => d.get('status') === 'Running'); 
   const [check, setCheck] = useState(false);
-  const id = list && list.getIn([0,'id']);
+  const [isPending, setPending] = useState(false);
+  const runningClusters = clusters && clusters.filter((d) => d.get('status') === 'Running'); 
+  const registry = registries.first();
+  const id = registry && registry.getIn(['id']);
+  const rurl = registry && registry.getIn(['links','remove']);
+
+  const delayUnset = (back) => {
+    setTimeout(() => {
+      setPending(false);
+      if (back) setCheck(!!check);
+    }, 1000);
+  }
 
   useEffect(() => {
     if (url) {
@@ -61,13 +71,12 @@ const GlobalConfigPage = ({
     if(id){
       setCheck(true)
     }
-    return () => {
-      // try cancel something when unmount
-    };
-  }, []);
+  }, [url,id]);
 
   async function doSubmit(formValues) {
     try {
+      setPending(true);
+      setCheck(!check);
       const data = formValues.toJS();
       await new Promise((resolve, reject) => {
         if(!check){
@@ -77,7 +86,6 @@ const GlobalConfigPage = ({
             url,
           });
         } else {
-          const rurl = list && list.getIn([0,'links','remove']);
           removeRegistry(id, {
             url:rurl, 
             resolve,
@@ -85,8 +93,9 @@ const GlobalConfigPage = ({
           })
         }
       });
+      delayUnset();
     } catch (error) {
-      setCheck(false)
+      delayUnset(true);
       throw new SubmissionError({ _error: error });
     }
   }
@@ -103,7 +112,6 @@ const GlobalConfigPage = ({
       <Breadcrumbs
             data={[
               {
-                path: '/registries',
                 name: <FormattedMessage {...messages.pageTitle} />,
               },
             ]}
@@ -120,11 +128,15 @@ const GlobalConfigPage = ({
                 <GridContainer>
                   <GridItem>
                     <Switch
+                     disabled={isPending}
+                     inputProps={{
+                       disabled: isPending
+                     }}
                       onChange={handleChange()}
                       checked={check}
                       label={
                         <FormattedMessage
-                          {...messages.repositoryServise}
+                          {...(isPending ? messages.pending :messages.repositoryServise)}
                         />
                       }
                     />
@@ -135,7 +147,7 @@ const GlobalConfigPage = ({
                       formValues={values}
                       clusters={runningClusters}
                       role={role}
-                      initialValues={list && list.getIn([0])}
+                      registry={registry}
                       check={check}
                     />
                   </GridItem>
@@ -150,7 +162,7 @@ const GlobalConfigPage = ({
 
 const mapStateToProps = createStructuredSelector({
   url: makeSelectURL(),
-  list: makeSelectRegistriesList(),
+  registries: makeSelectRegistries(),
   role: makeSelectRole(),
   values: getFormValues(formName),
   clusters: makeSelectClustersList(),
@@ -173,4 +185,4 @@ const withConnect = connect(
 export default compose(
   withConnect,
   memo
-)(GlobalConfigPage);
+)(RegistriesPage);

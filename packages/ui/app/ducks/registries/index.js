@@ -1,6 +1,6 @@
 /**
- * Duck: GlobalConfig
- * reducer: globalConfig
+ * Duck: Registries
+ * reducer: registries
  *
  */
 import _ from 'lodash';

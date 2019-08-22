@@ -53,10 +53,11 @@ export const reducer = (
       } = meta;
       return state.setIn(['data', clusterID, data.id], fromJS(data));
     }
-    case c.CREATE_MONITOR_FAILURE:
+    case c.CREATE_MONITOR_FAILURE:{
       const data = payload.response.message;
       return state.set('error', data);
-
+    }
+    
     case c.REMOVE_MONITOR:
       return state;
     case c.REMOVE_MONITOR_SUCCESS: {
@@ -68,9 +69,11 @@ export const reducer = (
         .removeIn(['data', clusterID, id])
         .updateIn(['list', clusterID], (l) => l.filterNot((i) => i === id));
     }
-    case c.REMOVE_MONITOR_FAILURE:
-      return state;
-
+    case c.REMOVE_MONITOR_FAILURE:{
+      const data = payload.response.message;
+      return state.set('error', data);
+    }
+    
     case c.CLEAR_ERROR_INFO:
       return state.set('error', '');
 

@@ -17,7 +17,7 @@ import ClusterDetailPage from 'containers/ClusterDetailPage/Loadable';
 import NodesPage, {
   NodeDetailPage,
 } from 'containers/NodesPage/Loadable';
-import GlobalConfigPage from 'containers/GlobalConfigPage/Loadable';
+import RegistriesPage from 'containers/RegistriesPage/Loadable';
 import NamespacesPage, {
   CreateNamespacePage,
   NamespaceDetailPage,
@@ -131,10 +131,10 @@ const appRoutes = [
   },
   //registry
   {
-    path: '/globalConfig',
-    name: 'GlobalConfig',
+    path: '/registries',
+    name: 'Registries',
     icon: Dashboard,
-    component: GlobalConfigPage,
+    component: RegistriesPage,
   },
   //registry end
   {

@@ -1,6 +1,6 @@
 /**
- * Duck: GlobalConfig
- * epic: globalConfig
+ * Duck: Registries
+ * epic: registries
  *
  */
 import { push } from 'connected-react-router';

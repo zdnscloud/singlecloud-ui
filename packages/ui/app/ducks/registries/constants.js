@@ -1,9 +1,9 @@
 /**
- * Duck: GlobalConfig
- * constants: globalConfig
+ * Duck: Registries
+ * constants: registries
  *
  */
-export const prefix = 'globalConfig';
+export const prefix = 'registries';
 
 /**
  *  constants
