@@ -78,7 +78,13 @@ import UserQuotasPage, {
   AdminUserQuotaPage,
   EditUserQuotaPage,
 } from 'containers/UserQuotasPage/Loadable';
-// UserQuotasPage
+import ApplicationStorePage, {
+
+} from 'containers/ApplicationStorePage/Loadable';
+import ApplicationsPage, {
+  ApplicationDetailPage,
+  CreateApplicationPage,
+} from 'containers/ApplicationsPage/Loadable';
 
 import UsersPage, {
   CreateUserPage,
@@ -446,6 +452,7 @@ const appRoutes = [
     icon: Dashboard,
     component: PasswordSetupPage,
   },
+  // userQuotas
   {
     path: '/userQuotas',
     name: 'User Quotas',
@@ -458,7 +465,7 @@ const appRoutes = [
     icon: Dashboard,
     component: AdminUserQuotaPage,
   },
-  // userQuotas
+
   {
     path: '/userQuotas/create',
     name: 'Create UserQuota',
@@ -484,6 +491,34 @@ const appRoutes = [
     component: EditUserQuotaPage,
   },
   // userQuotas end
+  // applicationStore
+  {
+    path: '/applicationStore',
+    name: 'Applications Store',
+    icon: Dashboard,
+    component: ApplicationStorePage,
+  },
+  // applicationStore end
+  // applications
+  {
+    path: '/clusters/:cluster_id/namespaces/:namespace_id/applications',
+    name: 'Applications',
+    icon: Dashboard,
+    component: ApplicationsPage,
+  },
+  {
+    path: '/applications/:chart_id/create',
+    name: 'Create Application',
+    icon: Dashboard,
+    component: CreateApplicationPage,
+  },
+  {
+    path: '/clusters/:cluster_id/namespaces/:namespace_id/applications/:application_id/show',
+    name: 'Application Detail',
+    icon: Dashboard,
+    component: ApplicationDetailPage,
+  },
+  // applications end
 ];
 
 export default appRoutes;

@@ -9,7 +9,7 @@ import ManagementIcon from 'components/Icons/Management';
 import ApplicationIcon from 'components/Icons/Application';
 import SystemIcon from 'components/Icons/System';
 import UserQuotasIcon from 'components/Icons/UserQuotas';
-
+import ApplicationStoreIcon from 'components/Icons/ApplicationStore';
 import { makeSelectRole, makeSelectIsAdmin } from 'ducks/role/selectors';
 
 import { makeSelectCurrentNamespaceID } from 'ducks/namespaces/selectors';
@@ -35,10 +35,21 @@ export const makeSelectClusterID = () =>
 
 export const makeSelectUserQuotaID = () =>
   createSelector(
-    createMatchSelector('/userQuotas/:userQuotas_id'),
+    createMatchSelector('/userQuotas/:userQuota_id'),
     (match) => {
       if (match && match.params) {
-        return match.params.userQuotas_id;
+        return match.params.userQuota_id;
+      }
+      return '';
+    }
+  );
+
+export const makeSelectChartID = () =>
+  createSelector(
+    createMatchSelector('/applications/:chart_id'),
+    (match) => {
+      if (match && match.params) {
+        return match.params.chart_id;
       }
       return '';
     }
@@ -214,12 +225,23 @@ export const makeSelectLeftMenus = () =>
                 name: 'Udpingresses',
                 path: `/clusters/${cluster}/namespaces/${namespace}/udpingresses`,
               },
+              {
+                name: 'Applications',
+                path: `/clusters/${cluster}/namespaces/${namespace}/applications`,
+              }
             ],
             icon: ApplicationIcon,
           },
         ]);
       }
 
+      menus = menus.concat([
+        {
+          name: 'ApplicationStore',
+          path: '/applicationStore',
+          icon: ApplicationStoreIcon,
+        },
+      ]);
       menus = menus.concat([
         {
           name: 'UserQuotas',

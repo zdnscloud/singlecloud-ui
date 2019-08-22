@@ -144,6 +144,9 @@ export default defineMessages({
   leftMenuBasicResources: {
     id: `${scope}.leftMenuBasicResources`,
     defaultMessage: 'BasicResources',
+  leftMenuApplicationStore: {
+    id: `${scope}.leftMenuApplicationStore`,
+    defaultMessage: 'ApplicationStore',
   },
   leftMenuApplications: {
     id: `${scope}.leftMenuApplications`,
@@ -192,5 +195,9 @@ export default defineMessages({
   leftMenuUdpingresses: {
     id: `${scope}.leftMenuUdpingresses`,
     defaultMessage: 'Udpingresses',
+  },
+  leftMenuApplicationManagement: {
+    id: `${scope}.leftMenuApplicationManagement`,
+    defaultMessage: 'AppManagement',
   },
 });

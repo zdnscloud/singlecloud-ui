@@ -2,6 +2,8 @@ FROM node:12-alpine as uibuild
 
 RUN apk --no-cache add make
 
+
+
 COPY . /singlecloud-ui
 RUN cd /singlecloud-ui && make build
 
@@ -14,5 +16,7 @@ ARG branch
 LABEL ui.zcloud/version=$version ui.zcloud/buildtime=$buildtime ui.zcloud/branch=$branch
 
 COPY --from=uibuild /singlecloud-ui/packages/ui/build /www
+
+COPY  --from=uibuild /singlecloud-ui/packages/helm-icons  /www/helm/icons/
 
 WORKDIR /www

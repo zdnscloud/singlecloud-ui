@@ -2,12 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Breadcrumbs from '@material-ui/core/Breadcrumbs';
-import HomeIcon from '@material-ui/icons/Home';
-// import Link from '@material-ui/core/Link';
 import { Link } from 'react-router-dom';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
+import homeIcon from 'images/clusters/home.png';
 
 const style = {
   breadcrumbs: {
@@ -40,7 +39,7 @@ function BreadcrumbsContainer({ ...props }) {
       className={classes.breadcrumbs}
     >
       <Link color="inherit" to="/">
-        <HomeIcon className={classes.icon} />
+        <img src={homeIcon} className={classes.icon} alt='home'/>
       </Link>
       {data.map((prop, key) =>
         key === data.length - 1 ? (
