@@ -188,7 +188,7 @@ const styles = (theme) => ({
   },
   appLogo: {
     margin: '0 auto',  
-    width: 200, 
+    width: 80, 
     display: 'block',
     height:80
   },

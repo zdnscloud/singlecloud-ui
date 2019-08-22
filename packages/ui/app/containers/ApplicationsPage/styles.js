@@ -184,8 +184,8 @@ const styles = (theme) => ({
   appLogo: {
     margin: '0 auto',  
     display: 'inline-block',
-    width: 100, 
-    height:100,
+    width: 80, 
+    height:80,
     verticalAlign:'middle',
     marginRight: 20
   },
