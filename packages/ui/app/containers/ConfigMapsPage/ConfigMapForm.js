@@ -32,12 +32,16 @@ import messages from './messages';
 
 const renderData = ({ meta, input, classes }) => {
   const [open, setOpen] = useState(false);
+  const { touched, invalid, error } = meta;
 
   return (
     <div className={classes.fileContentButton}>
       <Button color="secondary" onClick={() => setOpen(true)}>
         <FormattedMessage {...messages.formFileContent} />
       </Button>
+      {touched && error && (
+        <Danger>{error}</Danger>
+      )}
       <Dialog
         maxWidth="lg"
         fullWidth
