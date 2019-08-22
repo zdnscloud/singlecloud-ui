@@ -144,6 +144,7 @@ export default defineMessages({
   leftMenuBasicResources: {
     id: `${scope}.leftMenuBasicResources`,
     defaultMessage: 'BasicResources',
+  },
   leftMenuApplicationStore: {
     id: `${scope}.leftMenuApplicationStore`,
     defaultMessage: 'ApplicationStore',
