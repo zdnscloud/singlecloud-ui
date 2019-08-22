@@ -27,6 +27,14 @@ const tableSchema = schema
       label: 'Actions',
       component: (props) => (
         <Fragment>
+          <Button onClick={() => props.setUpgrade(props.data.get('id'))}>
+            Upgrade
+          </Button>
+
+          <Button onClick={() => props.setDegrade(props.data.get('id'))}>
+            Degrade
+          </Button>
+
           <ConfirmDelete
             actionName={props.removeDeployment}
             id={props.data.get('id')}
