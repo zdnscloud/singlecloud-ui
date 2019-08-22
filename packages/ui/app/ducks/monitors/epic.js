@@ -80,15 +80,9 @@ export const removeMonitorEpic = (action$, state$, { ajax }) =>
     )
   );
 
-export const afterCreateMonitorEpic = (action$) =>
-  action$.pipe(
-    ofType(c.CREATE_MONITOR_SUCCESS),
-    mergeMap(({ payload, meta }) => of(push(`/monitors`)))
-  );
 
 export default combineEpics(
   loadMonitorsEpic,
   createMonitorEpic,
   removeMonitorEpic,
-  afterCreateMonitorEpic,
 );

@@ -49,7 +49,7 @@ const MonitorsPage = ({
   const classes = useStyles();
   const url = cluster.getIn(['links', 'monitors']);
   const rurl =  monitors && monitors.getIn([0,'links','remove']);
-  const ingressDomain = monitors && monitors.getIn([0,'ingressDomain']);
+  const redirectUrl = monitors && monitors.getIn([0,'redirectUrl']);
   const id = monitors && monitors.getIn([0,'id']);
 
   useEffect(() => {
@@ -57,17 +57,14 @@ const MonitorsPage = ({
       loadMonitors(url, {
         clusterID,
       });
-      if(ingressDomain){
+      if(redirectUrl){
         setCheck(true)
-      }
-      if(error){
+      }else {
         setCheck(false)
       }
+      console.log('redirectUrl',redirectUrl,'check',check)
     }
-    return () => {
-      // try cancel something when unmount
-    };
-  }, [url,error]);
+  }, [url,redirectUrl]);
 
   const handleChange = () => () => {
     setCheck(!check);
@@ -120,8 +117,8 @@ const MonitorsPage = ({
                   <Button
                     variant="contained"
                     color="primary"
-                    onClick={()=>window.open(ingressDomain)}
-                    disabled={!ingressDomain}
+                    onClick={()=>window.open(redirectUrl)}
+                    disabled={!redirectUrl}
                   >
                     <FormattedMessage {...messages.openMonitor} />
                   </Button>
