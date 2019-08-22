@@ -6,9 +6,11 @@ import {
 
 import OverviewIcon from 'components/Icons/Overview';
 import ManagementIcon from 'components/Icons/Management';
-import ApplicationIcon from 'components/Icons/Application';
+import BasicResourcesIcon from 'components/Icons/BasicResources';
 import SystemIcon from 'components/Icons/System';
 import UserQuotasIcon from 'components/Icons/UserQuotas';
+import ImageRegistryIcon from 'components/Icons/ImageRegistry';
+import ClusterWatchIcon from 'components/Icons/ClusterWatch';
 import ApplicationStoreIcon from 'components/Icons/ApplicationStore';
 import { makeSelectRole, makeSelectIsAdmin } from 'ducks/role/selectors';
 
@@ -112,7 +114,6 @@ export const makeSelectLeftMenus = () =>
           name: 'Global',
           children: [
             { name: 'ClusterList', path: `/clusters` },
-            { name: 'GlobalConfig', path: `/globalConfig` },
           ],
           icon: OverviewIcon,
         },
@@ -159,12 +160,13 @@ export const makeSelectLeftMenus = () =>
           children: [
             {
               name: 'LocalAppTemplates',
-              path: `/helm-templates`,
+              path: `/applicationStore`,
             },
           ],
-          icon: SystemIcon,
+          icon: ApplicationStoreIcon,
         },
       ]);
+
 
       if (cluster !== '') {
         menus = menus.concat([
@@ -225,23 +227,11 @@ export const makeSelectLeftMenus = () =>
                 name: 'Udpingresses',
                 path: `/clusters/${cluster}/namespaces/${namespace}/udpingresses`,
               },
-              {
-                name: 'Applications',
-                path: `/clusters/${cluster}/namespaces/${namespace}/applications`,
-              }
             ],
-            icon: ApplicationIcon,
+            icon: BasicResourcesIcon,
           },
         ]);
       }
-
-      menus = menus.concat([
-        {
-          name: 'ApplicationStore',
-          path: '/applicationStore',
-          icon: ApplicationStoreIcon,
-        },
-      ]);
       menus = menus.concat([
         {
           name: 'UserQuotas',
@@ -258,7 +248,7 @@ export const makeSelectLeftMenus = () =>
       menus = menus.concat([
         {
           name: 'ImageRegistry',
-          icon: UserQuotasIcon,
+          icon: ImageRegistryIcon,
         },
       ]);
 
@@ -266,7 +256,7 @@ export const makeSelectLeftMenus = () =>
         menus = menus.concat([
           {
             name: 'ClusterWatch',
-            icon: UserQuotasIcon,
+            icon: ClusterWatchIcon,
           },
         ]);
       }

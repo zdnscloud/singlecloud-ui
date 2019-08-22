@@ -46,7 +46,7 @@ const tableSchema = schema
           <Button
             color="primary"
             component={Link}
-            to={`${props.pathname}${props.data.get('id')}/show`}
+            to={`${props.pathname}/${props.data.get('id')}/show`}
           >
             {props.data.get('name')}
           </Button>
