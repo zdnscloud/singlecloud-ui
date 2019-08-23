@@ -237,4 +237,24 @@ export default defineMessages({
     id: `${scope}.formVersionInfo`,
     defaultMessage: 'VersionInfo',
   },
+  dialogUpgrade: {
+    id: `${scope}.dialogUpgrade`,
+    defaultMessage: 'Upgrade',
+  },
+  dialogRollback: {
+    id: `${scope}.dialogRollback`,
+    defaultMessage: 'Rollback',
+  },
+  dialogUpgradeButton: {
+    id: `${scope}.dialogUpgradeButton`,
+    defaultMessage: 'Upgrade',
+  },
+  dialogRollbackButton: {
+    id: `${scope}.dialogRollbackButton`,
+    defaultMessage: 'Rollback',
+  },
+  dialogCancelButton: {
+    id: `${scope}.dialogCancelButton`,
+    defaultMessage: 'Cancel',
+  },
 });

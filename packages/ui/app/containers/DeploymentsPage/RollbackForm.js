@@ -24,7 +24,7 @@ import SelectField from 'components/Field/SelectField';
 import messages from './messages';
 import useStyles from './styles';
 
-export const DegradeForm = ({
+export const RollbackForm = ({
   handleSubmit,
   error,
   configMaps,
@@ -62,4 +62,4 @@ export const DegradeForm = ({
   );
 };
 
-export default DegradeForm;
+export default RollbackForm;

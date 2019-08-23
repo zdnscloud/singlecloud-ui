@@ -1,6 +1,6 @@
 /**
  *
- * Degrade Dialog
+ * Rollback Dialog
  *
  */
 
@@ -38,7 +38,7 @@ import * as actions from 'ducks/deployments/actions';
 
 import messages from './messages';
 import useStyles from './styles';
-import Form from './DegradeForm';
+import Form from './RollbackForm';
 
 export const formName = 'upgradeDeploymentForm';
 
@@ -53,13 +53,13 @@ const validate = (values) => {
   return errors;
 };
 
-const DegradeForm = reduxForm({
+const RollbackForm = reduxForm({
   form: formName,
   validate,
 })(Form);
 
 /* eslint-disable react/prefer-stateless-function */
-export const DegradeDialog = ({
+export const RollbackDialog = ({
   open,
   close,
   id,
@@ -111,14 +111,15 @@ export const DegradeDialog = ({
       open={open}
       onEnter={() => {
         const item = deployments.get(id);
-        const init = {
-          reason: '',
-          version: -1,
-        };
-        setInitialValues(fromJS(init));
 
         const resolve = (resp) => {
-          setHistory(getByKey(resp, ['response', 'history'], []));
+          const data = getByKey(resp, ['response', 'history'], []);
+          setHistory(data);
+          const init = {
+            reason: '',
+            version: data.length > 0 ? data[data.length - 1].version : 0,
+          };
+          setInitialValues(fromJS(init));
         };
         const reject = (error) => {
           console.log(error);
@@ -140,7 +141,7 @@ export const DegradeDialog = ({
       <Card className={classes.dialogCard}>
         <CardHeader color="secondary" className={classes.dialogHeader}>
           <h4 className={classes.cardTitleWhite}>
-            <FormattedMessage {...messages.header} />
+            <FormattedMessage {...messages.dialogRollback} />
           </h4>
           <IconButton onClick={close} style={{ padding: 0 }}>
             <CloseIcon style={{ color: '#fff' }} />
@@ -149,7 +150,7 @@ export const DegradeDialog = ({
         <CardBody className={classes.dialogCardBody}>
           <Paper elevation={0} className={classes.dialogCardBodyPaper}>
             {initialValues && (
-              <DegradeForm
+              <RollbackForm
                 onSubmit={doSubmit}
                 initialValues={initialValues}
                 formValues={values || initialValues}
@@ -160,10 +161,10 @@ export const DegradeDialog = ({
         </CardBody>
         <CardFooter>
           <Button onClick={submitForm} color="primary" variant="contained">
-            <FormattedMessage {...messages.save} />
+            <FormattedMessage {...messages.dialogRollbackButton} />
           </Button>
           <Button onClick={close} color="default" variant="contained">
-            <FormattedMessage {...messages.save} />
+            <FormattedMessage {...messages.dialogCancelButton} />
           </Button>
         </CardFooter>
       </Card>
@@ -194,4 +195,4 @@ const withConnect = connect(
 
 export default compose(
   withConnect,
-)(DegradeDialog);
+)(RollbackDialog);

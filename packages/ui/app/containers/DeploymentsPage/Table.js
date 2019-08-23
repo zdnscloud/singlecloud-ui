@@ -33,7 +33,7 @@ import messages from './messages';
 import useStyles from './styles';
 import schema from './tableSchema';
 import UpgradeDialog from './UpgradeDialog';
-import DegradeDialog from './DegradeDialog';
+import RollbackDialog from './RollbackDialog';
 
 /* eslint-disable react/prefer-stateless-function */
 export const DeploymentsTable = ({
@@ -49,7 +49,7 @@ export const DeploymentsTable = ({
   const [dialog, setDialog] = useState([null, null]);
   const closeDialog = () => setDialog([null, null]);
   const setUpgrade = (id) => setDialog(['upgrade', id]);
-  const setDegrade = (id) => setDialog(['degrade', id]);
+  const setRollback = (id) => setDialog(['rollback', id]);
   const mergedSchema = schema
         .map((sch) => {
           if (sch.id === 'actions') {
@@ -59,7 +59,7 @@ export const DeploymentsTable = ({
                 executeDeploymentAction,
                 removeDeployment,
                 setUpgrade,
-                setDegrade,
+                setRollback,
                 clusterID,
                 namespaceID,
               },
@@ -85,8 +85,8 @@ export const DeploymentsTable = ({
         close={closeDialog}
         id={dialog[1]}
       />
-      <DegradeDialog
-        open={dialog[0] === 'degrade'}
+      <RollbackDialog
+        open={dialog[0] === 'rollback'}
         close={closeDialog}
         id={dialog[1]}
       />

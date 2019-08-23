@@ -126,7 +126,7 @@ export const UpgradeDialog = ({
       <Card className={classes.dialogCard}>
         <CardHeader color="secondary" className={classes.dialogHeader}>
           <h4 className={classes.cardTitleWhite}>
-            <FormattedMessage {...messages.header} />
+            <FormattedMessage {...messages.dialogUpgrade} />
           </h4>
           <IconButton onClick={close} style={{ padding: 0 }}>
             <CloseIcon style={{ color: '#fff' }} />
@@ -145,10 +145,10 @@ export const UpgradeDialog = ({
         </CardBody>
         <CardFooter>
           <Button onClick={submitForm} color="primary" variant="contained">
-            <FormattedMessage {...messages.save} />
+            <FormattedMessage {...messages.dialogUpgradeButton} />
           </Button>
           <Button onClick={close} color="default" variant="contained">
-            <FormattedMessage {...messages.save} />
+            <FormattedMessage {...messages.dialogCancelButton} />
           </Button>
         </CardFooter>
       </Card>

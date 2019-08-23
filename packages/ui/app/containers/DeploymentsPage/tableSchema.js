@@ -31,8 +31,8 @@ const tableSchema = schema
             Upgrade
           </Button>
 
-          <Button onClick={() => props.setDegrade(props.data.get('id'))}>
-            Degrade
+          <Button onClick={() => props.setRollback(props.data.get('id'))}>
+            Rollback
           </Button>
 
           <ConfirmDelete
