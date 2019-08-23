@@ -143,7 +143,7 @@ export const UpgradeDialog = ({
             )}
           </Paper>
         </CardBody>
-        <CardFooter>
+        <CardFooter className={classes.dialogCardFooter}>
           <Button onClick={submitForm} color="primary" variant="contained">
             <FormattedMessage {...messages.dialogUpgradeButton} />
           </Button>

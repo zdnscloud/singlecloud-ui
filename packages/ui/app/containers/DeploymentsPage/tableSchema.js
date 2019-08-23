@@ -3,6 +3,9 @@ import { ucfirst } from '@gsmlg/utils';
 import TimeCell from 'components/Cells/TimeCell';
 import { Link } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
+import IconButton from '@material-ui/core/IconButton';
+import UpgradeIcon from 'components/Icons/Upgrade';
+import RollbackIcon from 'components/Icons/Rollback';
 import ConfirmDelete from 'components/ConfirmDelete/ConfirmDelete';
 
 const schema = ['name', 'replicas', 'creationTimestamp'];
@@ -27,13 +30,13 @@ const tableSchema = schema
       label: 'Actions',
       component: (props) => (
         <Fragment>
-          <Button onClick={() => props.setUpgrade(props.data.get('id'))}>
-            Upgrade
-          </Button>
+          <IconButton onClick={() => props.setUpgrade(props.data.get('id'))}>
+            <UpgradeIcon />
+          </IconButton>
 
-          <Button onClick={() => props.setRollback(props.data.get('id'))}>
-            Rollback
-          </Button>
+          <IconButton onClick={() => props.setRollback(props.data.get('id'))}>
+            <RollbackIcon />
+          </IconButton>
 
           <ConfirmDelete
             actionName={props.removeDeployment}

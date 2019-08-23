@@ -159,7 +159,7 @@ export const RollbackDialog = ({
             )}
           </Paper>
         </CardBody>
-        <CardFooter>
+        <CardFooter className={classes.dialogCardFooter}>
           <Button onClick={submitForm} color="primary" variant="contained">
             <FormattedMessage {...messages.dialogRollbackButton} />
           </Button>
