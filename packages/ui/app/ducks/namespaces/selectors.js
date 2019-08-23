@@ -5,7 +5,7 @@ import {
 } from 'connected-react-router/immutable';
 import {
   makeSelectCurrentID as makeSelectCurrentClusterID,
-  selectDomain as selectClusterDomain
+  selectDomain as selectClustersDomain
 } from 'ducks/clusters/selectors';
 import { prefix } from './constants';
 
