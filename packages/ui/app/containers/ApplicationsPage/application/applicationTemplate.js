@@ -26,7 +26,7 @@ class ApplicationTemplate extends PureComponent {
       <Fragment>
           <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
               <div className={classes.appWrap}>
-                <img alt="icon"  src={item && item.get('icon')} className={classes.appLogo} />
+                <img alt="icon"  src={item && item.get('chartIcon')} className={classes.appLogo} />
                 <div className={classes.appContent}>
                   { item &&  item.get('status') === 'failed' ? 
                      <p className={classes.aapName}>{item && item.get('name')}</p>
