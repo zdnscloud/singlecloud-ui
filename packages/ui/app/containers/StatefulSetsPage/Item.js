@@ -9,6 +9,7 @@ import { connect } from 'react-redux';
 import { useIntl } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import { bindActionCreators, compose } from 'redux';
+import list2str from '@gsmlg/utils/list2str';
 
 import { FormattedMessage } from 'react-intl';
 import InputAdornment from '@material-ui/core/InputAdornment';
@@ -179,7 +180,7 @@ export const StatefulSet = ({
                                  />
                                }
                                fullWidth
-                               value={c.get('command')}
+                               value={list2str(c.get('command'), ' ')}
                              />
                            </GridItem>
                            <GridItem xs={3} sm={3} md={3}>
@@ -188,7 +189,7 @@ export const StatefulSet = ({
                                  <FormattedMessage {...messages.formArgs} />
                                }
                                fullWidth
-                               value={c.get('args')}
+                               value={list2str(c.get('args'), ' ')}
                              />
                            </GridItem>
                          </GridContainer>

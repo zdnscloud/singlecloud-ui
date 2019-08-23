@@ -98,7 +98,16 @@ export const CreateDeployment = ({
   async function doSubmit(formValues) {
     try {
       const data = formValues.toJS();
-      const { persistentVolumes } = data;
+      const { containers, persistentVolumes } = data;
+      data.containers = containers.map((item) => {
+        if (item && item.args) {
+          item.args = item.args.split(' ');
+        }
+        if (item && item.command) {
+          item.command = item.command.split(' ');
+        }
+        return item;
+      });
       persistentVolumes.forEach((item)=>{
         if (item && item.size) {
           item.size = `${item.size}Gi`;
