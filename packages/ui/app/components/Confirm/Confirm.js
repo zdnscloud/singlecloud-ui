@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react';
+import React,{Fragment,useState}from 'react';
 // nodejs library that concatenates classes
 import classNames from 'classnames';
 // nodejs library to set properties for components
@@ -16,64 +16,66 @@ import warningIcon from 'images/warning.png';
 import messages from './messages';
 
 const Confirm = (props) => {
-  const { component, handleConfirm, dialogContentText } = props;
+  
+  const { component,handleConfirm,dialogContentText } = props;
   const [open, setOpen] = useState(false);
 
-  const handleConfirmClick = () => {
-    handleConfirm();
-    setOpen(false);
-  };
-  return (
-    <Fragment>
-      <div
-        aria-label="Delete"
-        onClick={() => {
-          setOpen(true);
-        }}
-        style={{ display: 'inline' }}
-      >
-        {component}
-      </div>
-      <Dialog
-        open={open}
-        onClose={() => {
-          setOpen(false);
-        }}
-      >
-        <DialogTitle id="alert-dialog-title">
-          {<FormattedMessage {...messages.dialogTitle} />}
-        </DialogTitle>
-        <DialogContent>
-          <DialogContentText id="alert-dialog-description">
-            <img
-              src={warningIcon}
-              style={{ marginRight: 11, verticalAlign: 'middle' }}
-            />
-            <FormattedMessage {...dialogContentText} />
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button
-            onClick={() => {
-              setOpen(false);
-            }}
-            variant="contained"
-          >
-            <FormattedMessage {...messages.cancleButton} />
-          </Button>
-          <Button
-            // onClick={handleConfirm}
-            onClick={handleConfirmClick}
-            color="primary"
-            variant="contained"
-            style={{ marginLeft: 16, marginRight: 8 }}
-          >
-            <FormattedMessage {...messages.sureButton} />
-          </Button>
-        </DialogActions>
-      </Dialog>
-    </Fragment>
-  );
-};
+  const handleConfirmClick = () => { 
+        handleConfirm();
+        setOpen(false);
+  }
+    return (
+      <Fragment>
+        <div
+          aria-label="Delete"
+          onClick={() => {
+            setOpen(true);
+          }}
+          style={{display: "inline"}}
+        >
+          {component}
+        </div>
+        <Dialog
+          open={open}
+          onClose={() => {
+            setOpen(false);
+          }}
+        >
+          <DialogTitle id="alert-dialog-title">
+            {<FormattedMessage {...messages.dialogTitle} />}
+          </DialogTitle>
+          <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+              <img
+                src={warningIcon}
+                style={{marginRight: 11, verticalAlign: 'middle'}}
+              />
+              <FormattedMessage {...dialogContentText} />
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button
+              onClick={() => {
+                setOpen(false);
+              }}
+              variant="contained"
+            >
+              <FormattedMessage {...messages.cancleButton} />
+            </Button>
+            <Button
+              // onClick={handleConfirm}
+              onClick={handleConfirmClick}
+              color="primary"
+              variant="contained"
+              style={{marginLeft: 16, marginRight: 8 }}
+            >
+              <FormattedMessage {...messages.sureButton} />
+            </Button>
+          </DialogActions>
+        </Dialog>
+      </Fragment>
+    )
+  }
+
 
 export default Confirm;

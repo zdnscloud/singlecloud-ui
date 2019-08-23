@@ -113,6 +113,13 @@ const styles = (theme) => ({
     flexDirection: 'row',
     marginLeft: '2rem',
   },
+  menuButton: {
+    marginLeft: 12,
+    marginRight: 36,
+    position: 'absolute',
+    right: 0,
+    top: 6,
+  },
 });
 
 export default styles;

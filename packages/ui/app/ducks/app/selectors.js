@@ -249,6 +249,7 @@ export const makeSelectLeftMenus = () =>
         {
           name: 'ImageRegistry',
           icon: ImageRegistryIcon,
+          path: '/registries'
         },
       ]);
 
@@ -257,6 +258,7 @@ export const makeSelectLeftMenus = () =>
           {
             name: 'ClusterWatch',
             icon: ClusterWatchIcon,
+            path: `/clusters/${cluster}/monitors`,
           },
         ]);
       }

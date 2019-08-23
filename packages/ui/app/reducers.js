@@ -44,6 +44,8 @@ import ingressesReducer, { prefix as ingressesPrefix } from 'ducks/ingresses';
 import udpingressesReducer, { prefix as udpingressesPrefix } from 'ducks/udpingresses';
 import applicationStoreReducer, { prefix as applicationStorePrefix } from 'ducks/applicationStore';
 import applicationsReducer, { prefix as applicationsPrefix } from 'ducks/applications';
+import registriesReducer, { prefix as registriesPrefix } from 'ducks/registries';
+import monitorsReducer, { prefix as monitorsPrefix } from 'ducks/monitors';
 // import reducers end
 
 /**
@@ -81,6 +83,8 @@ export default function createReducer(injectedReducers = {}) {
     [udpingressesPrefix]: udpingressesReducer,
     [applicationStorePrefix]: applicationStoreReducer,
     [applicationsPrefix]: applicationsReducer,
+    [registriesPrefix]: registriesReducer,
+    [monitorsPrefix]: monitorsReducer,
     // combine reducers end
     ...injectedReducers,
   });

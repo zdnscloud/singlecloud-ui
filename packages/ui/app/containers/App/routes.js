@@ -14,7 +14,10 @@ import ClustersPage, {
 } from 'containers/ClustersPage/Loadable';
 import ClusterManagePage from 'containers/ClusterManagePage/Loadable';
 import ClusterDetailPage from 'containers/ClusterDetailPage/Loadable';
-import NodesPage, { NodeDetailPage } from 'containers/NodesPage/Loadable';
+import NodesPage, {
+  NodeDetailPage,
+} from 'containers/NodesPage/Loadable';
+import RegistriesPage from 'containers/RegistriesPage/Loadable';
 import NamespacesPage, {
   CreateNamespacePage,
   NamespaceDetailPage,
@@ -86,6 +89,8 @@ import ApplicationsPage, {
   CreateApplicationPage,
 } from 'containers/ApplicationsPage/Loadable';
 
+import MonitorsPage from 'containers/MonitorsPage/Loadable';
+
 import UsersPage, {
   CreateUserPage,
   EditUserPage,
@@ -142,6 +147,14 @@ const appRoutes = [
     icon: Dashboard,
     component: EventsPage,
   },
+  //registry
+  {
+    path: '/registries',
+    name: 'Registries',
+    icon: Dashboard,
+    component: RegistriesPage,
+  },
+  //registry end
   {
     path: '/clusters/:cluster_id/namespaces',
     name: 'namespaces',
@@ -519,6 +532,14 @@ const appRoutes = [
     component: ApplicationDetailPage,
   },
   // applications end
+  // monitors
+  {
+    path: '/clusters/:cluster_id/monitors',
+    name: 'Monitors',
+    icon: Dashboard,
+    component: MonitorsPage,
+  },
+  // monitors end
 ];
 
 export default appRoutes;
