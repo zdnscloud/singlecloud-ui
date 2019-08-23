@@ -103,3 +103,25 @@ export const removeStatefulSetFailure = (error, meta = {}) => ({
   error: true,
 });
 
+export const executeStatefulSetAction = (action, data, meta = {}) => ({
+  type: c.EXECUTE_STATEFUL_SET_ACTION,
+  payload: {
+    action,
+    data,
+  },
+  meta,
+});
+
+export const executeStatefulSetActionSuccess = (resp, meta = {}) => ({
+  type: c.EXECUTE_STATEFUL_SET_ACTION_SUCCESS,
+  payload: resp,
+  meta,
+});
+
+export const executeStatefulSetActionFailure = (error, meta = {}) => ({
+  type: c.EXECUTE_STATEFUL_SET_ACTION_FAILURE,
+  payload: error,
+  meta,
+  error: true,
+});
+

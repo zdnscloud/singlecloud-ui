@@ -101,6 +101,13 @@ export const reducer = (
     case c.REMOVE_STATEFUL_SET_FAILURE:
       return state;
 
+    case c.EXECUTE_STATEFUL_SET_ACTION:
+      return state;
+    case c.EXECUTE_STATEFUL_SET_ACTION_SUCCESS:
+      return state;
+    case c.EXECUTE_STATEFUL_SET_ACTION_FAILURE:
+      return state;
+
     default:
       return state;
   }
