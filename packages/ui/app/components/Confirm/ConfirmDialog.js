@@ -60,9 +60,6 @@ const ConfirmDialog = ({
 
 ConfirmDialog.defaultProps = {
   open: false,
-  onClose: () => {},
-  onCancel: () => {},
-  onAction: () => {},
   children: '',
   title: '',
   content: '',
