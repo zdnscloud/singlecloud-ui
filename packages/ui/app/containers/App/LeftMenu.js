@@ -58,7 +58,7 @@ const LeftMenu = ({
     timer = null;
     timer = setTimeout(() => {
       setOpeningMenu(name);
-    }, 500);
+    }, 200);
   };
   const handleClose = () => {
     clearTimeout(ctimer);
