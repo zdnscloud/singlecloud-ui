@@ -43,7 +43,7 @@ export const formName = 'upgradeDeploymentForm';
 
 const validate = (values) => {
   const errors = {};
-  const requiredFields = [];
+  const requiredFields = ['reason'];
   requiredFields.forEach((field) => {
     if (!values.get(field)) {
       errors[field] = 'Required';
@@ -67,6 +67,7 @@ export const UpgradeDialog = ({
   deployments,
   values,
   executeDeploymentAction,
+  readDeployment,
   submitForm,
 }) => {
   const classes = useStyles();
@@ -77,16 +78,23 @@ export const UpgradeDialog = ({
     try {
       const data = formValues.toJS();
       const item = deployments.get(id);
-      const { response } = await new Promise((resolve, reject) => {
+      const url = item.getIn(['links', 'self']);
+      await new Promise((resolve, reject) => {
         executeDeploymentAction('setImage', data, {
           resolve,
           reject,
-          url: item.getIn(['links', 'self']),
+          url,
           id,
           clusterID,
           namespaceID,
         });
       });
+      readDeployment(id, {
+        url,
+        clusterID,
+        namespaceID,
+      });
+      close();
     } catch (error) {
       throw new SubmissionError({ _error: error });
     }
@@ -97,13 +105,13 @@ export const UpgradeDialog = ({
       disableBackdropClick
       disableEscapeKeyDown
       fullWidth
-      maxWidth="md"
+      /* maxWidth="md" */
       open={open}
       onEnter={() => {
-        const deployment = deployments.get(id);
+        const item = deployments.get(id);
         const init = {
           reason: '',
-          images: deployment.get('containers').map((c) => ({
+          images: item.get('containers').map((c) => ({
             name: c.get('name'),
             image: c.get('image'),
           })).toJS(),
@@ -139,7 +147,7 @@ export const UpgradeDialog = ({
           <Button onClick={submitForm} color="primary" variant="contained">
             <FormattedMessage {...messages.save} />
           </Button>
-          <Button onClick={close} color="" variant="contained">
+          <Button onClick={close} color="default" variant="contained">
             <FormattedMessage {...messages.save} />
           </Button>
         </CardFooter>

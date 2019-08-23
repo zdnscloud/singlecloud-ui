@@ -229,4 +229,12 @@ export default defineMessages({
     id: `${scope}.successContent`,
     defaultMessage: 'Deployment has been created, would you like to create a service for it?',
   },
+  formReason: {
+    id: `${scope}.formReason`,
+    defaultMessage: 'Reason',
+  },
+  formVersionInfo: {
+    id: `${scope}.formVersionInfo`,
+    defaultMessage: 'VersionInfo',
+  },
 });

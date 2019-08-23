@@ -18,19 +18,24 @@ import Danger from 'components/Typography/Danger';
 import GridItem from 'components/Grid/GridItem';
 import GridContainer from 'components/Grid/GridContainer';
 import InputField from 'components/Field/InputField';
-import RadioField from 'components/Field/RadioField';
 import ReadOnlyInput from 'components/CustomInput/ReadOnlyInput';
+import SelectField from 'components/Field/SelectField';
 
 import messages from './messages';
 import useStyles from './styles';
 
-export const UpgradeForm = ({
+export const DegradeForm = ({
   handleSubmit,
   error,
   configMaps,
   formValues,
+  history,
 }) => {
   const classes = useStyles();
+  const historyOptions = history.map((h) => ({
+    label: h.changeReason,
+    value: h.version,
+  }));
 
   return (
     <form className={getByKey(classes, 'form')} onSubmit={handleSubmit}>
@@ -41,37 +46,20 @@ export const UpgradeForm = ({
           </GridItem>
         ) : null}
         <GridItem xs={12} sm={12} md={12}>
-          {formValues.get('images').map((img, i) => (
-            <GridContainer key={img.get('name')}>
-              <GridItem xs={5} sm={5} md={5}>
-                <ReadOnlyInput
-                  label={<FormattedMessage {...messages.formContainerName} />}
-                  value={img.get('name')}
-                  fullWidth
-                />
-              </GridItem>
-              <GridItem xs={5} sm={5} md={5}>
-                <InputField
-                  label={<FormattedMessage {...messages.formImage} />}
-                  name={`images[${i}].image`}
-                  fullWidth
-                  inputProps={{ type: 'text', autoComplete: 'off' }}
-                />
-              </GridItem>
-            </GridContainer>
-          ))}
-        </GridItem>
-        <GridItem xs={10} sm={10} md={10}>
-          <InputField
-            label={<FormattedMessage {...messages.formReason} />}
-            name="reason"
-            fullWidth
-            inputProps={{ type: 'text', autoComplete: 'off' }}
-          />
+          <GridContainer>
+            <GridItem xs={5} sm={5} md={5}>
+              <SelectField
+                label={<FormattedMessage {...messages.formVersionInfo} />}
+                name="version"
+                fullWidth
+                options={historyOptions}
+              />
+            </GridItem>
+          </GridContainer>
         </GridItem>
       </GridContainer>
     </form>
   );
 };
 
-export default UpgradeForm;
+export default DegradeForm;
