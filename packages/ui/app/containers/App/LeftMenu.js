@@ -17,6 +17,7 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import ChevronRight from 'components/Icons/ChevronRight';
+import logoICon from 'images/logo.svg';
 
 import * as actions from 'ducks/app/actions';
 import {
@@ -74,7 +75,6 @@ const LeftMenu = ({
     <List className={classes.list} onMouseLeave={handleClose}>
       {menus.map((prop, key) => {
         const msgName = messages[`leftMenu${prop.name}`];
-
         if (prop.path) {
           const listItemClasses = classNames({
             [` ${classes.activeMenu1}`]: activeRoute(prop.path),

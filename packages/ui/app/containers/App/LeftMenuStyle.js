@@ -27,7 +27,7 @@ const leftMenuStyle = (theme) => ({
     top: '0',
     bottom: '0',
     left: '0',
-    zIndex: '1',
+    zIndex: 10000,
     ...transition,
     // ...boxShadow,
     width: drawerWidth,
@@ -162,6 +162,7 @@ const leftMenuStyle = (theme) => ({
     marginBottom: '0',
     listStyle: 'none',
     position: 'unset',
+    zIndex: 10000,
   },
   item: {
     position: 'relative',
@@ -279,6 +280,9 @@ const leftMenuStyle = (theme) => ({
       // )},.12), 0 7px 8px -5px rgba(${hexToRgb('#1B9CCE')},.2)`,
     },
   },
+  logoICon: {
+    transform: 'scale(0.188)'
+  }
 });
 
 export default leftMenuStyle;
