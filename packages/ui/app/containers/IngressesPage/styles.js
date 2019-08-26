@@ -3,12 +3,12 @@ import pageStyles from 'jss/page';
 
 export const styles = (theme) => ({
   ...pageStyles(theme),
-  plusIcon: {
+  formPlusIcon: {
     position: 'absolute',
     left: 265,
     top:-33,
   },
-  table: {
+  formTable: {
     marginTop: 30
   }
 });

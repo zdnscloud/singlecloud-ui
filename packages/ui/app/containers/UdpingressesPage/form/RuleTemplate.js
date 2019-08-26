@@ -34,8 +34,8 @@ const RuleTemplate = ({
 
   return (
     <Fragment>
-      <Button 
-        color="secondary" 
+      <Button
+        color="secondary"
         onClick={(evt) => exposedPorts.filter((p) => p.get('protocol') === 'udp').forEach((p) => {
           if(fields.length < 1){
             fields.push(fromJS(
@@ -48,7 +48,7 @@ const RuleTemplate = ({
             ))
           }
         })}
-        className={classes.plusIcon}
+        className={classes.formPlusIcon}
         >
         <PlusIcon />
       </Button>
@@ -57,7 +57,7 @@ const RuleTemplate = ({
           <Danger>{error}</Danger>
         </ListItem>
       )}
-       <Table className={classes.table}>
+      <Table className={classes.formTable}>
          <TableHead>
            <TableRow>
              <TableCell className={`${classes.tableCell} ${classes.tableHeadCell}`}>
