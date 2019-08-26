@@ -62,7 +62,7 @@ class ApplicationForm extends PureComponent {
           <Card>
             <CardHeader color="primary">
               <h4 className={classes.cardTitleWhite}>
-                <FormattedMessage {...messages.createApplication} />
+                <FormattedMessage {...messages.createApplicationDesc} />
               </h4>
             </CardHeader>
             <CardBody>
