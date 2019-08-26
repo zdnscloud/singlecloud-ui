@@ -1,19 +1,4 @@
-import {
-  transition,
-  boxShadow,
-  defaultFont,
-  primaryColor,
-  primaryBoxShadow,
-  infoColor,
-  successColor,
-  warningColor,
-  dangerColor,
-  whiteColor,
-  grayColor,
-  blackColor,
-  hexToRgb,
-} from 'assets/jss/material-dashboard-react';
-
+import hexToRgb from '@gsmlg/utils/hexToRgb';
 const drawerWidth = 232;
 
 const leftMenuStyle = (theme) => ({
@@ -27,9 +12,8 @@ const leftMenuStyle = (theme) => ({
     top: '0',
     bottom: '0',
     left: '0',
-    zIndex: 10000,
-    ...transition,
-    // ...boxShadow,
+    zIndex: theme.zIndex.drawer + 1,
+    ...theme.palette.transition,
     width: drawerWidth,
     [theme.breakpoints.up('md')]: {
       width: drawerWidth,
@@ -38,7 +22,6 @@ const leftMenuStyle = (theme) => ({
     },
     [theme.breakpoints.down('sm')]: {
       width: drawerWidth,
-      // ...boxShadow,
       position: 'fixed',
       display: 'block',
       top: '0',
@@ -53,7 +36,7 @@ const leftMenuStyle = (theme) => ({
       paddingRight: '0px',
       paddingLeft: '0',
       transform: `translate3d(${drawerWidth}px, 0, 0)`,
-      ...transition,
+      ...theme.palette.transition,
     },
   },
   drawerPaperRTL: {
@@ -73,10 +56,8 @@ const leftMenuStyle = (theme) => ({
     left: '85px !important',
   },
   secondMenuModal: {
-    // top: 64,
-    // left: '232px',
     zIndex: theme.zIndex.drawer,
-    ...transition,
+    ...theme.palette.transition,
   },
   secondMenu: {
     width: '232px',
@@ -97,22 +78,6 @@ const leftMenuStyle = (theme) => ({
       height: '1px',
       right: '15px',
       width: 'calc(100% - 30px)',
-      backgroundColor: `rgba(${hexToRgb(grayColor[6])}, 0.3)`,
-    },
-  },
-  logoLink: {
-    ...defaultFont,
-    textTransform: 'uppercase',
-    padding: '5px 0',
-    display: 'block',
-    fontSize: '18px',
-    textAlign: 'left',
-    fontWeight: '400',
-    lineHeight: '30px',
-    textDecoration: 'none',
-    backgroundColor: 'transparent',
-    '&,&:hover': {
-      color: blackColor,
     },
   },
   logoLinkRTL: {
@@ -170,18 +135,16 @@ const leftMenuStyle = (theme) => ({
     position: 'relative',
     textDecoration: 'none',
     '&:hover,&:focus,&:visited,&': {
-      color: blackColor,
     },
   },
   itemLink: {
     width: 'auto',
-    ...transition,
+    ...theme.palette.transition,
     borderRadius: '0px',
     position: 'relative',
     padding: '10px 15px',
     backgroundColor: 'transparent',
     height: '50px',
-    ...defaultFont,
   },
   itemIcon: {
     width: '24px',
@@ -192,7 +155,7 @@ const leftMenuStyle = (theme) => ({
     marginRight: '15px',
     textAlign: 'center',
     verticalAlign: 'middle',
-    color: `rgba(${hexToRgb(whiteColor)}, 0.8)`,
+    color: `rgba(${hexToRgb(theme.palette.text.c)}, 0.8)`,
   },
   itemIconRTL: {
     marginRight: '3px',
@@ -200,7 +163,6 @@ const leftMenuStyle = (theme) => ({
     float: 'right',
   },
   itemText: {
-    ...defaultFont,
     fontSize: '14px',
     color: theme.palette.secondary.contrastText,
     paddingLeft: 5,
@@ -214,17 +176,15 @@ const leftMenuStyle = (theme) => ({
     backgroundColor: theme.palette.primary.main,
   },
   itemSecondaryAction: {
-    ...transition,
+    ...theme.palette.transition,
   },
   whiteFont: {
-    color: whiteColor,
+    color: theme.palette.text.c,
   },
   zcloud: {
     backgroundColor: theme.palette.secondary.main,
-    ...primaryBoxShadow,
     '&:hover': {
       backgroundColor: theme.palette.primary.main,
-      ...primaryBoxShadow,
     },
   },
   sidebarWrapper: {
@@ -237,7 +197,7 @@ const leftMenuStyle = (theme) => ({
     zIndex: '4',
     overflowScrolling: 'touch',
     color: theme.palette.primary.contrastText,
-    ...transition,
+    ...theme.palette.transition,
   },
   nested: {
     padding: '10px 15px',
@@ -246,18 +206,8 @@ const leftMenuStyle = (theme) => ({
   },
   activeMenu1: {
     backgroundColor: '#345471',
-    // boxShadow: `0 12px 20px -10px rgba(${hexToRgb(
-    //   theme.palette.primary.main
-    // )},.28), 0 4px 20px 0 rgba(${hexToRgb(
-    //   blackColor
-    // )},.12), 0 7px 8px -5px rgba(${hexToRgb(theme.palette.primary.main)},.2)`,
     '&:hover': {
       backgroundColor: '#345471',
-      // boxShadow: `0 12px 20px -10px rgba(${hexToRgb(
-      //   theme.palette.primary.main
-      // )},.28), 0 4px 20px 0 rgba(${hexToRgb(
-      //   blackColor
-      // )},.12), 0 7px 8px -5px rgba(${hexToRgb(theme.palette.primary.main)},.2)`,
     },
     '&:before': {
       position: 'absolute',
@@ -273,18 +223,8 @@ const leftMenuStyle = (theme) => ({
   },
   activeMenu2: {
     backgroundColor: '#1B9CCE',
-    // boxShadow: `0 12px 20px -10px rgba(${hexToRgb(
-    //   '#1B9CCE'
-    // )},.28), 0 4px 20px 0 rgba(${hexToRgb(
-    //   blackColor
-    // )},.12), 0 7px 8px -5px rgba(${hexToRgb('#1B9CCE')},.2)`,
     '&:hover': {
       backgroundColor: '#1B9CCE',
-      // boxShadow: `0 12px 20px -10px rgba(${hexToRgb(
-      //   '#1B9CCE'
-      // )},.28), 0 4px 20px 0 rgba(${hexToRgb(
-      //   blackColor
-      // )},.12), 0 7px 8px -5px rgba(${hexToRgb('#1B9CCE')},.2)`,
     },
   },
   logoIcon: {
@@ -292,7 +232,7 @@ const leftMenuStyle = (theme) => ({
     height: 32,
     width: 32,
     left: 26,
-    top:18 
+    top:18
   },
   logoWrap: {
     display: 'flex',

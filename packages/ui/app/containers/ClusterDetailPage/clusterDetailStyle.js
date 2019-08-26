@@ -1,39 +1,6 @@
-import {
-  successColor,
-  whiteColor,
-  grayColor,
-  hexToRgb,
-} from 'assets/jss/material-dashboard-react';
+import hexToRgb from '@gsmlg/utils/hexToRgb';
 
-const dashboardStyle = {
-  successText: {
-    color: successColor[0],
-  },
-  upArrowCardCategory: {
-    width: '16px',
-    height: '16px',
-  },
-  stats: {
-    color: grayColor[0],
-    display: 'inline-flex',
-    fontSize: '12px',
-    lineHeight: '22px',
-    '& svg': {
-      top: '4px',
-      width: '16px',
-      height: '16px',
-      position: 'relative',
-      marginRight: '3px',
-      marginLeft: '3px',
-    },
-    '& .fab,& .fas,& .far,& .fal,& .material-icons': {
-      top: '4px',
-      fontSize: '16px',
-      position: 'relative',
-      marginRight: '3px',
-      marginLeft: '3px',
-    },
-  },
+const dashboardStyle = (theme) => ({
   cardHeader: {
     marginLeft: '15px !important',
     marginRight: '15px !important',
@@ -46,13 +13,6 @@ const dashboardStyle = {
     paddingTop: '20px',
     marginBottom: '0',
     fontWeight: 'bold',
-  },
-  cardCategoryWhite: {
-    color: `rgba(${hexToRgb(whiteColor)},.62)`,
-    margin: '0',
-    fontSize: '14px',
-    marginTop: '0',
-    marginBottom: '0',
   },
   cardTitle: {
     color: '#4A4A4A',
@@ -69,7 +29,7 @@ const dashboardStyle = {
     },
   },
   cardTitleWhite: {
-    color: whiteColor,
+    color: '#FFFFFF',
     marginTop: '0px',
     minHeight: 'auto',
     fontWeight: '300',
@@ -77,18 +37,18 @@ const dashboardStyle = {
     marginBottom: '3px',
     textDecoration: 'none',
     '& small': {
-      color: grayColor[1],
+      color: '#777',
       fontWeight: '400',
       lineHeight: '1',
     },
   },
   cardTitleValue: {
     float: 'right',
-    color: '#40B7E8',
+    color: theme.palette.highlight.light,
   },
   cardHeaderLine: {
     borderBottom: '1px #DFE0DF solid',
   },
-};
+});
 
 export default dashboardStyle;

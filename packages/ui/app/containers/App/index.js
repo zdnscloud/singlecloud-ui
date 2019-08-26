@@ -15,87 +15,16 @@ import { FormattedMessage } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import { bindActionCreators, compose } from 'redux';
 import { Switch, Route, Redirect } from 'react-router-dom';
-import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import { MuiThemeProvider } from '@material-ui/core/styles';
 import { withRouter } from 'react-router';
 
 import GlobalStyle from 'global-styles';
 import LoginPage from 'containers/LoginPage/Loadable';
-import hexToRgb from '@gsmlg/utils/hexToRgb';
+import theme from 'theme';
 
 import * as roleActions from 'ducks/role/actions';
 
 import Dashboard from './Dashboard';
-
-const theme = createMuiTheme({
-  typography: {
-    useNextVariants: true,
-  },
-  palette: {
-    type: 'light',
-    primary: {
-      main: '#072C47',
-      light: '#072C47',
-      minor: '#1B9CCE',
-    },
-    secondary: {
-      main: '#1A435F',
-      light: '#1A435F',
-      minor: `rgba(${hexToRgb('#1B9CCE')}, 0.2)`,
-    },
-    highlight: {
-      main: '#1B9CCE',
-      secondary: '#1B9CCE',
-      minor: 'A2A2A2',
-    },
-    icons: {
-      a: '#7ED321',
-      b: '#E23939',
-      c: '#4A4A4A',
-      d: '#6CD6B1',
-      e: '#40B7E8',
-      f: '#FF7A22',
-    },
-    text: {
-      a: '#000000',
-      b: '#4A4A4A',
-      c: '#ffffff',
-      d: '#838383',
-      e: '#EE827C',
-    },
-  },
-  overrides: {
-    MuiButton: {
-      root: {
-        textTransform: 'none',
-      },
-    },
-    MuiInputLabel: {
-      shrink: {
-        transform: 'translate(0, 1.5px) scale(0.85)',
-      },
-    },
-    MuiInputBase: {
-      root: {
-        fontSize: '14px',
-      },
-    },
-    MuiFormLabel: {
-      root: {
-        fontSize: '12px',
-      },
-    },
-    MuiSelect: {
-      selectMenu: {
-        height: '1.1875em',
-      },
-    },
-    MuiFormControlLabel: {
-      label: {
-        fontSize: '14px',
-      },
-    },
-  },
-});
 
 class App extends PureComponent {
   state = { hasError: false };

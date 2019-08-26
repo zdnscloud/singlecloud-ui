@@ -1,11 +1,5 @@
-import {
-  primaryColor,
-  dangerColor,
-  successColor,
-  defaultFont,
-} from 'assets/jss/material-kit-react';
 
-const customInputStyle = {
+const customInputStyle = (theme) => ({
   disabled: {
     '&:before': {
       borderColor: 'transparent !important',
@@ -17,17 +11,17 @@ const customInputStyle = {
       borderWidth: '1px !important',
     },
     '&:after': {
-      borderColor: primaryColor,
+      borderColor: theme.palette.primary.main,
     },
   },
   underlineError: {
     '&:after': {
-      borderColor: dangerColor,
+      borderColor: theme.palette.text.danger,
     },
   },
   underlineSuccess: {
     '&:after': {
-      borderColor: successColor,
+      borderColor: theme.palette.text.success,
     },
   },
   whiteUnderline: {
@@ -39,7 +33,7 @@ const customInputStyle = {
     },
   },
   labelRoot: {
-    ...defaultFont,
+    ...theme.palette.defaultFont,
     color: '#838383 !important',
     fontWeight: '400',
     fontSize: '12px',
@@ -49,10 +43,10 @@ const customInputStyle = {
     },
   },
   labelRootError: {
-    color: `${dangerColor} !important`,
+    color: `${theme.palette.text.danger} !important`,
   },
   labelRootSuccess: {
-    color: `${successColor} !important`,
+    color: `${theme.palette.text.success} !important`,
   },
   formControl: {
     margin: '0 0 17px 0',
@@ -81,6 +75,6 @@ const customInputStyle = {
       opacity: '1',
     },
   },
-};
+});
 
 export default customInputStyle;

@@ -1,8 +1,4 @@
-import {
-  drawerWidth,
-  transition,
-  container,
-} from 'assets/jss/material-dashboard-react';
+const drawerWidth = 268;
 
 const appStyle = (theme) => ({
   wrapper: {
@@ -21,7 +17,7 @@ const appStyle = (theme) => ({
     overflow: 'auto',
     position: 'relative',
     float: 'right',
-    ...transition,
+    ...theme.palette.transition,
     maxHeight: '100%',
     width: '100%',
     overflowScrolling: 'touch',
@@ -29,10 +25,7 @@ const appStyle = (theme) => ({
   },
   content: {
     minHeight: 'calc(100vh - 123px)',
-    // padding: '5px',
   },
-  container,
-  map: {},
   eventPage: {
     position: 'fixed',
     top: '65px',
