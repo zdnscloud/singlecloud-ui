@@ -35,6 +35,8 @@ import { makeSelectRole } from 'ducks/role/selectors';
 import * as roleActions from 'ducks/role/actions';
 import { openTerminal } from 'containers/TerminalPage/actions';
 import * as actions from 'ducks/app/actions';
+import { changeNamespace } from 'ducks/namespaces/actions';
+
 import {
   makeSelectActiveCluster,
   makeSelectClusterID,
@@ -44,6 +46,10 @@ import {
   makeSelectShowMenuText,
 } from 'ducks/app/selectors';
 import { makeSelectClusters } from 'ducks/clusters/selectors';
+import {
+  makeSelectNamespaces,
+  makeSelectCurrentNamespaceID,
+} from 'ducks/namespaces/selectors';
 
 import ClusterMenu from './ClusterMenu';
 import SelectCluster from './SelectCluster';
@@ -82,6 +88,8 @@ class AppMenubar extends PureComponent {
       showMenuText,
       toggleMenuText,
       openTerminal,
+      changeNamespace,
+      namespaces
     } = this.props;
     const { userEl } = this.state;
 
@@ -91,12 +99,13 @@ class AppMenubar extends PureComponent {
         onClickMenuButton={(evt) => toggleMenuText(!showMenuText)}
         headerLeftContent={
           <Fragment>
-            <SelectCluster
+            <ClusterMenu 
               clusters={clusters}
               changeCluster={changeCluster}
-              activeCluster={clusterID}
+              classes={classes}
+              namespaces={namespaces}
+              changeNamespace={changeNamespace}
             />
-            {clusterID && <SelectNamespace />}
           </Fragment>
         }
         headerRightContent={
@@ -160,6 +169,7 @@ const mapStateToProps = createStructuredSelector({
   clusters: makeSelectClusters(),
   activeCluster: makeSelectActiveCluster(),
   clusterID: makeSelectClusterID(),
+  namespaces: makeSelectNamespaces(),
   showEvents: makeSelectShowEvents(),
   currentLocation: makeSelectLocation(),
   role: makeSelectRole(),
@@ -173,6 +183,7 @@ const mapDispatchToProps = (dispatch) =>
       ...actions,
       openTerminal,
       logout: roleActions.logout,
+      changeNamespace
     },
     dispatch
   );

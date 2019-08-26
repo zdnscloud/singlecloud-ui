@@ -43,6 +43,23 @@ const appStyle = (theme) => ({
     overflow: 'auto',
     backgroundColor: '#fff',
   },
+  selectIcon: {
+    position: 'absolute',
+    top: 13,
+    right: 10,
+  },
+  selectBtn: {
+    minWidth: 106,
+    border: '1px solid #ccc',
+    paddingRight: 40,
+    boxShadow: 'none',
+    height: 40,
+    color: '#4A4A4A'
+  },
+  menuItem: {
+      minWidth: 106,
+   },
+
 });
 
 export default appStyle;

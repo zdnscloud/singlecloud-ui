@@ -7,6 +7,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import messages from './messages';
 import SelectIcon from 'components/Icons/Select';
+import ChevronRight from 'components/Icons/ChevronRight';
 
 const StyledMenu = withStyles({
   paper: {
@@ -40,17 +41,20 @@ const StyledMenuItem = withStyles(theme => ({
 }))(MenuItem);
 
 export default function CustomizedMenus(props) {
-  console.log('props',props);
-  const {clusters,activeCluster, changeCluster,classes} = props;
+  
+  const {clusters, changeCluster,classes,namespaces,changeNamespace} = props;
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [selectCluster, setSelectCluster] = React.useState(null);
+  const [nsAnchorEl, setNsAnchorEl] = React.useState(null);
   const [selectNamespace, setSelectNamespace] = React.useState(null);
+
   function handleClick(event) {
     setAnchorEl(event.currentTarget);
   }
 
   function handleClose() {
     setAnchorEl(null);
+    setNsAnchorEl(null)
   }
 
   return (
@@ -61,33 +65,77 @@ export default function CustomizedMenus(props) {
         variant="contained"
         onClick={handleClick}
         style={{ backgroundColor: '#fff' }}
-        className={classes.btn}
+        className={classes.selectBtn}
       >
         {selectCluster ? (
           <>
-            {selectCluster}  {selectNamespace}
+            {selectCluster}
+            {selectCluster ? <ChevronRight
+              style={{
+                transform: 'scale(0.6)',
+                color: '#9E9E9E',
+                marginRight: 4
+              }}
+            /> :null} 
+            {selectNamespace}
           </>
         ) :  <FormattedMessage {...messages.global} />}
         <SelectIcon className={classes.selectIcon} />
       </Button>
       <StyledMenu
-        id="customized-menu"
         anchorEl={anchorEl}
         keepMounted
         open={Boolean(anchorEl)}
       >
-        {clusters.toList().map((c, i) => (
-          <StyledMenuItem onClick={() => {
-            setSelectCluster(c.get('id'));
+        <StyledMenuItem 
+          onClick={() => {
+            setSelectCluster('');
             handleClose();
-            changeCluster(c.get('id'))
-          }}>
+            changeCluster('')
+          }}
+          className={classes.menuItem}
+        >
+          <ListItemText>
+            <FormattedMessage {...messages.global} />
+          </ListItemText>
+        </StyledMenuItem>
+        {clusters.toList().map((c, i) => (
+          <StyledMenuItem 
+            onClick={(e) => {
+              setSelectCluster(c.get('id'));
+              changeCluster(c.get('id'))
+              setNsAnchorEl(e.currentTarget)
+            }}
+            className={classes.menuItem}
+          >
             <ListItemText
               primary={c.get('id')}
-              className={classes.itemText}
             />
           </StyledMenuItem>
         ))}
+
+        {selectCluster ? (
+          <StyledMenu
+            anchorEl={nsAnchorEl}
+            keepMounted
+            open={Boolean(nsAnchorEl)}
+          >
+            {namespaces.toList().map((c, i) => (
+              <StyledMenuItem 
+                onClick={() => {
+                  setSelectNamespace(c.get('id'));
+                  handleClose();
+                  changeNamespace(c.get('id'))
+                }}
+                className={classes.menuItem}
+              >
+                <ListItemText
+                  primary={c.get('id')}
+                />
+              </StyledMenuItem>
+            ))}
+          </StyledMenu>
+        ) : null}
       </StyledMenu>
     </div>
   );
