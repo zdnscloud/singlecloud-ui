@@ -83,6 +83,11 @@ const theme = createMuiTheme({
         fontSize: '14px',
       },
     },
+    MuiListItemIcon: {
+      root: {
+        color: 'inherit',
+      },
+    },
   },
 });
 

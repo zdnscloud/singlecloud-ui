@@ -91,7 +91,7 @@ const LeftMenu = ({
                 {prop.icon ? (
                   <ListItemIcon className={classes.itemIcon}>
                     <prop.icon
-                      style={{ color: '#fff', transform: 'scale(0.8334)',verticalAlign: 'text-bottom'}}
+                      fontSize="small"
                     />
                   </ListItemIcon>
                 ) : null}
@@ -129,7 +129,7 @@ const LeftMenu = ({
               {prop.icon ? (
                 <ListItemIcon className={classes.itemIcon}>
                   <prop.icon
-                    style={{ color: '#fff', transform: 'scale(0.8334)',verticalAlign: 'text-bottom' }}
+                    fontSize="small"
                   />
                 </ListItemIcon>
               ) : null}
@@ -138,9 +138,6 @@ const LeftMenu = ({
                   primary={<FormattedMessage {...msgName} />}
                   className={classNames(classes.itemText)}
                   disableTypography
-                  style={{
-                    opacity: active ? 1 : 0.7,
-                  }}
                 />
               ) : null}
               {prop.children ? (
@@ -216,12 +213,12 @@ const LeftMenu = ({
             [classes.menuShrink]: !showText,
           }),
         }}
-      > 
+      >
         <div className={classes.logoWrap}>
           <img src={logoICon} alt="logo" className= {classes.logoIcon }/>
           {showText ? <p  className={classes.logoName}>Zcloud</p> : null }
         </div>
-     
+
         <div
           className={classNames(classes.sidebarWrapper, {
             [classes.menuShrink]: !showText,

@@ -15,39 +15,6 @@ const leftMenuStyle = (theme) => ({
     zIndex: theme.zIndex.drawer + 1,
     ...theme.palette.transition,
     width: drawerWidth,
-    [theme.breakpoints.up('md')]: {
-      width: drawerWidth,
-      position: 'fixed',
-      height: '100%',
-    },
-    [theme.breakpoints.down('sm')]: {
-      width: drawerWidth,
-      position: 'fixed',
-      display: 'block',
-      top: '0',
-      height: '100vh',
-      right: '0',
-      left: 'auto',
-      zIndex: '1032',
-      visibility: 'visible',
-      overflowY: 'visible',
-      borderTop: 'none',
-      textAlign: 'left',
-      paddingRight: '0px',
-      paddingLeft: '0',
-      transform: `translate3d(${drawerWidth}px, 0, 0)`,
-      ...theme.palette.transition,
-    },
-  },
-  drawerPaperRTL: {
-    [theme.breakpoints.up('md')]: {
-      left: 'auto !important',
-      right: '0 !important',
-    },
-    [theme.breakpoints.down('sm')]: {
-      left: '0  !important',
-      right: 'auto !important',
-    },
   },
   menuShrink: {
     width: '85px !important',
@@ -64,7 +31,7 @@ const leftMenuStyle = (theme) => ({
     height: 'calc(100vh - 64px)',
     backgroundColor: '#345471',
     position: 'absolute',
-    left: 2
+    left: 2,
   },
   logo: {
     position: 'relative',
@@ -134,12 +101,14 @@ const leftMenuStyle = (theme) => ({
   item: {
     position: 'relative',
     textDecoration: 'none',
+    color: theme.palette.primary.contrastText,
     '&:hover,&:focus,&:visited,&': {
     },
   },
   itemLink: {
     width: 'auto',
     ...theme.palette.transition,
+    color: theme.palette.primary.contrastText,
     borderRadius: '0px',
     position: 'relative',
     padding: '10px 15px',
@@ -147,29 +116,11 @@ const leftMenuStyle = (theme) => ({
     height: '50px',
   },
   itemIcon: {
-    width: '24px',
-    height: '30px',
-    fontSize: '24px',
-    lineHeight: '30px',
-    float: 'left',
-    marginRight: '15px',
-    textAlign: 'center',
-    verticalAlign: 'middle',
-    color: `rgba(${hexToRgb(theme.palette.text.c)}, 0.8)`,
-  },
-  itemIconRTL: {
-    marginRight: '3px',
-    marginLeft: '15px',
-    float: 'right',
+    justifyContent: 'center',
   },
   itemText: {
-    fontSize: '14px',
-    color: theme.palette.secondary.contrastText,
+    fontSize: 14,
     paddingLeft: 5,
-    color: '#6A8090',
-    '&:hover': {
-      color: '#fff',
-    }
   },
   'active itemText': {
     color: theme.palette.primary.contrastText,
@@ -248,19 +199,6 @@ const leftMenuStyle = (theme) => ({
     top:21,
     margin: 0
   },
-  itemIcon: {
-    display: 'block',
-    textAlign: 'center'
-  },
-  propIcon: {
-    width: 20,
-    height: 20,
-    verticalAlign: 'text-bottom',
-    color: '#6A8090',
-    '&:hover': {
-      color: '#fff',
-    },
-  }
 });
 
 export default leftMenuStyle;
