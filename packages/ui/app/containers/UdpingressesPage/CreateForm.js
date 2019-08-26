@@ -78,7 +78,6 @@ const Form = ({ formValues, handleSubmit, error, services }) => {
                 <GridItem xs={12} sm={12} md={12}>
                    <FieldArray
                       name="rules"
-                      classes={classes}
                       component={RuleTemplate}
                       formValues={formValues}
                       services={services}
