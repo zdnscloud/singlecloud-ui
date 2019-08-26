@@ -11,13 +11,13 @@ const cardHeaderStyle = (theme) => ({
       margin: '0',
       padding: '0',
       position: 'relative',
-      color: theme.palette.text.c,
+      color: theme.palette.primary.contrastText,
     },
     '&$cyanInverseCardHeader': {
       margin: '0',
       padding: '0',
       position: 'relative',
-      color: theme.palette.icons.d,
+      color: theme.palette.primary.contrastText,
     },
     '&:first-child': {
       borderRadius: 'calc(.25rem - 1px) calc(.25rem - 1px) 0 0',
@@ -82,25 +82,25 @@ const cardHeaderStyle = (theme) => ({
     },
   },
   primaryCardHeader: {
-    color: theme.palette.text.c,
+    color: theme.palette.primary.contrastText,
     '&:not($cardHeaderIcon)': {
       background: `linear-gradient(60deg, ${theme.palette.primary.main}, ${theme.palette.primary.main})`,
     },
   },
   secondaryCardHeader: {
-    color: theme.palette.text.c,
+    color: theme.palette.primary.contrastText,
     '&:not($cardHeaderIcon)': {
       background: `linear-gradient(60deg, ${theme.palette.secondary.main}, ${theme.palette.secondary.main})`,
     },
   },
   azureCardHeader: {
-    color: theme.palette.text.c,
+    color: theme.palette.primary.contrastText,
     '&:not($cardHeaderIcon)': {
       background: `linear-gradient(60deg, transparent, transparent)`,
     },
   },
   cyanInverseCardHeader: {
-    color: theme.palette.icons.d,
+    color: theme.palette.primary.contrastText,
     '&:not($cardHeaderIcon)': {
       background: `linear-gradient(60deg, ${theme.palette.text.c}, ${theme.palette.text.c})`,
     },
