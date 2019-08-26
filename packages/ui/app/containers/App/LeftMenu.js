@@ -16,9 +16,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
-import ChevronRight from 'components/Icons/ChevronRight';
 import logoICon from 'images/logo.svg';
-
 import * as actions from 'ducks/app/actions';
 import {
   makeSelectActiveCluster,
@@ -91,9 +89,9 @@ const LeftMenu = ({
             >
               <ListItem button className={classes.itemLink + listItemClasses}>
                 {prop.icon ? (
-                  <ListItemIcon>
+                  <ListItemIcon className={classes.itemIcon}>
                     <prop.icon
-                      style={{ color: '#fff', transform: 'scale(0.8334)' }}
+                      style={{ color: '#fff', transform: 'scale(0.8334)',verticalAlign: 'text-bottom'}}
                     />
                   </ListItemIcon>
                 ) : null}
@@ -129,9 +127,9 @@ const LeftMenu = ({
               onMouseLeave={handleClose}
             >
               {prop.icon ? (
-                <ListItemIcon>
+                <ListItemIcon className={classes.itemIcon}>
                   <prop.icon
-                    style={{ color: '#fff', transform: 'scale(0.8334)' }}
+                    style={{ color: '#fff', transform: 'scale(0.8334)',verticalAlign: 'text-bottom' }}
                   />
                 </ListItemIcon>
               ) : null}
@@ -152,12 +150,6 @@ const LeftMenu = ({
                   style={{ right: showText ? 16 : 0 }}
                   className={classes.itemSecondaryAction}
                 >
-                  <ChevronRight
-                    style={{
-                      transform: 'scale(0.6)',
-                      opacity: active ? 1 : 0.7,
-                    }}
-                  />
                 </ListItemSecondaryAction>
               ) : null}
             </ListItem>
@@ -224,7 +216,12 @@ const LeftMenu = ({
             [classes.menuShrink]: !showText,
           }),
         }}
-      >
+      > 
+        <div className={classes.logoWrap}>
+          <img src={logoICon} alt="logo" className= {classes.logoIcon }/>
+          {showText ? <p  className={classes.logoName}>Zcloud</p> : null }
+        </div>
+     
         <div
           className={classNames(classes.sidebarWrapper, {
             [classes.menuShrink]: !showText,

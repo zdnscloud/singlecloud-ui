@@ -33,10 +33,13 @@ const styles = (theme) => ({
   toolbarLeft: {
     display: 'flex',
     alignItems: 'center',
+    position: 'absolute',
   },
   toolbarRight: {
     display: 'flex',
     alignItems: 'center',
+    position: 'absolute',
+    right:18
   },
   menuButton: {
     display: 'flex',
@@ -47,23 +50,6 @@ const styles = (theme) => ({
     flexGrow: 1,
     flexDirection: 'column',
     justifyContent: 'center',
-    borderRight: '#204159 1px solid',
-  },
-  logo: {
-    display: 'flex',
-    width: '150px',
-    height: 65,
-    position: 'relative',
-    zIndex: '4',
-    flexGrow: 1,
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  img: {
-    position: 'absolute',
-    verticalAlign: 'middle',
-    border: '0',
   },
 });
 

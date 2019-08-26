@@ -86,6 +86,7 @@ class AppMenubar extends PureComponent {
 
     return (
       <Menubar
+        showMenuText={showMenuText}
         onClickMenuButton={(evt) => toggleMenuText(!showMenuText)}
         headerLeftContent={
           <Fragment>

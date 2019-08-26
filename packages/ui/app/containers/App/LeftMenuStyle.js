@@ -67,10 +67,10 @@ const leftMenuStyle = (theme) => ({
     },
   },
   menuShrink: {
-    width: '60px !important',
+    width: '85px !important',
   },
   menuShrinkModal: {
-    left: '60px !important',
+    left: '85px !important',
   },
   secondMenuModal: {
     // top: 64,
@@ -82,6 +82,8 @@ const leftMenuStyle = (theme) => ({
     width: '232px',
     height: 'calc(100vh - 64px)',
     backgroundColor: '#345471',
+    position: 'absolute',
+    left: 2
   },
   logo: {
     position: 'relative',
@@ -201,6 +203,11 @@ const leftMenuStyle = (theme) => ({
     ...defaultFont,
     fontSize: '14px',
     color: theme.palette.secondary.contrastText,
+    paddingLeft: 5,
+    color: '#6A8090',
+    '&:hover': {
+      color: '#fff',
+    }
   },
   'active itemText': {
     color: theme.palette.primary.contrastText,
@@ -280,8 +287,39 @@ const leftMenuStyle = (theme) => ({
       // )},.12), 0 7px 8px -5px rgba(${hexToRgb('#1B9CCE')},.2)`,
     },
   },
-  logoICon: {
-    transform: 'scale(0.188)'
+  logoIcon: {
+    position: 'absolute',
+    height: 32,
+    width: 32,
+    left: 26,
+    top:18 
+  },
+  logoWrap: {
+    display: 'flex',
+    height: 65,
+    zIndex: '4',
+  },
+  logoName: {
+    color: '#fff',
+    fontFamily:'MicrosoftYaHeiUI',
+    fontSize: 18,
+    position: 'absolute',
+    left: 77,
+    top:21,
+    margin: 0
+  },
+  itemIcon: {
+    display: 'block',
+    textAlign: 'center'
+  },
+  propIcon: {
+    width: 20,
+    height: 20,
+    verticalAlign: 'text-bottom',
+    color: '#6A8090',
+    '&:hover': {
+      color: '#fff',
+    },
   }
 });
 
