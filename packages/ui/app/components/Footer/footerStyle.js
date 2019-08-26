@@ -1,23 +1,4 @@
-import {
-  defaultFont,
-  container,
-  primaryColor,
-  grayColor,
-} from 'assets/jss/material-dashboard-react';
-
-const footerStyle = {
-  block: {
-    color: 'inherit',
-    padding: '15px',
-    textTransform: 'uppercase',
-    borderRadius: '3px',
-    textDecoration: 'none',
-    position: 'relative',
-    display: 'block',
-    ...defaultFont,
-    fontWeight: '500',
-    fontSize: '12px',
-  },
+const footerStyle = (theme) => ({
   left: {
     float: 'left !important',
     display: 'block',
@@ -31,13 +12,12 @@ const footerStyle = {
   footer: {
     overflow: 'hidden',
     bottom: '0',
-    borderTop: `1px solid ${grayColor[11]}`,
+    borderTop: `1px solid ${theme.palette.highlight.minor}`,
     padding: '15px 0',
-    ...defaultFont,
+    ...theme.palette.defaultFont,
   },
-  container,
   a: {
-    color: primaryColor,
+    color: theme.palette.primary.main,
     textDecoration: 'none',
     backgroundColor: 'transparent',
   },
@@ -51,5 +31,5 @@ const footerStyle = {
     padding: '0px',
     width: 'auto',
   },
-};
+});
 export default footerStyle;

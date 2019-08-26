@@ -1,15 +1,25 @@
-import {
-  container,
-  primaryColor,
-  dangerColor,
-  successColor,
-} from 'assets/jss/material-kit-react';
 import boxImage from 'images/login-bg-box.png';
 import image from 'images/login-bg.jpg';
 
 const signupPageStyle = (theme) => ({
   container: {
-    ...container,
+    paddingRight: '15px',
+    paddingLeft: '15px',
+    marginRight: 'auto',
+    marginLeft: 'auto',
+    width: '100%',
+    '@media (min-width: 576px)': {
+      maxWidth: '540px',
+    },
+    '@media (min-width: 768px)': {
+      maxWidth: '720px',
+    },
+    '@media (min-width: 992px)': {
+      maxWidth: '960px',
+    },
+    '@media (min-width: 1200px)': {
+      maxWidth: '1140px',
+    },
     zIndex: '2',
     position: 'relative',
     paddingTop: '20vh',
@@ -114,10 +124,10 @@ const signupPageStyle = (theme) => ({
     transform: 'scale(0.7)',
   },
   inputIconsError: {
-    color: `${dangerColor} !important`,
+    color: `#f44336 !important`,
   },
   inputIconsSuccess: {
-    color: `${successColor} !important`,
+    color: `#4caf50 !important`,
   },
   inputIconUp: {
     transform: 'translate(0, -2px) scale(0.7)',
