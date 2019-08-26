@@ -45,6 +45,7 @@ import {
 } from 'ducks/app/selectors';
 import { makeSelectClusters } from 'ducks/clusters/selectors';
 
+import ClusterMenu from './ClusterMenu';
 import SelectCluster from './SelectCluster';
 import dashboardStyle from './dashboardStyles';
 import messages from './messages';
