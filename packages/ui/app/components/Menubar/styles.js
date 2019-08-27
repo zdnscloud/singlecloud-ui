@@ -6,9 +6,8 @@ const styles = (theme) => ({
     alignItems: 'center',
   },
   appBar: {
-    flex: 1,
     position: 'inherit',
-    boxShadow: 'none',
+    // boxShadow: 'none',
     height: theme.appBarHeight,
     width: '100%',
     backgroundColor: theme.palette.primary.contrastText,
