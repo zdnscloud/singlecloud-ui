@@ -8,14 +8,12 @@ import { bindActionCreators, compose } from 'redux';
 import { NavLink } from 'react-router-dom';
 
 // @material-ui/core components
-import withStyles from '@material-ui/core/styles/withStyles';
 import Drawer from '@material-ui/core/Drawer';
 import Popper from '@material-ui/core/Popper';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import logoICon from 'images/logo.svg';
 import * as actions from 'ducks/app/actions';
 import {
@@ -28,13 +26,12 @@ import {
 } from 'ducks/app/selectors';
 
 import messages from './messages';
-import styles from './LeftMenuStyle';
+import useStyles from './LeftMenuStyle';
 
 let timer = null;
 let ctimer = null;
 
 const LeftMenu = ({
-  classes,
   logo,
   image,
   logoText,
@@ -42,6 +39,7 @@ const LeftMenu = ({
   showText,
   location,
 }) => {
+  const classes = useStyles({ showText });
   const menuRef = useRef(null);
   const [openingMenu, setOpeningMenu] = useState(null);
 
@@ -75,7 +73,8 @@ const LeftMenu = ({
         const msgName = messages[`leftMenu${prop.name}`];
         if (prop.path) {
           const listItemClasses = classNames({
-            [` ${classes.activeMenu1}`]: activeRoute(prop.path),
+            [` ${classes.active}`]: activeRoute(prop.path),
+            [` ${classes.activeTile}`]: activeRoute(prop.path),
           });
 
           return (
@@ -114,7 +113,8 @@ const LeftMenu = ({
           });
         }
         const listItemClasses = classNames({
-          [` ${classes.activeMenu1}`]: active,
+          [` ${classes.active}`]: active,
+          [` ${classes.activeTile}`]: active,
         });
 
         return (
@@ -140,15 +140,6 @@ const LeftMenu = ({
                   disableTypography
                 />
               ) : null}
-              {prop.children ? (
-                <ListItemSecondaryAction
-                  onMouseEnter={handleOpen(prop.name)}
-                  onMouseMove={handleOpen(prop.name)}
-                  style={{ right: showText ? 16 : 0 }}
-                  className={classes.itemSecondaryAction}
-                >
-                </ListItemSecondaryAction>
-              ) : null}
             </ListItem>
             {prop.name === openingMenu && prop.children ? (
               <Popper
@@ -164,7 +155,7 @@ const LeftMenu = ({
                   <List component="div" disablePadding>
                     {prop.children.map((menu, idx) => {
                       const itemClasses = classNames({
-                        [` ${classes.activeMenu2}`]: activeRoute(menu.path),
+                        [` ${classes.active}`]: activeRoute(menu.path),
                       });
                       const msgSubName = messages[`leftMenu${menu.name}`];
 
@@ -202,39 +193,23 @@ const LeftMenu = ({
     </List>
   );
   return (
-    <div className={classes.root}>
-      <Drawer
-        open
-        anchor="left"
-        variant="permanent"
-        classes={{
-          root: classes.root,
-          paper: classNames(classes.drawerPaper, {
-            [classes.menuShrink]: !showText,
-          }),
-        }}
-      >
-        <div className={classes.logoWrap}>
-          <img src={logoICon} alt="logo" className= {classes.logoIcon }/>
-          {showText ? <p  className={classes.logoName}>Zcloud</p> : null }
+    <div
+      className={classNames(classes.root, {
+        [classes.menuShrink]: !showText,
+      })}
+    >
+      <div className={classes.logoWrap}>
+        <div className={classes.logoIconWrapper}>
+          <img src={logoICon} alt="logo" className={classes.logoIcon} />
         </div>
+        {showText ? <p className={classes.logoName}>Zcloud</p> : null}
+      </div>
 
-        <div
-          className={classNames(classes.sidebarWrapper, {
-            [classes.menuShrink]: !showText,
-          })}
-          ref={menuRef}
-        >
-          {links}
-        </div>
-        <div className={classes.background} />
-      </Drawer>
+      <div className={classes.sidebarWrapper} ref={menuRef}>
+        {links}
+      </div>
     </div>
   );
-};
-
-LeftMenu.propTypes = {
-  classes: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -259,6 +234,5 @@ const withConnect = connect(
 );
 
 export default compose(
-  withStyles(styles),
   withConnect
 )(LeftMenu);

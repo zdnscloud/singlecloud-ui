@@ -2,6 +2,9 @@ import { createMuiTheme } from '@material-ui/core/styles';
 import hexToRgb from '@gsmlg/utils/hexToRgb';
 
 const theme = createMuiTheme({
+  appBarHeight: 65,
+  leftMenuWidth: 232,
+  leftShrinkWidth: 85,
   typography: {
     useNextVariants: true,
   },

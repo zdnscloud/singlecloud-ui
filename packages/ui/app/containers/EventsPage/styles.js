@@ -76,7 +76,7 @@ const styles = (theme) => ({
     marginBottom: theme.spacing(2),
   },
   wrapper: {
-    minHeight: 'calc(100vh - 65px)',
+    flex: 1,
   },
   list: {
     paddingTop: 0,

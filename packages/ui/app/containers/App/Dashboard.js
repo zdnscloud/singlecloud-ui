@@ -17,7 +17,6 @@ import { Switch, Route, Redirect } from 'react-router-dom';
 import classNames from 'classnames';
 
 // @material-ui/core components
-import withStyles from '@material-ui/core/styles/withStyles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 // core components
 import Footer from 'components/Footer/Footer';
@@ -37,57 +36,32 @@ import { makeSelectClusters } from 'ducks/clusters/selectors';
 import { makeSelectIsLogin } from 'ducks/role/selectors';
 import EventsList from 'containers/EventsPage/EventsList';
 
-import dashboardStyle from './dashboardStyles';
+import useStyles from './dashboardStyles';
 
 import AppMenubar from './AppMenubar';
 import SelectCluster from './SelectCluster';
 import LeftMenu from './LeftMenu';
 import appRoutes from './routes';
 
-class Dashboard extends PureComponent {
-  state = { hasError: false };
+export const Dashboard = ({
+  clusters,
+  clusterID,
+  menus,
+  showEvents,
+  activeCluster,
+  changeCluster,
+  toggleEventsView,
+  showMenuText,
+}) => {
+  const hasEvents = clusterID && showEvents;
+  const classes = useStyles({ hasEvents });
 
-  componentWillMount() {
-    const { isLogin, history, initAction, loadRole } = this.props;
-    initAction();
-  }
-
-  render() {
-    if (this.state.hasError) {
-      // You can render any custom fallback UI
-      return (
-        <div>
-          <h1>Something went wrong.</h1>
-          <pre>{`${this.state.error}`}</pre>
-        </div>
-      );
-    }
-    const {
-      classes,
-      clusters,
-      clusterID,
-      menus,
-      showEvents,
-      activeCluster,
-      changeCluster,
-      toggleEventsView,
-      showMenuText,
-    } = this.props;
-    const hasEvents = clusterID && showEvents;
-
-    return (
-      <div className={classes.wrapper}>
+  return (
+    <div className={classes.wrapper}>
+      <LeftMenu />
+      <div className={classes.mainWrapper}>
         <AppMenubar />
-        <LeftMenu />
-        <div
-          className={classNames(classes.mainPanel)}
-          data-ref="mainPanel"
-          style={{
-            marginRight: hasEvents ? '310px' : null,
-            width: `calc(100% - ${(hasEvents ? 310 : 0) +
-              (showMenuText ? 232 : 85)}px)`,
-          }}
-        >
+        <div className={classNames(classes.mainPanel)}>
           <div className={classes.content}>
             <Switch>
               {appRoutes.map((route, key) => (
@@ -101,19 +75,16 @@ class Dashboard extends PureComponent {
               <Redirect to="/clusters" />
             </Switch>
           </div>
-          <Footer />
-        </div>
-        <TerminalDialog />
-        {hasEvents && (
-          <div className={classes.eventPage}>
+          <div className={classes.events}>
             <EventsList />
           </div>
-        )}
-        <GlobalStyle />
+        </div>
       </div>
-    );
-  }
-}
+      <TerminalDialog />
+      <GlobalStyle />
+    </div>
+  );
+};
 
 const mapStateToProps = createStructuredSelector({
   clusters: makeSelectClusters(),
@@ -141,5 +112,4 @@ const withConnect = connect(
 
 export default compose(
   withConnect,
-  withStyles(dashboardStyle)
 )(Dashboard);
