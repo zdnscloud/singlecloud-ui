@@ -33,9 +33,10 @@ export const RollbackForm = ({
 }) => {
   const classes = useStyles();
   const historyOptions = history.map((h) => ({
-    label: h.changeReason,
+    label: h.version,
     value: h.version,
   }));
+  const current = history.find((h) => h.version === formValues.get('version'));
 
   return (
     <form className={getByKey(classes, 'form')} onSubmit={handleSubmit}>
@@ -53,6 +54,17 @@ export const RollbackForm = ({
                 name="version"
                 fullWidth
                 options={historyOptions}
+              />
+            </GridItem>
+          </GridContainer>
+        </GridItem>
+        <GridItem xs={12} sm={12} md={12}>
+          <GridContainer>
+            <GridItem xs={10} sm={10} md={10}>
+              <ReadOnlyInput
+                label={<FormattedMessage {...messages.formReason} />}
+                value={current && current.changeReason}
+                fullWidth
               />
             </GridItem>
           </GridContainer>
