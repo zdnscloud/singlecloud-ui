@@ -46,7 +46,7 @@ export const DaemonSetForm = ({
         ) : null}
         <GridItem xs={12} sm={12} md={12}>
           <Card>
-            <CardHeader color="primary">
+            <CardHeader>
               <h4 className={classes.cardTitleWhite}>
                 <FormattedMessage {...messages.createDaemonSet} />
               </h4>
@@ -77,7 +77,7 @@ export const DaemonSetForm = ({
         </GridItem>
         <GridItem xs={12} sm={12} md={12}>
           <Card>
-            <CardHeader color="primary">
+            <CardHeader>
               <h4 className={classes.cardTitleWhite}>
                 <FormattedMessage {...messages.formServiceConfig} />
               </h4>
@@ -149,7 +149,7 @@ export const DaemonSetForm = ({
         </GridItem>
         <GridItem xs={12} sm={12} md={12}>
           <Card>
-            <CardHeader color="primary">
+            <CardHeader>
               <h4 className={classes.cardTitleWhite}>
                 <FormattedMessage {...messages.formVolumeClaimTemplate} />
               </h4>

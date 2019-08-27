@@ -72,7 +72,7 @@ export class ClustersPage extends React.PureComponent {
           <GridContainer className={classes.grid}>
             <GridItem xs={12} sm={12} md={12}>
               <Card>
-                <CardHeader color="primary">
+                <CardHeader>
                   <h4 className={classes.cardTitleWhite}>
                     <FormattedMessage {...messages.clusters} />
                     <IconButton

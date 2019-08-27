@@ -93,6 +93,12 @@ const cardHeaderStyle = (theme) => ({
       background: `linear-gradient(60deg, ${theme.palette.secondary.main}, ${theme.palette.secondary.main})`,
     },
   },
+  defaultCardHeader: {
+    color: theme.palette.light.contrastText,
+    '&:not($cardHeaderIcon)': {
+      background: `linear-gradient(60deg, ${theme.palette.light.main}, ${theme.palette.light.main})`,
+    },
+  },
   azureCardHeader: {
     color: theme.palette.primary.contrastText,
     '&:not($cardHeaderIcon)': {

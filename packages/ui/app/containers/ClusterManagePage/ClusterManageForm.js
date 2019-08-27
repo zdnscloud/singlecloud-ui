@@ -45,7 +45,7 @@ class ClusterManageForm extends PureComponent {
             </GridItem>
           ) : null}
           <Card>
-            <CardHeader color="primary">
+            <CardHeader>
               <h4 className={classes.cardTitleWhite}>
                 <FormattedMessage {...messages.basicInfo} />
               </h4>
@@ -162,7 +162,7 @@ class ClusterManageForm extends PureComponent {
             </CardBody>
           </Card>
           <Card style={{ margin: 0, marginTop: 20 }}>
-            <CardHeader color="primary">
+            <CardHeader>
               <h4 className={classes.cardTitleWhite}>
                 <FormattedMessage {...messages.nodeList} />
                 <IconButton

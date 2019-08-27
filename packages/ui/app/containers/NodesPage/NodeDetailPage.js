@@ -78,7 +78,7 @@ export class NodeDetailPage extends React.PureComponent {
           <GridContainer className={classes.grid}>
             <GridItem xs={12} sm={12} md={12}>
               <Card>
-                <CardHeader color="primary">
+                <CardHeader>
                   <h4 className={classes.cardTitleWhite}>
                     <FormattedMessage {...messages.nodeInfo} />
                   </h4>
@@ -238,7 +238,7 @@ export class NodeDetailPage extends React.PureComponent {
           <GridContainer className={classes.grid}>
             <GridItem xs={12} sm={12} md={12}>
               <Card>
-                <CardHeader color="primary">
+                <CardHeader>
                   <h4 className={classes.cardTitleWhite}>
                     <FormattedMessage {...messages.labels} />
                   </h4>
@@ -276,7 +276,7 @@ export class NodeDetailPage extends React.PureComponent {
           <GridContainer className={classes.grid}>
             <GridItem xs={12} sm={12} md={12}>
               <Card>
-                <CardHeader color="primary">
+                <CardHeader>
                   <h4 className={classes.cardTitleWhite}>
                     <FormattedMessage {...messages.annotations} />
                   </h4>
