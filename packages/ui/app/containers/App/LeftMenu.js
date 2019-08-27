@@ -48,18 +48,17 @@ const LeftMenu = ({
     const pathname = location.get('pathname');
     return pathname === routeName;
   };
-  const handleOpen = (name, notChange) => ({ target }) => {
+  const handleOpen = (name, notChange) => ({ currentTarget }) => {
     clearTimeout(ctimer);
     ctimer = null;
     clearTimeout(timer);
     timer = null;
-    const setTarget = notChange ? (openingMenu && openingMenu[1]) : target;
+    const setTarget = notChange ? (openingMenu && openingMenu[1]) : currentTarget;
     timer = setTimeout(() => {
       setOpeningMenu([name, setTarget]);
     }, 200);
   };
   const handleClose = () => {
-    return 0;
     clearTimeout(ctimer);
     ctimer = null;
     ctimer = setTimeout(() => {

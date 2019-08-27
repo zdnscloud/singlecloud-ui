@@ -16,7 +16,7 @@ export const styles = (theme) => ({
     width: theme.leftMenuWidth,
     backgroundColor: theme.palette.secondary.main,
     position: 'absolute',
-    left: 20,
+    left: 2,
   },
   list: {
     marginTop: '0px',
