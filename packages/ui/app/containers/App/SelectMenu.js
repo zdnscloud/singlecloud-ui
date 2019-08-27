@@ -14,6 +14,7 @@ import { makeSelectClusters } from 'ducks/clusters/selectors';
 import { makeSelectNamespaces,makeSelectCurrentNamespaceID } from 'ducks/namespaces/selectors';
 import {
   makeSelectClusterID,
+  makeSelectNamespaceID
 } from 'ducks/app/selectors';
 import * as actions from 'ducks/app/actions';
 import { changeNamespace,loadNamespaces } from 'ducks/namespaces/actions';
@@ -61,7 +62,7 @@ const SelectMenu = ({
   changeNamespace,
   clusterID,
   loadNamespaces,
-  namespaceID
+  namespaceID,
 }) => {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -70,7 +71,7 @@ const SelectMenu = ({
   const [selectNamespace, setSelectNamespace] = React.useState(null);
   const url = clusters.getIn([selectCluster, 'links', 'namespaces']);
   
-  console.log('namespaceID',namespaceID)
+  console.log('namespaceID',namespaceID,'selectNamespace',selectNamespace,'clusterID',clusterID)
   function handleClick(event) {
     setAnchorEl(event.currentTarget);
   }
@@ -83,8 +84,14 @@ const SelectMenu = ({
   useEffect(() => {
     if (url && clusterID) {
       loadNamespaces(url, clusterID);
-    }
+    };
   }, [url, clusterID]);
+
+  useEffect(() => {
+   if (namespaceID) {
+    setSelectNamespace(namespaceID)
+   }
+  }, [namespaceID]);
 
   return (
     <div>
@@ -106,7 +113,7 @@ const SelectMenu = ({
                 marginRight: 4
               }}
             /> :null} 
-            {namespaceID} 
+            {selectNamespace} 
           </>
         ) :  <FormattedMessage {...messages.global} />}
         <SelectIcon className={classes.selectIcon} />
@@ -175,7 +182,7 @@ const mapStateToProps = createStructuredSelector({
   clusters: makeSelectClusters(),
   namespaces: makeSelectNamespaces(),
   clusterID: makeSelectClusterID(),
-  namespaceID: makeSelectCurrentNamespaceID(),
+  namespaceID: makeSelectNamespaceID(),
 });
 
 const mapDispatchToProps = (dispatch) =>
