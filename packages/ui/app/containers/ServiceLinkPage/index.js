@@ -101,7 +101,7 @@ export class ServiceLinkPage extends React.PureComponent {
       <div className={classes.root}>
         <ServiceLinkPageHelmet />
         <CssBaseline />
-        <Paper className={classes.content}>
+        <div className={classes.content}>
           <Breadcrumbs
             data={[
               {
@@ -150,7 +150,7 @@ export class ServiceLinkPage extends React.PureComponent {
               </Card>
             </GridItem>
           </GridContainer>
-        </Paper>
+        </div>
       </div>
     );
   }
