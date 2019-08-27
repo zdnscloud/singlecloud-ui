@@ -90,7 +90,7 @@ export class ShowConfigMap extends React.PureComponent {
             <GridItem xs={12} sm={12} md={12}>
               <Card>
                 <CardHeader>
-                  <h4 className={classes.cardTitleWhite}>
+                  <h4>
                     <FormattedMessage {...messages.showConfigMap} />
                   </h4>
                 </CardHeader>
@@ -161,7 +161,7 @@ export class ShowConfigMap extends React.PureComponent {
           >
             <Card className={classes.dialogCard}>
               <CardHeader color="secondary" className={classes.dialogHeader}>
-                <h4 className={classes.cardTitleWhite}>
+                <h4>
                   <FormattedMessage {...messages.formShowFile} />
                 </h4>
               </CardHeader>

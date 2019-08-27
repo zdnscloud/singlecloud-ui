@@ -76,19 +76,20 @@ export class NamespacesPage extends React.PureComponent {
               <GridItem xs={12} sm={12} md={12}>
                 <Card>
                   <CardHeader>
-                    <h4 className={classes.cardTitleWhite}>
+                    <h4>
                       <FormattedMessage {...messages.namespaces} />
-                      <IconButton
+
+                    </h4>
+                    <IconButton
                         aria-label={
                           <FormattedMessage {...messages.namespaces} />
                         }
-                        className={classes.menuButton}
+                          
                         component={Link}
                         to={`/clusters/${clusterID}/namespaces/create`}
                       >
-                        <AddIcon style={{ color: '#fff' }} />
+                        <AddIcon />
                       </IconButton>
-                    </h4>
                   </CardHeader>
                   <CardBody>
                     <NamespacesTable location={this.props.location} />

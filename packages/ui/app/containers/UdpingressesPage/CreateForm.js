@@ -57,7 +57,7 @@ const Form = ({ formValues, handleSubmit, error, services }) => {
         ) : null}
         <Card style={{ margin: 0, marginTop: 20 }}>
             <CardHeader>
-              <h4 className={classes.cardTitleWhite}>
+              <h4>
                 <FormattedMessage {...messages.createUdpingress} />
               </h4>
             </CardHeader>

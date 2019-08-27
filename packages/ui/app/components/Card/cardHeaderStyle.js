@@ -7,6 +7,9 @@ const cardHeaderStyle = (theme) => ({
     borderBottom: 'none',
     background: 'transparent',
     zIndex: '3 !important',
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
     '&$cardHeaderPlain,&$cardHeaderIcon,&$cardHeaderStats,&$primaryCardHeader,&$azureCardHeader': {
       margin: '0',
       padding: '0',

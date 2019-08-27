@@ -122,7 +122,6 @@ const styles = (theme) => ({
     },
   },
   cardTitleWhite: {
-    color: '#FFFFFF',
     marginTop: '0px',
     minHeight: 'auto',
     fontFamily: "'Roboto', 'Helvetica', 'Arial', sans-serif",

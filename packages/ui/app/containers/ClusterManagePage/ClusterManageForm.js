@@ -46,7 +46,7 @@ class ClusterManageForm extends PureComponent {
           ) : null}
           <Card>
             <CardHeader>
-              <h4 className={classes.cardTitleWhite}>
+              <h4>
                 <FormattedMessage {...messages.basicInfo} />
               </h4>
             </CardHeader>
@@ -163,16 +163,16 @@ class ClusterManageForm extends PureComponent {
           </Card>
           <Card style={{ margin: 0, marginTop: 20 }}>
             <CardHeader>
-              <h4 className={classes.cardTitleWhite}>
+              <h4>
                 <FormattedMessage {...messages.nodeList} />
                 <IconButton
                   aria-label={<FormattedMessage {...messages.clusters} />}
-                  className={classes.menuButton}
+                    
                   onClick={(evt) => {
                     openNode();
                   }}
                 >
-                  <AddIcon style={{ color: '#fff' }} />
+                  <AddIcon />
                 </IconButton>
               </h4>
             </CardHeader>

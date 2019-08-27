@@ -53,7 +53,7 @@ const renderData = ({ meta, input, classes }) => {
       >
         <Card className={classes.dialogCard}>
           <CardHeader color="secondary" className={classes.dialogHeader}>
-            <h4 className={classes.cardTitleWhite}>
+            <h4>
               <FormattedMessage {...messages.formEditFile} />
             </h4>
           </CardHeader>

@@ -83,7 +83,7 @@ export const IngressDetailPage = ({
           <GridItem xs={12} sm={12} md={12}>
             <Card>
               <CardHeader>
-                <h4 className={classes.cardTitleWhite}>
+                <h4>
                   <FormattedMessage {...messages.ingressDetail} />
                 </h4>
               </CardHeader>
@@ -106,7 +106,7 @@ export const IngressDetailPage = ({
           <GridItem xs={12} sm={12} md={12}>
             <Card>
               <CardHeader>
-                <h4 className={classes.cardTitleWhite}>
+                <h4>
                   <FormattedMessage {...messages.configurationDetails} />
                 </h4>
               </CardHeader>

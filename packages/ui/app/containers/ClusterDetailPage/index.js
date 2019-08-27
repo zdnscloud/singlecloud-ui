@@ -65,7 +65,7 @@ export class ClusterDetailPage extends React.PureComponent {
             <GridItem xs={12} sm={12} md={12}>
               <Card>
                 <CardHeader>
-                  <h4 className={classes.cardTitleWhite}>
+                  <h4>
                     <FormattedMessage
                       {...messages.clusterDetail}
                       values={cluster.toJS()}

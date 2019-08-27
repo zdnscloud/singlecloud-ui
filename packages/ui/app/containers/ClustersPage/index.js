@@ -73,17 +73,15 @@ export class ClustersPage extends React.PureComponent {
             <GridItem xs={12} sm={12} md={12}>
               <Card>
                 <CardHeader>
-                  <h4 className={classes.cardTitleWhite}>
+                  <h4>
                     <FormattedMessage {...messages.clusters} />
-                    <IconButton
-                      aria-label={<FormattedMessage {...messages.clusters} />}
-                      className={classes.menuButton}
-                      component={Link}
-                      to="/clusters/create"
-                    >
-                      <AddIcon style={{ color: '#fff' }} />
-                    </IconButton>
                   </h4>
+                  <IconButton
+                    component={Link}
+                    to="/clusters/create"
+                  >
+                    <AddIcon />
+                  </IconButton>
                 </CardHeader>
                 <CardBody>
                   <ClustersTable />

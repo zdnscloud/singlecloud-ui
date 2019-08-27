@@ -72,17 +72,14 @@ export const DeploymentsPage = ({
           <GridItem xs={12} sm={12} md={12}>
             <Card>
               <CardHeader>
-                <h4 className={classes.cardTitleWhite}>
+                <h4>
                   <FormattedMessage {...messages.deployments} />
-                  <Link
-                    to={`${location.pathname}/create`}
-                    className={classes.createBtnLink}
-                  >
-                    <IconButton>
-                      <AddIcon style={{ color: '#fff' }} />
-                    </IconButton>
-                  </Link>
                 </h4>
+                <Link to={`${location.pathname}/create`}>
+                  <IconButton>
+                    <AddIcon />
+                  </IconButton>
+                </Link>
               </CardHeader>
               <CardBody>
                 <DeploymentsTable />

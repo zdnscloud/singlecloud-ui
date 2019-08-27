@@ -55,7 +55,7 @@ const Containers = ({
   return (
     <Card>
       <CardHeader>
-        <h4 className={classes.cardTitleWhite}>
+        <h4>
           <FormattedMessage {...messages.formContainers} />
         </h4>
       </CardHeader>

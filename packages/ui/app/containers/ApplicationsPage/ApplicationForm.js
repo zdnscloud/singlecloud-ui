@@ -61,7 +61,7 @@ class ApplicationForm extends PureComponent {
           ) : null}
           <Card>
             <CardHeader>
-              <h4 className={classes.cardTitleWhite}>
+              <h4>
                 <FormattedMessage {...messages.createApplicationDesc} />
               </h4>
             </CardHeader>
@@ -80,7 +80,7 @@ class ApplicationForm extends PureComponent {
 
          <Card>
             <CardHeader>
-              <h4 className={classes.cardTitleWhite}>
+              <h4>
                 <FormattedMessage {...messages.detailedDesc} />
               </h4>
             </CardHeader>
@@ -91,7 +91,7 @@ class ApplicationForm extends PureComponent {
 
          <Card>
             <CardHeader>
-              <h4 className={classes.cardTitleWhite}>
+              <h4>
                 <FormattedMessage {...messages.configurationOptions} />
               </h4>
             </CardHeader>
@@ -156,7 +156,7 @@ class ApplicationForm extends PureComponent {
          </Card>
           {chartVersion ? <Card>
               <CardHeader>
-                <h4 className={classes.cardTitleWhite}>
+                <h4>
                   <FormattedMessage {...messages.dynamicOptions} />
                 </h4>
               </CardHeader>

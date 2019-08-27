@@ -139,7 +139,7 @@ export class CreateConfigMap extends React.PureComponent {
             <GridItem xs={12} sm={12} md={12}>
               <Card>
                 <CardHeader>
-                  <h4 className={classes.cardTitleWhite}>
+                  <h4>
                     <FormattedMessage {...messages.createConfigMap} />
                   </h4>
                 </CardHeader>

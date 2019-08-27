@@ -33,7 +33,7 @@ class ClusterForm extends PureComponent {
           ) : null}
           <Card style={{ margin: 0, marginTop: 20 }}>
             <CardHeader>
-              <h4 className={classes.cardTitleWhite}>
+              <h4>
                 <FormattedMessage {...messages.createNode} />
               </h4>
             </CardHeader>

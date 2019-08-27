@@ -59,7 +59,7 @@ export const Deployment = ({
       <GridItem xs={12} sm={12} md={12}>
         <Card>
           <CardHeader>
-            <h4 className={classes.cardTitleWhite}>
+            <h4>
               <FormattedMessage {...messages.deploymentDetail} />
             </h4>
           </CardHeader>
@@ -136,7 +136,7 @@ export const Deployment = ({
       <GridItem xs={12} sm={12} md={12}>
         <Card>
           <CardHeader>
-            <h4 className={classes.cardTitleWhite}>
+            <h4>
               <FormattedMessage {...messages.formContainers} />
             </h4>
           </CardHeader>
@@ -400,7 +400,7 @@ export const Deployment = ({
       <GridItem xs={12} sm={12} md={12} className={classes.formLine}>
         <Card>
           <CardHeader>
-            <h4 className={classes.cardTitleWhite}>
+            <h4>
               <FormattedMessage {...messages.formServiceConfig} />
             </h4>
           </CardHeader>
@@ -460,7 +460,7 @@ export const Deployment = ({
       <GridItem xs={12} sm={12} md={12}>
         <Card style={{ marginTop: 20, marginBottom: 0 }}>
           <CardHeader>
-            <h4 className={classes.cardTitleWhite}>
+            <h4>
               <FormattedMessage {...messages.formVolumeClaimTemplate} />
             </h4>
           </CardHeader>

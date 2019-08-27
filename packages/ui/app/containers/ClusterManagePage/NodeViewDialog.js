@@ -99,7 +99,7 @@ export class NodeViewDialog extends React.PureComponent {
       >
         <Card className={classes.dialogCard}>
           <CardHeader color="secondary" className={classes.dialogHeader}>
-            <h4 className={classes.cardTitleWhite}>
+            <h4>
               <FormattedMessage {...messages.nodeTitle} />
             </h4>
             <IconButton onClick={closeNode} style={{ padding: 0 }}>

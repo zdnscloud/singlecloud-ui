@@ -57,7 +57,7 @@ export class Job extends React.PureComponent {
         <GridItem xs={12} sm={12} md={12}>
           <Card>
             <CardHeader>
-              <h4 className={classes.cardTitleWhite}>
+              <h4>
                 <FormattedMessage {...messages.jobDetail} />
               </h4>
             </CardHeader>
@@ -90,7 +90,7 @@ export class Job extends React.PureComponent {
         <GridItem xs={12} sm={12} md={12}>
           <Card>
             <CardHeader>
-              <h4 className={classes.cardTitleWhite}>
+              <h4>
                 <FormattedMessage {...messages.formContainers} />
               </h4>
             </CardHeader>

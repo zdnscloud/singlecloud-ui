@@ -63,9 +63,11 @@ export class UsersPage extends React.PureComponent {
             <GridItem xs={12} sm={12} md={12}>
               <Card>
                 <CardHeader>
-                  <h4 className={classes.cardTitleWhite}>
+                  <h4>
                     <FormattedMessage {...messages.users} />
-                    <Link
+
+                  </h4>
+                  <Link
                       to={`${location.get('pathname')}/create`}
                       className={classes.createBtnLink}
                     >
@@ -73,12 +75,11 @@ export class UsersPage extends React.PureComponent {
                         size="small"
                         color="default"
                         aria-label="create user"
-                        className={classes.menuButton}
+                          
                       >
-                        <AddIcon style={{ color: '#fff' }} />
+                        <AddIcon />
                       </IconButton>
                     </Link>
-                  </h4>
                 </CardHeader>
                 <CardBody>
                   <UsersTable />

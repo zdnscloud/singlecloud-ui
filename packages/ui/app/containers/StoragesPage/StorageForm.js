@@ -54,7 +54,7 @@ class StorageForm extends PureComponent {
           <GridItem xs={12} sm={12} md={12}>
             <Card>
               <CardHeader>
-                <h4 className={classes.cardTitleWhite}>
+                <h4>
                   <FormattedMessage {...messages.formStorage} />
                 </h4>
               </CardHeader>
@@ -124,7 +124,7 @@ class StorageForm extends PureComponent {
           <GridItem xs={12} sm={12} md={12}>
             <Card>
               <CardHeader>
-                <h4 className={classes.cardTitleWhite}>
+                <h4>
                   <FormattedMessage {...messages.formHostnames} />
                 </h4>
               </CardHeader>

@@ -86,19 +86,20 @@ export class StoragesPage extends React.PureComponent {
             <GridItem xs={12} sm={12} md={12}>
               <Card>
                 <CardHeader>
-                  <h4 className={classes.cardTitleWhite}>
+                  <h4>
                     <FormattedMessage {...messages.storages} />
-                    <IconButton
+
+                  </h4>
+                  <IconButton
                       aria-label={
                         <FormattedMessage {...messages.createStorage} />
                       }
-                      className={classes.menuButton}
+                        
                       component={Link}
                       to={`/clusters/${clusterID}/storages/create`}
                     >
-                      <AddIcon style={{ color: '#fff' }} />
+                      <AddIcon />
                     </IconButton>
-                  </h4>
                 </CardHeader>
                 <CardBody>
                   <StoragesTable />

@@ -90,7 +90,7 @@ const LogViewDialog = ({
     >
       <Card className={classes.dialogCard}>
         <CardHeader color="secondary" className={classes.dialogHeader}>
-          <h4 className={classes.cardTitleWhite}>
+          <h4>
             <FormattedMessage {...messages.logTitle} />
           </h4>
           <IconButton onClick={closeClusterLog} style={{ padding: 0 }}>

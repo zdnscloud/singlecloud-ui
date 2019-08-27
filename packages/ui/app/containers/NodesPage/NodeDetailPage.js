@@ -79,7 +79,7 @@ export class NodeDetailPage extends React.PureComponent {
             <GridItem xs={12} sm={12} md={12}>
               <Card>
                 <CardHeader>
-                  <h4 className={classes.cardTitleWhite}>
+                  <h4>
                     <FormattedMessage {...messages.nodeInfo} />
                   </h4>
                 </CardHeader>
@@ -239,7 +239,7 @@ export class NodeDetailPage extends React.PureComponent {
             <GridItem xs={12} sm={12} md={12}>
               <Card>
                 <CardHeader>
-                  <h4 className={classes.cardTitleWhite}>
+                  <h4>
                     <FormattedMessage {...messages.labels} />
                   </h4>
                 </CardHeader>
@@ -277,7 +277,7 @@ export class NodeDetailPage extends React.PureComponent {
             <GridItem xs={12} sm={12} md={12}>
               <Card>
                 <CardHeader>
-                  <h4 className={classes.cardTitleWhite}>
+                  <h4>
                     <FormattedMessage {...messages.annotations} />
                   </h4>
                 </CardHeader>
