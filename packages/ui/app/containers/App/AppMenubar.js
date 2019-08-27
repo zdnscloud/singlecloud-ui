@@ -29,13 +29,11 @@ import Menubar from 'components/Menubar';
 import DownIcon from 'components/Icons/Down';
 import ShellIcon from 'components/Icons/Shell';
 import AccountIcon from 'components/Icons/Account';
-import SelectNamespace from 'containers/NamespacesPage/SelectNamespace';
 
 import { makeSelectRole } from 'ducks/role/selectors';
 import * as roleActions from 'ducks/role/actions';
 import { openTerminal } from 'containers/TerminalPage/actions';
 import * as actions from 'ducks/app/actions';
-import { changeNamespace } from 'ducks/namespaces/actions';
 
 import {
   makeSelectActiveCluster,
@@ -45,14 +43,8 @@ import {
   makeSelectUserMenus,
   makeSelectShowMenuText,
 } from 'ducks/app/selectors';
-import { makeSelectClusters } from 'ducks/clusters/selectors';
-import {
-  makeSelectNamespaces,
-  makeSelectCurrentNamespaceID,
-} from 'ducks/namespaces/selectors';
 
-import ClusterMenu from './ClusterMenu';
-import SelectCluster from './SelectCluster';
+import SelectMenu from './SelectMenu';
 import messages from './messages';
 
 class AppMenubar extends PureComponent {
@@ -74,11 +66,8 @@ class AppMenubar extends PureComponent {
 
   render() {
     const {
-      clusters,
       clusterID,
       showEvents,
-      activeCluster,
-      changeCluster,
       toggleEventsView,
       role,
       userMenus,
@@ -86,8 +75,6 @@ class AppMenubar extends PureComponent {
       showMenuText,
       toggleMenuText,
       openTerminal,
-      changeNamespace,
-      namespaces
     } = this.props;
     const { userEl } = this.state;
 
@@ -97,13 +84,7 @@ class AppMenubar extends PureComponent {
         onClickMenuButton={(evt) => toggleMenuText(!showMenuText)}
         headerLeftContent={
           <Fragment>
-            <ClusterMenu 
-              clusters={clusters}
-              changeCluster={changeCluster}
-              classes={classes}
-              namespaces={namespaces}
-              changeNamespace={changeNamespace}
-            />
+            <SelectMenu />
           </Fragment>
         }
         headerRightContent={
@@ -164,10 +145,8 @@ class AppMenubar extends PureComponent {
 }
 
 const mapStateToProps = createStructuredSelector({
-  clusters: makeSelectClusters(),
   activeCluster: makeSelectActiveCluster(),
   clusterID: makeSelectClusterID(),
-  namespaces: makeSelectNamespaces(),
   showEvents: makeSelectShowEvents(),
   currentLocation: makeSelectLocation(),
   role: makeSelectRole(),
@@ -181,7 +160,6 @@ const mapDispatchToProps = (dispatch) =>
       ...actions,
       openTerminal,
       logout: roleActions.logout,
-      changeNamespace
     },
     dispatch
   );

@@ -1,13 +1,27 @@
-import React from 'react';
+import React, { useEffect, useState, memo } from 'react';
+import { bindActionCreators, compose } from 'redux';
+import { createStructuredSelector } from 'reselect';
+import { connect } from 'react-redux';
+
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import { FormattedMessage } from 'react-intl';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import ListItemText from '@material-ui/core/ListItemText';
+
+import { makeSelectClusters } from 'ducks/clusters/selectors';
+import { makeSelectNamespaces } from 'ducks/namespaces/selectors';
+import {
+  makeSelectClusterID,
+} from 'ducks/app/selectors';
+import * as actions from 'ducks/app/actions';
+import { changeNamespace,loadNamespaces } from 'ducks/namespaces/actions';
+
 import messages from './messages';
 import SelectIcon from 'components/Icons/Select';
 import ChevronRight from 'components/Icons/ChevronRight';
+import useStyles from './dashboardStyles';
 
 const StyledMenu = withStyles({
   paper: {
@@ -40,14 +54,21 @@ const StyledMenuItem = withStyles(theme => ({
   },
 }))(MenuItem);
 
-export default function CustomizedMenus(props) {
-  
-  const {clusters, changeCluster,classes,namespaces,changeNamespace} = props;
+const SelectMenu = ({
+  clusters,
+  changeCluster,
+  namespaces,
+  changeNamespace,
+  clusterID,
+  loadNamespaces
+}) => {
+  const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [selectCluster, setSelectCluster] = React.useState(null);
   const [nsAnchorEl, setNsAnchorEl] = React.useState(null);
   const [selectNamespace, setSelectNamespace] = React.useState(null);
-
+  const url = clusters.getIn([selectCluster, 'links', 'namespaces']);
+  
   function handleClick(event) {
     setAnchorEl(event.currentTarget);
   }
@@ -56,6 +77,12 @@ export default function CustomizedMenus(props) {
     setAnchorEl(null);
     setNsAnchorEl(null)
   }
+
+  useEffect(() => {
+    if (url && clusterID) {
+      loadNamespaces(url, clusterID);
+    }
+  }, [url, clusterID]);
 
   return (
     <div>
@@ -101,10 +128,11 @@ export default function CustomizedMenus(props) {
         </StyledMenuItem>
         {clusters.toList().map((c, i) => (
           <StyledMenuItem 
+            key={i}
             onClick={(e) => {
               setSelectCluster(c.get('id'));
-              changeCluster(c.get('id'))
-              setNsAnchorEl(e.currentTarget)
+              changeCluster(c.get('id'));
+              setNsAnchorEl(e.currentTarget);
             }}
             className={classes.menuItem}
           >
@@ -113,8 +141,8 @@ export default function CustomizedMenus(props) {
             />
           </StyledMenuItem>
         ))}
-
-        {selectCluster ? (
+      </StyledMenu>
+      {selectCluster ? (
           <StyledMenu
             anchorEl={nsAnchorEl}
             keepMounted
@@ -122,6 +150,7 @@ export default function CustomizedMenus(props) {
           >
             {namespaces.toList().map((c, i) => (
               <StyledMenuItem 
+                key={i}
                 onClick={() => {
                   setSelectNamespace(c.get('id'));
                   handleClose();
@@ -136,7 +165,31 @@ export default function CustomizedMenus(props) {
             ))}
           </StyledMenu>
         ) : null}
-      </StyledMenu>
     </div>
   );
 }
+
+const mapStateToProps = createStructuredSelector({
+  clusters: makeSelectClusters(),
+  namespaces: makeSelectNamespaces(),
+  clusterID: makeSelectClusterID(),
+});
+
+const mapDispatchToProps = (dispatch) =>
+  bindActionCreators(
+    {
+      ...actions,
+      changeNamespace,
+      loadNamespaces
+    },
+    dispatch
+  );
+
+const withConnect = connect(
+  mapStateToProps,
+  mapDispatchToProps
+);
+
+export default compose(
+  withConnect,
+)(SelectMenu);
