@@ -22,6 +22,11 @@ function eventsReducer(state = initialState, { type, payload, meta }) {
         .set('clusterID', payload.clusterID)
         .setIn(['events', payload.clusterID], []);
 
+    case c.CLOSE_CLUSTER:
+      return state
+        .setIn(['events', state.get('clusterID')], [])
+        .set('clusterID', null);
+
     case c.ADD_EVENT:
       return state.updateIn(['events', meta.clusterID], (events) =>
         events.push(payload.event)

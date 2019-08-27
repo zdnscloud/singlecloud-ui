@@ -25,15 +25,13 @@ import GlobalStyle from 'global-styles';
 
 import * as roleActions from 'ducks/role/actions';
 import * as actions from 'ducks/app/actions';
+import * as eventsActions from 'ducks/events/actions';
+import { makeSelectShowEvents } from 'ducks/app/selectors';
 import {
-  makeSelectActiveCluster,
-  makeSelectClusterID,
-  makeSelectShowEvents,
-  makeSelectLocation,
-  makeSelectShowMenuText,
-} from 'ducks/app/selectors';
-import { makeSelectClusters } from 'ducks/clusters/selectors';
+  makeSelectCurrentID as makeSelectClusterID,
+} from 'ducks/clusters/selectors';
 import { makeSelectIsLogin } from 'ducks/role/selectors';
+
 import EventsList from 'containers/EventsPage/EventsList';
 
 import useStyles from './dashboardStyles';
@@ -44,19 +42,24 @@ import LeftMenu from './LeftMenu';
 import appRoutes from './routes';
 
 export const Dashboard = ({
-  clusters,
   clusterID,
   menus,
   initAction,
   showEvents,
-  activeCluster,
   changeCluster,
   toggleEventsView,
-  showMenuText,
+  openCluster,
+  closeCluster,
 }) => {
   useEffect(() => {
     initAction();
   }, []);
+  useEffect(() => {
+    if (clusterID) {
+      openCluster(clusterID);
+    }
+    return () => closeCluster();
+  }, [clusterID]);
   const hasEvents = clusterID && showEvents;
   const classes = useStyles({ hasEvents });
 
@@ -91,13 +94,9 @@ export const Dashboard = ({
 };
 
 const mapStateToProps = createStructuredSelector({
-  clusters: makeSelectClusters(),
-  activeCluster: makeSelectActiveCluster(),
   clusterID: makeSelectClusterID(),
   showEvents: makeSelectShowEvents(),
   isLogin: makeSelectIsLogin(),
-  currentLocation: makeSelectLocation(),
-  showMenuText: makeSelectShowMenuText(),
 });
 
 const mapDispatchToProps = (dispatch) =>
@@ -105,6 +104,7 @@ const mapDispatchToProps = (dispatch) =>
     {
       ...actions,
       ...roleActions,
+      ...eventsActions,
     },
     dispatch
   );

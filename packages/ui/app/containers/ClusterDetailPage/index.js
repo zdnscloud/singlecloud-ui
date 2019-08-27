@@ -37,11 +37,8 @@ export class ClusterDetailPage extends React.PureComponent {
   };
 
   componentWillMount() {
-    const { openCluster, closeCluster, cluster, routeTo } = this.props;
-    if (cluster && cluster.size > 0) {
-      closeCluster();
-      openCluster(cluster.get('id'));
-    } else {
+    const { cluster, routeTo } = this.props;
+    if (!(cluster && cluster.size > 0)) {
       routeTo('/clusters');
     }
   }
@@ -56,7 +53,7 @@ export class ClusterDetailPage extends React.PureComponent {
           <Breadcrumbs
             data={[
               {
-                path: `/clusters/${cluster.toJS().name}`,
+                path: `/clusters/${cluster.get('name')}`,
                 name: <FormattedMessage {...messages.pageTitle} />,
               },
             ]}
