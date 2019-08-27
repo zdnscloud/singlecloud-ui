@@ -7,7 +7,7 @@ const cardHeaderStyle = (theme) => ({
     borderBottom: 'none',
     background: 'transparent',
     zIndex: '3 !important',
-    '&$cardHeaderPlain,&$cardHeaderIcon,&$cardHeaderStats,&$primaryCardHeader,&$cyanInverseCardHeader,&$azureCardHeader': {
+    '&$cardHeaderPlain,&$cardHeaderIcon,&$cardHeaderStats,&$primaryCardHeader,&$azureCardHeader': {
       margin: '0',
       padding: '0',
       position: 'relative',
@@ -17,7 +17,7 @@ const cardHeaderStyle = (theme) => ({
       margin: '0',
       padding: '0',
       position: 'relative',
-      color: theme.palette.primary.contrastText,
+      color: theme.palette.icons.d,
     },
     '&:first-child': {
       borderRadius: 'calc(.25rem - 1px) calc(.25rem - 1px) 0 0',
@@ -100,7 +100,7 @@ const cardHeaderStyle = (theme) => ({
     },
   },
   cyanInverseCardHeader: {
-    color: theme.palette.primary.contrastText,
+    color: theme.palette.icons.d,
     '&:not($cardHeaderIcon)': {
       background: `linear-gradient(60deg, ${theme.palette.text.c}, ${theme.palette.text.c})`,
     },
