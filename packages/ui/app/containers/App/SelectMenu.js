@@ -1,4 +1,4 @@
-import React, { useEffect, useState, memo } from 'react';
+import React, { useEffect, useState, memo, useRef } from 'react';
 import { bindActionCreators, compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
@@ -9,6 +9,7 @@ import { FormattedMessage } from 'react-intl';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import ListItemText from '@material-ui/core/ListItemText';
+import Popper from '@material-ui/core/Popper';
 
 import { makeSelectClusters } from 'ducks/clusters/selectors';
 import { makeSelectNamespaces,makeSelectCurrentNamespaceID } from 'ducks/namespaces/selectors';
@@ -26,7 +27,7 @@ import useStyles from './dashboardStyles';
 
 const StyledMenu = withStyles({
   paper: {
-    border: '1px solid #d3d4d5',
+    boxShadow: '0 1px 4px 0 rgba(0, 0, 0, 0.14)'
   },
 })((props) => (
   <Menu
@@ -46,10 +47,17 @@ const StyledMenu = withStyles({
 
 const StyledMenuItem = withStyles(theme => ({
   root: {
+    color:'#6A8090',
     '&:focus': {
-      backgroundColor: theme.palette.primary.main,
+      backgroundColor: '#fff',
       ' & .MuiListItemText-primary': {
-        color: theme.palette.common.white,
+        color: '#32C5FF',
+      },
+    },
+    '&:hover': {
+      backgroundColor: '#fff',
+      ' & .MuiListItemText-primary': {
+        color: '#000',
       },
     },
   },
@@ -70,10 +78,9 @@ const SelectMenu = ({
   const [nsAnchorEl, setNsAnchorEl] = React.useState(null);
   const [selectNamespace, setSelectNamespace] = React.useState(null);
   const url = clusters.getIn([selectCluster, 'links', 'namespaces']);
-  
-  console.log('namespaceID',namespaceID,'selectNamespace',selectNamespace,'clusterID',clusterID,'selectCluster',selectCluster)
+  const menuRef = useRef(null);
 
-   const handleClick = (event) => {
+  const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   }
 
@@ -132,6 +139,7 @@ const SelectMenu = ({
         anchorEl={anchorEl}
         keepMounted
         open={Boolean(anchorEl)}
+        style={{ zIndex: 4 }}
       >
         <StyledMenuItem 
           onClick={() => {
@@ -140,6 +148,7 @@ const SelectMenu = ({
             changeCluster('')
           }}
           className={classes.menuItem}
+          ref={menuRef}
         >
           <ListItemText>
             <FormattedMessage {...messages.global} />
@@ -157,30 +166,34 @@ const SelectMenu = ({
             />
           </StyledMenuItem>
         ))}
-      </StyledMenu>
-      {selectCluster ? (
-          <StyledMenu
-            anchorEl={nsAnchorEl}
-            keepMounted
-            open={Boolean(nsAnchorEl)}
-          >
-            {namespaces.toList().map((c, i) => (
-              <StyledMenuItem 
-                key={i}
-                onClick={() => {
-                  setSelectNamespace(c.get('id'));
-                  changeNamespace(c.get('id'),clusterID);
-                  handleClose();
-                }}
-                className={classes.menuItem}
-              >
-                <ListItemText
-                  primary={c.get('id')}
-                />
-              </StyledMenuItem>
-            ))}
-          </StyledMenu>
+        {selectCluster ? (
+         <Popper
+          open={Boolean(nsAnchorEl)}
+          anchorEl={menuRef.current}
+          placement="right-start"
+          className={classes.secondMenu}
+          onMouseLeave={()=>{
+            setNsAnchorEl(null)
+          }}
+        >
+          {namespaces.toList().map((c, i) => (
+            <StyledMenuItem 
+              key={i}
+              onClick={() => {
+                setSelectNamespace(c.get('id'));
+                changeNamespace(c.get('id'),clusterID);
+                handleClose();
+              }}
+              className={classes.menuItem}
+            >
+              <ListItemText
+                primary={c.get('id')}
+              />
+            </StyledMenuItem>
+          ))}
+        </Popper>
         ) : null}
+      </StyledMenu>
     </div>
   );
 }

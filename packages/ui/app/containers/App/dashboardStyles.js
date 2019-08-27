@@ -51,6 +51,12 @@ export const styles = (theme) => ({
   menuItem: {
       minWidth: 106,
    },
+  secondMenu: {
+    left: '4px !important',
+    zIndex: 5 ,
+    backgroundColor: '#fff', 
+    boxShadow: '0 1px 4px 0 rgba(0, 0, 0, 0.14)'
+  }
 
 });
 

@@ -42,7 +42,7 @@ const LeftMenu = ({
   const classes = useStyles({ showText });
   const menuRef = useRef(null);
   const [openingMenu, setOpeningMenu] = useState(null);
-
+  
   // verifies if routeName is the one active (in browser input)
   const activeRoute = (routeName) => {
     const pathname = location.get('pathname');
