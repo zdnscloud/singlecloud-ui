@@ -65,6 +65,10 @@ export default defineMessages({
     id: `${scope}.createApplication`,
     defaultMessage: 'Create Application',
   },
+  createApplicationDesc: {
+    id: `${scope}.createApplicationDesc`,
+    defaultMessage: 'Application Desc',
+  },
   createApplicationButton: {
     id: `${scope}.createApplicationButton`,
     defaultMessage: 'Create',

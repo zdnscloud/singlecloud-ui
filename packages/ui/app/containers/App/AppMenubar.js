@@ -53,7 +53,6 @@ import {
 
 import ClusterMenu from './ClusterMenu';
 import SelectCluster from './SelectCluster';
-import dashboardStyle from './dashboardStyles';
 import messages from './messages';
 
 class AppMenubar extends PureComponent {
@@ -75,7 +74,6 @@ class AppMenubar extends PureComponent {
 
   render() {
     const {
-      classes,
       clusters,
       clusterID,
       showEvents,
@@ -195,5 +193,4 @@ const withConnect = connect(
 
 export default compose(
   withConnect,
-  withStyles(dashboardStyle)
 )(AppMenubar);

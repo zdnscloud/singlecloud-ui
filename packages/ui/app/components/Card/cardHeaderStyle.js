@@ -1,18 +1,4 @@
-import {
-  warningCardHeader,
-  successCardHeader,
-  dangerCardHeader,
-  infoCardHeader,
-  primaryCardHeader,
-  roseCardHeader,
-  whiteColor,
-  customBlueCardHeader,
-} from 'assets/jss/material-dashboard-react';
 import hexToRgb from '@gsmlg/utils/hexToRgb';
-
-const blackColor = '#000';
-const cyanColor = '#6CD6B1';
-const azureColor = 'transparent';
 
 const cardHeaderStyle = (theme) => ({
   cardHeader: {
@@ -21,22 +7,22 @@ const cardHeaderStyle = (theme) => ({
     borderBottom: 'none',
     background: 'transparent',
     zIndex: '3 !important',
-    '&$cardHeaderPlain,&$cardHeaderIcon,&$cardHeaderStats,&$warningCardHeader,&$successCardHeader,&$dangerCardHeader,&$infoCardHeader,&$primaryCardHeader,&$roseCardHeader,&$customBlueCardHeader,&$cyanCardHeader,&$azureCardHeader': {
+    '&$cardHeaderPlain,&$cardHeaderIcon,&$cardHeaderStats,&$primaryCardHeader,&$azureCardHeader': {
       margin: '0',
       padding: '0',
       position: 'relative',
-      color: whiteColor,
+      color: theme.palette.primary.contrastText,
     },
     '&$cyanInverseCardHeader': {
       margin: '0',
       padding: '0',
       position: 'relative',
-      color: cyanColor,
+      color: theme.palette.icons.d,
     },
     '&:first-child': {
       borderRadius: 'calc(.25rem - 1px) calc(.25rem - 1px) 0 0',
     },
-    '&$warningCardHeader,&$successCardHeader,&$dangerCardHeader,&$infoCardHeader,&$primaryCardHeader,&$roseCardHeader,&$customBlueCardHeader,&$cyanCardHeader,&$azureCardHeader,&$cyanInverseCardHeader': {
+    '&$primaryCardHeader,&$azureCardHeader,&$cyanInverseCardHeader': {
       '&:not($cardHeaderIcon)': {
         borderRadius: '3px 3px 0 0',
         marginTop: '-20px',
@@ -77,7 +63,7 @@ const cardHeaderStyle = (theme) => ({
     },
   },
   cardHeaderIcon: {
-    '&$warningCardHeader,&$successCardHeader,&$dangerCardHeader,&$infoCardHeader,&$primaryCardHeader,&$roseCardHeader,&$customBlueCardHeader,&cyanCardHeader': {
+    '&$primaryCardHeader': {
       background: 'transparent',
       boxShadow: 'none',
     },
@@ -95,82 +81,28 @@ const cardHeaderStyle = (theme) => ({
       margin: '5px 4px 0px',
     },
   },
-  warningCardHeader: {
-    color: whiteColor,
-    '&:not($cardHeaderIcon)': {
-      ...warningCardHeader,
-    },
-  },
-  successCardHeader: {
-    color: whiteColor,
-    '&:not($cardHeaderIcon)': {
-      ...successCardHeader,
-    },
-  },
-  dangerCardHeader: {
-    color: whiteColor,
-    '&:not($cardHeaderIcon)': {
-      ...dangerCardHeader,
-    },
-  },
-  infoCardHeader: {
-    color: whiteColor,
-    '&:not($cardHeaderIcon)': {
-      ...infoCardHeader,
-    },
-  },
   primaryCardHeader: {
-    color: whiteColor,
+    color: theme.palette.primary.contrastText,
     '&:not($cardHeaderIcon)': {
-      ...primaryCardHeader,
+      background: `linear-gradient(60deg, ${theme.palette.primary.main}, ${theme.palette.primary.main})`,
     },
   },
   secondaryCardHeader: {
-    color: whiteColor,
+    color: theme.palette.primary.contrastText,
     '&:not($cardHeaderIcon)': {
       background: `linear-gradient(60deg, ${theme.palette.secondary.main}, ${theme.palette.secondary.main})`,
-      // boxshadow: `0 4px 20px 0 rgba(${hextorgb(
-      //   blackcolor
-      // )}, 0.14), 0 7px 10px -5px rgba(${hexToRgb(theme.palette.secondary.main)}, 0.4)`,
-    },
-  },
-  customBlueCardHeader: {
-    color: whiteColor,
-    '&:not($cardHeaderIcon)': {
-      ...customBlueCardHeader,
-    },
-  },
-  roseCardHeader: {
-    color: whiteColor,
-    '&:not($cardHeaderIcon)': {
-      ...roseCardHeader,
-    },
-  },
-  cyanCardHeader: {
-    color: whiteColor,
-    '&:not($cardHeaderIcon)': {
-      background: `linear-gradient(60deg, ${cyanColor}, ${cyanColor})`,
-      // boxShadow: `0 4px 20px 0 rgba(${hexToRgb(
-      //   blackColor
-      // )}, 0.14), 0 7px 10px -5px rgba(${hexToRgb(cyanColor)}, 0.4)`,
     },
   },
   azureCardHeader: {
-    color: whiteColor,
+    color: theme.palette.primary.contrastText,
     '&:not($cardHeaderIcon)': {
-      background: `linear-gradient(60deg, ${azureColor}, ${azureColor})`,
-      // boxShadow: `0 4px 20px 0 rgba(${hexToRgb(
-      //   blackColor
-      // )}, 0.14), 0 7px 10px -5px rgba(${hexToRgb(azureColor)}, 0.4)`,
+      background: `linear-gradient(60deg, transparent, transparent)`,
     },
   },
   cyanInverseCardHeader: {
-    color: cyanColor,
+    color: theme.palette.icons.d,
     '&:not($cardHeaderIcon)': {
-      background: `linear-gradient(60deg, ${whiteColor}, ${whiteColor})`,
-      // boxShadow: `0 4px 20px 0 rgba(${hexToRgb(
-      //   blackColor
-      // )}, 0.14), 0 7px 10px -5px rgba(${hexToRgb(whiteColor)}, 0.4)`,
+      background: `linear-gradient(60deg, ${theme.palette.text.c}, ${theme.palette.text.c})`,
     },
   },
 });

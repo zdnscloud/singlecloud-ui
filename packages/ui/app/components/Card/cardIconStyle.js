@@ -1,23 +1,10 @@
-import {
-  warningCardHeader,
-  successCardHeader,
-  dangerCardHeader,
-  infoCardHeader,
-  primaryCardHeader,
-  roseCardHeader,
-  grayColor,
-} from 'assets/jss/material-dashboard-react';
 import hexToRgb from '@gsmlg/utils/hexToRgb';
 
-const whiteColor = '#fff';
-const blackColor = '#000';
-const cyanColor = '#6CD6B1';
-
-const cardIconStyle = {
+const cardIconStyle = (theme) => ({
   cardIcon: {
-    '&$warningCardHeader,&$successCardHeader,&$dangerCardHeader,&$infoCardHeader,&$primaryCardHeader,&$roseCardHeader,&$cyanCardHeader': {
+    '&$primaryCardHeader,&$cyanCardHeader': {
       borderRadius: '3px',
-      backgroundColor: grayColor[0],
+      backgroundColor: theme.palette.highlight.minor,
       padding: '15px',
       marginTop: '-20px',
       marginRight: '15px',
@@ -25,28 +12,21 @@ const cardIconStyle = {
     },
     '&$cyanInverseCardHeader': {
       borderRadius: '3px',
-      // backgroundColor: grayColor[0],
       padding: '15px',
       marginTop: '0px',
       marginRight: '15px',
       float: 'left',
     },
   },
-  warningCardHeader,
-  successCardHeader,
-  dangerCardHeader,
-  infoCardHeader,
-  primaryCardHeader,
-  roseCardHeader,
+  primaryCardHeader: {
+    background: `linear-gradient(60deg, ${theme.palette.primary.main}, ${theme.palette.primary.main})`,
+  },
   cyanCardHeader: {
-    background: `linear-gradient(60deg, ${cyanColor}, ${cyanColor})`,
-    // boxShadow: `0 4px 20px 0 rgba(${hexToRgb(
-    //   blackColor
-    // )}, 0.14), 0 7px 10px -5px rgba(${hexToRgb(cyanColor)}, 0.4)`,
+    background: `linear-gradient(60deg, ${theme.palette.text.c}, ${theme.palette.text.c})`,
   },
   cyanInverseCardHeader: {
     background: `transparent`,
   },
-};
+});
 
 export default cardIconStyle;

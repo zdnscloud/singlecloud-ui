@@ -208,6 +208,7 @@ const styles = (theme) => ({
     width: '100px',
     height: '35px',
     margin: '0 auto',  
+    textAlign: 'center'
   },
   appDetailBtn: {
     background: '#1B9CCE',
