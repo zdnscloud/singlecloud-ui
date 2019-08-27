@@ -4,7 +4,7 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import { Link } from 'react-router-dom';
-import Button from '@material-ui/core/Button';
+import Button from 'components/CustomButtons/Button';
 import EditIcon from 'components/Icons/Edit';
 import IconButton from '@material-ui/core/IconButton';
 import ConfirmDelete from 'components/ConfirmDelete/ConfirmDelete';
@@ -57,7 +57,7 @@ const tableSchema = schema
         ...sch,
         component: (props) => (
           <Button
-            color="primary"
+            link
             component={Link}
             to={`${props.pathname}/${props.data.get('id')}/show`}
           >

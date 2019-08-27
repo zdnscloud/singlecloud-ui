@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import { ucfirst } from '@gsmlg/utils';
 import { Link } from 'react-router-dom';
-import Button from '@material-ui/core/Button';
+import Button from 'components/CustomButtons/Button';
 
 const schema = [
   'name',
@@ -21,7 +21,7 @@ const tableSchema = schema
           switch (props.data.get('type')) {
             default:
               return  <Button
-              color="primary"
+              link
               to={`/clusters/${props.clusterID}/namespaces/${props.namespaceID}/${props.data.get('type')}s/${props.data.get('name')}/show`}
               component={Link}
             >

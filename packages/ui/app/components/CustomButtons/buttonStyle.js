@@ -129,10 +129,12 @@ const buttonStyle = (theme) => ({
     },
     '&$info': {
       '&,&:focus,&:hover,&:visited': {
+        color: theme.palette.text.info,
       },
     },
     '&$success': {
       '&,&:focus,&:hover,&:visited': {
+        color: theme.palette.text.success,
       },
     },
     '&$warning': {
@@ -176,9 +178,10 @@ const buttonStyle = (theme) => ({
     width: '100% !important',
   },
   link: {
+    color: theme.palette.highlight.main,
     '&,&:hover,&:focus': {
       backgroundColor: 'transparent',
-      color: '#999999',
+      color: theme.palette.highlight.main,
       boxShadow: 'none',
     },
   },

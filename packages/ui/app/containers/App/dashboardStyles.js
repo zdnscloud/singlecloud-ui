@@ -21,10 +21,13 @@ export const styles = (theme) => ({
     overflowScrolling: 'touch',
     backgroundColor: '#EAEDF2',
     paddingTop: 15,
+    height: `calc(100vh - ${theme.appBarHeight}px)`,
   },
   content: {
     ...theme.palette.transition,
     flex: 1,
+    overflowScrolling: 'touch',
+    overflow: 'auto',
   },
   events: {
     ...theme.palette.transition,

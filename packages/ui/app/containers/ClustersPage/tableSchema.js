@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import { ucfirst } from '@gsmlg/utils';
 import { Link } from 'react-router-dom';
-import Button from '@material-ui/core/Button';
+import Button from 'components/CustomButtons/Button';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
 import TimeCell from 'components/Cells/TimeCell';
@@ -66,7 +66,7 @@ const tableSchema = schema
         ...sch,
         component: (props) => (
           <Button
-            color="primary"
+            link
             to={`/clusters/${props.data.get('id')}/show`}
             component={Link}
           >

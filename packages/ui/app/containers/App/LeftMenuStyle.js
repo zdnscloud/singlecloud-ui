@@ -27,8 +27,6 @@ export const styles = (theme) => ({
     position: 'relative',
     textDecoration: 'none',
     color: theme.palette.primary.contrastText,
-    '&:hover,&:focus,&:visited,&': {
-    },
   },
   itemLink: {
     ...theme.palette.transition,

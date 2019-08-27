@@ -89,7 +89,7 @@ export class NetworkPage extends React.PureComponent {
       <div className={classes.root}>
         <NetworkPageHelmet />
         <CssBaseline />
-        <Paper className={classes.content}>
+        <div className={classes.content}>
           <Breadcrumbs
             data={[
               {
@@ -136,7 +136,7 @@ export class NetworkPage extends React.PureComponent {
               </Card>
             </GridItem>
           </GridContainer>
-        </Paper>
+        </div>
       </div>
     );
   }
