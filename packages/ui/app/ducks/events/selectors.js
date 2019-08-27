@@ -6,7 +6,7 @@ import { initialState, prefix } from './index';
  * Direct selector to the events state domain
  */
 
-const selectEventsDomain = (state) => state.get(prefix, initialState);
+export const selectEventsDomain = (state) => state.get(prefix, initialState);
 
 /**
  * Other specific selectors
@@ -32,14 +32,3 @@ export const makeSelectLatestEvents = () =>
     (substate, clusterID) =>
       (substate.getIn(['events', clusterID]) || []).slice(-100)
   );
-
-/**
- * Default selector used by Events
- */
-export const makeSelectEventsPage = () =>
-  createSelector(
-    selectEventsDomain,
-    (substate) => substate
-  );
-
-export default makeSelectEventsPage;

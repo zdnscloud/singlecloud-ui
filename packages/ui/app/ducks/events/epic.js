@@ -8,6 +8,7 @@ import {
   scan,
   throttleTime,
   throttle,
+  takeUntil,
 } from 'rxjs/operators';
 import { ofType, combineEpics } from 'redux-observable';
 import SockJS from 'sockjs-client';
@@ -37,9 +38,12 @@ export const eventEpic = (action$) =>
         socket.onclose = () => {
           observer.complete();
         };
+
+        return () => socket.close();
       })
+        .pipe(takeUntil(action$.pipe(ofType(c.CLOSE_CLUSTER))))
         .pipe(scan((acc, event) => acc.concat([event]).slice(-1000), []))
-        .pipe(debounceTime(100))
+        .pipe(debounceTime(1000 / 20))
         .pipe(map((events) => a.setEvents(events, clusterID)))
     )
   );
