@@ -11,7 +11,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import ListItemText from '@material-ui/core/ListItemText';
 
 import { makeSelectClusters } from 'ducks/clusters/selectors';
-import { makeSelectNamespaces } from 'ducks/namespaces/selectors';
+import { makeSelectNamespaces,makeSelectCurrentNamespaceID } from 'ducks/namespaces/selectors';
 import {
   makeSelectClusterID,
 } from 'ducks/app/selectors';
@@ -60,7 +60,8 @@ const SelectMenu = ({
   namespaces,
   changeNamespace,
   clusterID,
-  loadNamespaces
+  loadNamespaces,
+  namespaceID
 }) => {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -69,6 +70,7 @@ const SelectMenu = ({
   const [selectNamespace, setSelectNamespace] = React.useState(null);
   const url = clusters.getIn([selectCluster, 'links', 'namespaces']);
   
+  console.log('namespaceID',namespaceID)
   function handleClick(event) {
     setAnchorEl(event.currentTarget);
   }
@@ -94,17 +96,17 @@ const SelectMenu = ({
         style={{ backgroundColor: '#fff' }}
         className={classes.selectBtn}
       >
-        {selectCluster ? (
+        {clusterID ? (
           <>
-            {selectCluster}
-            {selectCluster ? <ChevronRight
+            {clusterID}
+            {clusterID ? <ChevronRight
               style={{
                 transform: 'scale(0.6)',
                 color: '#9E9E9E',
                 marginRight: 4
               }}
             /> :null} 
-            {selectNamespace}
+            {namespaceID} 
           </>
         ) :  <FormattedMessage {...messages.global} />}
         <SelectIcon className={classes.selectIcon} />
@@ -153,8 +155,8 @@ const SelectMenu = ({
                 key={i}
                 onClick={() => {
                   setSelectNamespace(c.get('id'));
+                  changeNamespace(c.get('id'),clusterID);
                   handleClose();
-                  changeNamespace(c.get('id'))
                 }}
                 className={classes.menuItem}
               >
@@ -173,6 +175,7 @@ const mapStateToProps = createStructuredSelector({
   clusters: makeSelectClusters(),
   namespaces: makeSelectNamespaces(),
   clusterID: makeSelectClusterID(),
+  namespaceID: makeSelectCurrentNamespaceID(),
 });
 
 const mapDispatchToProps = (dispatch) =>
