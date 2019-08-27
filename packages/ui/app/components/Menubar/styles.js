@@ -7,7 +7,7 @@ const styles = (theme) => ({
   },
   appBar: {
     position: 'inherit',
-    // boxShadow: 'none',
+    boxShadow: 'none',
     height: theme.appBarHeight,
     width: '100%',
     backgroundColor: theme.palette.primary.contrastText,

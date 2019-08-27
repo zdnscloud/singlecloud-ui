@@ -3,19 +3,9 @@ import hexToRgb from '@gsmlg/utils/hexToRgb';
 const cardIconStyle = (theme) => ({
   cardIcon: {
     '&$primaryCardHeader,&$cyanCardHeader': {
-      borderRadius: '3px',
+      borderRadius: 3,
       backgroundColor: theme.palette.highlight.minor,
-      padding: '15px',
-      marginTop: '-20px',
-      marginRight: '15px',
-      float: 'left',
-    },
-    '&$cyanInverseCardHeader': {
-      borderRadius: '3px',
-      padding: '15px',
-      marginTop: '0px',
-      marginRight: '15px',
-      float: 'left',
+      padding: 15,
     },
   },
   primaryCardHeader: {

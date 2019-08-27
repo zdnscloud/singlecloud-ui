@@ -44,8 +44,8 @@ class ClusterForm extends PureComponent {
             </GridItem>
           ) : null}
           <Card>
-            <CardHeader color="primary">
-              <h4 className={classes.cardTitleWhite}>
+            <CardHeader>
+              <h4>
                 <FormattedMessage {...messages.formCreate} />
               </h4>
             </CardHeader>
@@ -327,8 +327,8 @@ class ClusterForm extends PureComponent {
             </CardBody>
           </Card>
           <Card style={{ margin: 0, marginTop: 20 }}>
-            <CardHeader color="primary">
-              <h4 className={classes.cardTitleWhite}>
+            <CardHeader>
+              <h4>
                 <FormattedMessage {...messages.formNode} />
               </h4>
             </CardHeader>

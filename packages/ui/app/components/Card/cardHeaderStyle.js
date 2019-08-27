@@ -7,6 +7,9 @@ const cardHeaderStyle = (theme) => ({
     borderBottom: 'none',
     background: 'transparent',
     zIndex: '3 !important',
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
     '&$cardHeaderPlain,&$cardHeaderIcon,&$cardHeaderStats,&$primaryCardHeader,&$azureCardHeader': {
       margin: '0',
       padding: '0',
@@ -91,6 +94,12 @@ const cardHeaderStyle = (theme) => ({
     color: theme.palette.primary.contrastText,
     '&:not($cardHeaderIcon)': {
       background: `linear-gradient(60deg, ${theme.palette.secondary.main}, ${theme.palette.secondary.main})`,
+    },
+  },
+  defaultCardHeader: {
+    color: theme.palette.light.contrastText,
+    '&:not($cardHeaderIcon)': {
+      background: `linear-gradient(60deg, ${theme.palette.light.main}, ${theme.palette.light.main})`,
     },
   },
   azureCardHeader: {

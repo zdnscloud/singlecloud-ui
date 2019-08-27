@@ -101,8 +101,8 @@ export class NetworkPage extends React.PureComponent {
           <GridContainer className={classes.grid}>
             <GridItem xs={12} sm={12} md={12}>
               <Card>
-                <CardHeader color="primary" style={{ padding: 0 }}>
-                  <h4 className={classes.cardTitleWhite}>
+                <CardHeader style={{ padding: 0 }}>
+                  <h4>
                     <Tabs
                       value={this.state.tab}
                       onChange={this.setTab}

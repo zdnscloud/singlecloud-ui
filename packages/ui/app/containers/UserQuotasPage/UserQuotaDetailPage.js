@@ -76,8 +76,8 @@ export class UserQuotaDetailPage extends React.PureComponent {
           <GridContainer className={classes.grid}>
             <GridItem xs={12} sm={12} md={12}>
               <Card>
-                <CardHeader color="primary">
-                  <h4 className={classes.cardTitleWhite}>
+                <CardHeader>
+                  <h4>
                     <FormattedMessage {...messages.detail} />
                   </h4>
                 </CardHeader>

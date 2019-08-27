@@ -96,8 +96,8 @@ export class TerminalPage extends React.PureComponent {
         <CssBaseline />
         <div className={classes.content}>
           <Card>
-            <CardHeader color="primary">
-              <h4 className={classes.cardTitleWhite}>
+            <CardHeader>
+              <h4>
                 <FormattedMessage {...messages.header} />
               </h4>
             </CardHeader>

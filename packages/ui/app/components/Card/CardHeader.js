@@ -36,18 +36,17 @@ function CardHeader({ ...props }) {
   );
 }
 
+CardHeader.defaultProps = {
+};
+
 CardHeader.propTypes = {
   classes: PropTypes.object.isRequired,
   className: PropTypes.string,
   color: PropTypes.oneOf([
-    'warning',
-    'success',
-    'danger',
-    'info',
+    'none',
+    'default',
     'primary',
     'secondary',
-    'rose',
-    'cyan',
     'azure',
     'cyanInverse',
   ]),

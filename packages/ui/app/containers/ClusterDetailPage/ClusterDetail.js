@@ -103,91 +103,38 @@ export class ClusterDetail extends React.PureComponent {
     )}GiB / ${(cluster.get('memory') / 1024 ** 3).toFixed(2)}GiB`;
     const pod = `${cluster.get('podUsed')} / ${cluster.get('pod')}`;
 
+    const infoList = [
+      { key: 'name', Icon: NameIcon, message: 'clusterName', value: cluster.get('name') },
+      { key: 'version', Icon: VersionIcon, message: 'clusterVersion', value: cluster.get('version') },
+      { key: 'nodeCount', Icon: NodesIcon, message: 'clusterNodes', value: cluster.get('nodeCount') },
+      { key: 'creationTimestamp', Icon: TimeIcon, message: 'clusterCreated', value: moment(cluster.get('creationTimestamp')).format('YYYY-MM-DD') },
+    ];
+
     return (
-      <div>
+      <div className={classes.wrapper}>
         <GridContainer>
-          <GridItem xs={12} sm={6} md={3}>
-            <Card>
-              <CardHeader
-                color="cyanInverse"
-                stats
-                icon
-                className={classes.cardHeader}
-              >
-                <CardIcon color="cyanInverse">
-                  <NameIcon />
-                </CardIcon>
-                <p className={classes.cardCategory}>
-                  <FormattedMessage {...messages.clusterName} />
-                </p>
-                <h3 className={classes.cardTitle}>{cluster.get('name')}</h3>
-              </CardHeader>
-            </Card>
-          </GridItem>
-          <GridItem xs={12} sm={6} md={3}>
-            <Card>
-              <CardHeader
-                color="cyanInverse"
-                stats
-                icon
-                className={classes.cardHeader}
-              >
-                <CardIcon color="cyanInverse">
-                  <VersionIcon />
-                </CardIcon>
-                <p className={classes.cardCategory}>
-                  <FormattedMessage {...messages.clusterVersion} />
-                </p>
-                <h3 className={classes.cardTitle}>
-                  <small>{cluster.get('version')}</small>
-                </h3>
-              </CardHeader>
-            </Card>
-          </GridItem>
-          <GridItem xs={12} sm={6} md={3}>
-            <Card>
-              <CardHeader
-                color="cyanInverse"
-                stats
-                icon
-                className={classes.cardHeader}
-              >
-                <CardIcon color="cyanInverse">
-                  <NodesIcon />
-                </CardIcon>
-                <p className={classes.cardCategory}>
-                  <FormattedMessage {...messages.clusterNodes} />
-                </p>
-                <h3 className={classes.cardTitle}>
-                  <small>{cluster.get('nodeCount')}</small>
-                </h3>
-              </CardHeader>
-            </Card>
-          </GridItem>
-          <GridItem xs={12} sm={6} md={3}>
-            <Card>
-              <CardHeader
-                color="cyanInverse"
-                stats
-                icon
-                className={classes.cardHeader}
-              >
-                <CardIcon color="cyanInverse">
-                  <TimeIcon />
-                </CardIcon>
-                <p className={classes.cardCategory}>
-                  <FormattedMessage {...messages.clusterCreated} />
-                </p>
-                <h3 className={classes.cardTitle}>
-                  <small>
-                    {moment(cluster.get('creationTimestamp')).format(
-                      'YYYY-MM-DD'
-                    )}
-                  </small>
-                </h3>
-              </CardHeader>
-            </Card>
-          </GridItem>
+          {infoList.map((info) => (
+            <GridItem xs={12} sm={6} md={3} key={info.key}>
+              <Card>
+                <CardHeader
+                  color="cyanInverse"
+                  stats
+                  icon
+                  className={classes.infoCardHeader}
+                >
+                  <CardIcon color="cyanInverse" className={classes.infoCardIcon}>
+                    <info.Icon />
+                  </CardIcon>
+                  <div className={classes.infoCardText}>
+                    <h3 className={classes.info}>
+                      <FormattedMessage {...messages[info.message]} />
+                    </h3>
+                    <p className={classes.info}>{info.value}</p>
+                  </div>
+                </CardHeader>
+              </Card>
+            </GridItem>
+          ))}
         </GridContainer>
 
         <GridContainer>

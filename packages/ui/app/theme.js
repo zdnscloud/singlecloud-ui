@@ -26,6 +26,10 @@ const theme = createMuiTheme({
       secondary: '#1B9CCE',
       minor: '#A2A2A2',
     },
+    light: {
+      main: '#FFFFFF',
+      contrastText: '#000000',
+    },
     icons: {
       a: '#7ED321',
       b: '#E23939',

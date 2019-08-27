@@ -62,8 +62,8 @@ class CronJobForm extends PureComponent {
           ) : null}
           <GridItem xs={12} sm={12} md={12}>
             <Card>
-              <CardHeader color="primary">
-                <h4 className={classes.cardTitleWhite}>
+              <CardHeader>
+                <h4>
                   <FormattedMessage {...messages.createCronJob} />
                 </h4>
               </CardHeader>

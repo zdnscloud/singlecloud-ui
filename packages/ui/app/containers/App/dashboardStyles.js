@@ -20,6 +20,7 @@ export const styles = (theme) => ({
     flex: 1,
     overflowScrolling: 'touch',
     backgroundColor: '#EAEDF2',
+    paddingTop: 15,
   },
   content: {
     ...theme.palette.transition,

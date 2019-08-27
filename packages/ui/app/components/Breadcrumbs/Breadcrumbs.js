@@ -10,10 +10,10 @@ import homeIcon from 'images/clusters/home.png';
 
 const style = {
   breadcrumbs: {
-    width: '100%',
+    margin: '0 16px',
     padding: 6,
     paddingLeft: 16,
-    background: '#fff',
+    backgroundColor: '#fff',
   },
   icon: {
     width: 20,

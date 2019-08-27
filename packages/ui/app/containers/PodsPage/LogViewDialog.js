@@ -99,7 +99,7 @@ class LogViewDialog extends React.Component {
       >
         <Card className={classes.dialogCard}>
           <CardHeader color="secondary" className={classes.dialogHeader}>
-            <h4 className={classes.cardTitleWhite}>
+            <h4>
               <FormattedMessage {...messages.logTitle} />
             </h4>
             <IconButton onClick={closePodLog} style={{ padding: 0 }}>

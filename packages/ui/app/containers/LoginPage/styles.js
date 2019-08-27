@@ -86,14 +86,10 @@ const signupPageStyle = (theme) => ({
     margin: '0',
   },
   cardHeader: {
-    width: 'auto',
-    textAlign: 'center',
-    marginLeft: '0px',
-    marginRight: '0px',
-    marginTop: '0px',
-    padding: '3rem 0 0 0',
-    marginBottom: '-15px',
-    backgroundColor: 'rgb(255,255,255, 0)',
+    paddingBottom: 0,
+    height: 124,
+    alignItems: 'flex-end',
+    justifyContent: 'center',
   },
   socialIcons: {
     maxWidth: '24px',

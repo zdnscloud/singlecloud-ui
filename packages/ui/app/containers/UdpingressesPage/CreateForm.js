@@ -56,8 +56,8 @@ const Form = ({ formValues, handleSubmit, error, services }) => {
           </GridItem>
         ) : null}
         <Card style={{ margin: 0, marginTop: 20 }}>
-            <CardHeader color="primary">
-              <h4 className={classes.cardTitleWhite}>
+            <CardHeader>
+              <h4>
                 <FormattedMessage {...messages.createUdpingress} />
               </h4>
             </CardHeader>

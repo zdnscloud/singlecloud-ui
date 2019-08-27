@@ -102,8 +102,8 @@ export class StoragePage extends React.PureComponent {
           <GridContainer className={classes.grid}>
             <GridItem xs={12} sm={12} md={12}>
               <Card>
-                <CardHeader color="primary">
-                  <h4 className={classes.cardTitleWhite}>{name}</h4>
+                <CardHeader>
+                  <h4>{name}</h4>
                 </CardHeader>
                 <CardBody>
                   <GridContainer>
@@ -165,8 +165,8 @@ export class StoragePage extends React.PureComponent {
           <GridContainer className={classes.grid}>
             <GridItem xs={12} sm={12} md={12}>
               <Card>
-                <CardHeader color="primary">
-                  <h4 className={classes.cardTitleWhite}>
+                <CardHeader>
+                  <h4>
                     <FormattedMessage {...messages.pvList} />
                   </h4>
                 </CardHeader>

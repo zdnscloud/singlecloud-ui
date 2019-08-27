@@ -76,8 +76,8 @@ export class UserProfilePage extends React.PureComponent {
           <GridContainer className={classes.grid}>
             <GridItem xs={12} sm={12} md={12}>
               <Card>
-                <CardHeader color="primary">
-                  <h4 className={classes.cardTitleWhite}>
+                <CardHeader>
+                  <h4>
                     <FormattedMessage {...messages.userProfile} />
                     <Link
                       to={`/users/${user && user.get('id')}/passwd`}
@@ -87,7 +87,7 @@ export class UserProfilePage extends React.PureComponent {
                         size="small"
                         color="default"
                         aria-label="create user"
-                        className={classes.menuButton}
+                          
                       >
                         <KeyIcon />
                       </Fab>

@@ -56,8 +56,8 @@ const Form = ({ formValues, handleSubmit, error,services }) => {
           </GridItem>
         ) : null}
           <Card>
-            <CardHeader color="primary">
-              <h4 className={classes.cardTitleWhite}>
+            <CardHeader>
+              <h4>
                 <FormattedMessage {...messages.createIngress} />
               </h4>
             </CardHeader>
@@ -75,8 +75,8 @@ const Form = ({ formValues, handleSubmit, error,services }) => {
             </CardBody>
           </Card>
           <Card style={{ margin: 0, marginTop: 20 }}>
-            <CardHeader color="primary">
-              <h4 className={classes.cardTitleWhite}>
+            <CardHeader>
+              <h4>
                 <FormattedMessage {...messages.configurationDetails} />
               </h4>
             </CardHeader>

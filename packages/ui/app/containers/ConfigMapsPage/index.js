@@ -79,22 +79,18 @@ export class ConfigMapsPage extends React.PureComponent {
           <GridContainer className={classes.grid}>
             <GridItem xs={12} sm={12} md={12}>
               <Card>
-                <CardHeader color="primary">
-                  <h4 className={classes.cardTitleWhite}>
+                <CardHeader>
+                  <h4>
                     <FormattedMessage {...messages.configMaps} />
-                    <Link
+
+                  </h4>
+                  <Link
                       to={`${this.props.location.pathname}/create`}
-                      className={classes.createBtnLink}
                     >
-                      <IconButton
-                        aria-label={
-                          <FormattedMessage {...messages.configMaps} />
-                        }
-                      >
-                        <AddIcon style={{ color: '#fff' }} />
+                      <IconButton>
+                        <AddIcon />
                       </IconButton>
                     </Link>
-                  </h4>
                 </CardHeader>
                 <CardBody>
                   <ConfigMapsTable />
