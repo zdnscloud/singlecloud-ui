@@ -48,16 +48,18 @@ const LeftMenu = ({
     const pathname = location.get('pathname');
     return pathname === routeName;
   };
-  const handleOpen = (name) => () => {
+  const handleOpen = (name, notChange) => ({ target }) => {
     clearTimeout(ctimer);
     ctimer = null;
     clearTimeout(timer);
     timer = null;
+    const setTarget = notChange ? (openingMenu && openingMenu[1]) : target;
     timer = setTimeout(() => {
-      setOpeningMenu(name);
+      setOpeningMenu([name, setTarget]);
     }, 200);
   };
   const handleClose = () => {
+    return 0;
     clearTimeout(ctimer);
     ctimer = null;
     ctimer = setTimeout(() => {
@@ -128,28 +130,24 @@ const LeftMenu = ({
             >
               {prop.icon ? (
                 <ListItemIcon className={classes.itemIcon}>
-                  <prop.icon
-                    fontSize="small"
-                  />
+                  <prop.icon fontSize="small" />
                 </ListItemIcon>
               ) : null}
-              {showText ? (
-                <ListItemText
-                  primary={<FormattedMessage {...msgName} />}
-                  className={classNames(classes.itemText)}
-                  disableTypography
-                />
-              ) : null}
+              <ListItemText
+                primary={<FormattedMessage {...msgName} />}
+                className={classNames(classes.itemText)}
+                disableTypography
+              />
             </ListItem>
-            {prop.name === openingMenu && prop.children ? (
+            {openingMenu && prop.name === openingMenu[0] && prop.children ? (
               <Popper
-                open={prop.name === openingMenu}
-                onMouseEnter={handleOpen(prop.name)}
-                onMouseMove={handleOpen(prop.name)}
+                open={prop.name === openingMenu[0]}
+                onMouseEnter={handleOpen(prop.name, true)}
+                onMouseMove={handleOpen(prop.name, true)}
                 onClose={handleClose}
-                anchorEl={menuRef.current}
+                anchorEl={openingMenu && openingMenu[1]}
                 placement="right-start"
-                style={{ zIndex: 1300 }}
+                style={{ zIndex: 1200 }}
               >
                 <div className={classNames(classes.secondMenu)}>
                   <List component="div" disablePadding>
@@ -193,16 +191,12 @@ const LeftMenu = ({
     </List>
   );
   return (
-    <div
-      className={classNames(classes.root, {
-        [classes.menuShrink]: !showText,
-      })}
-    >
+    <div className={classes.root}>
       <div className={classes.logoWrap}>
         <div className={classes.logoIconWrapper}>
           <img src={logoICon} alt="logo" className={classes.logoIcon} />
         </div>
-        {showText ? <p className={classes.logoName}>Zcloud</p> : null}
+        <p className={classes.logoName}>Zcloud</p>
       </div>
 
       <div className={classes.sidebarWrapper} ref={menuRef}>

@@ -12,14 +12,11 @@ export const styles = (theme) => ({
     zIndex: theme.zIndex.appBar,
     width: ({ showText }) => showText ? theme.leftMenuWidth : theme.leftShrinkWidth,
   },
-  menuShrink: {
-    width: '85px !important',
-  },
   secondMenu: {
-    width: ({ showText }) => showText ? theme.leftMenuWidth : theme.leftShrinkWidth,
+    width: theme.leftMenuWidth,
     backgroundColor: theme.palette.secondary.main,
     position: 'absolute',
-    left: 2,
+    left: 20,
   },
   list: {
     marginTop: '0px',
@@ -51,6 +48,7 @@ export const styles = (theme) => ({
     justifyContent: 'center',
   },
   itemText: {
+    display: ({ showText }) => showText ? 'flex' : 'none',
     fontSize: 14,
     paddingLeft: 5,
   },
@@ -105,6 +103,7 @@ export const styles = (theme) => ({
     },
   },
   logoName: {
+    display: ({ showText }) => showText ? 'flex' : 'none',
     flex: 1,
     fontSize: 18,
   },
