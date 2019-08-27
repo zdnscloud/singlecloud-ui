@@ -71,14 +71,20 @@ const SelectMenu = ({
   const [selectNamespace, setSelectNamespace] = React.useState(null);
   const url = clusters.getIn([selectCluster, 'links', 'namespaces']);
   
-  console.log('namespaceID',namespaceID,'selectNamespace',selectNamespace,'clusterID',clusterID)
-  function handleClick(event) {
+  console.log('namespaceID',namespaceID,'selectNamespace',selectNamespace,'clusterID',clusterID,'selectCluster',selectCluster)
+
+   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   }
 
-  function handleClose() {
+  const handleClose = () => {
     setAnchorEl(null);
     setNsAnchorEl(null)
+  }
+  
+  const openNamespanceMenu = (e,c) => {
+    setSelectCluster(c);
+    setNsAnchorEl(e.currentTarget);
   }
 
   useEffect(() => {
@@ -92,6 +98,10 @@ const SelectMenu = ({
     setSelectNamespace(namespaceID)
    }
   }, [namespaceID]);
+
+  useEffect(() => {
+    changeCluster(selectCluster);
+   }, [selectCluster]);
 
   return (
     <div>
@@ -138,12 +148,9 @@ const SelectMenu = ({
         {clusters.toList().map((c, i) => (
           <StyledMenuItem 
             key={i}
-            onClick={(e) => {
-              setSelectCluster(c.get('id'));
-              changeCluster(c.get('id'));
-              setNsAnchorEl(e.currentTarget);
-            }}
+            onClick={(e) => openNamespanceMenu(e,c.get('id'))}
             className={classes.menuItem}
+            onMouseEnter={(e) => openNamespanceMenu(e,c.get('id'))}
           >
             <ListItemText
               primary={c.get('id')}
