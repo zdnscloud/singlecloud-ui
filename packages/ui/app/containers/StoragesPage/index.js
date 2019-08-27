@@ -42,11 +42,6 @@ import styles from './styles';
 
 /* eslint-disable react/prefer-stateless-function */
 export class StoragesPage extends React.PureComponent {
-  static propTypes = {
-    initAction: PropTypes.func,
-    classes: PropTypes.object.isRequired,
-  };
-
   componentWillMount() {
     this.load();
   }

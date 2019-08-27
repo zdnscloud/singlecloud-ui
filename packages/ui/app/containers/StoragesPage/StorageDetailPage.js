@@ -47,10 +47,6 @@ import PVTable from './PVTable';
 
 /* eslint-disable react/prefer-stateless-function */
 export class StoragePage extends React.PureComponent {
-  static propTypes = {
-    initAction: PropTypes.func,
-    classes: PropTypes.object.isRequired,
-  };
 
   state = { checkedNode: null };
 
@@ -87,7 +83,7 @@ export class StoragePage extends React.PureComponent {
       <div className={classes.root}>
         <StoragePageHelmet />
         <CssBaseline />
-        <Paper className={classes.content}>
+        <div className={classes.content}>
           <Breadcrumbs
             data={[
               {
@@ -145,13 +141,13 @@ export class StoragePage extends React.PureComponent {
                             onClick={
                               enableFilter
                                 ? (evt) => {
-                                    const name = node.get('name');
-                                    if (name === this.state.checkedNode) {
-                                      this.setState({ checkedNode: null });
-                                    } else {
-                                      this.setState({ checkedNode: name });
-                                    }
+                                  const nodeName = node.get('name');
+                                  if (nodeName === this.state.checkedNode) {
+                                    this.setState({ checkedNode: null });
+                                  } else {
+                                    this.setState({ checkedNode: nodeName });
                                   }
+                                }
                                 : null
                             }
                           />
@@ -185,7 +181,7 @@ export class StoragePage extends React.PureComponent {
               </Card>
             </GridItem>
           </GridContainer>
-        </Paper>
+        </div>
       </div>
     );
   }
