@@ -2,7 +2,7 @@ import React, { Fragment } from 'react';
 import { ucfirst } from '@gsmlg/utils';
 import TimeCell from 'components/Cells/TimeCell';
 import { Link } from 'react-router-dom';
-import Button from '@material-ui/core/Button';
+import Button from 'components/CustomButtons/Button';
 import ConfirmDelete from 'components/ConfirmDelete/ConfirmDelete';
 
 const schema = ['serviceName'];
@@ -44,7 +44,7 @@ const tableSchema = schema
         ...sch,
         component: (props) => (
           <Button
-            color="primary"
+            link
             component={Link}
             to={`${props.pathname}/${props.data.get('id')}/show`}
           >

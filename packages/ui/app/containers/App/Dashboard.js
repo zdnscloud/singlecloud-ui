@@ -7,7 +7,7 @@
  *
  */
 
-import React, { PureComponent, Fragment } from 'react';
+import React, { useEffect, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
@@ -47,12 +47,16 @@ export const Dashboard = ({
   clusters,
   clusterID,
   menus,
+  initAction,
   showEvents,
   activeCluster,
   changeCluster,
   toggleEventsView,
   showMenuText,
 }) => {
+  useEffect(() => {
+    initAction();
+  }, []);
   const hasEvents = clusterID && showEvents;
   const classes = useStyles({ hasEvents });
 
