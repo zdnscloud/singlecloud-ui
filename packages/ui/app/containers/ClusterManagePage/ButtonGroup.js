@@ -160,7 +160,7 @@ class ButtonGroup extends PureComponent {
               </Button>
             )}
 
-            {status === 'Updating' || status === 'Creating' ? (
+            {status === 'Updating' || status === 'Creating' || status === 'Unavailable' ? (
               <Button
                 className={classes.handleBtn}
                 onClick={(evt) => {
@@ -230,7 +230,6 @@ const mapDispatchToProps = (dispatch) =>
     {
       ...actions,
       openTerminal,
-      submitForm: () => submit(formName),
     },
     dispatch
   );

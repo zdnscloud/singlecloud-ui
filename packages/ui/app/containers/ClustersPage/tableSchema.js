@@ -64,14 +64,16 @@ const tableSchema = schema
     if (sch.id === 'name') {
       return {
         ...sch,
-        component: (props) => (
-          <Button
-            link
-            to={`/clusters/${props.data.get('id')}/show`}
-            component={Link}
-          >
-            {props.data.get('name')}
-          </Button>
+        component: ({ data }) => (
+          data.get('status') === 'Running' ? (
+            <Button
+              link
+              to={`/clusters/${data.get('id')}/show`}
+              component={Link}
+            >
+              {data.get('name')}
+            </Button>
+          ) : data.get('name')
         ),
       };
     }
