@@ -14,9 +14,13 @@ export const styles = (theme) => ({
   },
   secondMenu: {
     width: theme.leftMenuWidth,
+    color: theme.palette.primary.contrastText,
     backgroundColor: theme.palette.secondary.main,
     position: 'absolute',
     left: 2,
+    '& $itemText': {
+      display: 'flex',
+    },
   },
   list: {
     marginTop: '0px',

@@ -1,4 +1,4 @@
-import React, { useRef, Fragment, useState } from 'react';
+import React, { useRef, Fragment, useEffect, useState } from 'react';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -42,6 +42,9 @@ const LeftMenu = ({
   const classes = useStyles({ showText });
   const menuRef = useRef(null);
   const [openingMenu, setOpeningMenu] = useState(null);
+  useEffect(() => {
+    setOpeningMenu(null);
+  }, [showText]);
 
   // verifies if routeName is the one active (in browser input)
   const activeRoute = (routeName) => {
