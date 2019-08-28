@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import React, { PureComponent, Fragment, useState } from 'react';
+import React, { PureComponent, Fragment, useEffect, useState } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
@@ -29,195 +29,187 @@ import messages from './messages';
 
 import styles from './styles';
 
-class ButtonGroup extends PureComponent {
-  state = {};
+export const ButtonGroup = ({
+  classes,
+  clusterID,
+  cluster,
+  openTerminal,
+  openClusterLog,
+  cancelCluster,
+  loadClusters,
+  url,
+}) => {
+  useEffect(() => {
+    const timer = setInterval(() => loadClusters(url), 3000);
+    return () => clearInterval(timer);
+  }, []);
 
-  componentWillMount() {
-    this.load();
-    this.timer = setInterval(() => this.load(), 3000);
+  const status = cluster.get('status');
+  let clusterStatus = null;
+
+  const handleConfirm = () => {
+    cancelCluster(clusterID, {
+      url: `${cluster.getIn(['links', 'self'])}?action=cancel`,
+    });
+  };
+
+  switch (status) {
+    case 'Running':
+      clusterStatus = (
+        <Button className={classes.runningBtn}>
+          <img
+            src={checkIcon}
+            alt="checkIcon"
+            className={classes.buttonIcon}
+          />
+          <FormattedMessage {...messages.runningStatus} />
+        </Button>
+      );
+      break;
+    case 'Updating':
+      clusterStatus = (
+        <Button className={classes.loadingBtn}>
+          <img
+            src={loadingIcon}
+            alt="loadingIcon"
+            className={classes.buttonIcon}
+          />
+          <FormattedMessage {...messages.updatingStatus} />
+        </Button>
+      );
+      break;
+    case 'Connecting':
+      clusterStatus = (
+        <Button className={classes.loadingBtn}>
+          <img
+            src={loadingIcon}
+            alt="loadingIcon"
+            className={classes.buttonIcon}
+          />
+          <FormattedMessage {...messages.connectingStatus} />
+        </Button>
+      );
+      break;
+    case 'Creating':
+      clusterStatus = (
+        <Button className={classes.loadingBtn}>
+          <img
+            src={loadingIcon}
+            alt="loadingIcon"
+            className={classes.buttonIcon}
+          />
+          <FormattedMessage {...messages.creatingStatus} />
+        </Button>
+      );
+      break;
+    case 'Unavailable':
+      clusterStatus = (
+        <Button className={classes.failBtn}>
+          <img
+            src={failIcon}
+            alt="checkIcon"
+            className={classes.buttonIcon}
+          />
+          <FormattedMessage {...messages.unavailableStatus} />
+        </Button>
+      );
+      break;
+    case 'Unreachable':
+      clusterStatus = (
+        <Button className={classes.failBtn}>
+          <img
+            src={failIcon}
+            alt="checkIcon"
+            className={classes.buttonIcon}
+          />
+          <FormattedMessage {...messages.unreachableStatus} />
+        </Button>
+      );
+      break;
+    default:
+      break;
   }
 
-  load() {
-    const { loadClusters, url } = this.props;
-    loadClusters(url);
-  }
+  return (
+    <Fragment>
+      <LogViewDialog />
+      <GridContainer className={classes.btnGroup}>
+        <GridItem xs={12} sm={12} md={12} className={classes.formLine}>
+          {clusterStatus}
+          {status === 'Running' ? (
+            <Button
+              className={classes.handleBtn}
+              onClick={(evt) => {
+                openTerminal(clusterID);
+              }}
+            >
+              <ShellIcon className={classes.shellIcon} />
+              <FormattedMessage {...messages.shellButton} />
+            </Button>
+          ) : (
+            <Button className={classes.unableBtn}>
+              <ShellIcon className={classes.shellIcon} />
+              <FormattedMessage {...messages.shellButton} />
+            </Button>
+          )}
 
-  render() {
-    const {
-      classes,
-      clusterID,
-      cluster,
-      openTerminal,
-      openClusterLog,
-      cancelCluster,
-    } = this.props;
-    const status = cluster.get('status');
-    let clusterStatus = null;
-
-    const handleConfirm = () => {
-      cancelCluster(clusterID, {
-        url: `${cluster.getIn(['links', 'self'])}?action=cancel`,
-      });
-    };
-
-    switch (status) {
-      case 'Running':
-        clusterStatus = (
-          <Button className={classes.runningBtn}>
-            <img
-              src={checkIcon}
-              alt="checkIcon"
-              className={classes.buttonIcon}
-            />
-            <FormattedMessage {...messages.runningStatus} />
-          </Button>
-        );
-        break;
-      case 'Updating':
-        clusterStatus = (
-          <Button className={classes.loadingBtn}>
-            <img
-              src={loadingIcon}
-              alt="loadingIcon"
-              className={classes.buttonIcon}
-            />
-            <FormattedMessage {...messages.updatingStatus} />
-          </Button>
-        );
-        break;
-      case 'Connecting':
-        clusterStatus = (
-          <Button className={classes.loadingBtn}>
-            <img
-              src={loadingIcon}
-              alt="loadingIcon"
-              className={classes.buttonIcon}
-            />
-            <FormattedMessage {...messages.connectingStatus} />
-          </Button>
-        );
-        break;
-      case 'Creating':
-        clusterStatus = (
-          <Button className={classes.loadingBtn}>
-            <img
-              src={loadingIcon}
-              alt="loadingIcon"
-              className={classes.buttonIcon}
-            />
-            <FormattedMessage {...messages.creatingStatus} />
-          </Button>
-        );
-        break;
-      case 'Unavailable':
-        clusterStatus = (
-          <Button className={classes.failBtn}>
-            <img
-              src={failIcon}
-              alt="checkIcon"
-              className={classes.buttonIcon}
-            />
-            <FormattedMessage {...messages.unavailableStatus} />
-          </Button>
-        );
-        break;
-      case 'Unreachable':
-        clusterStatus = (
-          <Button className={classes.failBtn}>
-            <img
-              src={failIcon}
-              alt="checkIcon"
-              className={classes.buttonIcon}
-            />
-            <FormattedMessage {...messages.unreachableStatus} />
-          </Button>
-        );
-        break;
-      default:
-        break;
-    }
-
-    return (
-      <Fragment>
-        <LogViewDialog />
-        <GridContainer className={classes.btnGroup}>
-          <GridItem xs={12} sm={12} md={12} className={classes.formLine}>
-            {clusterStatus}
-            {status === 'Running' ? (
-              <Button
-                className={classes.handleBtn}
-                onClick={(evt) => {
-                  openTerminal(clusterID);
-                }}
-              >
-                <ShellIcon className={classes.shellIcon} />
-                <FormattedMessage {...messages.shellButton} />
-              </Button>
-            ) : (
-              <Button className={classes.unableBtn}>
-                <ShellIcon className={classes.shellIcon} />
-                <FormattedMessage {...messages.shellButton} />
-              </Button>
-            )}
-
-            {status === 'Updating' || status === 'Creating' || status === 'Unavailable' ? (
-              <Button
-                className={classes.handleBtn}
-                onClick={(evt) => {
-                  openClusterLog(clusterID);
-                }}
-              >
-                <img
-                  src={logIcon}
-                  alt="logIcon"
-                  className={classes.buttonIcon}
-                />
-                <FormattedMessage {...messages.updateLogButton} />
-              </Button>
-            ) : (
-              <Button className={classes.unableBtn}>
-                <img
-                  src={logIcon}
-                  alt="logIcon"
-                  className={classes.buttonIcon}
-                />
-                <FormattedMessage {...messages.updateLogButton} />
-              </Button>
-            )}
-
-            {status === 'Updating' ||
-            status === 'Connecting' ||
-            status === 'Creating' ? (
-              <Confirm
-                handleConfirm={handleConfirm}
-                dialogContentText={messages.stopPromptText}
-                component={
-                  <Button className={classes.handleBtn}>
-                    <img
-                      src={stopIcon}
-                      alt="stopIcon"
-                      className={classes.buttonIcon}
-                    />
-                    <FormattedMessage {...messages.stopButton} />
-                  </Button>
-                }
+          {status === 'Updating' || status === 'Creating' || status === 'Unavailable' ? (
+            <Button
+              className={classes.handleBtn}
+              onClick={(evt) => {
+                openClusterLog(clusterID);
+              }}
+            >
+              <img
+                src={logIcon}
+                alt="logIcon"
+                className={classes.buttonIcon}
               />
-            ) : (
-              <Button className={classes.unableBtn}>
-                <img
-                  src={unableStopIcon}
-                  alt="stopIcon"
-                  className={classes.buttonIcon}
-                />
-                <FormattedMessage {...messages.stopButton} />
-              </Button>
-            )}
-          </GridItem>
-        </GridContainer>
-      </Fragment>
-    );
-  }
-}
+              <FormattedMessage {...messages.updateLogButton} />
+            </Button>
+          ) : (
+            <Button className={classes.unableBtn}>
+              <img
+                src={logIcon}
+                alt="logIcon"
+                className={classes.buttonIcon}
+              />
+              <FormattedMessage {...messages.updateLogButton} />
+            </Button>
+          )}
+
+          {status === 'Updating' ||
+           status === 'Connecting' ||
+           status === 'Creating' ? (
+             <Confirm
+               handleConfirm={handleConfirm}
+               dialogContentText={messages.stopPromptText}
+               component={
+                 <Button className={classes.handleBtn}>
+                   <img
+                     src={stopIcon}
+                     alt="stopIcon"
+                     className={classes.buttonIcon}
+                   />
+                   <FormattedMessage {...messages.stopButton} />
+                 </Button>
+               }
+             />
+           ) : (
+             <Button className={classes.unableBtn}>
+               <img
+                 src={unableStopIcon}
+                 alt="stopIcon"
+                 className={classes.buttonIcon}
+               />
+               <FormattedMessage {...messages.stopButton} />
+             </Button>
+           )}
+        </GridItem>
+      </GridContainer>
+    </Fragment>
+  );
+};
 
 const mapStateToProps = createStructuredSelector({
   url: makeSelectURL(),
