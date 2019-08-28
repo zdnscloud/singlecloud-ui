@@ -42,10 +42,10 @@ import statefulSetsReducer, { prefix as statefulSetsPrefix } from 'ducks/statefu
 import daemonSetsReducer, { prefix as daemonSetsPrefix } from 'ducks/daemonSets';
 import ingressesReducer, { prefix as ingressesPrefix } from 'ducks/ingresses';
 import udpingressesReducer, { prefix as udpingressesPrefix } from 'ducks/udpingresses';
-import applicationStoreReducer, { prefix as applicationStorePrefix } from 'ducks/applicationStore';
 import applicationsReducer, { prefix as applicationsPrefix } from 'ducks/applications';
 import registriesReducer, { prefix as registriesPrefix } from 'ducks/registries';
 import monitorsReducer, { prefix as monitorsPrefix } from 'ducks/monitors';
+import chartsReducer, { prefix as chartsPrefix } from 'ducks/charts';
 // import reducers end
 
 /**
@@ -81,10 +81,10 @@ export default function createReducer(injectedReducers = {}) {
     [servicesPrefix]: servicesReducer,
     [ingressesPrefix]: ingressesReducer,
     [udpingressesPrefix]: udpingressesReducer,
-    [applicationStorePrefix]: applicationStoreReducer,
     [applicationsPrefix]: applicationsReducer,
     [registriesPrefix]: registriesReducer,
     [monitorsPrefix]: monitorsReducer,
+    [chartsPrefix]: chartsReducer,
     // combine reducers end
     ...injectedReducers,
   });

@@ -28,10 +28,10 @@ import userQuotasEpic from 'ducks/userQuotas/epic';
 import servicesEpic from 'ducks/services/epic';
 import ingressesEpic from 'ducks/ingresses/epic';
 import udpingressesEpic from 'ducks/udpingresses/epic';
-import applicationStoreEpic from 'ducks/applicationStore/epic';
 import applicationsEpic from 'ducks/applications/epic';
 import registriesEpic from 'ducks/registries/epic';
 import monitorsEpic from 'ducks/monitors/epic';
+import chartsEpic from 'ducks/charts/epic';
 // import epics end
 
 /**
@@ -63,10 +63,10 @@ export default function createEpic(injectedEpics = {}) {
     servicesEpic,
     ingressesEpic,
     udpingressesEpic,
-    applicationStoreEpic,
     applicationsEpic,
     registriesEpic,
     monitorsEpic,
+    chartsEpic,
     // combine epics end
   );
 
