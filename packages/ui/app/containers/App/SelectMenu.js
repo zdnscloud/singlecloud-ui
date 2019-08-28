@@ -144,6 +144,9 @@ const SelectMenu = ({
         keepMounted
         open={Boolean(anchorEl)}
         style={{ zIndex: 4 }}
+        onMouseLeave={()=>{
+          handleClose()
+        }}
       >
         <StyledMenuItem 
           onClick={() => {
