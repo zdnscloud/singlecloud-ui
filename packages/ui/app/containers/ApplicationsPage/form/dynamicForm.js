@@ -1,4 +1,4 @@
-import React, { PureComponent ,Fragment} from 'react';
+import React, { Fragment } from 'react';
 import GridItem from 'components/Grid/GridItem';
 import GridContainer from 'components/Grid/GridContainer';
 import InputField from 'components/Field/InputField';
@@ -6,23 +6,23 @@ import SwitchField from 'components/Field/SwitchField';
 import RadioField from 'components/Field/RadioField';
 import ChexboxesField from 'components/Field/ChexboxesField';
 
-const DynamicForm = ({ 
+const DynamicForm = ({
   fields,
   config,
   classes,
-  formValues
-}) => { 
+  formValues,
+}) => {
 
-  const renderItem= (item)=>{
-    
-    const radioOptions =  item.get('validValues') ? item.get('validValues').toList().map((sc) => ({
+  const renderItem= (item) => {
+    const radioOptions = item.get('validValues') ? item.get('validValues').toList().map((sc) => ({
       label: sc,
       value: sc,
-    })):null;
+    })) : null;
 
     switch (item.get('type')) {
       case 'int':
-        return <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
+        return (
+          <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
             <InputField
               label={item.get('label')}
               name={item.get('jsonKey')}
@@ -35,14 +35,15 @@ const DynamicForm = ({
               inputProps={{
                 type: 'number',
                 autoComplete: 'off',
-            }}
-            normalize={(val) => Number(val)}
+              }}
+              normalize={(val) => Number(val)}
             />
           </GridItem>
-        break; 
+        );
 
-        case 'string':
-        return <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
+      case 'string':
+        return (
+          <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
             <InputField
               label={item.get('label')}
               name={item.get('jsonKey')}
@@ -55,23 +56,25 @@ const DynamicForm = ({
               inputProps={{
                 type: 'text',
                 autoComplete: 'off',
-            }}
+              }}
             />
           </GridItem>
-        break; 
+        );
 
       case 'bool':
-        return  <GridItem xs={12} sm={12} md={12} className={classes.formLine}>
+        return  (
+          <GridItem xs={12} sm={12} md={12} className={classes.formLine}>
             <SwitchField
               label={item.get('label')}
               name={item.get('jsonKey')}
               className={classes.singleField}
             />
           </GridItem>
-        break; 
+        );
 
-      case 'enum':  
-        return  <GridItem xs={12} sm={12} md={12} className={classes.formLine}>
+      case 'enum':
+        return (
+          <GridItem xs={12} sm={12} md={12} className={classes.formLine}>
             <RadioField
               label={item.get('label')}
               name={item.get('jsonKey')}
@@ -83,12 +86,13 @@ const DynamicForm = ({
               options={radioOptions}
               formControlComponent="div"
               formLabelComponent="div"
-          />
+            />
           </GridItem>
-        break;
+        );
 
-        case 'array':  
-        return  <GridItem xs={12} sm={12} md={12} className={classes.formLine}>
+      case 'array':
+        return  (
+          <GridItem xs={12} sm={12} md={12} className={classes.formLine}>
             <ChexboxesField
               label={item.get('label')}
               name={item.get('jsonKey')}
@@ -102,21 +106,21 @@ const DynamicForm = ({
               formLabelComponent="div"
             />
           </GridItem>
-        break;
+        );
     }
-  }
+  };
 
   return (
     <Fragment>
-       <GridContainer>
-          { config.map((item, index) => {  
-            return (
-                <Fragment key={index}>
-                  {renderItem(item)}
-              </Fragment>
-            );
-          })}
-        </GridContainer>
+      <GridContainer>
+        {config.map((item, index) => {
+          return (
+            <Fragment key={index}>
+              {renderItem(item)}
+            </Fragment>
+          );
+        })}
+      </GridContainer>
     </Fragment>
   );
 };

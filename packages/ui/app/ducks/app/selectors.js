@@ -154,22 +154,18 @@ export const makeSelectLeftMenus = () =>
         ]);
       }
 
-      menus = menus.concat([
-        {
-          name: 'AppStore',
-          children: [
-            {
-              name: 'LocalAppTemplates',
-              path: `/applicationStore`,
-            },
-          ],
-          icon: ApplicationStoreIcon,
-        },
-      ]);
-
-
       if (cluster !== '') {
         menus = menus.concat([
+          {
+            name: 'AppStore',
+            children: [
+              {
+                name: 'LocalAppTemplates',
+                path: `/clusters/${cluster}/namespaces/${namespace}/charts`,
+              },
+            ],
+            icon: ApplicationStoreIcon,
+          },
           {
             name: 'AppManagement',
             children: [

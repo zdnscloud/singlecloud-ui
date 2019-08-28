@@ -21,15 +21,16 @@ import Card from 'components/Card/Card';
 import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
 import Button from '@material-ui/core/Button';
 
-import { makeSelectURL } from 'ducks/applicationStore/selectors';
-import * as actions from 'ducks/applicationStore/actions';
+import { makeSelectCurrentID as makeSelectCurrentClusterID } from 'ducks/clusters/selectors';
+import { makeSelectCurrentID as makeSelectCurrentNamespaceID } from 'ducks/namespaces/selectors';
+import { makeSelectURL } from 'ducks/charts/selectors';
+import * as actions from 'ducks/charts/actions';
 
 import messages from './messages';
 import styles from './styles';
 import ApplicationsList from './ApplicationsList';
 import ApplicationStorePageHelmet from './helmet';
 import SearchForm from './form/searchForm';
-
 
 export const formName = 'searchApplicationsForm';
 
@@ -45,20 +46,21 @@ const SearchApplicationsForm = reduxForm({
 
 /* eslint-disable react/prefer-stateless-function */
 export class ApplicationStorePage extends React.PureComponent {
-  state={
-    filter:{}
-  }
+  state = {
+    filter: {},
+  };
+
   componentDidMount() {
     this.load();
   }
 
   load() {
-    const { loadCharts, url } = this.props;
-    loadCharts(url);
+    const { loadCharts, url, clusterID, namespaceID } = this.props;
+    loadCharts(url, { clusterID, namespaceID });
   }
 
   render() {
-    const { classes, submitForm } = this.props;
+    const { classes, submitForm, clusterID, namespaceID } = this.props;
     const doSubmit = (formValues) => {
       this.setState({
         filter: formValues.toJS(),
@@ -73,7 +75,7 @@ export class ApplicationStorePage extends React.PureComponent {
           <Breadcrumbs
             data={[
               {
-                path: '/applicationStore',
+                path: `/clusters/${clusterID}/namespaces/${namespaceID}/charts`,
                 name: <FormattedMessage {...messages.pageTitle} />,
               },
             ]}
@@ -83,23 +85,23 @@ export class ApplicationStorePage extends React.PureComponent {
               <Card className={classes.card}>
                 <GridContainer style={{ marginBottom: '20px' }}>
                   <GridItem xs={3} sm={3} md={3}>
-                      <SearchApplicationsForm   
-                        classes={classes}
-                        onSubmit={doSubmit}
-                      />
-                    </GridItem>
-                    <GridItem xs={6} sm={6} md={6}>
-                      <Button
-                        variant="contained"
-                        color="primary"
-                        onClick={submitForm}
-                        style={{ marginTop: '10px'}}
-                      >
-                        <FormattedMessage {...messages.searchApplicationsButton} />
-                      </Button>
-                    </GridItem>
-                  </GridContainer>
-                  <ApplicationsList filter={this.state.filter} />
+                    <SearchApplicationsForm
+                      classes={classes}
+                      onSubmit={doSubmit}
+                    />
+                  </GridItem>
+                  <GridItem xs={6} sm={6} md={6}>
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      onClick={submitForm}
+                      style={{ marginTop: '10px'}}
+                    >
+                      <FormattedMessage {...messages.searchApplicationsButton} />
+                    </Button>
+                  </GridItem>
+                </GridContainer>
+                <ApplicationsList filter={this.state.filter} />
               </Card>
             </GridItem>
           </GridContainer>
@@ -110,6 +112,8 @@ export class ApplicationStorePage extends React.PureComponent {
 }
 
 const mapStateToProps = createStructuredSelector({
+  clusterID: makeSelectCurrentClusterID(),
+  namespaceID: makeSelectCurrentNamespaceID(),
   url: makeSelectURL(),
 });
 

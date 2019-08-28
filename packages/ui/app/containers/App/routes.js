@@ -81,9 +81,7 @@ import UserQuotasPage, {
   AdminUserQuotaPage,
   EditUserQuotaPage,
 } from 'containers/UserQuotasPage/Loadable';
-import ApplicationStorePage, {
-
-} from 'containers/ApplicationStorePage/Loadable';
+import ApplicationStorePage from 'containers/ApplicationStorePage/Loadable';
 import ApplicationsPage, {
   ApplicationDetailPage,
   CreateApplicationPage,
@@ -506,10 +504,16 @@ const appRoutes = [
   // userQuotas end
   // applicationStore
   {
-    path: '/applicationStore',
+    path: '/clusters/:cluster_id/namespaces/:namespace_id/charts',
     name: 'Applications Store',
     icon: Dashboard,
     component: ApplicationStorePage,
+  },
+  {
+    path: '/clusters/:cluster_id/namespaces/:namespace_id/charts/:chart_id/show',
+    name: 'Show Chart Detail',
+    icon: Dashboard,
+    component: CreateApplicationPage,
   },
   // applicationStore end
   // applications
@@ -518,12 +522,6 @@ const appRoutes = [
     name: 'Applications',
     icon: Dashboard,
     component: ApplicationsPage,
-  },
-  {
-    path: '/applications/:chart_id/create',
-    name: 'Create Application',
-    icon: Dashboard,
-    component: CreateApplicationPage,
   },
   {
     path: '/clusters/:cluster_id/namespaces/:namespace_id/applications/:application_id/show',

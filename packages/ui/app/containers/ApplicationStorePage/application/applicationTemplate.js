@@ -6,34 +6,32 @@ import Button from '@material-ui/core/Button';
 import messages from '../messages';
 import RightArrowIcon from 'components/Icons/RightArrow';
 
-class ApplicationTemplate extends PureComponent {
+const ApplicationTemplate = ({
+  classes,
+  item,
+  clusterID,
+  namespaceID,
+}) => {
 
-  render() {
-    const {
-      classes,
-      item
-    } = this.props;
-    return (
-      <Fragment>
-          <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
-              <div className={classes.appWrap}>
-                  <img alt="icon"  src={item.get('icon')} className={classes.appLogo} />
-                  <div className={classes.line}></div>
-                  <p className={classes.aapName}>{item.get('name')}</p>
-                  <p className={classes.appDiscribe}>{item.get('description')}</p>
-                  <Button
-                      to={`/applications/${item.get('id')}/create`}
-                      component={Link}
-                      className={classes.appDetailBtn}
-                    >
-                      <FormattedMessage {...messages.viewDetailButton} />
-                      <RightArrowIcon className={classes.rightArrowIcon} />
-                  </Button>
-              </div>
-          </GridItem>
-      </Fragment> 
-    );
-  }
-}
+  return (
+    <GridItem xs={3} sm={3} md={3}>
+      <div className={classes.appWrap}>
+        <img alt="icon" src={item.get('icon')} className={classes.appLogo} />
+        <div className={classes.line}></div>
+        <p className={classes.aapName}>{item.get('name')}</p>
+        <p className={classes.appDiscribe}>{item.get('description')}</p>
+        <Button
+          to={`/clusters/${clusterID}/namespaces/${namespaceID}/charts/${item.get('id')}/show`}
+          component={Link}
+          className={classes.appDetailBtn}
+        >
+          <FormattedMessage {...messages.viewDetailButton} />
+          <RightArrowIcon className={classes.rightArrowIcon} />
+        </Button>
+      </div>
+    </GridItem>
+  );
+};
+
 
 export default ApplicationTemplate;

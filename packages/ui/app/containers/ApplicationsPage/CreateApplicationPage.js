@@ -3,7 +3,7 @@
  * Create Application Page
  *
  */
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
@@ -21,11 +21,14 @@ import Button from '@material-ui/core/Button';
 import GridItem from 'components/Grid/GridItem';
 import GridContainer from 'components/Grid/GridContainer';
 
-import { makeSelectURL } from 'ducks/applicationStore/selectors';
-import { makeSelectCurrentChart } from 'ducks/applications/selectors';
-import { makeSelectClusters } from 'ducks/clusters/selectors';
-import { makeSelectNamespacesWithoutClusterID } from 'ducks/namespaces/selectors';
-import { makeSelectChartID} from 'ducks/app/selectors';
+import { makeSelectCurrentID as makeSelectCurrentClusterID } from 'ducks/clusters/selectors';
+import { makeSelectCurrentID as makeSelectCurrentNamespaceID } from 'ducks/namespaces/selectors';
+import {
+  makeSelectURL as makeSelectChartsURL,
+  makeSelectCurrentID as makeSelectCurrentChartID,
+  makeSelectCurrent as makeSelectCurrentChart,
+} from 'ducks/charts/selectors';
+import * as chartsActions from 'ducks/charts/actions';
 import * as actions from 'ducks/applications/actions';
 
 import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
@@ -33,7 +36,6 @@ import messages from './messages';
 import styles from './styles';
 import ApplicationsPageHelmet from './helmet';
 import ApplicationForm from './ApplicationForm';
-import { from } from 'rxjs';
 
 export const formName = 'createApplicationForm';
 
@@ -54,109 +56,119 @@ const CreateApplicationForm = reduxForm({
 })(ApplicationForm);
 
 /* eslint-disable react/prefer-stateless-function */
-export class CreateApplicationPage extends React.PureComponent {
-  static propTypes = {
-    initAction: PropTypes.func,
-    classes: PropTypes.object.isRequired,
-    match: PropTypes.object,
-    location: PropTypes.object,
-  };
+export const CreateApplicationPage = ({
+  clusterID,
+  namespaceID,
+  chartID,
+  chartsUrl,
+  readChart,
+  classes,
+  submitForm,
+  createApplication,
+  chart,
+  values,
+}) => {
+  useEffect(() => {
+    readChart(chartID, {
+      clusterID,
+      namespaceID,
+      url: `${chartsUrl}/${chartID}`,
+    });
+  }, []);
 
-  componentDidMount() {
-    const { loadChart, url, chartID } = this.props;
-    loadChart(url+'/'+chartID);
-  }
-
-  render() {
-    const { classes, submitForm, createApplication, clusters, namespaces, chart, chartID, values } = this.props;
-    async function doSubmit(formValues) {
-      try {
-        const { name,chartVersion,clusterID,namespaceID,...formData } = formValues.toJS();
-        const url = `/apis/zcloud.cn/v1/clusters/${clusterID}/namespaces/${namespaceID}/applications`
-        const data = {
-          name,
-          chartVersion,
-          chartName:chartID,
-          configs: formData
-        };
-        await new Promise((resolve, reject) => {
-          createApplication({ ...data }, { resolve, reject, url ,clusterID, namespaceID});
-        });
-      } catch (error) {
-        throw new SubmissionError({ _error: error });
-      }
+  async function doSubmit(formValues) {
+    try {
+      const {
+        name,
+        chartVersion,
+        ...formData
+      } = formValues.toJS();
+      const url = `/apis/zcloud.cn/v1/clusters/${clusterID}/namespaces/${namespaceID}/applications`;
+      const data = {
+        name,
+        chartVersion,
+        chartName: chartID,
+        configs: formData,
+      };
+      await new Promise((resolve, reject) => {
+        createApplication(data, { resolve, reject, url ,clusterID, namespaceID});
+      });
+    } catch (error) {
+      throw new SubmissionError({ _error: error });
     }
-
-    return (
-      <div className={classes.root}>
-        <ApplicationsPageHelmet />
-        <CssBaseline />
-        <div className={classes.content}>
-          <Breadcrumbs
-            data={[
-              {
-                path: `/applicationStore`,
-                name: <FormattedMessage {...messages.applicationStorePage} />,
-              },
-              {
-                name: <FormattedMessage {...messages.createApplication} />,
-              },
-            ]}
-          />
-          <Typography component="div" className="">
-            <GridContainer className={classes.grid}>
-              <GridItem xs={12} sm={12} md={12}>
-                <CreateApplicationForm
-                  classes={classes}
-                  onSubmit={doSubmit}
-                  clusters={clusters}
-                  namespaces={namespaces}
-                  initialValues={fromJS({ name: chartID })}
-                  chart={chart}
-                  formValues={values}
-                />
-                </GridItem>
-                <GridItem xs={12} sm={12} md={12}>
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    onClick={submitForm}
-                  >
-                    <FormattedMessage
-                      {...messages.createApplicationButton}
-                    />
-                  </Button>
-                  <Button
-                    variant="contained"
-                    className={classes.cancleBtn}
-                    to="/applicationStore"
-                    component={Link}
-                  >
-                    <FormattedMessage
-                      {...messages.cancleApplicationButton}
-                    />
-                  </Button>
-                </GridItem>
-            </GridContainer>
-          </Typography>
-        </div>
-      </div>
-    );
   }
-}
+
+  return (
+    <div className={classes.root}>
+      <ApplicationsPageHelmet />
+      <CssBaseline />
+      <div className={classes.content}>
+        <Breadcrumbs
+          data={[
+            {
+              path: `/clusters/${clusterID}/namespaces/${namespaceID}/charts`,
+              name: <FormattedMessage {...messages.applicationStorePage} />,
+            },
+            {
+              name: <FormattedMessage {...messages.createApplication} />,
+            },
+          ]}
+        />
+        <Typography component="div" className="">
+          <GridContainer className={classes.grid}>
+            <GridItem xs={12} sm={12} md={12}>
+              <CreateApplicationForm
+                classes={classes}
+                onSubmit={doSubmit}
+                initialValues={fromJS({ name: chartID })}
+                chart={chart}
+                clusterID={clusterID}
+                namespaceID={namespaceID}
+                formValues={values}
+              />
+            </GridItem>
+            <GridItem xs={12} sm={12} md={12}>
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={submitForm}
+              >
+                <FormattedMessage
+                  {...messages.createApplicationButton}
+                />
+              </Button>
+              <Button
+                variant="contained"
+                className={classes.cancleBtn}
+                to="/applicationStore"
+                component={Link}
+              >
+                <FormattedMessage
+                  {...messages.cancleApplicationButton}
+                />
+              </Button>
+            </GridItem>
+          </GridContainer>
+        </Typography>
+      </div>
+    </div>
+  );
+};
+
 
 const mapStateToProps = createStructuredSelector({
-  url: makeSelectURL(),
-  clusters: makeSelectClusters(),
-  namespaces: makeSelectNamespacesWithoutClusterID(),
+  clusterID: makeSelectCurrentClusterID(),
+  namespaceID: makeSelectCurrentNamespaceID(),
+  chartsUrl: makeSelectChartsURL(),
   chart: makeSelectCurrentChart(),
-  chartID: makeSelectChartID(),
+  chartID: makeSelectCurrentChartID(),
   values: getFormValues(formName),
 });
 
 const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
+      ...chartsActions,
       ...actions,
       submitForm: () => submit(formName),
     },
