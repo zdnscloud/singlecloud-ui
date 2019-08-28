@@ -20,7 +20,7 @@ export const styles = (theme) => ({
     flex: 1,
     overflowScrolling: 'touch',
     backgroundColor: '#EAEDF2',
-    paddingTop: 15,
+    paddingTop: 1,
     height: `calc(100vh - ${theme.appBarHeight}px)`,
   },
   content: {
