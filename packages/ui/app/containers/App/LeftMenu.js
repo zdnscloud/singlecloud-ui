@@ -15,6 +15,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import logoICon from 'images/logo.svg';
+import ZcloudICon from 'images/Zcloud.svg';
 import * as actions from 'ducks/app/actions';
 import {
   makeSelectActiveCluster,
@@ -195,9 +196,8 @@ const LeftMenu = ({
         <div className={classes.logoIconWrapper}>
           <img src={logoICon} alt="logo" className={classes.logoIcon} />
         </div>
-        <p className={classes.logoName}>Zcloud</p>
+        <img src={ZcloudICon} alt="Zcloud" className={classes.logoName} />
       </div>
-
       <div className={classes.sidebarWrapper} ref={menuRef}>
         {links}
       </div>

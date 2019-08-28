@@ -102,7 +102,6 @@ export const styles = (theme) => ({
   },
   logoName: {
     display: ({ showText }) => showText ? 'flex' : 'none',
-    flex: 1,
     fontSize: 18,
   },
 });

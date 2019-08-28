@@ -41,10 +41,10 @@ export const styles = (theme) => ({
     right: 10,
   },
   selectBtn: {
-    minWidth: 106,
+    minWidth: '106px !important',
     border: '1px solid #ccc',
-    paddingRight: 40,
-    boxShadow: 'none',
+    paddingRight: '40px !important',
+    boxShadow: 'none !important',
     height: 40,
     color: '#4A4A4A'
   },
