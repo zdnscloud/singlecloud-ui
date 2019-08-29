@@ -4,7 +4,7 @@
  *
  */
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
@@ -32,7 +32,7 @@ import ReadOnlyInput from 'components/CustomInput/ReadOnlyInput';
 import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
 
 import * as actions from 'ducks/storages/actions';
-import { makeSelectClusterID } from 'ducks/app/selectors';
+import { makeSelectCurrentID as makeSelectClusterID } from 'ducks/clusters/selectors';
 import { makeSelectURL } from 'ducks/storages/selectors';
 
 import StoragesTable from './StoragesTable';
@@ -40,73 +40,60 @@ import messages from './messages';
 import StoragePageHelmet from './helmet';
 import styles from './styles';
 
-/* eslint-disable react/prefer-stateless-function */
-export class StoragesPage extends React.PureComponent {
-  componentWillMount() {
-    this.load();
-  }
+export const StoragesPage = ({
+  classes,
+  clusterID,
+  loadStorages,
+  url,
+}) => {
+  useEffect(() => {
+    loadStorages(url, clusterID);
+    const t = setInterval(() => loadStorages(url, clusterID), 3000);
+    return () => clearInterval(t);
+  }, [url]);
 
-  componentDidUpdate(prevProps) {
-    const { clusterID: prevClusterID } = prevProps;
-    const { clusterID, namespace } = this.props;
-    if (clusterID !== prevClusterID) {
-      this.load();
-    }
-  }
+  return (
+    <div className={classes.root}>
+      <StoragePageHelmet />
+      <CssBaseline />
+      <div className={classes.content}>
+        <Breadcrumbs
+          data={[
+            {
+              path: `/clusters/${clusterID}/storages`,
+              name: <FormattedMessage {...messages.pageTitle} />,
+            },
+          ]}
+        />
+        <GridContainer className={classes.grid}>
+          <GridItem xs={12} sm={12} md={12}>
+            <Card>
+              <CardHeader>
+                <h4>
+                  <FormattedMessage {...messages.storages} />
 
-  load() {
-    const { clusterID, loadStorages, url } = this.props;
-    if (url) {
-      loadStorages(url, clusterID);
-    }
-  }
+                </h4>
+                <IconButton
+                  aria-label={
+                    <FormattedMessage {...messages.createStorage} />
+                  }
 
-  render() {
-    const { classes, theme, clusterID } = this.props;
-
-    return (
-      <div className={classes.root}>
-        <StoragePageHelmet />
-        <CssBaseline />
-        <div className={classes.content}>
-          <Breadcrumbs
-            data={[
-              {
-                path: `/clusters/${clusterID}/storages`,
-                name: <FormattedMessage {...messages.pageTitle} />,
-              },
-            ]}
-          />
-          <GridContainer className={classes.grid}>
-            <GridItem xs={12} sm={12} md={12}>
-              <Card>
-                <CardHeader>
-                  <h4>
-                    <FormattedMessage {...messages.storages} />
-
-                  </h4>
-                  <IconButton
-                      aria-label={
-                        <FormattedMessage {...messages.createStorage} />
-                      }
-
-                      component={Link}
-                      to={`/clusters/${clusterID}/storages/create`}
-                    >
-                      <AddIcon />
-                    </IconButton>
-                </CardHeader>
-                <CardBody>
-                  <StoragesTable />
-                </CardBody>
-              </Card>
-            </GridItem>
-          </GridContainer>
-        </div>
+                  component={Link}
+                  to={`/clusters/${clusterID}/storages/create`}
+                >
+                  <AddIcon />
+                </IconButton>
+              </CardHeader>
+              <CardBody>
+                <StoragesTable />
+              </CardBody>
+            </Card>
+          </GridItem>
+        </GridContainer>
       </div>
-    );
-  }
-}
+    </div>
+  );
+};
 
 const mapStateToProps = createStructuredSelector({
   clusterID: makeSelectClusterID(),
@@ -128,5 +115,5 @@ const withConnect = connect(
 
 export default compose(
   withConnect,
-  withStyles(styles, { withTheme: true })
+  withStyles(styles)
 )(StoragesPage);
