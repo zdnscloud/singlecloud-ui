@@ -41,4 +41,9 @@ export const READ_<%= SN %>_FAILURE = `${prefix}/READ_<%= SN %>_FAILURE`;
 export const REMOVE_<%= SN %> = `${prefix}/REMOVE_<%= SN %>`;
 export const REMOVE_<%= SN %>_SUCCESS = `${prefix}/REMOVE_<%= SN %>_SUCCESS`;
 export const REMOVE_<%= SN %>_FAILURE = `${prefix}/REMOVE_<%= SN %>_FAILURE`;
+<% }
+   if (wannaResourceActions) {%>
+export const EXECUTE_<%= SN %>_ACTION = `${prefix}/EXECUTE_<%= SN %>_ACTION`;
+export const EXECUTE_<%= SN %>_ACTION_SUCCESS = `${prefix}/EXECUTE_<%= SN %>_ACTION_SUCCESS`;
+export const EXECUTE_<%= SN %>_ACTION_FAILURE = `${prefix}/EXECUTE_<%= SN %>_ACTION_FAILURE`;
 <% } %>

@@ -116,4 +116,27 @@ export const remove<%= csname %>Failure = (error, meta = {}) => ({
   meta,
   error: true,
 });
+<% }
+   if (wannaResourceActions) {%>
+export const execute<%= csname %>Action = (action, data, meta = {}) => ({
+  type: c.EXECUTE_<%= SN %>_ACTION,
+  payload: {
+    action,
+    data,
+  },
+  meta,
+});
+
+export const execute<%= csname %>ActionSuccess = (resp, meta = {}) => ({
+  type: c.EXECUTE_<%= SN %>_ACTION_SUCCESS,
+  payload: resp,
+  meta,
+});
+
+export const execute<%= csname %>ActionFailure = (error, meta = {}) => ({
+  type: c.EXECUTE_<%= SN %>_ACTION_FAILURE,
+  payload: error,
+  meta,
+  error: true,
+});
 <% } %>

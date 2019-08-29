@@ -36,6 +36,12 @@ module.exports = {
       },
       {
         type: 'confirm',
+        name: 'wannaResourceActions',
+        initial: true,
+        message: 'Wanna add resource actions?',
+      },
+      {
+        type: 'confirm',
         name: 'hasParents',
         initial: false,
         message: 'Does this resource have parents resources?'

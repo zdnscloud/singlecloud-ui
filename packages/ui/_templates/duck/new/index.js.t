@@ -122,6 +122,14 @@ if (wannaRemoveAction) {%>
     }
     case c.REMOVE_<%= SN %>_FAILURE:
       return state;
+<% }
+if (wannaResourceActions) {%>
+    case c.EXECUTE_<%= SN %>_ACTION:
+      return state;
+    case c.EXECUTE_<%= SN %>_ACTION_SUCCESS:
+      return state;
+    case c.EXECUTE_<%= SN %>_ACTION_FAILURE:
+      return state;
 <% } %>
     default:
       return state;

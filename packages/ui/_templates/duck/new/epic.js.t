@@ -135,11 +135,26 @@ export const remove<%= csname %>Epic = (action$, state$, { ajax }) =>
     )
   );
 <% }
-if (wannaCreateAction) {%>
-export const afterCreate<%= csname %>Epic = (action$) =>
+   if (wannaResourceActions) {%>
+export const execute<%= csname %>ActionEpic = (action$, state$, { ajax }) =>
   action$.pipe(
-    ofType(c.CREATE_<%= SN %>_SUCCESS),
-    mergeMap(({ payload, meta }) => of(push(`/<%= name %>`)))
+    ofType(c.EXECUTE_<%= SN %>_ACTION),
+    mergeMap(({ payload: { action, data }, meta }) =>
+      ajax({
+        url: `${meta.url}?action=${action}`,
+        method: 'POST',
+        body: data,
+      }).pipe(
+        map((resp) => {
+          meta.resolve && meta.resolve(resp);
+          return a.execute<%= csname %>ActionSuccess(resp, { ...meta, action });
+        }),
+        catchError((error) => {
+          meta.reject && meta.reject(error);
+          return of(a.execute<%= csname %>ActionFailure(error, { ...meta, action }));
+        })
+      )
+    )
   );
 <% } %>
 export default combineEpics(
@@ -151,6 +166,6 @@ if (wannaReadOneAction) {%>
   read<%= csname %>Epic,<% }
 if (wannaRemoveAction) {%>
   remove<%= csname %>Epic,<% }
-if (wannaCreateAction) {%>
-  afterCreate<%= csname %>Epic,<% } %>
+if (wannaResourceActions) {%>
+  execute<%= csname %>ActionEpic,<% } %>
 );
