@@ -13,6 +13,7 @@ import { bindActionCreators, compose } from 'redux';
 import { fromJS } from 'immutable';
 import { reduxForm, getFormValues } from 'redux-form/immutable';
 import { SubmissionError, submit } from 'redux-form';
+import { push } from 'connected-react-router';
 
 import classNames from 'classnames';
 import { withStyles } from '@material-ui/core/styles';
@@ -38,10 +39,8 @@ import GridItem from 'components/Grid/GridItem';
 import GridContainer from 'components/Grid/GridContainer';
 import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
 
-import {
-  makeSelectClusterID,
-  makeSelectNamespaceID,
-} from 'ducks/app/selectors';
+import { makeSelectCurrentID as makeSelectClusterID } from 'ducks/clusters/selectors';
+import { makeSelectCurrentID as makeSelectNamespaceID } from 'ducks/namespaces/selectors';
 import * as actions from 'ducks/configMaps/actions';
 import { makeSelectURL } from 'ducks/configMaps/selectors';
 
@@ -87,88 +86,82 @@ const CreateConfigMapForm = reduxForm({
   validate,
 })(ConfigMapForm);
 
-/* eslint-disable react/prefer-stateless-function */
-export class CreateConfigMap extends React.PureComponent {
-  static propTypes = {
-    classes: PropTypes.object.isRequired,
-  };
-
-  render() {
-    const {
-      classes,
-      createConfigMap,
-      submitForm,
-      url,
-      clusterID,
-      namespaceID,
-    } = this.props;
-    async function doSubmit(formValues) {
-      try {
-        const data = formValues.toJS();
-        await new Promise((resolve, reject) => {
-          createConfigMap(data, {
-            resolve,
-            reject,
-            url,
-            clusterID,
-            namespaceID,
-          });
+export const CreateConfigMap = ({
+  classes,
+  createConfigMap,
+  submitForm,
+  url,
+  clusterID,
+  namespaceID,
+  routeTo,
+}) => {
+  async function doSubmit(formValues) {
+    try {
+      const data = formValues.toJS();
+      await new Promise((resolve, reject) => {
+        createConfigMap(data, {
+          resolve,
+          reject,
+          url,
+          clusterID,
+          namespaceID,
         });
-      } catch (error) {
-        throw new SubmissionError({ _error: error });
-      }
+      });
+      routeTo(`/clusters/${clusterID}/namespaces/${namespaceID}/configmaps`);
+    } catch (error) {
+      throw new SubmissionError({ _error: error });
     }
-
-    return (
-      <div className={classes.root}>
-        <ConfigMapsPageHelmet />
-        <CssBaseline />
-        <div className={classes.content}>
-          <Breadcrumbs
-            data={[
-              {
-                path: `/clusters/${clusterID}/namespaces/${namespaceID}/configmaps`,
-                name: <FormattedMessage {...messages.pageTitle} />,
-              },
-              {
-                name: <FormattedMessage {...messages.createConfigMap} />,
-              },
-            ]}
-          />
-          <GridContainer className={classes.grid}>
-            <GridItem xs={12} sm={12} md={12}>
-              <Card>
-                <CardHeader>
-                  <h4>
-                    <FormattedMessage {...messages.createConfigMap} />
-                  </h4>
-                </CardHeader>
-                <CardBody>
-                  <CreateConfigMapForm
-                    classes={classes}
-                    onSubmit={doSubmit}
-                    initialValues={fromJS({})}
-                    type="create"
-                  />
-                </CardBody>
-                <CardFooter className={classes.cardFooter}>
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    size="large"
-                    onClick={submitForm}
-                  >
-                    <FormattedMessage {...messages.formCreate} />
-                  </Button>
-                </CardFooter>
-              </Card>
-            </GridItem>
-          </GridContainer>
-        </div>
-      </div>
-    );
   }
-}
+
+  return (
+    <div className={classes.root}>
+      <ConfigMapsPageHelmet />
+      <CssBaseline />
+      <div className={classes.content}>
+        <Breadcrumbs
+          data={[
+            {
+              path: `/clusters/${clusterID}/namespaces/${namespaceID}/configmaps`,
+              name: <FormattedMessage {...messages.pageTitle} />,
+            },
+            {
+              name: <FormattedMessage {...messages.createConfigMap} />,
+            },
+          ]}
+        />
+        <GridContainer className={classes.grid}>
+          <GridItem xs={12} sm={12} md={12}>
+            <Card>
+              <CardHeader>
+                <h4>
+                  <FormattedMessage {...messages.createConfigMap} />
+                </h4>
+              </CardHeader>
+              <CardBody>
+                <CreateConfigMapForm
+                  classes={classes}
+                  onSubmit={doSubmit}
+                  initialValues={fromJS({})}
+                  type="create"
+                />
+              </CardBody>
+              <CardFooter className={classes.cardFooter}>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  size="large"
+                  onClick={submitForm}
+                >
+                  <FormattedMessage {...messages.formCreate} />
+                </Button>
+              </CardFooter>
+            </Card>
+          </GridItem>
+        </GridContainer>
+      </div>
+    </div>
+  );
+};
 
 const mapStateToProps = createStructuredSelector({
   clusterID: makeSelectClusterID(),
@@ -180,6 +173,7 @@ const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
       ...actions,
+      routeTo: push,
       submitForm: () => submit(formName),
     },
     dispatch

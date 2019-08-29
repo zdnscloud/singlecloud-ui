@@ -17,9 +17,6 @@ import usersReducer, { prefix as usersPrefix } from 'ducks/users';
 import serviceLinksReducer, {
   prefix as serviceLinksPrefix,
 } from 'ducks/serviceLinks';
-import configMapsReducer, {
-  prefix as configMapsPrefix,
-} from 'ducks/configMaps';
 import secretsReducer, { prefix as secretsPrefix } from 'ducks/secrets';
 import cronJobsReducer, { prefix as cronJobsPrefix } from 'ducks/cronJobs';
 import jobsReducer, { prefix as jobsPrefix } from 'ducks/jobs';
@@ -46,6 +43,7 @@ import applicationsReducer, { prefix as applicationsPrefix } from 'ducks/applica
 import registriesReducer, { prefix as registriesPrefix } from 'ducks/registries';
 import monitorsReducer, { prefix as monitorsPrefix } from 'ducks/monitors';
 import chartsReducer, { prefix as chartsPrefix } from 'ducks/charts';
+import configMapsReducer, { prefix as configMapsPrefix } from 'ducks/configMaps';
 // import reducers end
 
 /**

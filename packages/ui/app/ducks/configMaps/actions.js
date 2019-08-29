@@ -1,95 +1,105 @@
+/**
+ * Duck: Configmaps
+ * actions: configMaps
+ *
+ */
 import * as c from './constants';
 
-/*
-  actions
-*/
-export const loadConfigMaps = (meta) => ({
+/**
+ * actions
+ */
+export const loadConfigMaps = (url, meta = {}) => ({
   type: c.LOAD_CONFIG_MAPS,
-  payload: {},
+  payload: url,
   meta,
 });
 
-export const loadConfigMapsSuccess = (resp, meta) => ({
+export const loadConfigMapsSuccess = (resp, meta = {}) => ({
   type: c.LOAD_CONFIG_MAPS_SUCCESS,
   payload: resp,
   meta,
 });
 
-export const loadConfigMapsFailure = (error, meta) => ({
+export const loadConfigMapsFailure = (error, meta = {}) => ({
   type: c.LOAD_CONFIG_MAPS_FAILURE,
   payload: error,
   meta,
   error: true,
 });
 
-export const loadConfigMap = (id) => ({
-  type: c.LOAD_CONFIG_MAP,
-  payload: id,
-});
-
-export const loadConfigMapSuccess = (resp) => ({
-  type: c.LOAD_CONFIG_MAP_SUCCESS,
-  payload: resp,
-});
-
-export const loadConfigMapFailure = (error) => ({
-  type: c.LOAD_CONFIG_MAP_FAILURE,
-  payload: error,
-  error: true,
-});
-
-export const createConfigMap = (data, meta) => ({
+export const createConfigMap = (data, meta = {}) => ({
   type: c.CREATE_CONFIG_MAP,
   payload: data,
   meta,
 });
 
-export const createConfigMapSuccess = (resp, meta) => ({
+export const createConfigMapSuccess = (resp, meta = {}) => ({
   type: c.CREATE_CONFIG_MAP_SUCCESS,
   payload: resp,
   meta,
 });
 
-export const createConfigMapFailure = (error, meta) => ({
+export const createConfigMapFailure = (error, meta = {}) => ({
   type: c.CREATE_CONFIG_MAP_FAILURE,
   payload: error,
   meta,
   error: true,
 });
 
-export const updateConfigMap = (data, meta) => ({
+export const updateConfigMap = (data, meta = {}) => ({
   type: c.UPDATE_CONFIG_MAP,
   payload: data,
   meta,
 });
 
-export const updateConfigMapSuccess = (resp, meta) => ({
+export const updateConfigMapSuccess = (resp, meta = {}) => ({
   type: c.UPDATE_CONFIG_MAP_SUCCESS,
   payload: resp,
   meta,
 });
 
-export const updateConfigMapFailure = (error) => ({
+export const updateConfigMapFailure = (error, meta = {}) => ({
   type: c.UPDATE_CONFIG_MAP_FAILURE,
   payload: error,
+  meta,
   error: true,
 });
 
-export const removeConfigMap = (id, meta) => ({
+export const readConfigMap = (id, meta = {}) => ({
+  type: c.READ_CONFIG_MAP,
+  payload: id,
+  meta,
+});
+
+export const readConfigMapSuccess = (resp, meta = {}) => ({
+  type: c.READ_CONFIG_MAP_SUCCESS,
+  payload: resp,
+  meta,
+});
+
+export const readConfigMapFailure = (error, meta = {}) => ({
+  type: c.READ_CONFIG_MAP_FAILURE,
+  payload: error,
+  meta,
+  error: true,
+});
+
+export const removeConfigMap = (id, meta = {}) => ({
   type: c.REMOVE_CONFIG_MAP,
   payload: id,
   meta,
 });
 
-export const removeConfigMapSuccess = (resp, meta) => ({
+export const removeConfigMapSuccess = (resp, meta = {}) => ({
   type: c.REMOVE_CONFIG_MAP_SUCCESS,
   payload: resp,
   meta,
 });
 
-export const removeConfigMapFailure = (error, meta) => ({
+export const removeConfigMapFailure = (error, meta = {}) => ({
   type: c.REMOVE_CONFIG_MAP_FAILURE,
   payload: error,
   meta,
   error: true,
 });
+

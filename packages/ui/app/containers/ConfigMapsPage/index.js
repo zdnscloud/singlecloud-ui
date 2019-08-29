@@ -4,7 +4,7 @@
  *
  */
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
@@ -26,10 +26,8 @@ import GridItem from 'components/Grid/GridItem';
 import GridContainer from 'components/Grid/GridContainer';
 import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
 
-import {
-  makeSelectClusterID,
-  makeSelectNamespaceID,
-} from 'ducks/app/selectors';
+import { makeSelectCurrentID as makeSelectClusterID } from 'ducks/clusters/selectors';
+import { makeSelectCurrentID as makeSelectNamespaceID } from 'ducks/namespaces/selectors';
 import * as actions from 'ducks/configMaps/actions';
 import { makeSelectURL } from 'ducks/configMaps/selectors';
 
@@ -39,70 +37,57 @@ import styles from './styles';
 import ConfigMapsTable from './ConfigMapsTable';
 
 /* eslint-disable react/prefer-stateless-function */
-export class ConfigMapsPage extends React.PureComponent {
-  static propTypes = {
-    classes: PropTypes.object.isRequired,
-  };
+export const ConfigMapsPage = ({
+  classes,
+  clusterID,
+  namespaceID,
+  url,
+  loadConfigMaps,
+  location,
+}) => {
+  useEffect(() => {
+    loadConfigMaps(url, { clusterID, namespaceID });
+  }, [url]);
 
-  componentWillMount() {
-    const { clusterID, namespaceID, url, loadConfigMaps } = this.props;
-    loadConfigMaps({ url, clusterID, namespaceID });
-  }
+  return (
+    <div className={classes.root}>
+      <ConfigMapsPageHelmet />
+      <CssBaseline />
+      <div className={classes.content}>
+        <Breadcrumbs
+          data={[
+            {
+              path: `/clusters/${clusterID}/namespaces/${namespaceID}/configmaps`,
+              name: <FormattedMessage {...messages.pageTitle} />,
+            },
+          ]}
+        />
+        <GridContainer className={classes.grid}>
+          <GridItem xs={12} sm={12} md={12}>
+            <Card>
+              <CardHeader>
+                <h4>
+                  <FormattedMessage {...messages.configMaps} />
 
-  componentDidUpdate(prevProps) {
-    const {
-      clusterID: prevClusterID,
-      namespaceID: prevNamespaceID,
-    } = prevProps;
-    const { clusterID, namespaceID, url, loadConfigMaps } = this.props;
-    if (prevClusterID !== clusterID || prevNamespaceID !== namespaceID) {
-      loadConfigMaps({ url, clusterID, namespaceID });
-    }
-  }
-
-  render() {
-    const { classes, clusterID, namespaceID } = this.props;
-
-    return (
-      <div className={classes.root}>
-        <ConfigMapsPageHelmet />
-        <CssBaseline />
-        <div className={classes.content}>
-          <Breadcrumbs
-            data={[
-              {
-                path: `/clusters/${clusterID}/namespaces/${namespaceID}/configmaps`,
-                name: <FormattedMessage {...messages.pageTitle} />,
-              },
-            ]}
-          />
-          <GridContainer className={classes.grid}>
-            <GridItem xs={12} sm={12} md={12}>
-              <Card>
-                <CardHeader>
-                  <h4>
-                    <FormattedMessage {...messages.configMaps} />
-
-                  </h4>
-                  <Link
-                      to={`${this.props.location.pathname}/create`}
-                    >
-                      <IconButton>
-                        <AddIcon />
-                      </IconButton>
-                    </Link>
-                </CardHeader>
-                <CardBody>
-                  <ConfigMapsTable />
-                </CardBody>
-              </Card>
-            </GridItem>
-          </GridContainer>
-        </div>
+                </h4>
+                <Link
+                  to={`${location.pathname}/create`}
+                >
+                  <IconButton>
+                    <AddIcon />
+                  </IconButton>
+                </Link>
+              </CardHeader>
+              <CardBody>
+                <ConfigMapsTable />
+              </CardBody>
+            </Card>
+          </GridItem>
+        </GridContainer>
       </div>
-    );
-  }
-}
+    </div>
+  );
+};
 
 const mapStateToProps = createStructuredSelector({
   clusterID: makeSelectClusterID(),

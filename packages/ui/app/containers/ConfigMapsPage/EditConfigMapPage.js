@@ -4,7 +4,7 @@
  *
  */
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
@@ -13,13 +13,11 @@ import { bindActionCreators, compose } from 'redux';
 import { fromJS } from 'immutable';
 import { reduxForm, getFormValues } from 'redux-form/immutable';
 import { SubmissionError, submit } from 'redux-form';
+import { push } from 'connected-react-router';
 
 import { withStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Button from '@material-ui/core/Button';
-import 'brace/mode/yaml';
-import 'brace/theme/github';
-
 import Card from 'components/Card/Card';
 import CardBody from 'components/Card/CardBody';
 import CardHeader from 'components/Card/CardHeader';
@@ -28,14 +26,13 @@ import GridItem from 'components/Grid/GridItem';
 import GridContainer from 'components/Grid/GridContainer';
 import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
 
-import {
-  makeSelectClusterID,
-  makeSelectNamespaceID,
-} from 'ducks/app/selectors';
+import { makeSelectCurrentID as makeSelectClusterID } from 'ducks/clusters/selectors';
+import { makeSelectCurrentID as makeSelectNamespaceID } from 'ducks/namespaces/selectors';
 import * as actions from 'ducks/configMaps/actions';
 import {
   makeSelectURL,
-  makeSelectCurrentConfigMap,
+  makeSelectCurrent,
+  makeSelectCurrentID,
 } from 'ducks/configMaps/selectors';
 
 import messages from './messages';
@@ -80,96 +77,97 @@ const CreateConfigMapForm = reduxForm({
   validate,
 })(ConfigMapForm);
 
-/* eslint-disable react/prefer-stateless-function */
-export class EditConfigMap extends React.PureComponent {
-  static propTypes = {
-    classes: PropTypes.object.isRequired,
-  };
+export const EditConfigMap = ({
+  classes,
+  readConfigMap,
+  updateConfigMap,
+  submitForm,
+  clusterID,
+  namespaceID,
+  id,
+  url,
+  configMap,
+  routeTo,
+}) => {
+  useEffect(() => {
+    readConfigMap(id, { url: `${url}/${id}`, clusterID, namespaceID });
+  }, [id]);
 
-  render() {
-    const {
-      classes,
-      updateConfigMap,
-      submitForm,
-      clusterID,
-      namespaceID,
-      configMap,
-    } = this.props;
-
-    async function doSubmit(formValues) {
-      try {
-        const data = formValues.toJS();
-        const url = configMap.getIn(['links', 'update']);
-        await new Promise((resolve, reject) => {
-          updateConfigMap(data, {
-            resolve,
-            reject,
-            url,
-            clusterID,
-            namespaceID,
-          });
+  async function doSubmit(formValues) {
+    try {
+      const data = formValues.toJS();
+      const updateUrl = configMap.getIn(['links', 'update']);
+      await new Promise((resolve, reject) => {
+        updateConfigMap(data, {
+          resolve,
+          reject,
+          url: updateUrl,
+          clusterID,
+          namespaceID,
         });
-      } catch (error) {
-        throw new SubmissionError({ _error: error });
-      }
+      });
+      routeTo(`/clusters/${clusterID}/namespaces/${namespaceID}/configmaps`);
+    } catch (error) {
+      throw new SubmissionError({ _error: error });
     }
-
-    return (
-      <div className={classes.root}>
-        <ConfigMapsPageHelmet />
-        <CssBaseline />
-        <div className={classes.content}>
-          <Breadcrumbs
-            data={[
-              {
-                path: `/clusters/${clusterID}/namespaces/${namespaceID}/configmaps`,
-                name: <FormattedMessage {...messages.pageTitle} />,
-              },
-              {
-                name: <FormattedMessage {...messages.editConfigMap} />,
-              },
-            ]}
-          />
-          <GridContainer className={classes.grid}>
-            <GridItem xs={12} sm={12} md={12}>
-              <Card>
-                <CardHeader>
-                  <h4>
-                    <FormattedMessage {...messages.editConfigMap} />
-                  </h4>
-                </CardHeader>
-                <CardBody>
-                  <CreateConfigMapForm
-                    classes={classes}
-                    onSubmit={doSubmit}
-                    initialValues={configMap}
-                    configMap={configMap}
-                    type="edit"
-                  />
-                </CardBody>
-                <CardFooter className={classes.cardFooter}>
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    size="large"
-                    onClick={submitForm}
-                  >
-                    <FormattedMessage {...messages.formCreate} />
-                  </Button>
-                </CardFooter>
-              </Card>
-            </GridItem>
-          </GridContainer>
-        </div>
-      </div>
-    );
   }
-}
+
+  return (
+    <div className={classes.root}>
+      <ConfigMapsPageHelmet />
+      <CssBaseline />
+      <div className={classes.content}>
+        <Breadcrumbs
+          data={[
+            {
+              path: `/clusters/${clusterID}/namespaces/${namespaceID}/configmaps`,
+              name: <FormattedMessage {...messages.pageTitle} />,
+            },
+            {
+              name: <FormattedMessage {...messages.editConfigMap} />,
+            },
+          ]}
+        />
+        <GridContainer className={classes.grid}>
+          <GridItem xs={12} sm={12} md={12}>
+            <Card>
+              <CardHeader>
+                <h4>
+                  <FormattedMessage {...messages.editConfigMap} />
+                </h4>
+              </CardHeader>
+              <CardBody>
+                <CreateConfigMapForm
+                  classes={classes}
+                  onSubmit={doSubmit}
+                  initialValues={configMap}
+                  configMap={configMap}
+                  type="edit"
+                />
+              </CardBody>
+              <CardFooter className={classes.cardFooter}>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  size="large"
+                  onClick={submitForm}
+                >
+                  <FormattedMessage {...messages.formCreate} />
+                </Button>
+              </CardFooter>
+            </Card>
+          </GridItem>
+        </GridContainer>
+      </div>
+    </div>
+  );
+};
 
 const mapStateToProps = createStructuredSelector({
   clusterID: makeSelectClusterID(),
   namespaceID: makeSelectNamespaceID(),
-  configMap: makeSelectCurrentConfigMap(),
+  id: makeSelectCurrentID(),
+  configMap: makeSelectCurrent(),
   url: makeSelectURL(),
 });
 
@@ -177,6 +175,7 @@ const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
       ...actions,
+      routeTo: push,
       submitForm: () => submit(formName),
     },
     dispatch
