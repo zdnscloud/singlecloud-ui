@@ -1,8 +1,9 @@
 /**
- *
- * Secrets Duck
+ * Duck: Secrets
+ * reducer: secrets
  *
  */
+import _ from 'lodash';
 import { fromJS } from 'immutable';
 import getByKey from '@gsmlg/utils/getByKey';
 import { procCollectionData } from '@gsmlg/utils/procData';
@@ -15,13 +16,14 @@ const { prefix } = constants;
 export { constants, actions, prefix };
 
 export const initialState = fromJS({
-  secrets: {},
-  list: [],
+  data: {},
+  list: {},
+  selectedData: null,
 });
 
 const c = constants;
 
-export const secretsReducer = (
+export const reducer = (
   state = initialState,
   { type, payload, error, meta }
 ) => {
@@ -29,61 +31,73 @@ export const secretsReducer = (
     case c.LOAD_SECRETS:
       return state;
     case c.LOAD_SECRETS_SUCCESS: {
-      const { clusterID, namespaceID } = meta;
       const { data, list } = procCollectionData(payload);
+      const {
+        clusterID, namespaceID,
+      } = meta;
       return state
-        .setIn(['secrets', clusterID, namespaceID], fromJS(data))
-        .set('list', fromJS(list));
+        .setIn(['data', clusterID, namespaceID], fromJS(data))
+        .setIn(['list', clusterID, namespaceID], fromJS(list));
     }
     case c.LOAD_SECRETS_FAILURE:
       return state;
 
-    case c.LOAD_SECRET:
-      return state;
-    case c.LOAD_SECRET_SUCCESS: {
-      const { clusterID, namespaceID, id } = meta;
-      const secret = payload.response;
-      return state.setIn(
-        ['secrets', clusterID, namespaceID, secret.id],
-        fromJS(secret)
-      );
-    }
-    case c.LOAD_SECRET_FAILURE:
-      return state;
 
     case c.CREATE_SECRET:
       return state;
     case c.CREATE_SECRET_SUCCESS: {
-      const { clusterID, namespaceID } = meta;
       const data = payload.response;
-      return state.setIn(
-        ['secrets', clusterID, namespaceID, data.id],
-        fromJS(data)
-      );
+      const {
+        clusterID, namespaceID,
+      } = meta;
+      return state.setIn(['data', clusterID, namespaceID, data.id], fromJS(data));
     }
-
     case c.CREATE_SECRET_FAILURE:
       return state;
 
     case c.UPDATE_SECRET:
       return state;
     case c.UPDATE_SECRET_SUCCESS: {
-      const { clusterID, namespaceID } = meta;
-      const data = payload.response;
-      return state.setIn(
-        ['secrets', clusterID, namespaceID, data.id],
-        fromJS(data)
-      );
+      const id = getByKey(payload, ['response', 'id']);
+      const data = getByKey(payload, ['response']);
+      const {
+        clusterID, namespaceID,
+      } = meta;
+      if (id) {
+        return state.setIn(['data', clusterID, namespaceID, id], fromJS(data));
+      }
+      return state;
     }
     case c.UPDATE_SECRET_FAILURE:
       return state;
 
+    case c.READ_SECRET:
+      return state;
+    case c.READ_SECRET_SUCCESS: {
+      const id = getByKey(payload, ['response', 'id']);
+      const data = getByKey(payload, ['response']);
+      const {
+        clusterID, namespaceID,
+      } = meta;
+      if (id) {
+        return state.setIn(['data', clusterID, namespaceID, id], fromJS(data));
+      }
+      return state;
+    }
+    case c.READ_SECRET_FAILURE:
+      return state;
+
     case c.REMOVE_SECRET:
       return state;
-    case c.REMOVE_SECRET_SUCCESS:
+    case c.REMOVE_SECRET_SUCCESS: {
+      const { id } = meta;
+      const {
+        clusterID, namespaceID,
+      } = meta;
       return state
-        .deleteIn(['secrets', meta.id])
-        .update('list', (l) => l.filterNot((id) => id === meta.id));
+        .removeIn(['data', clusterID, namespaceID, id])
+        .updateIn(['list', clusterID, namespaceID], (l) => l.filterNot((i) => i === id));
+    }
     case c.REMOVE_SECRET_FAILURE:
       return state;
 
@@ -92,4 +106,4 @@ export const secretsReducer = (
   }
 };
 
-export default secretsReducer;
+export default reducer;

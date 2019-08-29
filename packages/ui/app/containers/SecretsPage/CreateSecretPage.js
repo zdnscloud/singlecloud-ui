@@ -4,7 +4,7 @@
  *
  */
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
@@ -13,29 +13,24 @@ import { bindActionCreators, compose } from 'redux';
 import { fromJS } from 'immutable';
 import { reduxForm, getFormValues } from 'redux-form/immutable';
 import { SubmissionError, submit } from 'redux-form';
-
+import { push } from 'connected-react-router';
 import { withStyles } from '@material-ui/core/styles';
 
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Button from '@material-ui/core/Button';
 import GridItem from 'components/Grid/GridItem';
 import GridContainer from 'components/Grid/GridContainer';
-import 'brace/mode/yaml';
-import 'brace/theme/github';
-
 import Card from 'components/Card/Card';
 import CardBody from 'components/Card/CardBody';
 import CardHeader from 'components/Card/CardHeader';
 import CardFooter from 'components/Card/CardFooter';
+import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
 
-import {
-  makeSelectClusterID,
-  makeSelectNamespaceID,
-} from 'ducks/app/selectors';
+import { makeSelectCurrentID as makeSelectClusterID } from 'ducks/clusters/selectors';
+import { makeSelectCurrentID as makeSelectNamespaceID } from 'ducks/namespaces/selectors';
 import * as actions from 'ducks/secrets/actions';
 import { makeSelectURL } from 'ducks/secrets/selectors';
 
-import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
 import messages from './messages';
 import SecretsPageHelmet from './helmet';
 import styles from './styles';
@@ -77,88 +72,83 @@ const CreateSecretForm = reduxForm({
 })(SecretForm);
 
 /* eslint-disable react/prefer-stateless-function */
-export class CreateSecret extends React.PureComponent {
-  static propTypes = {
-    classes: PropTypes.object.isRequired,
-  };
-
-  render() {
-    const {
-      classes,
-      createSecret,
-      submitForm,
-      url,
-      clusterID,
-      namespaceID,
-    } = this.props;
-    async function doSubmit(formValues) {
-      try {
-        const data = formValues.toJS();
-        await new Promise((resolve, reject) => {
-          createSecret(data, {
-            resolve,
-            reject,
-            url,
-            clusterID,
-            namespaceID,
-          });
+export const CreateSecret = ({
+  classes,
+  createSecret,
+  submitForm,
+  url,
+  clusterID,
+  namespaceID,
+  routeTo,
+}) => {
+  async function doSubmit(formValues) {
+    try {
+      const data = formValues.toJS();
+      await new Promise((resolve, reject) => {
+        createSecret(data, {
+          resolve,
+          reject,
+          url,
+          clusterID,
+          namespaceID,
         });
-      } catch (error) {
-        throw new SubmissionError({ _error: error });
-      }
+      });
+      routeTo(`/clusters/${clusterID}/namespaces/${namespaceID}/secrets`);
+    } catch (error) {
+      throw new SubmissionError({ _error: error });
     }
-
-    return (
-      <div className={classes.root}>
-        <SecretsPageHelmet />
-        <CssBaseline />
-        <div className={classes.content}>
-          <Breadcrumbs
-            data={[
-              {
-                path: `/clusters/${clusterID}/namespaces/${namespaceID}/secrets`,
-                name: <FormattedMessage {...messages.pageTitle} />,
-              },
-              {
-                path: `/clusters/${clusterID}/namespaces/${namespaceID}/secrets/create`,
-                name: <FormattedMessage {...messages.createSecret} />,
-              },
-            ]}
-          />
-          <GridContainer className={classes.grid}>
-            <GridItem xs={12} sm={12} md={12}>
-              <Card>
-                <CardHeader>
-                  <h4>
-                    <FormattedMessage {...messages.createSecret} />
-                  </h4>
-                </CardHeader>
-                <CardBody>
-                  <CreateSecretForm
-                    classes={classes}
-                    onSubmit={doSubmit}
-                    initialValues={fromJS({})}
-                    type="create"
-                  />
-                </CardBody>
-                <CardFooter className={classes.cardFooter}>
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    size="large"
-                    onClick={submitForm}
-                  >
-                    <FormattedMessage {...messages.formCreate} />
-                  </Button>
-                </CardFooter>
-              </Card>
-            </GridItem>
-          </GridContainer>
-        </div>
-      </div>
-    );
   }
-}
+
+  return (
+    <div className={classes.root}>
+      <SecretsPageHelmet />
+      <CssBaseline />
+      <div className={classes.content}>
+        <Breadcrumbs
+          data={[
+            {
+              path: `/clusters/${clusterID}/namespaces/${namespaceID}/secrets`,
+              name: <FormattedMessage {...messages.pageTitle} />,
+            },
+            {
+              path: `/clusters/${clusterID}/namespaces/${namespaceID}/secrets/create`,
+              name: <FormattedMessage {...messages.createSecret} />,
+            },
+          ]}
+        />
+        <GridContainer className={classes.grid}>
+          <GridItem xs={12} sm={12} md={12}>
+            <Card>
+              <CardHeader>
+                <h4>
+                  <FormattedMessage {...messages.createSecret} />
+                </h4>
+              </CardHeader>
+              <CardBody>
+                <CreateSecretForm
+                  classes={classes}
+                  onSubmit={doSubmit}
+                  initialValues={fromJS({})}
+                  type="create"
+                />
+              </CardBody>
+              <CardFooter className={classes.cardFooter}>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  size="large"
+                  onClick={submitForm}
+                >
+                  <FormattedMessage {...messages.formCreate} />
+                </Button>
+              </CardFooter>
+            </Card>
+          </GridItem>
+        </GridContainer>
+      </div>
+    </div>
+  );
+};
 
 const mapStateToProps = createStructuredSelector({
   clusterID: makeSelectClusterID(),
@@ -170,6 +160,7 @@ const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
       ...actions,
+      routeTo: push,
       submitForm: () => submit(formName),
     },
     dispatch

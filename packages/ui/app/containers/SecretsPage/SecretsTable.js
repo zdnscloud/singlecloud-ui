@@ -19,10 +19,8 @@ import AceEditor from 'react-ace';
 import 'brace/mode/yaml';
 import 'brace/theme/github';
 
-import {
-  makeSelectClusterID,
-  makeSelectNamespaceID,
-} from 'ducks/app/selectors';
+import { makeSelectCurrentID as makeSelectClusterID } from 'ducks/clusters/selectors';
+import { makeSelectCurrentID as makeSelectNamespaceID } from 'ducks/namespaces/selectors';
 import * as actions from 'ducks/secrets/actions';
 import {
   makeSelectURL,

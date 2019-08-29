@@ -1,74 +1,81 @@
+/**
+ * Duck: Secrets
+ * selectors: secrets
+ *
+ */
+import { fromJS } from 'immutable';
 import { createSelector } from 'reselect';
 import {
   createMatchSelector,
   getLocation,
 } from 'connected-react-router/immutable';
 
-import { makeSelectCurrentID as makeSelectClusterID } from 'ducks/clusters/selectors';
-import { makeSelectCurrentID as makeSelectNamespaceID } from 'ducks/namespaces/selectors';
-import { makeSelectCurrentNamespace } from 'ducks/namespaces/selectors';
+import {
+  makeSelectCurrent as makeSelectCurrentNamespace,
+} from 'ducks/namespaces/selectors';
+
+import { makeSelectCurrentID as makeSelectCurrentClusterID } from 'ducks/clusters/selectors';
+
+import { makeSelectCurrentID as makeSelectCurrentNamespaceID } from 'ducks/namespaces/selectors';
 
 import { prefix } from './constants';
+import { initialState } from './index';
 
 /**
- * Direct selector to the secrets duck
+ * Direct selector to the secrets domain
  */
-
-const selectSecretsDomain = (state) => state.get(prefix);
+export const selectDomain = (state) => state.get(prefix) || initialState;
 
 /**
  * Other specific selectors
  */
+export const makeSelectURL = () =>
+  createSelector(
+    makeSelectCurrentNamespace(),
+    (pt) => pt.getIn(['links', 'secrets'])
+  );
+
 export const makeSelectSecrets = () =>
   createSelector(
-    selectSecretsDomain,
-    makeSelectClusterID(),
-    makeSelectNamespaceID(),
+    selectDomain,
+    makeSelectCurrentClusterID(),
+    makeSelectCurrentNamespaceID(),
+
     (substate, clusterID, namespaceID) =>
-      substate.getIn(['secrets', clusterID, namespaceID]) || substate.clear()
+      substate.getIn(['data', clusterID, namespaceID])
+        || substate.clear()
   );
 
 export const makeSelectSecretsList = () =>
   createSelector(
-    selectSecretsDomain,
+    selectDomain,
     makeSelectSecrets(),
-    (substate, secrets) => substate.get('list').map((id) => secrets.get(id))
+    makeSelectCurrentClusterID(),
+    makeSelectCurrentNamespaceID(),
+
+    (substate, data, clusterID, namespaceID) =>
+      (substate.getIn(['list', clusterID, namespaceID]) || fromJS([]))
+        .map((id) => data.get(id)) || fromJS([])
   );
 
-export const makeSelectURL = () =>
+export const makeSelectCurrentID = () =>
+   createSelector(
+     createMatchSelector('*/secrets/:id/*'),
+     (match) => {
+       if (match && match.params) {
+         return match.params.id;
+       }
+       return '';
+     }
+   );
+
+export const makeSelectCurrent = () =>
   createSelector(
-    makeSelectCurrentNamespace(),
-    (ns) => ns.getIn(['links', 'secrets'])
+    selectDomain,
+    makeSelectCurrentClusterID(),
+    makeSelectCurrentNamespaceID(),
+
+    makeSelectCurrentID(),
+    (substate, clusterID, namespaceID, id) =>
+      substate.getIn(['data', clusterID, namespaceID, id]) || substate.clear()
   );
-
-export const makeSelectSecretID = () =>
-  createSelector(
-    createMatchSelector(
-      '/clusters/:cluster_id/namespaces/:namespace_id/secrets/:secret_id'
-    ),
-    (match) => {
-      if (match && match.params) {
-        return match.params.secret_id;
-      }
-      return '';
-    }
-  );
-
-export const makeSelectCurrentSecret = () =>
-  createSelector(
-    makeSelectSecrets(),
-    makeSelectSecretID(),
-    (secrets, id) => secrets.get(id) || secrets.clear()
-  );
-
-/**
- * Default selector used by LoginPage
- */
-
-const makeSelectSecretsDomain = () =>
-  createSelector(
-    selectSecretsDomain,
-    (substate) => substate
-  );
-
-export default makeSelectSecretsDomain;

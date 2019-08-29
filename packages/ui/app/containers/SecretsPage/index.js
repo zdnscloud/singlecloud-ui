@@ -4,7 +4,7 @@
  *
  */
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
@@ -25,10 +25,8 @@ import Card from 'components/Card/Card';
 import CardHeader from 'components/Card/CardHeader';
 import CardBody from 'components/Card/CardBody';
 
-import {
-  makeSelectClusterID,
-  makeSelectNamespaceID,
-} from 'ducks/app/selectors';
+import { makeSelectCurrentID as makeSelectClusterID } from 'ducks/clusters/selectors';
+import { makeSelectCurrentID as makeSelectNamespaceID } from 'ducks/namespaces/selectors';
 import * as actions from 'ducks/secrets/actions';
 import { makeSelectURL } from 'ducks/secrets/selectors';
 
@@ -37,78 +35,58 @@ import messages from './messages';
 import SecretsPageHelmet from './helmet';
 import styles from './styles';
 import SecretsTable from './SecretsTable';
-/* eslint-disable react/prefer-stateless-function */
-export class SecretsPage extends React.PureComponent {
-  static propTypes = {
-    classes: PropTypes.object.isRequired,
-  };
 
-  componentWillMount() {
-    this.load();
-  }
+export const SecretsPage = ({
+  classes,
+  clusterID,
+  namespaceID,
+  url,
+  loadSecrets,
+  location,
+}) => {
+  useEffect(() => {
+    loadSecrets(url, { clusterID, namespaceID });
+  }, [url]);
 
-  componentDidUpdate(prevProps) {
-    const {
-      clusterID: prevClusterID,
-      namespaceID: prevNamespaceID,
-    } = prevProps;
-    const { clusterID, namespaceID } = this.props;
-    if (prevClusterID !== clusterID || prevNamespaceID !== namespaceID) {
-      this.load();
-    }
-  }
-
-  load() {
-    const { clusterID, namespaceID, url, loadSecrets } = this.props;
-    loadSecrets({ url, clusterID, namespaceID });
-  }
-
-  render() {
-    const { classes, clusterID, namespaceID } = this.props;
-
-    return (
-      <div className={classes.root}>
-        <SecretsPageHelmet />
-        <CssBaseline />
-        <div className={classes.content}>
-          <Breadcrumbs
-            data={[
-              {
-                path: `/clusters/${clusterID}/namespaces/${namespaceID}/secrets`,
-                name: <FormattedMessage {...messages.pageTitle} />,
-              },
-            ]}
-          />
-          <GridContainer className={classes.grid}>
-            <GridItem xs={12} sm={12} md={12}>
-              <Card>
-                <CardHeader>
-                  <h4>
-                    <FormattedMessage {...messages.secrets} />
-
-                  </h4>
-                  <Link
-                      to={`${this.props.location.pathname}/create`}
-                      className={classes.createBtnLink}
-                    >
-                      <IconButton
-                        aria-label={<FormattedMessage {...messages.secrets} />}
-                      >
-                        <AddIcon />
-                      </IconButton>
-                    </Link>
-                </CardHeader>
-                <CardBody>
-                  <SecretsTable />
-                </CardBody>
-              </Card>
-            </GridItem>
-          </GridContainer>
-        </div>
+  return (
+    <div className={classes.root}>
+      <SecretsPageHelmet />
+      <CssBaseline />
+      <div className={classes.content}>
+        <Breadcrumbs
+          data={[
+            {
+              path: `/clusters/${clusterID}/namespaces/${namespaceID}/secrets`,
+              name: <FormattedMessage {...messages.pageTitle} />,
+            },
+          ]}
+        />
+        <GridContainer className={classes.grid}>
+          <GridItem xs={12} sm={12} md={12}>
+            <Card>
+              <CardHeader>
+                <h4>
+                  <FormattedMessage {...messages.secrets} />
+                </h4>
+                <Link
+                  to={`${location.pathname}/create`}
+                  className={classes.createBtnLink}
+                >
+                  <IconButton>
+                    <AddIcon />
+                  </IconButton>
+                </Link>
+              </CardHeader>
+              <CardBody>
+                <SecretsTable />
+              </CardBody>
+            </Card>
+          </GridItem>
+        </GridContainer>
       </div>
-    );
-  }
-}
+    </div>
+  );
+};
 
 const mapStateToProps = createStructuredSelector({
   clusterID: makeSelectClusterID(),

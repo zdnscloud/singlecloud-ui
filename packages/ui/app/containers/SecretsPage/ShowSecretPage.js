@@ -4,7 +4,7 @@
  *
  */
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
@@ -26,11 +26,6 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import AttachmentIcon from '@material-ui/icons/Attachment';
-import AceEditor from 'react-ace';
-import 'brace/mode/yaml';
-import 'brace/theme/github';
-import 'brace/theme/tomorrow_night';
-
 import GridItem from 'components/Grid/GridItem';
 import GridContainer from 'components/Grid/GridContainer';
 import Card from 'components/Card/Card';
@@ -38,120 +33,119 @@ import CardBody from 'components/Card/CardBody';
 import CardHeader from 'components/Card/CardHeader';
 import CardFooter from 'components/Card/CardFooter';
 import ReadOnlyInput from 'components/CustomInput/ReadOnlyInput';
+import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
 
-import {
-  makeSelectClusterID,
-  makeSelectNamespaceID,
-} from 'ducks/app/selectors';
+import { makeSelectCurrentID as makeSelectClusterID } from 'ducks/clusters/selectors';
+import { makeSelectCurrentID as makeSelectNamespaceID } from 'ducks/namespaces/selectors';
 import * as actions from 'ducks/secrets/actions';
 import {
-  makeSelectCurrentSecret,
   makeSelectURL,
+  makeSelectCurrent,
+  makeSelectCurrentID,
 } from 'ducks/secrets/selectors';
 
-import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
 import messages from './messages';
 import SecretsPageHelmet from './helmet';
 import styles from './styles';
-/* eslint-disable react/prefer-stateless-function */
-export class ShowSecret extends React.PureComponent {
-  static propTypes = {
-    classes: PropTypes.object.isRequired,
-  };
 
-  componentWillMount() {
-    const { clusterID, namespaceID, url, loadSecrets } = this.props;
-    loadSecrets({ url, clusterID, namespaceID });
-  }
+export const ShowSecret = ({
+  classes,
+  clusterID,
+  namespaceID,
+  id,
+  url,
+  readSecret,
+  secret,
+}) => {
+  useEffect(() => {
+    readSecret(id, { url: `${url}/${id}`, clusterID, namespaceID });
+  }, [id, url]);
 
-  render() {
-    const { classes, clusterID, namespaceID, secret } = this.props;
-
-    return (
-      <div className={classes.root}>
-        <SecretsPageHelmet />
-        <CssBaseline />
-        <div className={classes.content}>
-          <Breadcrumbs
-            data={[
-              {
-                path: `/clusters/${clusterID}/namespaces/${namespaceID}/secrets`,
-                name: <FormattedMessage {...messages.pageTitle} />,
-              },
-              {
-                path: '#',
-                name: <FormattedMessage {...messages.showSecret} />,
-              },
-            ]}
-          />
-          <GridContainer className={classes.grid}>
-            <GridItem xs={12} sm={12} md={12}>
-              <Card>
-                <CardHeader>
-                  <h4>
-                    <FormattedMessage {...messages.showSecret} />
-                  </h4>
-                </CardHeader>
-                <CardBody>
-                  <GridContainer>
-                    <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
-                      <ReadOnlyInput
-                        labelText={<FormattedMessage {...messages.formName} />}
-                        value={secret.get('name')}
-                        formControlProps={{
-                          className: classes.nameControl,
-                        }}
-                        fullWidth
-                      />
-                    </GridItem>
-                    <GridItem xs={12} sm={12} md={12}>
-                      {secret.get('data') &&
-                        secret.get('data').map((sec, idx) => (
-                          <GridContainer key={`${idx}-${sec.get('key')}`}>
-                            <GridItem xs={3} sm={3} md={3}>
-                              <ReadOnlyInput
-                                labelText={
-                                  <FormattedMessage {...messages.formDataKey} />
-                                }
-                                value={sec.get('key')}
-                                fullWidth
-                                formControlProps={{
-                                  className: classes.nameControl,
-                                }}
-                              />
-                            </GridItem>
-                            <GridItem xs={3} sm={3} md={3}>
-                              <ReadOnlyInput
-                                labelText={
-                                  <FormattedMessage
-                                    {...messages.formDataValue}
-                                  />
-                                }
-                                value={sec.get('value')}
-                                fullWidth
-                                formControlProps={{
-                                  className: classes.nameControl,
-                                }}
-                              />
-                            </GridItem>
-                          </GridContainer>
-                        ))}
-                    </GridItem>
-                  </GridContainer>
-                </CardBody>
-              </Card>
-            </GridItem>
-          </GridContainer>
-        </div>
+  return (
+    <div className={classes.root}>
+      <SecretsPageHelmet />
+      <CssBaseline />
+      <div className={classes.content}>
+        <Breadcrumbs
+          data={[
+            {
+              path: `/clusters/${clusterID}/namespaces/${namespaceID}/secrets`,
+              name: <FormattedMessage {...messages.pageTitle} />,
+            },
+            {
+              path: '#',
+              name: <FormattedMessage {...messages.showSecret} />,
+            },
+          ]}
+        />
+        <GridContainer className={classes.grid}>
+          <GridItem xs={12} sm={12} md={12}>
+            <Card>
+              <CardHeader>
+                <h4>
+                  <FormattedMessage {...messages.showSecret} />
+                </h4>
+              </CardHeader>
+              <CardBody>
+                <GridContainer>
+                  <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
+                    <ReadOnlyInput
+                      labelText={<FormattedMessage {...messages.formName} />}
+                      value={secret.get('name')}
+                      formControlProps={{
+                        className: classes.nameControl,
+                      }}
+                      fullWidth
+                    />
+                  </GridItem>
+                  <GridItem xs={12} sm={12} md={12}>
+                    {secret.get('data') &&
+                     secret.get('data').map((sec, idx) => (
+                       <GridContainer key={`${idx}-${sec.get('key')}`}>
+                         <GridItem xs={3} sm={3} md={3}>
+                           <ReadOnlyInput
+                             labelText={
+                               <FormattedMessage {...messages.formDataKey} />
+                             }
+                             value={sec.get('key')}
+                             fullWidth
+                             formControlProps={{
+                               className: classes.nameControl,
+                             }}
+                           />
+                         </GridItem>
+                         <GridItem xs={3} sm={3} md={3}>
+                           <ReadOnlyInput
+                             labelText={
+                               <FormattedMessage
+                                 {...messages.formDataValue}
+                               />
+                             }
+                             value={sec.get('value')}
+                             fullWidth
+                             formControlProps={{
+                               className: classes.nameControl,
+                             }}
+                           />
+                         </GridItem>
+                       </GridContainer>
+                     ))}
+                  </GridItem>
+                </GridContainer>
+              </CardBody>
+            </Card>
+          </GridItem>
+        </GridContainer>
       </div>
-    );
-  }
-}
+    </div>
+  );
+};
 
 const mapStateToProps = createStructuredSelector({
   clusterID: makeSelectClusterID(),
   namespaceID: makeSelectNamespaceID(),
-  secret: makeSelectCurrentSecret(),
+  id: makeSelectCurrentID(),
+  secret: makeSelectCurrent(),
   url: makeSelectURL(),
 });
 

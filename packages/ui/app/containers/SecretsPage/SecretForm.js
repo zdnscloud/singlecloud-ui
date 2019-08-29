@@ -4,7 +4,6 @@ import { fromJS } from 'immutable';
 import { Field, FieldArray, reduxForm } from 'redux-form/immutable';
 import { FormattedMessage } from 'react-intl';
 import getByKey from '@gsmlg/utils/getByKey';
-import 'brace/theme/tomorrow_night';
 
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -61,64 +60,59 @@ const renderConfigs = ({ fields, meta: { error, submitFailed }, classes }) => (
   </List>
 );
 
-class SecretForm extends PureComponent {
-  state = {};
+const SecretForm = ({
+  clusters,
+  handleSubmit,
+  pristine,
+  reset,
+  submitting,
+  error,
+  classes,
+  edit,
+  initialValues,
+  secret,
+  type,
+}) => {
 
-  render() {
-    const {
-      clusters,
-      handleSubmit,
-      pristine,
-      reset,
-      submitting,
-      error,
-      classes,
-      edit,
-      initialValues,
-      secret,
-      type,
-    } = this.props;
-
-    return (
-      <form className={getByKey(classes, 'form')} onSubmit={handleSubmit}>
-        <GridContainer>
-          <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
-            {type === 'create' ? (
-              <InputField
-                label={<FormattedMessage {...messages.formName} />}
-                name="name"
-                formControlProps={{
-                  className: classes.nameControl,
-                }}
-                inputProps={{
-                  type: 'text',
-                  autoComplete: 'off',
-                  disabled: edit,
-                }}
-                fullWidth
-              />
-            ) : (
-              <ReadOnlyInput
-                labelText={<FormattedMessage {...messages.formName} />}
-                value={secret ? secret.get('name') : ''}
-                formControlProps={{
-                  className: classes.nameControl,
-                }}
-                fullWidth
-              />
-            )}
-          </GridItem>
-          <GridItem xs={12} sm={12} md={12}>
-            <FieldArray
-              name="data"
-              component={renderConfigs}
-              classes={classes}
+  return (
+    <form className={getByKey(classes, 'form')} onSubmit={handleSubmit}>
+      <GridContainer>
+        <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
+          {type === 'create' ? (
+            <InputField
+              label={<FormattedMessage {...messages.formName} />}
+              name="name"
+              formControlProps={{
+                className: classes.nameControl,
+              }}
+              inputProps={{
+                type: 'text',
+                autoComplete: 'off',
+                disabled: edit,
+              }}
+              fullWidth
             />
-          </GridItem>
-        </GridContainer>
-      </form>
-    );
-  }
-}
+          ) : (
+            <ReadOnlyInput
+              labelText={<FormattedMessage {...messages.formName} />}
+              value={secret ? secret.get('name') : ''}
+              formControlProps={{
+                className: classes.nameControl,
+              }}
+              fullWidth
+            />
+          )}
+        </GridItem>
+        <GridItem xs={12} sm={12} md={12}>
+          <FieldArray
+            name="data"
+            component={renderConfigs}
+            classes={classes}
+          />
+        </GridItem>
+      </GridContainer>
+    </form>
+  );
+};
 
 export default SecretForm;
