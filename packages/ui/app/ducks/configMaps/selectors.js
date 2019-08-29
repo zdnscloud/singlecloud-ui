@@ -59,7 +59,7 @@ export const makeSelectCurrentConfigMap = () =>
   createSelector(
     makeSelectConfigMaps(),
     makeSelectConfigMapID(),
-    (maps, id) => maps.get(id)
+    (maps, id) => maps.get(id) || maps.clear()
   );
 
 /**
