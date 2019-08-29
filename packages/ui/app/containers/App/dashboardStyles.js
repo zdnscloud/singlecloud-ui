@@ -17,7 +17,7 @@ export const styles = (theme) => ({
   mainPanel: {
     ...theme.palette.transition,
     display: 'flex',
-    flex: 1,
+    flex: '1 1 auto',
     overflowScrolling: 'touch',
     backgroundColor: '#EAEDF2',
     paddingTop: 1,
@@ -54,7 +54,7 @@ export const styles = (theme) => ({
   secondMenu: {
     left: '4px !important',
     zIndex: 5 ,
-    backgroundColor: '#fff', 
+    backgroundColor: '#fff',
     boxShadow: '0 1px 4px 0 rgba(0, 0, 0, 0.14)'
   }
 
