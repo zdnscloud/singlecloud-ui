@@ -31,10 +31,7 @@ import styles from './styles';
 export const ResourceQuota = (props) => {
   const { classes, resourceQuota, clusterID, namespaceID } = props;
   const reg = /^(\d+)([a-zA-Z]+)?$/;
-  const cpu = resourceQuota.getIn(['limits', 'limits.cpu']);
-  const memory = resourceQuota.getIn(['limits', 'limits.memory']);
   const storage = resourceQuota.getIn(['limits', 'requests.storage']);
-  console.log(cpu);
 
   return (
     <GridContainer className={classes.grid}>
@@ -49,28 +46,6 @@ export const ResourceQuota = (props) => {
           </GridItem>
         </GridContainer>
         <GridContainer style={{ paddingLeft: 30, paddingRight: 30 }}>
-          <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
-            <ReadOnlyInput
-              labelText={<FormattedMessage {...messages.CPUQuota} />}
-              fullWidth
-              inputProps={{
-                endAdornment: (
-                  <FormattedMessage {...messages.CPUQuotaEndAdornment} />
-                ),
-              }}
-              value={(reg.exec(cpu) || [])[1]}
-            />
-          </GridItem>
-          <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
-            <ReadOnlyInput
-              labelText={<FormattedMessage {...messages.memoryQuota} />}
-              fullWidth
-              inputProps={{
-                endAdornment: (reg.exec(memory) || [])[2],
-              }}
-              value={(reg.exec(memory) || [])[1]}
-            />
-          </GridItem>
           <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
             <ReadOnlyInput
               labelText={<FormattedMessage {...messages.storageQuota} />}

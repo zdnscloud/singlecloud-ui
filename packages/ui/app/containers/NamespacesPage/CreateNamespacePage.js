@@ -80,12 +80,10 @@ export class CreateNamespacePage extends React.PureComponent {
         const data = {
           name,
           limits: {
-            'limits.cpu': cpu,
-            'limits.memory': `${memory}Gi`,
             'requests.storage': `${storage}Gi`,
           },
         };
-        console.log('data', data);
+
         await new Promise((resolve, reject) => {
           createNamespace({ name }, { resolve, reject, clusterID, url, data });
         });
