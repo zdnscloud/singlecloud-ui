@@ -174,6 +174,11 @@ const LeftMenu = ({
                               classes.nested,
                               itemClasses
                             )}
+                            onClick={() => {
+                              setOpeningMenu(null);
+                              clearTimeout(timer);
+                              timer = null;
+                            }}
                           >
                             <ListItemText
                               primary={<FormattedMessage {...msgSubName} />}
