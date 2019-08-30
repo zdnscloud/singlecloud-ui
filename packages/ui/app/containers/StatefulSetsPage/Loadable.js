@@ -11,13 +11,9 @@ export default loadable(() =>
 );
 
 export const CreateStatefulSetPage = loadable(() =>
-  import(
-    /* webpackChunkName: "CreateStatefulSetPage" */ './CreatePage'
-  )
+  import(/* webpackChunkName: "CreateStatefulSetPage" */ './CreatePage')
 );
 
 export const StatefulSetDetailPage = loadable(() =>
-  import(
-    /* webpackChunkName: "StatefulSetDetailPage" */ './ShowItemPage'
-  )
+  import(/* webpackChunkName: "StatefulSetDetailPage" */ './ShowItemPage')
 );

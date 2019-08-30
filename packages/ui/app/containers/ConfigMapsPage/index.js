@@ -47,7 +47,7 @@ export const ConfigMapsPage = ({
 }) => {
   useEffect(() => {
     loadConfigMaps(url, { clusterID, namespaceID });
-  }, [url]);
+  }, [clusterID, loadConfigMaps, namespaceID, url]);
 
   return (
     <div className={classes.root}>
@@ -68,11 +68,8 @@ export const ConfigMapsPage = ({
               <CardHeader>
                 <h4>
                   <FormattedMessage {...messages.configMaps} />
-
                 </h4>
-                <Link
-                  to={`${location.pathname}/create`}
-                >
+                <Link to={`${location.pathname}/create`}>
                   <IconButton>
                     <AddIcon />
                   </IconButton>

@@ -3,10 +3,7 @@ import { ucfirst } from '@gsmlg/utils';
 import { Link } from 'react-router-dom';
 import Button from 'components/CustomButtons/Button';
 
-const schema = [
-  'name',
-  'type',
-];
+const schema = ['name', 'type'];
 
 const tableSchema = schema
   .map((id) => ({
@@ -20,15 +17,19 @@ const tableSchema = schema
         component: (props) => {
           switch (props.data.get('type')) {
             default:
-              return  <Button
-              link
-              to={`/clusters/${props.clusterID}/namespaces/${props.namespaceID}/${props.data.get('type')}s/${props.data.get('name')}/show`}
-              component={Link}
-            >
-              {props.data.get('name')}
-            </Button>
+              return (
+                <Button
+                  link
+                  to={`/clusters/${props.clusterID}/namespaces/${
+                    props.namespaceID
+                  }/${props.data.get('type')}s/${props.data.get('name')}/show`}
+                  component={Link}
+                >
+                  {props.data.get('name')}
+                </Button>
+              );
               break;
-           }
+          }
         },
       };
     }

@@ -6,18 +6,17 @@ import SwitchField from 'components/Field/SwitchField';
 import RadioField from 'components/Field/RadioField';
 import ChexboxesField from 'components/Field/ChexboxesField';
 
-const DynamicForm = ({
-  fields,
-  config,
-  classes,
-  formValues,
-}) => {
-
-  const renderItem= (item) => {
-    const radioOptions = item.get('validValues') ? item.get('validValues').toList().map((sc) => ({
-      label: sc,
-      value: sc,
-    })) : null;
+const DynamicForm = ({ fields, config, classes, formValues }) => {
+  const renderItem = (item) => {
+    const radioOptions = item.get('validValues')
+      ? item
+        .get('validValues')
+        .toList()
+        .map((sc) => ({
+          label: sc,
+          value: sc,
+        }))
+      : null;
 
     switch (item.get('type')) {
       case 'int':
@@ -62,7 +61,7 @@ const DynamicForm = ({
         );
 
       case 'bool':
-        return  (
+        return (
           <GridItem xs={12} sm={12} md={12} className={classes.formLine}>
             <SwitchField
               label={item.get('label')}
@@ -91,7 +90,7 @@ const DynamicForm = ({
         );
 
       case 'array':
-        return  (
+        return (
           <GridItem xs={12} sm={12} md={12} className={classes.formLine}>
             <ChexboxesField
               label={item.get('label')}
@@ -113,13 +112,9 @@ const DynamicForm = ({
   return (
     <Fragment>
       <GridContainer>
-        {config.map((item, index) => {
-          return (
-            <Fragment key={index}>
-              {renderItem(item)}
-            </Fragment>
-          );
-        })}
+        {config.map((item, index) => (
+          <Fragment key={index}>{renderItem(item)}</Fragment>
+        ))}
       </GridContainer>
     </Fragment>
   );

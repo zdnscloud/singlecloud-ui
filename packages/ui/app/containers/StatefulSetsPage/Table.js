@@ -51,32 +51,32 @@ export const StatefulSetsTable = ({
   const setUpgrade = (id) => setDialog(['upgrade', id]);
   const setRollback = (id) => setDialog(['rollback', id]);
   const mergedSchema = schema
-        .map((sch) => {
-          if (sch.id === 'actions') {
-            return {
-              ...sch,
-              props: {
-                executeStatefulSetAction,
-                removeStatefulSet,
-                setUpgrade,
-                setRollback,
-                clusterID,
-                namespaceID,
-              },
-            };
-          }
-          if (sch.id === 'name') {
-            return {
-              ...sch,
-              props: { pathname }
-            };
-          }
-          return sch;
-        })
-        .map((s) => ({
-          ...s,
-          label: <FormattedMessage {...messages[`tableTitle${s.label}`]} />,
-        }));
+    .map((sch) => {
+      if (sch.id === 'actions') {
+        return {
+          ...sch,
+          props: {
+            executeStatefulSetAction,
+            removeStatefulSet,
+            setUpgrade,
+            setRollback,
+            clusterID,
+            namespaceID,
+          },
+        };
+      }
+      if (sch.id === 'name') {
+        return {
+          ...sch,
+          props: { pathname },
+        };
+      }
+      return sch;
+    })
+    .map((s) => ({
+      ...s,
+      label: <FormattedMessage {...messages[`tableTitle${s.label}`]} />,
+    }));
 
   return (
     <Paper className={classes.tableWrapper}>
@@ -119,6 +119,4 @@ const withConnect = connect(
   mapDispatchToProps
 );
 
-export default compose(
-  withConnect,
-)(StatefulSetsTable);
+export default compose(withConnect)(StatefulSetsTable);

@@ -51,7 +51,8 @@ export default defineMessages({
   },
   removeAppText: {
     id: `${scope}.removeAppText`,
-    defaultMessage: 'This action permanently deletes the content. Continue or not？',
+    defaultMessage:
+      'This action permanently deletes the content. Continue or not？',
   },
   configurationOptions: {
     id: `${scope}.configurationOptions`,

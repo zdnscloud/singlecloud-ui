@@ -87,7 +87,6 @@ export class UserProfilePage extends React.PureComponent {
                         size="small"
                         color="default"
                         aria-label="create user"
-                          
                       >
                         <KeyIcon />
                       </Fab>

@@ -64,6 +64,3 @@ export const removeRegistryFailure = (error, meta = {}) => ({
   meta,
   error: true,
 });
-
-
-

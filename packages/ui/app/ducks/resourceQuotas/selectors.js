@@ -5,8 +5,10 @@ import {
 } from 'connected-react-router/immutable';
 
 import { makeSelectCurrentID as makeSelectClusterID } from 'ducks/clusters/selectors';
-import { makeSelectCurrentID as makeSelectNamespaceID } from 'ducks/namespaces/selectors';
-import { makeSelectCurrentNamespace } from 'ducks/namespaces/selectors';
+import {
+  makeSelectCurrentID as makeSelectNamespaceID,
+  makeSelectCurrentNamespace,
+} from 'ducks/namespaces/selectors';
 
 import { prefix } from './constants';
 

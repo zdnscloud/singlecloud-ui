@@ -102,4 +102,3 @@ export const removeSecretFailure = (error, meta = {}) => ({
   meta,
   error: true,
 });
-

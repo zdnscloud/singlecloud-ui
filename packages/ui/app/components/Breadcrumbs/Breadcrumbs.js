@@ -38,7 +38,7 @@ function BreadcrumbsContainer({ ...props }) {
       className={classes.breadcrumbs}
     >
       <Link color="inherit" to="/">
-        <img src={homeIcon} className={classes.icon} alt='home'/>
+        <img src={homeIcon} className={classes.icon} alt="home" />
       </Link>
       {data.map((prop, key) =>
         key === data.length - 1 ? (

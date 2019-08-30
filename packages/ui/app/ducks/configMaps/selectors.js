@@ -12,11 +12,10 @@ import {
 
 import {
   makeSelectCurrent as makeSelectCurrentNamespace,
+  makeSelectCurrentID as makeSelectCurrentNamespaceID,
 } from 'ducks/namespaces/selectors';
 
 import { makeSelectCurrentID as makeSelectCurrentClusterID } from 'ducks/clusters/selectors';
-
-import { makeSelectCurrentID as makeSelectCurrentNamespaceID } from 'ducks/namespaces/selectors';
 
 import { prefix } from './constants';
 import { initialState } from './index';
@@ -42,8 +41,7 @@ export const makeSelectConfigMaps = () =>
     makeSelectCurrentNamespaceID(),
 
     (substate, clusterID, namespaceID) =>
-      substate.getIn(['data', clusterID, namespaceID])
-        || substate.clear()
+      substate.getIn(['data', clusterID, namespaceID]) || substate.clear()
   );
 
 export const makeSelectConfigMapsList = () =>
@@ -54,20 +52,21 @@ export const makeSelectConfigMapsList = () =>
     makeSelectCurrentNamespaceID(),
 
     (substate, data, clusterID, namespaceID) =>
-      (substate.getIn(['list', clusterID, namespaceID]) || fromJS([]))
-        .map((id) => data.get(id)) || fromJS([])
+      (substate.getIn(['list', clusterID, namespaceID]) || fromJS([])).map(
+        (id) => data.get(id)
+      ) || fromJS([])
   );
 
 export const makeSelectCurrentID = () =>
-   createSelector(
-     createMatchSelector('*/configMaps/:id/*'),
-     (match) => {
-       if (match && match.params) {
-         return match.params.id;
-       }
-       return '';
-     }
-   );
+  createSelector(
+    createMatchSelector('*/configMaps/:id/*'),
+    (match) => {
+      if (match && match.params) {
+        return match.params.id;
+      }
+      return '';
+    }
+  );
 
 export const makeSelectCurrent = () =>
   createSelector(

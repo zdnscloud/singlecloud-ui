@@ -32,20 +32,17 @@ export const reducer = (
       return state;
     case c.LOAD_REGISTRIES_SUCCESS: {
       const { data, list } = procCollectionData(payload);
-      
-      return state
-        .setIn(['data'], fromJS(data))
-        .setIn(['list'], fromJS(list));
+
+      return state.setIn(['data'], fromJS(data)).setIn(['list'], fromJS(list));
     }
     case c.LOAD_REGISTRIES_FAILURE:
       return state;
-
 
     case c.CREATE_REGISTRY:
       return state;
     case c.CREATE_REGISTRY_SUCCESS: {
       const data = payload.response;
-      
+
       return state.setIn(['data', data.id], fromJS(data));
     }
     case c.CREATE_REGISTRY_FAILURE:
@@ -55,14 +52,14 @@ export const reducer = (
       return state;
     case c.REMOVE_REGISTRY_SUCCESS: {
       const { id } = meta;
-      
+
       return state
         .removeIn(['data', id])
         .updateIn(['list'], (l) => l.filterNot((i) => i === id));
     }
     case c.REMOVE_REGISTRY_FAILURE:
       return state;
-    
+
     default:
       return state;
   }

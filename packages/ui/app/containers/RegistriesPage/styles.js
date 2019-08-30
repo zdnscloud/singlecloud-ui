@@ -3,9 +3,9 @@ import pageStyles from 'jss/page';
 
 export const styles = (theme) => ({
   ...pageStyles(theme),
-  switch:{
+  switch: {
     marginLeft: 10,
-  }
+  },
 });
 
 export default makeStyles(styles);

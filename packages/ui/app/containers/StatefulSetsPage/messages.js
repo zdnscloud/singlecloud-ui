@@ -227,7 +227,8 @@ export default defineMessages({
   },
   successContent: {
     id: `${scope}.successContent`,
-    defaultMessage: 'StatefulSet has been created, would you like to create a service for it?',
+    defaultMessage:
+      'StatefulSet has been created, would you like to create a service for it?',
   },
   formReason: {
     id: `${scope}.formReason`,

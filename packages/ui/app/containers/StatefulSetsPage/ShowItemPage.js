@@ -66,7 +66,15 @@ export const StatefulSetDetailPage = ({
     const timer = setInterval(loadStatefulSetAndPods, 3000);
 
     return () => clearInterval(timer);
-  }, [url, podUrl]);
+  }, [
+    url,
+    podUrl,
+    readStatefulSet,
+    statefulSetID,
+    clusterID,
+    namespaceID,
+    loadPods,
+  ]);
 
   return (
     <div className={classes.root}>
@@ -126,6 +134,4 @@ const withConnect = connect(
   mapDispatchToProps
 );
 
-export default compose(
-  withConnect,
-)(StatefulSetDetailPage);
+export default compose(withConnect)(StatefulSetDetailPage);

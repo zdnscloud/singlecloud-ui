@@ -18,9 +18,7 @@ import ReadOnlyInput from 'components/CustomInput/ReadOnlyInput';
 import messages from './messages';
 import useStyles from './styles';
 
-export const Service = ({
-  service,
-}) => {
+export const Service = ({ service }) => {
   const classes = useStyles();
 
   return (
@@ -42,60 +40,32 @@ export const Service = ({
         </GridItem>
       </GridContainer>
       <GridContainer>
-        <GridItem
-          xs={12}
-          sm={12}
-          md={12}
-          className={classes.formLine}
-        >
+        <GridItem xs={12} sm={12} md={12} className={classes.formLine}>
           <FormattedMessage {...messages.formExposedPorts} />
         </GridItem>
       </GridContainer>
       {service.get('exposedPorts').map((exposedPort, i) => (
         <GridContainer key={i}>
-          <GridItem
-            xs={3}
-            sm={3}
-            md={3}
-            className={classes.formLine}
-          >
+          <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
             <ReadOnlyInput
-              labelText={
-                <FormattedMessage
-                  {...messages.formExposedPortName}
-                />
-              }
+              labelText={<FormattedMessage {...messages.formExposedPortName} />}
               fullWidth
               value={exposedPort.get('name')}
             />
           </GridItem>
-          <GridItem
-            xs={3}
-            sm={3}
-            md={3}
-            className={classes.formLine}
-          >
+          <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
             <ReadOnlyInput
               labelText={
-                <FormattedMessage
-                  {...messages.formExposedPortTarget}
-                />
+                <FormattedMessage {...messages.formExposedPortTarget} />
               }
               fullWidth
               value={exposedPort.get('targetPort')}
             />
           </GridItem>
-          <GridItem
-            xs={3}
-            sm={3}
-            md={3}
-            className={classes.formLine}
-          >
+          <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
             <ReadOnlyInput
               labelText={
-                <FormattedMessage
-                  {...messages.formExposedPortProtocol}
-                />
+                <FormattedMessage {...messages.formExposedPortProtocol} />
               }
               fullWidth
               value={exposedPort.get('protocol')}

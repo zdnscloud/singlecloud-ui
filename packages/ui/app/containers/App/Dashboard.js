@@ -27,9 +27,7 @@ import * as roleActions from 'ducks/role/actions';
 import * as actions from 'ducks/app/actions';
 import * as eventsActions from 'ducks/events/actions';
 import { makeSelectShowEvents } from 'ducks/app/selectors';
-import {
-  makeSelectCurrentID as makeSelectClusterID,
-} from 'ducks/clusters/selectors';
+import { makeSelectCurrentID as makeSelectClusterID } from 'ducks/clusters/selectors';
 import { makeSelectIsLogin } from 'ducks/role/selectors';
 
 import EventsList from 'containers/EventsPage/EventsList';
@@ -53,13 +51,13 @@ export const Dashboard = ({
 }) => {
   useEffect(() => {
     initAction();
-  }, []);
+  }, [initAction]);
   useEffect(() => {
     if (clusterID) {
       openCluster(clusterID);
     }
     return () => closeCluster();
-  }, [clusterID]);
+  }, [closeCluster, clusterID, openCluster]);
   const hasEvents = clusterID && showEvents;
   const classes = useStyles({ hasEvents });
 
@@ -114,6 +112,4 @@ const withConnect = connect(
   mapDispatchToProps
 );
 
-export default compose(
-  withConnect,
-)(Dashboard);
+export default compose(withConnect)(Dashboard);

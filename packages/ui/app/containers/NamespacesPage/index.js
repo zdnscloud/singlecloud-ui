@@ -78,18 +78,14 @@ export class NamespacesPage extends React.PureComponent {
                   <CardHeader>
                     <h4>
                       <FormattedMessage {...messages.namespaces} />
-
                     </h4>
                     <IconButton
-                        aria-label={
-                          <FormattedMessage {...messages.namespaces} />
-                        }
-                          
-                        component={Link}
-                        to={`/clusters/${clusterID}/namespaces/create`}
-                      >
-                        <AddIcon />
-                      </IconButton>
+                      aria-label={<FormattedMessage {...messages.namespaces} />}
+                      component={Link}
+                      to={`/clusters/${clusterID}/namespaces/create`}
+                    >
+                      <AddIcon />
+                    </IconButton>
                   </CardHeader>
                   <CardBody>
                     <NamespacesTable location={this.props.location} />

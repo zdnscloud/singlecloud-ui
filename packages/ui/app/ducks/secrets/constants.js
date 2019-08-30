@@ -27,4 +27,3 @@ export const READ_SECRET_FAILURE = `${prefix}/READ_SECRET_FAILURE`;
 export const REMOVE_SECRET = `${prefix}/REMOVE_SECRET`;
 export const REMOVE_SECRET_SUCCESS = `${prefix}/REMOVE_SECRET_SUCCESS`;
 export const REMOVE_SECRET_FAILURE = `${prefix}/REMOVE_SECRET_FAILURE`;
-

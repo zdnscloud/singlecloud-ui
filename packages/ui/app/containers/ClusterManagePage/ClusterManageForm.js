@@ -167,7 +167,6 @@ class ClusterManageForm extends PureComponent {
                 <FormattedMessage {...messages.nodeList} />
                 <IconButton
                   aria-label={<FormattedMessage {...messages.clusters} />}
-                    
                   onClick={(evt) => {
                     openNode();
                   }}

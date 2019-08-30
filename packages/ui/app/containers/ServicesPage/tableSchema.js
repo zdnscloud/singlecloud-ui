@@ -5,7 +5,13 @@ import { Link } from 'react-router-dom';
 import Button from 'components/CustomButtons/Button';
 import ConfirmDelete from 'components/ConfirmDelete/ConfirmDelete';
 
-const schema = ['name', 'serviceType', 'clusterIP', 'exposedPorts', 'creationTimestamp'];
+const schema = [
+  'name',
+  'serviceType',
+  'clusterIP',
+  'exposedPorts',
+  'creationTimestamp',
+];
 
 const tableSchema = schema
   .map((id) => ({
@@ -18,7 +24,9 @@ const tableSchema = schema
         ...item,
         component: ({ data, value }) => (
           <Fragment>
-            { value.map((p) => `${p.get('port')}/${p.get('protocol')}`).join(', ') }
+            {value
+              .map((p) => `${p.get('port')}/${p.get('protocol')}`)
+              .join(', ')}
           </Fragment>
         ),
       };

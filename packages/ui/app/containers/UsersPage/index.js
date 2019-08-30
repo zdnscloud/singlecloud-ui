@@ -65,21 +65,19 @@ export class UsersPage extends React.PureComponent {
                 <CardHeader>
                   <h4>
                     <FormattedMessage {...messages.users} />
-
                   </h4>
                   <Link
-                      to={`${location.get('pathname')}/create`}
-                      className={classes.createBtnLink}
+                    to={`${location.get('pathname')}/create`}
+                    className={classes.createBtnLink}
+                  >
+                    <IconButton
+                      size="small"
+                      color="default"
+                      aria-label="create user"
                     >
-                      <IconButton
-                        size="small"
-                        color="default"
-                        aria-label="create user"
-                          
-                      >
-                        <AddIcon />
-                      </IconButton>
-                    </Link>
+                      <AddIcon />
+                    </IconButton>
+                  </Link>
                 </CardHeader>
                 <CardBody>
                   <UsersTable />

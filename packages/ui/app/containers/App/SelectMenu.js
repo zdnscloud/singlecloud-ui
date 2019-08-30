@@ -11,22 +11,22 @@ import MenuItem from '@material-ui/core/MenuItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import Popper from '@material-ui/core/Popper';
 
-import { makeSelectClustersAndNamespaces} from 'ducks/namespaces/selectors';
+import { makeSelectClustersAndNamespaces } from 'ducks/namespaces/selectors';
 import {
   makeSelectClusterID,
-  makeSelectNamespaceID
+  makeSelectNamespaceID,
 } from 'ducks/app/selectors';
 import * as actions from 'ducks/app/actions';
-import { changeNamespace,loadNamespaces } from 'ducks/namespaces/actions';
+import { changeNamespace, loadNamespaces } from 'ducks/namespaces/actions';
 
-import messages from './messages';
 import SelectIcon from 'components/Icons/Select';
 import ChevronRight from 'components/Icons/ChevronRight';
+import messages from './messages';
 import useStyles from './dashboardStyles';
 
 const StyledMenu = withStyles({
   paper: {
-    boxShadow: '0 1px 4px 0 rgba(0, 0, 0, 0.14)'
+    boxShadow: '0 1px 4px 0 rgba(0, 0, 0, 0.14)',
   },
 })((props) => (
   <Menu
@@ -44,9 +44,9 @@ const StyledMenu = withStyles({
   />
 ));
 
-const StyledMenuItem = withStyles(theme => ({
+const StyledMenuItem = withStyles((theme) => ({
   root: {
-    color:'#6A8090',
+    color: '#6A8090',
     '&:focus,&:active': {
       backgroundColor: '#fff',
       ' & .MuiListItemText-primary': {
@@ -67,9 +67,8 @@ const SelectMenu = ({
   changeCluster,
   clusterID,
   namespaceID,
-  itemLink
+  itemLink,
 }) => {
-
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [selectCluster, setSelectCluster] = React.useState(null);
@@ -79,37 +78,37 @@ const SelectMenu = ({
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
-  }
+  };
 
   const handleClose = () => {
     setAnchorEl(null);
     setNsAnchorEl(null);
-  }
+  };
 
   const handleSelectCluster = (c) => {
     setSelectCluster(c.get('id'));
-    if(c.get('status') === 'Running') {
+    if (c.get('status') === 'Running') {
       changeCluster(selectCluster);
       setSelectNamespace(null);
       handleClose();
     }
-  }
+  };
 
   const handleSelectNamespace = (ns) => {
     setSelectNamespace(ns);
     itemLink(`/clusters/${selectCluster}/namespaces/${ns}/applications`);
     handleClose();
-  }
-  
-  const openNamespanceMenu = (e,c) => {
+  };
+
+  const openNamespanceMenu = (e, c) => {
     setSelectCluster(c);
     setNsAnchorEl(e.currentTarget);
-  }
+  };
 
   useEffect(() => {
-   if (namespaceID) {
-    setSelectNamespace(namespaceID)
-   }
+    if (namespaceID) {
+      setSelectNamespace(namespaceID);
+    }
   }, [namespaceID]);
 
   const cluster = clusters.get(selectCluster);
@@ -127,16 +126,20 @@ const SelectMenu = ({
         {clusterID ? (
           <>
             {clusterID}
-            {selectNamespace ? <ChevronRight
-              style={{
-                transform: 'scale(0.6)',
-                color: '#9E9E9E',
-                marginRight: 4
-              }}
-            /> :null} 
-            {selectNamespace} 
+            {selectNamespace ? (
+              <ChevronRight
+                style={{
+                  transform: 'scale(0.6)',
+                  color: '#9E9E9E',
+                  marginRight: 4,
+                }}
+              />
+            ) : null}
+            {selectNamespace}
           </>
-        ) :  <FormattedMessage {...messages.global} />}
+        ) : (
+          <FormattedMessage {...messages.global} />
+        )}
         <SelectIcon className={classes.selectIcon} />
       </Button>
       <StyledMenu
@@ -144,15 +147,15 @@ const SelectMenu = ({
         keepMounted
         open={Boolean(anchorEl)}
         style={{ zIndex: 4 }}
-        onMouseLeave={()=>{
-          handleClose()
+        onMouseLeave={() => {
+          handleClose();
         }}
       >
-        <StyledMenuItem 
+        <StyledMenuItem
           onClick={() => {
             setSelectCluster('');
             handleClose();
-            changeCluster('')
+            changeCluster('');
           }}
           className={classes.menuItem}
           ref={menuRef}
@@ -162,45 +165,44 @@ const SelectMenu = ({
           </ListItemText>
         </StyledMenuItem>
         {clusters.toList().map((c, i) => (
-          <StyledMenuItem 
+          <StyledMenuItem
             key={i}
             onClick={(e) => handleSelectCluster(c)}
             className={classes.menuItem}
-            onMouseEnter={(e) => openNamespanceMenu(e,c.get('id'))}
-            disabled = {c.get('status') !== 'Running'}
+            onMouseEnter={(e) => openNamespanceMenu(e, c.get('id'))}
+            disabled={c.get('status') !== 'Running'}
           >
-            <ListItemText
-              primary={c.get('id')}
-            />
+            <ListItemText primary={c.get('id')} />
           </StyledMenuItem>
         ))}
         {cluster ? (
-         <Popper
-          open={Boolean(nsAnchorEl)}
-          anchorEl={menuRef.current}
-          placement="right-start"
-          className={classes.secondMenu}
-          onMouseLeave={()=>{
-            setNsAnchorEl(null)
-          }}
-        >
-          {cluster.get('namespaces').toList().map((nc, i) => (
-            <StyledMenuItem 
-              key={i}
-              onClick={(e) => handleSelectNamespace(nc.get('id'))}
-              className={classes.menuItem}
-            >
-              <ListItemText
-                primary={nc.get('id')}
-              />
-            </StyledMenuItem>
-          ))}
-        </Popper>
+          <Popper
+            open={Boolean(nsAnchorEl)}
+            anchorEl={menuRef.current}
+            placement="right-start"
+            className={classes.secondMenu}
+            onMouseLeave={() => {
+              setNsAnchorEl(null);
+            }}
+          >
+            {cluster
+              .get('namespaces')
+              .toList()
+              .map((nc, i) => (
+                <StyledMenuItem
+                  key={i}
+                  onClick={(e) => handleSelectNamespace(nc.get('id'))}
+                  className={classes.menuItem}
+                >
+                  <ListItemText primary={nc.get('id')} />
+                </StyledMenuItem>
+              ))}
+          </Popper>
         ) : null}
       </StyledMenu>
     </div>
   );
-}
+};
 
 const mapStateToProps = createStructuredSelector({
   clusters: makeSelectClustersAndNamespaces(),
@@ -214,7 +216,7 @@ const mapDispatchToProps = (dispatch) =>
       ...actions,
       changeNamespace,
       loadNamespaces,
-      itemLink:push
+      itemLink: push,
     },
     dispatch
   );
@@ -224,6 +226,4 @@ const withConnect = connect(
   mapDispatchToProps
 );
 
-export default compose(
-  withConnect,
-)(SelectMenu);
+export default compose(withConnect)(SelectMenu);

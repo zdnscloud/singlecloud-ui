@@ -10,7 +10,8 @@ export const styles = (theme) => ({
     ...theme.palette.transition,
     border: 'none',
     zIndex: theme.zIndex.appBar,
-    width: ({ showText }) => showText ? theme.leftMenuWidth : theme.leftShrinkWidth,
+    width: ({ showText }) =>
+      showText ? theme.leftMenuWidth : theme.leftShrinkWidth,
   },
   secondMenu: {
     width: theme.leftMenuWidth,
@@ -50,14 +51,15 @@ export const styles = (theme) => ({
     justifyContent: 'center',
   },
   itemText: {
-    display: ({ showText }) => showText ? 'flex' : 'none',
+    display: ({ showText }) => (showText ? 'flex' : 'none'),
     fontSize: 14,
     paddingLeft: 5,
   },
   sidebarWrapper: {
     flex: 1,
     overflow: 'hidden',
-    width: ({ showText }) => showText ? theme.leftMenuWidth : theme.leftShrinkWidth,
+    width: ({ showText }) =>
+      showText ? theme.leftMenuWidth : theme.leftShrinkWidth,
     zIndex: 4,
     overflowScrolling: 'touch',
     color: theme.palette.primary.contrastText,
@@ -91,7 +93,8 @@ export const styles = (theme) => ({
   logoWrap: {
     display: 'flex',
     alignItems: 'center',
-    width: ({ showText }) => showText ? theme.leftMenuWidth : theme.leftShrinkWidth,
+    width: ({ showText }) =>
+      showText ? theme.leftMenuWidth : theme.leftShrinkWidth,
     height: theme.appBarHeight,
     zIndex: 4,
   },
@@ -105,7 +108,7 @@ export const styles = (theme) => ({
     },
   },
   logoName: {
-    display: ({ showText }) => showText ? 'flex' : 'none',
+    display: ({ showText }) => (showText ? 'flex' : 'none'),
     fontSize: 18,
   },
 });

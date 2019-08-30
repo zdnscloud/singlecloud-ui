@@ -66,7 +66,15 @@ export const DeploymentDetailPage = ({
     const timer = setInterval(loadDeploymentAndPods, 3000);
 
     return () => clearInterval(timer);
-  }, [url, podUrl]);
+  }, [
+    url,
+    podUrl,
+    readDeployment,
+    deploymentID,
+    clusterID,
+    namespaceID,
+    loadPods,
+  ]);
 
   return (
     <div className={classes.root}>
@@ -126,6 +134,4 @@ const withConnect = connect(
   mapDispatchToProps
 );
 
-export default compose(
-  withConnect,
-)(DeploymentDetailPage);
+export default compose(withConnect)(DeploymentDetailPage);

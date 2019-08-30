@@ -29,7 +29,10 @@ import { makeSelectCurrentID as makeSelectClusterID } from 'ducks/clusters/selec
 import { makeSelectCurrentID as makeSelectNamespaceID } from 'ducks/namespaces/selectors';
 import { makeSelectServices } from 'ducks/services/selectors';
 
-import { makeSelectURL,makeSelectServicesURL } from 'ducks/ingresses/selectors';
+import {
+  makeSelectURL,
+  makeSelectServicesURL,
+} from 'ducks/ingresses/selectors';
 import * as actions from 'ducks/ingresses/actions';
 
 import { loadServices } from 'ducks/services/actions';
@@ -52,7 +55,7 @@ export const CreateIngressPage = ({
 }) => {
   const classes = useStyles();
   const search = location.get('search');
-  let targetName='';
+  let targetName = '';
   if (search && search.includes('from=true')) {
     const [tn, name] = /targetName=([a-zA-Z0-9-]+)/i.exec(search);
     targetName = name;
@@ -68,24 +71,22 @@ export const CreateIngressPage = ({
     return () => {
       // try cancel something when unmount
     };
-  }, [url]);
-
-  
+  }, [clusterID, loadServices, namespaceID, surl, url]);
 
   async function doSubmit(formValues) {
     try {
       const { name, rules } = formValues.toJS();
       const rulesArr = [];
-      rules.forEach((item)=>{
-        const {host,path,servicePort,serviceName} = item;
-        const rule = {host,path,servicePort,serviceName,}
-        rulesArr.push(rule)
+      rules.forEach((item) => {
+        const { host, path, servicePort, serviceName } = item;
+        const rule = { host, path, servicePort, serviceName };
+        rulesArr.push(rule);
       });
       const data = {
         name,
-        rules: rulesArr
-      }
-      console.log('data',data,'url',url)
+        rules: rulesArr,
+      };
+      console.log('data', data, 'url', url);
       await new Promise((resolve, reject) => {
         createIngress(data, {
           resolve,
@@ -125,7 +126,7 @@ export const CreateIngressPage = ({
               onSubmit={doSubmit}
               formValues={values}
               services={services}
-              initialValues={fromJS({'serviceName':targetName})}
+              initialValues={fromJS({ serviceName: targetName })}
             />
             <Button
               variant="contained"
@@ -148,7 +149,7 @@ const mapStateToProps = createStructuredSelector({
   url: makeSelectURL(),
   values: getFormValues(formName),
   services: makeSelectServices(),
-  surl: makeSelectServicesURL(), 
+  surl: makeSelectServicesURL(),
   location: makeSelectLocation(),
 });
 

@@ -27,7 +27,7 @@ import {
 
 import messages from './messages';
 import styles from './styles';
-import ApplicationTemplate from './application/applicationTemplate'
+import ApplicationTemplate from './application/applicationTemplate';
 
 /* eslint-disable react/prefer-stateless-function */
 export class ApplicationsList extends React.PureComponent {
@@ -45,29 +45,27 @@ export class ApplicationsList extends React.PureComponent {
       theme,
       filter,
       clusterID,
-      namespaceID
+      namespaceID,
     } = this.props;
-    let appData = data.filter((item) => {
+    const appData = data.filter((item) => {
       let flag = true;
       if (filter.name) {
         flag = flag && item.get('name').includes(filter.name);
       }
       return flag;
-    })
+    });
     return (
       <GridContainer>
-          {appData.map((item, key) => {
-              return (
-                <ApplicationTemplate
-                  classes={classes}
-                  key={key}
-                  item={item}
-                  removeApplication={removeApplication}
-                  namespaceID={namespaceID}
-                  clusterID={clusterID}
-                />
-              );
-            })}
+        {appData.map((item, key) => (
+          <ApplicationTemplate
+            classes={classes}
+            key={key}
+            item={item}
+            removeApplication={removeApplication}
+            namespaceID={namespaceID}
+            clusterID={clusterID}
+          />
+        ))}
       </GridContainer>
     );
   }

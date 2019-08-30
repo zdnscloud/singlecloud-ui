@@ -80,9 +80,8 @@ export const removeMonitorEpic = (action$, state$, { ajax }) =>
     )
   );
 
-
 export default combineEpics(
   loadMonitorsEpic,
   createMonitorEpic,
-  removeMonitorEpic,
+  removeMonitorEpic
 );

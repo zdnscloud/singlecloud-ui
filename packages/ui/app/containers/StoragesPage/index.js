@@ -40,17 +40,12 @@ import messages from './messages';
 import StoragePageHelmet from './helmet';
 import styles from './styles';
 
-export const StoragesPage = ({
-  classes,
-  clusterID,
-  loadStorages,
-  url,
-}) => {
+export const StoragesPage = ({ classes, clusterID, loadStorages, url }) => {
   useEffect(() => {
     loadStorages(url, clusterID);
     const t = setInterval(() => loadStorages(url, clusterID), 3000);
     return () => clearInterval(t);
-  }, [url]);
+  }, [clusterID, loadStorages, url]);
 
   return (
     <div className={classes.root}>
@@ -71,13 +66,9 @@ export const StoragesPage = ({
               <CardHeader>
                 <h4>
                   <FormattedMessage {...messages.storages} />
-
                 </h4>
                 <IconButton
-                  aria-label={
-                    <FormattedMessage {...messages.createStorage} />
-                  }
-
+                  aria-label={<FormattedMessage {...messages.createStorage} />}
                   component={Link}
                   to={`/clusters/${clusterID}/storages/create`}
                 >

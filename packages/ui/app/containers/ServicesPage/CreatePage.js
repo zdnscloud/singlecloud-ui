@@ -32,9 +32,18 @@ import { makeSelectCurrentID as makeSelectClusterID } from 'ducks/clusters/selec
 import { makeSelectCurrentID as makeSelectNamespaceID } from 'ducks/namespaces/selectors';
 import { makeSelectURL } from 'ducks/services/selectors';
 import * as actions from 'ducks/services/actions';
-import { makeSelectURL as makeSelectDeploymentsURL, makeSelectDeployments, } from 'ducks/deployments/selectors';
-import { makeSelectURL as makeSelectDaemonSetsURL, makeSelectDaemonSets } from 'ducks/daemonSets/selectors';
-import { makeSelectURL as makeSelectStatefulSetsURL, makeSelectStatefulSets } from 'ducks/statefulSets/selectors';
+import {
+  makeSelectURL as makeSelectDeploymentsURL,
+  makeSelectDeployments,
+} from 'ducks/deployments/selectors';
+import {
+  makeSelectURL as makeSelectDaemonSetsURL,
+  makeSelectDaemonSets,
+} from 'ducks/daemonSets/selectors';
+import {
+  makeSelectURL as makeSelectStatefulSetsURL,
+  makeSelectStatefulSets,
+} from 'ducks/statefulSets/selectors';
 import * as deployActions from 'ducks/deployments/actions';
 import * as dsActions from 'ducks/daemonSets/actions';
 import * as stsActions from 'ducks/statefulSets/actions';
@@ -67,7 +76,7 @@ export const CreateServicePage = ({
   const search = location.get('search');
   let from = false;
   let targetResourceType = '';
-  let targetName='';
+  let targetName = '';
   if (search && search.includes('from=true')) {
     const [trt, type] = /targetResourceType=([a-zA-Z]+)/i.exec(search);
     const [tn, name] = /targetName=([a-zA-Z0-9-]+)/i.exec(search);
@@ -79,7 +88,16 @@ export const CreateServicePage = ({
     loadDeployments(deployURL, { clusterID, namespaceID });
     loadDaemonSets(dsURL, { clusterID, namespaceID });
     loadStatefulSets(stsURL, { clusterID, namespaceID });
-  }, [deployURL, dsURL, stsURL]);
+  }, [
+    clusterID,
+    deployURL,
+    dsURL,
+    loadDaemonSets,
+    loadDeployments,
+    loadStatefulSets,
+    namespaceID,
+    stsURL,
+  ]);
   let exposedPorts = [];
   if (from) {
     let l = fromJS({});
@@ -90,11 +108,17 @@ export const CreateServicePage = ({
     if (target) {
       exposedPorts = target
         .get('containers')
-        .reduce((meno, c) => meno.concat(c.get('exposedPorts') || fromJS([])), fromJS([]))
-        .map((exposedPort) => exposedPort.set('targetPort', exposedPort.get('port'))).toJS();
+        .reduce(
+          (meno, c) => meno.concat(c.get('exposedPorts') || fromJS([])),
+          fromJS([])
+        )
+        .map((exposedPort) =>
+          exposedPort.set('targetPort', exposedPort.get('port'))
+        )
+        .toJS();
     }
   }
-  const initialValues =  fromJS({
+  const initialValues = fromJS({
     targetResourceType: from ? targetResourceType : 'deployments',
     targetName: from ? targetName : '',
     name: from ? targetName : '',
@@ -105,9 +129,9 @@ export const CreateServicePage = ({
   const [open, setOpen] = useState(false);
   async function doSubmit(formValues) {
     try {
-      const data = formValues.update('exposedPorts', (ports) => (
-        ports.filter((p) => p.get('enable'))
-      )).toJS();
+      const data = formValues
+        .update('exposedPorts', (ports) => ports.filter((p) => p.get('enable')))
+        .toJS();
 
       const { response } = await new Promise((resolve, reject) => {
         createService(data, {
@@ -137,7 +161,9 @@ export const CreateServicePage = ({
           routeTo(`/clusters/${clusterID}/namespaces/${namespaceID}/services`);
         }}
         onAction={() => {
-          routeTo(`/clusters/${clusterID}/namespaces/${namespaceID}/ingresses/create?from=true&targetResourceType=services&targetName=${open}`);
+          routeTo(
+            `/clusters/${clusterID}/namespaces/${namespaceID}/ingresses/create?from=true&targetResourceType=services&targetName=${open}`
+          );
         }}
         title={<FormattedMessage {...messages.successTitle} />}
         content={<FormattedMessage {...messages.successContent} />}

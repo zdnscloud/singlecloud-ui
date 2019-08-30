@@ -22,8 +22,12 @@ export const loadApplicationsEpic = (action$, state$, { ajax }) =>
     ofType(c.LOAD_APPLICATIONS),
     mergeMap(({ meta: { url, clusterID, namespaceID } }) =>
       ajax(url).pipe(
-        map((resp) => a.loadApplicationsSuccess(resp,{ clusterID, namespaceID })),
-        catchError((error) => of(a.loadApplicationsFailure(error,{ clusterID, namespaceID })))
+        map((resp) =>
+          a.loadApplicationsSuccess(resp, { clusterID, namespaceID })
+        ),
+        catchError((error) =>
+          of(a.loadApplicationsFailure(error, { clusterID, namespaceID }))
+        )
       )
     )
   );
@@ -39,19 +43,17 @@ export const loadChartEpic = (action$, state$, { ajax }) =>
     )
   );
 
-
 export const removeApplicationEpic = (action$, state$, { ajax }) =>
   action$.pipe(
     ofType(c.REMOVE_APPLICATION),
-    mergeMap(({ payload, meta: { url} }) =>
+    mergeMap(({ payload, meta: { url } }) =>
       ajax({
         url: `${url}`,
         method: 'DELETE',
       }).pipe(
         map((resp) => a.removeApplicationSuccess(resp, { id: payload })),
-        catchError((error) =>{
-          return of(a.removeApplicationFailure(error, { id: payload }))
-        }
+        catchError((error) =>
+          of(a.removeApplicationFailure(error, { id: payload }))
         )
       )
     )
@@ -60,21 +62,22 @@ export const removeApplicationEpic = (action$, state$, { ajax }) =>
 export const createApplicationEpic = (action$, state$, { ajax }) =>
   action$.pipe(
     ofType(c.CREATE_APPLICATION),
-    mergeMap(({ payload, meta: { resolve, reject, url ,clusterID, namespaceID} }) =>
-      ajax({
-        url,
-        method: 'POST',
-        body: payload,
-      }).pipe(
-        map((resp) => {
-          resolve(resp);
-          return a.createApplicationSuccess(resp ,{ clusterID, namespaceID });
-        }),
-        catchError((error) => {
-          reject(error);
-          return of(a.createApplicationFailure(error));
-        })
-      )
+    mergeMap(
+      ({ payload, meta: { resolve, reject, url, clusterID, namespaceID } }) =>
+        ajax({
+          url,
+          method: 'POST',
+          body: payload,
+        }).pipe(
+          map((resp) => {
+            resolve(resp);
+            return a.createApplicationSuccess(resp, { clusterID, namespaceID });
+          }),
+          catchError((error) => {
+            reject(error);
+            return of(a.createApplicationFailure(error));
+          })
+        )
     )
   );
 
@@ -82,7 +85,13 @@ export const afterCreateEpic = (action$) =>
   action$.pipe(
     ofType(c.CREATE_APPLICATION_SUCCESS),
     mergeMap(({ payload, meta }) =>
-      timer(1000).pipe(mapTo(push( `/clusters/${meta.clusterID}/namespaces/${meta.namespaceID}/applications`)))
+      timer(1000).pipe(
+        mapTo(
+          push(
+            `/clusters/${meta.clusterID}/namespaces/${meta.namespaceID}/applications`
+          )
+        )
+      )
     )
   );
 
@@ -91,5 +100,5 @@ export default combineEpics(
   removeApplicationEpic,
   loadChartEpic,
   createApplicationEpic,
-  afterCreateEpic,
+  afterCreateEpic
 );

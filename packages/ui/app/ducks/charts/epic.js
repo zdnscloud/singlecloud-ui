@@ -59,7 +59,4 @@ export const readChartEpic = (action$, state$, { ajax }) =>
     )
   );
 
-export default combineEpics(
-  loadChartsEpic,
-  readChartEpic,
-);
+export default combineEpics(loadChartsEpic, readChartEpic);

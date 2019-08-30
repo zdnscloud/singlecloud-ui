@@ -51,7 +51,7 @@ const UdpingressesPage = ({
     return () => {
       // try cancel something when unmount
     };
-  }, [url]);
+  }, [clusterID, loadUdpingresses, namespaceID, url]);
 
   return (
     <div className={classes.root}>
@@ -72,16 +72,15 @@ const UdpingressesPage = ({
               <CardHeader>
                 <h4>
                   <FormattedMessage {...messages.udpingresses} />
-
                 </h4>
                 <Link
-                    to={`${location.pathname}/create`}
-                    className={classes.createBtnLink}
-                  >
-                    <IconButton>
-                      <AddIcon />
-                    </IconButton>
-                  </Link>
+                  to={`${location.pathname}/create`}
+                  className={classes.createBtnLink}
+                >
+                  <IconButton>
+                    <AddIcon />
+                  </IconButton>
+                </Link>
               </CardHeader>
               <CardBody>
                 <UdpingressesTable />

@@ -59,7 +59,7 @@ export const ShowSecret = ({
 }) => {
   useEffect(() => {
     readSecret(id, { url: `${url}/${id}`, clusterID, namespaceID });
-  }, [id, url]);
+  }, [clusterID, id, namespaceID, readSecret, url]);
 
   return (
     <div className={classes.root}>
@@ -100,36 +100,34 @@ export const ShowSecret = ({
                   </GridItem>
                   <GridItem xs={12} sm={12} md={12}>
                     {secret.get('data') &&
-                     secret.get('data').map((sec, idx) => (
-                       <GridContainer key={`${idx}-${sec.get('key')}`}>
-                         <GridItem xs={3} sm={3} md={3}>
-                           <ReadOnlyInput
-                             labelText={
-                               <FormattedMessage {...messages.formDataKey} />
-                             }
-                             value={sec.get('key')}
-                             fullWidth
-                             formControlProps={{
-                               className: classes.nameControl,
-                             }}
-                           />
-                         </GridItem>
-                         <GridItem xs={3} sm={3} md={3}>
-                           <ReadOnlyInput
-                             labelText={
-                               <FormattedMessage
-                                 {...messages.formDataValue}
-                               />
-                             }
-                             value={sec.get('value')}
-                             fullWidth
-                             formControlProps={{
-                               className: classes.nameControl,
-                             }}
-                           />
-                         </GridItem>
-                       </GridContainer>
-                     ))}
+                      secret.get('data').map((sec, idx) => (
+                        <GridContainer key={`${idx}-${sec.get('key')}`}>
+                          <GridItem xs={3} sm={3} md={3}>
+                            <ReadOnlyInput
+                              labelText={
+                                <FormattedMessage {...messages.formDataKey} />
+                              }
+                              value={sec.get('key')}
+                              fullWidth
+                              formControlProps={{
+                                className: classes.nameControl,
+                              }}
+                            />
+                          </GridItem>
+                          <GridItem xs={3} sm={3} md={3}>
+                            <ReadOnlyInput
+                              labelText={
+                                <FormattedMessage {...messages.formDataValue} />
+                              }
+                              value={sec.get('value')}
+                              fullWidth
+                              formControlProps={{
+                                className: classes.nameControl,
+                              }}
+                            />
+                          </GridItem>
+                        </GridContainer>
+                      ))}
                   </GridItem>
                 </GridContainer>
               </CardBody>

@@ -69,4 +69,3 @@ export const clearErrorInfo = () => ({
   type: c.CLEAR_ERROR_INFO,
   payload: {},
 });
-

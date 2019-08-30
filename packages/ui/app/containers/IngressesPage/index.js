@@ -51,7 +51,7 @@ export const IngressesPage = ({
     return () => {
       // try cancel something when unmount
     };
-  }, [url]);
+  }, [clusterID, loadIngresses, namespaceID, url]);
 
   return (
     <div className={classes.root}>
@@ -72,16 +72,15 @@ export const IngressesPage = ({
               <CardHeader>
                 <h4>
                   <FormattedMessage {...messages.ingresses} />
-
                 </h4>
                 <Link
-                    to={`${location.pathname}/create`}
-                    className={classes.createBtnLink}
-                  >
-                    <IconButton>
-                      <AddIcon />
-                    </IconButton>
-                  </Link>
+                  to={`${location.pathname}/create`}
+                  className={classes.createBtnLink}
+                >
+                  <IconButton>
+                    <AddIcon />
+                  </IconButton>
+                </Link>
               </CardHeader>
               <CardBody>
                 <IngressTable />

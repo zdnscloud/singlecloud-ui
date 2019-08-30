@@ -82,16 +82,12 @@ export class CronJobsPage extends React.PureComponent {
                 <CardHeader>
                   <h4>
                     <FormattedMessage {...messages.cronJobs} />
-
                   </h4>
-                  <Link
-                      to={`${this.props.location.pathname}/create`}
-
-                    >
-                      <IconButton>
-                        <AddIcon />
-                      </IconButton>
-                    </Link>
+                  <Link to={`${this.props.location.pathname}/create`}>
+                    <IconButton>
+                      <AddIcon />
+                    </IconButton>
+                  </Link>
                 </CardHeader>
                 <CardBody>
                   <CronJobsTable location={this.props.location} />

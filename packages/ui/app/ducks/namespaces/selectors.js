@@ -5,7 +5,7 @@ import {
 } from 'connected-react-router/immutable';
 import {
   makeSelectCurrentID as makeSelectCurrentClusterID,
-  selectDomain as selectClustersDomain
+  selectDomain as selectClustersDomain,
 } from 'ducks/clusters/selectors';
 import { prefix } from './constants';
 
@@ -41,15 +41,15 @@ export const makeSelectNamespacesList = () =>
   );
 
 export const makeSelectCurrentID = () =>
-   createSelector(
-     createMatchSelector('*/namespaces/:id/*'),
-     (match) => {
-       if (match && match.params) {
-         return match.params.id;
-       }
-       return '';
-     }
-   );
+  createSelector(
+    createMatchSelector('*/namespaces/:id/*'),
+    (match) => {
+      if (match && match.params) {
+        return match.params.id;
+      }
+      return '';
+    }
+  );
 
 export const makeSelectCurrent = () =>
   createSelector(

@@ -13,12 +13,7 @@ class SearchForm extends PureComponent {
   state = {};
 
   render() {
-    const {
-      handleSubmit,
-      error,
-      classes,
-      initialValues,
-    } = this.props;
+    const { handleSubmit, error, classes, initialValues } = this.props;
 
     return (
       <form className={getByKey(classes, 'form')} onSubmit={handleSubmit}>
@@ -30,7 +25,9 @@ class SearchForm extends PureComponent {
           ) : null}
           <GridItem xs={12} sm={12} md={12} className={classes.formLine}>
             <InputField
-              label={<FormattedMessage {...messages.searchFormApplicationName} />}
+              label={
+                <FormattedMessage {...messages.searchFormApplicationName} />
+              }
               name="name"
               formControlProps={{
                 className: classes.nameControl,

@@ -66,7 +66,15 @@ export const DaemonSetDetailPage = ({
     const timer = setInterval(loadDaemonSetAndPods, 3000);
 
     return () => clearInterval(timer);
-  }, [url, podUrl]);
+  }, [
+    url,
+    podUrl,
+    readDaemonSet,
+    daemonSetID,
+    clusterID,
+    namespaceID,
+    loadPods,
+  ]);
 
   return (
     <div className={classes.root}>
@@ -126,6 +134,4 @@ const withConnect = connect(
   mapDispatchToProps
 );
 
-export default compose(
-  withConnect,
-)(DaemonSetDetailPage);
+export default compose(withConnect)(DaemonSetDetailPage);

@@ -11,10 +11,13 @@ export default loadable(() =>
 );
 
 export const ApplicationDetailPage = loadable(() =>
-  import(/* webpackChunkName: "ApplicationDetailPage" */ './ApplicationDetailPage')
+  import(
+    /* webpackChunkName: "ApplicationDetailPage" */ './ApplicationDetailPage'
+  )
 );
 
 export const CreateApplicationPage = loadable(() =>
-  import(/* webpackChunkName: "CreateApplicationPage" */ './CreateApplicationPage')
+  import(
+    /* webpackChunkName: "CreateApplicationPage" */ './CreateApplicationPage'
+  )
 );
-

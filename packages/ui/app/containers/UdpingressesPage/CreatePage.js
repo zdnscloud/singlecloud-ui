@@ -27,7 +27,10 @@ import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
 import { makeSelectCurrentID as makeSelectClusterID } from 'ducks/clusters/selectors';
 import { makeSelectCurrentID as makeSelectNamespaceID } from 'ducks/namespaces/selectors';
 import { makeSelectServices } from 'ducks/services/selectors';
-import { makeSelectURL,makeSelectServicesURL } from 'ducks/udpingresses/selectors';
+import {
+  makeSelectURL,
+  makeSelectServicesURL,
+} from 'ducks/udpingresses/selectors';
 import * as actions from 'ducks/udpingresses/actions';
 import { loadServices } from 'ducks/services/actions';
 
@@ -44,7 +47,7 @@ export const CreateUdpingressPage = ({
   values,
   services,
   loadServices,
-  surl
+  surl,
 }) => {
   const classes = useStyles();
 
@@ -58,21 +61,21 @@ export const CreateUdpingressPage = ({
     return () => {
       // try cancel something when unmount
     };
-  }, [url]);
+  }, [clusterID, loadServices, namespaceID, surl, url]);
 
   async function doSubmit(formValues) {
     try {
       const { rules } = formValues.toJS();
-      let rulesArr =[];
-      rules.forEach((item)=>{
-        const {port,servicePort,serviceName} = item;
-        const rule = {port,servicePort,serviceName,}
-        rulesArr.push(rule)
+      const rulesArr = [];
+      rules.forEach((item) => {
+        const { port, servicePort, serviceName } = item;
+        const rule = { port, servicePort, serviceName };
+        rulesArr.push(rule);
       });
       const data = {
-        ...rulesArr[0]
-      }
-      console.log('data',data)
+        ...rulesArr[0],
+      };
+      console.log('data', data);
       await new Promise((resolve, reject) => {
         createUdpingress(data, {
           resolve,
@@ -135,7 +138,7 @@ const mapStateToProps = createStructuredSelector({
   url: makeSelectURL(),
   values: getFormValues(formName),
   services: makeSelectServices(),
-  surl: makeSelectServicesURL(), 
+  surl: makeSelectServicesURL(),
 });
 
 const mapDispatchToProps = (dispatch) =>

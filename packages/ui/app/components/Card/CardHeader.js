@@ -36,8 +36,7 @@ function CardHeader({ ...props }) {
   );
 }
 
-CardHeader.defaultProps = {
-};
+CardHeader.defaultProps = {};
 
 CardHeader.propTypes = {
   classes: PropTypes.object.isRequired,

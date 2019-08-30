@@ -17,7 +17,7 @@ import Button from '@material-ui/core/Button';
 
 import { makeSelectClusterID } from 'ducks/app/selectors';
 import { makeSelectCurrentCluster } from 'ducks/clusters/selectors';
-import { makeSelectMonitors,makeSelectError } from 'ducks/monitors/selectors';
+import { makeSelectMonitors, makeSelectError } from 'ducks/monitors/selectors';
 
 import * as actions from 'ducks/monitors/actions';
 
@@ -42,15 +42,14 @@ const MonitorsPage = ({
   createMonitor,
   removeMonitor,
   error,
-  clearErrorInfo
+  clearErrorInfo,
 }) => {
-
   const [check, setCheck] = useState(false);
   const [isPending, setPending] = useState(false);
   const classes = useStyles();
   const url = cluster.getIn(['links', 'monitors']);
   const monitor = monitors.first();
-  const rurl =  monitor && monitor.getIn(['links','remove']);
+  const rurl = monitor && monitor.getIn(['links', 'remove']);
   const redirectUrl = monitor && monitor.getIn(['redirectUrl']);
   const id = monitor && monitor.getIn(['id']);
 
@@ -59,16 +58,16 @@ const MonitorsPage = ({
       loadMonitors(url, {
         clusterID,
       });
-    };
-    if(redirectUrl) {
+    }
+    if (redirectUrl) {
       setCheck(true);
-    }else {
-      setCheck(false)
+    } else {
+      setCheck(false);
     }
     return () => {
-      clearErrorInfo()
-    }
-  }, [url,redirectUrl]);
+      clearErrorInfo();
+    };
+  }, [url, redirectUrl, loadMonitors, clusterID, clearErrorInfo]);
 
   const handleChange = () => () => {
     setPending(true);
@@ -78,32 +77,35 @@ const MonitorsPage = ({
         setPending(false);
         if (back) setCheck(!!check);
       }, 1000);
-    }
-    if(check){
-      removeMonitor(id,{
-        url:rurl,
+    };
+    if (check) {
+      removeMonitor(id, {
+        url: rurl,
         clusterID,
         resolve() {
           delayUnset();
         },
         reject() {
           delayUnset(true);
-        }
-      })
-    }else{
-      createMonitor({},{
-        url,
-        clusterID,
-        resolve() {
-          delayUnset();
         },
-        reject() {
-          delayUnset(true);
+      });
+    } else {
+      createMonitor(
+        {},
+        {
+          url,
+          clusterID,
+          resolve() {
+            delayUnset();
+          },
+          reject() {
+            delayUnset(true);
+          },
         }
-      })
+      );
     }
-  }
-  
+  };
+
   return (
     <div className={classes.root}>
       <Helmet title={messages.pageTitle} description={messages.pageDesc} />
@@ -117,15 +119,13 @@ const MonitorsPage = ({
         ]}
       />
       <GridContainer className={classes.grid}>
-       {error ? (
-          <ErrorInfo errorText={error} close={clearErrorInfo} />
-        ) : null}
+        {error ? <ErrorInfo errorText={error} close={clearErrorInfo} /> : null}
         <GridItem xs={12} sm={12} md={12}>
           <Card>
             <CardHeader>
               <h4>
-                  <FormattedMessage {...messages.clusterMonitor} />
-                </h4>
+                <FormattedMessage {...messages.clusterMonitor} />
+              </h4>
             </CardHeader>
             <CardBody>
               <GridContainer>
@@ -133,7 +133,7 @@ const MonitorsPage = ({
                   <Switch
                     disabled={isPending}
                     inputProps={{
-                      disabled: isPending
+                      disabled: isPending,
                     }}
                     onChange={handleChange()}
                     checked={check}
@@ -148,7 +148,7 @@ const MonitorsPage = ({
                   <Button
                     variant="contained"
                     color="primary"
-                    onClick={()=>window.open(redirectUrl)}
+                    onClick={() => window.open(redirectUrl)}
                     disabled={!redirectUrl}
                   >
                     <FormattedMessage {...messages.openMonitor} />

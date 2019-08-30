@@ -55,7 +55,7 @@ export const ServiceDetailPage = ({
     });
 
     return () => {};
-  }, [url, id]);
+  }, [url, id, readService, clusterID, namespaceID]);
 
   return (
     <div className={classes.root}>
@@ -84,7 +84,7 @@ export const ServiceDetailPage = ({
               <CardBody>
                 {service && service.size > 0 ? (
                   <Service service={service} />
-                ): null}
+                ) : null}
               </CardBody>
             </Card>
           </GridItem>
@@ -115,6 +115,4 @@ const withConnect = connect(
   mapDispatchToProps
 );
 
-export default compose(
-  withConnect,
-)(ServiceDetailPage);
+export default compose(withConnect)(ServiceDetailPage);

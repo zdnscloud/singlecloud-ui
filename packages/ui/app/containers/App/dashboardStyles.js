@@ -31,8 +31,8 @@ export const styles = (theme) => ({
   },
   events: {
     ...theme.palette.transition,
-    display: ({ hasEvents }) => hasEvents ? 'flex' : 'none',
-    width: ({ hasEvents }) => hasEvents ? 310 : 0,
+    display: ({ hasEvents }) => (hasEvents ? 'flex' : 'none'),
+    width: ({ hasEvents }) => (hasEvents ? 310 : 0),
     overflow: 'auto',
   },
   selectIcon: {
@@ -46,18 +46,17 @@ export const styles = (theme) => ({
     paddingRight: '40px !important',
     boxShadow: 'none !important',
     height: 40,
-    color: '#4A4A4A'
+    color: '#4A4A4A',
   },
   menuItem: {
-      minWidth: 106,
-   },
+    minWidth: 106,
+  },
   secondMenu: {
     left: '4px !important',
-    zIndex: 5 ,
+    zIndex: 5,
     backgroundColor: '#fff',
-    boxShadow: '0 1px 4px 0 rgba(0, 0, 0, 0.14)'
-  }
-
+    boxShadow: '0 1px 4px 0 rgba(0, 0, 0, 0.14)',
+  },
 });
 
 export default makeStyles(styles);

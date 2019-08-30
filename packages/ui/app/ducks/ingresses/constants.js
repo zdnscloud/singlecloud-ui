@@ -23,4 +23,3 @@ export const READ_INGRESS_FAILURE = `${prefix}/READ_INGRESS_FAILURE`;
 export const REMOVE_INGRESS = `${prefix}/REMOVE_INGRESS`;
 export const REMOVE_INGRESS_SUCCESS = `${prefix}/REMOVE_INGRESS_SUCCESS`;
 export const REMOVE_INGRESS_FAILURE = `${prefix}/REMOVE_INGRESS_FAILURE`;
-

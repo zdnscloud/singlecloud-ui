@@ -17,7 +17,7 @@ import Paper from '@material-ui/core/Paper';
 import { SimpleTable } from '@gsmlg/com';
 
 import * as actions from 'ducks/applications/actions';
-import { makeSelectCurrentApplication} from 'ducks/applications/selectors';
+import { makeSelectCurrentApplication } from 'ducks/applications/selectors';
 import {
   makeSelectClusterID,
   makeSelectNamespaceID,
@@ -35,13 +35,7 @@ export class ApplicationsTable extends React.PureComponent {
   };
 
   render() {
-    const {
-      classes,
-      theme,
-      clusterID,
-      namespaceID,
-      application
-    } = this.props;
+    const { classes, theme, clusterID, namespaceID, application } = this.props;
     const data = application.get('appResources') || List([]);
     const mergedSchema = schema
       .map((sch) => {

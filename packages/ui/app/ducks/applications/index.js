@@ -20,7 +20,7 @@ export const initialState = fromJS({
   list: [],
   selectedApplication: {},
   deleteError: '',
-  chart:{}
+  chart: {},
 });
 
 const c = constants;
@@ -35,19 +35,21 @@ export const applicationsReducer = (
     case c.LOAD_APPLICATIONS_SUCCESS: {
       const { clusterID, namespaceID } = meta;
       const { data, list } = procCollectionData(payload);
-      return state.setIn(['applications',clusterID, namespaceID], fromJS(data)).set('list', fromJS(list));
+      return state
+        .setIn(['applications', clusterID, namespaceID], fromJS(data))
+        .set('list', fromJS(list));
     }
     case c.LOAD_APPLICATIONS_FAILURE:
       return state;
 
     case c.LOAD_CHART:
-        return state;
+      return state;
     case c.LOAD_CHART_SUCCESS: {
-        const data = payload.response;
-        return state.set('chart', fromJS(data));
-      }
+      const data = payload.response;
+      return state.set('chart', fromJS(data));
+    }
     case c.LOAD_CHART_FAILURE:
-        return state;
+      return state;
 
     case c.CREATE_APPLICATION:
       return state;
@@ -61,14 +63,14 @@ export const applicationsReducer = (
     case c.REMOVE_APPLICATION:
       return state;
     case c.REMOVE_APPLICATION_SUCCESS: {
-      return state
+      return state;
     }
     case c.REMOVE_APPLICATION_FAILURE:
       const data = payload.response.message;
       return state.set('deleteError', data);
 
     case c.CLEAR_DELETE_ERROR_INFO:
-        return state.set('deleteError', '');
+      return state.set('deleteError', '');
 
     case c.CHANGE_APPLICATION:
       return state.setIn(['selectedApplication'], payload.applicationID);

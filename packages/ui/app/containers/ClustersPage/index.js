@@ -76,10 +76,7 @@ export class ClustersPage extends React.PureComponent {
                   <h4>
                     <FormattedMessage {...messages.clusters} />
                   </h4>
-                  <IconButton
-                    component={Link}
-                    to="/clusters/create"
-                  >
+                  <IconButton component={Link} to="/clusters/create">
                     <AddIcon />
                   </IconButton>
                 </CardHeader>

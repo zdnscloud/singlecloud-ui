@@ -84,7 +84,12 @@ export class AdminUserQuotaPage extends React.PureComponent {
   }
 
   render() {
-    const { classes, submitForm, deleteError,clearDeleteErrorInfo } = this.props;
+    const {
+      classes,
+      submitForm,
+      deleteError,
+      clearDeleteErrorInfo,
+    } = this.props;
     const doSubmit = (formValues) => {
       this.setState({
         filter: formValues.toJS(),

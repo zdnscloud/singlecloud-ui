@@ -32,9 +32,7 @@ export const reducer = (
       return state;
     case c.LOAD_CHARTS_SUCCESS: {
       const { data, list } = procCollectionData(payload);
-      const {
-        clusterID, namespaceID,
-      } = meta;
+      const { clusterID, namespaceID } = meta;
       return state
         .setIn(['data', clusterID, namespaceID], fromJS(data))
         .setIn(['list', clusterID, namespaceID], fromJS(list));
@@ -42,15 +40,12 @@ export const reducer = (
     case c.LOAD_CHARTS_FAILURE:
       return state;
 
-
     case c.READ_CHART:
       return state;
     case c.READ_CHART_SUCCESS: {
       const id = getByKey(payload, ['response', 'id']);
       const data = getByKey(payload, ['response']);
-      const {
-        clusterID, namespaceID,
-      } = meta;
+      const { clusterID, namespaceID } = meta;
       if (id) {
         return state.setIn(['data', clusterID, namespaceID, id], fromJS(data));
       }

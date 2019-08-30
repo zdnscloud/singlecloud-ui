@@ -124,4 +124,3 @@ export const executeDaemonSetActionFailure = (error, meta = {}) => ({
   meta,
   error: true,
 });
-

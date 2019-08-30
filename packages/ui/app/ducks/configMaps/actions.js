@@ -102,4 +102,3 @@ export const removeConfigMapFailure = (error, meta = {}) => ({
   meta,
   error: true,
 });
-

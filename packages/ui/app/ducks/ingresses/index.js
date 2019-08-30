@@ -32,9 +32,7 @@ export const reducer = (
       return state;
     case c.LOAD_INGRESSES_SUCCESS: {
       const { data, list } = procCollectionData(payload);
-      const {
-        clusterID, namespaceID,
-      } = meta;
+      const { clusterID, namespaceID } = meta;
       return state
         .setIn(['data', clusterID, namespaceID], fromJS(data))
         .setIn(['list', clusterID, namespaceID], fromJS(list));
@@ -42,15 +40,15 @@ export const reducer = (
     case c.LOAD_INGRESSES_FAILURE:
       return state;
 
-
     case c.CREATE_INGRESS:
       return state;
     case c.CREATE_INGRESS_SUCCESS: {
       const data = payload.response;
-      const {
-        clusterID, namespaceID,
-      } = meta;
-      return state.setIn(['data', clusterID, namespaceID, data.id], fromJS(data));
+      const { clusterID, namespaceID } = meta;
+      return state.setIn(
+        ['data', clusterID, namespaceID, data.id],
+        fromJS(data)
+      );
     }
     case c.CREATE_INGRESS_FAILURE:
       return state;
@@ -60,9 +58,7 @@ export const reducer = (
     case c.READ_INGRESS_SUCCESS: {
       const id = getByKey(payload, ['response', 'id']);
       const data = getByKey(payload, ['response']);
-      const {
-        clusterID, namespaceID,
-      } = meta;
+      const { clusterID, namespaceID } = meta;
       if (id) {
         return state.setIn(['data', clusterID, namespaceID, id], fromJS(data));
       }
@@ -75,12 +71,12 @@ export const reducer = (
       return state;
     case c.REMOVE_INGRESS_SUCCESS: {
       const { id } = meta;
-      const {
-        clusterID, namespaceID,
-      } = meta;
+      const { clusterID, namespaceID } = meta;
       return state
         .removeIn(['data', clusterID, namespaceID, id])
-        .updateIn(['list', clusterID, namespaceID], (l) => l.filterNot((i) => i === id));
+        .updateIn(['list', clusterID, namespaceID], (l) =>
+          l.filterNot((i) => i === id)
+        );
     }
     case c.REMOVE_INGRESS_FAILURE:
       return state;

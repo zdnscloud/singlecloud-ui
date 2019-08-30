@@ -102,4 +102,3 @@ export const removeServiceFailure = (error, meta = {}) => ({
   meta,
   error: true,
 });
-

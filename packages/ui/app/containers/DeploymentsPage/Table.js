@@ -51,32 +51,32 @@ export const DeploymentsTable = ({
   const setUpgrade = (id) => setDialog(['upgrade', id]);
   const setRollback = (id) => setDialog(['rollback', id]);
   const mergedSchema = schema
-        .map((sch) => {
-          if (sch.id === 'actions') {
-            return {
-              ...sch,
-              props: {
-                executeDeploymentAction,
-                removeDeployment,
-                setUpgrade,
-                setRollback,
-                clusterID,
-                namespaceID,
-              },
-            };
-          }
-          if (sch.id === 'name') {
-            return {
-              ...sch,
-              props: { pathname }
-            };
-          }
-          return sch;
-        })
-        .map((s) => ({
-          ...s,
-          label: <FormattedMessage {...messages[`tableTitle${s.label}`]} />,
-        }));
+    .map((sch) => {
+      if (sch.id === 'actions') {
+        return {
+          ...sch,
+          props: {
+            executeDeploymentAction,
+            removeDeployment,
+            setUpgrade,
+            setRollback,
+            clusterID,
+            namespaceID,
+          },
+        };
+      }
+      if (sch.id === 'name') {
+        return {
+          ...sch,
+          props: { pathname },
+        };
+      }
+      return sch;
+    })
+    .map((s) => ({
+      ...s,
+      label: <FormattedMessage {...messages[`tableTitle${s.label}`]} />,
+    }));
 
   return (
     <Paper className={classes.tableWrapper}>
@@ -119,6 +119,4 @@ const withConnect = connect(
   mapDispatchToProps
 );
 
-export default compose(
-  withConnect,
-)(DeploymentsTable);
+export default compose(withConnect)(DeploymentsTable);

@@ -66,7 +66,7 @@ export default function createEpic(injectedEpics = {}) {
     applicationsEpic,
     registriesEpic,
     monitorsEpic,
-    chartsEpic,
+    chartsEpic
     // combine epics end
   );
 

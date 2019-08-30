@@ -112,9 +112,7 @@ export const makeSelectLeftMenus = () =>
       let menus = [
         {
           name: 'Global',
-          children: [
-            { name: 'ClusterList', path: `/clusters` },
-          ],
+          children: [{ name: 'ClusterList', path: `/clusters` }],
           icon: OverviewIcon,
         },
       ];
@@ -245,7 +243,7 @@ export const makeSelectLeftMenus = () =>
         {
           name: 'ImageRegistry',
           icon: ImageRegistryIcon,
-          path: '/registries'
+          path: '/registries',
         },
       ]);
 

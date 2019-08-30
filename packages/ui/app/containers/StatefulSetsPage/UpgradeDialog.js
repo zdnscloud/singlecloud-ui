@@ -111,10 +111,13 @@ export const UpgradeDialog = ({
         const item = statefulSets.get(id);
         const init = {
           reason: '',
-          images: item.get('containers').map((c) => ({
-            name: c.get('name'),
-            image: c.get('image'),
-          })).toJS(),
+          images: item
+            .get('containers')
+            .map((c) => ({
+              name: c.get('name'),
+              image: c.get('image'),
+            }))
+            .toJS(),
         };
         setInitialValues(fromJS(init));
       }}
@@ -177,6 +180,4 @@ const withConnect = connect(
   mapDispatchToProps
 );
 
-export default compose(
-  withConnect,
-)(UpgradeDialog);
+export default compose(withConnect)(UpgradeDialog);

@@ -1,4 +1,4 @@
- /**
+/**
  *
  * StatefulSetsPage
  *
@@ -53,7 +53,7 @@ export const StatefulSetsPage = ({
     return () => {
       // try cancel something when unmount
     };
-  }, [url]);
+  }, [clusterID, loadStatefulSets, namespaceID, url]);
 
   return (
     <div className={classes.root}>
@@ -74,16 +74,15 @@ export const StatefulSetsPage = ({
               <CardHeader>
                 <h4>
                   <FormattedMessage {...messages.statefulSets} />
-
                 </h4>
                 <Link
-                    to={`${location.pathname}/create`}
-                    className={classes.createBtnLink}
-                  >
-                    <IconButton>
-                      <AddIcon />
-                    </IconButton>
-                  </Link>
+                  to={`${location.pathname}/create`}
+                  className={classes.createBtnLink}
+                >
+                  <IconButton>
+                    <AddIcon />
+                  </IconButton>
+                </Link>
               </CardHeader>
               <CardBody>
                 <StatefulSetsTable />
@@ -95,7 +94,6 @@ export const StatefulSetsPage = ({
     </div>
   );
 };
-
 
 const mapStateToProps = createStructuredSelector({
   clusterID: makeSelectCurrentClusterID(),
@@ -116,6 +114,4 @@ const withConnect = connect(
   mapDispatchToProps
 );
 
-export default compose(
-  withConnect,
-)(StatefulSetsPage);
+export default compose(withConnect)(StatefulSetsPage);

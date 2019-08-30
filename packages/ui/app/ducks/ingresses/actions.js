@@ -83,4 +83,3 @@ export const removeIngressFailure = (error, meta = {}) => ({
   meta,
   error: true,
 });
-

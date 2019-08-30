@@ -124,4 +124,3 @@ export const executeStatefulSetActionFailure = (error, meta = {}) => ({
   meta,
   error: true,
 });
-

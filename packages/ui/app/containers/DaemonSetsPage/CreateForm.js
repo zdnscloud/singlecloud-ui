@@ -102,34 +102,20 @@ export const DaemonSetForm = ({
                   </GridItem>
                 </GridContainer>
                 <GridContainer>
-                  <GridItem
-                    xs={3}
-                    sm={3}
-                    md={3}
-                    className={classes.formLine}
-                  >
+                  <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
                     <InputField
                       label={
-                        <FormattedMessage
-                          {...messages.formExposedMetricPath}
-                        />
+                        <FormattedMessage {...messages.formExposedMetricPath} />
                       }
                       fullWidth
                       inputProps={{ type: 'text', autoComplete: 'off' }}
                       name="exposedMetric.path"
                     />
                   </GridItem>
-                  <GridItem
-                    xs={3}
-                    sm={3}
-                    md={3}
-                    className={classes.formLine}
-                  >
+                  <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
                     <InputField
                       label={
-                        <FormattedMessage
-                          {...messages.formExposedMeticPort}
-                        />
+                        <FormattedMessage {...messages.formExposedMeticPort} />
                       }
                       normalize={(val) => Number(val)}
                       fullWidth
@@ -169,6 +155,5 @@ export const DaemonSetForm = ({
     </form>
   );
 };
-
 
 export default DaemonSetForm;

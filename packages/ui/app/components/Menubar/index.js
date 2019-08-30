@@ -27,7 +27,6 @@ function Menubar({
   headerRightContent,
   onClickMenuButton,
 }) {
-
   return (
     <AppBar className={classes.appBar}>
       <Toolbar disableGutters className={classes.toolbar}>
@@ -39,9 +38,7 @@ function Menubar({
           </div>
           {headerLeftContent}
         </div>
-        <div className={classes.toolbarRight}>
-          {headerRightContent}
-        </div>
+        <div className={classes.toolbarRight}>{headerRightContent}</div>
       </Toolbar>
     </AppBar>
   );

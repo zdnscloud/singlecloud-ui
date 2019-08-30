@@ -74,15 +74,11 @@ export const CreateApplicationPage = ({
       namespaceID,
       url: `${chartsUrl}/${chartID}`,
     });
-  }, []);
+  }, [chartID, chartsUrl, clusterID, namespaceID, readChart]);
 
   async function doSubmit(formValues) {
     try {
-      const {
-        name,
-        chartVersion,
-        ...formData
-      } = formValues.toJS();
+      const { name, chartVersion, ...formData } = formValues.toJS();
       const url = `/apis/zcloud.cn/v1/clusters/${clusterID}/namespaces/${namespaceID}/applications`;
       const data = {
         name,
@@ -91,7 +87,13 @@ export const CreateApplicationPage = ({
         configs: formData,
       };
       await new Promise((resolve, reject) => {
-        createApplication(data, { resolve, reject, url ,clusterID, namespaceID});
+        createApplication(data, {
+          resolve,
+          reject,
+          url,
+          clusterID,
+          namespaceID,
+        });
       });
     } catch (error) {
       throw new SubmissionError({ _error: error });
@@ -128,14 +130,8 @@ export const CreateApplicationPage = ({
               />
             </GridItem>
             <GridItem xs={12} sm={12} md={12}>
-              <Button
-                variant="contained"
-                color="primary"
-                onClick={submitForm}
-              >
-                <FormattedMessage
-                  {...messages.createApplicationButton}
-                />
+              <Button variant="contained" color="primary" onClick={submitForm}>
+                <FormattedMessage {...messages.createApplicationButton} />
               </Button>
               <Button
                 variant="contained"
@@ -143,9 +139,7 @@ export const CreateApplicationPage = ({
                 to="/applicationStore"
                 component={Link}
               >
-                <FormattedMessage
-                  {...messages.cancleApplicationButton}
-                />
+                <FormattedMessage {...messages.cancleApplicationButton} />
               </Button>
             </GridItem>
           </GridContainer>
@@ -154,7 +148,6 @@ export const CreateApplicationPage = ({
     </div>
   );
 };
-
 
 const mapStateToProps = createStructuredSelector({
   clusterID: makeSelectCurrentClusterID(),

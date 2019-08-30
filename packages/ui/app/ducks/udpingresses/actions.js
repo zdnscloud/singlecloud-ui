@@ -83,4 +83,3 @@ export const removeUdpingressFailure = (error, meta = {}) => ({
   meta,
   error: true,
 });
-

@@ -17,17 +17,17 @@ function ErrorInfo({ ...props }) {
     <Fragment>
       <GridItem xs={12} sm={12} md={12}>
         <div className={classes.errorWrap}>
-            <WarningIcon className={classes.warningIcon} />
-            {close ? (
-              <IconButton  className={classes.closeIcon} onClick={close}>
-                <img alt="close" src={closeIcon} />
-              </IconButton>
-            ) : null}
-            <p className={classes.errorTitle}>
-              <FormattedMessage {...messages.warningTitle} />
-            </p>
-            <p className={classes.errorText}>{errorText}</p>
-          </div>
+          <WarningIcon className={classes.warningIcon} />
+          {close ? (
+            <IconButton className={classes.closeIcon} onClick={close}>
+              <img alt="close" src={closeIcon} />
+            </IconButton>
+          ) : null}
+          <p className={classes.errorTitle}>
+            <FormattedMessage {...messages.warningTitle} />
+          </p>
+          <p className={classes.errorText}>{errorText}</p>
+        </div>
       </GridItem>
     </Fragment>
   );

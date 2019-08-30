@@ -32,14 +32,7 @@ import useStyles from './LeftMenuStyle';
 let timer = null;
 let ctimer = null;
 
-const LeftMenu = ({
-  logo,
-  image,
-  logoText,
-  menus,
-  showText,
-  location,
-}) => {
+const LeftMenu = ({ logo, image, logoText, menus, showText, location }) => {
   const classes = useStyles({ showText });
   const menuRef = useRef(null);
   const [openingMenu, setOpeningMenu] = useState(null);
@@ -57,7 +50,7 @@ const LeftMenu = ({
     ctimer = null;
     clearTimeout(timer);
     timer = null;
-    const setTarget = notChange ? (openingMenu && openingMenu[1]) : currentTarget;
+    const setTarget = notChange ? openingMenu && openingMenu[1] : currentTarget;
     timer = setTimeout(() => {
       setOpeningMenu([name, setTarget]);
     }, 200);
@@ -94,9 +87,7 @@ const LeftMenu = ({
               <ListItem button className={classes.itemLink + listItemClasses}>
                 {prop.icon ? (
                   <ListItemIcon className={classes.itemIcon}>
-                    <prop.icon
-                      fontSize="small"
-                    />
+                    <prop.icon fontSize="small" />
                   </ListItemIcon>
                 ) : null}
                 {showText ? (
@@ -234,6 +225,4 @@ const withConnect = connect(
   mapDispatchToProps
 );
 
-export default compose(
-  withConnect
-)(LeftMenu);
+export default compose(withConnect)(LeftMenu);

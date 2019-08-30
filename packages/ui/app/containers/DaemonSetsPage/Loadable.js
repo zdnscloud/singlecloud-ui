@@ -11,13 +11,9 @@ export default loadable(() =>
 );
 
 export const CreateDaemonSetPage = loadable(() =>
-  import(
-    /* webpackChunkName: "CreateDaemonSetPage" */ './CreatePage'
-  )
+  import(/* webpackChunkName: "CreateDaemonSetPage" */ './CreatePage')
 );
 
 export const DaemonSetDetailPage = loadable(() =>
-  import(
-    /* webpackChunkName: "DaemonSetDetailPage" */ './ShowItemPage'
-  )
+  import(/* webpackChunkName: "DaemonSetDetailPage" */ './ShowItemPage')
 );

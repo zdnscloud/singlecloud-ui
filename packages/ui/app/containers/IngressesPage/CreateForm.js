@@ -40,48 +40,48 @@ const validate = (values) => {
   return errors;
 };
 
-const Form = ({ formValues, handleSubmit, error,services }) => {
+const Form = ({ formValues, handleSubmit, error, services }) => {
   const classes = useStyles();
   const servicesOptions = services.toList().map((sc) => ({
     label: sc.get('name'),
     value: sc.get('name'),
   }));
-  
+
   return (
-    <form  onSubmit={handleSubmit} className={getByKey(classes, 'form')}>
+    <form onSubmit={handleSubmit} className={getByKey(classes, 'form')}>
       <GridContainer className={classes.contentGrid}>
         {error ? (
           <GridItem xs={12} sm={12} md={12}>
             <Danger>{getByKey(error, ['response', 'message'])}</Danger>
           </GridItem>
         ) : null}
-          <Card>
-            <CardHeader>
-              <h4>
-                <FormattedMessage {...messages.createIngress} />
-              </h4>
-            </CardHeader>
-            <CardBody>
-              <GridContainer style={{ margin: 0 }}>
-                <GridItem xs={3} sm={3} md={3}>
-                  <InputField
-                    label={<FormattedMessage {...messages.formName} />}
-                    name="name"
-                    fullWidth
-                    inputProps={{ type: 'text', autoComplete: 'off' }}
-                  />
-                </GridItem>
-              </GridContainer>
-            </CardBody>
-          </Card>
-          <Card style={{ margin: 0, marginTop: 20 }}>
-            <CardHeader>
-              <h4>
-                <FormattedMessage {...messages.configurationDetails} />
-              </h4>
-            </CardHeader>
-            <CardBody>
-              <GridContainer style={{ margin: 0 }}>
+        <Card>
+          <CardHeader>
+            <h4>
+              <FormattedMessage {...messages.createIngress} />
+            </h4>
+          </CardHeader>
+          <CardBody>
+            <GridContainer style={{ margin: 0 }}>
+              <GridItem xs={3} sm={3} md={3}>
+                <InputField
+                  label={<FormattedMessage {...messages.formName} />}
+                  name="name"
+                  fullWidth
+                  inputProps={{ type: 'text', autoComplete: 'off' }}
+                />
+              </GridItem>
+            </GridContainer>
+          </CardBody>
+        </Card>
+        <Card style={{ margin: 0, marginTop: 20 }}>
+          <CardHeader>
+            <h4>
+              <FormattedMessage {...messages.configurationDetails} />
+            </h4>
+          </CardHeader>
+          <CardBody>
+            <GridContainer style={{ margin: 0 }}>
               <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
                 <SelectField
                   label={<FormattedMessage {...messages.formServiceName} />}
@@ -93,19 +93,19 @@ const Form = ({ formValues, handleSubmit, error,services }) => {
                   }}
                   options={servicesOptions}
                 />
-                </GridItem>
-                <GridItem xs={12} sm={12} md={12}>
-                   <FieldArray
-                      name="rules"
-                      classes={classes}
-                      component={RuleTemplate}
-                      formValues={formValues}
-                      services={services}
-                    />
-                </GridItem>
-              </GridContainer>
-            </CardBody>
-          </Card>
+              </GridItem>
+              <GridItem xs={12} sm={12} md={12}>
+                <FieldArray
+                  name="rules"
+                  classes={classes}
+                  component={RuleTemplate}
+                  formValues={formValues}
+                  services={services}
+                />
+              </GridItem>
+            </GridContainer>
+          </CardBody>
+        </Card>
       </GridContainer>
     </form>
   );

@@ -22,7 +22,7 @@ const styles = (theme) => ({
   },
   contentGrid: {
     padding: theme.spacing(2),
-    paddingTop:0
+    paddingTop: 0,
   },
   appContainer: {},
   advanceContainer: {},

@@ -50,7 +50,7 @@ export const UdpingressDetailPage = ({
 }) => {
   const classes = useStyles();
   useEffect(() => {
-    if(url){
+    if (url) {
       readUdpingress(udpingressID, {
         clusterID,
         namespaceID,
@@ -60,7 +60,7 @@ export const UdpingressDetailPage = ({
     return () => {
       // try cancel something when unmount
     };
-  }, [url]);
+  }, [clusterID, namespaceID, readUdpingress, udpingressID, url]);
 
   return (
     <div className={classes.root}>
@@ -78,7 +78,7 @@ export const UdpingressDetailPage = ({
             },
           ]}
         />
-       
+
         <GridContainer className={classes.grid}>
           <GridItem xs={12} sm={12} md={12}>
             <Card>
@@ -88,7 +88,7 @@ export const UdpingressDetailPage = ({
                 </h4>
               </CardHeader>
               <CardBody>
-                <UdpingressRuleTable udpingress={udpingress}/>
+                <UdpingressRuleTable udpingress={udpingress} />
               </CardBody>
             </Card>
           </GridItem>
@@ -119,6 +119,4 @@ const withConnect = connect(
   mapDispatchToProps
 );
 
-export default compose(
-  withConnect,
-)(UdpingressDetailPage);
+export default compose(withConnect)(UdpingressDetailPage);

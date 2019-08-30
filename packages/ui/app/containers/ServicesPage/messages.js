@@ -119,6 +119,7 @@ export default defineMessages({
   },
   successContent: {
     id: `${scope}.successContent`,
-    defaultMessage: 'Service has been created, would you like to create a ingress for it?',
+    defaultMessage:
+      'Service has been created, would you like to create a ingress for it?',
   },
 });

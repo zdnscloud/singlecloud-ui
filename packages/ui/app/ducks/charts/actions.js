@@ -45,4 +45,3 @@ export const readChartFailure = (error, meta = {}) => ({
   meta,
   error: true,
 });
-

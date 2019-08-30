@@ -6,11 +6,11 @@ export const styles = (theme) => ({
   formPlusIcon: {
     position: 'absolute',
     left: 265,
-    top:-33,
+    top: -33,
   },
   formTable: {
-    marginTop: 30
-  }
+    marginTop: 30,
+  },
 });
 
 export default makeStyles(styles);

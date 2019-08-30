@@ -20,16 +20,12 @@ import useStyles from './styles';
 import schema from './ruleTableSchema';
 
 /* eslint-disable react/prefer-stateless-function */
-const UdpingressRuleTable = ({
-  udpingress,
-}) => {
- 
+const UdpingressRuleTable = ({ udpingress }) => {
   const classes = useStyles();
-  const mergedSchema = schema
-    .map((s) => ({
-      ...s,
-      label: <FormattedMessage {...messages[`form${s.label}`]} />,
-    }));
+  const mergedSchema = schema.map((s) => ({
+    ...s,
+    label: <FormattedMessage {...messages[`form${s.label}`]} />,
+  }));
 
   return (
     <Paper className={classes.tableWrapper}>
@@ -42,9 +38,7 @@ const UdpingressRuleTable = ({
   );
 };
 
-const mapStateToProps = createStructuredSelector({
- 
-});
+const mapStateToProps = createStructuredSelector({});
 
 const mapDispatchToProps = (dispatch) =>
   bindActionCreators(

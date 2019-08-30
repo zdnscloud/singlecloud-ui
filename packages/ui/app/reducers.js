@@ -32,18 +32,34 @@ import resourceQuotasReducer, {
 import nodesReducer, { prefix as nodesPrefix } from 'ducks/nodes';
 import clustersReducer, { prefix as clustersPrefix } from 'ducks/clusters';
 import eventsReducer, { prefix as eventsPrefix } from 'ducks/events';
-import userQuotasReducer, { prefix as userQuotasPrefix } from 'ducks/userQuotas';
+import userQuotasReducer, {
+  prefix as userQuotasPrefix,
+} from 'ducks/userQuotas';
 import servicesReducer, { prefix as servicesPrefix } from 'ducks/services';
-import deploymentsReducer, { prefix as deploymentsPrefix } from 'ducks/deployments';
-import statefulSetsReducer, { prefix as statefulSetsPrefix } from 'ducks/statefulSets';
-import daemonSetsReducer, { prefix as daemonSetsPrefix } from 'ducks/daemonSets';
+import deploymentsReducer, {
+  prefix as deploymentsPrefix,
+} from 'ducks/deployments';
+import statefulSetsReducer, {
+  prefix as statefulSetsPrefix,
+} from 'ducks/statefulSets';
+import daemonSetsReducer, {
+  prefix as daemonSetsPrefix,
+} from 'ducks/daemonSets';
 import ingressesReducer, { prefix as ingressesPrefix } from 'ducks/ingresses';
-import udpingressesReducer, { prefix as udpingressesPrefix } from 'ducks/udpingresses';
-import applicationsReducer, { prefix as applicationsPrefix } from 'ducks/applications';
-import registriesReducer, { prefix as registriesPrefix } from 'ducks/registries';
+import udpingressesReducer, {
+  prefix as udpingressesPrefix,
+} from 'ducks/udpingresses';
+import applicationsReducer, {
+  prefix as applicationsPrefix,
+} from 'ducks/applications';
+import registriesReducer, {
+  prefix as registriesPrefix,
+} from 'ducks/registries';
 import monitorsReducer, { prefix as monitorsPrefix } from 'ducks/monitors';
 import chartsReducer, { prefix as chartsPrefix } from 'ducks/charts';
-import configMapsReducer, { prefix as configMapsPrefix } from 'ducks/configMaps';
+import configMapsReducer, {
+  prefix as configMapsPrefix,
+} from 'ducks/configMaps';
 // import reducers end
 
 /**

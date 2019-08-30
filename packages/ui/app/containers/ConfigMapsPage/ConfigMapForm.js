@@ -38,9 +38,7 @@ const renderData = ({ meta, input, classes }) => {
       <Button color="secondary" onClick={() => setOpen(true)}>
         <FormattedMessage {...messages.formFileContent} />
       </Button>
-      {touched && error && (
-        <Danger>{error}</Danger>
-      )}
+      {touched && error && <Danger>{error}</Danger>}
       <Dialog
         maxWidth="lg"
         fullWidth

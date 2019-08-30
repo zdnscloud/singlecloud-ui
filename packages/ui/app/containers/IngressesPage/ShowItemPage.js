@@ -49,9 +49,9 @@ export const IngressDetailPage = ({
   readIngress,
 }) => {
   const classes = useStyles();
-  console.log('ingressID',ingressID)
+  console.log('ingressID', ingressID);
   useEffect(() => {
-    if(url){
+    if (url) {
       readIngress(ingressID, {
         clusterID,
         namespaceID,
@@ -61,7 +61,7 @@ export const IngressDetailPage = ({
     return () => {
       // try cancel something when unmount
     };
-  }, [url]);
+  }, [clusterID, ingressID, namespaceID, readIngress, url]);
 
   return (
     <div className={classes.root}>
@@ -88,21 +88,21 @@ export const IngressDetailPage = ({
                 </h4>
               </CardHeader>
               <CardBody>
-              <GridContainer style={{ margin: 0 }}>
-                <GridItem xs={3} sm={3} md={3}>
-                  <ReadOnlyInput
-                    labelText={<FormattedMessage {...messages.formName} />}
-                    value={ingress.get('name')}
-                    fullWidth
-                  />
-                 </GridItem>
-              </GridContainer>
+                <GridContainer style={{ margin: 0 }}>
+                  <GridItem xs={3} sm={3} md={3}>
+                    <ReadOnlyInput
+                      labelText={<FormattedMessage {...messages.formName} />}
+                      value={ingress.get('name')}
+                      fullWidth
+                    />
+                  </GridItem>
+                </GridContainer>
               </CardBody>
             </Card>
           </GridItem>
         </GridContainer>
 
-        <GridContainer className={classes.grid} style={{paddingTop:0}}>
+        <GridContainer className={classes.grid} style={{ paddingTop: 0 }}>
           <GridItem xs={12} sm={12} md={12}>
             <Card>
               <CardHeader>
@@ -111,7 +111,7 @@ export const IngressDetailPage = ({
                 </h4>
               </CardHeader>
               <CardBody>
-                <IngressRuleTable ingress={ingress}/>
+                <IngressRuleTable ingress={ingress} />
               </CardBody>
             </Card>
           </GridItem>
@@ -142,6 +142,4 @@ const withConnect = connect(
   mapDispatchToProps
 );
 
-export default compose(
-  withConnect,
-)(IngressDetailPage);
+export default compose(withConnect)(IngressDetailPage);

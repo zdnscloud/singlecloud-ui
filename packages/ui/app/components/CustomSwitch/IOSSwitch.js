@@ -38,9 +38,7 @@ const IOSSwitch = ({ ...props }) => {
         }
         label={label}
       />
-      {touched && error && (
-        <Danger>{error}</Danger>
-      )}
+      {touched && error && <Danger>{error}</Danger>}
     </>
   );
 };

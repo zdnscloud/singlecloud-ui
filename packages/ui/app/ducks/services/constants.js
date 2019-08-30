@@ -27,4 +27,3 @@ export const READ_SERVICE_FAILURE = `${prefix}/READ_SERVICE_FAILURE`;
 export const REMOVE_SERVICE = `${prefix}/REMOVE_SERVICE`;
 export const REMOVE_SERVICE_SUCCESS = `${prefix}/REMOVE_SERVICE_SUCCESS`;
 export const REMOVE_SERVICE_FAILURE = `${prefix}/REMOVE_SERVICE_FAILURE`;
-

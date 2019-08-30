@@ -82,16 +82,15 @@ export class JobsPage extends React.PureComponent {
                 <CardHeader>
                   <h4>
                     <FormattedMessage {...messages.jobs} />
-
                   </h4>
                   <Link
-                      to={`${this.props.location.pathname}/create`}
-                      className={classes.createBtnLink}
-                    >
-                      <IconButton>
-                        <AddIcon />
-                      </IconButton>
-                    </Link>
+                    to={`${this.props.location.pathname}/create`}
+                    className={classes.createBtnLink}
+                  >
+                    <IconButton>
+                      <AddIcon />
+                    </IconButton>
+                  </Link>
                 </CardHeader>
                 <CardBody>
                   <JobsTable location={this.props.location} />

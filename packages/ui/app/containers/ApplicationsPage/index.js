@@ -24,7 +24,10 @@ import {
   makeSelectClusterID,
   makeSelectNamespaceID,
 } from 'ducks/app/selectors';
-import { makeSelectURL,makeSelectDeleteApplicationError } from 'ducks/applications/selectors';
+import {
+  makeSelectURL,
+  makeSelectDeleteApplicationError,
+} from 'ducks/applications/selectors';
 import * as actions from 'ducks/applications/actions';
 import ErrorInfo from 'components/ErrorInfo/ErrorInfo';
 
@@ -33,7 +36,6 @@ import styles from './styles';
 import ApplicationsList from './ApplicationsList';
 import ApplicationsPageHelmet from './helmet';
 import SearchForm from './form/searchForm';
-
 
 export const formName = 'searchApplicationsForm';
 
@@ -64,11 +66,16 @@ export class ApplicationsPage extends React.PureComponent {
 
   load() {
     const { loadApplications, url, clusterID, namespaceID } = this.props;
-    loadApplications({url, clusterID, namespaceID});
+    loadApplications({ url, clusterID, namespaceID });
   }
 
   render() {
-    const { classes, submitForm, deleteError, clearDeleteErrorInfo } = this.props;
+    const {
+      classes,
+      submitForm,
+      deleteError,
+      clearDeleteErrorInfo,
+    } = this.props;
     const doSubmit = (formValues) => {
       this.setState({
         filter: formValues.toJS(),
@@ -89,32 +96,31 @@ export class ApplicationsPage extends React.PureComponent {
           />
           <GridContainer className={classes.grid}>
             {deleteError ? (
-              <ErrorInfo 
-                errorText = {deleteError}
-                close = {clearDeleteErrorInfo}
-              />
-            ):null}
+              <ErrorInfo errorText={deleteError} close={clearDeleteErrorInfo} />
+            ) : null}
             <GridItem xs={12} sm={12} md={12}>
               <Card className={classes.card}>
                 <GridContainer style={{ marginBottom: '20px' }}>
                   <GridItem xs={3} sm={3} md={3}>
-                      <SearchApplicationsForm   
-                        classes={classes}
-                        onSubmit={doSubmit}
+                    <SearchApplicationsForm
+                      classes={classes}
+                      onSubmit={doSubmit}
+                    />
+                  </GridItem>
+                  <GridItem xs={6} sm={6} md={6}>
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      onClick={submitForm}
+                      style={{ marginTop: '10px' }}
+                    >
+                      <FormattedMessage
+                        {...messages.searchApplicationsButton}
                       />
-                    </GridItem>
-                    <GridItem xs={6} sm={6} md={6}>
-                      <Button
-                        variant="contained"
-                        color="primary"
-                        onClick={submitForm}
-                        style={{ marginTop: '10px'}}
-                      >
-                        <FormattedMessage {...messages.searchApplicationsButton} />
-                      </Button>
-                    </GridItem>
-                  </GridContainer>
-                  <ApplicationsList filter={this.state.filter}/>
+                    </Button>
+                  </GridItem>
+                </GridContainer>
+                <ApplicationsList filter={this.state.filter} />
               </Card>
             </GridItem>
           </GridContainer>

@@ -20,7 +20,10 @@ import Helmet from 'components/Helmet/Helmet';
 import { FormattedMessage } from 'react-intl';
 import CssBaseline from '@material-ui/core/CssBaseline';
 
-import { makeSelectURL ,makeSelectRegistries} from 'ducks/registries/selectors';
+import {
+  makeSelectURL,
+  makeSelectRegistries,
+} from 'ducks/registries/selectors';
 import { makeSelectClustersList } from 'ducks/clusters/selectors';
 
 import * as actions from 'ducks/registries/actions';
@@ -47,31 +50,32 @@ const RegistriesPage = ({
   removeRegistry,
   createRegistry,
   clusters,
-  submitForm
+  submitForm,
 }) => {
   const classes = useStyles();
   const [check, setCheck] = useState(false);
   const [isPending, setPending] = useState(false);
-  const runningClusters = clusters && clusters.filter((d) => d.get('status') === 'Running'); 
+  const runningClusters =
+    clusters && clusters.filter((d) => d.get('status') === 'Running');
   const registry = registries.first();
   const id = registry && registry.getIn(['id']);
-  const rurl = registry && registry.getIn(['links','remove']);
+  const rurl = registry && registry.getIn(['links', 'remove']);
 
   const delayUnset = (back) => {
     setTimeout(() => {
       setPending(false);
       if (back) setCheck(!!check);
     }, 1000);
-  }
+  };
 
   useEffect(() => {
     if (url) {
       loadRegistries(url);
     }
-    if(id){
-      setCheck(true)
+    if (id) {
+      setCheck(true);
     }
-  }, [url,id]);
+  }, [url, id, loadRegistries]);
 
   async function doSubmit(formValues) {
     try {
@@ -79,7 +83,7 @@ const RegistriesPage = ({
       setCheck(!check);
       const data = formValues.toJS();
       await new Promise((resolve, reject) => {
-        if(!check){
+        if (!check) {
           createRegistry(data, {
             resolve,
             reject,
@@ -87,10 +91,10 @@ const RegistriesPage = ({
           });
         } else {
           removeRegistry(id, {
-            url:rurl, 
+            url: rurl,
             resolve,
-            reject
-          })
+            reject,
+          });
         }
       });
       delayUnset();
@@ -102,60 +106,62 @@ const RegistriesPage = ({
 
   const handleChange = () => () => {
     setCheck(!check);
-    submitForm()
-  }
+    submitForm();
+  };
 
   return (
     <div className={classes.root}>
       <Helmet title={messages.pageTitle} description={messages.pageDesc} />
       <CssBaseline />
       <Breadcrumbs
-            data={[
-              {
-                name: <FormattedMessage {...messages.pageTitle} />,
-              },
-            ]}
-          />
-        <GridContainer className={classes.grid}>
-          <GridItem xs={12} sm={12} md={12}>
-            <Card>
-              <CardHeader>
-                <h4>
-                    <FormattedMessage {...messages.registries} />
-                  </h4>
-              </CardHeader>
-              <CardBody>
-                <GridContainer>
-                  <GridItem>
-                    <Switch
-                     disabled={isPending}
-                     inputProps={{
-                       disabled: isPending
-                     }}
-                      onChange={handleChange()}
-                      checked={check}
-                      label={
-                        <FormattedMessage
-                          {...(isPending ? messages.pending :messages.repositoryServise)}
-                        />
-                      }
-                    />
-                  </GridItem>
-                  <GridItem xs={12} sm={12} md={12}>
-                    <UpdateRegistryForm
-                      onSubmit={doSubmit}
-                      formValues={values}
-                      clusters={runningClusters}
-                      role={role}
-                      registry={registry}
-                      check={check}
-                    />
-                  </GridItem>
-                </GridContainer>
-              </CardBody>
-            </Card>
-          </GridItem>
-        </GridContainer>
+        data={[
+          {
+            name: <FormattedMessage {...messages.pageTitle} />,
+          },
+        ]}
+      />
+      <GridContainer className={classes.grid}>
+        <GridItem xs={12} sm={12} md={12}>
+          <Card>
+            <CardHeader>
+              <h4>
+                <FormattedMessage {...messages.registries} />
+              </h4>
+            </CardHeader>
+            <CardBody>
+              <GridContainer>
+                <GridItem>
+                  <Switch
+                    disabled={isPending}
+                    inputProps={{
+                      disabled: isPending,
+                    }}
+                    onChange={handleChange()}
+                    checked={check}
+                    label={
+                      <FormattedMessage
+                        {...(isPending
+                          ? messages.pending
+                          : messages.repositoryServise)}
+                      />
+                    }
+                  />
+                </GridItem>
+                <GridItem xs={12} sm={12} md={12}>
+                  <UpdateRegistryForm
+                    onSubmit={doSubmit}
+                    formValues={values}
+                    clusters={runningClusters}
+                    role={role}
+                    registry={registry}
+                    check={check}
+                  />
+                </GridItem>
+              </GridContainer>
+            </CardBody>
+          </Card>
+        </GridItem>
+      </GridContainer>
     </div>
   );
 };

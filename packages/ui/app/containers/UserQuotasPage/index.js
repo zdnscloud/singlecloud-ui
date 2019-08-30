@@ -74,16 +74,14 @@ export class UserQuotasPage extends React.PureComponent {
                 <CardHeader>
                   <h4>
                     <FormattedMessage {...messages.userQuotas} />
-
                   </h4>
                   <IconButton
-                      aria-label={<FormattedMessage {...messages.userQuotas} />}
-                        
-                      component={Link}
-                      to="/userQuotas/create"
-                    >
-                      <AddIcon />
-                    </IconButton>
+                    aria-label={<FormattedMessage {...messages.userQuotas} />}
+                    component={Link}
+                    to="/userQuotas/create"
+                  >
+                    <AddIcon />
+                  </IconButton>
                 </CardHeader>
                 <CardBody>
                   <UserQuotasTable />

@@ -46,7 +46,7 @@ export const SecretsPage = ({
 }) => {
   useEffect(() => {
     loadSecrets(url, { clusterID, namespaceID });
-  }, [url]);
+  }, [clusterID, loadSecrets, namespaceID, url]);
 
   return (
     <div className={classes.root}>

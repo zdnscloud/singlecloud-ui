@@ -30,26 +30,31 @@ const RuleTemplate = ({
 }) => {
   const classes = useStyles();
   const serviceName = formValues && formValues.get('serviceName');
-  const exposedPorts =  services && services.getIn([serviceName,'exposedPorts']);
+  const exposedPorts =
+    services && services.getIn([serviceName, 'exposedPorts']);
 
   return (
     <Fragment>
       <Button
         color="secondary"
-        onClick={(evt) => exposedPorts.filter((p) => p.get('protocol') === 'udp').forEach((p) => {
-          if(fields.length < 1){
-            fields.push(fromJS(
-              {
-                'serviceName':serviceName,
-                'serviceProtocol':'udp',
-                'servicePort': p.get('port'),
-                'protocol': 'UDP'
+        onClick={(evt) =>
+          exposedPorts
+            .filter((p) => p.get('protocol') === 'udp')
+            .forEach((p) => {
+              if (fields.length < 1) {
+                fields.push(
+                  fromJS({
+                    serviceName,
+                    serviceProtocol: 'udp',
+                    servicePort: p.get('port'),
+                    protocol: 'UDP',
+                  })
+                );
               }
-            ))
-          }
-        })}
+            })
+        }
         className={classes.formPlusIcon}
-        >
+      >
         <PlusIcon />
       </Button>
       {submitFailed && error && (
@@ -58,79 +63,96 @@ const RuleTemplate = ({
         </ListItem>
       )}
       <Table className={classes.formTable}>
-         <TableHead>
-           <TableRow>
-             <TableCell className={`${classes.tableCell} ${classes.tableHeadCell}`}>
-                 <FormattedMessage {...messages.formPort} />
-             </TableCell>
-             <TableCell className={`${classes.tableCell} ${classes.tableHeadCell}`}>
-                 <FormattedMessage {...messages.formProtocol} />
-             </TableCell>
-             <TableCell className={`${classes.tableCell} ${classes.tableHeadCell}`}>
-                 <FormattedMessage {...messages.formServiceName} />
-             </TableCell>
-             <TableCell className={`${classes.tableCell} ${classes.tableHeadCell}`}>
-                 <FormattedMessage {...messages.formServicePort} />
-             </TableCell>
-             <TableCell className={`${classes.tableCell} ${classes.tableHeadCell}`}>
-                 <FormattedMessage {...messages.formServiceProtocol} />
-             </TableCell>
-             <TableCell className={`${classes.tableCell} ${classes.tableHeadCell}`}>
-                 <FormattedMessage {...messages.formActions} />
-             </TableCell>
-           </TableRow>
-         </TableHead>
-         <TableBody>
-            {fields.map((f, i) => (
-              <TableRow key={i}>
-                <TableCell className={classes.tableCell}>
-                  <InputField
-                    name={`${f}.port`}
-                    fullWidth
-                    inputProps={{ type: 'number', autoComplete: 'off' }}
-                    normalize={(val) => Number(val)}
-                  />
-                </TableCell>
-                <TableCell className={classes.tableCell}>
-                  <InputField
-                      name={`${f}.protocol`}
-                      fullWidth
-                      inputProps={{ type: 'text', autoComplete: 'off' }}
-                      disabled
-                    />
-                </TableCell>
-                <TableCell className={classes.tableCell}>
-                  <InputField
-                    name={`${f}.serviceName`}
-                    fullWidth
-                    inputProps={{ type: 'text', autoComplete: 'off' }}
-                    disabled
-                  />
-                </TableCell>
-                <TableCell className={classes.tableCell}>
-                  <InputField
-                      name={`${f}.servicePort`}
-                      fullWidth
-                      inputProps={{ type: 'text', autoComplete: 'off' }}
-                      disabled
-                    />
-                </TableCell>
-                <TableCell className={classes.tableCell}>
-                  <InputField
-                      name={`${f}.serviceProtocol`}
-                      fullWidth
-                      inputProps={{ type: 'text', autoComplete: 'off' }}
-                      disabled
-                    />
-                </TableCell>
-                <TableCell className={classes.tableCell}>
-                  <IconButton variant="contained" onClick={(evt) => fields.remove(i)}>
-                    <MinusIcon />
-                  </IconButton>
-                </TableCell>
-              </TableRow>
-            ))}
-         </TableBody>
+        <TableHead>
+          <TableRow>
+            <TableCell
+              className={`${classes.tableCell} ${classes.tableHeadCell}`}
+            >
+              <FormattedMessage {...messages.formPort} />
+            </TableCell>
+            <TableCell
+              className={`${classes.tableCell} ${classes.tableHeadCell}`}
+            >
+              >
+              <FormattedMessage {...messages.formProtocol} />
+            </TableCell>
+            <TableCell
+              className={`${classes.tableCell} ${classes.tableHeadCell}`}
+            >
+              <FormattedMessage {...messages.formServiceName} />
+            </TableCell>
+            <TableCell
+              className={`${classes.tableCell} ${classes.tableHeadCell}`}
+            >
+              <FormattedMessage {...messages.formServicePort} />
+            </TableCell>
+            <TableCell
+              className={`${classes.tableCell} ${classes.tableHeadCell}`}
+            >
+              <FormattedMessage {...messages.formServiceProtocol} />
+            </TableCell>
+            <TableCell
+              className={`${classes.tableCell} ${classes.tableHeadCell}`}
+            >
+              <FormattedMessage {...messages.formActions} />
+            </TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {fields.map((f, i) => (
+            <TableRow key={i}>
+              <TableCell className={classes.tableCell}>
+                <InputField
+                  name={`${f}.port`}
+                  fullWidth
+                  inputProps={{ type: 'number', autoComplete: 'off' }}
+                  normalize={(val) => Number(val)}
+                />
+              </TableCell>
+              <TableCell className={classes.tableCell}>
+                <InputField
+                  name={`${f}.protocol`}
+                  fullWidth
+                  inputProps={{ type: 'text', autoComplete: 'off' }}
+                  disabled
+                />
+              </TableCell>
+              <TableCell className={classes.tableCell}>
+                <InputField
+                  name={`${f}.serviceName`}
+                  fullWidth
+                  inputProps={{ type: 'text', autoComplete: 'off' }}
+                  disabled
+                />
+              </TableCell>
+              <TableCell className={classes.tableCell}>
+                <InputField
+                  name={`${f}.servicePort`}
+                  fullWidth
+                  inputProps={{ type: 'text', autoComplete: 'off' }}
+                  disabled
+                />
+              </TableCell>
+              <TableCell className={classes.tableCell}>
+                <InputField
+                  name={`${f}.serviceProtocol`}
+                  fullWidth
+                  inputProps={{ type: 'text', autoComplete: 'off' }}
+                  disabled
+                />
+              </TableCell>
+              <TableCell className={classes.tableCell}>
+                <IconButton
+                  variant="contained"
+                  onClick={(evt) => fields.remove(i)}
+                >
+                  >
+                  <MinusIcon />
+                </IconButton>
+              </TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
       </Table>
     </Fragment>
   );

@@ -104,10 +104,30 @@ export class ClusterDetail extends React.PureComponent {
     const pod = `${cluster.get('podUsed')} / ${cluster.get('pod')}`;
 
     const infoList = [
-      { key: 'name', Icon: NameIcon, message: 'clusterName', value: cluster.get('name') },
-      { key: 'version', Icon: VersionIcon, message: 'clusterVersion', value: cluster.get('version') },
-      { key: 'nodeCount', Icon: NodesIcon, message: 'clusterNodes', value: cluster.get('nodeCount') },
-      { key: 'creationTimestamp', Icon: TimeIcon, message: 'clusterCreated', value: moment(cluster.get('creationTimestamp')).format('YYYY-MM-DD') },
+      {
+        key: 'name',
+        Icon: NameIcon,
+        message: 'clusterName',
+        value: cluster.get('name'),
+      },
+      {
+        key: 'version',
+        Icon: VersionIcon,
+        message: 'clusterVersion',
+        value: cluster.get('version'),
+      },
+      {
+        key: 'nodeCount',
+        Icon: NodesIcon,
+        message: 'clusterNodes',
+        value: cluster.get('nodeCount'),
+      },
+      {
+        key: 'creationTimestamp',
+        Icon: TimeIcon,
+        message: 'clusterCreated',
+        value: moment(cluster.get('creationTimestamp')).format('YYYY-MM-DD'),
+      },
     ];
 
     return (
@@ -122,7 +142,10 @@ export class ClusterDetail extends React.PureComponent {
                   icon
                   className={classes.infoCardHeader}
                 >
-                  <CardIcon color="cyanInverse" className={classes.infoCardIcon}>
+                  <CardIcon
+                    color="cyanInverse"
+                    className={classes.infoCardIcon}
+                  >
                     <info.Icon />
                   </CardIcon>
                   <div className={classes.infoCardText}>

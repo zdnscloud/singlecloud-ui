@@ -78,7 +78,7 @@ const styles = (theme) => ({
   grid: {
     padding: theme.spacing(2),
   },
-  contentGrid:{
+  contentGrid: {
     padding: theme.spacing(2),
     paddingTop: 0,
   },
@@ -160,8 +160,8 @@ const styles = (theme) => ({
     top: '3px',
     right: '10px',
   },
-  card:{
-    padding:'20px',
+  card: {
+    padding: '20px',
     margin: 0,
   },
   detailedDesc: {
@@ -179,18 +179,18 @@ const styles = (theme) => ({
   appWrap: {
     border: '1px solid #DFE0DF',
     padding: '20px 13px',
-    marginBottom: 25
+    marginBottom: 25,
   },
   aapName: {
     color: '#1B9CCE',
     width: '100%',
-    textAlign: 'center'
+    textAlign: 'center',
   },
   appLogo: {
-    margin: '0 auto',  
-    width: 80, 
+    margin: '0 auto',
+    width: 80,
     display: 'block',
-    height:80
+    height: 80,
   },
   appDiscribe: {
     color: '#4A4A4A',
@@ -198,7 +198,7 @@ const styles = (theme) => ({
     overflow: 'hidden',
     textOverflow: 'ellipsis',
     display: '-webkit-box',
-    '-webkitLineClamp':2,
+    '-webkitLineClamp': 2,
     '-webkitBoxOrient': 'vertical',
     height: 42,
   },
@@ -207,27 +207,27 @@ const styles = (theme) => ({
     color: '#fff',
     width: '100px',
     height: '35px',
-    margin: '0 auto',  
-    textAlign: 'center'
+    margin: '0 auto',
+    textAlign: 'center',
   },
   appDetailBtn: {
     background: '#1B9CCE',
     color: '#fff',
     width: '100px',
     height: '35px',
-    margin: '0 auto', 
-    display: 'block' ,
+    margin: '0 auto',
+    display: 'block',
     position: 'relative',
-    padding:'6px 16px'
+    padding: '6px 16px',
   },
   line: {
-    borderBottom : '1px solid #DFE0DF',
+    borderBottom: '1px solid #DFE0DF',
     marginTop: 20,
   },
-  rightArrowIcon:{
+  rightArrowIcon: {
     position: 'absolute',
-    right:0,
-    top:12
+    right: 0,
+    top: 12,
   },
 });
 

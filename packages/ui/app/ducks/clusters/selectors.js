@@ -33,22 +33,21 @@ export const makeSelectClustersList = () =>
   );
 
 export const makeSelectCurrentID = () =>
-   createSelector(
-     createMatchSelector('*/clusters/:id/*'),
-     (match) => {
-       if (match && match.params) {
-         return match.params.id;
-       }
-       return '';
-     }
-   );
+  createSelector(
+    createMatchSelector('*/clusters/:id/*'),
+    (match) => {
+      if (match && match.params) {
+        return match.params.id;
+      }
+      return '';
+    }
+  );
 
 export const makeSelectCurrent = () =>
   createSelector(
     selectDomain,
     makeSelectCurrentID(),
-    (substate, id) =>
-      substate.getIn(['clusters', id]) || substate.clear()
+    (substate, id) => substate.getIn(['clusters', id]) || substate.clear()
   );
 
 export const makeSelectCurrentCluster = () =>

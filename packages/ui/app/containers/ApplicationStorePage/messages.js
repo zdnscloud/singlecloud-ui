@@ -37,5 +37,4 @@ export default defineMessages({
     id: `${scope}.viewDetailButton`,
     defaultMessage: 'detailed',
   },
-  
 });

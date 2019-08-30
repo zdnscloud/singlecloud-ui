@@ -78,7 +78,7 @@ const styles = (theme) => ({
   grid: {
     padding: theme.spacing(2),
   },
-  contentGrid:{
+  contentGrid: {
     padding: theme.spacing(2),
     paddingTop: 0,
   },
@@ -152,8 +152,8 @@ const styles = (theme) => ({
     boxShadow: '1px 0px 2px #ccc',
     border: '1px solid #ccc',
   },
-  card:{
-    padding:'20px',
+  card: {
+    padding: '20px',
     margin: 0,
   },
   detailedDesc: {
@@ -175,19 +175,19 @@ const styles = (theme) => ({
   appWrap: {
     border: '1px solid #DFE0DF',
     padding: 10,
-    marginBottom: 25
+    marginBottom: 25,
   },
   aapName: {
     color: '#1B9CCE',
     margin: 0,
   },
   appLogo: {
-    margin: '0 auto',  
+    margin: '0 auto',
     display: 'inline-block',
-    width: 80, 
-    height:80,
-    verticalAlign:'middle',
-    marginRight: 20
+    width: 80,
+    height: 80,
+    verticalAlign: 'middle',
+    marginRight: 20,
   },
   appContent: {
     display: 'inline-block',
@@ -209,8 +209,8 @@ const styles = (theme) => ({
     top: 4,
   },
   appDetailBtn: {
-    padding:0,
-    minWidth:0 
+    padding: 0,
+    minWidth: 0,
   },
   tag: {
     width: '100%',
@@ -219,18 +219,18 @@ const styles = (theme) => ({
     borderRadius: 2,
     textAlign: 'center',
     marginBottom: 0,
-    padding: '15px 0'
+    padding: '15px 0',
   },
   tagWrap: {
     paddingLeft: theme.spacing(2),
-    paddingRight: theme.spacing(2)
+    paddingRight: theme.spacing(2),
   },
   singleField: {
-    margin:'6px 0'
+    margin: '6px 0',
   },
   radioControl: {
     flexDirection: 'row',
-    margin:'4px 0'
+    margin: '4px 0',
   },
   radioLabel: {
     flexDirection: 'row',

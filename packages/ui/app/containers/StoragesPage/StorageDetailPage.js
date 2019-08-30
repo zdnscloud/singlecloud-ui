@@ -47,7 +47,6 @@ import PVTable from './PVTable';
 
 /* eslint-disable react/prefer-stateless-function */
 export class StoragePage extends React.PureComponent {
-
   state = { checkedNode: null };
 
   componentWillMount() {

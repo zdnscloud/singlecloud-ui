@@ -29,12 +29,12 @@ export default defineMessages({
     id: `${scope}.open`,
     defaultMessage: 'Open',
   },
-  openMonitor :{
+  openMonitor: {
     id: `${scope}.openMonitor`,
     defaultMessage: 'Open Monitor',
   },
   pending: {
     id: `${scope}.pending`,
     defaultMessage: 'Pending',
-  }
+  },
 });

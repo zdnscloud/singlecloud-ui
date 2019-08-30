@@ -1,4 +1,4 @@
- /**
+/**
  *
  * DaemonSetsPage
  *
@@ -53,7 +53,7 @@ export const DaemonSetsPage = ({
     return () => {
       // try cancel something when unmount
     };
-  }, [url]);
+  }, [clusterID, loadDaemonSets, namespaceID, url]);
 
   return (
     <div className={classes.root}>
@@ -74,16 +74,15 @@ export const DaemonSetsPage = ({
               <CardHeader>
                 <h4>
                   <FormattedMessage {...messages.daemonSets} />
-
                 </h4>
                 <Link
-                    to={`${location.pathname}/create`}
-                    className={classes.createBtnLink}
-                  >
-                    <IconButton>
-                      <AddIcon />
-                    </IconButton>
-                  </Link>
+                  to={`${location.pathname}/create`}
+                  className={classes.createBtnLink}
+                >
+                  <IconButton>
+                    <AddIcon />
+                  </IconButton>
+                </Link>
               </CardHeader>
               <CardBody>
                 <DaemonSetsTable />
@@ -95,7 +94,6 @@ export const DaemonSetsPage = ({
     </div>
   );
 };
-
 
 const mapStateToProps = createStructuredSelector({
   clusterID: makeSelectCurrentClusterID(),
@@ -116,6 +114,4 @@ const withConnect = connect(
   mapDispatchToProps
 );
 
-export default compose(
-  withConnect,
-)(DaemonSetsPage);
+export default compose(withConnect)(DaemonSetsPage);

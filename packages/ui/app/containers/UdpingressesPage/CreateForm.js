@@ -56,13 +56,13 @@ const Form = ({ formValues, handleSubmit, error, services }) => {
           </GridItem>
         ) : null}
         <Card style={{ margin: 0, marginTop: 20 }}>
-            <CardHeader>
-              <h4>
-                <FormattedMessage {...messages.createUdpingress} />
-              </h4>
-            </CardHeader>
-            <CardBody>
-              <GridContainer style={{ margin: 0 }}>
+          <CardHeader>
+            <h4>
+              <FormattedMessage {...messages.createUdpingress} />
+            </h4>
+          </CardHeader>
+          <CardBody>
+            <GridContainer style={{ margin: 0 }}>
               <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
                 <SelectField
                   label={<FormattedMessage {...messages.formServiceName} />}
@@ -74,18 +74,18 @@ const Form = ({ formValues, handleSubmit, error, services }) => {
                   }}
                   options={servicesOptions}
                 />
-                </GridItem>
-                <GridItem xs={12} sm={12} md={12}>
-                   <FieldArray
-                      name="rules"
-                      component={RuleTemplate}
-                      formValues={formValues}
-                      services={services}
-                    />
-                </GridItem>
-              </GridContainer>
-            </CardBody>
-          </Card>
+              </GridItem>
+              <GridItem xs={12} sm={12} md={12}>
+                <FieldArray
+                  name="rules"
+                  component={RuleTemplate}
+                  formValues={formValues}
+                  services={services}
+                />
+              </GridItem>
+            </GridContainer>
+          </CardBody>
+        </Card>
       </GridContainer>
     </form>
   );

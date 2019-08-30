@@ -90,7 +90,7 @@ export const EditSecret = ({
 }) => {
   useEffect(() => {
     readSecret(id, { url: `${url}/${id}`, clusterID, namespaceID });
-  }, [id, url]);
+  }, [clusterID, id, namespaceID, readSecret, url]);
 
   async function doSubmit(formValues) {
     try {
@@ -144,7 +144,7 @@ export const EditSecret = ({
                     secret={secret}
                     type="edit"
                   />
-                ): null}
+                ) : null}
               </CardBody>
               <CardFooter className={classes.cardFooter}>
                 <Button

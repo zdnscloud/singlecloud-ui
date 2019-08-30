@@ -18,7 +18,11 @@ import Card from 'components/Card/Card';
 import CardHeader from 'components/Card/CardHeader';
 import CardBody from 'components/Card/CardBody';
 
-import { makeSelectURL,makeSelectApplicationID, makeSelectCurrentApplication } from 'ducks/applications/selectors';
+import {
+  makeSelectURL,
+  makeSelectApplicationID,
+  makeSelectCurrentApplication,
+} from 'ducks/applications/selectors';
 import {
   makeSelectClusterID,
   makeSelectNamespaceID,
@@ -26,11 +30,11 @@ import {
 import * as actions from 'ducks/applications/actions';
 
 import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
+import moment from 'moment';
 import messages from './messages';
 import styles from './styles';
 import ApplicationsPageHelmet from './helmet';
 import ApplicationsTable from './ApplicationsTable';
-import moment from 'moment';
 
 /* eslint-disable react/prefer-stateless-function */
 export class ApplicationDetailPage extends React.PureComponent {
@@ -42,13 +46,13 @@ export class ApplicationDetailPage extends React.PureComponent {
   };
 
   componentWillMount() {
-    const { clusterID, namespaceID, url,loadApplications } = this.props;
-    loadApplications({url, clusterID, namespaceID});
+    const { clusterID, namespaceID, url, loadApplications } = this.props;
+    loadApplications({ url, clusterID, namespaceID });
   }
 
   render() {
-    const { classes, clusterID, namespaceID, application} = this.props;
- 
+    const { classes, clusterID, namespaceID, application } = this.props;
+
     return (
       <div className={classes.root}>
         <ApplicationsPageHelmet />
@@ -67,12 +71,19 @@ export class ApplicationDetailPage extends React.PureComponent {
           />
           <Typography component="div" className="">
             <GridContainer className={classes.tagWrap}>
-                <GridItem xs={6} sm={6} md={6}>
-                    <p className={classes.tag}>Version {application.get('chartVersion')}</p>
-                </GridItem>
-                <GridItem xs={6} sm={6} md={6}>
-                    <p className={classes.tag}>Created at {moment(application.get('creationTimestamp')).format('YYYY-MM-DD HH:mm:ss')} </p>
-                </GridItem>
+              <GridItem xs={6} sm={6} md={6}>
+                <p className={classes.tag}>
+                  Version {application.get('chartVersion')}
+                </p>
+              </GridItem>
+              <GridItem xs={6} sm={6} md={6}>
+                <p className={classes.tag}>
+                  Created at{' '}
+                  {moment(application.get('creationTimestamp')).format(
+                    'YYYY-MM-DD HH:mm:ss'
+                  )}{' '}
+                </p>
+              </GridItem>
             </GridContainer>
             <GridContainer className={classes.grid}>
               <GridItem xs={12} sm={12} md={12}>

@@ -1,7 +1,7 @@
 /**
  * Confirm Dialog
  */
-import React,{ Fragment,useState } from 'react';
+import React, { Fragment, useState } from 'react';
 import classNames from 'classnames';
 
 // @material-ui/core components
@@ -23,40 +23,27 @@ const ConfirmDialog = ({
   children,
   title,
   content,
-}) => {
-
-  return (
-    <Dialog
-      open={open}
-      onClose={onClose}
-    >
-      <DialogTitle>
-        {title}
-      </DialogTitle>
-      <DialogContent>
-        <DialogContentText>
-          {content || children}
-        </DialogContentText>
-      </DialogContent>
-      <DialogActions>
-        <Button
-          onClick={onCancel || onClose}
-          variant="contained"
-        >
-          <FormattedMessage {...messages.cancleButton} />
-        </Button>
-        <Button
-          onClick={onAction}
-          color="primary"
-          variant="contained"
-          style={{marginLeft: 16, marginRight: 8 }}
-        >
-          <FormattedMessage {...messages.sureButton} />
-        </Button>
-      </DialogActions>
-    </Dialog>
-  );
-};
+}) => (
+  <Dialog open={open} onClose={onClose}>
+    <DialogTitle>{title}</DialogTitle>
+    <DialogContent>
+      <DialogContentText>{content || children}</DialogContentText>
+    </DialogContent>
+    <DialogActions>
+      <Button onClick={onCancel || onClose} variant="contained">
+        <FormattedMessage {...messages.cancleButton} />
+      </Button>
+      <Button
+        onClick={onAction}
+        color="primary"
+        variant="contained"
+        style={{ marginLeft: 16, marginRight: 8 }}
+      >
+        <FormattedMessage {...messages.sureButton} />
+      </Button>
+    </DialogActions>
+  </Dialog>
+);
 
 ConfirmDialog.defaultProps = {
   open: false,

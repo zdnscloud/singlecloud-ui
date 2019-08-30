@@ -124,14 +124,18 @@ export const RollbackDialog = ({
         const reject = (error) => {
           console.log(error);
         };
-        executeDaemonSetAction('history', {}, {
-          resolve,
-          reject,
-          url: item.getIn(['links', 'self']),
-          id,
-          clusterID,
-          namespaceID,
-        });
+        executeDaemonSetAction(
+          'history',
+          {},
+          {
+            resolve,
+            reject,
+            url: item.getIn(['links', 'self']),
+            id,
+            clusterID,
+            namespaceID,
+          }
+        );
       }}
       onExit={() => {
         setInitialValues(null);
@@ -193,6 +197,4 @@ const withConnect = connect(
   mapDispatchToProps
 );
 
-export default compose(
-  withConnect,
-)(RollbackDialog);
+export default compose(withConnect)(RollbackDialog);

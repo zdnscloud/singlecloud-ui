@@ -15,4 +15,3 @@ export const LOAD_CHARTS_FAILURE = `${prefix}/LOAD_CHARTS_FAILURE`;
 export const READ_CHART = `${prefix}/READ_CHART`;
 export const READ_CHART_SUCCESS = `${prefix}/READ_CHART_SUCCESS`;
 export const READ_CHART_FAILURE = `${prefix}/READ_CHART_FAILURE`;
-

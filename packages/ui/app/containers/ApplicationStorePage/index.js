@@ -95,9 +95,11 @@ export class ApplicationStorePage extends React.PureComponent {
                       variant="contained"
                       color="primary"
                       onClick={submitForm}
-                      style={{ marginTop: '10px'}}
+                      style={{ marginTop: '10px' }}
                     >
-                      <FormattedMessage {...messages.searchApplicationsButton} />
+                      <FormattedMessage
+                        {...messages.searchApplicationsButton}
+                      />
                     </Button>
                   </GridItem>
                 </GridContainer>

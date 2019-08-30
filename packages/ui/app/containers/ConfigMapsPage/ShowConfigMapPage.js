@@ -64,7 +64,7 @@ export const ShowConfigMap = ({
 }) => {
   useEffect(() => {
     readConfigMap(id, { url: `${url}/${id}`, clusterID, namespaceID });
-  }, [id]);
+  }, [clusterID, id, namespaceID, readConfigMap, url]);
   const [isOpen, setIsOpen] = useState(false);
   const [fileIndex, setFileIndex] = useState(null);
 
@@ -108,36 +108,38 @@ export const ShowConfigMap = ({
                   </GridItem>
                   <GridItem xs={12} sm={12} md={12}>
                     <GridContainer>
-                      {configMap && configMap.get('configs') && configMap.get('configs').map((cfg, idx) => (
-                        <GridItem
-                          xs={3}
-                          sm={3}
-                          md={3}
-                          key={`${idx}-${cfg.get('name')}`}
-                        >
-                          <ReadOnlyInput
-                            labelText={
-                              <FormattedMessage {...messages.formFileName} />
-                            }
-                            value={cfg.get('name')}
-                            fullWidth
-                            formControlProps={{
-                              className: classes.nameControl,
-                            }}
-                            classes={{
-                              input: classes.fileNameLink,
-                            }}
-                            inputProps={{
-                              disabled: false,
-                              readOnly: true,
-                              onClick: (evt) => {
-                                setIsOpen(true);
-                                setFileIndex(idx);
-                              },
-                            }}
-                          />
-                        </GridItem>
-                      ))}
+                      {configMap &&
+                        configMap.get('configs') &&
+                        configMap.get('configs').map((cfg, idx) => (
+                          <GridItem
+                            xs={3}
+                            sm={3}
+                            md={3}
+                            key={`${idx}-${cfg.get('name')}`}
+                          >
+                            <ReadOnlyInput
+                              labelText={
+                                <FormattedMessage {...messages.formFileName} />
+                              }
+                              value={cfg.get('name')}
+                              fullWidth
+                              formControlProps={{
+                                className: classes.nameControl,
+                              }}
+                              classes={{
+                                input: classes.fileNameLink,
+                              }}
+                              inputProps={{
+                                disabled: false,
+                                readOnly: true,
+                                onClick: (evt) => {
+                                  setIsOpen(true);
+                                  setFileIndex(idx);
+                                },
+                              }}
+                            />
+                          </GridItem>
+                        ))}
                     </GridContainer>
                   </GridItem>
                 </GridContainer>
@@ -166,11 +168,9 @@ export const ShowConfigMap = ({
                 focus
                 mode="yaml"
                 theme="tomorrow_night"
-                value={configMap && configMap.getIn([
-                  'configs',
-                  fileIndex,
-                  'data',
-                ])}
+                value={
+                  configMap && configMap.getIn(['configs', fileIndex, 'data'])
+                }
                 height="calc(100vh - 225px)"
                 width="calc(100vw - 200px)"
                 readOnly

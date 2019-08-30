@@ -14,9 +14,7 @@ import ClustersPage, {
 } from 'containers/ClustersPage/Loadable';
 import ClusterManagePage from 'containers/ClusterManagePage/Loadable';
 import ClusterDetailPage from 'containers/ClusterDetailPage/Loadable';
-import NodesPage, {
-  NodeDetailPage,
-} from 'containers/NodesPage/Loadable';
+import NodesPage, { NodeDetailPage } from 'containers/NodesPage/Loadable';
 import RegistriesPage from 'containers/RegistriesPage/Loadable';
 import NamespacesPage, {
   CreateNamespacePage,
@@ -145,14 +143,14 @@ const appRoutes = [
     icon: Dashboard,
     component: EventsPage,
   },
-  //registry
+  // registry
   {
     path: '/registries',
     name: 'Registries',
     icon: Dashboard,
     component: RegistriesPage,
   },
-  //registry end
+  // registry end
   {
     path: '/clusters/:cluster_id/namespaces',
     name: 'namespaces',
@@ -351,7 +349,8 @@ const appRoutes = [
     component: CreateServicePage,
   },
   {
-    path: '/clusters/:cluster_id/namespaces/:namespace_id/services/:service_id/show',
+    path:
+      '/clusters/:cluster_id/namespaces/:namespace_id/services/:service_id/show',
     name: 'Show Service',
     icon: Dashboard,
     component: ShowServicePage,
@@ -371,14 +370,15 @@ const appRoutes = [
     component: CreateIngressPage,
   },
   {
-    path: '/clusters/:cluster_id/namespaces/:namespace_id/ingresses/:ingress_id/show',
+    path:
+      '/clusters/:cluster_id/namespaces/:namespace_id/ingresses/:ingress_id/show',
     name: 'Show Ingress',
     icon: Dashboard,
     component: ShowIngressPage,
   },
   // ingresses end
   // udpingresses start
-   {
+  {
     path: '/clusters/:cluster_id/namespaces/:namespace_id/udpingresses',
     name: 'Udpingresses',
     icon: Dashboard,
@@ -391,7 +391,8 @@ const appRoutes = [
     component: CreateUdpingressPage,
   },
   {
-    path: '/clusters/:cluster_id/namespaces/:namespace_id/udpingresses/:udpingress_id/show',
+    path:
+      '/clusters/:cluster_id/namespaces/:namespace_id/udpingresses/:udpingress_id/show',
     name: 'Show Udpingress',
     icon: Dashboard,
     component: ShowUdpingressPage,
@@ -510,7 +511,8 @@ const appRoutes = [
     component: ApplicationStorePage,
   },
   {
-    path: '/clusters/:cluster_id/namespaces/:namespace_id/charts/:chart_id/show',
+    path:
+      '/clusters/:cluster_id/namespaces/:namespace_id/charts/:chart_id/show',
     name: 'Show Chart Detail',
     icon: Dashboard,
     component: CreateApplicationPage,
@@ -524,7 +526,8 @@ const appRoutes = [
     component: ApplicationsPage,
   },
   {
-    path: '/clusters/:cluster_id/namespaces/:namespace_id/applications/:application_id/show',
+    path:
+      '/clusters/:cluster_id/namespaces/:namespace_id/applications/:application_id/show',
     name: 'Application Detail',
     icon: Dashboard,
     component: ApplicationDetailPage,

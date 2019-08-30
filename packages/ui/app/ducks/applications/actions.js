@@ -6,7 +6,7 @@ import * as c from './constants';
 export const loadApplications = (meta) => ({
   type: c.LOAD_APPLICATIONS,
   payload: {},
-  meta
+  meta,
 });
 
 export const loadApplicationsSuccess = (resp, meta) => ({
@@ -88,5 +88,3 @@ export const clearDeleteErrorInfo = () => ({
   type: c.CLEAR_DELETE_ERROR_INFO,
   payload: {},
 });
-
-

@@ -28,14 +28,12 @@ import messages from './messages';
 
 export const formName = 'createServiceForm';
 
-const ExposedPortsComponent = ({ meta: { touched, error, invalid }}) => {
+const ExposedPortsComponent = ({ meta: { touched, error, invalid } }) => {
   console.log('meta: ', { touched, error, invalid });
   return (
     <>
       <FormattedMessage {...messages.formExposedPorts} />
-      {touched && (typeof error === 'string') && (
-        <Danger>{error}</Danger>
-      )}
+      {touched && typeof error === 'string' && <Danger>{error}</Danger>}
     </>
   );
 };
@@ -55,15 +53,24 @@ const validate = (values) => {
     }
   });
   const exposedPorts = values.get('exposedPorts') || [];
-  const enabled = exposedPorts.reduce((enabled, p) => enabled || p.get('enable'), false);
+  const enabled = exposedPorts.reduce(
+    (enabled, p) => enabled || p.get('enable'),
+    false
+  );
   exposedPorts.forEach((port, i) => {
     if (!enabled) {
       errors.exposedPorts = errors.exposedPorts || [];
-      errors.exposedPorts[i] = { ...(errors.exposedPorts[i] || {}), enable: 'Required' };
+      errors.exposedPorts[i] = {
+        ...(errors.exposedPorts[i] || {}),
+        enable: 'Required',
+      };
     }
     if (!port.get('port')) {
       errors.exposedPorts = errors.exposedPorts || [];
-      errors.exposedPorts[i] = { ...(errors.exposedPorts[i] || {}), port: 'Required' };
+      errors.exposedPorts[i] = {
+        ...(errors.exposedPorts[i] || {}),
+        port: 'Required',
+      };
     }
   });
   if (exposedPorts.size === 0) {
@@ -111,7 +118,9 @@ const Form = ({
               <GridContainer>
                 <GridItem xs={3} sm={3} md={3}>
                   <SelectField
-                    label={<FormattedMessage {...messages.formTargetResourceType} />}
+                    label={
+                      <FormattedMessage {...messages.formTargetResourceType} />
+                    }
                     name="targetResourceType"
                     options={['deployments', 'statefulSets', 'daemonSets']}
                     onChange={(evt) => {
@@ -130,11 +139,19 @@ const Form = ({
                     onChange={(evt) => {
                       const name = evt.target.value;
                       changeFormValue('name', name);
-                      const workload = targetNameOptions.find((t) => t.get('name') === name);
+                      const workload = targetNameOptions.find(
+                        (t) => t.get('name') === name
+                      );
                       const exposedPorts = workload
-                            .get('containers')
-                            .reduce((meno, c) => meno.concat(c.get('exposedPorts') || fromJS([])), fromJS([]))
-                            .map((exposedPort) => exposedPort.set('targetPort', exposedPort.get('port')));
+                        .get('containers')
+                        .reduce(
+                          (meno, c) =>
+                            meno.concat(c.get('exposedPorts') || fromJS([])),
+                          fromJS([])
+                        )
+                        .map((exposedPort) =>
+                          exposedPort.set('targetPort', exposedPort.get('port'))
+                        );
                       changeFormValue('exposedPorts', exposedPorts);
                     }}
                     fullWidth
@@ -147,24 +164,19 @@ const Form = ({
                     label={<FormattedMessage {...messages.formName} />}
                     name="name"
                     fullWidth
-                    inputProps={{ type: 'text', autoComplete: 'off', readOnly: true }}
+                    inputProps={{
+                      type: 'text',
+                      autoComplete: 'off',
+                      readOnly: true,
+                    }}
                   />
                 </GridItem>
               </GridContainer>
               <GridContainer>
-                <GridItem
-                  xs={12}
-                  sm={12}
-                  md={12}
-                  className={classes.formLine}
-                >
+                <GridItem xs={12} sm={12} md={12} className={classes.formLine}>
                   <RadioField
                     name="serviceType"
-                    label={
-                      <FormattedMessage
-                        {...messages.formServiceType}
-                      />
-                    }
+                    label={<FormattedMessage {...messages.formServiceType} />}
                     classes={{
                       formControl: classes.radioControl,
                       formLabel: classes.radioLabel,
@@ -180,12 +192,7 @@ const Form = ({
                 </GridItem>
               </GridContainer>
               <GridContainer>
-                <GridItem
-                  xs={12}
-                  sm={12}
-                  md={12}
-                  className={classes.formLine}
-                >
+                <GridItem xs={12} sm={12} md={12} className={classes.formLine}>
                   <ExposedPortsField name="exposedPorts" />
                 </GridItem>
               </GridContainer>
@@ -200,50 +207,29 @@ const Form = ({
                     <SwitchField
                       name={`exposedPorts.${i}.enable`}
                       label={
-                        <FormattedMessage
-                          {...messages.formExposedPortEnable}
-                        />
+                        <FormattedMessage {...messages.formExposedPortEnable} />
                       }
                     />
                   </GridItem>
-                  <GridItem
-                    xs={3}
-                    sm={3}
-                    md={3}
-                    className={classes.formLine}
-                  >
+                  <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
                     <ReadOnlyInput
                       labelText={
-                        <FormattedMessage
-                          {...messages.formExposedPortName}
-                        />
+                        <FormattedMessage {...messages.formExposedPortName} />
                       }
                       fullWidth
                       value={exposedPort.get('name')}
                     />
                   </GridItem>
-                  <GridItem
-                    xs={3}
-                    sm={3}
-                    md={3}
-                    className={classes.formLine}
-                  >
+                  <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
                     <ReadOnlyInput
                       labelText={
-                        <FormattedMessage
-                          {...messages.formExposedPortTarget}
-                        />
+                        <FormattedMessage {...messages.formExposedPortTarget} />
                       }
                       fullWidth
                       value={exposedPort.get('targetPort')}
                     />
                   </GridItem>
-                  <GridItem
-                    xs={3}
-                    sm={3}
-                    md={3}
-                    className={classes.formLine}
-                  >
+                  <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
                     <ReadOnlyInput
                       labelText={
                         <FormattedMessage

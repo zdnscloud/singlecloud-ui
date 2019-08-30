@@ -83,5 +83,5 @@ export const removeRegistryEpic = (action$, state$, { ajax }) =>
 export default combineEpics(
   loadRegistriesEpic,
   createRegistryEpic,
-  removeRegistryEpic,
+  removeRegistryEpic
 );

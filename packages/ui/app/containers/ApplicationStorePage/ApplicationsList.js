@@ -18,10 +18,7 @@ import GridContainer from 'components/Grid/GridContainer';
 import * as actions from 'ducks/charts/actions';
 import { makeSelectCurrentID as makeSelectCurrentClusterID } from 'ducks/clusters/selectors';
 import { makeSelectCurrentID as makeSelectCurrentNamespaceID } from 'ducks/namespaces/selectors';
-import {
-  makeSelectCharts,
-  makeSelectChartsList,
-} from 'ducks/charts/selectors';
+import { makeSelectCharts, makeSelectChartsList } from 'ducks/charts/selectors';
 
 import messages from './messages';
 import styles from './styles';

@@ -64,7 +64,7 @@ const tableSchema = schema
     if (sch.id === 'name') {
       return {
         ...sch,
-        component: ({ data }) => (
+        component: ({ data }) =>
           data.get('status') === 'Running' ? (
             <Button
               link
@@ -73,8 +73,9 @@ const tableSchema = schema
             >
               {data.get('name')}
             </Button>
-          ) : data.get('name')
-        ),
+          ) : (
+            data.get('name')
+          ),
       };
     }
     return sch;

@@ -27,7 +27,8 @@ export const makeSelectApplications = () =>
     makeSelectClusterID(),
     makeSelectNamespaceID(),
     (substate, clusterID, namespaceID) =>
-      substate.getIn(['applications', clusterID, namespaceID]) || substate.clear()
+      substate.getIn(['applications', clusterID, namespaceID]) ||
+      substate.clear()
   );
 
 export const makeSelectApplicationsList = () =>
@@ -64,8 +65,8 @@ export const makeSelectCurrentApplication = () =>
     makeSelectNamespaceID(),
     makeSelectApplicationID(),
     (substate, clusterID, namespaceID, applicationID) =>
-    substate.getIn(['applications', clusterID, namespaceID, applicationID]) ||
-    substate.clear()
+      substate.getIn(['applications', clusterID, namespaceID, applicationID]) ||
+      substate.clear()
   );
 
 export const makeSelectDeleteApplicationError = () =>

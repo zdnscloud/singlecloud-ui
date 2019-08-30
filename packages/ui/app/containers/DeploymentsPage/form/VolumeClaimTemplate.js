@@ -22,7 +22,7 @@ const VolumeClaimTemplate = ({
 }) => {
   const classes = useStyles();
   const storageClassesOptions = storageClasses.toList().map((sc) => ({
-  label: sc.get('name'),
+    label: sc.get('name'),
     value: sc.get('name'),
   }));
 

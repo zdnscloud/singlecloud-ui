@@ -31,9 +31,7 @@ export const makeSelectRegistries = () =>
   createSelector(
     selectDomain,
 
-    (substate) =>
-      substate.getIn(['data'])
-        || substate.clear()
+    (substate) => substate.getIn(['data']) || substate.clear()
   );
 
 export const makeSelectRegistriesList = () =>
@@ -42,26 +40,25 @@ export const makeSelectRegistriesList = () =>
     makeSelectRegistries(),
 
     (substate, data) =>
-      (substate.getIn(['list']) || fromJS([]))
-        .map((id) => data.get(id)) || fromJS([])
+      (substate.getIn(['list']) || fromJS([])).map((id) => data.get(id)) ||
+      fromJS([])
   );
 
 export const makeSelectCurrentID = () =>
-   createSelector(
-     createMatchSelector('*/globalConfig/:id/*'),
-     (match) => {
-       if (match && match.params) {
-         return match.params.id;
-       }
-       return '';
-     }
-   );
+  createSelector(
+    createMatchSelector('*/globalConfig/:id/*'),
+    (match) => {
+      if (match && match.params) {
+        return match.params.id;
+      }
+      return '';
+    }
+  );
 
 export const makeSelectCurrent = () =>
   createSelector(
     selectDomain,
 
     makeSelectCurrentID(),
-    (substate, id) =>
-      substate.getIn(['data', id]) || substate.clear()
+    (substate, id) => substate.getIn(['data', id]) || substate.clear()
   );

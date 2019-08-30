@@ -26,9 +26,12 @@ import GridContainer from 'components/Grid/GridContainer';
 import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
 import ConfirmDialog from 'components/Confirm/ConfirmDialog';
 
-import { makeSelectCurrentID as makeSelectCurrentClusterID } from 'ducks/clusters/selectors';
+import {
+  makeSelectCurrentID as makeSelectCurrentClusterID,
+  makeSelectCurrentCluster,
+} from 'ducks/clusters/selectors';
 import { makeSelectCurrentID as makeSelectCurrentNamespaceID } from 'ducks/namespaces/selectors';
-import { makeSelectCurrentCluster } from 'ducks/clusters/selectors';
+
 import * as sActions from 'ducks/secrets/actions';
 import {
   makeSelectSecrets,
@@ -88,11 +91,18 @@ export const CreateStatefulSet = ({
   const classes = useStyles();
   useEffect(() => {
     loadStorageClasses(cluster.getIn(['links', 'storageclasses']), clusterID);
-  }, [clusterID]);
+  }, [cluster, clusterID, loadStorageClasses]);
   useEffect(() => {
     loadConfigMaps({ url: configMapURL, clusterID, namespaceID });
     loadSecrets({ url: secretURL, clusterID, namespaceID });
-  }, [clusterID, namespaceID]);
+  }, [
+    clusterID,
+    configMapURL,
+    loadConfigMaps,
+    loadSecrets,
+    namespaceID,
+    secretURL,
+  ]);
   const [open, setOpen] = useState(false);
 
   async function doSubmit(formValues) {
@@ -108,7 +118,7 @@ export const CreateStatefulSet = ({
         }
         return item;
       });
-      persistentVolumes.forEach((item)=>{
+      persistentVolumes.forEach((item) => {
         if (item && item.size) {
           item.size = `${item.size}Gi`;
         }
@@ -135,10 +145,14 @@ export const CreateStatefulSet = ({
       <ConfirmDialog
         open={!!open}
         onClose={() => {
-          routeTo(`/clusters/${clusterID}/namespaces/${namespaceID}/statefulSets`);
+          routeTo(
+            `/clusters/${clusterID}/namespaces/${namespaceID}/statefulSets`
+          );
         }}
         onAction={() => {
-          routeTo(`/clusters/${clusterID}/namespaces/${namespaceID}/services/create?from=true&targetResourceType=statefulSets&targetName=${open}`);
+          routeTo(
+            `/clusters/${clusterID}/namespaces/${namespaceID}/services/create?from=true&targetResourceType=statefulSets&targetName=${open}`
+          );
         }}
         title={<FormattedMessage {...messages.successTitle} />}
         content={<FormattedMessage {...messages.successContent} />}
@@ -165,9 +179,9 @@ export const CreateStatefulSet = ({
               storageClasses={storageClasses}
               initialValues={fromJS({
                 replicas: 1,
-                containers: [{ name: '',exposedPorts:[]}],
-                persistentVolumes:[],
-                advancedOptions: {}
+                containers: [{ name: '', exposedPorts: [] }],
+                persistentVolumes: [],
+                advancedOptions: {},
               })}
               formValues={values}
             />
@@ -217,6 +231,4 @@ const withConnect = connect(
   mapDispatchToProps
 );
 
-export default compose(
-  withConnect,
-)(CreateStatefulSet);
+export default compose(withConnect)(CreateStatefulSet);

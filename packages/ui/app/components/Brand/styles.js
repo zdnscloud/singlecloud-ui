@@ -24,8 +24,7 @@ const sidebarStyle = (theme) => ({
     lineHeight: '30px',
     textDecoration: 'none',
     backgroundColor: 'transparent',
-    '&,&:hover': {
-    },
+    '&,&:hover': {},
   },
   logoImage: {
     width: '30px',

@@ -12,14 +12,13 @@ import {
 
 import {
   makeSelectCurrent as makeSelectCurrentCluster,
+  makeSelectCurrentID as makeSelectCurrentClusterID,
 } from 'ducks/clusters/selectors';
 
 import {
   makeSelectClusterID,
   makeSelectNamespaceID,
 } from 'ducks/app/selectors';
-
-import { makeSelectCurrentID as makeSelectCurrentClusterID } from 'ducks/clusters/selectors';
 
 import { prefix } from './constants';
 import { initialState } from './index';
@@ -44,8 +43,7 @@ export const makeSelectMonitors = () =>
     makeSelectClusterID(),
 
     (substate, clusterID) =>
-      substate.getIn(['data', clusterID])
-        || substate.clear()
+      substate.getIn(['data', clusterID]) || substate.clear()
   );
 
 export const makeSelectMonitorsList = () =>
@@ -55,20 +53,21 @@ export const makeSelectMonitorsList = () =>
     makeSelectClusterID(),
 
     (substate, data, clusterID) =>
-      (substate.getIn(['list', clusterID]) || fromJS([]))
-        .map((id) => data.get(id)) || fromJS([])
+      (substate.getIn(['list', clusterID]) || fromJS([])).map((id) =>
+        data.get(id)
+      ) || fromJS([])
   );
 
 export const makeSelectCurrentID = () =>
-   createSelector(
-     createMatchSelector('*/monitors/:id/*'),
-     (match) => {
-       if (match && match.params) {
-         return match.params.id;
-       }
-       return '';
-     }
-   );
+  createSelector(
+    createMatchSelector('*/monitors/:id/*'),
+    (match) => {
+      if (match && match.params) {
+        return match.params.id;
+      }
+      return '';
+    }
+  );
 
 export const makeSelectCurrent = () =>
   createSelector(

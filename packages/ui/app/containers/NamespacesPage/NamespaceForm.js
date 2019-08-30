@@ -22,52 +22,50 @@ const NamespaceForm = ({
   initialValues,
   type,
   namespaceID,
-}) => {
-  return (
-    <form className={getByKey(classes, 'form')} onSubmit={handleSubmit}>
-      <GridContainer>
-        {error ? (
-          <GridItem xs={12} sm={12} md={12}>
-            <Danger>{getByKey(error, ['response', 'message'])}</Danger>
-          </GridItem>
-        ) : null}
-        {type === 'edit' ? (
-          <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
-            <ReadOnlyInput
-              labelText={<FormattedMessage {...messages.formName} />}
-              fullWidth
-              value={namespaceID}
-            />
-          </GridItem>
-        ) : (
-          <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
-            <InputField
-              label={<FormattedMessage {...messages.formName} />}
-              name="name"
-              fullWidth
-              inputProps={{
-                type: 'text',
-                autoComplete: 'off',
-              }}
-            />
-          </GridItem>
-        )}
-      </GridContainer>
-      <GridContainer>
+}) => (
+  <form className={getByKey(classes, 'form')} onSubmit={handleSubmit}>
+    <GridContainer>
+      {error ? (
+        <GridItem xs={12} sm={12} md={12}>
+          <Danger>{getByKey(error, ['response', 'message'])}</Danger>
+        </GridItem>
+      ) : null}
+      {type === 'edit' ? (
+        <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
+          <ReadOnlyInput
+            labelText={<FormattedMessage {...messages.formName} />}
+            fullWidth
+            value={namespaceID}
+          />
+        </GridItem>
+      ) : (
         <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
           <InputField
-            label={<FormattedMessage {...messages.storageQuota} />}
-            name="storage"
+            label={<FormattedMessage {...messages.formName} />}
+            name="name"
             fullWidth
             inputProps={{
+              type: 'text',
               autoComplete: 'off',
-              endAdornment: 'Gi',
             }}
           />
         </GridItem>
-      </GridContainer>
-    </form>
-  );
-};
+      )}
+    </GridContainer>
+    <GridContainer>
+      <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
+        <InputField
+          label={<FormattedMessage {...messages.storageQuota} />}
+          name="storage"
+          fullWidth
+          inputProps={{
+            autoComplete: 'off',
+            endAdornment: 'Gi',
+          }}
+        />
+      </GridItem>
+    </GridContainer>
+  </form>
+);
 
 export default NamespaceForm;

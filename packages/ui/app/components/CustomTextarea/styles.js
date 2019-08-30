@@ -1,4 +1,3 @@
-
 const customInputStyle = (theme) => ({
   disabled: {
     '&:before': {

@@ -169,6 +169,4 @@ const withConnect = connect(
   mapDispatchToProps
 );
 
-export default compose(
-  withConnect,
-)(AppMenubar);
+export default compose(withConnect)(AppMenubar);

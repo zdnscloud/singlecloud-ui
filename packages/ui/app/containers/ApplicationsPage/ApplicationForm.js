@@ -1,9 +1,9 @@
 import React, { PureComponent } from 'react';
 import { compose } from 'redux';
 import { FormattedMessage } from 'react-intl';
-import { Field, reduxForm } from 'redux-form/immutable';
+import { Field, reduxForm, FieldArray } from 'redux-form/immutable';
 import getByKey from '@gsmlg/utils/getByKey';
-import { FieldArray } from 'redux-form/immutable';
+
 import { fromJS } from 'immutable';
 
 import Danger from 'components/Typography/Danger';
@@ -37,7 +37,9 @@ const ApplicationForm = ({
     value: sc.get('version'),
   }));
   const chartVersion = formValues && formValues.get('chartVersion');
-  const currentVersion = versions.find((v) => v.get('version') === chartVersion);
+  const currentVersion = versions.find(
+    (v) => v.get('version') === chartVersion
+  );
   const config = (currentVersion && currentVersion.get('config')) || fromJS([]);
 
   return (
@@ -57,11 +59,17 @@ const ApplicationForm = ({
           <CardBody>
             <GridContainer>
               <GridItem xs={1} sm={1} md={1}>
-                <img alt="application logo"  src={chart.get('icon')} className={classes.appLogo} />
+                <img
+                  alt="application logo"
+                  src={chart.get('icon')}
+                  className={classes.appLogo}
+                />
               </GridItem>
               <GridItem xs={11} sm={11} md={11}>
                 <p className={classes.title}>{chart.get('id')}</p>
-                <p className={classes.description}>{chart.get('description')}</p>
+                <p className={classes.description}>
+                  {chart.get('description')}
+                </p>
               </GridItem>
             </GridContainer>
           </CardBody>
@@ -129,7 +137,6 @@ const ApplicationForm = ({
                 />
               </GridItem>
             </GridContainer>
-
           </CardBody>
         </Card>
         {chartVersion ? (
@@ -154,6 +161,5 @@ const ApplicationForm = ({
     </form>
   );
 };
-
 
 export default ApplicationForm;

@@ -44,5 +44,5 @@ export default defineMessages({
   pending: {
     id: `${scope}.pending`,
     defaultMessage: 'Pending',
-  }
+  },
 });

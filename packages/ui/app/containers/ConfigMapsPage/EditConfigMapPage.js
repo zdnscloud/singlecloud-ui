@@ -91,7 +91,7 @@ export const EditConfigMap = ({
 }) => {
   useEffect(() => {
     readConfigMap(id, { url: `${url}/${id}`, clusterID, namespaceID });
-  }, [id]);
+  }, [clusterID, id, namespaceID, readConfigMap, url]);
 
   async function doSubmit(formValues) {
     try {

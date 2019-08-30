@@ -53,7 +53,7 @@ export const DeploymentsPage = ({
     return () => {
       // try cancel something when unmount
     };
-  }, [url]);
+  }, [clusterID, loadDeployments, namespaceID, url]);
 
   return (
     <div className={classes.root}>
@@ -92,7 +92,6 @@ export const DeploymentsPage = ({
   );
 };
 
-
 const mapStateToProps = createStructuredSelector({
   clusterID: makeSelectCurrentClusterID(),
   namespaceID: makeSelectCurrentNamespaceID(),
@@ -112,6 +111,4 @@ const withConnect = connect(
   mapDispatchToProps
 );
 
-export default compose(
-  withConnect,
-)(DeploymentsPage);
+export default compose(withConnect)(DeploymentsPage);
