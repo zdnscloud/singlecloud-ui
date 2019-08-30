@@ -15,16 +15,9 @@ const app = express();
 // If you need a backend, e.g. an API, add your custom backend-specific middleware here
 const backend = process.env.BACKEND || 'localhost';
 
-const proxier = proxy({ target: `http://${backend}:8088`, changeOrigin: true, ws: true });
-
-app.use(
-  '/apis',
-  proxier
-);
-app.use(
-  '/web',
-  proxier
-);
+const proxier = proxy({ target: `http://${backend}:8088`, changeOrigin: false, ws: true });
+app.use('/apis', proxier);
+app.use('/web', proxier);
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
