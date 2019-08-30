@@ -77,16 +77,18 @@ export class CreateStoragePage extends React.PureComponent {
   }
 
   componentDidUpdate(prevProps) {
-    const { clusterID: prevClusterID } = prevProps;
-    const { clusterID } = this.props;
-    if (clusterID !== prevClusterID) {
+    const { devicesURL: prevDevicesURL } = prevProps;
+    const { devicesURL } = this.props;
+    if (devicesURL !== prevDevicesURL) {
       this.load();
     }
   }
 
   load() {
     const { clusterID, loadBlockDevices, devicesURL } = this.props;
-    loadBlockDevices(devicesURL, clusterID);
+    if (devicesURL) {
+      loadBlockDevices(devicesURL, clusterID);
+    }
   }
 
   render() {
