@@ -140,13 +140,13 @@ export class StoragePage extends React.PureComponent {
                             onClick={
                               enableFilter
                                 ? (evt) => {
-                                  const nodeName = node.get('name');
-                                  if (nodeName === this.state.checkedNode) {
-                                    this.setState({ checkedNode: null });
-                                  } else {
-                                    this.setState({ checkedNode: nodeName });
+                                    const nodeName = node.get('name');
+                                    if (nodeName === this.state.checkedNode) {
+                                      this.setState({ checkedNode: null });
+                                    } else {
+                                      this.setState({ checkedNode: nodeName });
+                                    }
                                   }
-                                }
                                 : null
                             }
                           />

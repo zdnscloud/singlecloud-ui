@@ -10,12 +10,12 @@ const DynamicForm = ({ fields, config, classes, formValues }) => {
   const renderItem = (item) => {
     const radioOptions = item.get('validValues')
       ? item
-        .get('validValues')
-        .toList()
-        .map((sc) => ({
-          label: sc,
-          value: sc,
-        }))
+          .get('validValues')
+          .toList()
+          .map((sc) => ({
+            label: sc,
+            value: sc,
+          }))
       : null;
 
     switch (item.get('type')) {

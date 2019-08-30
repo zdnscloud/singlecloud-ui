@@ -144,49 +144,49 @@ export const ButtonGroup = ({
           {status === 'Updating' ||
           status === 'Creating' ||
           status === 'Unavailable' ? (
-              <Button
-                className={classes.handleBtn}
-                onClick={(evt) => {
-                  openClusterLog(clusterID);
-                }}
-              >
-                <img src={logIcon} alt="logIcon" className={classes.buttonIcon} />
-                <FormattedMessage {...messages.updateLogButton} />
-              </Button>
-            ) : (
-              <Button className={classes.unableBtn}>
-                <img src={logIcon} alt="logIcon" className={classes.buttonIcon} />
-                <FormattedMessage {...messages.updateLogButton} />
-              </Button>
-            )}
+            <Button
+              className={classes.handleBtn}
+              onClick={(evt) => {
+                openClusterLog(clusterID);
+              }}
+            >
+              <img src={logIcon} alt="logIcon" className={classes.buttonIcon} />
+              <FormattedMessage {...messages.updateLogButton} />
+            </Button>
+          ) : (
+            <Button className={classes.unableBtn}>
+              <img src={logIcon} alt="logIcon" className={classes.buttonIcon} />
+              <FormattedMessage {...messages.updateLogButton} />
+            </Button>
+          )}
 
           {status === 'Updating' ||
           status === 'Connecting' ||
           status === 'Creating' ? (
-              <Confirm
+            <Confirm
               handleConfirm={handleConfirm}
-                dialogContentText={messages.stopPromptText}
+              dialogContentText={messages.stopPromptText}
               component={
-                  <Button className={classes.handleBtn}>
+                <Button className={classes.handleBtn}>
                   <img
-                      src={stopIcon}
-                      alt="stopIcon"
+                    src={stopIcon}
+                    alt="stopIcon"
                     className={classes.buttonIcon}
-                    />
+                  />
                   <FormattedMessage {...messages.stopButton} />
                 </Button>
-                }
+              }
             />
-            ) : (
+          ) : (
             <Button className={classes.unableBtn}>
               <img
-                  src={unableStopIcon}
+                src={unableStopIcon}
                 alt="stopIcon"
-                  className={classes.buttonIcon}
+                className={classes.buttonIcon}
               />
-                <FormattedMessage {...messages.stopButton} />
+              <FormattedMessage {...messages.stopButton} />
             </Button>
-            )}
+          )}
         </GridItem>
       </GridContainer>
     </Fragment>
