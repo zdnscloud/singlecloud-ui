@@ -14,13 +14,16 @@ const app = express();
 
 // If you need a backend, e.g. an API, add your custom backend-specific middleware here
 const backend = process.env.BACKEND || 'localhost';
+
+const proxier = proxy({ target: `http://${backend}:8088`, changeOrigin: true, ws: true });
+
 app.use(
   '/apis',
-  proxy({ target: `http://${backend}:8088`, changeOrigin: false, ws: true })
+  proxier
 );
 app.use(
   '/web',
-  proxy({ target: `http://${backend}:8088`, changeOrigin: false, ws: true })
+  proxier
 );
 
 app.use(bodyParser.json());
@@ -38,11 +41,11 @@ const host = customHost || null; // Let http.Server use its default IPv6/4 host
 const prettyHost = customHost || 'localhost';
 
 // use the gzipped bundle
-app.get('*.js', (req, res, next) => {
-  req.url = req.url + '.gz'; // eslint-disable-line
-  res.set('Content-Encoding', 'gzip');
-  next();
-});
+// app.get('*.js', (req, res, next) => {
+//   req.url = req.url + '.gz'; // eslint-disable-line
+//   res.set('Content-Encoding', 'gzip');
+//   next();
+// });
 
 // Start your app.
 app.listen(port, host, async (err) => {
