@@ -3,6 +3,9 @@ import { ucfirst } from '@gsmlg/utils';
 import TimeCell from 'components/Cells/TimeCell';
 import { Link } from 'react-router-dom';
 import Button from 'components/CustomButtons/Button';
+import IconButton from '@material-ui/core/IconButton';
+import UpgradeIcon from 'components/Icons/Upgrade';
+import RollbackIcon from 'components/Icons/Rollback';
 import ConfirmDelete from 'components/ConfirmDelete/ConfirmDelete';
 
 const schema = ['name', 'creationTimestamp'];
@@ -27,6 +30,14 @@ const tableSchema = schema
       label: 'Actions',
       component: (props) => (
         <Fragment>
+          <IconButton onClick={() => props.setUpgrade(props.data.get('id'))}>
+            <UpgradeIcon />
+          </IconButton>
+
+          <IconButton onClick={() => props.setRollback(props.data.get('id'))}>
+            <RollbackIcon />
+          </IconButton>
+
           <ConfirmDelete
             actionName={props.removeDaemonSet}
             id={props.data.get('id')}

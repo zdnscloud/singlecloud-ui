@@ -229,4 +229,32 @@ export default defineMessages({
     id: `${scope}.successContent`,
     defaultMessage: 'DaemonSet has been created, would you like to create a service for it?',
   },
+  formReason: {
+    id: `${scope}.formReason`,
+    defaultMessage: 'Reason',
+  },
+  formVersionInfo: {
+    id: `${scope}.formVersionInfo`,
+    defaultMessage: 'VersionInfo',
+  },
+  dialogUpgrade: {
+    id: `${scope}.dialogUpgrade`,
+    defaultMessage: 'Upgrade',
+  },
+  dialogRollback: {
+    id: `${scope}.dialogRollback`,
+    defaultMessage: 'Rollback',
+  },
+  dialogUpgradeButton: {
+    id: `${scope}.dialogUpgradeButton`,
+    defaultMessage: 'Upgrade',
+  },
+  dialogRollbackButton: {
+    id: `${scope}.dialogRollbackButton`,
+    defaultMessage: 'Rollback',
+  },
+  dialogCancelButton: {
+    id: `${scope}.dialogCancelButton`,
+    defaultMessage: 'Cancel',
+  },
 });

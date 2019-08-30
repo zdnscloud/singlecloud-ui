@@ -1,4 +1,4 @@
-export default (any, key) => {
+export default (any, key, defaultValue = undefined) => {
   if (Array.isArray(key)) {
     let k = void(0);
     let val = any;
@@ -13,5 +13,5 @@ export default (any, key) => {
       return any[key];
     } catch(e) {}
   }
-  return void(0);
+  return defaultValue;
 }

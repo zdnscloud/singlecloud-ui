@@ -3,7 +3,7 @@
  * StatefulSetsPage
  *
  */
-import React, { Fragment } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
@@ -32,6 +32,8 @@ import * as actions from 'ducks/statefulSets/actions';
 import messages from './messages';
 import useStyles from './styles';
 import schema from './tableSchema';
+import UpgradeDialog from './UpgradeDialog';
+import RollbackDialog from './RollbackDialog';
 
 /* eslint-disable react/prefer-stateless-function */
 export const StatefulSetsTable = ({
@@ -40,15 +42,27 @@ export const StatefulSetsTable = ({
   clusterID,
   namespaceID,
   removeStatefulSet,
+  executeStatefulSetAction,
 }) => {
   const classes = useStyles();
   const pathname = location.get('pathname');
+  const [dialog, setDialog] = useState([null, null]);
+  const closeDialog = () => setDialog([null, null]);
+  const setUpgrade = (id) => setDialog(['upgrade', id]);
+  const setRollback = (id) => setDialog(['rollback', id]);
   const mergedSchema = schema
         .map((sch) => {
           if (sch.id === 'actions') {
             return {
               ...sch,
-              props: { removeStatefulSet, clusterID, namespaceID },
+              props: {
+                executeStatefulSetAction,
+                removeStatefulSet,
+                setUpgrade,
+                setRollback,
+                clusterID,
+                namespaceID,
+              },
             };
           }
           if (sch.id === 'name') {
@@ -66,6 +80,16 @@ export const StatefulSetsTable = ({
 
   return (
     <Paper className={classes.tableWrapper}>
+      <UpgradeDialog
+        open={dialog[0] === 'upgrade'}
+        close={closeDialog}
+        id={dialog[1]}
+      />
+      <RollbackDialog
+        open={dialog[0] === 'rollback'}
+        close={closeDialog}
+        id={dialog[1]}
+      />
       <SimpleTable
         className={classes.table}
         schema={mergedSchema}

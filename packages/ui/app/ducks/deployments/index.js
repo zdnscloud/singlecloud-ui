@@ -101,6 +101,13 @@ export const reducer = (
     case c.REMOVE_DEPLOYMENT_FAILURE:
       return state;
 
+    case c.EXECUTE_DEPLOYMENT_ACTION:
+      return state;
+    case c.EXECUTE_DEPLOYMENT_ACTION_SUCCESS:
+      return state;
+    case c.EXECUTE_DEPLOYMENT_ACTION_FAILURE:
+      return state;
+
     default:
       return state;
   }

@@ -103,3 +103,25 @@ export const removeDeploymentFailure = (error, meta = {}) => ({
   error: true,
 });
 
+export const executeDeploymentAction = (action, data, meta = {}) => ({
+  type: c.EXECUTE_DEPLOYMENT_ACTION,
+  payload: {
+    action,
+    data,
+  },
+  meta,
+});
+
+export const executeDeploymentActionSuccess = (resp, meta = {}) => ({
+  type: c.EXECUTE_DEPLOYMENT_ACTION_SUCCESS,
+  payload: resp,
+  meta,
+});
+
+export const executeDeploymentActionFailure = (error, meta = {}) => ({
+  type: c.EXECUTE_DEPLOYMENT_ACTION_FAILURE,
+  payload: error,
+  meta,
+  error: true,
+});
+
