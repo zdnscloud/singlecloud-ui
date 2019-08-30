@@ -24,12 +24,7 @@ import messages from './messages';
 import styles from './styles';
 import schema from './tableSchema';
 
-/* eslint-disable react/prefer-stateless-function */
 export class EventsTable extends React.PureComponent {
-  static propTypes = {
-    classes: PropTypes.object.isRequired,
-  };
-
   render() {
     const { classes, events, filters } = this.props;
     const allFilter = '__all__';

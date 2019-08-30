@@ -115,7 +115,7 @@ const cardHeaderStyle = (theme) => ({
   cyanInverseCardHeader: {
     color: theme.palette.icons.d,
     '&:not($cardHeaderIcon)': {
-      background: `linear-gradient(60deg, ${theme.palette.text.c}, ${theme.palette.text.c})`,
+      background: `linear-gradient(60deg, ${theme.palette.light.main}, ${theme.palette.light.main})`,
     },
   },
 });

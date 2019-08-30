@@ -120,6 +120,9 @@ const styles = (theme) => ({
     right: 0,
     top: 6,
   },
+  tableWrapper: {
+    overflow: 'auto',
+  },
 });
 
 export default styles;

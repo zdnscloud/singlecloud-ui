@@ -12,7 +12,7 @@ const cardIconStyle = (theme) => ({
     background: `linear-gradient(60deg, ${theme.palette.primary.main}, ${theme.palette.primary.main})`,
   },
   cyanCardHeader: {
-    background: `linear-gradient(60deg, ${theme.palette.text.c}, ${theme.palette.text.c})`,
+    background: `linear-gradient(60deg, ${theme.palette.light.main}, ${theme.palette.light.main})`,
   },
   cyanInverseCardHeader: {
     background: `transparent`,

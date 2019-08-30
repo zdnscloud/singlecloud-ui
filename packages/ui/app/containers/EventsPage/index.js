@@ -51,13 +51,6 @@ const formInitialValues = fromJS({
 
 /* eslint-disable react/prefer-stateless-function */
 export class EventsPage extends React.PureComponent {
-  static propTypes = {
-    initAction: PropTypes.func,
-    classes: PropTypes.object.isRequired,
-    match: PropTypes.object,
-    location: PropTypes.object,
-  };
-
   render() {
     const { classes, clusterID, events, filters } = this.props;
     const options = events.reduce(
