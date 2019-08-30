@@ -71,7 +71,7 @@ export class ApplicationDetailPage extends React.PureComponent {
                     <p className={classes.tag}>Version {application.get('chartVersion')}</p>
                 </GridItem>
                 <GridItem xs={6} sm={6} md={6}>
-                    <p className={classes.tag}>Creaced {moment(application.get('creationTimestamp')).format('YYYY-MM-DD HH:mm:ss')} </p>
+                    <p className={classes.tag}>Created at {moment(application.get('creationTimestamp')).format('YYYY-MM-DD HH:mm:ss')} </p>
                 </GridItem>
             </GridContainer>
             <GridContainer className={classes.grid}>
