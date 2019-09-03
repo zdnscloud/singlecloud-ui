@@ -31,8 +31,8 @@ export const styles = (theme) => ({
   },
   events: {
     ...theme.palette.transition,
-    display: ({ hasEvents }) => hasEvents ? 'flex' : 'none',
-    width: ({ hasEvents }) => hasEvents ? 310 : 0,
+    display: ({ hasEvents }) => (hasEvents ? 'flex' : 'none'),
+    width: ({ hasEvents }) => (hasEvents ? 310 : 0),
     overflow: 'auto',
   },
   selectIcon: {
@@ -47,35 +47,35 @@ export const styles = (theme) => ({
     boxShadow: 'none !important',
     height: 40,
     color: '#4A4A4A',
-    marginLeft: 12
+    marginLeft: 12,
   },
   menuItem: {
     minWidth: 106,
     '&:hover': {
       backgroundColor: '#fff',
     },
-   },
+  },
   secondMenu: {
     left: '4px !important',
-    zIndex: 5,
+    zIndex: 1300,
     backgroundColor: '#fff',
-    boxShadow: '0 1px 4px 0 rgba(0, 0, 0, 0.14)'
+    boxShadow: '0 1px 4px 0 rgba(0, 0, 0, 0.14)',
   },
   ItemText: {
     color: '#6A8090',
     '&:hover': {
       color: '#000',
-    }
+    },
   },
   activeItemText: {
-    color:theme.palette.highlight.main,
+    color: theme.palette.highlight.main,
     '&:hover': {
       color: '#000',
-    }
+    },
   },
   selectMenu: {
     boxShadow: '0 1px 4px 0 rgba(0, 0, 0, 0.14)',
-  }
+  },
 });
 
 export default makeStyles(styles);
