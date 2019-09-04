@@ -32,6 +32,9 @@ import applicationsEpic from 'ducks/applications/epic';
 import registriesEpic from 'ducks/registries/epic';
 import monitorsEpic from 'ducks/monitors/epic';
 import chartsEpic from 'ducks/charts/epic';
+import storageClustersEpic from 'ducks/storageClusters/epic';
+import storageClassesEpic from 'ducks/storageClasses/epic';
+import blockDevicesEpic from 'ducks/blockDevices/epic';
 // import epics end
 
 /**
@@ -66,7 +69,10 @@ export default function createEpic(injectedEpics = {}) {
     applicationsEpic,
     registriesEpic,
     monitorsEpic,
-    chartsEpic
+    chartsEpic,
+    storageClustersEpic,
+    storageClassesEpic,
+    blockDevicesEpic
     // combine epics end
   );
 

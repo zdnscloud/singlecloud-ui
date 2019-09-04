@@ -31,21 +31,26 @@ import CardBody from 'components/Card/CardBody';
 import ReadOnlyInput from 'components/CustomInput/ReadOnlyInput';
 import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
 
-import * as actions from 'ducks/storages/actions';
+import * as actions from 'ducks/storageClusters/actions';
 import { makeSelectCurrentID as makeSelectClusterID } from 'ducks/clusters/selectors';
-import { makeSelectURL } from 'ducks/storages/selectors';
+import { makeSelectURL } from 'ducks/storageClusters/selectors';
 
-import StoragesTable from './StoragesTable';
+import StoragesTable from './Table';
 import messages from './messages';
 import StoragePageHelmet from './helmet';
 import styles from './styles';
 
-export const StoragesPage = ({ classes, clusterID, loadStorages, url }) => {
+export const StoragesPage = ({
+  classes,
+  clusterID,
+  loadStorageClusters,
+  url,
+}) => {
   useEffect(() => {
-    loadStorages(url, clusterID);
-    const t = setInterval(() => loadStorages(url, clusterID), 3000);
+    loadStorageClusters(url, { clusterID });
+    const t = setInterval(() => loadStorageClusters(url, { clusterID }), 3000);
     return () => clearInterval(t);
-  }, [clusterID, loadStorages, url]);
+  }, [clusterID, loadStorageClusters, url]);
 
   return (
     <div className={classes.root}>
@@ -68,7 +73,6 @@ export const StoragesPage = ({ classes, clusterID, loadStorages, url }) => {
                   <FormattedMessage {...messages.storages} />
                 </h4>
                 <IconButton
-                  aria-label={<FormattedMessage {...messages.createStorage} />}
                   component={Link}
                   to={`/clusters/${clusterID}/storages/create`}
                 >

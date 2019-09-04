@@ -60,6 +60,15 @@ import chartsReducer, { prefix as chartsPrefix } from 'ducks/charts';
 import configMapsReducer, {
   prefix as configMapsPrefix,
 } from 'ducks/configMaps';
+import storageClustersReducer, {
+  prefix as storageClustersPrefix,
+} from 'ducks/storageClusters';
+import storageClassesReducer, {
+  prefix as storageClassesPrefix,
+} from 'ducks/storageClasses';
+import blockDevicesReducer, {
+  prefix as blockDevicesPrefix,
+} from 'ducks/blockDevices';
 // import reducers end
 
 /**
@@ -99,6 +108,9 @@ export default function createReducer(injectedReducers = {}) {
     [registriesPrefix]: registriesReducer,
     [monitorsPrefix]: monitorsReducer,
     [chartsPrefix]: chartsReducer,
+    [storageClustersPrefix]: storageClustersReducer,
+    [storageClassesPrefix]: storageClassesReducer,
+    [blockDevicesPrefix]: blockDevicesReducer,
     // combine reducers end
     ...injectedReducers,
   });
