@@ -3,7 +3,7 @@ import { ucfirst } from '@gsmlg/utils';
 import TimeCell from 'components/Cells/TimeCell';
 import { Link } from 'react-router-dom';
 import Button from 'components/CustomButtons/Button';
-import IconButton from '@material-ui/core/IconButton';
+import IconButton from 'components/CustomIconButtons/IconButton';
 import UpgradeIcon from 'components/Icons/Upgrade';
 import RollbackIcon from 'components/Icons/Rollback';
 import ConfirmDelete from 'components/ConfirmDelete/ConfirmDelete';

@@ -2,7 +2,7 @@ import React, { Fragment } from 'react';
 import { ucfirst } from '@gsmlg/utils';
 import { Link } from 'react-router-dom';
 import Button from 'components/CustomButtons/Button';
-import IconButton from '@material-ui/core/IconButton';
+import IconButton from 'components/CustomIconButtons/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
 import TimeCell from 'components/Cells/TimeCell';
 import ConfirmDelete from 'components/ConfirmDelete/ConfirmDelete';

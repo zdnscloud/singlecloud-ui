@@ -82,7 +82,7 @@ const styles = (theme) => ({
     height: 320,
   },
   button: {
-    margin: theme.spacing(1),
+    margin: 0,
   },
   h5: {
     marginBottom: theme.spacing(2),
