@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>简介 - SingleCloud UI Documents</title>
+        <title>开发管理 - SingleCloud UI Documents</title>
         
 
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
@@ -80,7 +80,7 @@
               <b class="sidebar-book-title">SingleCloud UI Documents</b>
             </div>
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li><a href="intro.html"><strong aria-hidden="true">1.</strong> 简介</a></li><li><a href="view.html"><strong aria-hidden="true">2.</strong> 视图管理</a></li><li><a href="state.html"><strong aria-hidden="true">3.</strong> 状态管理</a></li><li><a href="intl.html"><strong aria-hidden="true">4.</strong> 页面语言管理</a></li><li><a href="dev.html"><strong aria-hidden="true">5.</strong> 开发管理</a></li></ol>
+                <ol class="chapter"><li><a href="intro.html"><strong aria-hidden="true">1.</strong> 简介</a></li><li><a href="view.html"><strong aria-hidden="true">2.</strong> 视图管理</a></li><li><a href="state.html"><strong aria-hidden="true">3.</strong> 状态管理</a></li><li><a href="intl.html"><strong aria-hidden="true">4.</strong> 页面语言管理</a></li><li><a href="dev.html" class="active"><strong aria-hidden="true">5.</strong> 开发管理</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -130,16 +130,28 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#简介" id="简介">简介</a></h1>
-<h2><a class="header" href="#什么是-singlecloud" id="什么是-singlecloud">什么是 <code>SingleCloud</code></a></h2>
-<p>Zcloud是一个企业级容器云的完整解决方案。为用户提供以多集群、多租户为核心的资源管理能力和以应用商店、可视化编排为核心的应用部署能力，帮助企业在不同环境中简便快捷的部署和管理容器。同时，Zcloud也是云原生技术体系和方法论的最佳实践，具备了以下特点：可自动化弹性扩展、持续交付、微服务化，承载着云原生应用安全、可靠的运行。Zcloud助力企业适应云原生，应用云原生，最终实现企业IT支撑系统的迭代升级，降低成本、提升企业竞争力。Zcloud定位于原生Kubernetes发行版本，与操作系统和内核的关系一致。Zcloud不仅提供了强大的便捷UI操作界面，而且还对DNS、网络、存储、资源管理、多集群等众多方面做了极大的改进，降低了其使用门槛，同时也为企业建立自己的私有容器云平台提供了基础支撑。</p>
-<h2><a class="header" href="#ui" id="ui">UI</a></h2>
-<p>UI项目是SingleCloud的用户界面</p>
+                        <h1><a class="header" href="#开发管理" id="开发管理">开发管理</a></h1>
+<h2><a class="header" href="#javascript-项目" id="javascript-项目">Javascript 项目</a></h2>
+<p>开发使用 <code>lerna</code> 管理多个项目来协同开发，项目在目录 <code>/packages</code> 下</p>
+<ul>
+<li><code>ui</code> UI项目</li>
+<li><code>com</code> 自定UI组件</li>
+<li><code>utils</code> 自定utils</li>
+<li><code>helm-icons</code> 项目的helm图标</li>
+</ul>
+<h2><a class="header" href="#启动开发" id="启动开发">启动开发</a></h2>
+<p>在 <code>packages/ui</code> 目录下 执行</p>
+<pre><code class="language-shell">npm start
+</code></pre>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="intl.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
                         
 
                         
@@ -150,6 +162,10 @@
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+                    <a href="intl.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
                 
 
                 

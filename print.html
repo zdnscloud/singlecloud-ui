@@ -82,7 +82,7 @@
               <b class="sidebar-book-title">SingleCloud UI Documents</b>
             </div>
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li><a href="intro.html"><strong aria-hidden="true">1.</strong> 简介</a></li><li><a href="view.html"><strong aria-hidden="true">2.</strong> 视图管理</a></li><li><a href="state.html"><strong aria-hidden="true">3.</strong> 状态管理</a></li><li><a href="intl.html"><strong aria-hidden="true">4.</strong> 页面语言管理</a></li></ol>
+                <ol class="chapter"><li><a href="intro.html"><strong aria-hidden="true">1.</strong> 简介</a></li><li><a href="view.html"><strong aria-hidden="true">2.</strong> 视图管理</a></li><li><a href="state.html"><strong aria-hidden="true">3.</strong> 状态管理</a></li><li><a href="intl.html"><strong aria-hidden="true">4.</strong> 页面语言管理</a></li><li><a href="dev.html"><strong aria-hidden="true">5.</strong> 开发管理</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -147,6 +147,19 @@
 <p>Singlecloud UI 使用了 <code>React-Intl</code> 来管理页面的语言显示</p>
 <p>关于<a href="https://github.com/formatjs/react-intl/blob/master/docs/README.md">React-intl</a></p>
 <h2><a class="header" href="#使用规则" id="使用规则">使用规则</a></h2>
+<h1><a class="header" href="#开发管理" id="开发管理">开发管理</a></h1>
+<h2><a class="header" href="#javascript-项目" id="javascript-项目">Javascript 项目</a></h2>
+<p>开发使用 <code>lerna</code> 管理多个项目来协同开发，项目在目录 <code>/packages</code> 下</p>
+<ul>
+<li><code>ui</code> UI项目</li>
+<li><code>com</code> 自定UI组件</li>
+<li><code>utils</code> 自定utils</li>
+<li><code>helm-icons</code> 项目的helm图标</li>
+</ul>
+<h2><a class="header" href="#启动开发" id="启动开发">启动开发</a></h2>
+<p>在 <code>packages/ui</code> 目录下 执行</p>
+<pre><code class="language-shell">npm start
+</code></pre>
 
                     </main>
 
