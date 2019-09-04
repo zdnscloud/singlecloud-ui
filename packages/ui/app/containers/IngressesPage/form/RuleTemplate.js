@@ -86,7 +86,6 @@ const RuleTemplate = ({
             <TableCell
               className={`${classes.tableCell} ${classes.tableHeadCell}`}
             >
-              >
               <FormattedMessage {...messages.formServicePort} />
             </TableCell>
             <TableCell
@@ -155,7 +154,6 @@ const RuleTemplate = ({
                   variant="contained"
                   onClick={(evt) => fields.remove(i)}
                 >
-                  >
                   <MinusIcon />
                 </IconButton>
               </TableCell>
