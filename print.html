@@ -147,6 +147,66 @@
 <p>Singlecloud UI 使用了 <code>React-Intl</code> 来管理页面的语言显示</p>
 <p>关于<a href="https://github.com/formatjs/react-intl/blob/master/docs/README.md">React-intl</a></p>
 <h2><a class="header" href="#使用规则" id="使用规则">使用规则</a></h2>
+<h4><a class="header" href="#命名规则简述" id="命名规则简述">命名规则简述：</a></h4>
+<ul>
+<li>
+<p>左侧菜单：app.containers.App.leftMenu***</p>
+</li>
+<li>
+<p>头部菜单栏:</p>
+<ul>
+<li>内容：app.containers.App.menubar ***</li>
+<li>按钮: app.containers.App.menubarButton ***</li>
+</ul>
+</li>
+<li>
+<p>面包屑: app.containers.***page.pageTitle</p>
+</li>
+<li>
+<p>内容标题: app.containers.***page.secondaryTitle *** </p>
+</li>
+<li>
+<p>表格： </p>
+<ul>
+<li>表头：app.containers.***page.tableTitle ***</li>
+<li>表体：app.containers.***page.tableContent ***</li>
+<li>表尾：app.containers.***page.tableFooter ***</li>
+</ul>
+</li>
+<li>
+<p>表单： </p>
+<ul>
+<li>内容: app.containers.***page.form *** </li>
+<li>按钮：app.containers.***page.formButton ***</li>
+<li>过滤搜索：app.containers.***page.search *** </li>
+<li>搜索按钮：app.containers.***page.searchButton ***</li>
+</ul>
+</li>
+<li>
+<p>弹窗：</p>
+<ul>
+<li>标题：app.containers.***page.dialogTitle</li>
+<li>内容：app.containers.***page.dialog *** </li>
+<li>按钮：app.containers.***page.dialogButton ***</li>
+</ul>
+</li>
+<li>
+<p>列表：</p>
+<ul>
+<li>标题：app.containers.***page.listTitle ***</li>
+<li>内容：app.containers.***page.list *** </li>
+<li>按钮：app.containers.***page.listButton ***</li>
+</ul>
+</li>
+<li>
+<p>标签页： </p>
+<ul>
+<li>标题：app.containers.***page.tabTitle ***</li>
+<li>内容：app.containers.***page.tab *** </li>
+<li>按钮：app.containers.***page.tabButton ***</li>
+</ul>
+</li>
+</ul>
 <h1><a class="header" href="#开发管理" id="开发管理">开发管理</a></h1>
 <h2><a class="header" href="#javascript-项目" id="javascript-项目">Javascript 项目</a></h2>
 <p>开发使用 <code>lerna</code> 管理多个项目来协同开发，项目在目录 <code>/packages</code> 下</p>
