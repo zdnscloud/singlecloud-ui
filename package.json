@@ -7,6 +7,7 @@
     "generate": "plop --plopfile generators/index.js",
     "lint:staged": "lerna run lint:staged"
   },
+  "pre-commit": "lint:staged",
   "devDependencies": {
     "lerna": "^3.15.0",
     "plop": "^2.2.1"
