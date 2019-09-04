@@ -78,7 +78,13 @@ export const RollbackDialog = ({
 
   async function doSubmit(formValues) {
     try {
-      const data = formValues.toJS();
+      const current = history.find(
+        (h) => h.version === formValues.get('version')
+      );
+      const data = {
+        version: formValues.get('version'),
+        reason: current.changeReason,
+      };
       const item = deployments.get(id);
       const url = item.getIn(['links', 'self']);
       await new Promise((resolve, reject) => {
@@ -116,7 +122,6 @@ export const RollbackDialog = ({
           const data = getByKey(resp, ['response', 'history'], []);
           setHistory(data);
           const init = {
-            reason: '',
             version: data.length > 0 ? data[data.length - 1].version : 0,
           };
           setInitialValues(fromJS(init));
