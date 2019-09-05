@@ -13,7 +13,7 @@ import { fromJS } from 'immutable';
 import { reduxForm, getFormValues } from 'redux-form/immutable';
 import { SubmissionError, submit } from 'redux-form';
 
-import { withStyles } from '@material-ui/core/styles';
+import Helmet from 'components/Helmet/Helmet';
 import Menubar from 'components/Menubar';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Typography from '@material-ui/core/Typography';
@@ -41,11 +41,12 @@ import {
   makeSelectBlockDevicesList,
 } from 'ducks/blockDevices/selectors';
 
+import { usePush, useLocation } from 'hooks/router';
+
 import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
 import messages from './messages';
-import styles from './styles';
-import StoragesPageHelmet from './helmet';
-import StorageForm from './StorageForm';
+import useStyles from './styles';
+import StorageForm from './Form';
 
 export const formName = 'createStorageForm';
 
@@ -69,7 +70,6 @@ export const EditStoragePage = ({
   loadBlockDevices,
   devicesURL,
   blockDevices,
-  classes,
   clusterID,
   id,
   readStorageCluster,
@@ -79,12 +79,15 @@ export const EditStoragePage = ({
   url,
   values,
 }) => {
+  const classes = useStyles();
+  const push = usePush();
+  const location = useLocation();
   useEffect(() => {
     readStorageCluster(id, { clusterID, url: `${url}/${id}` });
     if (devicesURL) {
-      loadBlockDevices(devicesURL, clusterID);
+      loadBlockDevices(devicesURL, { clusterID });
     }
-  }, [devicesURL, url, id, readStorageCluster, clusterID, loadBlockDevices]);
+  }, [devicesURL, url, id, clusterID, readStorageCluster, loadBlockDevices]);
 
   const itemUrl = storage.getIn(['links', 'update']);
   async function doSubmit(formValues) {
@@ -96,6 +99,7 @@ export const EditStoragePage = ({
           { resolve, reject, clusterID, url: itemUrl }
         );
       });
+      push(`/clusters/${clusterID}/storageClusters`);
     } catch (error) {
       throw new SubmissionError({ _error: error });
     }
@@ -103,30 +107,31 @@ export const EditStoragePage = ({
 
   return (
     <div className={classes.root}>
-      <StoragesPageHelmet />
+      <Helmet title={messages.pageTitle} description={messages.pageDesc} />
       <CssBaseline />
       <div className={classes.content}>
         <Breadcrumbs
           data={[
             {
-              path: `/clusters/${clusterID}/storages`,
+              path: `/clusters/${clusterID}/storageClusters`,
               name: <FormattedMessage {...messages.pageTitle} />,
             },
             {
-              path: `/clusters/${clusterID}/storages/${storage.get('id')}/edit`,
               name: <FormattedMessage {...messages.editStorage} />,
             },
           ]}
         />
         <Typography component="div" className="">
-          <EditStorageForm
-            classes={classes}
-            onSubmit={doSubmit}
-            initialValues={storage}
-            blockDevices={blockDevices.concat(storage.get('config'))}
-            formValues={values || storage}
-            edit
-          />
+          {storage.size > 0 ? (
+            <EditStorageForm
+              classes={classes}
+              onSubmit={doSubmit}
+              initialValues={storage}
+              blockDevices={blockDevices.concat(storage.get('config'))}
+              formValues={values || storage}
+              edit
+            />
+          ) : null}
           <GridContainer className={classes.grid}>
             <GridItem xs={12} sm={12} md={12}>
               <CardFooter className={classes.cardFooter}>
@@ -171,7 +176,4 @@ const withConnect = connect(
   mapDispatchToProps
 );
 
-export default compose(
-  withConnect,
-  withStyles(styles)
-)(EditStoragePage);
+export default compose(withConnect)(EditStoragePage);

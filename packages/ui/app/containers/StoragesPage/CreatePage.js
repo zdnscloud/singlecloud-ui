@@ -13,7 +13,7 @@ import { fromJS } from 'immutable';
 import { reduxForm, getFormValues } from 'redux-form/immutable';
 import { SubmissionError, submit } from 'redux-form';
 
-import { withStyles } from '@material-ui/core/styles';
+import Helmet from 'components/Helmet/Helmet';
 import Menubar from 'components/Menubar';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Typography from '@material-ui/core/Typography';
@@ -37,11 +37,12 @@ import {
   makeSelectBlockDevicesList,
 } from 'ducks/blockDevices/selectors';
 
+import { usePush, useLocation } from 'hooks/router';
+
 import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
 import messages from './messages';
-import styles from './styles';
-import StoragesPageHelmet from './helmet';
-import StorageForm from './StorageForm';
+import useStyles from './styles';
+import StorageForm from './Form';
 
 export const formName = 'createStorageForm';
 
@@ -67,7 +68,6 @@ export const CreateStoragePage = ({
   loadBlockDevices,
   devicesURL,
   blockDevices,
-  classes,
   cluster,
   clusterID,
   createStorageCluster,
@@ -75,9 +75,12 @@ export const CreateStoragePage = ({
   url,
   values,
 }) => {
+  const classes = useStyles();
+  const push = usePush();
+  const location = useLocation();
   useEffect(() => {
     if (devicesURL) {
-      loadBlockDevices(devicesURL, clusterID);
+      loadBlockDevices(devicesURL, { clusterID });
     }
   }, [clusterID, devicesURL, loadBlockDevices]);
 
@@ -87,6 +90,7 @@ export const CreateStoragePage = ({
       await new Promise((resolve, reject) => {
         createStorageCluster({ ...data }, { resolve, reject, clusterID, url });
       });
+      push(`/clusters/${clusterID}/storageClusters`);
     } catch (error) {
       throw new SubmissionError({ _error: error });
     }
@@ -94,17 +98,16 @@ export const CreateStoragePage = ({
 
   return (
     <div className={classes.root}>
-      <StoragesPageHelmet />
+      <Helmet title={messages.pageTitle} description={messages.pageDesc} />
       <CssBaseline />
       <div className={classes.content}>
         <Breadcrumbs
           data={[
             {
-              path: `/clusters/${clusterID}/storages`,
+              path: `/clusters/${clusterID}/storageClusters`,
               name: <FormattedMessage {...messages.pageTitle} />,
             },
             {
-              path: `/clusters/${clusterID}/storages/create`,
               name: <FormattedMessage {...messages.createStorage} />,
             },
           ]}
@@ -159,7 +162,4 @@ const withConnect = connect(
   mapDispatchToProps
 );
 
-export default compose(
-  withConnect,
-  withStyles(styles)
-)(CreateStoragePage);
+export default compose(withConnect)(CreateStoragePage);

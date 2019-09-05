@@ -20,7 +20,6 @@ import cronJobsEpic from 'ducks/cronJobs/epic';
 import jobsEpic from 'ducks/jobs/epic';
 import podsEpic from 'ducks/pods/epic';
 import serviceLinksEpic from 'ducks/serviceLinks/epic';
-import storagesEpic from 'ducks/storages/epic';
 import networksEpic from 'ducks/networks/epic';
 import clustersEpic from 'ducks/clusters/epic';
 import resourceQuotasEpic from 'ducks/resourceQuotas/epic';
@@ -60,7 +59,6 @@ export default function createEpic(injectedEpics = {}) {
     jobsEpic,
     podsEpic,
     serviceLinksEpic,
-    storagesEpic,
     networksEpic,
     resourceQuotasEpic,
     servicesEpic,

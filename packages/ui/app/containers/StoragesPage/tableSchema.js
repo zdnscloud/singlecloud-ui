@@ -31,21 +31,21 @@ const tableSchema = schema
     {
       id: 'actions',
       label: 'Actions',
-      component: (props) => (
+      component: ({ pathname, data, removeStorageCluster, clusterID }) => (
         <Fragment>
           <IconButton
             aria-label="Edit"
             component={Link}
-            to={`${props.pathname}/${props.data.get('id')}/edit`}
+            to={`${pathname}/${data.get('id')}/edit`}
           >
             <EditIcon />
           </IconButton>
 
           <ConfirmDelete
-            actionName={props.removeStorage}
-            id={props.data.get('id')}
-            url={props.data.getIn(['links', 'remove'])}
-            clusterID={props.clusterID}
+            actionName={removeStorageCluster}
+            id={data.get('id')}
+            url={data.getIn(['links', 'remove'])}
+            clusterID={clusterID}
           />
         </Fragment>
       ),

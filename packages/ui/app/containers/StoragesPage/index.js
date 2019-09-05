@@ -11,7 +11,7 @@ import { FormattedMessage } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import { bindActionCreators, compose } from 'redux';
 
-import { withStyles } from '@material-ui/core/styles';
+import Helmet from 'components/Helmet/Helmet';
 import { Link } from 'react-router-dom';
 import Menubar from 'components/Menubar';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -37,15 +37,10 @@ import { makeSelectURL } from 'ducks/storageClusters/selectors';
 
 import StoragesTable from './Table';
 import messages from './messages';
-import StoragePageHelmet from './helmet';
-import styles from './styles';
+import useStyles from './styles';
 
-export const StoragesPage = ({
-  classes,
-  clusterID,
-  loadStorageClusters,
-  url,
-}) => {
+export const StoragesPage = ({ clusterID, loadStorageClusters, url }) => {
+  const classes = useStyles();
   useEffect(() => {
     loadStorageClusters(url, { clusterID });
     const t = setInterval(() => loadStorageClusters(url, { clusterID }), 3000);
@@ -54,13 +49,13 @@ export const StoragesPage = ({
 
   return (
     <div className={classes.root}>
-      <StoragePageHelmet />
+      <Helmet title={messages.pageTitle} description={messages.pageDesc} />
       <CssBaseline />
       <div className={classes.content}>
         <Breadcrumbs
           data={[
             {
-              path: `/clusters/${clusterID}/storages`,
+              path: `/clusters/${clusterID}/storageClusters`,
               name: <FormattedMessage {...messages.pageTitle} />,
             },
           ]}
@@ -74,7 +69,7 @@ export const StoragesPage = ({
                 </h4>
                 <IconButton
                   component={Link}
-                  to={`/clusters/${clusterID}/storages/create`}
+                  to={`/clusters/${clusterID}/storageClusters/create`}
                 >
                   <AddIcon />
                 </IconButton>
@@ -108,7 +103,4 @@ const withConnect = connect(
   mapDispatchToProps
 );
 
-export default compose(
-  withConnect,
-  withStyles(styles)
-)(StoragesPage);
+export default compose(withConnect)(StoragesPage);

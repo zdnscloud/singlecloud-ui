@@ -31,7 +31,7 @@ export const reducer = (
     case c.LOAD_BLOCK_DEVICES:
       return state;
     case c.LOAD_BLOCK_DEVICES_SUCCESS: {
-      const { data, list } = procCollectionData(payload);
+      const { data, list } = procCollectionData(payload, { generateID: true });
       const { clusterID } = meta;
       return state
         .setIn(['data', clusterID], fromJS(data))

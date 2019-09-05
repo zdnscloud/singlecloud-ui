@@ -136,7 +136,7 @@ export const makeSelectLeftMenus = () =>
               { name: 'Nodes', path: `/clusters/${cluster}/nodes` },
               {
                 name: 'Storages',
-                path: `/clusters/${cluster}/storages`,
+                path: `/clusters/${cluster}/storageClusters`,
               },
               {
                 name: 'Network',

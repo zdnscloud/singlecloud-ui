@@ -21,7 +21,6 @@ import secretsReducer, { prefix as secretsPrefix } from 'ducks/secrets';
 import cronJobsReducer, { prefix as cronJobsPrefix } from 'ducks/cronJobs';
 import jobsReducer, { prefix as jobsPrefix } from 'ducks/jobs';
 import podsReducer, { prefix as podsPrefix } from 'ducks/pods';
-import storagesReducer, { prefix as storagesPrefix } from 'ducks/storages';
 import networksReducer, { prefix as networksPrefix } from 'ducks/networks';
 import namespacesReducer, {
   prefix as namespacesPrefix,
@@ -93,7 +92,6 @@ export default function createReducer(injectedReducers = {}) {
     [cronJobsPrefix]: cronJobsReducer,
     [jobsPrefix]: jobsReducer,
     [podsPrefix]: podsReducer,
-    [storagesPrefix]: storagesReducer,
     [networksPrefix]: networksReducer,
     [namespacesPrefix]: namespacesReducer,
     [resourceQuotasPrefix]: resourceQuotasReducer,

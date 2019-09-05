@@ -11,13 +11,13 @@ export default loadable(() =>
 );
 
 export const CreateStoragePage = loadable(() =>
-  import(/* webpackChunkName: "CreateStoragePage" */ './CreateStoragePage')
+  import(/* webpackChunkName: "CreateStoragePage" */ './CreatePage')
 );
 
 export const EditStoragePage = loadable(() =>
-  import(/* webpackChunkName: "EditStoragePage" */ './EditStoragePage')
+  import(/* webpackChunkName: "EditStoragePage" */ './EditPage')
 );
 
 export const StorageDetailPage = loadable(() =>
-  import(/* webpackChunkName: "StorageDetailPage" */ './StorageDetailPage')
+  import(/* webpackChunkName: "StorageDetailPage" */ './ShowItemPage')
 );

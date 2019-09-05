@@ -11,7 +11,6 @@ import { FormattedMessage } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import { bindActionCreators, compose } from 'redux';
 
-import { withStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import { SimpleTable } from '@gsmlg/com';
 
@@ -23,18 +22,16 @@ import {
   makeSelectStorageClustersList,
 } from 'ducks/storageClusters/selectors';
 
+import { usePush, useLocation } from 'hooks/router';
+
 import messages from './messages';
-import styles from './styles';
+import useStyles from './styles';
 import schema from './tableSchema';
 
-export const StoragesTable = ({
-  classes,
-  clusterID,
-  data,
-  removeStorageCluster,
-  location,
-}) => {
-  const pathname = location.get('pathname');
+export const StoragesTable = ({ clusterID, data, removeStorageCluster }) => {
+  const classes = useStyles();
+  const location = useLocation();
+  const { pathname } = location;
   const mergedSchema = schema
     .map((sch) => {
       if (sch.id === 'actions') {
@@ -68,7 +65,6 @@ export const StoragesTable = ({
 };
 
 const mapStateToProps = createStructuredSelector({
-  location: makeSelectLocation(),
   clusterID: makeSelectClusterID(),
   data: makeSelectStorageClustersList(),
 });
@@ -86,7 +82,4 @@ const withConnect = connect(
   mapDispatchToProps
 );
 
-export default compose(
-  withConnect,
-  withStyles(styles)
-)(StoragesTable);
+export default compose(withConnect)(StoragesTable);
