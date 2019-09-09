@@ -97,7 +97,11 @@ export class ClusterManagePage extends React.PureComponent {
           <Breadcrumbs
             data={[
               {
-                name: <FormattedMessage {...messages.clusterManage} />,
+                path: '/clusters',
+                name: <FormattedMessage {...messages.pageTitleClusters} />,
+              },
+              {
+                name: <FormattedMessage {...messages.pageTitle} />,
               },
             ]}
           />

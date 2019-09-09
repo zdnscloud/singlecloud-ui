@@ -17,8 +17,8 @@ export default defineMessages({
     id: `${scope}.pageDesc`,
     defaultMessage: 'This is the ClusterManagePage description!',
   },
-  clusters: {
-    id: `${scope}.clusters`,
+  pageTitleClusters: {
+    id: `${scope}.pageTitleClusters`,
     defaultMessage: 'Clusters',
   },
   tableTitleName: {
@@ -128,10 +128,6 @@ export default defineMessages({
   cancleClustersButton: {
     id: `${scope}.cancleClustersButton`,
     defaultMessage: 'cancleClusters',
-  },
-  clusterManage: {
-    id: `${scope}.clusterManage`,
-    defaultMessage: 'ClusterManage',
   },
   basicInfo: {
     id: `${scope}.basicInfo`,
