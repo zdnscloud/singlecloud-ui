@@ -65,10 +65,6 @@ export default defineMessages({
     id: `${scope}.formClusterSuffix`,
     defaultMessage: 'formClusterSuffix',
   },
-  formClusterSuffix: {
-    id: `${scope}.formClusterSuffix`,
-    defaultMessage: 'formClusterSuffix',
-  },
   formSSHPort: {
     id: `${scope}.formSSHPort`,
     defaultMessage: 'formSSHPort',
@@ -112,26 +108,6 @@ export default defineMessages({
   formForwardDNSSecond: {
     id: `${scope}.formForwardDNSSecond`,
     defaultMessage: 'formForwardDNSSecond',
-  },
-  formPrivateWarehouses: {
-    id: `${scope}.formPrivateWarehouses`,
-    defaultMessage: 'formPrivateWarehouses',
-  },
-  formUrl: {
-    id: `${scope}.formUrl`,
-    defaultMessage: 'formUrl',
-  },
-  formCACertificate: {
-    id: `${scope}.formCACertificate`,
-    defaultMessage: 'formCACertificate',
-  },
-  formUser: {
-    id: `${scope}.formUser`,
-    defaultMessage: 'formUser',
-  },
-  formPwd: {
-    id: `${scope}.formPwd`,
-    defaultMessage: 'formPwd',
   },
   formSinglecloudUrl: {
     id: `${scope}.formSinglecloudUrl`,

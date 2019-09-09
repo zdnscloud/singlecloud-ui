@@ -142,29 +142,6 @@ class ClusterManageForm extends PureComponent {
                   />
                 </GridItem>
               </GridContainer>
-              <GridContainer>
-                <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
-                  <label>
-                    <FormattedMessage {...messages.formPrivateWarehouses} />
-                  </label>
-                </GridItem>
-              </GridContainer>
-              <GridContainer>
-                <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
-                  <ReadOnlyInput
-                    labelText={<FormattedMessage {...messages.formUrl} />}
-                    fullWidth
-                    value={cluster.get('privateRegistrys[0].url')}
-                  />
-                </GridItem>
-                <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
-                  <ReadOnlyInput
-                    labelText={<FormattedMessage {...messages.formUser} />}
-                    fullWidth
-                    value={cluster.get('privateRegistrys[0].user')}
-                  />
-                </GridItem>
-              </GridContainer>
             </CardBody>
           </Card>
           <Card style={{ margin: 0, marginTop: 20 }}>
