@@ -165,15 +165,15 @@ class ClusterManageForm extends PureComponent {
             <CardHeader>
               <h4>
                 <FormattedMessage {...messages.nodeList} />
-                <IconButton
-                  aria-label={<FormattedMessage {...messages.clusters} />}
-                  onClick={(evt) => {
-                    openNode();
-                  }}
-                >
-                  <AddIcon />
-                </IconButton>
               </h4>
+              <IconButton
+                aria-label={<FormattedMessage {...messages.clusters} />}
+                onClick={(evt) => {
+                  openNode();
+                }}
+              >
+                <AddIcon />
+              </IconButton>
             </CardHeader>
             <CardBody>
               <NodeViewDialog />
@@ -195,7 +195,6 @@ const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
       ...actions,
-      submitForm: () => submit(formName),
     },
     dispatch
   );
