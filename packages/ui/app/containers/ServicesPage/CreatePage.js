@@ -161,8 +161,15 @@ export const CreateServicePage = ({
           routeTo(`/clusters/${clusterID}/namespaces/${namespaceID}/services`);
         }}
         onAction={() => {
+          const p = values
+            .get('exposedPorts')
+            .filter((p) => p.get('enable'))
+            .first()
+            .get('protocol');
+          const page = p === 'udp' ? 'udpingresses' : 'ingresses';
+
           routeTo(
-            `/clusters/${clusterID}/namespaces/${namespaceID}/ingresses/create?from=true&targetResourceType=services&targetName=${open}`
+            `/clusters/${clusterID}/namespaces/${namespaceID}/${page}/create?from=true&targetResourceType=services&targetName=${open}`
           );
         }}
         title={<FormattedMessage {...messages.successTitle} />}
