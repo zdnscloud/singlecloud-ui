@@ -25,7 +25,11 @@ const tableSchema = schema
         component: ({ data, value }) => (
           <Fragment>
             {value
-              .map((p) => `${p.get('port')}/${p.get('protocol')}`)
+              .map((p) =>
+                p.get('nodePort')
+                  ? `${p.get('port')}/${p.get('protocol')}/${p.get('nodePort')}`
+                  : `${p.get('port')}/${p.get('protocol')}`
+              )
               .join(', ')}
           </Fragment>
         ),
