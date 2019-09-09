@@ -126,13 +126,19 @@ class ClusterManageForm extends PureComponent {
                 <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
                   <ReadOnlyInput
                     labelText={
-                      <FormattedMessage {...messages.formForwardDNS} />
+                      <FormattedMessage {...messages.formForwardDNSFirst} />
                     }
                     fullWidth
-                    value={
-                      cluster.get('clusterUpstreamDNS') &&
-                      cluster.get('clusterUpstreamDNS').toJS()
+                    value={cluster.getIn(['clusterUpstreamDNS', 0])}
+                  />
+                </GridItem>
+                <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
+                  <ReadOnlyInput
+                    labelText={
+                      <FormattedMessage {...messages.formForwardDNSSecond} />
                     }
+                    fullWidth
+                    value={cluster.getIn(['clusterUpstreamDNS', 1])}
                   />
                 </GridItem>
               </GridContainer>
