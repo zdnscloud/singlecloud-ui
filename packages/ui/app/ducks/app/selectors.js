@@ -105,10 +105,11 @@ export const makeSelectUserMenus = () =>
 export const makeSelectLeftMenus = () =>
   createSelector(
     selectApp,
+    makeSelectLocation(),
     makeSelectClusterID(),
     makeSelectCurrentNamespaceID(),
     makeSelectIsAdmin(),
-    (appState, cluster, namespace, isAdmin) => {
+    (appState, location, cluster, namespace, isAdmin) => {
       let menus = [
         {
           name: 'Global',
@@ -116,7 +117,9 @@ export const makeSelectLeftMenus = () =>
           icon: OverviewIcon,
         },
       ];
-      if (cluster !== '') {
+      const path = location.get('pathname');
+      const isManage = /^\/clusters\/[^/]+\/manage/.test(path);
+      if (cluster !== '' && !isManage) {
         menus = menus.concat([
           {
             name: 'ClusterManagement',
@@ -149,11 +152,6 @@ export const makeSelectLeftMenus = () =>
           //   ],
           //   icon: SystemIcon,
           // },
-        ]);
-      }
-
-      if (cluster !== '') {
-        menus = menus.concat([
           {
             name: 'AppStore',
             children: [
@@ -238,7 +236,6 @@ export const makeSelectLeftMenus = () =>
           icon: UserQuotasIcon,
         },
       ]);
-
       menus = menus.concat([
         {
           name: 'ImageRegistry',
@@ -246,8 +243,7 @@ export const makeSelectLeftMenus = () =>
           path: '/registries',
         },
       ]);
-
-      if (cluster !== '') {
+      if (cluster !== '' && !isManage) {
         menus = menus.concat([
           {
             name: 'ClusterWatch',

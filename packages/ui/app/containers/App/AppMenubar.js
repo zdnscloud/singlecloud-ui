@@ -75,8 +75,11 @@ class AppMenubar extends PureComponent {
       showMenuText,
       toggleMenuText,
       openTerminal,
+      location,
     } = this.props;
     const { userEl } = this.state;
+    const path = location.get('pathname');
+    const isManage = /^\/clusters\/[^/]+\/manage/.test(path);
 
     return (
       <Menubar
@@ -89,7 +92,7 @@ class AppMenubar extends PureComponent {
         }
         headerRightContent={
           <Fragment>
-            {clusterID && (
+            {clusterID && !isManage && (
               <IconButton color="inherit" onClick={openTerminal}>
                 <ShellIcon />
               </IconButton>
@@ -125,7 +128,7 @@ class AppMenubar extends PureComponent {
                 <FormattedMessage {...messages.userLogout} />
               </MenuItem>
             </Menu>
-            {clusterID && (
+            {clusterID && !isManage && (
               <IconButton
                 color="inherit"
                 onClick={(evt) => toggleEventsView(!showEvents)}
@@ -148,7 +151,7 @@ const mapStateToProps = createStructuredSelector({
   activeCluster: makeSelectActiveCluster(),
   clusterID: makeSelectClusterID(),
   showEvents: makeSelectShowEvents(),
-  currentLocation: makeSelectLocation(),
+  location: makeSelectLocation(),
   role: makeSelectRole(),
   userMenus: makeSelectUserMenus(),
   showMenuText: makeSelectShowMenuText(),
