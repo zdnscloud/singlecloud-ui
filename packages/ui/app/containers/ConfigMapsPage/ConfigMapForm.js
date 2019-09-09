@@ -120,63 +120,61 @@ const renderConfigs = ({ fields, meta: { error, submitFailed }, classes }) => (
   </List>
 );
 
-class ConfigMapForm extends PureComponent {
-  state = {};
-
-  render() {
-    const {
-      clusters,
-      handleSubmit,
-      pristine,
-      reset,
-      submitting,
-      error,
-      classes,
-      edit,
-      initialValues,
-      type,
-      configMap,
-    } = this.props;
-    return (
-      <form className={getByKey(classes, 'form')} onSubmit={handleSubmit}>
-        <GridContainer>
-          <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
-            {type === 'create' ? (
-              <InputField
-                label={<FormattedMessage {...messages.formName} />}
-                name="name"
-                formControlProps={{
-                  className: classes.nameControl,
-                }}
-                inputProps={{
-                  type: 'text',
-                  autoComplete: 'off',
-                  disabled: edit,
-                }}
-                fullWidth
-              />
-            ) : (
-              <ReadOnlyInput
-                labelText={<FormattedMessage {...messages.formName} />}
-                value={configMap ? initialValues.get('name') : ''}
-                formControlProps={{
-                  className: classes.nameControl,
-                }}
-                fullWidth
-              />
-            )}
-          </GridItem>
-          <GridItem xs={12} sm={12} md={12}>
-            <FieldArray
-              name="configs"
-              component={renderConfigs}
-              classes={classes}
-            />
-          </GridItem>
-        </GridContainer>
-      </form>
-    );
-  }
-}
+const ConfigMapForm = ({
+  clusters,
+  handleSubmit,
+  pristine,
+  reset,
+  submitting,
+  error,
+  classes,
+  edit,
+  initialValues,
+  type,
+  configMap,
+}) => (
+  <form className={getByKey(classes, 'form')} onSubmit={handleSubmit}>
+    <GridContainer>
+      {error ? (
+        <GridItem xs={12} sm={12} md={12}>
+          <Danger>{getByKey(error, ['response', 'message'])}</Danger>
+        </GridItem>
+      ) : null}
+      <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
+        {type === 'create' ? (
+          <InputField
+            label={<FormattedMessage {...messages.formName} />}
+            name="name"
+            formControlProps={{
+              className: classes.nameControl,
+            }}
+            inputProps={{
+              type: 'text',
+              autoComplete: 'off',
+              disabled: edit,
+            }}
+            fullWidth
+          />
+        ) : (
+          <ReadOnlyInput
+            labelText={<FormattedMessage {...messages.formName} />}
+            value={configMap ? initialValues.get('name') : ''}
+            formControlProps={{
+              className: classes.nameControl,
+            }}
+            fullWidth
+          />
+        )}
+      </GridItem>
+      <GridItem xs={12} sm={12} md={12}>
+        <FieldArray
+          name="configs"
+          component={renderConfigs}
+          classes={classes}
+        />
+      </GridItem>
+    </GridContainer>
+  </form>
+);
 
 export default ConfigMapForm;

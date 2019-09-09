@@ -75,6 +75,11 @@ const SecretForm = ({
 }) => (
   <form className={getByKey(classes, 'form')} onSubmit={handleSubmit}>
     <GridContainer>
+      {error ? (
+        <GridItem xs={12} sm={12} md={12}>
+          <Danger>{getByKey(error, ['response', 'message'])}</Danger>
+        </GridItem>
+      ) : null}
       <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
         {type === 'create' ? (
           <InputField
