@@ -8,7 +8,7 @@ import UpgradeIcon from 'components/Icons/Upgrade';
 import RollbackIcon from 'components/Icons/Rollback';
 import ConfirmDelete from 'components/ConfirmDelete/ConfirmDelete';
 
-const schema = ['name', 'creationTimestamp'];
+const schema = ['name', 'creationTimestamp', 'status'];
 
 const tableSchema = schema
   .map((id) => ({
@@ -64,6 +64,19 @@ const tableSchema = schema
         ),
       };
     }
+
+    if (sch.id === 'status') {
+      return {
+        ...sch,
+        component: ({ data }) => (
+          <>
+            {data.getIn(['status', 'numberReady'])}/
+            {data.getIn(['status', 'desiredNumberScheduled'])}
+          </>
+        ),
+      };
+    }
+
     return sch;
   });
 export default tableSchema;

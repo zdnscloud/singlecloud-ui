@@ -50,8 +50,17 @@ export const DeploymentsPage = ({
         namespaceID,
       });
     }
+    const t = setInterval(() => {
+      if (url) {
+        loadDeployments(url, {
+          clusterID,
+          namespaceID,
+        });
+      }
+    }, 3000);
+
     return () => {
-      // try cancel something when unmount
+      clearInterval(t);
     };
   }, [clusterID, loadDeployments, namespaceID, url]);
 
