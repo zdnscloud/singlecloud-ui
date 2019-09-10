@@ -49,6 +49,7 @@ export const CreateIngressPage = ({
   namespaceID,
   services,
   values,
+  // eslint-disable-next-line no-shadow
   loadServices,
   surl,
   location,
@@ -68,9 +69,6 @@ export const CreateIngressPage = ({
         namespaceID,
       });
     }
-    return () => {
-      // try cancel something when unmount
-    };
   }, [clusterID, loadServices, namespaceID, surl, url]);
 
   async function doSubmit(formValues) {
@@ -86,7 +84,6 @@ export const CreateIngressPage = ({
         name,
         rules: rulesArr,
       };
-      console.log('data', data, 'url', url);
       await new Promise((resolve, reject) => {
         createIngress(data, {
           resolve,
