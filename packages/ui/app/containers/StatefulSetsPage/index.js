@@ -50,8 +50,17 @@ export const StatefulSetsPage = ({
         namespaceID,
       });
     }
+    const t = setInterval(() => {
+      if (url) {
+        loadStatefulSets(url, {
+          clusterID,
+          namespaceID,
+        });
+      }
+    }, 3000);
+
     return () => {
-      // try cancel something when unmount
+      clearInterval(t);
     };
   }, [clusterID, loadStatefulSets, namespaceID, url]);
 
