@@ -85,7 +85,14 @@ export const makeSelectShowMenuText = () =>
 export const makeSelectShowEvents = () =>
   createSelector(
     selectApp,
-    (appState) => appState.get('showEvents')
+    createMatchSelector('/clusters/:cluster_id/:mode'),
+    (appState, match) => {
+      let inEventsPage = false;
+      if (match && match.params) {
+        inEventsPage = match.params.mode === 'events';
+      }
+      return appState.get('showEvents') && !inEventsPage;
+    }
   );
 
 export const makeSelectUserMenus = () =>
