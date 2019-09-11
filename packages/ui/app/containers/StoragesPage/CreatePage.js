@@ -117,7 +117,7 @@ export const CreateStoragePage = ({
             classes={classes}
             onSubmit={doSubmit}
             initialValues={initFormValue}
-            blockDevices={blockDevices}
+            blockDevices={blockDevices.filter((b) => !b.get('usedby'))}
             formValues={values || initFormValue}
           />
           <GridContainer className={classes.grid}>

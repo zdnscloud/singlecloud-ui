@@ -48,7 +48,7 @@ import messages from './messages';
 import useStyles from './styles';
 import StorageForm from './Form';
 
-export const formName = 'createStorageForm';
+export const formName = 'editStorageForm';
 
 const validate = (values) => {
   const errors = {};
@@ -121,13 +121,16 @@ export const EditStoragePage = ({
             },
           ]}
         />
-        <Typography component="div" className="">
+        <Typography component="div">
           {storage.size > 0 ? (
             <EditStorageForm
               classes={classes}
               onSubmit={doSubmit}
               initialValues={storage}
-              blockDevices={blockDevices.concat(storage.get('config'))}
+              blockDevices={blockDevices.filter(
+                (b) =>
+                  !b.get('usedby') || b.get('usedby') === storage.get('name')
+              )}
               formValues={values || storage}
               edit
             />
