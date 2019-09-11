@@ -41,9 +41,6 @@ const styles = (theme) => ({
   menuButtonHidden: {
     display: 'none',
   },
-  title: {
-    flexGrow: 1,
-  },
   drawerPaper: {
     position: 'relative',
     whiteSpace: 'nowrap',
@@ -171,6 +168,7 @@ const styles = (theme) => ({
     fontSize: 14,
     margin: 0,
     color: '#000',
+    flexGrow: 1,
   },
   description: {
     color: '#838383',
@@ -203,22 +201,18 @@ const styles = (theme) => ({
     height: 42,
   },
   appDetailBtn: {
-    background: '#1B9CCE',
-    color: '#fff',
-    width: '100px',
-    height: '35px',
-    margin: '0 auto',
-    textAlign: 'center',
-  },
-  appDetailBtn: {
-    background: '#1B9CCE',
+    background: theme.palette.highlight.main,
     color: '#fff',
     width: '100px',
     height: '35px',
     margin: '0 auto',
     display: 'block',
     position: 'relative',
-    padding: '6px 16px',
+    padding: '6px 16px 6px 12px',
+    textAlign: 'center',
+    '&,&:hover,&:focus': {
+      backgroundColor: theme.palette.highlight.main,
+    },
   },
   line: {
     borderBottom: '1px solid #DFE0DF',
