@@ -2,6 +2,7 @@ import React, { Fragment } from 'react';
 import { ucfirst } from '@gsmlg/utils';
 import TimeCell from 'components/Cells/TimeCell';
 import { Link } from 'react-router-dom';
+import LinearProgress from '@material-ui/core/LinearProgress';
 import Button from 'components/CustomButtons/Button';
 import IconButton from 'components/CustomIconButtons/IconButton';
 import UpgradeIcon from 'components/Icons/Upgrade';
@@ -72,6 +73,10 @@ const tableSchema = schema
           <>
             {data.getIn(['status', 'readyReplicas'])}/
             {data.getIn(['status', 'replicas'])}
+            <LinearProgress
+              variant={'determinate'}
+              value={data.getIn(['status', 'readyReplicas']) / data.getIn(['status', 'replicas']) * 100}
+            />
           </>
         ),
       };
