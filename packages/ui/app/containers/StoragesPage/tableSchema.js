@@ -6,7 +6,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import { Link } from 'react-router-dom';
 import Button from 'components/CustomButtons/Button';
 import EditIcon from 'components/Icons/Edit';
-import IconButton from '@material-ui/core/IconButton';
+import IconButton from 'components/CustomIconButtons/IconButton';
 import ConfirmDelete from 'components/ConfirmDelete/ConfirmDelete';
 
 const schema = ['name', 'storageType', 'nodes', 'size', 'usedSize', 'freeSize'];

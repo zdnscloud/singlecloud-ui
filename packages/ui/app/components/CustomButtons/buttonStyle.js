@@ -178,6 +178,7 @@ const buttonStyle = (theme) => ({
   },
   link: {
     color: theme.palette.highlight.main,
+    padding: 0,
     '&,&:hover,&:focus': {
       backgroundColor: 'transparent',
       color: theme.palette.highlight.main,

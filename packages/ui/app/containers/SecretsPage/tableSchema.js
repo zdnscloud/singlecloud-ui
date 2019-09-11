@@ -3,7 +3,7 @@ import { ucfirst } from '@gsmlg/utils';
 import { Link } from 'react-router-dom';
 import Button from 'components/CustomButtons/Button';
 import ConfirmDelete from 'components/ConfirmDelete/ConfirmDelete';
-import IconButton from '@material-ui/core/IconButton';
+import IconButton from 'components/CustomIconButtons/IconButton';
 import EditIcon from 'components/Icons/Edit';
 
 const schema = ['name'];
