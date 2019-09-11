@@ -81,18 +81,6 @@ export default defineMessages({
     id: `${scope}.formForwardDNSSecond`,
     defaultMessage: 'formForwardDNSSecond',
   },
-  formPrivateWarehouses: {
-    id: `${scope}.formPrivateWarehouses`,
-    defaultMessage: 'formPrivateWarehouses',
-  },
-  formUrl: {
-    id: `${scope}.formUrl`,
-    defaultMessage: 'formUrl',
-  },
-  formUser: {
-    id: `${scope}.formUser`,
-    defaultMessage: 'formUser',
-  },
   formAddMainNode: {
     id: `${scope}.formAddMainNode`,
     defaultMessage: 'formAddMainNode',
