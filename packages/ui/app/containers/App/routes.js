@@ -21,7 +21,6 @@ import NamespacesPage, {
   NamespaceDetailPage,
   EditNamespacePage,
 } from 'containers/NamespacesPage/Loadable';
-import TerminalPage from 'containers/TerminalPage/Loadable';
 import EventsPage from 'containers/EventsPage/Loadable';
 import DeploymentsPage, {
   CreateDeploymentPage,
@@ -130,12 +129,6 @@ const appRoutes = [
     name: 'NodeDetail',
     icon: Dashboard,
     component: NodeDetailPage,
-  },
-  {
-    path: '/clusters/:cluster_id/console',
-    name: 'console',
-    icon: Dashboard,
-    component: TerminalPage,
   },
   {
     path: '/clusters/:cluster_id/events',

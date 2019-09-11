@@ -16,6 +16,5 @@
     "packages/*"
   ],
   "dependencies": {
-    "http-proxy-middleware": "0.20.0-beta.2"
   }
 }

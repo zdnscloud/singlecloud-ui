@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
 import { useIntl } from 'react-intl';
 
-const SingleCloudHelmet = ({ title, description }) => {
+const ZcloudHelmet = ({ title, description }) => {
   const intl = useIntl();
 
   return (
@@ -14,4 +14,4 @@ const SingleCloudHelmet = ({ title, description }) => {
   );
 };
 
-export default SingleCloudHelmet;
+export default ZcloudHelmet;

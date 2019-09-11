@@ -32,7 +32,7 @@ import AccountIcon from 'components/Icons/Account';
 
 import { makeSelectRole } from 'ducks/role/selectors';
 import * as roleActions from 'ducks/role/actions';
-import { openTerminal } from 'containers/TerminalPage/actions';
+import * as termActions from 'containers/TerminalPage/actions';
 import * as actions from 'ducks/app/actions';
 
 import {
@@ -93,7 +93,10 @@ class AppMenubar extends PureComponent {
         headerRightContent={
           <Fragment>
             {clusterID && !isManage && (
-              <IconButton color="inherit" onClick={openTerminal}>
+              <IconButton
+                color="inherit"
+                onClick={() => openTerminal(clusterID)}
+              >
                 <ShellIcon />
               </IconButton>
             )}
@@ -161,7 +164,7 @@ const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
       ...actions,
-      openTerminal,
+      openTerminal: termActions.openTerminal,
       logout: roleActions.logout,
     },
     dispatch

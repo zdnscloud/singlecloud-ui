@@ -5,15 +5,14 @@
  */
 
 import React, { createRef } from 'react';
-import { findDOMNode } from 'react-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import { bindActionCreators, compose } from 'redux';
 import { Terminal } from 'xterm';
-import * as fit from 'xterm/dist/addons/fit/fit';
-import 'xterm/dist/xterm.css';
+import { FitAddon } from 'xterm-addon-fit';
+import 'xterm/css/xterm.css';
 import SockJS from 'sockjs-client';
 
 import { withStyles } from '@material-ui/core/styles';
@@ -39,9 +38,6 @@ import { makeSelectContainerTermIsOpen } from './selectors';
 import * as actions from './actions';
 import messages from './messages';
 import styles from './styles';
-import TerminalPageHelmet from './helmet';
-
-Terminal.applyAddon(fit);
 
 /* eslint-disable react/prefer-stateless-function */
 export class TerminalDialog extends React.PureComponent {
@@ -70,6 +66,8 @@ export class TerminalDialog extends React.PureComponent {
         open={Boolean(open)}
         onEnter={() => {
           const term = new Terminal();
+          const fitAddon = new FitAddon();
+          term.loadAddon(fitAddon);
           // /apis/ws.zcloud.cn/v1//clusters/%s/namespaces/%s/pods/%s/containers/%s/shell
           const { podID, containerName } = open;
           const socket = new SockJS(
@@ -78,17 +76,13 @@ export class TerminalDialog extends React.PureComponent {
             { transports: 'websocket' }
           );
 
-          term.on('data', (data) => {
+          term.onData((data) => {
             if (socket.readyState === 1) socket.send(data);
           });
 
-          term.on('title', (title) => {
-            document.title = title;
-          });
-
-          term.open(findDOMNode(this.termEl.current)); // eslint-disable-line
+          term.open(this.termEl.current);
           term.focus();
-          term.fit();
+          fitAddon.fit();
 
           socket.onopen = () => {
             socket.send(JSON.stringify({ cols: term.cols, rows: term.rows }));
@@ -100,12 +94,11 @@ export class TerminalDialog extends React.PureComponent {
 
           socket.onclose = () => {
             term.write('session is close');
-            // term.destroy();
           };
 
           this.socket = socket;
           this.resizeListener = () => {
-            term.fit();
+            fitAddon.fit();
             socket.send(JSON.stringify({ cols: term.cols, rows: term.rows }));
           };
           window.addEventListener('resize', this.resizeListener);

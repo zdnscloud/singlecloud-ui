@@ -8,7 +8,6 @@
  *   You CANNOT use import/export in this file.
  */
 require('@formatjs/intl-relativetimeformat/polyfill');
-require('@formatjs/intl-relativetimeformat/dist/include-aliases'); // Optional, if you care about edge cases in locale resolution, e.g zh-CN -> zh-Hans-CN
 require('@formatjs/intl-relativetimeformat/dist/locale-data/en'); // Add locale data for en
 require('@formatjs/intl-relativetimeformat/dist/locale-data/zh'); // Add locale data for zh
 
