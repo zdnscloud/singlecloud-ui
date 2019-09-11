@@ -3,6 +3,7 @@ import { ucfirst } from '@gsmlg/utils';
 import { Link } from 'react-router-dom';
 import Button from 'components/CustomButtons/Button';
 
+const inflection = require('inflection');
 const schema = ['name', 'type'];
 
 const tableSchema = schema
@@ -14,23 +15,19 @@ const tableSchema = schema
     if (sch.id === 'name') {
       return {
         ...sch,
-        component: (props) => {
-          switch (props.data.get('type')) {
-            default:
-              return (
-                <Button
-                  link
-                  to={`/clusters/${props.clusterID}/namespaces/${
-                    props.namespaceID
-                  }/${props.data.get('type')}s/${props.data.get('name')}/show`}
-                  component={Link}
-                >
-                  {props.data.get('name')}
-                </Button>
-              );
-              break;
-          }
-        },
+        component: (props) => (
+          <Button
+            link
+            to={`/clusters/${props.clusterID}/namespaces/${
+              props.namespaceID
+            }/${inflection.pluralize(props.data.get('type'))}/${props.data.get(
+              'name'
+            )}/show`}
+            component={Link}
+          >
+            {props.data.get('name')}
+          </Button>
+        ),
       };
     }
     return sch;
