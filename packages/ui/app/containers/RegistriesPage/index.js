@@ -113,55 +113,57 @@ const RegistriesPage = ({
     <div className={classes.root}>
       <Helmet title={messages.pageTitle} description={messages.pageDesc} />
       <CssBaseline />
-      <Breadcrumbs
-        data={[
-          {
-            name: <FormattedMessage {...messages.pageTitle} />,
-          },
-        ]}
-      />
-      <GridContainer className={classes.grid}>
-        <GridItem xs={12} sm={12} md={12}>
-          <Card>
-            <CardHeader>
-              <h4>
-                <FormattedMessage {...messages.registries} />
-              </h4>
-            </CardHeader>
-            <CardBody>
-              <GridContainer>
-                <GridItem>
-                  <Switch
-                    disabled={isPending}
-                    inputProps={{
-                      disabled: isPending,
-                    }}
-                    onChange={handleChange()}
-                    checked={check}
-                    label={
-                      <FormattedMessage
-                        {...(isPending
-                          ? messages.pending
-                          : messages.repositoryServise)}
-                      />
-                    }
-                  />
-                </GridItem>
-                <GridItem xs={12} sm={12} md={12}>
-                  <UpdateRegistryForm
-                    onSubmit={doSubmit}
-                    formValues={values}
-                    clusters={runningClusters}
-                    role={role}
-                    registry={registry}
-                    check={check}
-                  />
-                </GridItem>
-              </GridContainer>
-            </CardBody>
-          </Card>
-        </GridItem>
-      </GridContainer>
+      <div className={classes.content}>
+        <Breadcrumbs
+          data={[
+            {
+              name: <FormattedMessage {...messages.pageTitle} />,
+            },
+          ]}
+        />
+        <GridContainer className={classes.grid}>
+          <GridItem xs={12} sm={12} md={12}>
+            <Card>
+              <CardHeader>
+                <h4>
+                  <FormattedMessage {...messages.registries} />
+                </h4>
+              </CardHeader>
+              <CardBody>
+                <GridContainer>
+                  <GridItem>
+                    <Switch
+                      disabled={isPending}
+                      inputProps={{
+                        disabled: isPending,
+                      }}
+                      onChange={handleChange()}
+                      checked={check}
+                      label={
+                        <FormattedMessage
+                          {...(isPending
+                            ? messages.pending
+                            : messages.repositoryServise)}
+                        />
+                      }
+                    />
+                  </GridItem>
+                  <GridItem xs={12} sm={12} md={12}>
+                    <UpdateRegistryForm
+                      onSubmit={doSubmit}
+                      formValues={values}
+                      clusters={runningClusters}
+                      role={role}
+                      registry={registry}
+                      check={check}
+                    />
+                  </GridItem>
+                </GridContainer>
+              </CardBody>
+            </Card>
+          </GridItem>
+        </GridContainer>
+      </div>
     </div>
   );
 };
