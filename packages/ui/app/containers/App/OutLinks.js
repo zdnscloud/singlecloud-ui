@@ -1,12 +1,11 @@
 /* eslint-disable no-shadow */
-import React, { useRef, Fragment, useEffect, useState } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import { bindActionCreators, compose } from 'redux';
-import { NavLink } from 'react-router-dom';
 import {
   reduxForm,
   getFormValues,
@@ -28,7 +27,6 @@ import { makeSelectCurrentCluster } from 'ducks/clusters/selectors';
 import { makeSelectError } from 'ducks/monitors/selectors';
 import {
   makeSelectClusterID,
-  makeSelectShowEvents,
   makeSelectShowMenuText,
 } from 'ducks/app/selectors';
 
@@ -82,8 +80,6 @@ const OutLinks = ({
 
   const handleMemuClick = (role) => {
     setMemuRole(role);
-    const url = cluster.getIn(['links', role]);
-    console.log('url', url, 'cluster', cluster.toJS());
     const loadAction = `load${inflection.camelize(role)}`;
     actions[loadAction](url, {
       clusterID,
@@ -94,9 +90,7 @@ const OutLinks = ({
           setOpen(true);
         }
       },
-      reject(err) {
-        console.log('err', err);
-      },
+      reject() {},
     });
   };
 
@@ -105,7 +99,9 @@ const OutLinks = ({
       const data = formValues ? formValues.toJS() : {};
       await new Promise((resolve, reject) => {
         createRegistry(data, {
-          resolve,
+          resolve() {
+            setOpen(false);
+          },
           reject,
           url,
         });

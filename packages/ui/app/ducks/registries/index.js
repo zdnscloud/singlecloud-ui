@@ -62,13 +62,6 @@ export const reducer = (
     case c.REMOVE_REGISTRY_FAILURE:
       return state;
 
-    case c.EXECUTE_REGISTRY_ACTION:
-      return state;
-    case c.EXECUTE_REGISTRY_ACTION_SUCCESS:
-      return state;
-    case c.EXECUTE_REGISTRY_ACTION_FAILURE:
-      return state;
-
     default:
       return state;
   }
