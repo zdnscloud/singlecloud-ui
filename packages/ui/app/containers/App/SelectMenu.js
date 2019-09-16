@@ -76,6 +76,12 @@ const SelectMenu = ({
     }
   }, [namespaceID]);
 
+  useEffect(() => {
+    if (anchorEl === null) {
+      setNsAnchorEl(null);
+    }
+  }, [anchorEl]);
+
   const cluster = clusters.get(selectCluster);
 
   return (
