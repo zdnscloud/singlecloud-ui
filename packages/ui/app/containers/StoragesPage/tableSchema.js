@@ -9,16 +9,16 @@ import EditIcon from 'components/Icons/Edit';
 import IconButton from 'components/CustomIconButtons/IconButton';
 import ConfirmDelete from 'components/ConfirmDelete/ConfirmDelete';
 
-const schema = ['name', 'storageType', 'nodes', 'size', 'usedSize', 'freeSize'];
+const schema = ['name', 'storageType', 'hosts', 'size', 'usedSize', 'freeSize'];
 
 const tableSchema = schema
   .map((id) => {
-    if (id === 'nodes') {
+    if (id === 'hosts') {
       return {
         id,
         label: ucfirst(id),
         component: (props) => (
-          <span>{props.data.get('nodes') && props.data.get('nodes').size}</span>
+          <span>{props.data.get('hosts') && props.data.get('hosts').size}</span>
         ),
       };
     }

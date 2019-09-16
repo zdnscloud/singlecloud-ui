@@ -61,9 +61,9 @@ export default defineMessages({
     id: `${scope}.tableTitleStorageType`,
     defaultMessage: 'StorageType',
   },
-  tableTitleNodes: {
-    id: `${scope}.tableTitleNodes`,
-    defaultMessage: 'Nodes',
+  tableTitleHosts: {
+    id: `${scope}.tableTitleHosts`,
+    defaultMessage: 'Hosts',
   },
   tableTitleSize: {
     id: `${scope}.tableTitleSize`,
