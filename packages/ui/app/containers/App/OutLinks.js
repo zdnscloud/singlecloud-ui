@@ -126,7 +126,7 @@ const OutLinks = ({
   };
 
   const outLinks = (
-    <List className={classes.list}>
+    <List className={classes.outLinkList}>
       {menus.map((prop, key) => {
         const msgName = messages[`leftMenu${prop.name}`];
         return (
