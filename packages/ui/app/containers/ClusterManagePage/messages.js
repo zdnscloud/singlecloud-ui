@@ -193,4 +193,8 @@ export default defineMessages({
     id: `${scope}.dialogContentText`,
     defaultMessage: 'This action  stop the content. Continue or not？',
   },
+  zcloudVersion: {
+    id: `${scope}.zcloudVersion`,
+    defaultMessage: 'zcloudVersion',
+  },
 });
