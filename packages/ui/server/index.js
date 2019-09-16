@@ -12,6 +12,10 @@ const isDev = process.env.NODE_ENV !== 'production';
 const { resolve } = require('path');
 const app = express();
 
+const appRoot = resolve(__dirname, '..');
+
+process.chdir(appRoot);
+
 // If you need a backend, e.g. an API, add your custom backend-specific middleware here
 let backend = process.env.BACKEND || 'localhost:8088';
 
