@@ -67,6 +67,7 @@ class ClusterManageForm extends PureComponent {
                     labelText={
                       <FormattedMessage {...messages.formClusterSuffix} />
                     }
+                    fullWidth
                     value={cluster.get('clusterDomain')}
                   />
                 </GridItem>
@@ -104,11 +105,12 @@ class ClusterManageForm extends PureComponent {
                 </GridItem>
               </GridContainer>
               <GridContainer>
-                <GridItem xs={6} sm={6} md={6} className={classes.formLine}>
+                <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
                   <ReadOnlyInput
                     labelText={
                       <FormattedMessage {...messages.formClustersNet} />
                     }
+                    fullWidth
                     value={cluster.get('network.plugin')}
                   />
                 </GridItem>
