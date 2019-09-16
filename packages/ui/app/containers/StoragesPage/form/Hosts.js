@@ -99,7 +99,7 @@ const Hosts = ({
                   b.get('blockDevices') &&
                   b.get('blockDevices').map((bd, j) => (
                     <span key={j} style={{ marginRight: 18 }}>
-                      <span>{bd.get('nodeName')}</span>
+                      <span>{bd.get('name')}</span>
                       <span>({bd.get('size')}GiB)</span>
                     </span>
                   ))}
