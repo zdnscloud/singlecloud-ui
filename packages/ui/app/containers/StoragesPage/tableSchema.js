@@ -9,7 +9,7 @@ import EditIcon from 'components/Icons/Edit';
 import IconButton from 'components/CustomIconButtons/IconButton';
 import ConfirmDelete from 'components/ConfirmDelete/ConfirmDelete';
 
-const schema = ['name', 'storageType', 'hosts', 'size', 'usedSize', 'freeSize'];
+const schema = ['storageType', 'hosts', 'size', 'usedSize', 'freeSize'];
 
 const tableSchema = schema
   .map((id) => {
@@ -52,7 +52,7 @@ const tableSchema = schema
     },
   ])
   .map((sch) => {
-    if (sch.id === 'name') {
+    if (sch.id === 'storageType') {
       return {
         ...sch,
         component: (props) => (
@@ -61,7 +61,7 @@ const tableSchema = schema
             component={Link}
             to={`${props.pathname}/${props.data.get('id')}/show`}
           >
-            {props.data.get('name')}
+            {props.data.get('storageType')}
           </Button>
         ),
       };

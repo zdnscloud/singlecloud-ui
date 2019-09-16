@@ -40,7 +40,7 @@ export const StoragesTable = ({ clusterID, data, removeStorageCluster }) => {
           props: { removeStorageCluster, clusterID, pathname },
         };
       }
-      if (sch.id === 'name') {
+      if (sch.id === 'storageType') {
         return {
           ...sch,
           props: { pathname },
