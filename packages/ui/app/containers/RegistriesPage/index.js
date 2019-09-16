@@ -24,10 +24,10 @@ import {
   makeSelectURL,
   makeSelectRegistries,
 } from 'ducks/registries/selectors';
-import { makeSelectClustersList } from 'ducks/clusters/selectors';
 
 import * as actions from 'ducks/registries/actions';
 import { makeSelectRole } from 'ducks/role/selectors';
+import { makeSelectCurrentID as makeSelectCurrentClusterID } from 'ducks/clusters/selectors';
 
 import GridItem from 'components/Grid/GridItem';
 import GridContainer from 'components/Grid/GridContainer';
@@ -49,17 +49,14 @@ const RegistriesPage = ({
   values,
   removeRegistry,
   createRegistry,
-  clusters,
   submitForm,
+  clusterID,
 }) => {
   const classes = useStyles();
   const [check, setCheck] = useState(false);
   const [isPending, setPending] = useState(false);
-  const runningClusters =
-    clusters && clusters.filter((d) => d.get('status') === 'Running');
   const registry = registries.first();
   const id = registry && registry.getIn(['id']);
-  const rurl = registry && registry.getIn(['links', 'remove']);
 
   const delayUnset = (back) => {
     setTimeout(() => {
@@ -70,12 +67,14 @@ const RegistriesPage = ({
 
   useEffect(() => {
     if (url) {
-      loadRegistries(url);
+      loadRegistries(url, {
+        clusterID,
+      });
     }
     if (id) {
       setCheck(true);
     }
-  }, [url, id, loadRegistries]);
+  }, [url, id, loadRegistries, clusterID]);
 
   async function doSubmit(formValues) {
     try {
@@ -91,7 +90,8 @@ const RegistriesPage = ({
           });
         } else {
           removeRegistry(id, {
-            url: rurl,
+            url,
+            clusterID,
             resolve,
             reject,
           });
@@ -113,57 +113,54 @@ const RegistriesPage = ({
     <div className={classes.root}>
       <Helmet title={messages.pageTitle} description={messages.pageDesc} />
       <CssBaseline />
-      <div className={classes.content}>
-        <Breadcrumbs
-          data={[
-            {
-              name: <FormattedMessage {...messages.pageTitle} />,
-            },
-          ]}
-        />
-        <GridContainer className={classes.grid}>
-          <GridItem xs={12} sm={12} md={12}>
-            <Card>
-              <CardHeader>
-                <h4>
-                  <FormattedMessage {...messages.registries} />
-                </h4>
-              </CardHeader>
-              <CardBody>
-                <GridContainer>
-                  <GridItem>
-                    <Switch
-                      disabled={isPending}
-                      inputProps={{
-                        disabled: isPending,
-                      }}
-                      onChange={handleChange()}
-                      checked={check}
-                      label={
-                        <FormattedMessage
-                          {...(isPending
-                            ? messages.pending
-                            : messages.repositoryServise)}
-                        />
-                      }
-                    />
-                  </GridItem>
-                  <GridItem xs={12} sm={12} md={12}>
-                    <UpdateRegistryForm
-                      onSubmit={doSubmit}
-                      formValues={values}
-                      clusters={runningClusters}
-                      role={role}
-                      registry={registry}
-                      check={check}
-                    />
-                  </GridItem>
-                </GridContainer>
-              </CardBody>
-            </Card>
-          </GridItem>
-        </GridContainer>
-      </div>
+      <Breadcrumbs
+        data={[
+          {
+            name: <FormattedMessage {...messages.pageTitle} />,
+          },
+        ]}
+      />
+      <GridContainer className={classes.grid}>
+        <GridItem xs={12} sm={12} md={12}>
+          <Card>
+            <CardHeader>
+              <h4>
+                <FormattedMessage {...messages.registries} />
+              </h4>
+            </CardHeader>
+            <CardBody>
+              <GridContainer>
+                <GridItem>
+                  <Switch
+                    disabled={isPending}
+                    inputProps={{
+                      disabled: isPending,
+                    }}
+                    onChange={handleChange()}
+                    checked={check}
+                    label={
+                      <FormattedMessage
+                        {...(isPending
+                          ? messages.pending
+                          : messages.repositoryServise)}
+                      />
+                    }
+                  />
+                </GridItem>
+                <GridItem xs={12} sm={12} md={12}>
+                  <UpdateRegistryForm
+                    onSubmit={doSubmit}
+                    formValues={values}
+                    role={role}
+                    registry={registry}
+                    check={check}
+                  />
+                </GridItem>
+              </GridContainer>
+            </CardBody>
+          </Card>
+        </GridItem>
+      </GridContainer>
     </div>
   );
 };
@@ -173,7 +170,7 @@ const mapStateToProps = createStructuredSelector({
   registries: makeSelectRegistries(),
   role: makeSelectRole(),
   values: getFormValues(formName),
-  clusters: makeSelectClustersList(),
+  clusterID: makeSelectCurrentClusterID(),
 });
 
 const mapDispatchToProps = (dispatch) =>

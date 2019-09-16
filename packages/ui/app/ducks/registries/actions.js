@@ -64,3 +64,25 @@ export const removeRegistryFailure = (error, meta = {}) => ({
   meta,
   error: true,
 });
+
+export const executeRegistryAction = (action, data, meta = {}) => ({
+  type: c.EXECUTE_REGISTRY_ACTION,
+  payload: {
+    action,
+    data,
+  },
+  meta,
+});
+
+export const executeRegistryActionSuccess = (resp, meta = {}) => ({
+  type: c.EXECUTE_REGISTRY_ACTION_SUCCESS,
+  payload: resp,
+  meta,
+});
+
+export const executeRegistryActionFailure = (error, meta = {}) => ({
+  type: c.EXECUTE_REGISTRY_ACTION_FAILURE,
+  payload: error,
+  meta,
+  error: true,
+});

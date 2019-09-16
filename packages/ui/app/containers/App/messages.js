@@ -201,4 +201,28 @@ export default defineMessages({
     id: `${scope}.leftMenuApplicationManagement`,
     defaultMessage: 'AppManagement',
   },
+  leftMenusDialogTitle: {
+    id: `${scope}.leftMenusDialogTitle`,
+    defaultMessage: 'Dialog Title',
+  },
+  leftMenusDialogContent: {
+    id: `${scope}.leftMenusDialogContent`,
+    defaultMessage: 'Whether installation is required',
+  },
+  leftMenusDialogButtonInstall: {
+    id: `${scope}.leftMenusDialogButtonInstall`,
+    defaultMessage: 'Install',
+  },
+  leftMenusDialogFormUser: {
+    id: `${scope}.leftMenusDialogFormUser`,
+    defaultMessage: 'User:',
+  },
+  leftMenusDialogFormIngressDomain: {
+    id: `${scope}.leftMenusDialogFormIngressDomain`,
+    defaultMessage: 'IngressDomain:',
+  },
+  leftMenusDialogFormStorageSize: {
+    id: `${scope}.leftMenusDialogFormStorageSize`,
+    defaultMessage: 'StorageSize:',
+  },
 });

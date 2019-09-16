@@ -110,59 +110,55 @@ const MonitorsPage = ({
     <div className={classes.root}>
       <Helmet title={messages.pageTitle} description={messages.pageDesc} />
       <CssBaseline />
-      <div className={classes.content}>
-        <Breadcrumbs
-          data={[
-            {
-              path: '/monitors',
-              name: <FormattedMessage {...messages.pageTitle} />,
-            },
-          ]}
-        />
-        <GridContainer className={classes.grid}>
-          {error ? (
-            <ErrorInfo errorText={error} close={clearErrorInfo} />
-          ) : null}
-          <GridItem xs={12} sm={12} md={12}>
-            <Card>
-              <CardHeader>
-                <h4>
-                  <FormattedMessage {...messages.clusterMonitor} />
-                </h4>
-              </CardHeader>
-              <CardBody>
-                <GridContainer>
-                  <GridItem xs={3} sm={3} md={3}>
-                    <Switch
-                      disabled={isPending}
-                      inputProps={{
-                        disabled: isPending,
-                      }}
-                      onChange={handleChange()}
-                      checked={check}
-                      label={
-                        <FormattedMessage
-                          {...(isPending ? messages.pending : messages.open)}
-                        />
-                      }
-                    />
-                  </GridItem>
-                  <GridItem xs={3} sm={3} md={3}>
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      onClick={() => window.open(redirectUrl)}
-                      disabled={!redirectUrl}
-                    >
-                      <FormattedMessage {...messages.openMonitor} />
-                    </Button>
-                  </GridItem>
-                </GridContainer>
-              </CardBody>
-            </Card>
-          </GridItem>
-        </GridContainer>
-      </div>
+      <Breadcrumbs
+        data={[
+          {
+            path: '/monitors',
+            name: <FormattedMessage {...messages.pageTitle} />,
+          },
+        ]}
+      />
+      <GridContainer className={classes.grid}>
+        {error ? <ErrorInfo errorText={error} close={clearErrorInfo} /> : null}
+        <GridItem xs={12} sm={12} md={12}>
+          <Card>
+            <CardHeader>
+              <h4>
+                <FormattedMessage {...messages.clusterMonitor} />
+              </h4>
+            </CardHeader>
+            <CardBody>
+              <GridContainer>
+                <GridItem xs={3} sm={3} md={3}>
+                  <Switch
+                    disabled={isPending}
+                    inputProps={{
+                      disabled: isPending,
+                    }}
+                    onChange={handleChange()}
+                    checked={check}
+                    label={
+                      <FormattedMessage
+                        {...(isPending ? messages.pending : messages.open)}
+                      />
+                    }
+                  />
+                </GridItem>
+                <GridItem xs={3} sm={3} md={3}>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={() => window.open(redirectUrl)}
+                    disabled={!redirectUrl}
+                  >
+                    <FormattedMessage {...messages.openMonitor} />
+                  </Button>
+                </GridItem>
+              </GridContainer>
+            </CardBody>
+          </Card>
+        </GridItem>
+      </GridContainer>
     </div>
   );
 };

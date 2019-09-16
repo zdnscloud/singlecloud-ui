@@ -37,4 +37,8 @@ export default defineMessages({
     id: `${scope}.pending`,
     defaultMessage: 'Pending',
   },
+  applicationLink: {
+    id: `${scope}.applicationLink`,
+    defaultMessage: 'Link Application',
+  },
 });

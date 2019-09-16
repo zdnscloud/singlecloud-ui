@@ -9,8 +9,6 @@ import ManagementIcon from 'components/Icons/Management';
 import BasicResourcesIcon from 'components/Icons/BasicResources';
 import SystemIcon from 'components/Icons/System';
 import UserQuotasIcon from 'components/Icons/UserQuotas';
-import ImageRegistryIcon from 'components/Icons/ImageRegistry';
-import ClusterWatchIcon from 'components/Icons/ClusterWatch';
 import ApplicationStoreIcon from 'components/Icons/ApplicationStore';
 import { makeSelectRole, makeSelectIsAdmin } from 'ducks/role/selectors';
 
@@ -243,22 +241,6 @@ export const makeSelectLeftMenus = () =>
           icon: UserQuotasIcon,
         },
       ]);
-      menus = menus.concat([
-        {
-          name: 'ImageRegistry',
-          icon: ImageRegistryIcon,
-          path: '/registries',
-        },
-      ]);
-      if (cluster !== '' && !isManage) {
-        menus = menus.concat([
-          {
-            name: 'ClusterWatch',
-            icon: ClusterWatchIcon,
-            path: `/clusters/${cluster}/monitors`,
-          },
-        ]);
-      }
 
       return menus;
     }

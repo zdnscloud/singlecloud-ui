@@ -10,6 +10,11 @@ import {
   getLocation,
 } from 'connected-react-router/immutable';
 
+import {
+  makeSelectCurrent as makeSelectCurrentCluster,
+  makeSelectCurrentID as makeSelectCurrentClusterID,
+} from 'ducks/clusters/selectors';
+
 import { prefix } from './constants';
 import { initialState } from './index';
 
@@ -23,30 +28,34 @@ export const selectDomain = (state) => state.get(prefix) || initialState;
  */
 export const makeSelectURL = () =>
   createSelector(
-    selectDomain,
-    (substate) => '/apis/zcloud.cn/v1/registries'
+    makeSelectCurrentCluster(),
+    (pt) => pt.getIn(['links', 'registries'])
   );
 
 export const makeSelectRegistries = () =>
   createSelector(
     selectDomain,
+    makeSelectCurrentClusterID(),
 
-    (substate) => substate.getIn(['data']) || substate.clear()
+    (substate, clusterID) =>
+      substate.getIn(['data', clusterID]) || substate.clear()
   );
 
 export const makeSelectRegistriesList = () =>
   createSelector(
     selectDomain,
     makeSelectRegistries(),
+    makeSelectCurrentClusterID(),
 
-    (substate, data) =>
-      (substate.getIn(['list']) || fromJS([])).map((id) => data.get(id)) ||
-      fromJS([])
+    (substate, data, clusterID) =>
+      (substate.getIn(['list', clusterID]) || fromJS([])).map((id) =>
+        data.get(id)
+      ) || fromJS([])
   );
 
 export const makeSelectCurrentID = () =>
   createSelector(
-    createMatchSelector('*/globalConfig/:id/*'),
+    createMatchSelector('*/registries/:id/*'),
     (match) => {
       if (match && match.params) {
         return match.params.id;
@@ -58,7 +67,9 @@ export const makeSelectCurrentID = () =>
 export const makeSelectCurrent = () =>
   createSelector(
     selectDomain,
+    makeSelectCurrentClusterID(),
 
     makeSelectCurrentID(),
-    (substate, id) => substate.getIn(['data', id]) || substate.clear()
+    (substate, clusterID, id) =>
+      substate.getIn(['data', clusterID, id]) || substate.clear()
   );

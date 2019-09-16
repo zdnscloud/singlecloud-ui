@@ -35,20 +35,8 @@ const validate = (values) => {
   return errors;
 };
 
-const Form = ({
-  formValues,
-  handleSubmit,
-  error,
-  clusters,
-  role,
-  check,
-  registry,
-}) => {
+const Form = ({ formValues, handleSubmit, error, role, check, registry }) => {
   const classes = useStyles();
-  const clustersOptions = clusters.toList().map((sc) => ({
-    label: sc.get('name'),
-    value: sc.get('name'),
-  }));
   const redirectUrl = registry && registry.getIn(['redirectUrl']);
 
   return (
@@ -76,13 +64,6 @@ const Form = ({
               />
             </GridItem>
             <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
-              <ReadOnlyInput
-                label={<FormattedMessage {...messages.formCluster} />}
-                value={registry.get('cluster')}
-                fullWidth
-              />
-            </GridItem>
-            <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
               <Button
                 variant="contained"
                 color="primary"
@@ -101,19 +82,6 @@ const Form = ({
                 name="ingressDomain"
                 fullWidth
                 inputProps={{ type: 'text', autoComplete: 'off' }}
-              />
-            </GridItem>
-            <GridItem xs={3} sm={3} md={3}>
-              <SelectField
-                label={<FormattedMessage {...messages.formCluster} />}
-                name="cluster"
-                formControlProps={{
-                  style: {
-                    width: '100%',
-                  },
-                }}
-                classes={classes}
-                options={clustersOptions}
               />
             </GridItem>
           </Fragment>

@@ -138,7 +138,7 @@ const appRoutes = [
   },
   // registry
   {
-    path: '/registries',
+    path: '/clusters/:cluster_id/registries',
     name: 'Registries',
     icon: Dashboard,
     component: RegistriesPage,
