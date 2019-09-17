@@ -76,7 +76,7 @@ const tableSchema = schema
             <LinearProgress
               variant="determinate"
               value={
-                (data.getIn(['status', 'numberReady']) /
+                ((data.getIn(['status', 'numberReady']) || 0) /
                   data.getIn(['status', 'desiredNumberScheduled'])) *
                 100
               }
