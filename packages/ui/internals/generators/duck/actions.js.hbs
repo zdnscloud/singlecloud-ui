@@ -1,0 +1,136 @@
+/**
+ * Duck: {{properCase name}}
+ * actions: {{ name }}
+ *
+ */
+import * as c from './constants';
+
+/**
+ * actions
+ */
+export const load{{pProperCase name}} = (url, meta = {}) => ({
+  type: c.LOAD_{{pcCase name}},
+  payload: url,
+  meta,
+});
+
+export const load{{pProperCase name}}Success = (resp, meta = {}) => ({
+  type: c.LOAD_{{pcCase name}}_SUCCESS,
+  payload: resp,
+  meta,
+});
+
+export const load{{pProperCase name}}Failure = (error, meta = {}) => ({
+  type: c.LOAD_{{pcCase name}}_FAILURE,
+  payload: error,
+  meta,
+  error: true,
+});
+
+{{#if wannaCreateAction}}
+export const create{{sProperCase name}} = (data, meta = {}) => ({
+  type: c.CREATE_{{scCase name}},
+  payload: data,
+  meta,
+});
+
+export const create{{sProperCase name}}Success = (resp, meta = {}) => ({
+  type: c.CREATE_{{scCase name}}_SUCCESS,
+  payload: resp,
+  meta,
+});
+
+export const create{{sProperCase name}}Failure = (error, meta = {}) => ({
+  type: c.CREATE_{{scCase name}}_FAILURE,
+  payload: error,
+  meta,
+  error: true,
+});
+{{/if}}
+
+{{#if wannaUpdateAction}}
+export const update{{sProperCase name}} = (data, meta = {}) => ({
+  type: c.UPDATE_{{scCase name}},
+  payload: data,
+  meta,
+});
+
+export const update{{sProperCase name}}Success = (resp, meta = {}) => ({
+  type: c.UPDATE_{{scCase name}}_SUCCESS,
+  payload: resp,
+  meta,
+});
+
+export const update{{sProperCase name}}Failure = (error, meta = {}) => ({
+  type: c.UPDATE_{{scCase name}}_FAILURE,
+  payload: error,
+  meta,
+  error: true,
+});
+{{/if}}
+
+{{#if wannaReadOneAction}}
+export const read{{sProperCase name}} = (id, meta = {}) => ({
+  type: c.READ_{{scCase name}},
+  payload: id,
+  meta,
+});
+
+export const read{{sProperCase name}}Success = (resp, meta = {}) => ({
+  type: c.READ_{{scCase name}}_SUCCESS,
+  payload: resp,
+  meta,
+});
+
+export const read{{sProperCase name}}Failure = (error, meta = {}) => ({
+  type: c.READ_{{scCase name}}_FAILURE,
+  payload: error,
+  meta,
+  error: true,
+});
+{{/if}}
+
+{{#if wannaRemoveAction}}
+export const remove{{sProperCase name}} = (id, meta = {}) => ({
+  type: c.REMOVE_{{scCase name}},
+  payload: id,
+  meta,
+});
+
+export const remove{{sProperCase name}}Success = (resp, meta = {}) => ({
+  type: c.REMOVE_{{scCase name}}_SUCCESS,
+  payload: resp,
+  meta,
+});
+
+export const remove{{sProperCase name}}Failure = (error, meta = {}) => ({
+  type: c.REMOVE_{{scCase name}}_FAILURE,
+  payload: error,
+  meta,
+  error: true,
+});
+{{/if}}
+
+{{#if wannaResourceActions}}
+export const execute{{sProperCase name}}Action = (action, data, meta = {}) => ({
+  type: c.EXECUTE_{{scCase name}}_ACTION,
+  payload: {
+    action,
+    data,
+  },
+  meta,
+});
+
+export const execute{{sProperCase name}}ActionSuccess = (resp, meta = {}) => ({
+  type: c.EXECUTE_{{scCase name}}_ACTION_SUCCESS,
+  payload: resp,
+  meta,
+});
+
+export const execute{{sProperCase name}}ActionFailure = (error, meta = {}) => ({
+  type: c.EXECUTE_{{scCase name}}_ACTION_FAILURE,
+  payload: error,
+  meta,
+  error: true,
+});
+{{/if}}

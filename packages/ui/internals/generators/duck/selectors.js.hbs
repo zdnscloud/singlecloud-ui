@@ -1,0 +1,119 @@
+/**
+ * Duck: {{properCase name}}
+ * selectors: {{ name }}
+ *
+ */
+import { fromJS } from 'immutable';
+import { createSelector } from 'reselect';
+import {
+  createMatchSelector,
+  getLocation,
+} from 'connected-react-router/immutable';
+{{#if hasParents}}
+import {
+  makeSelectCurrent as makeSelectCurrent{{lastSP parents}},
+} from 'ducks/{{last parents}}/selectors';
+{{#each parents}}
+import { makeSelectCurrentID as makeSelectCurrent{{sProperCase this}}ID } from 'ducks/{{ this }}/selectors';
+{{/each}}
+{{/if}}
+import { prefix } from './constants';
+import { initialState } from './index';
+
+/**
+ * Direct selector to the {{ name }} domain
+ */
+export const selectDomain = (state) => state.get(prefix) || initialState;
+
+/**
+ * Other specific selectors
+ */
+{{#if hasParents}}
+export const makeSelectURL = () =>
+  createSelector(
+    makeSelectCurrent{{lastSP parents}}(),
+    (pt) => pt.getIn(['links', '{{pluralize name}}'])
+  );
+{{else}}
+export const makeSelectURL = () =>
+  createSelector(
+    selectDomain,
+    (substate) => '/apis/zcloud.cn/v1/{{ name }}'
+  );
+{{/if}}
+
+export const makeSelect{{pProperCase name}} = () =>
+  createSelector(
+    selectDomain,
+{{#each parents}}
+    makeSelectCurrent{{sProperCase this}}ID(),
+{{/each}}
+  (
+    substate,
+    {{#each parents}}
+      {{singularize this}}ID,
+    {{/each}}
+  ) =>
+    substate.getIn([
+      'data',
+      {{#each parents}}
+      {{singularize this}}ID,
+      {{/each}}
+      ]) || substate.clear()
+  );
+
+export const makeSelect{{pProperCase name}}List = () =>
+  createSelector(
+    selectDomain,
+    makeSelect{{pProperCase name}}(),
+{{#each parents}}
+    makeSelectCurrent{{sProperCase this}}ID(),
+{{/each}}
+  (
+    substate,
+    data,
+    {{#each parents}}
+      {{singularize this}}ID,
+    {{/each}}
+  ) =>
+    (substate.getIn([
+      'list',
+      {{#each parents}}
+      {{singularize this}}ID,
+      {{/each}}
+    ]) || fromJS([])).map((id) => data.get(id)) || fromJS([])
+  );
+
+export const makeSelectCurrentID = () =>
+   createSelector(
+     createMatchSelector('*/{{ name }}/:id/*'),
+     (match) => {
+       if (match && match.params) {
+         return match.params.id;
+       }
+       return '';
+     }
+   );
+
+export const makeSelectCurrent = () =>
+  createSelector(
+    selectDomain,
+{{#each parents}}
+    makeSelectCurrent{{sProperCase this}}ID(),
+{{/each}}
+    makeSelectCurrentID(),
+    (
+      substate,
+      {{#each parents}}
+      {{singularize this}}ID,
+      {{/each}}
+      id
+    ) =>
+      substate.getIn([
+        'data',
+        {{#each parents}}
+        {{singularize this}}ID,
+        {{/each}}
+        id,
+      ]) || substate.clear()
+  );
