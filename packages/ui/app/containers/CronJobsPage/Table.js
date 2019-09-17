@@ -34,7 +34,7 @@ const CronJobsTable = ({
   data,
   clusterID,
   namespaceID,
-  removeCronjob,
+  removeCronJob,
 }) => {
   const classes = useStyles();
   const pathname = location.get('pathname');
@@ -44,7 +44,7 @@ const CronJobsTable = ({
         return {
           ...sch,
           props: {
-            removeCronjob,
+            removeCronJob,
             clusterID,
             namespaceID,
           },

@@ -28,7 +28,7 @@ const tableSchema = schema
       component: (props) => (
         <Fragment>
           <ConfirmDelete
-            actionName={props.removeCronjob}
+            actionName={props.removeCronJob}
             id={props.data.get('id')}
             url={props.data.getIn(['links', 'remove'])}
             clusterID={props.clusterID}
