@@ -1,7 +1,7 @@
 /* eslint-disable no-unreachable */
 /**
  *
- * User Quotas Table
+ * ApplicationsList
  *
  */
 
@@ -21,7 +21,7 @@ import { makeSelectCurrentID as makeSelectCurrentNamespaceID } from 'ducks/names
 import { makeSelectCharts, makeSelectChartsList } from 'ducks/charts/selectors';
 
 import messages from './messages';
-import styles from './styles';
+import useStyles from './styles';
 import ApplicationTemplate from './application/applicationTemplate';
 
 export const ApplicationsList = ({
@@ -74,7 +74,4 @@ const withConnect = connect(
   mapDispatchToProps
 );
 
-export default compose(
-  withConnect,
-  withStyles(styles)
-)(ApplicationsList);
+export default compose(withConnect)(ApplicationsList);
