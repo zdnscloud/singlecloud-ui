@@ -49,6 +49,11 @@ class ClusterManageForm extends PureComponent {
               <h4>
                 <FormattedMessage {...messages.basicInfo} />
               </h4>
+              <span>
+                <FormattedMessage {...messages.zcloudVersion} />
+                {': '}
+                {cluster.get('zcloudVersion')}
+              </span>
             </CardHeader>
             <CardBody>
               <ButtonGroup />
