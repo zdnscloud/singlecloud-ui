@@ -46,7 +46,7 @@ export const JobDetailPage = ({
   jobID,
   job,
   url,
-  loadPods,
+  loadJOBPods: loadPods,
   readJob,
 }) => {
   const classes = useStyles();

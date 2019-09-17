@@ -43,7 +43,7 @@ export const CronJobDetailPage = ({
   cronJobID,
   cronJob,
   url,
-  loadPods,
+  loadCJPods: loadPods,
   readCronJob,
 }) => {
   const classes = useStyles();
