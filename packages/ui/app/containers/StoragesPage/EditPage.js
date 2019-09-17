@@ -52,7 +52,7 @@ export const formName = 'editStorageForm';
 
 const validate = (values) => {
   const errors = {};
-  const requiredFields = ['name'];
+  const requiredFields = [];
   requiredFields.forEach((field) => {
     if (!values.get(field)) {
       errors[field] = 'Required';
@@ -129,7 +129,8 @@ export const EditStoragePage = ({
               initialValues={storage}
               blockDevices={blockDevices.filter(
                 (b) =>
-                  !b.get('usedby') || b.get('usedby') === storage.get('name')
+                  !b.get('usedby') ||
+                  b.get('usedby') === storage.get('storageType')
               )}
               formValues={values || storage}
               edit

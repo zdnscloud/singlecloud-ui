@@ -17,7 +17,6 @@ import Menubar from 'components/Menubar';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
-// import SwipeableViews from 'react-swipeable-views';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 
@@ -59,7 +58,7 @@ export const StoragePage = ({
   }, [clusterID, url, id, readStorageCluster]);
   const [checkedNode, setCheckedNode] = useState(null);
 
-  const name = storageCluster.get('name');
+  const storageType = storageCluster.get('storageType');
   const totalSize = storageCluster.get('size');
   const freeSize = storageCluster.get('freeSize');
   const usedSize = storageCluster.get('usedSize');
@@ -87,7 +86,7 @@ export const StoragePage = ({
           <GridItem xs={12} sm={12} md={12}>
             <Card>
               <CardHeader>
-                <h4>{name}</h4>
+                <h4>{storageType}</h4>
               </CardHeader>
               <CardBody>
                 <GridContainer>

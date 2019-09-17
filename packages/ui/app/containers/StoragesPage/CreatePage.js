@@ -48,7 +48,7 @@ export const formName = 'createStorageForm';
 
 const validate = (values) => {
   const errors = {};
-  const requiredFields = ['name'];
+  const requiredFields = [];
   requiredFields.forEach((field) => {
     if (!values.get(field)) {
       errors[field] = 'Required';
@@ -62,7 +62,7 @@ const CreateStorageForm = reduxForm({
   validate,
 })(StorageForm);
 
-const initFormValue = fromJS({ name: '', storageType: '', hosts: [] });
+const initFormValue = fromJS({ storageType: '', hosts: [] });
 
 export const CreateStoragePage = ({
   loadBlockDevices,

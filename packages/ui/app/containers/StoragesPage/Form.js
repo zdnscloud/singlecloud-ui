@@ -63,25 +63,6 @@ const StorageForm = ({
                   <GridItem xs={3} sm={3} md={3}>
                     {edit ? (
                       <ReadOnlyInput
-                        labelText={<FormattedMessage {...messages.formName} />}
-                        value={initialValues.get('name')}
-                        fullWidth
-                      />
-                    ) : (
-                      <InputField
-                        label={<FormattedMessage {...messages.formName} />}
-                        name="name"
-                        fullWidth
-                        inputProps={{
-                          type: 'text',
-                          autoComplete: 'off',
-                        }}
-                      />
-                    )}
-                  </GridItem>
-                  <GridItem xs={3} sm={3} md={3}>
-                    {edit ? (
-                      <ReadOnlyInput
                         labelText={
                           <FormattedMessage {...messages.formStorageType} />
                         }
@@ -95,7 +76,7 @@ const StorageForm = ({
                         }
                         name="storageType"
                         fullWidth
-                        options={['lvm', 'ceph']}
+                        options={['lvm', 'cephfs']}
                       />
                     )}
                   </GridItem>
