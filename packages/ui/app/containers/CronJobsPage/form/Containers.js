@@ -22,15 +22,16 @@ import Ports from './Ports';
 import Volumes from './Volumes';
 import Envs from './Envs';
 import messages from '../messages';
+import useStyles from '../styles';
 
 const Containers = ({
   fields,
   meta: { error, submitFailed },
   configMaps,
   secrets,
-  classes,
   formValues,
 }) => {
+  const classes = useStyles();
   const configMapsOptions = configMaps
     .toList()
     .map((m) => ({
