@@ -7,14 +7,20 @@
 const fs = require('fs');
 const path = require('path');
 const { exec } = require('child_process');
+
 const componentGenerator = require('./component/index.js');
 const containerGenerator = require('./container/index.js');
 const languageGenerator = require('./language/index.js');
+const duckGenerator = require('./duck/index.js');
+
+const setHelpers = require('./utils/helpers')
 
 module.exports = (plop) => {
   plop.setGenerator('component', componentGenerator);
   plop.setGenerator('container', containerGenerator);
   plop.setGenerator('language', languageGenerator);
+  plop.setGenerator('duck', duckGenerator);
+
   plop.addHelper('directory', (comp) => {
     try {
       fs.accessSync(
@@ -27,6 +33,8 @@ module.exports = (plop) => {
     }
   });
   plop.addHelper('curly', (object, open) => (open ? '{' : '}'));
+  setHelpers(plop);
+
   plop.setActionType('prettify', (answers, config) => {
     const folderPath = `${path.join(
       __dirname,

@@ -1,0 +1,172 @@
+/**
+ * Duck: {{properCase name}}
+ * epic: {{ name }}
+ *
+ */
+import { push } from 'connected-react-router';
+import { Observable, interval, of, timer, concat } from 'rxjs';
+import {
+  mergeMap,
+  map,
+  mapTo,
+  debounce,
+  debounceTime,
+  reduce,
+  scan,
+  throttleTime,
+  throttle,
+  catchError,
+} from 'rxjs/operators';
+import { ofType, combineEpics } from 'redux-observable';
+
+import * as c from './constants';
+import * as a from './actions';
+
+export const load{{pProperCase name}}Epic = (action$, state$, { ajax }) =>
+  action$.pipe(
+    ofType(c.LOAD_{{pcCase name}}),
+    mergeMap(({ payload, meta }) =>
+      ajax(payload).pipe(
+        map((resp) => {
+          meta.resolve && meta.resolve(resp);
+          return a.load{{pProperCase name}}Success(resp, meta);
+        }),
+        catchError((error) => {
+          meta.reject && meta.reject(error);
+          return of(a.load{{pProperCase name}}Failure(error, meta));
+        })
+      )
+    )
+  );
+
+{{#if wannaCreateAction}}
+export const create{{sProperCase name}}Epic = (action$, state$, { ajax }) =>
+  action$.pipe(
+    ofType(c.CREATE_{{scCase name}}),
+    mergeMap(({ payload, meta }) =>
+      ajax({
+        url: `${meta.url}`,
+        method: 'POST',
+        body: payload,
+      }).pipe(
+        map((resp) => {
+          meta.resolve && meta.resolve(resp);
+          return a.create{{sProperCase name}}Success(resp, meta);
+        }),
+        catchError((error) => {
+          meta.reject && meta.reject(error);
+          return of(a.create{{sProperCase name}}Failure(error, meta));
+        })
+      )
+    )
+  );
+{{/if}}
+
+{{#if wannaUpdateAction}}
+export const update{{sProperCase name}}Epic = (action$, state$, { ajax }) =>
+  action$.pipe(
+    ofType(c.UPDATE_{{scCase name}}),
+    mergeMap(({ payload, meta }) =>
+      ajax({
+        url: `${meta.url}`,
+        method: 'PUT',
+        body: payload
+      }).pipe(
+        map((resp) => {
+          meta.resolve && meta.resolve(resp);
+          return a.update{{sProperCase name}}Success(resp, meta);
+        }),
+        catchError((error) => {
+          meta.reject && meta.reject(error);
+          return of(a.update{{sProperCase name}}Failure(error, meta));
+        })
+      )
+    )
+  );
+{{/if}}
+
+{{#if wannaReadOneAction}}
+export const read{{sProperCase name}}Epic = (action$, state$, { ajax }) =>
+  action$.pipe(
+    ofType(c.READ_{{scCase name}}),
+    mergeMap(({ payload, meta }) =>
+      ajax({
+        url: `${meta.url}`,
+        method: 'GET',
+      }).pipe(
+        map((resp) => {
+          meta.resolve && meta.resolve(resp);
+          return a.read{{sProperCase name}}Success(resp, { ...meta, id: payload });
+        }),
+        catchError((error) => {
+          meta.reject && meta.reject(error);
+          return of(a.read{{sProperCase name}}Failure(error, { ...meta, id: payload }));
+        })
+      )
+    )
+  );
+{{/if}}
+
+{{#if wannaRemoveAction}}
+export const remove{{sProperCase name}}Epic = (action$, state$, { ajax }) =>
+  action$.pipe(
+    ofType(c.REMOVE_{{scCase name}}),
+    mergeMap(({ payload, meta }) =>
+      ajax({
+        url: `${meta.url}`,
+        method: 'DELETE',
+      }).pipe(
+        map((resp) => {
+          meta.resolve && meta.resolve(resp);
+          return a.remove{{sProperCase name}}Success(resp, { ...meta, id: payload });
+        }),
+        catchError((error) => {
+          meta.reject && meta.reject(error);
+          return of(a.remove{{sProperCase name}}Failure(error, { ...meta, id: payload }));
+        })
+      )
+    )
+  );
+{{/if}}
+
+{{#if wannaResourceActions}}
+export const execute{{sProperCase name}}ActionEpic = (action$, state$, { ajax }) =>
+  action$.pipe(
+    ofType(c.EXECUTE_{{scCase name}}_ACTION),
+    mergeMap(({ payload: { action, data }, meta }) =>
+      ajax({
+        url: `${meta.url}?action=${action}`,
+        method: 'POST',
+        body: data,
+      }).pipe(
+        map((resp) => {
+          meta.resolve && meta.resolve(resp);
+          return a.execute{{sProperCase name}}ActionSuccess(resp, { ...meta, action });
+        }),
+        catchError((error) => {
+          meta.reject && meta.reject(error);
+          return of(a.execute{{sProperCase name}}ActionFailure(error, { ...meta, action }));
+        })
+      )
+    )
+  );
+{{/if}}
+
+export default combineEpics(
+  load{{pProperCase name}}Epic,
+{{#if wannaCreateAction}}
+  create{{sProperCase name}}Epic,
+{{/if}}
+{{#if wannaUpdateAction}}
+  update{{sProperCase name}}Epic,
+{{/if}}
+{{#if wannaReadOneAction}}
+  read{{sProperCase name}}Epic,
+{{/if}}
+{{#if wannaRemoveAction}}
+  remove{{sProperCase name}}Epic,
+{{/if}}
+{{#if wannaResourceActions}}
+  execute{{sProperCase name}}ActionEpic,
+{{/if}}
+);

@@ -1,0 +1,43 @@
+/**
+ * Duck: {{properCase name}}
+ * constants: {{ name }}
+ *
+ */
+export const prefix = '{{ name }}';
+
+/**
+ *  constants
+ */
+export const LOAD_{{pcCase name}} = `${prefix}/LOAD_{{pcCase name}}`;
+export const LOAD_{{pcCase name}}_SUCCESS = `${prefix}/LOAD_{{pcCase name}}_SUCCESS`;
+export const LOAD_{{pcCase name}}_FAILURE = `${prefix}/LOAD_{{pcCase name}}_FAILURE`;
+
+{{#if wannaCreateAction}}
+export const CREATE_{{scCase name}} = `${prefix}/CREATE_{{scCase name}}`;
+export const CREATE_{{scCase name}}_SUCCESS = `${prefix}/CREATE_{{scCase name}}_SUCCESS`;
+export const CREATE_{{scCase name}}_FAILURE = `${prefix}/CREATE_{{scCase name}}_FAILURE`;
+{{/if}}
+
+{{#if wannaUpdateAction}}
+export const UPDATE_{{scCase name}} = `${prefix}/UPDATE_{{scCase name}}`;
+export const UPDATE_{{scCase name}}_SUCCESS = `${prefix}/UPDATE_{{scCase name}}_SUCCESS`;
+export const UPDATE_{{scCase name}}_FAILURE = `${prefix}/UPDATE_{{scCase name}}_FAILURE`;
+{{/if}}
+
+{{#if wannaReadOneAction}}
+export const READ_{{scCase name}} = `${prefix}/READ_{{scCase name}}`;
+export const READ_{{scCase name}}_SUCCESS = `${prefix}/READ_{{scCase name}}_SUCCESS`;
+export const READ_{{scCase name}}_FAILURE = `${prefix}/READ_{{scCase name}}_FAILURE`;
+{{/if}}
+
+{{#if wannaRemoveAction}}
+export const REMOVE_{{scCase name}} = `${prefix}/REMOVE_{{scCase name}}`;
+export const REMOVE_{{scCase name}}_SUCCESS = `${prefix}/REMOVE_{{scCase name}}_SUCCESS`;
+export const REMOVE_{{scCase name}}_FAILURE = `${prefix}/REMOVE_{{scCase name}}_FAILURE`;
+{{/if}}
+
+{{#if wannaResourceActions}}
+export const EXECUTE_{{scCase name}}_ACTION = `${prefix}/EXECUTE_{{scCase name}}_ACTION`;
+export const EXECUTE_{{scCase name}}_ACTION_SUCCESS = `${prefix}/EXECUTE_{{scCase name}}_ACTION_SUCCESS`;
+export const EXECUTE_{{scCase name}}_ACTION_FAILURE = `${prefix}/EXECUTE_{{scCase name}}_ACTION_FAILURE`;
+{{/if}}

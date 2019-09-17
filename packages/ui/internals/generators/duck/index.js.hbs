@@ -1,0 +1,188 @@
+/**
+ * Duck: {{ properCase name }}
+ * reducer: {{ name }}
+ *
+ */
+import _ from 'lodash';
+import { fromJS } from 'immutable';
+import getByKey from '@gsmlg/utils/getByKey';
+import { procCollectionData } from '@gsmlg/utils/procData';
+
+import * as constants from './constants';
+import * as actions from './actions';
+
+const { prefix } = constants;
+
+export { constants, actions, prefix };
+
+export const initialState = fromJS({
+  data: {},
+{{#if hasParents}}
+  list: {},
+{{else}}
+  list: [],
+{{/if}}
+  selectedData: null,
+});
+
+const c = constants;
+
+export const reducer = (
+  state = initialState,
+  { type, payload, error, meta }
+) => {
+  switch (type) {
+    case c.LOAD_{{pcCase name}}:
+      return state;
+    case c.LOAD_{{pcCase name}}_SUCCESS: {
+      const { data, list } = procCollectionData(payload);
+      {{#if hasParents}}
+      const {
+      {{#each parents}}
+        {{singularize this}}ID,
+      {{/each}}
+      } = meta;
+      {{/if}}
+      return state
+        .setIn([
+          'data',
+          {{#each parents}}
+          {{singularize this}}ID,
+          {{/each}}
+        ], fromJS(data))
+        .setIn([
+          'list',
+          {{#each parents}}
+          {{singularize this}}ID,
+          {{/each}}
+        ], fromJS(list));
+    }
+    case c.LOAD_{{pcCase name}}_FAILURE:
+      return state;
+
+{{#if wannaCreateAction }}
+    case c.CREATE_{{scCase name}}:
+      return state;
+    case c.CREATE_{{scCase name}}_SUCCESS: {
+      const data = payload.response;
+      {{#if hasParents}}
+      const {
+      {{#each parents}}
+        {{singularize this}}ID,
+      {{/each}}
+      } = meta;
+      {{/if}}
+      return state.setIn([
+        'data',
+        {{#each parents}}
+        {{singularize this}}ID,
+        {{/each}}
+        data.id,
+      ], fromJS(data));
+    }
+    case c.CREATE_{{scCase name}}_FAILURE:
+      return state;
+{{/if}}
+
+{{#if wannaUpdateAction }}
+    case c.UPDATE_{{scCase name}}:
+      return state;
+    case c.UPDATE_{{scCase name}}_SUCCESS: {
+      const id = getByKey(payload, ['response', 'id']);
+      const data = getByKey(payload, ['response']);
+      {{#if hasParents}}
+      const {
+      {{#each parents}}
+        {{singularize this}}ID,
+      {{/each}}
+      } = meta;
+      {{/if}}
+      if (id) {
+        return state.setIn([
+          'data',
+          {{#each parents}}
+          {{singularize this}}ID,
+          {{/each}}
+          id,
+        ], fromJS(data));
+      }
+      return state;
+      }
+    case c.UPDATE_{{scCase name}}_FAILURE:
+      return state;
+{{/if}}
+
+{{#if wannaReadOneAction }}
+    case c.READ_{{scCase name}}:
+      return state;
+    case c.READ_{{scCase name}}_SUCCESS: {
+      const id = getByKey(payload, ['response', 'id']);
+      const data = getByKey(payload, ['response']);
+      {{#if hasParents}}
+      const {
+      {{#each parents}}
+        {{singularize this}}ID,
+      {{/each}}
+      } = meta;
+      {{/if}}
+      if (id) {
+        return state.setIn([
+          'data',
+          {{#each parents}}
+          {{singularize this}}ID,
+          {{/each}}
+          id,
+        ], fromJS(data));
+      }
+      return state;
+    }
+    case c.READ_{{scCase name}}_FAILURE:
+      return state;
+{{/if}}
+
+{{#if wannaRemoveAction }}
+    case c.REMOVE_{{scCase name}}:
+      return state;
+    case c.REMOVE_{{scCase name}}_SUCCESS: {
+      const { id } = meta;
+      {{#if hasParents}}
+      const {
+      {{#each parents}}
+        {{singularize this}}ID,
+      {{/each}}
+      } = meta;
+      {{/if}}
+      return state
+        .removeIn([
+          'data',
+          {{#each parents}}
+          {{singularize this}}ID,
+          {{/each}}
+          id,
+        ])
+        .updateIn([
+          'list',
+          {{#each parents}}
+          {{singularize this}}ID,
+          {{/each}}
+        ], (l) => l.filterNot((i) => i === id));
+    }
+    case c.REMOVE_{{scCase name}}_FAILURE:
+      return state;
+{{/if}}
+
+{{#if wannaResourceActions }}
+    case c.EXECUTE_{{scCase name}}_ACTION:
+      return state;
+    case c.EXECUTE_{{scCase name}}_ACTION_SUCCESS:
+      return state;
+    case c.EXECUTE_{{scCase name}}_ACTION_FAILURE:
+      return state;
+{{/if}}
+
+    default:
+      return state;
+  }
+};
+
+export default reducer;
