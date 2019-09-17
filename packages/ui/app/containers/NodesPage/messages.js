@@ -10,18 +10,6 @@ import tableSchema from './tableSchema';
 
 export const scope = 'app.containers.NodesPage';
 
-// eslint-disable-next-line
-const table = tableSchema.reduce(
-  (schema, col) => ({
-    [`tableTitle${col.label}`]: {
-      id: `${scope}.tableTitle${col.label}`,
-      defaultMessage: col.label,
-    },
-    ...schema,
-  }),
-  {}
-);
-
 export default defineMessages({
   pageTitle: {
     id: `${scope}.pageTitle`,

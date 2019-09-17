@@ -4,7 +4,7 @@
  *
  */
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
@@ -28,69 +28,63 @@ import IconButton from '@material-ui/core/IconButton';
 import { makeSelectClusterID } from 'ducks/app/selectors';
 import { makeSelectCurrentCluster } from 'ducks/clusters/selectors';
 import * as actions from 'ducks/nodes/actions';
+import { makeSelectURL } from 'ducks/nodes/selectors';
 
 import messages from './messages';
-import styles from './styles';
-import NodesTable from './NodesTable';
+import useStyles from './styles';
+import NodesTable from './Table';
 import NodesPageHelmet from './helmet';
-/* eslint-disable react/prefer-stateless-function */
-export class NodesPage extends React.PureComponent {
-  static propTypes = {
-    initAction: PropTypes.func,
-    classes: PropTypes.object.isRequired,
-    match: PropTypes.object,
-  };
 
-  componentWillMount() {
-    this.load();
-  }
+const NodesPage = ({ clusterID, url, loadNodes }) => {
+  const classes = useStyles();
+  useEffect(() => {
+    if (url) {
+      loadNodes(url, {
+        clusterID,
+      });
+    }
+    return () => {
+      // try cancel something when unmount
+    };
+  }, [clusterID, loadNodes, url]);
 
-  load() {
-    const { cluster, clusterID, loadNodes } = this.props;
-    const url = cluster.getIn(['links', 'nodes']);
-    loadNodes(url, clusterID);
-  }
+  return (
+    <div className={classes.root}>
+      <NodesPageHelmet />
+      <CssBaseline />
+      <div className={classes.content}>
+        <Breadcrumbs
+          data={[
+            {
+              path: `/clusters/${clusterID}/nodes`,
 
-  render() {
-    const { classes, clusterID } = this.props;
-
-    return (
-      <div className={classes.root}>
-        <NodesPageHelmet />
-        <CssBaseline />
-        <div className={classes.content}>
-          <Breadcrumbs
-            data={[
-              {
-                path: `/clusters/${clusterID}/nodes`,
-
-                name: <FormattedMessage {...messages.pageTitle} />,
-              },
-            ]}
-          />
-          <GridContainer className={classes.grid}>
-            <GridItem xs={12} sm={12} md={12}>
-              <Card>
-                <CardHeader>
-                  <h4>
-                    <FormattedMessage {...messages.nodes} />
-                  </h4>
-                </CardHeader>
-                <CardBody>
-                  <NodesTable />
-                </CardBody>
-              </Card>
-            </GridItem>
-          </GridContainer>
-        </div>
+              name: <FormattedMessage {...messages.pageTitle} />,
+            },
+          ]}
+        />
+        <GridContainer className={classes.grid}>
+          <GridItem xs={12} sm={12} md={12}>
+            <Card>
+              <CardHeader>
+                <h4>
+                  <FormattedMessage {...messages.nodes} />
+                </h4>
+              </CardHeader>
+              <CardBody>
+                <NodesTable />
+              </CardBody>
+            </Card>
+          </GridItem>
+        </GridContainer>
       </div>
-    );
-  }
-}
+    </div>
+  );
+};
 
 const mapStateToProps = createStructuredSelector({
   cluster: makeSelectCurrentCluster(),
   clusterID: makeSelectClusterID(),
+  url: makeSelectURL(),
 });
 
 const mapDispatchToProps = (dispatch) =>
@@ -106,7 +100,4 @@ const withConnect = connect(
   mapDispatchToProps
 );
 
-export default compose(
-  withConnect,
-  withStyles(styles)
-)(NodesPage);
+export default compose(withConnect)(NodesPage);

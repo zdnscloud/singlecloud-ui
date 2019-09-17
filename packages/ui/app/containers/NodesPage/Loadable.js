@@ -11,7 +11,7 @@ export default loadable(() =>
 );
 
 export const NodeDetailPage = loadable(() =>
-  import(/* webpackChunkName: "NodeDetailPage" */ './NodeDetailPage')
+  import(/* webpackChunkName: "NodeDetailPage" */ './ShowItemPage')
 );
 
 export const CreateNodePage = loadable(() =>

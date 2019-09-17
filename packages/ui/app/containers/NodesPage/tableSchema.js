@@ -1,10 +1,10 @@
+/* eslint-disable indent */
 import React, { Fragment } from 'react';
 import { ucfirst } from '@gsmlg/utils';
 import { Link } from 'react-router-dom';
 import Button from 'components/CustomButtons/Button';
 import Chip from '@material-ui/core/Chip';
 import TimeCell from 'components/Cells/TimeCell';
-import ConfirmDelete from 'components/ConfirmDelete/ConfirmDelete';
 
 const schema = [
   'name',
@@ -32,9 +32,7 @@ const tableSchema = schema
         component: (props) => (
           <Button
             link
-            to={`/clusters/${props.clusterID}/nodes/${props.data.get(
-              'id'
-            )}/show`}
+            to={`${props.pathname}/${props.data.get('id')}/show`}
             component={Link}
           >
             {props.data.get('name')}

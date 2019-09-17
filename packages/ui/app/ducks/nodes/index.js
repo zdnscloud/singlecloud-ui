@@ -1,6 +1,6 @@
 /**
- *
- * Nodes Duck
+ * Duck: Nodes
+ * reducer: nodes
  *
  */
 import _ from 'lodash';
@@ -16,14 +16,14 @@ const { prefix } = constants;
 export { constants, actions, prefix };
 
 export const initialState = fromJS({
-  nodes: {},
-  list: [],
-  selectedNode: {},
+  data: {},
+  list: {},
+  selectedData: null,
 });
 
 const c = constants;
 
-export const nodesReducer = (
+export const reducer = (
   state = initialState,
   { type, payload, error, meta }
 ) => {
@@ -31,42 +31,32 @@ export const nodesReducer = (
     case c.LOAD_NODES:
       return state;
     case c.LOAD_NODES_SUCCESS: {
-      const { clusterID } = meta;
       const { data, list } = procCollectionData(payload);
+      const { clusterID } = meta;
       return state
-        .setIn(['nodes', clusterID], fromJS(data))
-        .set('list', fromJS(list));
+        .setIn(['data', clusterID], fromJS(data))
+        .setIn(['list', clusterID], fromJS(list));
     }
     case c.LOAD_NODES_FAILURE:
       return state;
 
-    case c.CREATE_NODE:
+    case c.READ_NODE:
       return state;
-    case c.CREATE_NODE_SUCCESS: {
+    case c.READ_NODE_SUCCESS: {
+      const id = getByKey(payload, ['response', 'id']);
+      const data = getByKey(payload, ['response']);
       const { clusterID } = meta;
-      const data = payload.response;
-      return state.setIn(['nodes', clusterID, data.id], fromJS(data));
+      if (id) {
+        return state.setIn(['data', clusterID, id], fromJS(data));
+      }
+      return state;
     }
-    case c.CREATE_NODE_FAILURE:
+    case c.READ_NODE_FAILURE:
       return state;
-
-    case c.REMOVE_NODE:
-      return state;
-    case c.REMOVE_NODE_SUCCESS: {
-      const { clusterID, id } = meta;
-      return state
-        .deleteIn(['nodes', clusterID, id])
-        .update('list', (l) => l.filterNot((i) => i === id));
-    }
-    case c.REMOVE_NODE_FAILURE:
-      return state;
-
-    case c.CHANGE_NODE:
-      return state.setIn(['selectedNode', payload.clusterID], payload.nodeID);
 
     default:
       return state;
   }
 };
 
-export default nodesReducer;
+export default reducer;
