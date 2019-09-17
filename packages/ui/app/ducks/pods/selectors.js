@@ -26,8 +26,10 @@ import {
   makeSelectCronJobID,
   makeSelectCurrentCronJob,
 } from 'ducks/cronJobs/selectors';
-import { makeSelectJobID, makeSelectCurrentJob } from 'ducks/jobs/selectors';
-
+import {
+  makeSelectCurrentID as makeSelectJobID,
+  makeSelectCurrent as makeSelectCurrentJob,
+} from 'ducks/jobs/selectors';
 import { prefix } from './constants';
 
 /**

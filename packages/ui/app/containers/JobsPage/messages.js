@@ -17,25 +17,21 @@ export default defineMessages({
     id: `${scope}.pageDesc`,
     defaultMessage: 'Description of JobsPage',
   },
-  header: {
-    id: `${scope}.header`,
-    defaultMessage: 'This is the JobsPage container!',
-  },
   jobs: {
     id: `${scope}.jobs`,
-    defaultMessage: 'Jobs',
+    defaultMessage: 'jobs',
+  },
+  pods: {
+    id: `${scope}.pods`,
+    defaultMessage: 'Pods',
+  },
+  jobDetail: {
+    id: `${scope}.jobDetail`,
+    defaultMessage: 'Job Detail',
   },
   tableTitleName: {
     id: `${scope}.tableTitleName`,
     defaultMessage: 'Name',
-  },
-  tableTitleSchedule: {
-    id: `${scope}.tableTitleSchedule`,
-    defaultMessage: 'Schedule',
-  },
-  tableTitleReplicas: {
-    id: `${scope}.tableTitleReplicas`,
-    defaultMessage: 'Replicas',
   },
   tableTitleCreationTimestamp: {
     id: `${scope}.tableTitleCreationTimestamp`,
@@ -45,17 +41,17 @@ export default defineMessages({
     id: `${scope}.tableTitleActions`,
     defaultMessage: 'Actions',
   },
+  createPageTitle: {
+    id: `${scope}.createPageTitle`,
+    defaultMessage: 'Create Job',
+  },
+  createPageDesc: {
+    id: `${scope}.createPageDesc`,
+    defaultMessage: 'Description of Create Job',
+  },
   createJob: {
     id: `${scope}.createJob`,
     defaultMessage: 'Create Job',
-  },
-  pods: {
-    id: `${scope}.pods`,
-    defaultMessage: 'Pods',
-  },
-  jobDetail: {
-    id: `${scope}.jobDetail`,
-    defaultMessage: 'Job Detail',
   },
   save: {
     id: `${scope}.save`,
