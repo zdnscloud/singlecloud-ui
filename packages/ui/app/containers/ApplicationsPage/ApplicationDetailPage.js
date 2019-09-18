@@ -20,8 +20,8 @@ import CardBody from 'components/Card/CardBody';
 
 import {
   makeSelectURL,
-  makeSelectApplicationID,
-  makeSelectCurrentApplication,
+  makeSelectCurrentID,
+  makeSelectCurrent,
 } from 'ducks/applications/selectors';
 import {
   makeSelectClusterID,
@@ -111,8 +111,8 @@ const mapStateToProps = createStructuredSelector({
   url: makeSelectURL(),
   clusterID: makeSelectClusterID(),
   namespaceID: makeSelectNamespaceID(),
-  applicationID: makeSelectApplicationID(),
-  application: makeSelectCurrentApplication(),
+  applicationID: makeSelectCurrentID(),
+  application: makeSelectCurrent(),
 });
 
 const mapDispatchToProps = (dispatch) =>

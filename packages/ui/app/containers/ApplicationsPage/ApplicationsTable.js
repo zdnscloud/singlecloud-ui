@@ -17,7 +17,7 @@ import Paper from '@material-ui/core/Paper';
 import { SimpleTable } from '@gsmlg/com';
 
 import * as actions from 'ducks/applications/actions';
-import { makeSelectCurrentApplication } from 'ducks/applications/selectors';
+import { makeSelectCurrent } from 'ducks/applications/selectors';
 import {
   makeSelectClusterID,
   makeSelectNamespaceID,
@@ -58,7 +58,7 @@ export const ApplicationsTable = ({ application, clusterID, namespaceID }) => {
 };
 
 const mapStateToProps = createStructuredSelector({
-  application: makeSelectCurrentApplication(),
+  application: makeSelectCurrent(),
   clusterID: makeSelectClusterID(),
   namespaceID: makeSelectNamespaceID(),
 });

@@ -62,10 +62,10 @@ const ApplicationsPage = ({
   const [filter, setFilter] = useState({});
   useEffect(() => {
     if (url) {
-      loadApplications({ url, clusterID, namespaceID });
+      loadApplications(url, { clusterID, namespaceID });
     }
     const t = setInterval(
-      () => loadApplications({ url, clusterID, namespaceID }),
+      () => loadApplications(url, { clusterID, namespaceID }),
       3000
     );
     return () => clearInterval(t);
