@@ -47,7 +47,6 @@ const SearchApplicationsForm = reduxForm({
 const ApplicationStorePage = ({
   clusterID,
   namespaceID,
-  // location,
   url,
   loadCharts,
   submitForm,

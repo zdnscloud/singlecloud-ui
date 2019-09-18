@@ -33,7 +33,7 @@ import * as actions from 'ducks/applications/actions';
 
 import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
 import messages from './messages';
-import styles from './styles';
+import useStyles from './styles';
 import ApplicationsPageHelmet from './helmet';
 import ApplicationForm from './ApplicationForm';
 
@@ -62,12 +62,12 @@ export const CreateApplicationPage = ({
   chartID,
   chartsUrl,
   readChart,
-  classes,
   submitForm,
   createApplication,
   chart,
   values,
 }) => {
+  const classes = useStyles();
   useEffect(() => {
     readChart(chartID, {
       clusterID,
@@ -136,7 +136,7 @@ export const CreateApplicationPage = ({
               <Button
                 variant="contained"
                 className={classes.cancleBtn}
-                to="/applicationStore"
+                to={`/clusters/${clusterID}/namespaces/${namespaceID}/charts`}
                 component={Link}
               >
                 <FormattedMessage {...messages.cancleApplicationButton} />
@@ -173,7 +173,4 @@ const withConnect = connect(
   mapDispatchToProps
 );
 
-export default compose(
-  withConnect,
-  withStyles(styles)
-)(CreateApplicationPage);
+export default compose(withConnect)(CreateApplicationPage);

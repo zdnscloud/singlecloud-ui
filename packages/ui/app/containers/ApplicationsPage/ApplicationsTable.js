@@ -25,44 +25,37 @@ import {
 import { Map, List } from 'immutable';
 
 import messages from './messages';
-import styles from './styles';
+import useStyles from './styles';
 import schema from './tableSchema';
 
-export class ApplicationsTable extends React.PureComponent {
-  static propTypes = {
-    classes: PropTypes.object.isRequired,
-    application: PropTypes.object.isRequired,
-  };
+export const ApplicationsTable = ({ application, clusterID, namespaceID }) => {
+  const classes = useStyles();
+  const data = application.get('appResources') || List([]);
+  const mergedSchema = schema
+    .map((sch) => {
+      if (sch.id === 'name') {
+        return {
+          ...sch,
+          props: { clusterID, namespaceID },
+        };
+      }
+      return sch;
+    })
+    .map((s) => ({
+      ...s,
+      label: <FormattedMessage {...messages[`tableTitle${s.label}`]} />,
+    }));
 
-  render() {
-    const { classes, theme, clusterID, namespaceID, application } = this.props;
-    const data = application.get('appResources') || List([]);
-    const mergedSchema = schema
-      .map((sch) => {
-        if (sch.id === 'name') {
-          return {
-            ...sch,
-            props: { clusterID, namespaceID },
-          };
-        }
-        return sch;
-      })
-      .map((s) => ({
-        ...s,
-        label: <FormattedMessage {...messages[`tableTitle${s.label}`]} />,
-      }));
-
-    return (
-      <Paper className={classes.tableWrapper}>
-        <SimpleTable
-          className={classes.table}
-          schema={mergedSchema}
-          data={data}
-        />
-      </Paper>
-    );
-  }
-}
+  return (
+    <Paper className={classes.tableWrapper}>
+      <SimpleTable
+        className={classes.table}
+        schema={mergedSchema}
+        data={data}
+      />
+    </Paper>
+  );
+};
 
 const mapStateToProps = createStructuredSelector({
   application: makeSelectCurrentApplication(),
@@ -83,7 +76,4 @@ const withConnect = connect(
   mapDispatchToProps
 );
 
-export default compose(
-  withConnect,
-  withStyles(styles, { withTheme: true })
-)(ApplicationsTable);
+export default compose(withConnect)(ApplicationsTable);

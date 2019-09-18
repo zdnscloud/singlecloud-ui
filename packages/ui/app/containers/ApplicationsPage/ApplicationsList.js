@@ -26,50 +26,39 @@ import {
 } from 'ducks/app/selectors';
 
 import messages from './messages';
-import styles from './styles';
+import useStyles from './styles';
 import ApplicationTemplate from './application/applicationTemplate';
 
-/* eslint-disable react/prefer-stateless-function */
-export class ApplicationsList extends React.PureComponent {
-  static propTypes = {
-    classes: PropTypes.object.isRequired,
-    data: PropTypes.object.isRequired,
-    applications: PropTypes.object.isRequired,
-  };
-
-  render() {
-    const {
-      classes,
-      data,
-      removeApplication,
-      theme,
-      filter,
-      clusterID,
-      namespaceID,
-    } = this.props;
-    const appData = data.filter((item) => {
-      let flag = true;
-      if (filter.name) {
-        flag = flag && item.get('name').includes(filter.name);
-      }
-      return flag;
-    });
-    return (
-      <GridContainer>
-        {appData.map((item, key) => (
-          <ApplicationTemplate
-            classes={classes}
-            key={key}
-            item={item}
-            removeApplication={removeApplication}
-            namespaceID={namespaceID}
-            clusterID={clusterID}
-          />
-        ))}
-      </GridContainer>
-    );
-  }
-}
+export const ApplicationsList = ({
+  data,
+  filter,
+  clusterID,
+  namespaceID,
+  removeApplication,
+}) => {
+  const classes = useStyles();
+  const appData = data.filter((item) => {
+    let flag = true;
+    if (filter.name) {
+      flag = flag && item.get('name').includes(filter.name);
+    }
+    return flag;
+  });
+  return (
+    <GridContainer>
+      {appData.map((item, key) => (
+        <ApplicationTemplate
+          classes={classes}
+          key={key}
+          item={item}
+          removeApplication={removeApplication}
+          namespaceID={namespaceID}
+          clusterID={clusterID}
+        />
+      ))}
+    </GridContainer>
+  );
+};
 
 const mapStateToProps = createStructuredSelector({
   applications: makeSelectApplications(),
@@ -91,7 +80,4 @@ const withConnect = connect(
   mapDispatchToProps
 );
 
-export default compose(
-  withConnect,
-  withStyles(styles, { withTheme: true })
-)(ApplicationsList);
+export default compose(withConnect)(ApplicationsList);
