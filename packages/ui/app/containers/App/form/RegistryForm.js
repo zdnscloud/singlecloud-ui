@@ -65,7 +65,11 @@ const Form = ({ formValues, handleSubmit, error, role }) => {
             normalize={(val) => Number(val)}
             name="storageSize"
             fullWidth
-            inputProps={{ type: 'number', autoComplete: 'off' }}
+            inputProps={{
+              type: 'number',
+              autoComplete: 'off',
+              endAdornment: 'Gi',
+            }}
           />
         </GridItem>
       </GridContainer>
