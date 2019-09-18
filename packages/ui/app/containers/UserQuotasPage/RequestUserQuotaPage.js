@@ -3,7 +3,7 @@
  * RequestUserQuotaPage
  *
  */
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
@@ -27,14 +27,15 @@ import { makeSelectClusters } from 'ducks/clusters/selectors';
 import Button from '@material-ui/core/Button';
 
 import {
-  makeSelectCurrentUserQuota,
+  makeSelectCurrent,
   makeSelectURL,
+  makeSelectCurrentID,
 } from 'ducks/userQuotas/selectors';
 import * as actions from 'ducks/userQuotas/actions';
 
 import messages from './messages';
 import RequestUserQuotaPageHelmet from './helmet';
-import styles from './styles';
+import useStyles from './styles';
 import RequestUserQuotaForm from './RequestUserQuotaForm';
 
 export const formName = 'CreateRequestUserQuotaForm';
@@ -55,117 +56,113 @@ const CreateRequestUserQuotaForm = reduxForm({
   validate,
 })(RequestUserQuotaForm);
 
-export class RequestUserQuotaPage extends React.PureComponent {
-  static propTypes = {
-    initAction: PropTypes.func,
-    classes: PropTypes.object.isRequired,
-    match: PropTypes.object,
-    location: PropTypes.object,
-  };
+const RequestUserQuotaPage = ({
+  userQuota,
+  submitForm,
+  requestUserQuota,
+  clusters,
+  readUserQuota,
+  userQuotaID,
+  url,
+}) => {
+  const classes = useStyles();
+  const [actionType, setActionType] = useState(null);
 
-  componentWillMount() {
-    this.load();
-  }
-
-  load() {
-    const { loadUserQuotas, url } = this.props;
-    loadUserQuotas(url);
-  }
-
-  render() {
-    const {
-      classes,
-      userQuota,
-      submitForm,
-      requestUserQuota,
-      clusters,
-    } = this.props;
-    const getClickedAction = () => this.clickedAction;
-    async function doSubmit(formValues) {
-      try {
-        const { clusterName, reason } = formValues.toJS();
-        const action = getClickedAction();
-        const url = `${userQuota.getIn(['links', 'self'])}?action=${action}`;
-        const data = action === 'approval' ? { clusterName } : { reason };
-        await new Promise((resolve, reject) => {
-          requestUserQuota({ ...data }, { resolve, reject, url });
-        });
-      } catch (error) {
-        throw new SubmissionError({ _error: error });
-      }
+  useEffect(() => {
+    if (url) {
+      readUserQuota(userQuotaID, {
+        url: `${url}/${userQuotaID}`,
+      });
     }
-    return (
-      <div className={classes.root}>
-        <RequestUserQuotaPageHelmet />
-        <CssBaseline />
-        <div className={classes.content}>
-          <Breadcrumbs
-            data={[
-              {
-                path: `/adminUserQuotas`,
-                name: <FormattedMessage {...messages.adminRequestListPage} />,
-              },
-              {
-                name: <FormattedMessage {...messages.requestDetail} />,
-              },
-            ]}
-          />
-          <GridContainer className={classes.grid}>
-            <GridItem xs={12} sm={12} md={12}>
-              <Card>
-                <CardHeader>
-                  <h4>
-                    <FormattedMessage {...messages.detail} />
-                  </h4>
-                </CardHeader>
-                <CardBody>
-                  <CreateRequestUserQuotaForm
-                    classes={classes}
-                    onSubmit={doSubmit}
-                    initialValues={userQuota}
-                    userQuota={userQuota}
-                    clusters={clusters}
-                  />
-                </CardBody>
-                <CardFooter className={classes.cardFooter}>
-                  <GridContainer>
-                    <GridItem xs={12} sm={12} md={12}>
-                      <Button
-                        variant="contained"
-                        color="primary"
-                        onClick={() => {
-                          this.clickedAction = 'approval';
-                          submitForm();
-                        }}
-                      >
-                        <FormattedMessage {...messages.passBtn} />
-                      </Button>
-                      <Button
-                        variant="contained"
-                        className={classes.cancleBtn}
-                        onClick={() => {
-                          this.clickedAction = 'reject';
-                          submitForm();
-                        }}
-                      >
-                        <FormattedMessage {...messages.rejectBtn} />
-                      </Button>
-                    </GridItem>
-                  </GridContainer>
-                </CardFooter>
-              </Card>
-            </GridItem>
-          </GridContainer>
-        </div>
-      </div>
-    );
+    return () => {
+      // try cancel something when unmount
+    };
+  }, [readUserQuota, url, userQuotaID]);
+
+  async function doSubmit(formValues) {
+    try {
+      const { clusterName, reason } = formValues.toJS();
+      const aurl = `${userQuota.getIn(['links', 'self'])}?action=${actionType}`;
+      const data = actionType === 'approval' ? { clusterName } : { reason };
+      await new Promise((resolve, reject) => {
+        requestUserQuota({ ...data }, { resolve, reject, url: aurl });
+      });
+    } catch (error) {
+      throw new SubmissionError({ _error: error });
+    }
   }
-}
+  return (
+    <div className={classes.root}>
+      <RequestUserQuotaPageHelmet />
+      <CssBaseline />
+      <div className={classes.content}>
+        <Breadcrumbs
+          data={[
+            {
+              path: `/adminUserQuotas`,
+              name: <FormattedMessage {...messages.adminRequestListPage} />,
+            },
+            {
+              name: <FormattedMessage {...messages.requestDetail} />,
+            },
+          ]}
+        />
+        <GridContainer className={classes.grid}>
+          <GridItem xs={12} sm={12} md={12}>
+            <Card>
+              <CardHeader>
+                <h4>
+                  <FormattedMessage {...messages.detail} />
+                </h4>
+              </CardHeader>
+              <CardBody>
+                <CreateRequestUserQuotaForm
+                  classes={classes}
+                  onSubmit={doSubmit}
+                  initialValues={userQuota}
+                  userQuota={userQuota}
+                  clusters={clusters}
+                />
+              </CardBody>
+              <CardFooter className={classes.cardFooter}>
+                <GridContainer>
+                  <GridItem xs={12} sm={12} md={12}>
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      onClick={() => {
+                        setActionType('approval');
+                        submitForm();
+                      }}
+                    >
+                      <FormattedMessage {...messages.passBtn} />
+                    </Button>
+                    <Button
+                      variant="contained"
+                      className={classes.cancleBtn}
+                      onClick={() => {
+                        setActionType('reject');
+                        submitForm();
+                      }}
+                    >
+                      <FormattedMessage {...messages.rejectBtn} />
+                    </Button>
+                  </GridItem>
+                </GridContainer>
+              </CardFooter>
+            </Card>
+          </GridItem>
+        </GridContainer>
+      </div>
+    </div>
+  );
+};
 
 const mapStateToProps = createStructuredSelector({
-  userQuota: makeSelectCurrentUserQuota(),
+  userQuota: makeSelectCurrent(),
   url: makeSelectURL(),
   clusters: makeSelectClusters(),
+  userQuotaID: makeSelectCurrentID(),
 });
 
 const mapDispatchToProps = (dispatch) =>
@@ -182,7 +179,4 @@ const withConnect = connect(
   mapDispatchToProps
 );
 
-export default compose(
-  withConnect,
-  withStyles(styles)
-)(RequestUserQuotaPage);
+export default compose(withConnect)(RequestUserQuotaPage);

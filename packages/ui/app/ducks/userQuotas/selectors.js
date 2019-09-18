@@ -1,54 +1,70 @@
+/**
+ * Duck: Userquotas
+ * selectors: userQuotas
+ *
+ */
+import { fromJS } from 'immutable';
 import { createSelector } from 'reselect';
 import {
   createMatchSelector,
   getLocation,
 } from 'connected-react-router/immutable';
-import { makeSelectUserQuotaID } from 'ducks/app/selectors';
+
 import { prefix } from './constants';
+import { initialState } from './index';
 
 /**
- * Direct selector to the userQuotas duck
+ * Direct selector to the userQuotas domain
  */
-export const selectUserQuotasDomain = (state) => state.get(prefix);
+export const selectDomain = (state) => state.get(prefix) || initialState;
 
 /**
  * Other specific selectors
  */
 export const makeSelectURL = () =>
   createSelector(
-    selectUserQuotasDomain,
+    selectDomain,
     (substate) => '/apis/zcloud.cn/v1/userquotas'
   );
 
 export const makeSelectUserQuotas = () =>
   createSelector(
-    selectUserQuotasDomain,
-    (substate) => substate.get('userQuotas') || substate.clear()
+    selectDomain,
+
+    (substate) => substate.getIn(['data']) || substate.clear()
   );
 
 export const makeSelectUserQuotasList = () =>
   createSelector(
-    selectUserQuotasDomain,
+    selectDomain,
     makeSelectUserQuotas(),
-    (substate, userQuotas) =>
-      substate.get('list').map((id) => userQuotas.get(id))
+
+    (substate, data) =>
+      (substate.getIn(['list']) || fromJS([])).map((id) => data.get(id)) ||
+      fromJS([])
   );
 
-export const makeSelectCurrentUserQuota = () =>
+export const makeSelectCurrentID = () =>
   createSelector(
-    selectUserQuotasDomain,
-    makeSelectUserQuotaID(),
-    (substate, userQuotaID) =>
-      substate.getIn(['userQuotas', userQuotaID]) || substate.clear()
+    createMatchSelector('*/userQuotas/:id/*'),
+    (match) => {
+      if (match && match.params) {
+        return match.params.id;
+      }
+      return '';
+    }
   );
 
-export const makeSelectDeleteUserQuotaError = () =>
+export const makeSelectCurrent = () =>
   createSelector(
-    selectUserQuotasDomain,
+    selectDomain,
+
+    makeSelectCurrentID(),
+    (substate, id) => substate.getIn(['data', id]) || substate.clear()
+  );
+
+export const makeSelectDeleteError = () =>
+  createSelector(
+    selectDomain,
     (state) => state.get('deleteError')
   );
-
-/**
- * Default selector used by UserQuotas
- */
-export default makeSelectUserQuotas;
