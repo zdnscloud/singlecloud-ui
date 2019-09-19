@@ -1,21 +1,40 @@
-import { Observable, interval, of, timer } from 'rxjs';
-import { mergeMap, map, mapTo, catchError } from 'rxjs/operators';
-import { ofType, combineEpics } from 'redux-observable';
+/**
+ * Duck: ResourceQuotas
+ * epic: resourceQuotas
+ *
+ */
 import { push } from 'connected-react-router';
+import { Observable, interval, of, timer, concat } from 'rxjs';
+import {
+  mergeMap,
+  map,
+  mapTo,
+  debounce,
+  debounceTime,
+  reduce,
+  scan,
+  throttleTime,
+  throttle,
+  catchError,
+} from 'rxjs/operators';
+import { ofType, combineEpics } from 'redux-observable';
+
 import * as c from './constants';
 import * as a from './actions';
 
-export const loadResourceQuotaEpic = (action$, state$, { ajax }) =>
+export const loadResourceQuotasEpic = (action$, state$, { ajax }) =>
   action$.pipe(
-    ofType(c.LOAD_RESOURCE_QUOTA),
-    mergeMap(({ meta: { url, clusterID, namespaceID } }) =>
-      ajax(url).pipe(
-        map((resp) =>
-          a.loadResourceQuotaSuccess(resp, { clusterID, namespaceID })
-        ),
-        catchError((error) =>
-          of(a.loadResourceQuotaFailure(error, { clusterID, namespaceID }))
-        )
+    ofType(c.LOAD_RESOURCE_QUOTAS),
+    mergeMap(({ payload, meta }) =>
+      ajax(payload).pipe(
+        map((resp) => {
+          meta.resolve && meta.resolve(resp);
+          return a.loadResourceQuotasSuccess(resp, meta);
+        }),
+        catchError((error) => {
+          meta.reject && meta.reject(error);
+          return of(a.loadResourceQuotasFailure(error, meta));
+        })
       )
     )
   );
@@ -23,71 +42,71 @@ export const loadResourceQuotaEpic = (action$, state$, { ajax }) =>
 export const createResourceQuotaEpic = (action$, state$, { ajax }) =>
   action$.pipe(
     ofType(c.CREATE_RESOURCE_QUOTA),
-    mergeMap(
-      ({ payload, meta: { resolve, reject, url, clusterID, namespaceID } }) =>
-        ajax({
-          url,
-          method: 'POST',
-          body: payload,
-        }).pipe(
-          map((resp) => {
-            resolve(resp);
-            return a.createResourceQuotaSuccess(resp, {
-              clusterID,
-              namespaceID,
-            });
-          }),
-          catchError((error) => {
-            reject(error);
-            return of(
-              a.createResourceQuotaFailure(error, { clusterID, namespaceID })
-            );
-          })
-        )
+    mergeMap(({ payload, meta }) =>
+      ajax({
+        url: `${meta.url}`,
+        method: 'POST',
+        body: payload,
+      }).pipe(
+        map((resp) => {
+          meta.resolve && meta.resolve(resp);
+          return a.createResourceQuotaSuccess(resp, meta);
+        }),
+        catchError((error) => {
+          meta.reject && meta.reject(error);
+          return of(a.createResourceQuotaFailure(error, meta));
+        })
+      )
     )
   );
 
-export const updateResourceQuotaEpic = (action$, state$, { ajax }) =>
+export const readResourceQuotaEpic = (action$, state$, { ajax }) =>
   action$.pipe(
-    ofType(c.UPDATE_RESOURCE_QUOTA),
-    mergeMap(
-      ({ payload, meta: { resolve, reject, url, clusterID, namespaceID } }) =>
-        ajax({
-          url,
-          method: 'PUT',
-          body: payload,
-        }).pipe(
-          map((resp) => {
-            resolve(resp);
-            return a.updateResourceQuotaSuccess(resp, {
-              clusterID,
-              namespaceID,
-            });
-          }),
-          catchError((error) => {
-            reject(error);
-            return of(
-              a.updateResourceQuotaFailure(error, {
-                clusterID,
-                namespaceID,
-              })
-            );
-          })
-        )
+    ofType(c.READ_RESOURCE_QUOTA),
+    mergeMap(({ payload, meta }) =>
+      ajax({
+        url: `${meta.url}`,
+        method: 'GET',
+      }).pipe(
+        map((resp) => {
+          meta.resolve && meta.resolve(resp);
+          return a.readResourceQuotaSuccess(resp, { ...meta, id: payload });
+        }),
+        catchError((error) => {
+          meta.reject && meta.reject(error);
+          return of(
+            a.readResourceQuotaFailure(error, { ...meta, id: payload })
+          );
+        })
+      )
     )
   );
 
-export const afterUpdateEpic = (action$) =>
+export const removeResourceQuotaEpic = (action$, state$, { ajax }) =>
   action$.pipe(
-    ofType(c.UPDATE_RESOURCE_QUOTA_SUCCESS),
-    mergeMap(({ payload, meta, clusterID }) =>
-      timer(1000).pipe(mapTo(push(`/clusters/${clusterID}/namespaces`)))
+    ofType(c.REMOVE_RESOURCE_QUOTA),
+    mergeMap(({ payload, meta }) =>
+      ajax({
+        url: `${meta.url}`,
+        method: 'DELETE',
+      }).pipe(
+        map((resp) => {
+          meta.resolve && meta.resolve(resp);
+          return a.removeResourceQuotaSuccess(resp, { ...meta, id: payload });
+        }),
+        catchError((error) => {
+          meta.reject && meta.reject(error);
+          return of(
+            a.removeResourceQuotaFailure(error, { ...meta, id: payload })
+          );
+        })
+      )
     )
   );
 
 export default combineEpics(
-  loadResourceQuotaEpic,
+  loadResourceQuotasEpic,
   createResourceQuotaEpic,
-  updateResourceQuotaEpic,
-  afterUpdateEpic
+  readResourceQuotaEpic,
+  removeResourceQuotaEpic
 );

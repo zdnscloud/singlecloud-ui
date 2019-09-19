@@ -1,82 +1,81 @@
+/**
+ * Duck: ResourceQuotas
+ * selectors: resourceQuotas
+ *
+ */
+import { fromJS } from 'immutable';
 import { createSelector } from 'reselect';
 import {
   createMatchSelector,
   getLocation,
 } from 'connected-react-router/immutable';
-
-import { makeSelectCurrentID as makeSelectClusterID } from 'ducks/clusters/selectors';
 import {
-  makeSelectCurrentID as makeSelectNamespaceID,
-  makeSelectCurrentNamespace,
+  makeSelectCurrent as makeSelectCurrentNamespace,
+  makeSelectCurrentID as makeSelectCurrentNamespaceID,
 } from 'ducks/namespaces/selectors';
+import { makeSelectCurrentID as makeSelectCurrentClusterID } from 'ducks/clusters/selectors';
 
 import { prefix } from './constants';
+import { initialState } from './index';
 
 /**
- * Direct selector to the resourceQuota duck
+ * Direct selector to the resourceQuotas domain
  */
-
-const selectResourceQuotaDomain = (state) => state.get(prefix);
+export const selectDomain = (state) => state.get(prefix) || initialState;
 
 /**
  * Other specific selectors
  */
-export const makeSelectResourceQuota = () =>
-  createSelector(
-    selectResourceQuotaDomain,
-    makeSelectClusterID(),
-    makeSelectNamespaceID(),
-    (substate, clusterID, namespaceID) =>
-      substate.getIn(['resourcequotas', clusterID, namespaceID]) ||
-      substate.clear()
-  );
-
-export const makeSelectNamespacesList = () =>
-  createSelector(
-    selectResourceQuotaDomain,
-    makeSelectResourceQuota(),
-    (substate, resourceQuota) =>
-      substate.get('list').map((id) => resourceQuota.get(id))
-  );
-
 export const makeSelectURL = () =>
   createSelector(
     makeSelectCurrentNamespace(),
-    (ns) => ns.getIn(['links', 'resourcequotas'])
+    (pt) => pt.getIn(['links', 'resourcequotas'])
   );
 
-export const makeSelectResourceQuotaID = () =>
+export const makeSelectData = () =>
   createSelector(
-    createMatchSelector(
-      '/clusters/:cluster_id/namespaces/:namespace_id/resourceQuota'
-    ),
+    selectDomain,
+    (substate) => substate.get('data')
+  );
+
+export const makeSelectResourceQuotas = () =>
+  createSelector(
+    selectDomain,
+    makeSelectCurrentClusterID(),
+    makeSelectCurrentNamespaceID(),
+    (substate, clusterID, namespaceID) =>
+      substate.getIn(['data', clusterID, namespaceID]) || substate.clear()
+  );
+
+export const makeSelectResourceQuotasList = () =>
+  createSelector(
+    selectDomain,
+    makeSelectResourceQuotas(),
+    makeSelectCurrentClusterID(),
+    makeSelectCurrentNamespaceID(),
+    (substate, data, clusterID, namespaceID) =>
+      (substate.getIn(['list', clusterID, namespaceID]) || fromJS([])).map(
+        (id) => data.get(id)
+      ) || fromJS([])
+  );
+
+export const makeSelectCurrentID = () =>
+  createSelector(
+    createMatchSelector('*/resourceQuotas/:id/*'),
     (match) => {
       if (match && match.params) {
-        return match.params;
+        return match.params.id;
       }
       return '';
     }
   );
 
-export const makeSelectCurrentResourceQuota = () =>
+export const makeSelectCurrent = () =>
   createSelector(
-    selectResourceQuotaDomain,
-    makeSelectClusterID(),
-    makeSelectNamespaceID(),
-    makeSelectResourceQuotaID(),
-    (substate, clusterID, namespaceID) =>
-      substate.getIn(['resourcequotas', clusterID, namespaceID]) ||
-      substate.clear()
+    selectDomain,
+    makeSelectCurrentClusterID(),
+    makeSelectCurrentNamespaceID(),
+    makeSelectCurrentID(),
+    (substate, clusterID, namespaceID, id) =>
+      substate.getIn(['data', clusterID, namespaceID, id]) || substate.clear()
   );
-
-/**
- * Default selector used by LoginPage
- */
-
-const makeSelectResourceQuotaDomain = () =>
-  createSelector(
-    selectResourceQuotaDomain,
-    (substate) => substate
-  );
-
-export default makeSelectResourceQuotaDomain;

@@ -3,7 +3,7 @@
  * NamespacesPage
  *
  */
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
@@ -11,7 +11,6 @@ import { createStructuredSelector } from 'reselect';
 import { bindActionCreators, compose } from 'redux';
 import { Link } from 'react-router-dom';
 
-import { withStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Typography from '@material-ui/core/Typography';
 import Fab from '@material-ui/core/Fab';
@@ -24,87 +23,76 @@ import Card from 'components/Card/Card';
 import CardHeader from 'components/Card/CardHeader';
 import CardBody from 'components/Card/CardBody';
 import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
+import Helmet from 'components/Helmet/Helmet';
 
 import {
   makeSelectCurrentID as makeSelectClusterID,
   makeSelectCurrent as makeSelectCurrentCluster,
 } from 'ducks/clusters/selectors';
-
+import { makeSelectURL } from 'ducks/namespaces/selectors';
 import * as actions from 'ducks/namespaces/actions';
 
 import messages from './messages';
-import styles from './styles';
+import useStyles from './styles';
 import NamespacesTable from './NamespacesTable';
-import NamespacesPageHelmet from './helmet';
 
-/* eslint-disable react/prefer-stateless-function */
-export class NamespacesPage extends React.PureComponent {
-  static propTypes = {
-    initAction: PropTypes.func,
-    classes: PropTypes.object.isRequired,
-    match: PropTypes.object,
-    location: PropTypes.object,
-  };
-
-  componentWillMount() {
-    // this.props.initAction();
-    this.load();
-  }
-
-  load() {
-    const { cluster, clusterID, loadNamespaces } = this.props;
-    const url = cluster.getIn(['links', 'namespaces']);
+export const NamespacesPage = ({ url, clusterID, loadNamespaces }) => {
+  const classes = useStyles();
+  useEffect(() => {
     if (url) {
-      loadNamespaces(url, clusterID);
+      loadNamespaces(url, { clusterID });
     }
-  }
+    const t = setInterval(() => {
+      if (url) {
+        loadNamespaces(url, { clusterID });
+      }
+    }, 3000);
+    return () => clearInterval(t);
+  }, [clusterID, loadNamespaces, url]);
 
-  render() {
-    const { classes, clusterID } = this.props;
-    return (
-      <div className={classes.root}>
-        <NamespacesPageHelmet />
-        <CssBaseline />
-        <div className={classes.content}>
-          <Breadcrumbs
-            data={[
-              {
-                path: `/clusters/${clusterID}/namespaces`,
-                name: <FormattedMessage {...messages.pageTitle} />,
-              },
-            ]}
-          />
-          <Typography component="div">
-            <GridContainer className={classes.grid}>
-              <GridItem xs={12} sm={12} md={12}>
-                <Card>
-                  <CardHeader>
-                    <h4>
-                      <FormattedMessage {...messages.namespaces} />
-                    </h4>
-                    <IconButton
-                      aria-label={<FormattedMessage {...messages.namespaces} />}
-                      component={Link}
-                      to={`/clusters/${clusterID}/namespaces/create`}
-                    >
-                      <AddIcon />
-                    </IconButton>
-                  </CardHeader>
-                  <CardBody>
-                    <NamespacesTable location={this.props.location} />
-                  </CardBody>
-                </Card>
-              </GridItem>
-            </GridContainer>
-          </Typography>
-        </div>
+  return (
+    <div className={classes.root}>
+      <Helmet title={messages.pageTitle} description={messages.pageDesc} />
+      <CssBaseline />
+      <div className={classes.content}>
+        <Breadcrumbs
+          data={[
+            {
+              path: `/clusters/${clusterID}/namespaces`,
+              name: <FormattedMessage {...messages.pageTitle} />,
+            },
+          ]}
+        />
+        <Typography component="div">
+          <GridContainer className={classes.grid}>
+            <GridItem xs={12} sm={12} md={12}>
+              <Card>
+                <CardHeader>
+                  <h4>
+                    <FormattedMessage {...messages.namespaces} />
+                  </h4>
+                  <IconButton
+                    aria-label={<FormattedMessage {...messages.namespaces} />}
+                    component={Link}
+                    to={`/clusters/${clusterID}/namespaces/create`}
+                  >
+                    <AddIcon />
+                  </IconButton>
+                </CardHeader>
+                <CardBody>
+                  <NamespacesTable />
+                </CardBody>
+              </Card>
+            </GridItem>
+          </GridContainer>
+        </Typography>
       </div>
-    );
-  }
-}
+    </div>
+  );
+};
 
 const mapStateToProps = createStructuredSelector({
-  cluster: makeSelectCurrentCluster(),
+  url: makeSelectURL(),
   clusterID: makeSelectClusterID(),
 });
 
@@ -121,7 +109,4 @@ const withConnect = connect(
   mapDispatchToProps
 );
 
-export default compose(
-  withConnect,
-  withStyles(styles)
-)(NamespacesPage);
+export default compose(withConnect)(NamespacesPage);

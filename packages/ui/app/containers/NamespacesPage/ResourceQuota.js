@@ -10,8 +10,6 @@ import { FormattedMessage, injectIntl } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import { bindActionCreators, compose } from 'redux';
 
-import { withStyles } from '@material-ui/core/styles';
-
 import GridItem from 'components/Grid/GridItem';
 import GridContainer from 'components/Grid/GridContainer';
 import ReadOnlyInput from 'components/CustomInput/ReadOnlyInput';
@@ -25,11 +23,11 @@ import {
 import { makeSelectConfigMaps } from 'ducks/configMaps/selectors';
 
 import messages from './messages';
-import styles from './styles';
+import useStyles from './styles';
 
 /* eslint-disable react/prefer-stateless-function */
-export const ResourceQuota = (props) => {
-  const { classes, resourceQuota, clusterID, namespaceID } = props;
+export const ResourceQuota = ({ resourceQuota, clusterID, namespaceID }) => {
+  const classes = useStyles();
   const reg = /^(\d+)([a-zA-Z]+)?$/;
   const storage = resourceQuota.getIn(['limits', 'requests.storage']);
 
@@ -84,6 +82,5 @@ const withConnect = connect(
 
 export default compose(
   injectIntl,
-  withConnect,
-  withStyles(styles)
+  withConnect
 )(ResourceQuota);

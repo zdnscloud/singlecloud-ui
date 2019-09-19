@@ -14,7 +14,7 @@ import ClusterWatchIcon from 'components/Icons/ClusterWatch';
 import ApplicationStoreIcon from 'components/Icons/ApplicationStore';
 import { makeSelectRole, makeSelectIsAdmin } from 'ducks/role/selectors';
 
-import { makeSelectCurrentNamespaceID } from 'ducks/namespaces/selectors';
+import { makeSelectCurrentID as makeSelectCurrentNamespaceID } from 'ducks/namespaces/selectors';
 
 const selectRouter = (state) => state.get('router');
 
@@ -41,17 +41,6 @@ export const makeSelectUserQuotaID = () =>
     (match) => {
       if (match && match.params) {
         return match.params.userQuota_id;
-      }
-      return '';
-    }
-  );
-
-export const makeSelectChartID = () =>
-  createSelector(
-    createMatchSelector('/applications/:chart_id'),
-    (match) => {
-      if (match && match.params) {
-        return match.params.chart_id;
       }
       return '';
     }
