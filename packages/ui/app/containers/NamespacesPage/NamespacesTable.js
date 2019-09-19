@@ -14,11 +14,8 @@ import { bindActionCreators, compose } from 'redux';
 import Paper from '@material-ui/core/Paper';
 import { SimpleTable } from '@gsmlg/com';
 
-import {
-  makeSelectClusterID,
-  makeSelectNamespaceID,
-  makeSelectLocation,
-} from 'ducks/app/selectors';
+import { makeSelectLocation } from 'ducks/app/selectors';
+import { makeSelectCurrentID as makeSelectCurrentClusterID } from 'ducks/clusters/selectors';
 import * as actions from 'ducks/namespaces/actions';
 import {
   makeSelectNamespaces,
@@ -72,9 +69,8 @@ export const NamespacesTable = ({
 
 const mapStateToProps = createStructuredSelector({
   location: makeSelectLocation(),
-  clusterID: makeSelectClusterID(),
+  clusterID: makeSelectCurrentClusterID(),
   namespaces: makeSelectNamespaces(),
-  namespaceID: makeSelectNamespaceID(),
   data: makeSelectNamespacesList(),
 });
 
