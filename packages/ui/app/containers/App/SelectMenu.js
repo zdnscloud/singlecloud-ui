@@ -16,7 +16,7 @@ import {
   makeSelectNamespaceID,
 } from 'ducks/app/selectors';
 import * as actions from 'ducks/app/actions';
-import { changeNamespace, loadNamespaces } from 'ducks/namespaces/actions';
+import * as clusterActions from 'ducks/clusters/actions';
 
 import SelectIcon from 'components/Icons/Select';
 import ChevronRight from 'components/Icons/ChevronRight';
@@ -28,6 +28,7 @@ const SelectMenu = ({
   changeCluster,
   clusterID,
   namespaceID,
+  loadClustersAndNamespaces,
   itemLink,
 }) => {
   const classes = useStyles();
@@ -39,6 +40,7 @@ const SelectMenu = ({
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
+    loadClustersAndNamespaces();
   };
 
   const handleClose = () => {
@@ -208,8 +210,7 @@ const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
       ...actions,
-      changeNamespace,
-      loadNamespaces,
+      ...clusterActions,
       itemLink: push,
     },
     dispatch

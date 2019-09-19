@@ -2,13 +2,14 @@ import React, { Fragment } from 'react';
 import { ucfirst } from '@gsmlg/utils';
 import TimeCell from 'components/Cells/TimeCell';
 import { Link } from 'react-router-dom';
+import LinearProgress from '@material-ui/core/LinearProgress';
 import Button from 'components/CustomButtons/Button';
 import IconButton from 'components/CustomIconButtons/IconButton';
 import UpgradeIcon from 'components/Icons/Upgrade';
 import RollbackIcon from 'components/Icons/Rollback';
 import ConfirmDelete from 'components/ConfirmDelete/ConfirmDelete';
 
-const schema = ['name', 'replicas', 'creationTimestamp'];
+const schema = ['name', 'replicas', 'creationTimestamp', 'status'];
 
 const tableSchema = schema
   .map((id) => ({
@@ -64,6 +65,27 @@ const tableSchema = schema
         ),
       };
     }
+
+    if (sch.id === 'status') {
+      return {
+        ...sch,
+        component: ({ data }) => (
+          <>
+            {data.getIn(['status', 'readyReplicas']) || 0}/
+            {data.getIn(['replicas'])}
+            <LinearProgress
+              variant="determinate"
+              value={
+                ((data.getIn(['status', 'readyReplicas']) || 0) /
+                  data.getIn(['replicas'])) *
+                100
+              }
+            />
+          </>
+        ),
+      };
+    }
+
     return sch;
   });
 export default tableSchema;

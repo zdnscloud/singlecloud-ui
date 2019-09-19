@@ -50,8 +50,17 @@ export const DaemonSetsPage = ({
         namespaceID,
       });
     }
+    const t = setInterval(() => {
+      if (url) {
+        loadDaemonSets(url, {
+          clusterID,
+          namespaceID,
+        });
+      }
+    }, 3000);
+
     return () => {
-      // try cancel something when unmount
+      clearInterval(t);
     };
   }, [clusterID, loadDaemonSets, namespaceID, url]);
 
