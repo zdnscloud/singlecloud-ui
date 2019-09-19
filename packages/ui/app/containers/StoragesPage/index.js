@@ -11,7 +11,7 @@ import { FormattedMessage } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import { bindActionCreators, compose } from 'redux';
 
-import { withStyles } from '@material-ui/core/styles';
+import Helmet from 'components/Helmet/Helmet';
 import { Link } from 'react-router-dom';
 import Menubar from 'components/Menubar';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -31,31 +31,31 @@ import CardBody from 'components/Card/CardBody';
 import ReadOnlyInput from 'components/CustomInput/ReadOnlyInput';
 import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
 
-import * as actions from 'ducks/storages/actions';
+import * as actions from 'ducks/storageClusters/actions';
 import { makeSelectCurrentID as makeSelectClusterID } from 'ducks/clusters/selectors';
-import { makeSelectURL } from 'ducks/storages/selectors';
+import { makeSelectURL } from 'ducks/storageClusters/selectors';
 
-import StoragesTable from './StoragesTable';
+import StoragesTable from './Table';
 import messages from './messages';
-import StoragePageHelmet from './helmet';
-import styles from './styles';
+import useStyles from './styles';
 
-export const StoragesPage = ({ classes, clusterID, loadStorages, url }) => {
+export const StoragesPage = ({ clusterID, loadStorageClusters, url }) => {
+  const classes = useStyles();
   useEffect(() => {
-    loadStorages(url, clusterID);
-    const t = setInterval(() => loadStorages(url, clusterID), 3000);
+    loadStorageClusters(url, { clusterID });
+    const t = setInterval(() => loadStorageClusters(url, { clusterID }), 3000);
     return () => clearInterval(t);
-  }, [clusterID, loadStorages, url]);
+  }, [clusterID, loadStorageClusters, url]);
 
   return (
     <div className={classes.root}>
-      <StoragePageHelmet />
+      <Helmet title={messages.pageTitle} description={messages.pageDesc} />
       <CssBaseline />
       <div className={classes.content}>
         <Breadcrumbs
           data={[
             {
-              path: `/clusters/${clusterID}/storages`,
+              path: `/clusters/${clusterID}/storageClusters`,
               name: <FormattedMessage {...messages.pageTitle} />,
             },
           ]}
@@ -68,9 +68,8 @@ export const StoragesPage = ({ classes, clusterID, loadStorages, url }) => {
                   <FormattedMessage {...messages.storages} />
                 </h4>
                 <IconButton
-                  aria-label={<FormattedMessage {...messages.createStorage} />}
                   component={Link}
-                  to={`/clusters/${clusterID}/storages/create`}
+                  to={`/clusters/${clusterID}/storageClusters/create`}
                 >
                   <AddIcon />
                 </IconButton>
@@ -104,7 +103,4 @@ const withConnect = connect(
   mapDispatchToProps
 );
 
-export default compose(
-  withConnect,
-  withStyles(styles)
-)(StoragesPage);
+export default compose(withConnect)(StoragesPage);

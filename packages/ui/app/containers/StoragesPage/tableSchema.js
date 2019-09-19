@@ -9,16 +9,16 @@ import EditIcon from 'components/Icons/Edit';
 import IconButton from 'components/CustomIconButtons/IconButton';
 import ConfirmDelete from 'components/ConfirmDelete/ConfirmDelete';
 
-const schema = ['name', 'storageType', 'nodes', 'size', 'usedSize', 'freeSize'];
+const schema = ['storageType', 'hosts', 'size', 'usedSize', 'freeSize'];
 
 const tableSchema = schema
   .map((id) => {
-    if (id === 'nodes') {
+    if (id === 'hosts') {
       return {
         id,
         label: ucfirst(id),
         component: (props) => (
-          <span>{props.data.get('nodes') && props.data.get('nodes').size}</span>
+          <span>{props.data.get('hosts') && props.data.get('hosts').size}</span>
         ),
       };
     }
@@ -31,28 +31,28 @@ const tableSchema = schema
     {
       id: 'actions',
       label: 'Actions',
-      component: (props) => (
+      component: ({ pathname, data, removeStorageCluster, clusterID }) => (
         <Fragment>
           <IconButton
             aria-label="Edit"
             component={Link}
-            to={`${props.pathname}/${props.data.get('id')}/edit`}
+            to={`${pathname}/${data.get('id')}/edit`}
           >
             <EditIcon />
           </IconButton>
 
           <ConfirmDelete
-            actionName={props.removeStorage}
-            id={props.data.get('id')}
-            url={props.data.getIn(['links', 'remove'])}
-            clusterID={props.clusterID}
+            actionName={removeStorageCluster}
+            id={data.get('id')}
+            url={data.getIn(['links', 'remove'])}
+            clusterID={clusterID}
           />
         </Fragment>
       ),
     },
   ])
   .map((sch) => {
-    if (sch.id === 'name') {
+    if (sch.id === 'storageType') {
       return {
         ...sch,
         component: (props) => (
@@ -61,7 +61,7 @@ const tableSchema = schema
             component={Link}
             to={`${props.pathname}/${props.data.get('id')}/show`}
           >
-            {props.data.get('name')}
+            {props.data.get('storageType')}
           </Button>
         ),
       };

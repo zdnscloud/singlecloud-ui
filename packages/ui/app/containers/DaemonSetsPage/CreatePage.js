@@ -26,10 +26,7 @@ import GridContainer from 'components/Grid/GridContainer';
 import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
 import ConfirmDialog from 'components/Confirm/ConfirmDialog';
 
-import {
-  makeSelectCurrentID as makeSelectCurrentClusterID,
-  makeSelectCurrentCluster,
-} from 'ducks/clusters/selectors';
+import { makeSelectCurrentID as makeSelectCurrentClusterID } from 'ducks/clusters/selectors';
 import { makeSelectCurrentID as makeSelectCurrentNamespaceID } from 'ducks/namespaces/selectors';
 
 import * as sActions from 'ducks/secrets/actions';
@@ -42,8 +39,11 @@ import {
   makeSelectConfigMaps,
   makeSelectURL as makeSelectConfigMapURL,
 } from 'ducks/configMaps/selectors';
-import { makeSelectCurrentStorageClasses } from 'ducks/storages/selectors';
-import * as storagesAction from 'ducks/storages/actions';
+import {
+  makeSelectStorageClasses,
+  makeSelectURL as makeSelectStorageClassesURL,
+} from 'ducks/storageClasses/selectors';
+import * as storagesAction from 'ducks/storageClasses/actions';
 import { makeSelectURL } from 'ducks/daemonSets/selectors';
 import * as actions from 'ducks/daemonSets/actions';
 
@@ -84,14 +84,15 @@ export const CreateDaemonSet = ({
   url,
   configMaps,
   secrets,
+  storageClassesURL,
   storageClasses,
   values,
   routeTo,
 }) => {
   const classes = useStyles();
   useEffect(() => {
-    loadStorageClasses(cluster.getIn(['links', 'storageclasses']), clusterID);
-  }, [cluster, clusterID, loadStorageClasses]);
+    loadStorageClasses(storageClassesURL, { clusterID });
+  }, [clusterID, loadStorageClasses, storageClassesURL]);
   useEffect(() => {
     loadConfigMaps({ url: configMapURL, clusterID, namespaceID });
     loadSecrets({ url: secretURL, clusterID, namespaceID });
@@ -202,13 +203,13 @@ export const CreateDaemonSet = ({
 const mapStateToProps = createStructuredSelector({
   clusterID: makeSelectCurrentClusterID(),
   namespaceID: makeSelectCurrentNamespaceID(),
-  cluster: makeSelectCurrentCluster(),
   url: makeSelectURL(),
   configMapURL: makeSelectConfigMapURL(),
   configMaps: makeSelectConfigMaps(),
   secretURL: makeSelectSecretURL(),
   secrets: makeSelectSecrets(),
-  storageClasses: makeSelectCurrentStorageClasses(),
+  storageClasses: makeSelectStorageClasses(),
+  storageClassesURL: makeSelectStorageClassesURL(),
   values: getFormValues(formName),
 });
 

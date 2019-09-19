@@ -5,14 +5,12 @@
  */
 
 import React, { useCallback, useState } from 'react';
-import { findDOMNode } from 'react-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import { bindActionCreators, compose } from 'redux';
 
-import { withStyles } from '@material-ui/core/styles';
 import { Link } from 'react-router-dom';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Typography from '@material-ui/core/Typography';
@@ -23,18 +21,17 @@ import { GradientPinkBlue } from '@vx/gradient';
 import { letterFrequency, browserUsage } from '@vx/mock-data';
 
 import messages from './messages';
-import styles from './styles';
+import useStyles from './styles';
 
-/* eslint-disable react/prefer-stateless-function */
-export const Node = (props) => {
+export const Node = ({ node, checkedNode, onClick }) => {
+  const classes = useStyles();
   const [rect, setRect] = useState({ width: 100, height: 86 });
-  const measuredRef = useCallback((node) => {
-    if (node !== null) {
-      const el = findDOMNode(node);
-      setRect(el.getBoundingClientRect());
+  const measuredRef = useCallback((nodeEl) => {
+    if (nodeEl !== null) {
+      const { width, height } = nodeEl.getBoundingClientRect();
+      setRect({ width, height });
     }
   }, []);
-  const { classes, theme, node, checkedNode, onClick } = props;
   const width = rect.width / 2;
   const { height } = rect;
   const radius = Math.min(width, height) * 0.8;
@@ -153,4 +150,4 @@ export const Node = (props) => {
   );
 };
 
-export default compose(withStyles(styles, { withTheme: true }))(Node);
+export default Node;
