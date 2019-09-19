@@ -20,10 +20,8 @@ import CardHeader from 'components/Card/CardHeader';
 import CardBody from 'components/Card/CardBody';
 import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
 
-import {
-  makeSelectClusterID,
-  makeSelectNamespaceID,
-} from 'ducks/app/selectors';
+import { makeSelectCurrentID as makeSelectCurrentClusterID } from 'ducks/clusters/selectors';
+import { makeSelectCurrentID as makeSelectCurrentNamespaceID } from 'ducks/namespaces/selectors';
 import {
   makeSelectCurrentID,
   makeSelectCurrent,
@@ -102,8 +100,8 @@ export const CronJobDetailPage = ({
 };
 
 const mapStateToProps = createStructuredSelector({
-  clusterID: makeSelectClusterID(),
-  namespaceID: makeSelectNamespaceID(),
+  clusterID: makeSelectCurrentClusterID(),
+  namespaceID: makeSelectCurrentNamespaceID(),
   cronJobID: makeSelectCurrentID(),
   url: makeSelectURL(),
   cronJob: makeSelectCurrent(),

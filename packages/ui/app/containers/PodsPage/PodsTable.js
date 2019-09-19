@@ -23,10 +23,8 @@ import LogIcon from 'components/Icons/Log';
 import Chip from '@material-ui/core/Chip';
 import ContainerTerminalDialog from 'containers/TerminalPage/ContainerTerminalDialog';
 
-import {
-  makeSelectClusterID,
-  makeSelectNamespaceID,
-} from 'ducks/app/selectors';
+import { makeSelectCurrentID as makeSelectCurrentClusterID } from 'ducks/clusters/selectors';
+import { makeSelectCurrentID as makeSelectCurrentNamespaceID } from 'ducks/namespaces/selectors';
 import { openContainerTerminal } from 'containers/TerminalPage/actions';
 import {
   makeSelectPodsList,
@@ -165,8 +163,8 @@ export class PodsTable extends React.PureComponent {
 }
 
 const mapStateToProps = createStructuredSelector({
-  clusterID: makeSelectClusterID(),
-  namespaceID: makeSelectNamespaceID(),
+  clusterID: makeSelectCurrentClusterID(),
+  namespaceID: makeSelectCurrentNamespaceID(),
   deployPodList: makeSelectPodsList(),
   stsPodList: makeSelectSTSPodsList(),
   dsPodList: makeSelectDSPodsList(),

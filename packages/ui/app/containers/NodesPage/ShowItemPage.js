@@ -30,8 +30,10 @@ import CardFooter from 'components/Card/CardFooter';
 import ReadOnlyInput from 'components/CustomInput/ReadOnlyInput';
 import CircleChart from 'components/Charts/Circle';
 
-import { makeSelectClusterID } from 'ducks/app/selectors';
-import { makeSelectCurrentCluster } from 'ducks/clusters/selectors';
+import {
+  makeSelectCurrentID as makeSelectCurrentClusterID,
+  makeSelectCurrent as makeSelectCurrentCluster,
+} from 'ducks/clusters/selectors';
 import {
   makeSelectCurrent,
   makeSelectURL,
@@ -313,7 +315,7 @@ export const NodeDetailPage = ({ clusterID, url, readNode, node, nodeID }) => {
 
 const mapStateToProps = createStructuredSelector({
   cluster: makeSelectCurrentCluster(),
-  clusterID: makeSelectClusterID(),
+  clusterID: makeSelectCurrentClusterID(),
   node: makeSelectCurrent(),
   url: makeSelectURL(),
   nodeID: makeSelectCurrentID(),
