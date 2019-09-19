@@ -18,11 +18,9 @@ import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
 import ConfirmDelete from 'components/ConfirmDelete/ConfirmDelete';
 
-import {
-  makeSelectClusterID,
-  makeSelectNamespaceID,
-  makeSelectLocation,
-} from 'ducks/app/selectors';
+import { makeSelectLocation } from 'ducks/app/selectors';
+import { makeSelectCurrentID as makeSelectCurrentClusterID } from 'ducks/clusters/selectors';
+import { makeSelectCurrentID as makeSelectCurrentNamespaceID } from 'ducks/namespaces/selectors';
 import {
   makeSelectDaemonSets,
   makeSelectDaemonSetsList,
@@ -101,8 +99,8 @@ export const DaemonSetsTable = ({
 
 const mapStateToProps = createStructuredSelector({
   location: makeSelectLocation(),
-  clusterID: makeSelectClusterID(),
-  namespaceID: makeSelectNamespaceID(),
+  clusterID: makeSelectCurrentClusterID(),
+  namespaceID: makeSelectCurrentNamespaceID(),
   data: makeSelectDaemonSetsList(),
 });
 
