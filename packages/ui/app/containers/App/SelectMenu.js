@@ -16,9 +16,10 @@ import {
 import {
   makeSelectClusters,
   makeSelectCurrentID as makeSelectCurrentClusterID,
+  makeSelectURL,
 } from 'ducks/clusters/selectors';
-import * as actions from 'ducks/app/actions';
 import * as clusterActions from 'ducks/clusters/actions';
+import * as nsActions from 'ducks/namespaces/actions';
 
 import { usePush } from 'hooks/router';
 
@@ -27,7 +28,15 @@ import ChevronRight from 'components/Icons/ChevronRight';
 import messages from './messages';
 import useStyles from './dashboardStyles';
 
-const SelectMenu = ({ clusters, namespacesData, clusterID, namespaceID }) => {
+const SelectMenu = ({
+  url,
+  clusters,
+  namespacesData,
+  clusterID,
+  namespaceID,
+  loadClusters,
+  loadNamespaces,
+}) => {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState(null);
   const [selectCluster, setSelectCluster] = useState(null);
@@ -38,6 +47,7 @@ const SelectMenu = ({ clusters, namespacesData, clusterID, namespaceID }) => {
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
+    loadClusters(url);
   };
 
   const handleClose = () => {
@@ -46,9 +56,11 @@ const SelectMenu = ({ clusters, namespacesData, clusterID, namespaceID }) => {
   };
 
   const handleSelectCluster = (c) => {
-    setSelectCluster(c.get('id'));
+    const id = c.get('id');
     if (c.get('status') === 'Running') {
+      setSelectCluster(id);
       setSelectNamespace(null);
+      push(`/clusters/${id}/show`);
       handleClose();
     }
   };
@@ -61,8 +73,11 @@ const SelectMenu = ({ clusters, namespacesData, clusterID, namespaceID }) => {
 
   const openNamespanceMenu = (e, c) => {
     if (c && c.get('status') === 'Running') {
-      setSelectCluster(c.get('id'));
+      const id = c.get('id');
+      setSelectCluster(id);
       setNsAnchorEl(e.currentTarget);
+      const nsUrl = c.getIn(['links', 'namespaces']);
+      loadNamespaces(nsUrl, { clusterID: id });
     } else {
       setNsAnchorEl(null);
     }
@@ -199,13 +214,14 @@ const mapStateToProps = createStructuredSelector({
   clusters: makeSelectClusters(),
   clusterID: makeSelectCurrentClusterID(),
   namespaceID: makeSelectCurrentNamespaceID(),
+  url: makeSelectURL(),
 });
 
 const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
-      ...actions,
       ...clusterActions,
+      ...nsActions,
     },
     dispatch
   );

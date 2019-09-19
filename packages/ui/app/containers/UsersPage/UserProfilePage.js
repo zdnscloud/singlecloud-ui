@@ -29,8 +29,8 @@ import GridContainer from 'components/Grid/GridContainer';
 
 import * as actions from 'ducks/users/actions';
 import { makeSelectEditingUser, makeSelectUID } from 'ducks/users/selectors';
-import { makeSelectLocation } from 'ducks/app/selectors';
-import { makeSelectClustersAndNamespaces } from 'ducks/namespaces/selectors';
+import { makeSelectData as makeSelectNamespacesData } from 'ducks/namespaces/selectors';
+import { makeSelectClusters } from 'ducks/clusters/selectors';
 
 import messages from './messages';
 import UsersHelmet from './helmet';
@@ -49,70 +49,60 @@ const UserProfileForm = reduxForm({
   validate,
 })(UserForm);
 
-/* eslint-disable react/prefer-stateless-function */
-export class UserProfilePage extends React.PureComponent {
-  static propTypes = {
-    classes: PropTypes.object.isRequired,
-  };
-
-  componentWillMount() {
-    this.props.loadUser(this.props.uid);
-  }
-
-  render() {
-    const { classes, clusters, updateUser, submitForm, user } = this.props;
-    return (
-      <div className={classes.root}>
-        <UsersHelmet />
-        <CssBaseline />
-        <div className={classes.content}>
-          <Breadcrumbs
-            data={[
-              {
-                name: <FormattedMessage {...messages.userProfile} />,
-              },
-            ]}
-          />
-          <GridContainer className={classes.grid}>
-            <GridItem xs={12} sm={12} md={12}>
-              <Card>
-                <CardHeader>
-                  <h4>
-                    <FormattedMessage {...messages.userProfile} />
-                    <Link
-                      to={`/users/${user && user.get('id')}/passwd`}
-                      className={classes.createBtnLink}
-                    >
-                      <Fab
-                        size="small"
-                        color="default"
-                        aria-label="create user"
-                      >
-                        <KeyIcon />
-                      </Fab>
-                    </Link>
-                  </h4>
-                </CardHeader>
-                <CardBody>
-                  <UserProfileForm
-                    profile
-                    classes={classes}
-                    clusters={clusters}
-                    initialValues={user}
-                  />
-                </CardBody>
-              </Card>
-            </GridItem>
-          </GridContainer>
-        </div>
-      </div>
-    );
-  }
-}
+export const UserProfilePage = ({
+  classes,
+  clusters,
+  namespacesData,
+  updateUser,
+  submitForm,
+  user,
+}) => (
+  <div className={classes.root}>
+    <UsersHelmet />
+    <CssBaseline />
+    <div className={classes.content}>
+      <Breadcrumbs
+        data={[
+          {
+            name: <FormattedMessage {...messages.userProfile} />,
+          },
+        ]}
+      />
+      <GridContainer className={classes.grid}>
+        <GridItem xs={12} sm={12} md={12}>
+          <Card>
+            <CardHeader>
+              <h4>
+                <FormattedMessage {...messages.userProfile} />
+                <Link
+                  to={`/users/${user && user.get('id')}/passwd`}
+                  className={classes.createBtnLink}
+                >
+                  <Fab size="small" color="default" aria-label="create user">
+                    <KeyIcon />
+                  </Fab>
+                </Link>
+              </h4>
+            </CardHeader>
+            <CardBody>
+              <UserProfileForm
+                profile
+                classes={classes}
+                clusters={clusters}
+                namespacesData={namespacesData}
+                initialValues={user}
+              />
+            </CardBody>
+          </Card>
+        </GridItem>
+      </GridContainer>
+    </div>
+  </div>
+);
 
 const mapStateToProps = createStructuredSelector({
-  clusters: makeSelectClustersAndNamespaces(),
-  location: makeSelectLocation(),
+  clusters: makeSelectClusters(),
+  namespacesData: makeSelectNamespacesData(),
   user: makeSelectEditingUser(),
   uid: makeSelectUID(),
 });

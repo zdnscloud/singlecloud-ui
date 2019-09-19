@@ -19,7 +19,6 @@ import RegistriesPage from 'containers/RegistriesPage/Loadable';
 import NamespacesPage, {
   CreateNamespacePage,
   NamespaceDetailPage,
-  EditNamespacePage,
 } from 'containers/NamespacesPage/Loadable';
 import EventsPage from 'containers/EventsPage/Loadable';
 import DeploymentsPage, {
@@ -161,12 +160,6 @@ const appRoutes = [
     name: 'namespaces',
     icon: Dashboard,
     component: NamespaceDetailPage,
-  },
-  {
-    path: '/clusters/:cluster_id/namespaces/:namespace_id/edit',
-    name: 'namespaces',
-    icon: Dashboard,
-    component: EditNamespacePage,
   },
   // configmap
   {

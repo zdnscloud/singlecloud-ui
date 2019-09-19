@@ -28,8 +28,8 @@ import GridContainer from 'components/Grid/GridContainer';
 
 import * as actions from 'ducks/users/actions';
 import { makeSelectEditingUser, makeSelectUID } from 'ducks/users/selectors';
-import { makeSelectLocation } from 'ducks/app/selectors';
-import { makeSelectClustersAndNamespaces } from 'ducks/namespaces/selectors';
+import { makeSelectData as makeSelectNamespacesData } from 'ducks/namespaces/selectors';
+import { makeSelectClusters } from 'ducks/clusters/selectors';
 
 import messages from './messages';
 import UsersHelmet from './helmet';
@@ -48,83 +48,79 @@ const EditUserForm = reduxForm({
   validate,
 })(UserForm);
 
-/* eslint-disable react/prefer-stateless-function */
-export class EditUserPage extends React.PureComponent {
-  static propTypes = {
-    classes: PropTypes.object.isRequired,
-  };
-
-  componentWillMount() {
-    this.props.loadUser(this.props.uid);
-  }
-
-  render() {
-    const { classes, clusters, updateUser, submitForm, user } = this.props;
-    async function doSubmit(formValues) {
-      try {
-        const data = formValues.toJS();
-        const name = formValues.get('name');
-        await new Promise((resolve, reject) => {
-          updateUser({ ...data }, { resolve, reject });
-        });
-      } catch (error) {
-        throw new SubmissionError({ _error: error });
-      }
+export const EditUserPage = ({
+  classes,
+  clusters,
+  namespacesData,
+  updateUser,
+  submitForm,
+  user,
+}) => {
+  async function doSubmit(formValues) {
+    try {
+      const data = formValues.toJS();
+      const name = formValues.get('name');
+      await new Promise((resolve, reject) => {
+        updateUser({ ...data }, { resolve, reject });
+      });
+    } catch (error) {
+      throw new SubmissionError({ _error: error });
     }
-
-    return (
-      <div className={classes.root}>
-        <UsersHelmet />
-        <CssBaseline />
-        <div className={classes.content}>
-          <Breadcrumbs
-            data={[
-              {
-                name: <FormattedMessage {...messages.editUser} />,
-              },
-            ]}
-          />
-          <GridContainer className={classes.grid}>
-            <GridItem xs={12} sm={12} md={12}>
-              <Card>
-                <CardHeader>
-                  <h4>
-                    <FormattedMessage {...messages.editUser} />
-                  </h4>
-                </CardHeader>
-                <CardBody>
-                  {user.size === 0 ? null : (
-                    <EditUserForm
-                      edit
-                      classes={classes}
-                      clusters={clusters}
-                      onSubmit={doSubmit}
-                      initialValues={user}
-                    />
-                  )}
-                </CardBody>
-                <CardFooter className={classes.cardFooter}>
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    size="large"
-                    onClick={submitForm}
-                  >
-                    <FormattedMessage {...messages.updateUser} />
-                  </Button>
-                </CardFooter>
-              </Card>
-            </GridItem>
-          </GridContainer>
-        </div>
-      </div>
-    );
   }
-}
+
+  return (
+    <div className={classes.root}>
+      <UsersHelmet />
+      <CssBaseline />
+      <div className={classes.content}>
+        <Breadcrumbs
+          data={[
+            {
+              name: <FormattedMessage {...messages.editUser} />,
+            },
+          ]}
+        />
+        <GridContainer className={classes.grid}>
+          <GridItem xs={12} sm={12} md={12}>
+            <Card>
+              <CardHeader>
+                <h4>
+                  <FormattedMessage {...messages.editUser} />
+                </h4>
+              </CardHeader>
+              <CardBody>
+                {user.size === 0 ? null : (
+                  <EditUserForm
+                    edit
+                    classes={classes}
+                    clusters={clusters}
+                    namespacesData={namespacesData}
+                    onSubmit={doSubmit}
+                    initialValues={user}
+                  />
+                )}
+              </CardBody>
+              <CardFooter className={classes.cardFooter}>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  size="large"
+                  onClick={submitForm}
+                >
+                  <FormattedMessage {...messages.updateUser} />
+                </Button>
+              </CardFooter>
+            </Card>
+          </GridItem>
+        </GridContainer>
+      </div>
+    </div>
+  );
+};
 
 const mapStateToProps = createStructuredSelector({
-  clusters: makeSelectClustersAndNamespaces(),
-  location: makeSelectLocation(),
+  clusters: makeSelectClusters(),
+  namespacesData: makeSelectNamespacesData(),
   uid: makeSelectUID(),
   user: makeSelectEditingUser(),
   values: createSelector(

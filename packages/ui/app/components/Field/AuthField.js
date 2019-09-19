@@ -48,6 +48,7 @@ const CustomCheckbox = ({
             }
 
             onChange(newValue);
+            return null;
           }}
         />
       }
@@ -56,11 +57,18 @@ const CustomCheckbox = ({
   );
 };
 
-const renderClusters = ({ label, input, meta, clusters, ...custom }) => (
+const renderClusters = ({
+  label,
+  input,
+  meta,
+  clusters,
+  namespacesData,
+  ...custom
+}) => (
   <Fragment>
     {clusters.toList().map((c, i) => {
       const name = c.get('name');
-      const ns = c.get('namespaces');
+      const ns = namespacesData.get('name') || namespacesData.clear();
       const { value, ...ipt } = input;
       return (
         <Fragment key={i}>

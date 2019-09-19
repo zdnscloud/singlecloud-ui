@@ -32,7 +32,6 @@ import * as actions from 'ducks/users/actions';
 import { makeSelectEditingUser, makeSelectUID } from 'ducks/users/selectors';
 import { makeSelectRole, makeSelectIsAdmin } from 'ducks/role/selectors';
 import { makeSelectLocation } from 'ducks/app/selectors';
-import { makeSelectClustersAndNamespaces } from 'ducks/namespaces/selectors';
 
 import messages from './messages';
 import UsersHelmet from './helmet';
@@ -83,7 +82,6 @@ export class PasswordSetupPage extends React.PureComponent {
           resetPassword(data, { resolve, reject });
         });
       } catch (error) {
-        console.error(error);
         throw new SubmissionError({ _error: error });
       }
     }
@@ -111,7 +109,6 @@ export class PasswordSetupPage extends React.PureComponent {
                 <CardBody>
                   <PasswordSetupForm
                     classes={classes}
-                    clusters={clusters}
                     onSubmit={doSubmit}
                     isAdmin={isAdmin}
                   />
@@ -136,7 +133,6 @@ export class PasswordSetupPage extends React.PureComponent {
 }
 
 const mapStateToProps = createStructuredSelector({
-  clusters: makeSelectClustersAndNamespaces(),
   location: makeSelectLocation(),
   isAdmin: makeSelectIsAdmin(),
   uid: makeSelectUID(),
