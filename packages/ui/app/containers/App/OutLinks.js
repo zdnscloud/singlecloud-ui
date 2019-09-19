@@ -75,12 +75,12 @@ const OutLinks = ({
     createRegistry,
   };
   const [open, setOpen] = useState(false);
-  const [memuRole, setMemuRole] = useState('registries');
-  const url = cluster.getIn(['links', memuRole]);
+  const [memuRole, setMemuRole] = useState(null);
 
   const handleMemuClick = (role) => {
     setMemuRole(role);
     const loadAction = `load${inflection.camelize(role)}`;
+    const url = cluster.getIn(['links', role]);
     actions[loadAction](url, {
       clusterID,
       resolve(res) {
@@ -97,6 +97,7 @@ const OutLinks = ({
   async function doSubmit() {
     try {
       const data = formValues ? formValues.toJS() : {};
+      const url = cluster.getIn(['links', memuRole]);
       await new Promise((resolve, reject) => {
         createRegistry(data, {
           resolve() {
@@ -112,6 +113,7 @@ const OutLinks = ({
   }
 
   const handleMonitorInstall = () => {
+    const url = cluster.getIn(['links', memuRole]);
     createMonitor(
       {},
       {
