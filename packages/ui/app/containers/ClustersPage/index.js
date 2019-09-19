@@ -4,15 +4,14 @@
  *
  */
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import { bindActionCreators, compose } from 'redux';
-import { Link } from 'react-router-dom';
 
-import { withStyles } from '@material-ui/core/styles';
+import { Link } from 'react-router-dom';
 import Menubar from 'components/Menubar';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Typography from '@material-ui/core/Typography';
@@ -24,73 +23,59 @@ import CardBody from 'components/Card/CardBody';
 import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
 import IconButton from '@material-ui/core/IconButton';
 import AddIcon from 'components/Icons/Add';
+import Helmet from 'components/Helmet/Helmet';
 
 import { makeSelectURL } from 'ducks/clusters/selectors';
 import * as actions from 'ducks/clusters/actions';
 
 import messages from './messages';
-import styles from './styles';
-import ClustersTable from './ClustersTable';
-import ClustersPageHelmet from './helmet';
+import useStyles from './styles';
+import ClustersTable from './Table';
 
-/* eslint-disable react/prefer-stateless-function */
-export class ClustersPage extends React.PureComponent {
-  static propTypes = {
-    classes: PropTypes.object.isRequired,
-  };
-
-  componentWillMount() {
-    this.load();
-    this.timer = setInterval(() => this.load(), 3000);
-  }
-
-  componentWillUnmount() {
-    clearInterval(this.timer);
-  }
-
-  load() {
-    const { loadClusters, url } = this.props;
+export const ClustersPage = ({ loadClusters, url }) => {
+  const classes = useStyles();
+  useEffect(() => {
     loadClusters(url);
-  }
+    const t = setInterval(() => {
+      loadClusters(url);
+    }, 3000);
+    return () => clearInterval(t);
+  }, [loadClusters, url]);
 
-  render() {
-    const { classes } = this.props;
-
-    return (
-      <div className={classes.root}>
-        <ClustersPageHelmet />
-        <CssBaseline />
-        <div className={classes.content}>
-          <Breadcrumbs
-            data={[
-              {
-                path: '/clusters',
-                name: <FormattedMessage {...messages.clusters} />,
-              },
-            ]}
-          />
-          <GridContainer className={classes.grid}>
-            <GridItem xs={12} sm={12} md={12}>
-              <Card>
-                <CardHeader>
-                  <h4>
-                    <FormattedMessage {...messages.clusters} />
-                  </h4>
-                  <IconButton component={Link} to="/clusters/create">
-                    <AddIcon />
-                  </IconButton>
-                </CardHeader>
-                <CardBody>
-                  <ClustersTable />
-                </CardBody>
-              </Card>
-            </GridItem>
-          </GridContainer>
-        </div>
+  return (
+    <div className={classes.root}>
+      <Helmet title={messages.pageTitle} description={messages.pageDesc} />
+      <CssBaseline />
+      <div className={classes.content}>
+        <Breadcrumbs
+          data={[
+            {
+              path: '/clusters',
+              name: <FormattedMessage {...messages.clusters} />,
+            },
+          ]}
+        />
+        <GridContainer className={classes.grid}>
+          <GridItem xs={12} sm={12} md={12}>
+            <Card>
+              <CardHeader>
+                <h4>
+                  <FormattedMessage {...messages.clusters} />
+                </h4>
+                <IconButton component={Link} to="/clusters/create">
+                  <AddIcon />
+                </IconButton>
+              </CardHeader>
+              <CardBody>
+                <ClustersTable />
+              </CardBody>
+            </Card>
+          </GridItem>
+        </GridContainer>
       </div>
-    );
-  }
-}
+    </div>
+  );
+};
 
 const mapStateToProps = createStructuredSelector({
   url: makeSelectURL(),
@@ -109,7 +94,4 @@ const withConnect = connect(
   mapDispatchToProps
 );
 
-export default compose(
-  withConnect,
-  withStyles(styles)
-)(ClustersPage);
+export default compose(withConnect)(ClustersPage);

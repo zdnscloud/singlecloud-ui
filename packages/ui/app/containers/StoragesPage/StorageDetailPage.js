@@ -30,7 +30,7 @@ import CardBody from 'components/Card/CardBody';
 import ReadOnlyInput from 'components/CustomInput/ReadOnlyInput';
 
 import * as actions from 'ducks/storages/actions';
-import { makeSelectClusterID } from 'ducks/app/selectors';
+import { makeSelectCurrentID as makeSelectClusterID } from 'ducks/clusters/selectors';
 import {
   makeSelectStorages,
   makeSelectStorageID,

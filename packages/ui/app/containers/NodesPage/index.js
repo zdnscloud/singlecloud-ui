@@ -25,8 +25,11 @@ import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
 import AddIcon from 'components/Icons/Add';
 import IconButton from '@material-ui/core/IconButton';
 
-import { makeSelectClusterID } from 'ducks/app/selectors';
-import { makeSelectCurrentCluster } from 'ducks/clusters/selectors';
+import {
+  makeSelectCurrentID as makeSelectClusterID,
+  makeSelectCurrent as makeSelectCurrentCluster,
+} from 'ducks/clusters/selectors';
+
 import * as actions from 'ducks/nodes/actions';
 
 import messages from './messages';

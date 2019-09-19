@@ -88,7 +88,7 @@ export const makeSelectClustersAndNamespaces = () =>
     selectNamespacesDomain,
     (cstate, nsstate) =>
       cstate
-        .get('clusters')
+        .get('data')
         .map((c) =>
           c.set(
             'namespaces',

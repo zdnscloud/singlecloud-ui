@@ -30,7 +30,7 @@ import NormalIcon from 'components/Icons/Normal';
 import WarningIcon from 'components/Icons/Warning';
 import MaxWindowIcon from 'components/Icons/MaxWindow';
 
-import { makeSelectClusterID } from 'ducks/app/selectors';
+import { makeSelectCurrentID as makeSelectClusterID } from 'ducks/clusters/selectors';
 import { makeSelectLatestEvents } from 'ducks/events/selectors';
 import * as actions from 'ducks/events/actions';
 

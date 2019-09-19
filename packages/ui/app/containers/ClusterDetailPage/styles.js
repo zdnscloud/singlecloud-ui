@@ -1,111 +1,48 @@
-const drawerWidth = 240;
+import { makeStyles } from '@material-ui/styles';
+import pageStyles from 'jss/page';
 
-const styles = (theme) => ({
-  root: {
+export const styles = (theme) => ({
+  ...pageStyles(theme),
+  wrapper: {
     display: 'flex',
+    flexDirection: 'column',
   },
-  toolbar: {
-    paddingRight: 24, // keep right padding when drawer closed
+  infoCardHeader: {
+    height: 85,
   },
-  toolbarIcon: {
+  infoCardIcon: {
     display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'flex-end',
-    padding: '0 8px',
-    ...theme.mixins.toolbar,
+    justifyContent: 'center',
+    width: 120,
   },
-  appBar: {
-    zIndex: theme.zIndex.drawer + 1,
-    transition: theme.transitions.create(['width', 'margin'], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
-  },
-  appBarShift: {
-    marginLeft: drawerWidth,
-    width: `calc(100% - ${drawerWidth}px)`,
-    transition: theme.transitions.create(['width', 'margin'], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-  },
-  menuButton: {
-    marginLeft: 12,
-    marginRight: 36,
-  },
-  menuButtonHidden: {
-    display: 'none',
-  },
-  title: {
-    flexGrow: 1,
-  },
-  drawerPaper: {
-    position: 'relative',
-    whiteSpace: 'nowrap',
-    width: drawerWidth,
-    transition: theme.transitions.create('width', {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-  },
-  drawerPaperClose: {
-    overflowX: 'hidden',
-    transition: theme.transitions.create('width', {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
-    width: theme.spacing(7),
-    [theme.breakpoints.up('sm')]: {
-      width: theme.spacing(9),
+  infoCardText: {
+    display: 'flex',
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'center',
+    paddingRight: 15,
+    '& h3': {
+      color: '#000',
+      fontSize: 14,
+    },
+    '& p': {
+      color: '#4A4A4A',
+      margin: 0,
+      fontFamily: "'Roboto', 'Helvetica', 'Arial', sans-serif",
     },
   },
-  appBarSpacer: theme.mixins.toolbar,
-  content: {
-    flexGrow: 1,
-    overflow: 'auto',
-    overflowX: 'hidden',
+  cardHeader: {
+    marginLeft: '15px !important',
+    marginRight: '15px !important',
   },
-  grid: {
-    padding: theme.spacing(2),
+  cardTitleValue: {
+    float: 'right',
+    color: theme.palette.highlight.light,
   },
-  chartContainer: {
-    marginLeft: -22,
-  },
-  tableContainer: {
-    height: 320,
-  },
-  button: {
-    margin: theme.spacing(1),
-  },
-  h5: {
-    marginBottom: theme.spacing(2),
-  },
-  cardCategoryWhite: {
-    '&,& a,& a:hover,& a:focus': {
-      color: 'rgba(255,255,255,.62)',
-      margin: '0',
-      fontSize: '14px',
-      marginTop: '0',
-      marginBottom: '0',
-    },
-    '& a,& a:hover,& a:focus': {
-      color: '#FFFFFF',
-    },
-  },
-  cardTitleWhite: {
-    color: '#FFFFFF',
-    marginTop: '0px',
-    minHeight: 'auto',
-    fontFamily: "'Roboto', 'Helvetica', 'Arial', sans-serif",
-    marginBottom: '3px',
-    textDecoration: 'none',
-    '& small': {
-      color: '#777',
-      fontSize: '65%',
-      fontWeight: '400',
-      lineHeight: '1',
-    },
+  cardHeaderLine: {
+    justifyContent: 'center',
+    borderBottom: '1px #DFE0DF solid',
   },
 });
 
-export default styles;
+export default makeStyles(styles);

@@ -25,8 +25,11 @@ import CardHeader from 'components/Card/CardHeader';
 import CardBody from 'components/Card/CardBody';
 import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
 
-import { makeSelectClusterID } from 'ducks/app/selectors';
-import { makeSelectCurrentCluster } from 'ducks/clusters/selectors';
+import {
+  makeSelectCurrentID as makeSelectClusterID,
+  makeSelectCurrent as makeSelectCurrentCluster,
+} from 'ducks/clusters/selectors';
+
 import * as actions from 'ducks/namespaces/actions';
 
 import messages from './messages';

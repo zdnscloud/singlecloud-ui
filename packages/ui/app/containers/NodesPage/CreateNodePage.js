@@ -26,7 +26,7 @@ import GridContainer from 'components/Grid/GridContainer';
 // import { makeSelectURL } from 'ducks/nodes/selectors';
 import { makeSelectURL } from 'ducks/nodes/selectors';
 import * as actions from 'ducks/nodes/actions';
-import { makeSelectClusterID } from 'ducks/app/selectors';
+import { makeSelectCurrentID as makeSelectClusterID } from 'ducks/clusters/selectors';
 
 import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
 import messages from './messages';

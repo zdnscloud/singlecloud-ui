@@ -7,10 +7,7 @@ import { withStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { bindActionCreators, compose } from 'redux';
-import {
-  makeSelectURL,
-  makeSelectCurrentCluster,
-} from 'ducks/clusters/selectors';
+import { makeSelectURL, makeSelectCurrent } from 'ducks/clusters/selectors';
 import * as actions from 'ducks/clusters/actions';
 
 import Card from 'components/Card/Card';
@@ -30,155 +27,159 @@ import ButtonGroup from './ButtonGroup';
 import NodeViewDialog from './NodeViewDialog';
 import styles from './styles';
 
-class ClusterManageForm extends PureComponent {
-  state = {};
+const ClusterManageForm = ({
+  handleSubmit,
+  error,
+  classes,
+  cluster,
+  nodes,
+  setNodes,
+}) => {
+  const [isOpen, setIsOpen] = useState(false);
 
-  render() {
-    const { handleSubmit, error, classes, cluster, openNode } = this.props;
-
-    return (
-      <form className={getByKey(classes, 'form')} onSubmit={handleSubmit}>
-        <GridContainer className={classes.formGrid}>
-          {error ? (
-            <GridItem xs={12} sm={12} md={12}>
-              <Danger>{getByKey(error, ['response', 'message'])}</Danger>
-            </GridItem>
-          ) : null}
-          <Card>
-            <CardHeader>
-              <h4>
-                <FormattedMessage {...messages.basicInfo} />
-              </h4>
-              <span>
-                <FormattedMessage {...messages.zcloudVersion} />
-                {': '}
-                {cluster.get('zcloudVersion')}
-              </span>
-            </CardHeader>
-            <CardBody>
-              <ButtonGroup />
-              <GridContainer>
-                <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
-                  <ReadOnlyInput
-                    labelText={
-                      <FormattedMessage {...messages.formClusterName} />
-                    }
-                    fullWidth
-                    value={cluster.get('name')}
-                  />
-                </GridItem>
-                <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
-                  <ReadOnlyInput
-                    labelText={
-                      <FormattedMessage {...messages.formClusterSuffix} />
-                    }
-                    fullWidth
-                    value={cluster.get('clusterDomain')}
-                  />
-                </GridItem>
-              </GridContainer>
-              <GridContainer>
-                <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
-                  <ReadOnlyInput
-                    labelText={<FormattedMessage {...messages.formSSHPort} />}
-                    fullWidth
-                    value={cluster.get('sshPort')}
-                  />
-                </GridItem>
-                <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
-                  <ReadOnlyInput
-                    labelText={<FormattedMessage {...messages.formSSHUser} />}
-                    fullWidth
-                    value={cluster.get('sshUser')}
-                  />
-                </GridItem>
-              </GridContainer>
-              <GridContainer>
-                <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
-                  <ReadOnlyInput
-                    labelText={<FormattedMessage {...messages.formServiceIP} />}
-                    fullWidth
-                    value={cluster.get('serviceCidr')}
-                  />
-                </GridItem>
-                <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
-                  <ReadOnlyInput
-                    labelText={<FormattedMessage {...messages.formPodIP} />}
-                    fullWidth
-                    value={cluster.get('clusterCidr')}
-                  />
-                </GridItem>
-              </GridContainer>
-              <GridContainer>
-                <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
-                  <ReadOnlyInput
-                    labelText={
-                      <FormattedMessage {...messages.formClustersNet} />
-                    }
-                    fullWidth
-                    value={cluster.get('network.plugin')}
-                  />
-                </GridItem>
-              </GridContainer>
-              <GridContainer>
-                <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
-                  <ReadOnlyInput
-                    labelText={
-                      <FormattedMessage {...messages.formClustersDNSIP} />
-                    }
-                    fullWidth
-                    value={cluster.get('clusterDNSServiceIP')}
-                  />
-                </GridItem>
-                <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
-                  <ReadOnlyInput
-                    labelText={
-                      <FormattedMessage {...messages.formForwardDNSFirst} />
-                    }
-                    fullWidth
-                    value={cluster.getIn(['clusterUpstreamDNS', 0])}
-                  />
-                </GridItem>
-                <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
-                  <ReadOnlyInput
-                    labelText={
-                      <FormattedMessage {...messages.formForwardDNSSecond} />
-                    }
-                    fullWidth
-                    value={cluster.getIn(['clusterUpstreamDNS', 1])}
-                  />
-                </GridItem>
-              </GridContainer>
-            </CardBody>
-          </Card>
-          <Card style={{ margin: 0, marginTop: 20 }}>
-            <CardHeader>
-              <h4>
-                <FormattedMessage {...messages.nodeList} />
-              </h4>
-              <IconButton
-                aria-label={<FormattedMessage {...messages.clusters} />}
-                onClick={(evt) => {
-                  openNode();
-                }}
-              >
-                <AddIcon />
-              </IconButton>
-            </CardHeader>
-            <CardBody>
-              <NodeViewDialog />
-              <NodesTable />
-            </CardBody>
-          </Card>
-        </GridContainer>
-      </form>
-    );
-  }
-}
+  return (
+    <form className={getByKey(classes, 'form')} onSubmit={handleSubmit}>
+      <GridContainer className={classes.formGrid}>
+        {error ? (
+          <GridItem xs={12} sm={12} md={12}>
+            <Danger>{getByKey(error, ['response', 'message'])}</Danger>
+          </GridItem>
+        ) : null}
+        <Card>
+          <CardHeader>
+            <h4>
+              <FormattedMessage {...messages.basicInfo} />
+            </h4>
+            <span>
+              <FormattedMessage {...messages.zcloudVersion} />
+              {': '}
+              {cluster.get('zcloudVersion')}
+            </span>
+          </CardHeader>
+          <CardBody>
+            <ButtonGroup />
+            <GridContainer>
+              <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
+                <ReadOnlyInput
+                  labelText={<FormattedMessage {...messages.formClusterName} />}
+                  fullWidth
+                  value={cluster.get('name')}
+                />
+              </GridItem>
+              <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
+                <ReadOnlyInput
+                  labelText={
+                    <FormattedMessage {...messages.formClusterSuffix} />
+                  }
+                  fullWidth
+                  value={cluster.get('clusterDomain')}
+                />
+              </GridItem>
+            </GridContainer>
+            <GridContainer>
+              <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
+                <ReadOnlyInput
+                  labelText={<FormattedMessage {...messages.formSSHPort} />}
+                  fullWidth
+                  value={cluster.get('sshPort')}
+                />
+              </GridItem>
+              <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
+                <ReadOnlyInput
+                  labelText={<FormattedMessage {...messages.formSSHUser} />}
+                  fullWidth
+                  value={cluster.get('sshUser')}
+                />
+              </GridItem>
+            </GridContainer>
+            <GridContainer>
+              <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
+                <ReadOnlyInput
+                  labelText={<FormattedMessage {...messages.formServiceIP} />}
+                  fullWidth
+                  value={cluster.get('serviceCidr')}
+                />
+              </GridItem>
+              <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
+                <ReadOnlyInput
+                  labelText={<FormattedMessage {...messages.formPodIP} />}
+                  fullWidth
+                  value={cluster.get('clusterCidr')}
+                />
+              </GridItem>
+            </GridContainer>
+            <GridContainer>
+              <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
+                <ReadOnlyInput
+                  labelText={<FormattedMessage {...messages.formClustersNet} />}
+                  fullWidth
+                  value={cluster.get('network.plugin')}
+                />
+              </GridItem>
+            </GridContainer>
+            <GridContainer>
+              <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
+                <ReadOnlyInput
+                  labelText={
+                    <FormattedMessage {...messages.formClustersDNSIP} />
+                  }
+                  fullWidth
+                  value={cluster.get('clusterDNSServiceIP')}
+                />
+              </GridItem>
+              <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
+                <ReadOnlyInput
+                  labelText={
+                    <FormattedMessage {...messages.formForwardDNSFirst} />
+                  }
+                  fullWidth
+                  value={cluster.getIn(['clusterUpstreamDNS', 0])}
+                />
+              </GridItem>
+              <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
+                <ReadOnlyInput
+                  labelText={
+                    <FormattedMessage {...messages.formForwardDNSSecond} />
+                  }
+                  fullWidth
+                  value={cluster.getIn(['clusterUpstreamDNS', 1])}
+                />
+              </GridItem>
+            </GridContainer>
+          </CardBody>
+        </Card>
+        <Card style={{ margin: 0, marginTop: 20 }}>
+          <CardHeader>
+            <h4>
+              <FormattedMessage {...messages.nodeList} />
+            </h4>
+            <IconButton
+              aria-label={<FormattedMessage {...messages.clusters} />}
+              onClick={(evt) => {
+                setIsOpen(true);
+              }}
+            >
+              <AddIcon />
+            </IconButton>
+          </CardHeader>
+          <CardBody>
+            <NodeViewDialog
+              nodes={nodes}
+              setNodes={setNodes}
+              isOpen={isOpen}
+              closeDialog={(evt) => setIsOpen(false)}
+            />
+            <NodesTable nodes={nodes} setNodes={setNodes} />
+          </CardBody>
+        </Card>
+      </GridContainer>
+    </form>
+  );
+};
 
 const mapStateToProps = createStructuredSelector({
   url: makeSelectURL(),
-  cluster: makeSelectCurrentCluster(),
+  cluster: makeSelectCurrent(),
 });
 
 const mapDispatchToProps = (dispatch) =>

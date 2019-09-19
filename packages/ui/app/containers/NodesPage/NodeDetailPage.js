@@ -30,8 +30,11 @@ import CardFooter from 'components/Card/CardFooter';
 import ReadOnlyInput from 'components/CustomInput/ReadOnlyInput';
 import CircleChart from 'components/Charts/Circle';
 
-import { makeSelectClusterID } from 'ducks/app/selectors';
-import { makeSelectCurrentCluster } from 'ducks/clusters/selectors';
+import {
+  makeSelectCurrentID as makeSelectClusterID,
+  makeSelectCurrent as makeSelectCurrentCluster,
+} from 'ducks/clusters/selectors';
+
 import { makeSelectCurrentNode } from 'ducks/nodes/selectors';
 import * as actions from 'ducks/nodes/actions';
 

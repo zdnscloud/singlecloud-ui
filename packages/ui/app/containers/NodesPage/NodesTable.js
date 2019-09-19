@@ -16,8 +16,11 @@ import Paper from '@material-ui/core/Paper';
 
 import { SimpleTable } from '@gsmlg/com';
 
-import { makeSelectClusterID } from 'ducks/app/selectors';
-import { makeSelectCurrentCluster } from 'ducks/clusters/selectors';
+import {
+  makeSelectCurrentID as makeSelectClusterID,
+  makeSelectCurrent as makeSelectCurrentCluster,
+} from 'ducks/clusters/selectors';
+
 import { makeSelectNodes, makeSelectNodesList } from 'ducks/nodes/selectors';
 import * as actions from 'ducks/nodes/actions';
 

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { bindActionCreators } from 'redux';
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
@@ -23,12 +23,7 @@ import List from 'react-virtualized/dist/es/List';
 import { Observable } from 'rxjs';
 import { map, scan, throttleTime, debounceTime } from 'rxjs/operators';
 
-import {
-  makeSelectPodLogIsOpening,
-  makeSelectLoggingCluster,
-  makeSelectOpeningLogs,
-  makeSelectLogURL,
-} from 'ducks/clusters/selectors';
+import { makeSelectCurrentID } from 'ducks/clusters/selectors';
 import * as actions from 'ducks/clusters/actions';
 
 import styles from './styles';
@@ -37,21 +32,14 @@ import messages from './messages';
 let socket = null;
 let observer = null;
 
-const LogViewDialog = ({
-  isOpen,
-  loggingCluster,
-  logs,
-  url,
-  closeClusterLog,
-  setOpeningLogs,
-  classes,
-}) => {
-  let t;
+const LogViewDialog = ({ isOpen, id, closeDialog, classes }) => {
+  const url = `${window.location.protocol}//${window.location.hostname}:${window.location.port}/apis/ws.zcloud.cn/v1/clusters/${id}/zkelog`;
+  const [logs, setLogs] = useState([]);
 
   return (
     <Dialog
       open={isOpen}
-      onClose={closeClusterLog}
+      onClose={closeDialog}
       onEnter={() => {
         socket = new SockJS(url, null, { transports: 'websocket' });
         const logSource = Observable.create((ob) => {
@@ -69,7 +57,7 @@ const LogViewDialog = ({
             }, [])
           )
           .subscribe((l) => {
-            setOpeningLogs(l);
+            setLogs(l);
           });
         socket.onclose = (e) => {
           observer.next(`${new Date().toISOString()} Pull log timeout!!!`);
@@ -93,7 +81,7 @@ const LogViewDialog = ({
           <h4>
             <FormattedMessage {...messages.logTitle} />
           </h4>
-          <IconButton onClick={closeClusterLog} style={{ padding: 0 }}>
+          <IconButton onClick={closeDialog} style={{ padding: 0 }}>
             <CloseIcon style={{ color: '#fff' }} />
           </IconButton>
         </CardHeader>
@@ -112,7 +100,7 @@ const LogViewDialog = ({
           </Paper>
         </CardBody>
         <CardFooter>
-          <Button onClick={closeClusterLog} color="primary" variant="contained">
+          <Button onClick={closeDialog} color="primary" variant="contained">
             <FormattedMessage {...messages.logClose} />
           </Button>
         </CardFooter>
@@ -122,10 +110,7 @@ const LogViewDialog = ({
 };
 
 const mapStateToProps = createStructuredSelector({
-  isOpen: makeSelectPodLogIsOpening(),
-  loggingCluster: makeSelectLoggingCluster(),
-  url: makeSelectLogURL(),
-  logs: makeSelectOpeningLogs(),
+  id: makeSelectCurrentID(),
 });
 
 const mapDispatchToProps = (dispatch) =>

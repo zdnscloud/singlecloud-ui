@@ -1,6 +1,6 @@
 /**
  *
- * NodesPage
+ * ClustersPage
  *
  */
 
@@ -11,49 +11,53 @@ import { FormattedMessage } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import { bindActionCreators, compose } from 'redux';
 
-import { withStyles } from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
 import { SimpleTable } from '@gsmlg/com';
+import IconButton from '@material-ui/core/IconButton';
+import DeleteIcon from '@material-ui/icons/Delete';
+import ShellIcon from 'components/Icons/Shell';
+import SuccessIcon from 'components/Icons/Success';
+import FailureIcon from 'components/Icons/Failure';
+import ConfirmDelete from 'components/ConfirmDelete/ConfirmDelete';
 
-import {
-  makeSelectCurrentID as makeSelectClusterID,
-} from 'ducks/clusters/selectors';
 import * as actions from 'ducks/clusters/actions';
+import { makeSelectClustersList } from 'ducks/clusters/selectors';
 
 import messages from './messages';
-import styles from './styles';
+import useStyles from './styles';
 import schema from './tableSchema';
 
-/* eslint-disable react/prefer-stateless-function */
-export const NodesTable = ({ classes, data, clusterID, setNodes, nodes }) => {
-  const mapedSchema = schema
-    .map((sche) => ({
-      ...sche,
-      label: <FormattedMessage {...messages[`tableTitle${sche.label}`]} />,
-    }))
+export const ClustersTable = ({ data, removeCluster }) => {
+  const classes = useStyles();
+  const mergedSchema = schema
     .map((sch) => {
       if (sch.id === 'actions') {
         return {
           ...sch,
-          props: { nodes, setNodes },
+          props: { classes, removeCluster },
         };
       }
       return sch;
-    });
+    })
+    .map((s) => ({
+      ...s,
+      label: <FormattedMessage {...messages[`tableTitle${s.label}`]} />,
+    }));
 
   return (
     <Paper className={classes.tableWrapper}>
       <SimpleTable
         className={classes.table}
-        schema={mapedSchema}
-        data={nodes}
+        schema={mergedSchema}
+        data={data}
       />
     </Paper>
   );
 };
 
 const mapStateToProps = createStructuredSelector({
-  clusterID: makeSelectClusterID(),
+  data: makeSelectClustersList(),
 });
 
 const mapDispatchToProps = (dispatch) =>
@@ -69,7 +73,4 @@ const withConnect = connect(
   mapDispatchToProps
 );
 
-export default compose(
-  withConnect,
-  withStyles(styles)
-)(NodesTable);
+export default compose(withConnect)(ClustersTable);

@@ -13,8 +13,8 @@ import {
   catchError,
 } from 'rxjs/operators';
 import { ofType, combineEpics } from 'redux-observable';
-import { CHANGE_NAMESPACE } from 'ducks/namespaces/constants';
-import { loadClustersAndNamespaces } from 'ducks/clusters/actions';
+import { loadClusters } from 'ducks/clusters/actions';
+import { makeSelectURL } from 'ducks/clusters/selectors';
 
 import * as c from './constants';
 import * as a from './actions';
@@ -27,7 +27,7 @@ import {
 export const initEpic = (action$, state$, { ajax }) =>
   action$.pipe(
     ofType(c.INIT_ACTION),
-    mapTo(loadClustersAndNamespaces())
+    mapTo(loadClusters(makeSelectURL()(state$.value)))
   );
 
 export const changeClusterEpic = (action$, state$, { ajax }) =>
@@ -41,23 +41,4 @@ export const changeClusterEpic = (action$, state$, { ajax }) =>
     })
   );
 
-export const changeNamespaceEpic = (action$, state$, { ajax }) =>
-  action$.pipe(
-    ofType(CHANGE_NAMESPACE),
-    mergeMap(({ payload: { namespaceID: ns } }) => {
-      const location = makeSelectLocation()(state$.value);
-      const clusterID = makeSelectClusterID()(state$.value);
-      const namespaceID = makeSelectNamespaceID()(state$.value);
-      if (namespaceID) {
-        const pathname = location.get('pathname');
-        const suffix = pathname
-          .split('/')
-          .slice(5)
-          .join('/');
-        return of(push(`/clusters/${clusterID}/namespaces/${ns}/${suffix}`));
-      }
-      return of(push(location));
-    })
-  );
-
-export default combineEpics(initEpic, changeClusterEpic, changeNamespaceEpic);
+export default combineEpics(initEpic, changeClusterEpic);

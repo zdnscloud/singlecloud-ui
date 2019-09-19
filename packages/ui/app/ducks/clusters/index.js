@@ -1,6 +1,6 @@
 /**
- *
- * Clusters Duck
+ * Duck: Clusters
+ * reducer: clusters
  *
  */
 import _ from 'lodash';
@@ -16,18 +16,14 @@ const { prefix } = constants;
 export { constants, actions, prefix };
 
 export const initialState = fromJS({
-  clusters: {},
+  data: {},
   list: [],
-  selectedCluster: {},
-  openedLog: null,
-  logs: [],
-  openedNode: false,
-  nodes: [],
+  selectedData: null,
 });
 
 const c = constants;
 
-export const clustersReducer = (
+export const reducer = (
   state = initialState,
   { type, payload, error, meta }
 ) => {
@@ -36,9 +32,44 @@ export const clustersReducer = (
       return state;
     case c.LOAD_CLUSTERS_SUCCESS: {
       const { data, list } = procCollectionData(payload);
-      return state.set('clusters', fromJS(data)).set('list', fromJS(list));
+      return state.setIn(['data'], fromJS(data)).setIn(['list'], fromJS(list));
     }
     case c.LOAD_CLUSTERS_FAILURE:
+      return state;
+
+    case c.CREATE_CLUSTER:
+      return state;
+    case c.CREATE_CLUSTER_SUCCESS: {
+      const data = payload.response;
+      return state.setIn(['data', data.id], fromJS(data));
+    }
+    case c.CREATE_CLUSTER_FAILURE:
+      return state;
+
+    case c.UPDATE_CLUSTER:
+      return state;
+    case c.UPDATE_CLUSTER_SUCCESS: {
+      const id = getByKey(payload, ['response', 'id']);
+      const data = getByKey(payload, ['response']);
+      if (id) {
+        return state.setIn(['data', id], fromJS(data));
+      }
+      return state;
+    }
+    case c.UPDATE_CLUSTER_FAILURE:
+      return state;
+
+    case c.READ_CLUSTER:
+      return state;
+    case c.READ_CLUSTER_SUCCESS: {
+      const id = getByKey(payload, ['response', 'id']);
+      const data = getByKey(payload, ['response']);
+      if (id) {
+        return state.setIn(['data', id], fromJS(data));
+      }
+      return state;
+    }
+    case c.READ_CLUSTER_FAILURE:
       return state;
 
     case c.REMOVE_CLUSTER:
@@ -46,44 +77,17 @@ export const clustersReducer = (
     case c.REMOVE_CLUSTER_SUCCESS: {
       const { id } = meta;
       return state
-        .deleteIn(['clusters', id])
-        .update('list', (l) => l.filterNot((i) => i === id));
+        .removeIn(['data', id])
+        .updateIn(['list'], (l) => l.filterNot((i) => i === id));
     }
     case c.REMOVE_CLUSTER_FAILURE:
       return state;
 
-    case c.CHANGE_CLUSTER:
-      return state.set('selectedCluster', payload.clusterID);
-
-    case c.CREATE_CLUSTER:
+    case c.EXECUTE_CLUSTER_ACTION:
       return state;
-    case c.CREATE_CLUSTER_SUCCESS: {
-      const data = payload.response;
-      return state.setIn(['clusters', data.id], fromJS(data));
-    }
-    case c.CREATE_CLUSTER_FAILURE:
+    case c.EXECUTE_CLUSTER_ACTION_SUCCESS:
       return state;
-
-    case c.OPEN_CLUSTER_LOG:
-      return state.set('openedLog', payload).set('logs', []);
-    case c.CLOSE_CLUSTER_LOG:
-      return state.set('openedLog', null);
-    case c.SET_OPENING_LOG:
-      return state.set('logs', payload);
-
-    case c.OPEN_NODE:
-      return state.set('openedNode', true);
-    case c.CLOSE_NODE:
-      return state.set('openedNode', false);
-
-    case c.SET_NODES:
-      return state.set('nodes', payload);
-
-    case c.UPDATE_CLUSTER:
-      return state;
-    case c.UPDATE_CLUSTER_SUCCESS:
-      return state;
-    case c.UPDATE_CLUSTER_FAILURE:
+    case c.EXECUTE_CLUSTER_ACTION_FAILURE:
       return state;
 
     default:
@@ -91,4 +95,4 @@ export const clustersReducer = (
   }
 };
 
-export default clustersReducer;
+export default reducer;

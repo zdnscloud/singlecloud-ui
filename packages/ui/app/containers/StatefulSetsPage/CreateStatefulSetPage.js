@@ -60,7 +60,7 @@ import {
   makeSelectClusterID,
   makeSelectNamespaceID,
 } from 'ducks/app/selectors';
-import { makeSelectCurrentCluster } from 'ducks/clusters/selectors';
+import { makeSelectCurrent as makeSelectCurrentCluster } from 'ducks/clusters/selectors';
 import * as sActions from 'ducks/secrets/actions';
 import {
   makeSelectSecrets,
