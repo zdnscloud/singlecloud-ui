@@ -40,7 +40,7 @@ const Form = ({ formValues, handleSubmit, error, role }) => {
         ) : null}
         <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
           <ReadOnlyInput
-            label={<FormattedMessage {...messages.leftMenusDialogFormUser} />}
+            label={<FormattedMessage {...messages.leftMenuDialogFormUser} />}
             value={role.get('user')}
             fullWidth
           />
@@ -48,9 +48,7 @@ const Form = ({ formValues, handleSubmit, error, role }) => {
         <GridItem xs={3} sm={3} md={3}>
           <InputField
             label={
-              <FormattedMessage
-                {...messages.leftMenusDialogFormIngressDomain}
-              />
+              <FormattedMessage {...messages.leftMenuDialogFormIngressDomain} />
             }
             name="ingressDomain"
             fullWidth
@@ -60,7 +58,7 @@ const Form = ({ formValues, handleSubmit, error, role }) => {
         <GridItem xs={3} sm={3} md={3}>
           <InputField
             label={
-              <FormattedMessage {...messages.leftMenusDialogFormStorageSize} />
+              <FormattedMessage {...messages.leftMenuDialogFormStorageSize} />
             }
             normalize={(val) => Number(val)}
             name="storageSize"

@@ -163,21 +163,21 @@ const OutLinks = ({
           setOpen(false);
           clearErrorInfo();
         }}
-        title={<FormattedMessage {...messages.leftMenusDialogTitle} />}
+        title={<FormattedMessage {...messages.leftMenuDialogTitle} />}
         content={
           memuRole === 'registries' ? (
             <RegistryForm role={role} onSubmit={doSubmit} />
           ) : (
             <>
               {monitorsError ? <Danger>{monitorsError}</Danger> : null}
-              <FormattedMessage {...messages.leftMenusDialogContent} />
+              <FormattedMessage {...messages.leftMenuDialogContent} />
             </>
           )
         }
         onAction={() =>
           memuRole === 'registries' ? submitForm() : handleMonitorInstall()
         }
-        sureButtonText={messages.leftMenusDialogButtonInstall}
+        sureButtonText={messages.leftMenuDialogButtonInstall}
       />
     </Fragment>
   );

@@ -201,28 +201,28 @@ export default defineMessages({
     id: `${scope}.leftMenuApplicationManagement`,
     defaultMessage: 'AppManagement',
   },
-  leftMenusDialogTitle: {
-    id: `${scope}.leftMenusDialogTitle`,
+  leftMenuDialogTitle: {
+    id: `${scope}.leftMenuDialogTitle`,
     defaultMessage: 'Dialog Title',
   },
-  leftMenusDialogContent: {
-    id: `${scope}.leftMenusDialogContent`,
+  leftMenuDialogContent: {
+    id: `${scope}.leftMenuDialogContent`,
     defaultMessage: 'Whether installation is required',
   },
-  leftMenusDialogButtonInstall: {
-    id: `${scope}.leftMenusDialogButtonInstall`,
+  leftMenuDialogButtonInstall: {
+    id: `${scope}.leftMenuDialogButtonInstall`,
     defaultMessage: 'Install',
   },
-  leftMenusDialogFormUser: {
-    id: `${scope}.leftMenusDialogFormUser`,
+  leftMenuDialogFormUser: {
+    id: `${scope}.leftMenuDialogFormUser`,
     defaultMessage: 'User:',
   },
-  leftMenusDialogFormIngressDomain: {
-    id: `${scope}.leftMenusDialogFormIngressDomain`,
+  leftMenuDialogFormIngressDomain: {
+    id: `${scope}.leftMenuDialogFormIngressDomain`,
     defaultMessage: 'IngressDomain:',
   },
-  leftMenusDialogFormStorageSize: {
-    id: `${scope}.leftMenusDialogFormStorageSize`,
+  leftMenuDialogFormStorageSize: {
+    id: `${scope}.leftMenuDialogFormStorageSize`,
     defaultMessage: 'StorageSize:',
   },
 });
