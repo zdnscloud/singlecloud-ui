@@ -1,3 +1,9 @@
+/**
+ * Duck: Applications
+ * selectors: applications
+ *
+ */
+import { fromJS } from 'immutable';
 import { createSelector } from 'reselect';
 import {
   createMatchSelector,
@@ -5,90 +11,76 @@ import {
 } from 'connected-react-router/immutable';
 
 import {
-  makeSelectClusterID,
-  makeSelectNamespaceID,
-} from 'ducks/app/selectors';
-import { makeSelectCurrentNamespace } from 'ducks/namespaces/selectors';
+  makeSelectCurrent as makeSelectCurrentNamespace,
+  makeSelectCurrentID as makeSelectCurrentNamespaceID,
+} from 'ducks/namespaces/selectors';
+
+import { makeSelectCurrentID as makeSelectCurrentClusterID } from 'ducks/clusters/selectors';
 
 import { prefix } from './constants';
+import { initialState } from './index';
 
 /**
- * Direct selector to the applications duck
+ * Direct selector to the applications domain
  */
-
-const selectApplicationsDomain = (state) => state.get(prefix);
+export const selectDomain = (state) => state.get(prefix) || initialState;
 
 /**
  * Other specific selectors
  */
+export const makeSelectURL = () =>
+  createSelector(
+    makeSelectCurrentNamespace(),
+    (pt) => pt.getIn(['links', 'applications'])
+  );
+
 export const makeSelectApplications = () =>
   createSelector(
-    selectApplicationsDomain,
-    makeSelectClusterID(),
-    makeSelectNamespaceID(),
+    selectDomain,
+    makeSelectCurrentClusterID(),
+    makeSelectCurrentNamespaceID(),
+
     (substate, clusterID, namespaceID) =>
-      substate.getIn(['applications', clusterID, namespaceID]) ||
-      substate.clear()
+      substate.getIn(['data', clusterID, namespaceID]) || substate.clear()
   );
 
 export const makeSelectApplicationsList = () =>
   createSelector(
-    selectApplicationsDomain,
+    selectDomain,
     makeSelectApplications(),
-    (substate, applications) =>
-      substate.get('list').map((id) => applications.get(id))
+    makeSelectCurrentClusterID(),
+    makeSelectCurrentNamespaceID(),
+
+    (substate, data, clusterID, namespaceID) =>
+      (substate.getIn(['list', clusterID, namespaceID]) || fromJS([])).map(
+        (id) => data.get(id)
+      ) || fromJS([])
   );
 
-export const makeSelectURL = () =>
+export const makeSelectCurrentID = () =>
   createSelector(
-    makeSelectCurrentNamespace(),
-    (ns) => ns.getIn(['links', 'applications'])
-  );
-
-export const makeSelectApplicationID = () =>
-  createSelector(
-    createMatchSelector(
-      '/clusters/:cluster_id/namespaces/:namespace_id/applications/:application_id'
-    ),
+    createMatchSelector('*/applications/:id/*'),
     (match) => {
       if (match && match.params) {
-        return match.params.application_id;
+        return match.params.id;
       }
       return '';
     }
   );
 
-export const makeSelectCurrentApplication = () =>
+export const makeSelectCurrent = () =>
   createSelector(
-    selectApplicationsDomain,
-    makeSelectClusterID(),
-    makeSelectNamespaceID(),
-    makeSelectApplicationID(),
-    (substate, clusterID, namespaceID, applicationID) =>
-      substate.getIn(['applications', clusterID, namespaceID, applicationID]) ||
-      substate.clear()
+    selectDomain,
+    makeSelectCurrentClusterID(),
+    makeSelectCurrentNamespaceID(),
+
+    makeSelectCurrentID(),
+    (substate, clusterID, namespaceID, id) =>
+      substate.getIn(['data', clusterID, namespaceID, id]) || substate.clear()
   );
 
 export const makeSelectDeleteApplicationError = () =>
   createSelector(
-    selectApplicationsDomain,
+    selectDomain,
     (state) => state.get('deleteError')
   );
-
-export const makeSelectCurrentChart = () =>
-  createSelector(
-    selectApplicationsDomain,
-    (substate) => substate.get('chart') || substate.clear()
-  );
-
-/**
- * Default selector used by LoginPage
- */
-
-const makeSelectApplicationsDomain = () =>
-  createSelector(
-    selectApplicationsDomain,
-    (substate) => substate
-  );
-
-export default makeSelectApplicationsDomain;

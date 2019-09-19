@@ -1,22 +1,18 @@
 /**
  *
- * CronJobsPage
+ * CronJobDetailPage
  *
  */
-import React, { useEffect, useState, memo } from 'react';
+import React, { Fragment, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { FormattedMessage } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import { bindActionCreators, compose } from 'redux';
-import { connect } from 'react-redux';
 
 import Helmet from 'components/Helmet/Helmet';
-import { FormattedMessage } from 'react-intl';
+import { withStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import { Link } from 'react-router-dom';
-import Typography from '@material-ui/core/Typography';
-import Fab from '@material-ui/core/Fab';
-import IconButton from '@material-ui/core/IconButton';
-import AddIcon from 'components/Icons/Add';
 import GridItem from 'components/Grid/GridItem';
 import GridContainer from 'components/Grid/GridContainer';
 import Card from 'components/Card/Card';
@@ -24,34 +20,50 @@ import CardHeader from 'components/Card/CardHeader';
 import CardBody from 'components/Card/CardBody';
 import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
 
-import { makeSelectCurrentID as makeSelectClusterID } from 'ducks/clusters/selectors';
-import { makeSelectCurrentID as makeSelectNamespaceID } from 'ducks/namespaces/selectors';
-import { makeSelectURL } from 'ducks/cronJobs/selectors';
+import {
+  makeSelectClusterID,
+  makeSelectNamespaceID,
+} from 'ducks/app/selectors';
+import {
+  makeSelectCurrentID,
+  makeSelectCurrent,
+  makeSelectURL,
+} from 'ducks/cronJobs/selectors';
+import * as podsActions from 'ducks/pods/actions';
 import * as actions from 'ducks/cronJobs/actions';
+import PodsTable from 'containers/PodsPage/PodsTable';
 
-import useStyles from './styles';
+import CronJob from './Item';
 import messages from './messages';
-import CronJobsTable from './Table';
+import useStyles from './styles';
 
-const CronJobsPage = ({
+export const CronJobDetailPage = ({
   clusterID,
   namespaceID,
-  location,
+  cronJobID,
+  cronJob,
   url,
-  loadCronJobs,
+  loadCJPods: loadPods,
+  readCronJob,
 }) => {
   const classes = useStyles();
+  const podUrl = cronJob.getIn(['links', 'pods']);
   useEffect(() => {
-    if (url) {
-      loadCronJobs(url, {
+    const loadCronJobAndPods = () => {
+      readCronJob(cronJobID, {
         clusterID,
         namespaceID,
+        url: `${url}/${cronJobID}`,
       });
-    }
-    return () => {
-      // try cancel something when unmount
+      if (podUrl) {
+        loadPods({ url: podUrl, clusterID, namespaceID, cronJobID });
+      }
     };
-  }, [clusterID, loadCronJobs, namespaceID, url]);
+    loadCronJobAndPods();
+    const timer = setInterval(loadCronJobAndPods, 3000);
+
+    return () => clearInterval(timer);
+  }, [url, podUrl, readCronJob, cronJobID, clusterID, namespaceID, loadPods]);
 
   return (
     <div className={classes.root}>
@@ -64,26 +76,22 @@ const CronJobsPage = ({
               path: `/clusters/${clusterID}/namespaces/${namespaceID}/cronJobs`,
               name: <FormattedMessage {...messages.pageTitle} />,
             },
+            {
+              name: <FormattedMessage {...messages.cronJobDetail} />,
+            },
           ]}
         />
+        <CronJob cronJob={cronJob} />
         <GridContainer className={classes.grid}>
           <GridItem xs={12} sm={12} md={12}>
             <Card>
               <CardHeader>
                 <h4>
-                  <FormattedMessage {...messages.cronJobs} />
+                  <FormattedMessage {...messages.pods} />
                 </h4>
-                <Link
-                  to={`${location.pathname}/create`}
-                  className={classes.createBtnLink}
-                >
-                  <IconButton>
-                    <AddIcon />
-                  </IconButton>
-                </Link>
               </CardHeader>
               <CardBody>
-                <CronJobsTable />
+                <PodsTable parentType="cj" />
               </CardBody>
             </Card>
           </GridItem>
@@ -96,13 +104,16 @@ const CronJobsPage = ({
 const mapStateToProps = createStructuredSelector({
   clusterID: makeSelectClusterID(),
   namespaceID: makeSelectNamespaceID(),
+  cronJobID: makeSelectCurrentID(),
   url: makeSelectURL(),
+  cronJob: makeSelectCurrent(),
 });
 
 const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
       ...actions,
+      ...podsActions,
     },
     dispatch
   );
@@ -112,7 +123,4 @@ const withConnect = connect(
   mapDispatchToProps
 );
 
-export default compose(
-  withConnect,
-  memo
-)(CronJobsPage);
+export default compose(withConnect)(CronJobDetailPage);

@@ -11,9 +11,9 @@ export default loadable(() =>
 );
 
 export const CreateJobPage = loadable(() =>
-  import(/* webpackChunkName: "CreateJobPage" */ './CreateJobPage')
+  import(/* webpackChunkName: "CreateJobPage" */ './CreatePage')
 );
 
 export const JobDetailPage = loadable(() =>
-  import(/* webpackChunkName: "JobDetailPage" */ './JobDetailPage')
+  import(/* webpackChunkName: "ShowJobPage" */ './ShowItemPage')
 );

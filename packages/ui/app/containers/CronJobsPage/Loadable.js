@@ -11,9 +11,9 @@ export default loadable(() =>
 );
 
 export const CreateCronJobPage = loadable(() =>
-  import(/* webpackChunkName: "CreateCronJobPage" */ './CreateCronJobPage')
+  import(/* webpackChunkName: "CreateCronJobPage" */ './CreatePage')
 );
 
 export const CronJobDetailPage = loadable(() =>
-  import(/* webpackChunkName: "CronJobDetailPage" */ './CronJobDetailPage')
+  import(/* webpackChunkName: "CronJobDetailPage" */ './ShowItemPage')
 );

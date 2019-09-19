@@ -1,115 +1,103 @@
+/**
+ * Duck: Jobs
+ * actions: jobs
+ *
+ */
 import * as c from './constants';
 
-/*
-  actions
-*/
-export const loadJobs = (meta) => ({
+/**
+ * actions
+ */
+export const loadJobs = (url, meta = {}) => ({
   type: c.LOAD_JOBS,
-  payload: {},
+  payload: url,
   meta,
 });
 
-export const loadJobsSuccess = (resp, meta) => ({
+export const loadJobsSuccess = (resp, meta = {}) => ({
   type: c.LOAD_JOBS_SUCCESS,
   payload: resp,
   meta,
 });
 
-export const loadJobsFailure = (error, meta) => ({
+export const loadJobsFailure = (error, meta = {}) => ({
   type: c.LOAD_JOBS_FAILURE,
   payload: error,
   meta,
   error: true,
 });
 
-export const loadJob = (id, meta) => ({
-  type: c.LOAD_JOB,
-  payload: id,
-  meta,
-});
-
-export const loadJobSuccess = (resp, meta) => ({
-  type: c.LOAD_JOB_SUCCESS,
-  payload: resp,
-  meta,
-});
-
-export const loadJobFailure = (error, meta) => ({
-  type: c.LOAD_JOB_FAILURE,
-  payload: error,
-  meta,
-  error: true,
-});
-
-export const createJob = (data, meta) => ({
+export const createJob = (data, meta = {}) => ({
   type: c.CREATE_JOB,
   payload: data,
   meta,
 });
 
-export const createJobSuccess = (resp, meta) => ({
+export const createJobSuccess = (resp, meta = {}) => ({
   type: c.CREATE_JOB_SUCCESS,
   payload: resp,
   meta,
 });
 
-export const createJobFailure = (error, meta) => ({
+export const createJobFailure = (error, meta = {}) => ({
   type: c.CREATE_JOB_FAILURE,
   payload: error,
   meta,
   error: true,
 });
 
-export const updateJob = (data, meta) => ({
+export const updateJob = (data, meta = {}) => ({
   type: c.UPDATE_JOB,
   payload: data,
   meta,
 });
 
-export const updateJobSuccess = (resp) => ({
+export const updateJobSuccess = (resp, meta = {}) => ({
   type: c.UPDATE_JOB_SUCCESS,
   payload: resp,
+  meta,
 });
 
-export const updateJobFailure = (error) => ({
+export const updateJobFailure = (error, meta = {}) => ({
   type: c.UPDATE_JOB_FAILURE,
   payload: error,
+  meta,
   error: true,
 });
 
-export const removeJob = (id, meta) => ({
+export const readJob = (id, meta = {}) => ({
+  type: c.READ_JOB,
+  payload: id,
+  meta,
+});
+
+export const readJobSuccess = (resp, meta = {}) => ({
+  type: c.READ_JOB_SUCCESS,
+  payload: resp,
+  meta,
+});
+
+export const readJobFailure = (error, meta = {}) => ({
+  type: c.READ_JOB_FAILURE,
+  payload: error,
+  meta,
+  error: true,
+});
+
+export const removeJob = (id, meta = {}) => ({
   type: c.REMOVE_JOB,
   payload: id,
   meta,
 });
 
-export const removeJobSuccess = (resp, meta) => ({
+export const removeJobSuccess = (resp, meta = {}) => ({
   type: c.REMOVE_JOB_SUCCESS,
   payload: resp,
   meta,
 });
 
-export const removeJobFailure = (error, meta) => ({
+export const removeJobFailure = (error, meta = {}) => ({
   type: c.REMOVE_JOB_FAILURE,
-  payload: error,
-  meta,
-  error: true,
-});
-
-export const scaleJob = (scale, meta) => ({
-  type: c.SCALE_JOB,
-  payload: scale,
-  meta,
-});
-
-export const scaleJobSuccess = (resp, meta) => ({
-  type: c.SCALE_JOB_SUCCESS,
-  payload: resp,
-  meta,
-});
-
-export const scaleJobFailure = (error, meta) => ({
-  type: c.SCALE_JOB_FAILURE,
   payload: error,
   meta,
   error: true,

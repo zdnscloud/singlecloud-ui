@@ -1,7 +1,6 @@
-/* eslint-disable no-unreachable */
 /**
  *
- * Applications Table
+ * NodesPage
  *
  */
 
@@ -14,53 +13,46 @@ import { bindActionCreators, compose } from 'redux';
 
 import { withStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
+
 import { SimpleTable } from '@gsmlg/com';
 
-import * as actions from 'ducks/applications/actions';
-import { makeSelectCurrent } from 'ducks/applications/selectors';
-import {
-  makeSelectClusterID,
-  makeSelectNamespaceID,
-} from 'ducks/app/selectors';
-import { Map, List } from 'immutable';
+import { makeSelectNodes, makeSelectNodesList } from 'ducks/nodes/selectors';
+import { makeSelectLocation } from 'ducks/app/selectors';
+import * as actions from 'ducks/nodes/actions';
 
 import messages from './messages';
 import useStyles from './styles';
 import schema from './tableSchema';
 
-export const ApplicationsTable = ({ application, clusterID, namespaceID }) => {
+/* eslint-disable react/prefer-stateless-function */
+const NodesTable = ({ location, data, clusterID }) => {
   const classes = useStyles();
-  const data = application.get('appResources') || List([]);
-  const mergedSchema = schema
+  const pathname = location.get('pathname');
+  const mapedSchema = schema
+    .map((sche) => ({
+      ...sche,
+      label: <FormattedMessage {...messages[`tableTitle${sche.label}`]} />,
+    }))
     .map((sch) => {
       if (sch.id === 'name') {
         return {
           ...sch,
-          props: { clusterID, namespaceID },
+          props: { pathname },
         };
       }
       return sch;
-    })
-    .map((s) => ({
-      ...s,
-      label: <FormattedMessage {...messages[`tableTitle${s.label}`]} />,
-    }));
+    });
 
   return (
     <Paper className={classes.tableWrapper}>
-      <SimpleTable
-        className={classes.table}
-        schema={mergedSchema}
-        data={data}
-      />
+      <SimpleTable className={classes.table} schema={mapedSchema} data={data} />
     </Paper>
   );
 };
 
 const mapStateToProps = createStructuredSelector({
-  application: makeSelectCurrent(),
-  clusterID: makeSelectClusterID(),
-  namespaceID: makeSelectNamespaceID(),
+  data: makeSelectNodesList(),
+  location: makeSelectLocation(),
 });
 
 const mapDispatchToProps = (dispatch) =>
@@ -76,4 +68,4 @@ const withConnect = connect(
   mapDispatchToProps
 );
 
-export default compose(withConnect)(ApplicationsTable);
+export default compose(withConnect)(NodesTable);

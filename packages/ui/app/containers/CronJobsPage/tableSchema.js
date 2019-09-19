@@ -55,5 +55,4 @@ const tableSchema = schema
     }
     return sch;
   });
-
 export default tableSchema;

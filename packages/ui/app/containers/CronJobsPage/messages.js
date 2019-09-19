@@ -17,13 +17,9 @@ export default defineMessages({
     id: `${scope}.pageDesc`,
     defaultMessage: 'Description of CronJobsPage',
   },
-  header: {
-    id: `${scope}.header`,
-    defaultMessage: 'This is the CronJobsPage container!',
-  },
   cronJobs: {
     id: `${scope}.cronJobs`,
-    defaultMessage: 'CronJobs',
+    defaultMessage: 'cronJobs',
   },
   tableTitleName: {
     id: `${scope}.tableTitleName`,
@@ -48,6 +44,18 @@ export default defineMessages({
   createCronJob: {
     id: `${scope}.createCronJob`,
     defaultMessage: 'Create CronJob',
+  },
+  createPageTitle: {
+    id: `${scope}.createPageTitle`,
+    defaultMessage: 'Create Cronjob',
+  },
+  createPageDesc: {
+    id: `${scope}.createPageDesc`,
+    defaultMessage: 'Description of Create Cronjob',
+  },
+  createCronjob: {
+    id: `${scope}.createCronjob`,
+    defaultMessage: 'Create Cronjob',
   },
   pods: {
     id: `${scope}.pods`,

@@ -1,8 +1,9 @@
 /**
- *
- * Jobs Duck
+ * Duck: Jobs
+ * reducer: jobs
  *
  */
+import _ from 'lodash';
 import { fromJS } from 'immutable';
 import getByKey from '@gsmlg/utils/getByKey';
 import { procCollectionData } from '@gsmlg/utils/procData';
@@ -15,13 +16,14 @@ const { prefix } = constants;
 export { constants, actions, prefix };
 
 export const initialState = fromJS({
-  jobs: {},
-  list: [],
+  data: {},
+  list: {},
+  selectedData: null,
 });
 
 const c = constants;
 
-export const jobsReducer = (
+export const reducer = (
   state = initialState,
   { type, payload, error, meta }
 ) => {
@@ -29,82 +31,68 @@ export const jobsReducer = (
     case c.LOAD_JOBS:
       return state;
     case c.LOAD_JOBS_SUCCESS: {
-      const { clusterID, namespaceID } = meta;
       const { data, list } = procCollectionData(payload);
+      const { clusterID, namespaceID } = meta;
       return state
-        .setIn(['jobs', clusterID, namespaceID], fromJS(data))
-        .set('list', fromJS(list));
+        .setIn(['data', clusterID, namespaceID], fromJS(data))
+        .setIn(['list', clusterID, namespaceID], fromJS(list));
     }
     case c.LOAD_JOBS_FAILURE:
-      return state;
-
-    case c.LOAD_JOB:
-      return state;
-    case c.LOAD_JOB_SUCCESS: {
-      const { clusterID, namespaceID } = meta;
-      const job = payload.response;
-      // temporary add, may remove when support cancel load data
-      if (job && job.id) {
-        const { containers } = job;
-        containers.forEach((item) => {
-          if (item && item.args) {
-            item.args = item.args.join(' ');
-          }
-          if (item && item.command) {
-            item.command = item.command.join(' ');
-          }
-        });
-        return state.setIn(
-          ['jobs', clusterID, namespaceID, job.id],
-          fromJS(job)
-        );
-      }
-      return state;
-    }
-    case c.LOAD_JOB_FAILURE:
       return state;
 
     case c.CREATE_JOB:
       return state;
     case c.CREATE_JOB_SUCCESS: {
-      const { clusterID, namespaceID } = meta;
       const data = payload.response;
+      const { clusterID, namespaceID } = meta;
       return state.setIn(
-        ['jobs', clusterID, namespaceID, data.id],
+        ['data', clusterID, namespaceID, data.id],
         fromJS(data)
       );
     }
-
     case c.CREATE_JOB_FAILURE:
       return state;
 
     case c.UPDATE_JOB:
       return state;
-    case c.UPDATE_JOB_SUCCESS:
+    case c.UPDATE_JOB_SUCCESS: {
+      const id = getByKey(payload, ['response', 'id']);
+      const data = getByKey(payload, ['response']);
+      const { clusterID, namespaceID } = meta;
+      if (id) {
+        return state.setIn(['data', clusterID, namespaceID, id], fromJS(data));
+      }
       return state;
+    }
     case c.UPDATE_JOB_FAILURE:
+      return state;
+
+    case c.READ_JOB:
+      return state;
+    case c.READ_JOB_SUCCESS: {
+      const id = getByKey(payload, ['response', 'id']);
+      const data = getByKey(payload, ['response']);
+      const { clusterID, namespaceID } = meta;
+      if (id) {
+        return state.setIn(['data', clusterID, namespaceID, id], fromJS(data));
+      }
+      return state;
+    }
+    case c.READ_JOB_FAILURE:
       return state;
 
     case c.REMOVE_JOB:
       return state;
-    case c.REMOVE_JOB_SUCCESS:
-      return state
-        .deleteIn(['jobs', meta.id])
-        .update('list', (l) => l.filterNot((id) => id === meta.id));
-    case c.REMOVE_JOB_FAILURE:
-      return state;
-
-    case c.SCALE_JOB:
-      return state;
-    case c.SCALE_JOB_SUCCESS: {
+    case c.REMOVE_JOB_SUCCESS: {
+      const { id } = meta;
       const { clusterID, namespaceID } = meta;
-      const data = payload.response;
-      return state.setIn(
-        ['jobs', clusterID, namespaceID, data.id, 'replicas'],
-        data.replicas
-      );
+      return state
+        .removeIn(['data', clusterID, namespaceID, id])
+        .updateIn(['list', clusterID, namespaceID], (l) =>
+          l.filterNot((i) => i === id)
+        );
     }
-    case c.SCALE_JOB_FAILURE:
+    case c.REMOVE_JOB_FAILURE:
       return state;
 
     default:
@@ -112,4 +100,4 @@ export const jobsReducer = (
   }
 };
 
-export default jobsReducer;
+export default reducer;

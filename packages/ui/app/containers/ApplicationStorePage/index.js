@@ -4,7 +4,7 @@
  *
  */
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
@@ -27,7 +27,7 @@ import { makeSelectURL } from 'ducks/charts/selectors';
 import * as actions from 'ducks/charts/actions';
 
 import messages from './messages';
-import styles from './styles';
+import useStyles from './styles';
 import ApplicationsList from './ApplicationsList';
 import ApplicationStorePageHelmet from './helmet';
 import SearchForm from './form/searchForm';
@@ -44,74 +44,73 @@ const SearchApplicationsForm = reduxForm({
   validate,
 })(SearchForm);
 
-/* eslint-disable react/prefer-stateless-function */
-export class ApplicationStorePage extends React.PureComponent {
-  state = {
-    filter: {},
+const ApplicationStorePage = ({
+  clusterID,
+  namespaceID,
+  url,
+  loadCharts,
+  submitForm,
+}) => {
+  const classes = useStyles();
+  const [filter, setFilter] = useState({});
+  useEffect(() => {
+    if (url) {
+      loadCharts(url, {
+        clusterID,
+        namespaceID,
+      });
+    }
+    return () => {
+      // try cancel something when unmount
+    };
+  }, [clusterID, loadCharts, namespaceID, url]);
+
+  const doSubmit = (formValues) => {
+    setFilter(formValues.toJS());
   };
 
-  componentDidMount() {
-    this.load();
-  }
-
-  load() {
-    const { loadCharts, url, clusterID, namespaceID } = this.props;
-    loadCharts(url, { clusterID, namespaceID });
-  }
-
-  render() {
-    const { classes, submitForm, clusterID, namespaceID } = this.props;
-    const doSubmit = (formValues) => {
-      this.setState({
-        filter: formValues.toJS(),
-      });
-    };
-
-    return (
-      <div className={classes.root}>
-        <ApplicationStorePageHelmet />
-        <CssBaseline />
-        <div className={classes.content}>
-          <Breadcrumbs
-            data={[
-              {
-                path: `/clusters/${clusterID}/namespaces/${namespaceID}/charts`,
-                name: <FormattedMessage {...messages.pageTitle} />,
-              },
-            ]}
-          />
-          <GridContainer className={classes.grid}>
-            <GridItem xs={12} sm={12} md={12}>
-              <Card className={classes.card}>
-                <GridContainer style={{ marginBottom: '20px' }}>
-                  <GridItem xs={3} sm={3} md={3}>
-                    <SearchApplicationsForm
-                      classes={classes}
-                      onSubmit={doSubmit}
-                    />
-                  </GridItem>
-                  <GridItem xs={6} sm={6} md={6}>
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      onClick={submitForm}
-                      style={{ marginTop: '10px' }}
-                    >
-                      <FormattedMessage
-                        {...messages.searchApplicationsButton}
-                      />
-                    </Button>
-                  </GridItem>
-                </GridContainer>
-                <ApplicationsList filter={this.state.filter} />
-              </Card>
-            </GridItem>
-          </GridContainer>
-        </div>
+  return (
+    <div className={classes.root}>
+      <ApplicationStorePageHelmet />
+      <CssBaseline />
+      <div className={classes.content}>
+        <Breadcrumbs
+          data={[
+            {
+              path: `/clusters/${clusterID}/namespaces/${namespaceID}/charts`,
+              name: <FormattedMessage {...messages.pageTitle} />,
+            },
+          ]}
+        />
+        <GridContainer className={classes.grid}>
+          <GridItem xs={12} sm={12} md={12}>
+            <Card className={classes.card}>
+              <GridContainer style={{ marginBottom: '20px' }}>
+                <GridItem xs={3} sm={3} md={3}>
+                  <SearchApplicationsForm
+                    classes={classes}
+                    onSubmit={doSubmit}
+                  />
+                </GridItem>
+                <GridItem xs={6} sm={6} md={6}>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={submitForm}
+                    style={{ marginTop: '10px' }}
+                  >
+                    <FormattedMessage {...messages.searchApplicationsButton} />
+                  </Button>
+                </GridItem>
+              </GridContainer>
+              <ApplicationsList filter={filter} />
+            </Card>
+          </GridItem>
+        </GridContainer>
       </div>
-    );
-  }
-}
+    </div>
+  );
+};
 
 const mapStateToProps = createStructuredSelector({
   clusterID: makeSelectCurrentClusterID(),
@@ -133,7 +132,4 @@ const withConnect = connect(
   mapDispatchToProps
 );
 
-export default compose(
-  withConnect,
-  withStyles(styles)
-)(ApplicationStorePage);
+export default compose(withConnect)(ApplicationStorePage);

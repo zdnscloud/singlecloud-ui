@@ -1,3 +1,8 @@
+/**
+ * Duck: Userquotas
+ * epic: userQuotas
+ *
+ */
 import { push } from 'connected-react-router';
 import { Observable, interval, of, timer, concat } from 'rxjs';
 import {
@@ -20,10 +25,16 @@ import * as a from './actions';
 export const loadUserQuotasEpic = (action$, state$, { ajax }) =>
   action$.pipe(
     ofType(c.LOAD_USER_QUOTAS),
-    mergeMap(({ payload }) =>
+    mergeMap(({ payload, meta }) =>
       ajax(payload).pipe(
-        map((resp) => a.loadUserQuotasSuccess(resp)),
-        catchError((error) => of(a.loadUserQuotasFailure(error)))
+        map((resp) => {
+          meta.resolve && meta.resolve(resp);
+          return a.loadUserQuotasSuccess(resp, meta);
+        }),
+        catchError((error) => {
+          meta.reject && meta.reject(error);
+          return of(a.loadUserQuotasFailure(error, meta));
+        })
       )
     )
   );
@@ -31,19 +42,19 @@ export const loadUserQuotasEpic = (action$, state$, { ajax }) =>
 export const createUserQuotaEpic = (action$, state$, { ajax }) =>
   action$.pipe(
     ofType(c.CREATE_USER_QUOTA),
-    mergeMap(({ payload, meta: { resolve, reject, url } }) =>
+    mergeMap(({ payload, meta }) =>
       ajax({
-        url,
+        url: `${meta.url}`,
         method: 'POST',
         body: payload,
       }).pipe(
         map((resp) => {
-          resolve(resp);
-          return a.createUserQuotaSuccess(resp);
+          meta.resolve && meta.resolve(resp);
+          return a.createUserQuotaSuccess(resp, meta);
         }),
         catchError((error) => {
-          reject(error);
-          return of(a.createUserQuotaFailure(error));
+          meta.reject && meta.reject(error);
+          return of(a.createUserQuotaFailure(error, meta));
         })
       )
     )
@@ -57,38 +68,22 @@ export const afterCreateEpic = (action$) =>
     )
   );
 
-export const removeUserQuotaEpic = (action$, state$, { ajax }) =>
-  action$.pipe(
-    ofType(c.REMOVE_USER_QUOTA),
-    mergeMap(({ payload, meta: { url } }) =>
-      ajax({
-        url: `${url}`,
-        method: 'DELETE',
-      }).pipe(
-        map((resp) => a.removeUserQuotaSuccess(resp, { id: payload })),
-        catchError((error) =>
-          of(a.removeUserQuotaFailure(error, { id: payload }))
-        )
-      )
-    )
-  );
-
 export const updateUserQuotaEpic = (action$, state$, { ajax }) =>
   action$.pipe(
     ofType(c.UPDATE_USER_QUOTA),
-    mergeMap(({ payload, meta: { resolve, reject, url } }) =>
+    mergeMap(({ payload, meta }) =>
       ajax({
-        url,
+        url: `${meta.url}`,
         method: 'PUT',
         body: payload,
       }).pipe(
         map((resp) => {
-          resolve(resp);
-          return a.updateUserQuotaSuccess(resp);
+          meta.resolve && meta.resolve(resp);
+          return a.updateUserQuotaSuccess(resp, meta);
         }),
         catchError((error) => {
-          reject(error);
-          return of(a.updateUserQuotaFailure(error));
+          meta.reject && meta.reject(error);
+          return of(a.updateUserQuotaFailure(error, meta));
         })
       )
     )
@@ -102,22 +97,62 @@ export const afterUpdateEpic = (action$) =>
     )
   );
 
+export const readUserQuotaEpic = (action$, state$, { ajax }) =>
+  action$.pipe(
+    ofType(c.READ_USER_QUOTA),
+    mergeMap(({ payload, meta }) =>
+      ajax({
+        url: `${meta.url}`,
+        method: 'GET',
+      }).pipe(
+        map((resp) => {
+          meta.resolve && meta.resolve(resp);
+          return a.readUserQuotaSuccess(resp, { ...meta, id: payload });
+        }),
+        catchError((error) => {
+          meta.reject && meta.reject(error);
+          return of(a.readUserQuotaFailure(error, { ...meta, id: payload }));
+        })
+      )
+    )
+  );
+
+export const removeUserQuotaEpic = (action$, state$, { ajax }) =>
+  action$.pipe(
+    ofType(c.REMOVE_USER_QUOTA),
+    mergeMap(({ payload, meta }) =>
+      ajax({
+        url: `${meta.url}`,
+        method: 'DELETE',
+      }).pipe(
+        map((resp) => {
+          meta.resolve && meta.resolve(resp);
+          return a.removeUserQuotaSuccess(resp, { ...meta, id: payload });
+        }),
+        catchError((error) => {
+          meta.reject && meta.reject(error);
+          return of(a.removeUserQuotaFailure(error, { ...meta, id: payload }));
+        })
+      )
+    )
+  );
+
 export const requestUserQuotaEpic = (action$, state$, { ajax }) =>
   action$.pipe(
     ofType(c.REQUEST_USER_QUOTA),
-    mergeMap(({ payload, meta: { resolve, reject, url } }) =>
+    mergeMap(({ payload, meta }) =>
       ajax({
-        url,
+        url: `${meta.url}`,
         method: 'POST',
         body: payload,
       }).pipe(
         map((resp) => {
-          resolve(resp);
-          return a.requestUserQuotaSuccess(resp);
+          meta.resolve && meta.resolve(resp);
+          return a.requestUserQuotaSuccess(resp, meta);
         }),
         catchError((error) => {
-          reject(error);
-          return of(a.requestUserQuotaFailure(error));
+          meta.reject && meta.reject(error);
+          return of(a.requestUserQuotaFailure(error, meta));
         })
       )
     )
@@ -135,9 +170,10 @@ export default combineEpics(
   loadUserQuotasEpic,
   createUserQuotaEpic,
   afterCreateEpic,
-  removeUserQuotaEpic,
   updateUserQuotaEpic,
-  afterUpdateEpic,
+  readUserQuotaEpic,
+  removeUserQuotaEpic,
   requestUserQuotaEpic,
+  afterUpdateEpic,
   afterRequestEpic
 );

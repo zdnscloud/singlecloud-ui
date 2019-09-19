@@ -6,21 +6,7 @@
 
 import { defineMessages } from 'react-intl';
 
-import tableSchema from './tableSchema';
-
 export const scope = 'app.containers.NodesPage';
-
-// eslint-disable-next-line
-const table = tableSchema.reduce(
-  (schema, col) => ({
-    [`tableTitle${col.label}`]: {
-      id: `${scope}.tableTitle${col.label}`,
-      defaultMessage: col.label,
-    },
-    ...schema,
-  }),
-  {}
-);
 
 export default defineMessages({
   pageTitle: {
@@ -126,41 +112,5 @@ export default defineMessages({
   value: {
     id: `${scope}.value`,
     defaultMessage: 'Value',
-  },
-  createNode: {
-    id: `${scope}.createNode`,
-    defaultMessage: 'CreateNode',
-  },
-  formAddNode: {
-    id: `${scope}.formAddNode`,
-    defaultMessage: 'AddNode',
-  },
-  formHostName: {
-    id: `${scope}.formHostName`,
-    defaultMessage: 'HostName',
-  },
-  formMainNode: {
-    id: `${scope}.formMainNode`,
-    defaultMessage: 'MainNode',
-  },
-  formETCDNode: {
-    id: `${scope}.formETCDNode`,
-    defaultMessage: 'ETCDNode',
-  },
-  formWorkNode: {
-    id: `${scope}.formWorkNode`,
-    defaultMessage: 'WorkNode',
-  },
-  formBoundaryNode: {
-    id: `${scope}.formBoundaryNode`,
-    defaultMessage: 'BoundaryNode',
-  },
-  createNodeButton: {
-    id: `${scope}.createNodeButton`,
-    defaultMessage: 'createNodeButton',
-  },
-  cancleNodesButton: {
-    id: `${scope}.cancleNodesButton`,
-    defaultMessage: 'cancleNodeButton',
   },
 });

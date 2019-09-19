@@ -1,7 +1,7 @@
 /* eslint-disable no-unreachable */
 /**
  *
- * User Quotas Table
+ * ApplicationsList
  *
  */
 
@@ -21,16 +21,11 @@ import { makeSelectCurrentID as makeSelectCurrentNamespaceID } from 'ducks/names
 import { makeSelectCharts, makeSelectChartsList } from 'ducks/charts/selectors';
 
 import messages from './messages';
-import styles from './styles';
+import useStyles from './styles';
 import ApplicationTemplate from './application/applicationTemplate';
 
-export const ApplicationsList = ({
-  classes,
-  data,
-  filter,
-  clusterID,
-  namespaceID,
-}) => {
+export const ApplicationsList = ({ data, filter, clusterID, namespaceID }) => {
+  const classes = useStyles();
   const chartData = data.filter((item) => {
     let flag = true;
     if (filter.name) {
@@ -45,7 +40,6 @@ export const ApplicationsList = ({
         <ApplicationTemplate
           clusterID={clusterID}
           namespaceID={namespaceID}
-          classes={classes}
           key={key}
           item={item}
         />
@@ -74,7 +68,4 @@ const withConnect = connect(
   mapDispatchToProps
 );
 
-export default compose(
-  withConnect,
-  withStyles(styles)
-)(ApplicationsList);
+export default compose(withConnect)(ApplicationsList);

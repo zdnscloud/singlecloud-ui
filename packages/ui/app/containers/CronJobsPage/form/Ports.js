@@ -13,7 +13,6 @@ import getByKey from '@gsmlg/utils/getByKey';
 import AceEditor from 'react-ace';
 import classNames from 'classnames';
 
-import withStyles from '@material-ui/core/styles/withStyles';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import Icon from '@material-ui/core/Icon';
 import Checkbox from '@material-ui/core/Checkbox';

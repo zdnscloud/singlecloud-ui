@@ -23,11 +23,13 @@ import {
   makeSelectCurrent as makeSelectCurrentDaemonSet,
 } from 'ducks/daemonSets/selectors';
 import {
-  makeSelectCronJobID,
-  makeSelectCurrentCronJob,
+  makeSelectCurrentID as makeSelectCronJobID,
+  makeSelectCurrent as makeSelectCurrentCronJob,
 } from 'ducks/cronJobs/selectors';
-import { makeSelectJobID, makeSelectCurrentJob } from 'ducks/jobs/selectors';
-
+import {
+  makeSelectCurrentID as makeSelectJobID,
+  makeSelectCurrent as makeSelectCurrentJob,
+} from 'ducks/jobs/selectors';
 import { prefix } from './constants';
 
 /**
