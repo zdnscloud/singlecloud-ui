@@ -11,18 +11,15 @@ import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import { bindActionCreators, compose } from 'redux';
+import { Map, List } from 'immutable';
 
-import { withStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import { SimpleTable } from '@gsmlg/com';
 
 import * as actions from 'ducks/applications/actions';
 import { makeSelectCurrent } from 'ducks/applications/selectors';
-import {
-  makeSelectClusterID,
-  makeSelectNamespaceID,
-} from 'ducks/app/selectors';
-import { Map, List } from 'immutable';
+import { makeSelectCurrentID as makeSelectCurrentClusterID } from 'ducks/clusters/selectors';
+import { makeSelectCurrentID as makeSelectCurrentNamespaceID } from 'ducks/namespaces/selectors';
 
 import messages from './messages';
 import useStyles from './styles';
@@ -59,8 +56,8 @@ export const ApplicationsTable = ({ application, clusterID, namespaceID }) => {
 
 const mapStateToProps = createStructuredSelector({
   application: makeSelectCurrent(),
-  clusterID: makeSelectClusterID(),
-  namespaceID: makeSelectNamespaceID(),
+  clusterID: makeSelectCurrentClusterID(),
+  namespaceID: makeSelectCurrentNamespaceID(),
 });
 
 const mapDispatchToProps = (dispatch) =>

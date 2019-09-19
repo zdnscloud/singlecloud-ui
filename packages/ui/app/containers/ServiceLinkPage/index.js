@@ -29,11 +29,11 @@ import CardBody from 'components/Card/CardBody';
 
 import * as actions from 'ducks/serviceLinks/actions';
 import request from 'utils/request';
+import { makeSelectCurrentID as makeSelectCurrentClusterID } from 'ducks/clusters/selectors';
 import {
-  makeSelectClusterID,
-  makeSelectNamespaceID,
-} from 'ducks/app/selectors';
-import { makeSelectCurrentNamespace } from 'ducks/namespaces/selectors';
+  makeSelectCurrentID as makeSelectCurrentNamespaceID,
+  makeSelectCurrent as makeSelectCurrentNamespace,
+} from 'ducks/namespaces/selectors';
 
 import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
 import messages from './messages';
@@ -157,8 +157,8 @@ export class ServiceLinkPage extends React.PureComponent {
 }
 
 const mapStateToProps = createStructuredSelector({
-  clusterID: makeSelectClusterID(),
-  namespaceID: makeSelectNamespaceID(),
+  clusterID: makeSelectCurrentClusterID(),
+  namespaceID: makeSelectCurrentNamespaceID(),
   namespace: makeSelectCurrentNamespace(),
 });
 
