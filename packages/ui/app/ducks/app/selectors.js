@@ -13,8 +13,10 @@ import ImageRegistryIcon from 'components/Icons/ImageRegistry';
 import ClusterWatchIcon from 'components/Icons/ClusterWatch';
 import ApplicationStoreIcon from 'components/Icons/ApplicationStore';
 import { makeSelectRole, makeSelectIsAdmin } from 'ducks/role/selectors';
-
+import { makeSelectCurrentID as makeSelectCurrentClusterID } from 'ducks/clusters/selectors';
 import { makeSelectCurrentID as makeSelectCurrentNamespaceID } from 'ducks/namespaces/selectors';
+
+import { prefix } from './constants';
 
 const selectRouter = (state) => state.get('router');
 
@@ -24,56 +26,17 @@ export const makeSelectLocation = () =>
     (routerState) => routerState.get('location')
   );
 
-export const makeSelectClusterID = () =>
-  createSelector(
-    createMatchSelector('/clusters/:cluster_id/*'),
-    (match) => {
-      if (match && match.params) {
-        return match.params.cluster_id;
-      }
-      return '';
-    }
-  );
-
-export const makeSelectUserQuotaID = () =>
-  createSelector(
-    createMatchSelector('/userQuotas/:userQuota_id'),
-    (match) => {
-      if (match && match.params) {
-        return match.params.userQuota_id;
-      }
-      return '';
-    }
-  );
-
-export const makeSelectNamespaceID = () =>
-  createSelector(
-    createMatchSelector('/clusters/:cluster_id/namespaces/:namespace_id'),
-    (match) => {
-      if (match && match.params) {
-        return match.params.namespace_id;
-      }
-      return '';
-    }
-  );
-
-const selectApp = (state) => state.get('app');
-
-export const makeSelectActiveCluster = () =>
-  createSelector(
-    selectApp,
-    (appState) => appState.get('activeCluster')
-  );
+const selectDomain = (state) => state.get('app');
 
 export const makeSelectShowMenuText = () =>
   createSelector(
-    selectApp,
+    selectDomain,
     (appState) => appState.get('showMenuText')
   );
 
 export const makeSelectShowEvents = () =>
   createSelector(
-    selectApp,
+    selectDomain,
     createMatchSelector('/clusters/:cluster_id/:mode'),
     (appState, match) => {
       let inEventsPage = false;
@@ -84,9 +47,15 @@ export const makeSelectShowEvents = () =>
     }
   );
 
+export const makeSelectLastNamespace = () =>
+  createSelector(
+    selectDomain,
+    (appState) => appState.get('lastNamespace')
+  );
+
 export const makeSelectUserMenus = () =>
   createSelector(
-    selectApp,
+    selectDomain,
     makeSelectIsAdmin(),
     makeSelectRole(),
     (appState, isAdmin, role) =>
@@ -100,12 +69,13 @@ export const makeSelectUserMenus = () =>
 
 export const makeSelectLeftMenus = () =>
   createSelector(
-    selectApp,
+    selectDomain,
     makeSelectLocation(),
-    makeSelectClusterID(),
-    makeSelectCurrentNamespaceID(),
+    makeSelectCurrentClusterID(),
+    makeSelectLastNamespace(),
     makeSelectIsAdmin(),
-    (appState, location, cluster, namespace, isAdmin) => {
+    (appState, location, cluster, nsID, isAdmin) => {
+      const namespace = nsID || 'default';
       let menus = [
         {
           name: 'Global',

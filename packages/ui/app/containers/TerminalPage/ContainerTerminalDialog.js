@@ -29,10 +29,8 @@ import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from 'components/Icons/Close';
 
-import {
-  makeSelectClusterID,
-  makeSelectNamespaceID,
-} from 'ducks/app/selectors';
+import { makeSelectCurrentID as makeSelectCurrentClusterID } from 'ducks/clusters/selectors';
+import { makeSelectCurrentID as makeSelectCurrentNamespaceID } from 'ducks/namespaces/selectors';
 
 import { makeSelectContainerTermIsOpen } from './selectors';
 import * as actions from './actions';
@@ -129,8 +127,8 @@ export class TerminalDialog extends React.PureComponent {
 }
 
 const mapStateToProps = createStructuredSelector({
-  clusterID: makeSelectClusterID(),
-  namespaceID: makeSelectNamespaceID(),
+  clusterID: makeSelectCurrentClusterID(),
+  namespaceID: makeSelectCurrentNamespaceID(),
   open: makeSelectContainerTermIsOpen(),
 });
 

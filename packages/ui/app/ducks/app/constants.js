@@ -10,10 +10,8 @@
  */
 export const prefix = 'app';
 
-export const INIT_ACTION = `${prefix}/INIT_ACTION`;
-
-export const CHANGE_CLUSTER = `${prefix}/CHANGE_CLUSTER`;
-
 export const TOGGLE_EVENTS_VIEW = `${prefix}/TOGGLE_EVENTS_VIEW`;
 
 export const TOGGLE_MENU_TEXT = `${prefix}/TOGGLE_MENU_TEXT`;
+
+export const SET_LAST_NAMESPACE = `${prefix}/SET_LAST_NAMESPACE`;

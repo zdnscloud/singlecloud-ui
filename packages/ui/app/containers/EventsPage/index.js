@@ -26,7 +26,6 @@ import CardHeader from 'components/Card/CardHeader';
 import CardBody from 'components/Card/CardBody';
 import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
 
-import { makeSelectNamespaces } from 'ducks/namespaces/selectors';
 import { makeSelectEvents } from 'ducks/events/selectors';
 import * as actions from 'ducks/events/actions';
 
@@ -115,7 +114,6 @@ export class EventsPage extends React.PureComponent {
 
 const mapStateToProps = createStructuredSelector({
   events: makeSelectEvents(),
-  namespaces: makeSelectNamespaces(),
   filters: createSelector(
     getFormValues(formName),
     (v) => v || formInitialValues

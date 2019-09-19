@@ -18,9 +18,7 @@ import logoICon from 'images/logo.svg';
 import ZcloudICon from 'images/Zcloud.svg';
 import * as actions from 'ducks/app/actions';
 import {
-  makeSelectActiveCluster,
   makeSelectLeftMenus,
-  makeSelectClusterID,
   makeSelectShowEvents,
   makeSelectLocation,
   makeSelectShowMenuText,
@@ -205,9 +203,7 @@ const LeftMenu = ({ logo, image, logoText, menus, showText, location }) => {
 };
 
 const mapStateToProps = createStructuredSelector({
-  activeCluster: makeSelectActiveCluster(),
   menus: makeSelectLeftMenus(),
-  clusterID: makeSelectClusterID(),
   location: makeSelectLocation(),
   showText: makeSelectShowMenuText(),
 });

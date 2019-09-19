@@ -34,10 +34,8 @@ import { makeSelectRole } from 'ducks/role/selectors';
 import * as roleActions from 'ducks/role/actions';
 import * as termActions from 'containers/TerminalPage/actions';
 import * as actions from 'ducks/app/actions';
-
+import { makeSelectCurrentID as makeSelectCurrentClusterID } from 'ducks/clusters/selectors';
 import {
-  makeSelectActiveCluster,
-  makeSelectClusterID,
   makeSelectShowEvents,
   makeSelectLocation,
   makeSelectUserMenus,
@@ -151,8 +149,7 @@ class AppMenubar extends PureComponent {
 }
 
 const mapStateToProps = createStructuredSelector({
-  activeCluster: makeSelectActiveCluster(),
-  clusterID: makeSelectClusterID(),
+  clusterID: makeSelectCurrentClusterID(),
   showEvents: makeSelectShowEvents(),
   location: makeSelectLocation(),
   role: makeSelectRole(),

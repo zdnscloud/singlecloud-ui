@@ -9,15 +9,14 @@ import MenuItem from '@material-ui/core/MenuItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import Popper from '@material-ui/core/Popper';
 
-import {
-  makeSelectData as makeSelectNamespacesData,
-  makeSelectCurrentID as makeSelectCurrentNamespaceID,
-} from 'ducks/namespaces/selectors';
+import { makeSelectLastNamespace } from 'ducks/app/selectors';
+import { makeSelectData as makeSelectNamespacesData } from 'ducks/namespaces/selectors';
 import {
   makeSelectClusters,
   makeSelectCurrentID as makeSelectCurrentClusterID,
   makeSelectURL,
 } from 'ducks/clusters/selectors';
+import * as actions from 'ducks/app/actions';
 import * as clusterActions from 'ducks/clusters/actions';
 import * as nsActions from 'ducks/namespaces/actions';
 
@@ -36,12 +35,13 @@ const SelectMenu = ({
   namespaceID,
   loadClusters,
   loadNamespaces,
+  setLastNamespace,
 }) => {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState(null);
-  const [selectCluster, setSelectCluster] = useState(null);
   const [nsAnchorEl, setNsAnchorEl] = useState(null);
-  const [selectNamespace, setSelectNamespace] = useState(null);
+  const [selectCluster, setSelectCluster] = useState(clusterID);
+  const [selectNamespace, setSelectNamespace] = useState(namespaceID);
   const menuRef = useRef(null);
   const push = usePush();
 
@@ -67,6 +67,7 @@ const SelectMenu = ({
 
   const handleSelectNamespace = (ns) => {
     setSelectNamespace(ns);
+    setLastNamespace(ns);
     push(`/clusters/${selectCluster}/namespaces/${ns}/applications`);
     handleClose();
   };
@@ -82,12 +83,6 @@ const SelectMenu = ({
       setNsAnchorEl(null);
     }
   };
-
-  useEffect(() => {
-    if (namespaceID) {
-      setSelectNamespace(namespaceID);
-    }
-  }, [namespaceID]);
 
   useEffect(() => {
     if (anchorEl === null) {
@@ -213,13 +208,14 @@ const mapStateToProps = createStructuredSelector({
   namespacesData: makeSelectNamespacesData(),
   clusters: makeSelectClusters(),
   clusterID: makeSelectCurrentClusterID(),
-  namespaceID: makeSelectCurrentNamespaceID(),
+  namespaceID: makeSelectLastNamespace(),
   url: makeSelectURL(),
 });
 
 const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
+      ...actions,
       ...clusterActions,
       ...nsActions,
     },

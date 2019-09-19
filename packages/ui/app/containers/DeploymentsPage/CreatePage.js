@@ -28,7 +28,7 @@ import ConfirmDialog from 'components/Confirm/ConfirmDialog';
 
 import {
   makeSelectCurrentID as makeSelectCurrentClusterID,
-  makeSelectCurrentCluster,
+  makeSelectCurrent as makeSelectCurrentCluster,
 } from 'ducks/clusters/selectors';
 import { makeSelectCurrentID as makeSelectCurrentNamespaceID } from 'ducks/namespaces/selectors';
 
