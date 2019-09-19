@@ -15,11 +15,6 @@ import {
   makeSelectCurrentID as makeSelectCurrentClusterID,
 } from 'ducks/clusters/selectors';
 
-import {
-  makeSelectClusterID,
-  makeSelectNamespaceID,
-} from 'ducks/app/selectors';
-
 import { prefix } from './constants';
 import { initialState } from './index';
 
@@ -40,8 +35,7 @@ export const makeSelectURL = () =>
 export const makeSelectMonitors = () =>
   createSelector(
     selectDomain,
-    makeSelectClusterID(),
-
+    makeSelectCurrentClusterID(),
     (substate, clusterID) =>
       substate.getIn(['data', clusterID]) || substate.clear()
   );
@@ -50,8 +44,7 @@ export const makeSelectMonitorsList = () =>
   createSelector(
     selectDomain,
     makeSelectMonitors(),
-    makeSelectClusterID(),
-
+    makeSelectCurrentClusterID(),
     (substate, data, clusterID) =>
       (substate.getIn(['list', clusterID]) || fromJS([])).map((id) =>
         data.get(id)
