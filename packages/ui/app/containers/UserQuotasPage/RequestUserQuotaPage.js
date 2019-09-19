@@ -132,7 +132,7 @@ const RequestUserQuotaPage = ({
                       color="primary"
                       onClick={() => {
                         setActionType('approval');
-                        submitForm();
+                        setTimeout(submitForm, 100);
                       }}
                     >
                       <FormattedMessage {...messages.passBtn} />
@@ -142,7 +142,7 @@ const RequestUserQuotaPage = ({
                       className={classes.cancleBtn}
                       onClick={() => {
                         setActionType('reject');
-                        submitForm();
+                        setTimeout(submitForm, 100);
                       }}
                     >
                       <FormattedMessage {...messages.rejectBtn} />
