@@ -56,7 +56,7 @@ export class PasswordSetupPage extends React.PureComponent {
     classes: PropTypes.object.isRequired,
   };
 
-  componentWillMount() {
+  componentDidMount() {
     this.props.loadUser(this.props.uid);
   }
 

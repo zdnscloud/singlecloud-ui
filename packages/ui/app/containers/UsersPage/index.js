@@ -40,7 +40,7 @@ export class UsersPage extends React.PureComponent {
     classes: PropTypes.object.isRequired,
   };
 
-  componentWillMount() {
+  componentDidMount() {
     this.props.loadUsers();
   }
 

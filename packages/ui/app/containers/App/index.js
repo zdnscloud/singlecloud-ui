@@ -40,7 +40,7 @@ class App extends PureComponent {
     console.error(error, info); // eslint-disable-line
   }
 
-  componentWillMount() {
+  componentDidMount() {
     const { loadRole } = this.props;
     loadRole('/web/role');
   }
@@ -55,7 +55,6 @@ class App extends PureComponent {
         </div>
       );
     }
-    const { classes } = this.props;
 
     return (
       <MuiThemeProvider theme={theme}>

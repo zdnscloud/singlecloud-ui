@@ -53,9 +53,8 @@ export class ServiceLinkPage extends React.PureComponent {
 
   setTab = (evt, val) => this.setState({ tab: val });
 
-  componentWillMount() {
+  componentDidMount() {
     this.load();
-    // this.timer = setInterval(() => this.load(), 10000);
   }
 
   componentDidUpdate(prevProps) {
