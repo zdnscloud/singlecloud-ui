@@ -28,6 +28,12 @@ export const styles = (theme) => ({
     listStyle: 'none',
     position: 'unset',
   },
+  outLinkList: {
+    marginTop: '-8px',
+    paddingTop: 0,
+    listStyle: 'none',
+    position: 'unset',
+  },
   item: {
     position: 'relative',
     textDecoration: 'none',
