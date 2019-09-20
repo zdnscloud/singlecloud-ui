@@ -27,7 +27,6 @@ import CardBody from 'components/Card/CardBody';
 import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
 import Helmet from 'components/Helmet/Helmet';
 
-import * as actions from 'ducks/serviceLinks/actions';
 import { makeSelectCurrentID as makeSelectCurrentClusterID } from 'ducks/clusters/selectors';
 import { makeSelectCurrentID as makeSelectCurrentNamespaceID } from 'ducks/namespaces/selectors';
 import * as iActions from 'ducks/innerServices/actions';

@@ -14,9 +14,6 @@ import terminalPageReducer from 'containers/TerminalPage/reducer';
 import appReducer from 'ducks/app';
 import roleReducer, { prefix as rolePrefix } from 'ducks/role';
 import usersReducer, { prefix as usersPrefix } from 'ducks/users';
-import serviceLinksReducer, {
-  prefix as serviceLinksPrefix,
-} from 'ducks/serviceLinks';
 import secretsReducer, { prefix as secretsPrefix } from 'ducks/secrets';
 import cronJobsReducer, { prefix as cronJobsPrefix } from 'ducks/cronJobs';
 import jobsReducer, { prefix as jobsPrefix } from 'ducks/jobs';
@@ -89,7 +86,6 @@ export default function createReducer(injectedReducers = {}) {
     app: appReducer,
     [rolePrefix]: roleReducer,
     [usersPrefix]: usersReducer,
-    [serviceLinksPrefix]: serviceLinksReducer,
     [configMapsPrefix]: configMapsReducer,
     [secretsPrefix]: secretsReducer,
     [deploymentsPrefix]: deploymentsReducer,
