@@ -37,7 +37,7 @@ const PodsList = ({ data }) => {
 
   return (
     <Paper className={classes.tableWrapper}>
-      {data.map((n, idx) => {
+      {data.toList().map((n, idx) => {
         const id = n.get('id');
         const podCIDR = n.get('podCIDR');
         const podIPs = n.get('podIPs');
