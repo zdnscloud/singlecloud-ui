@@ -20,13 +20,10 @@ const tableSchema = schema
     {
       id: 'actions',
       label: 'Actions',
-      component: ({ data, classes, removeUser }) => (
+      component: ({ data, removeUser }) => (
         <Fragment>
-          <Link
-            to={`/users/${data.get('id')}/edit`}
-            className={classes.createBtnLink}
-          >
-            <IconButton aria-label="Edit User">
+          <Link to={`/users/${data.get('id')}/edit`}>
+            <IconButton>
               <EditIcon />
             </IconButton>
           </Link>

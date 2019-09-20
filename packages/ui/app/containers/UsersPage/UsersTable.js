@@ -28,7 +28,7 @@ export const UsersTable = ({ data, removeUser }) => {
       if (sch.id === 'actions') {
         return {
           ...sch,
-          props: { classes, removeUser },
+          props: { removeUser },
         };
       }
       return sch;
