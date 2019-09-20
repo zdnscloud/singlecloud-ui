@@ -4,7 +4,7 @@
  *
  */
 
-import React, { Fragment } from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
@@ -14,10 +14,8 @@ import { fromJS } from 'immutable';
 import { reduxForm, getFormValues } from 'redux-form/immutable';
 import { SubmissionError, submit } from 'redux-form';
 
-import { withStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Button from '@material-ui/core/Button';
-
 import Card from 'components/Card/Card';
 import CardBody from 'components/Card/CardBody';
 import CardHeader from 'components/Card/CardHeader';
@@ -25,15 +23,21 @@ import CardFooter from 'components/Card/CardFooter';
 import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
 import GridItem from 'components/Grid/GridItem';
 import GridContainer from 'components/Grid/GridContainer';
+import Helmet from 'components/Helmet/Helmet';
 
 import * as actions from 'ducks/users/actions';
-import { makeSelectEditingUser, makeSelectUID } from 'ducks/users/selectors';
+import {
+  makeSelectCurrent,
+  makeSelectCurrentID,
+  makeSelectURL,
+} from 'ducks/users/selectors';
 import { makeSelectData as makeSelectNamespacesData } from 'ducks/namespaces/selectors';
 import { makeSelectClusters } from 'ducks/clusters/selectors';
 
+import { usePush } from 'hooks/router';
+
 import messages from './messages';
-import UsersHelmet from './helmet';
-import styles from './styles';
+import useStyles from './styles';
 import UserForm from './UserForm';
 
 export const formName = 'editUserForm';
@@ -49,20 +53,32 @@ const EditUserForm = reduxForm({
 })(UserForm);
 
 export const EditUserPage = ({
-  classes,
   clusters,
   namespacesData,
   updateUser,
   submitForm,
   user,
+  id,
+  url,
+  readUser,
 }) => {
+  const classes = useStyles();
+  const push = usePush();
+  useEffect(() => {
+    readUser(id, { url: `${url}/${id}` });
+  }, [id, readUser, url]);
+
   async function doSubmit(formValues) {
     try {
       const data = formValues.toJS();
-      const name = formValues.get('name');
       await new Promise((resolve, reject) => {
-        updateUser({ ...data }, { resolve, reject });
+        updateUser(data, {
+          url: user.getIn(['links', 'update']),
+          resolve,
+          reject,
+        });
       });
+      push(`/users/${id}/profile`);
     } catch (error) {
       throw new SubmissionError({ _error: error });
     }
@@ -70,7 +86,7 @@ export const EditUserPage = ({
 
   return (
     <div className={classes.root}>
-      <UsersHelmet />
+      <Helmet title={messages.pageTitle} description={messages.pageDesc} />
       <CssBaseline />
       <div className={classes.content}>
         <Breadcrumbs
@@ -121,8 +137,9 @@ export const EditUserPage = ({
 const mapStateToProps = createStructuredSelector({
   clusters: makeSelectClusters(),
   namespacesData: makeSelectNamespacesData(),
-  uid: makeSelectUID(),
-  user: makeSelectEditingUser(),
+  id: makeSelectCurrentID(),
+  user: makeSelectCurrent(),
+  url: makeSelectURL(),
   values: createSelector(
     getFormValues(formName),
     (v) => v
@@ -143,7 +160,4 @@ const withConnect = connect(
   mapDispatchToProps
 );
 
-export default compose(
-  withConnect,
-  withStyles(styles)
-)(EditUserPage);
+export default compose(withConnect)(EditUserPage);

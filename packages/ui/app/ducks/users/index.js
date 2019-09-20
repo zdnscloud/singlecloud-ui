@@ -1,8 +1,9 @@
 /**
- *
- * Users Duck
+ * Duck: Users
+ * reducer: users
  *
  */
+import _ from 'lodash';
 import { fromJS } from 'immutable';
 import getByKey from '@gsmlg/utils/getByKey';
 import { procCollectionData } from '@gsmlg/utils/procData';
@@ -15,13 +16,14 @@ const { prefix } = constants;
 export { constants, actions, prefix };
 
 export const initialState = fromJS({
-  users: {},
-  usersList: [],
+  data: {},
+  list: [],
+  selectedData: null,
 });
 
 const c = constants;
 
-export const usersReducer = (
+export const reducer = (
   state = initialState,
   { type, payload, error, meta }
 ) => {
@@ -30,46 +32,62 @@ export const usersReducer = (
       return state;
     case c.LOAD_USERS_SUCCESS: {
       const { data, list } = procCollectionData(payload);
-      return state.set('users', fromJS(data)).set('usersList', fromJS(list));
+      return state.setIn(['data'], fromJS(data)).setIn(['list'], fromJS(list));
     }
     case c.LOAD_USERS_FAILURE:
-      return state;
-
-    case c.LOAD_USER:
-      return state;
-    case c.LOAD_USER_SUCCESS: {
-      const user = payload.response;
-      return state.setIn(['users', user.id], fromJS(user));
-    }
-    case c.LOAD_USER_FAILURE:
       return state;
 
     case c.CREATE_USER:
       return state;
     case c.CREATE_USER_SUCCESS: {
       const data = payload.response;
-      return state.setIn(['users', data.id], fromJS(data));
+      return state.setIn(['data', data.id], fromJS(data));
     }
-
     case c.CREATE_USER_FAILURE:
       return state;
 
     case c.UPDATE_USER:
       return state;
     case c.UPDATE_USER_SUCCESS: {
-      const user = payload.response;
-      return state.setIn(['users', user.id], fromJS(user));
+      const id = getByKey(payload, ['response', 'id']);
+      const data = getByKey(payload, ['response']);
+      if (id) {
+        return state.setIn(['data', id], fromJS(data));
+      }
+      return state;
     }
     case c.UPDATE_USER_FAILURE:
       return state;
 
+    case c.READ_USER:
+      return state;
+    case c.READ_USER_SUCCESS: {
+      const id = getByKey(payload, ['response', 'id']);
+      const data = getByKey(payload, ['response']);
+      if (id) {
+        return state.setIn(['data', id], fromJS(data));
+      }
+      return state;
+    }
+    case c.READ_USER_FAILURE:
+      return state;
+
     case c.REMOVE_USER:
       return state;
-    case c.REMOVE_USER_SUCCESS:
+    case c.REMOVE_USER_SUCCESS: {
+      const { id } = meta;
       return state
-        .deleteIn(['users', meta.id])
-        .update('usersList', (l) => l.filterNot((id) => id === meta.id));
+        .removeIn(['data', id])
+        .updateIn(['list'], (l) => l.filterNot((i) => i === id));
+    }
     case c.REMOVE_USER_FAILURE:
+      return state;
+
+    case c.EXECUTE_USER_ACTION:
+      return state;
+    case c.EXECUTE_USER_ACTION_SUCCESS:
+      return state;
+    case c.EXECUTE_USER_ACTION_FAILURE:
       return state;
 
     default:
@@ -77,4 +95,4 @@ export const usersReducer = (
   }
 };
 
-export default usersReducer;
+export default reducer;

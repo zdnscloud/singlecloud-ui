@@ -1,66 +1,66 @@
+/**
+ * Duck: Users
+ * selectors: users
+ *
+ */
+import { fromJS } from 'immutable';
 import { createSelector } from 'reselect';
 import {
   createMatchSelector,
   getLocation,
 } from 'connected-react-router/immutable';
 import { prefix } from './constants';
+import { initialState } from './index';
 
 /**
- * Direct selector to the users duck
+ * Direct selector to the users domain
  */
-
-const selectUsersDomain = (state) => state.get(prefix);
+export const selectDomain = (state) => state.get(prefix) || initialState;
 
 /**
  * Other specific selectors
  */
+export const makeSelectURL = () =>
+  createSelector(
+    selectDomain,
+    (substate) => '/apis/zcloud.cn/v1/users'
+  );
+
+export const makeSelectData = () =>
+  createSelector(
+    selectDomain,
+    (substate) => substate.get('data')
+  );
+
 export const makeSelectUsers = () =>
   createSelector(
-    selectUsersDomain,
-    (substate) => substate.get('users')
+    selectDomain,
+    (substate) => substate.getIn(['data']) || substate.clear()
   );
 
 export const makeSelectUsersList = () =>
   createSelector(
-    selectUsersDomain,
-    (substate) =>
-      substate.get('usersList').map((id) => substate.getIn(['users', id]))
+    selectDomain,
+    makeSelectUsers(),
+    (substate, data) =>
+      (substate.getIn(['list']) || fromJS([])).map((id) => data.get(id)) ||
+      fromJS([])
   );
 
-const selectRouter = (state) => state.get('router');
-
-export const makeSelectLocation = () =>
+export const makeSelectCurrentID = () =>
   createSelector(
-    selectRouter,
-    (routerState) => routerState.get('location')
-  );
-
-export const makeSelectUID = () =>
-  createSelector(
-    createMatchSelector('/users/:user_id'),
+    createMatchSelector('*/users/:id/*'),
     (match) => {
       if (match && match.params) {
-        return match.params.user_id;
+        return match.params.id;
       }
       return '';
     }
   );
 
-export const makeSelectEditingUser = () =>
+export const makeSelectCurrent = () =>
   createSelector(
-    selectUsersDomain,
-    makeSelectUID(),
-    (substate, uid) => substate.getIn(['users', uid]) || substate.clear()
+    selectDomain,
+    makeSelectCurrentID(),
+    (substate, id) => substate.getIn(['data', id]) || substate.clear()
   );
-
-/**
- * Default selector used by LoginPage
- */
-
-const makeSelectUsersDomain = () =>
-  createSelector(
-    selectUsersDomain,
-    (substate) => substate
-  );
-
-export default makeSelectUsersDomain;

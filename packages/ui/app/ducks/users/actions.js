@@ -1,103 +1,126 @@
+/**
+ * Duck: Users
+ * actions: users
+ *
+ */
 import * as c from './constants';
 
-/*
-  actions
-*/
-export const loadUsers = () => ({
+/**
+ * actions
+ */
+export const loadUsers = (url, meta = {}) => ({
   type: c.LOAD_USERS,
-  payload: {},
+  payload: url,
+  meta,
 });
 
-export const loadUsersSuccess = (resp) => ({
+export const loadUsersSuccess = (resp, meta = {}) => ({
   type: c.LOAD_USERS_SUCCESS,
   payload: resp,
+  meta,
 });
 
-export const loadUsersFailure = (error) => ({
+export const loadUsersFailure = (error, meta = {}) => ({
   type: c.LOAD_USERS_FAILURE,
   payload: error,
+  meta,
   error: true,
 });
 
-export const loadUser = (id) => ({
-  type: c.LOAD_USER,
-  payload: id,
-});
-
-export const loadUserSuccess = (resp) => ({
-  type: c.LOAD_USER_SUCCESS,
-  payload: resp,
-});
-
-export const loadUserFailure = (error) => ({
-  type: c.LOAD_USER_FAILURE,
-  payload: error,
-  error: true,
-});
-
-export const createUser = (data, meta) => ({
+export const createUser = (data, meta = {}) => ({
   type: c.CREATE_USER,
   payload: data,
   meta,
 });
 
-export const createUserSuccess = (resp) => ({
+export const createUserSuccess = (resp, meta = {}) => ({
   type: c.CREATE_USER_SUCCESS,
   payload: resp,
+  meta,
 });
 
-export const createUserFailure = () => ({
+export const createUserFailure = (error, meta = {}) => ({
   type: c.CREATE_USER_FAILURE,
-  payload: {},
+  payload: error,
+  meta,
+  error: true,
 });
 
-export const updateUser = (data, meta) => ({
+export const updateUser = (data, meta = {}) => ({
   type: c.UPDATE_USER,
   payload: data,
   meta,
 });
 
-export const updateUserSuccess = (resp) => ({
+export const updateUserSuccess = (resp, meta = {}) => ({
   type: c.UPDATE_USER_SUCCESS,
   payload: resp,
-});
-
-export const updateUserFailure = (error) => ({
-  type: c.UPDATE_USER_FAILURE,
-  payload: error,
-  error: true,
-});
-
-export const removeUser = (id) => ({
-  type: c.REMOVE_USER,
-  payload: id,
-});
-
-export const removeUserSuccess = (resp, id) => ({
-  type: c.REMOVE_USER_SUCCESS,
-  payload: resp,
-  meta: { id },
-});
-
-export const removeUserFailure = (error, id) => ({
-  type: c.REMOVE_USER_FAILURE,
-  payload: error,
-  meta: { id },
-});
-
-export const resetPassword = (data, meta) => ({
-  type: c.RESET_PASSWORD,
-  payload: data,
   meta,
 });
 
-export const resetPasswordSuccess = (resp, id) => ({
-  type: c.RESET_PASSWORD_SUCCESS,
-  payload: { ...resp, id },
+export const updateUserFailure = (error, meta = {}) => ({
+  type: c.UPDATE_USER_FAILURE,
+  payload: error,
+  meta,
+  error: true,
 });
 
-export const resetPasswordFailure = (error, id) => ({
-  type: c.RESET_PASSWORD_FAILURE,
-  payload: { ...error, id },
+export const readUser = (id, meta = {}) => ({
+  type: c.READ_USER,
+  payload: id,
+  meta,
+});
+
+export const readUserSuccess = (resp, meta = {}) => ({
+  type: c.READ_USER_SUCCESS,
+  payload: resp,
+  meta,
+});
+
+export const readUserFailure = (error, meta = {}) => ({
+  type: c.READ_USER_FAILURE,
+  payload: error,
+  meta,
+  error: true,
+});
+
+export const removeUser = (id, meta = {}) => ({
+  type: c.REMOVE_USER,
+  payload: id,
+  meta,
+});
+
+export const removeUserSuccess = (resp, meta = {}) => ({
+  type: c.REMOVE_USER_SUCCESS,
+  payload: resp,
+  meta,
+});
+
+export const removeUserFailure = (error, meta = {}) => ({
+  type: c.REMOVE_USER_FAILURE,
+  payload: error,
+  meta,
+  error: true,
+});
+
+export const executeUserAction = (action, data, meta = {}) => ({
+  type: c.EXECUTE_USER_ACTION,
+  payload: {
+    action,
+    data,
+  },
+  meta,
+});
+
+export const executeUserActionSuccess = (resp, meta = {}) => ({
+  type: c.EXECUTE_USER_ACTION_SUCCESS,
+  payload: resp,
+  meta,
+});
+
+export const executeUserActionFailure = (error, meta = {}) => ({
+  type: c.EXECUTE_USER_ACTION_FAILURE,
+  payload: error,
+  meta,
   error: true,
 });

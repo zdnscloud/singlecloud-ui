@@ -68,7 +68,7 @@ const renderClusters = ({
   <Fragment>
     {clusters.toList().map((c, i) => {
       const name = c.get('name');
-      const ns = namespacesData.get('name') || namespacesData.clear();
+      const ns = namespacesData.get(c.get('id')) || namespacesData.clear();
       const { value, ...ipt } = input;
       return (
         <Fragment key={i}>
