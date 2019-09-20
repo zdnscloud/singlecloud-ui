@@ -3,6 +3,7 @@
  * selectors: networks
  *
  */
+import { fromJS } from 'immutable';
 import { createSelector } from 'reselect';
 import {
   createMatchSelector,
@@ -66,19 +67,19 @@ export const makeSelectCurrentPodNetworks = () =>
   createSelector(
     makeSelectPodNetworks(),
     makeSelectCurrentClusterID(),
-    (substate, clusterID) => substate.getIn([clusterID]) || substate.clear()
+    (substate, clusterID) => substate.getIn([clusterID]) || fromJS([])
   );
 
 export const makeSelectCurrentServiceNetworks = () =>
   createSelector(
     makeSelectServiceNetworks(),
     makeSelectCurrentClusterID(),
-    (substate, clusterID) => substate.getIn([clusterID]) || substate.clear()
+    (substate, clusterID) => substate.getIn([clusterID]) || fromJS([])
   );
 
 export const makeSelectCurrentNodeNetworks = () =>
   createSelector(
     makeSelectNodeNetworks(),
     makeSelectCurrentClusterID(),
-    (substate, clusterID) => substate.getIn([clusterID]) || substate.clear()
+    (substate, clusterID) => substate.getIn([clusterID]) || fromJS([])
   );

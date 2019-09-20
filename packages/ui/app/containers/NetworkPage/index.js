@@ -28,13 +28,14 @@ import Card from 'components/Card/Card';
 import CardHeader from 'components/Card/CardHeader';
 import CardBody from 'components/Card/CardBody';
 import ReadOnlyInput from 'components/CustomInput/ReadOnlyInput';
+import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
+import Helmet from 'components/Helmet/Helmet';
 
 import * as actions from 'ducks/networks/actions';
 import {
   makeSelectCurrentID as makeSelectClusterID,
   makeSelectCurrent as makeSelectCurrentCluster,
 } from 'ducks/clusters/selectors';
-
 import {
   makeSelectServiceNetworks,
   makeSelectPodNetworks,
@@ -44,9 +45,7 @@ import {
   makeSelectServiceURL,
 } from 'ducks/networks/selectors';
 
-import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
 import messages from './messages';
-import NetworkPageHelmet from './helmet';
 import useStyles from './styles';
 import Node from './Node';
 import ServiceTable from './ServiceTable';
@@ -85,7 +84,7 @@ const NetworkPage = ({
 
   return (
     <div className={classes.root}>
-      <NetworkPageHelmet />
+      <Helmet title={messages.pageTitle} description={messages.pageDesc} />
       <CssBaseline />
       <div className={classes.content}>
         <Breadcrumbs

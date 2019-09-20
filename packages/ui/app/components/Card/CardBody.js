@@ -25,11 +25,4 @@ function CardBody({ ...props }, ref) {
   );
 }
 
-CardBody.propTypes = {
-  classes: PropTypes.object.isRequired,
-  className: PropTypes.string,
-  plain: PropTypes.bool,
-  profile: PropTypes.bool,
-};
-
 export default withStyles(cardBodyStyle)(React.forwardRef(CardBody));
