@@ -74,7 +74,7 @@ const LeftMenu = ({
       setOpeningMenu(null);
       clearTimeout(timer);
       timer = null;
-    }, 500);
+    }, 200);
   };
 
   const links = (

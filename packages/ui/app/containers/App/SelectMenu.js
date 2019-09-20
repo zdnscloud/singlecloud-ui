@@ -10,7 +10,10 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Popper from '@material-ui/core/Popper';
 
 import { makeSelectLastNamespace } from 'ducks/app/selectors';
-import { makeSelectData as makeSelectNamespacesData } from 'ducks/namespaces/selectors';
+import {
+  makeSelectCurrentID as makeSelectCurrentNamespaceID,
+  makeSelectData as makeSelectNamespacesData,
+} from 'ducks/namespaces/selectors';
 import {
   makeSelectClusters,
   makeSelectCurrentID as makeSelectCurrentClusterID,
@@ -31,6 +34,7 @@ const SelectMenu = ({
   url,
   clusters,
   namespacesData,
+  lastNamespace,
   clusterID,
   namespaceID,
   loadClusters,
@@ -41,7 +45,6 @@ const SelectMenu = ({
   const [anchorEl, setAnchorEl] = useState(null);
   const [nsAnchorEl, setNsAnchorEl] = useState(null);
   const [selectCluster, setSelectCluster] = useState(clusterID);
-  const [selectNamespace, setSelectNamespace] = useState(namespaceID);
   const menuRef = useRef(null);
   const push = usePush();
 
@@ -59,15 +62,12 @@ const SelectMenu = ({
     const id = c.get('id');
     if (c.get('status') === 'Running') {
       setSelectCluster(id);
-      setSelectNamespace('default');
-      setLastNamespace('default');
       push(`/clusters/${id}/show`);
       handleClose();
     }
   };
 
   const handleSelectNamespace = (ns) => {
-    setSelectNamespace(ns);
     setLastNamespace(ns);
     push(`/clusters/${selectCluster}/namespaces/${ns}/applications`);
     handleClose();
@@ -90,6 +90,11 @@ const SelectMenu = ({
       setNsAnchorEl(null);
     }
   }, [anchorEl]);
+  useEffect(() => {
+    if (!lastNamespace && namespaceID) {
+      setLastNamespace(namespaceID);
+    }
+  }, []);
 
   const cluster = clusters.get(selectCluster);
   const namespaces =
@@ -108,7 +113,7 @@ const SelectMenu = ({
         {clusterID ? (
           <>
             {clusterID}
-            {selectNamespace ? (
+            {lastNamespace ? (
               <ChevronRight
                 style={{
                   transform: 'scale(0.6)',
@@ -117,7 +122,7 @@ const SelectMenu = ({
                 }}
               />
             ) : null}
-            {selectNamespace}
+            {lastNamespace}
           </>
         ) : (
           <FormattedMessage {...messages.global} />
@@ -142,7 +147,8 @@ const SelectMenu = ({
         <MenuItem
           onClick={() => {
             setSelectCluster('');
-            setSelectNamespace(null);
+            setLastNamespace(null);
+            push('/clusters');
             handleClose();
           }}
           className={classes.menuItem}
@@ -191,7 +197,7 @@ const SelectMenu = ({
                 <ListItemText
                   primary={nc.get('id')}
                   className={
-                    selectNamespace === nc.get('id')
+                    lastNamespace === nc.get('id')
                       ? classes.activeItemText
                       : classes.ItemText
                   }
@@ -209,7 +215,8 @@ const mapStateToProps = createStructuredSelector({
   namespacesData: makeSelectNamespacesData(),
   clusters: makeSelectClusters(),
   clusterID: makeSelectCurrentClusterID(),
-  namespaceID: makeSelectLastNamespace(),
+  namespaceID: makeSelectCurrentNamespaceID(),
+  lastNamespace: makeSelectLastNamespace(),
   url: makeSelectURL(),
 });
 

@@ -21,6 +21,8 @@ import Card from 'components/Card/Card';
 import CardHeader from 'components/Card/CardHeader';
 import CardBody from 'components/Card/CardBody';
 
+import { makeSelectLastNamespace } from 'ducks/app/selectors';
+import * as appActions from 'ducks/app/actions';
 import {
   makeSelectCurrent,
   makeSelectCurrentID,
@@ -34,9 +36,12 @@ import useStyles from './styles';
 import ClusterDetailPageHelmet from './helmet';
 import ClusterDetail from './ClusterDetail';
 
-export const ClusterDetailPage = ({ readCluster, cluster, id, url }) => {
+export const ClusterDetailPage = ({ readCluster, cluster, id, url, lastNamespace, setLastNamespace }) => {
   const classes = useStyles();
   useEffect(() => {
+    if (!lastNamespace) {
+      setLastNamespace('default');
+    }
     readCluster(id, { url: `${url}/${id}` });
     const t = setInterval(() => {
       readCluster(id, { url: `${url}/${id}` });
@@ -83,11 +88,13 @@ const mapStateToProps = createStructuredSelector({
   cluster: makeSelectCurrent(),
   id: makeSelectCurrentID(),
   url: makeSelectURL(),
+  lastNamespace: makeSelectLastNamespace(),
 });
 
 const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
+      ...appActions,
       ...actions,
       routeTo: push,
     },
