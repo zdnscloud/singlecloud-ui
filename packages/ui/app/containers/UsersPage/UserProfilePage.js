@@ -94,12 +94,14 @@ export class UserProfilePage extends React.PureComponent {
                   </h4>
                 </CardHeader>
                 <CardBody>
-                  <UserProfileForm
-                    profile
-                    classes={classes}
-                    clusters={clusters}
-                    initialValues={user}
-                  />
+                  {user.size === 0 ? null : (
+                    <UserProfileForm
+                      profile
+                      classes={classes}
+                      clusters={clusters}
+                      initialValues={user}
+                    />
+                  )}
                 </CardBody>
               </Card>
             </GridItem>

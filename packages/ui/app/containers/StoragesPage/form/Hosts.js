@@ -13,7 +13,6 @@ import getByKey from '@gsmlg/utils/getByKey';
 import AceEditor from 'react-ace';
 import classNames from 'classnames';
 
-import withStyles from '@material-ui/core/styles/withStyles';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import Icon from '@material-ui/core/Icon';
 import Checkbox from '@material-ui/core/Checkbox';
@@ -98,8 +97,8 @@ const Hosts = ({
               <TableCell className={`${classes.tableCell}`}>
                 {b &&
                   b.get('blockDevices') &&
-                  b.get('blockDevices').map((bd) => (
-                    <span style={{ marginRight: 18 }}>
+                  b.get('blockDevices').map((bd, j) => (
+                    <span key={j} style={{ marginRight: 18 }}>
                       <span>{bd.get('name')}</span>
                       <span>({bd.get('size')}GiB)</span>
                     </span>

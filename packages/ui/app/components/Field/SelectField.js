@@ -12,7 +12,7 @@ const SelectComponent = ({
   input,
   classes,
   disabled,
-  meta,
+  meta: { touched, invalid, error },
   inputProps,
   labelProps,
   formControlProps,
@@ -20,17 +20,23 @@ const SelectComponent = ({
   fullWidth,
   ...custom
 }) => (
-  <FormControl {...formControlProps} disabled={disabled} fullWidth={fullWidth}>
-    <InputLabel htmlFor="" {...labelProps}>
+  <FormControl
+    {...formControlProps}
+    error={touched && error}
+    disabled={disabled}
+    fullWidth={fullWidth}
+  >
+    <InputLabel htmlFor="" {...labelProps} error={touched && error}>
       {label}
     </InputLabel>
-    <Select {...input} {...inputProps}>
+    <Select {...input} {...inputProps} error={touched && error}>
       {options.map((opt, i) => (
         <MenuItem key={i} value={opt.value}>
           {opt.label}
         </MenuItem>
       ))}
     </Select>
+    {touched && error ? <FormHelperText>{error}</FormHelperText> : null}
   </FormControl>
 );
 
