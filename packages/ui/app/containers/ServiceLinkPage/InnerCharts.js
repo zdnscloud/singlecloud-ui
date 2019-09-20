@@ -4,7 +4,7 @@
  *
  */
 
-import React, { createRef, useRef, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
@@ -30,13 +30,13 @@ const separator = '$';
 
 export const InnerCharts = ({ innerServices }) => {
   const classes = useStyles();
-  const icardBodyRef = useRef();
-  let width = 400;
-  if (icardBodyRef.current) {
-    const icd = icardBodyRef.current;
-    const { width: w } = icd.getBoundingClientRect();
-    width = w - 40;
-  }
+  const [width, setWidth] = useState(400);
+  const ref = useCallback((el) => {
+    if (el) {
+      const { width: w } = el.getBoundingClientRect();
+      setWidth(w - 40);
+    }
+  }, []);
   const is = innerServices.toJS() || [];
 
   return (
@@ -49,7 +49,7 @@ export const InnerCharts = ({ innerServices }) => {
           const count = _.reduce(
             children,
             (n, c) => {
-              const m = _.reduce(c.children, (nn, cc) => (nn += 1), 0);
+              const m = _.reduce(c.children, (nn, cc) => nn + 1, 0);
               return n + (m < 4 ? 4 : m);
             },
             0
@@ -73,7 +73,7 @@ export const InnerCharts = ({ innerServices }) => {
                     {name}
                   </h3>
                 </CardHeader>
-                <CardBody ref={i === 0 ? icardBodyRef : null}>
+                <CardBody ref={i === 0 ? ref : null}>
                   <InnerServiceTree
                     width={width}
                     height={75 * count > 300 ? 75 * count : 300}

@@ -4,7 +4,7 @@
  *
  */
 
-import React, { useRef, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { findDOMNode } from 'react-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -31,13 +31,13 @@ const separator = '$';
 
 export const OuterCharts = ({ outerServices }) => {
   const classes = useStyles();
-  const ocardBodyRef = useRef();
-  let width = 400;
-  if (ocardBodyRef.current) {
-    const ocd = ocardBodyRef.current;
-    const { width: w } = ocd.getBoundingClientRect();
-    width = w - 40;
-  }
+  const [width, setWidth] = useState(400);
+  const ref = useCallback((el) => {
+    if (el) {
+      const { width: w } = el.getBoundingClientRect();
+      setWidth(w - 40);
+    }
+  }, []);
   const os = outerServices.toJS() || [];
 
   return (
@@ -58,7 +58,7 @@ export const OuterCharts = ({ outerServices }) => {
                     (nnn, ccc) => {
                       const mmm = _.reduce(
                         ccc.children,
-                        (nnnn, cccc) => (nnnn += 1),
+                        (nnnn, cccc) => nnnn + 1,
                         0
                       );
                       return nnn + mmm;
@@ -86,7 +86,7 @@ export const OuterCharts = ({ outerServices }) => {
                     {name}
                   </h3>
                 </CardHeader>
-                <CardBody ref={i === 0 ? ocardBodyRef : null}>
+                <CardBody ref={i === 0 ? ref : null}>
                   <OuterServiceTree
                     width={width}
                     height={75 * count > 300 ? 75 * count : 300}
