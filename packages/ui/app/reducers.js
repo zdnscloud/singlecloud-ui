@@ -68,6 +68,12 @@ import storageClassesReducer, {
 import blockDevicesReducer, {
   prefix as blockDevicesPrefix,
 } from 'ducks/blockDevices';
+import innerServicesReducer, {
+  prefix as innerServicesPrefix,
+} from 'ducks/innerServices';
+import outerServicesReducer, {
+  prefix as outerServicesPrefix,
+} from 'ducks/outerServices';
 // import reducers end
 
 /**
@@ -109,6 +115,8 @@ export default function createReducer(injectedReducers = {}) {
     [storageClustersPrefix]: storageClustersReducer,
     [storageClassesPrefix]: storageClassesReducer,
     [blockDevicesPrefix]: blockDevicesReducer,
+    [innerServicesPrefix]: innerServicesReducer,
+    [outerServicesPrefix]: outerServicesReducer,
     // combine reducers end
     ...injectedReducers,
   });
