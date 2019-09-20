@@ -1,80 +1,26 @@
-const drawerWidth = 240;
+import { makeStyles } from '@material-ui/styles';
+import pageStyles from 'jss/page';
 
-const styles = (theme) => ({
-  root: {
-    display: 'flex',
+export const styles = (theme) => ({
+  ...pageStyles(theme),
+  indicator: {
+    backgroundColor: theme.palette.highlight.secondary,
   },
-  toolbar: {
-    paddingRight: 24, // keep right padding when drawer closed
-  },
-  toolbarIcon: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'flex-end',
-    padding: '0 8px',
-    ...theme.mixins.toolbar,
-  },
-  menuButton: {
-    marginLeft: 12,
-    marginRight: 36,
-  },
-  menuButtonHidden: {
-    display: 'none',
-  },
-  title: {
-    flexGrow: 1,
-  },
-  appBarSpacer: theme.mixins.toolbar,
-  content: {
-    flexGrow: 1,
-    overflow: 'auto',
-    overflowX: 'hidden',
-  },
-  grid: {
-    padding: theme.spacing(2),
-  },
-  chartContainer: {},
-  h5: {
-    marginBottom: theme.spacing(2),
-  },
-  margin: {
-    margin: theme.spacing(1),
-  },
-  button: {
-    margin: theme.spacing(1),
-  },
-  textField: {
-    flexBasis: 200,
-  },
-  cardCategoryWhite: {
-    '&,& a,& a:hover,& a:focus': {
-      color: 'rgba(255,255,255,.62)',
-      margin: '0',
-      fontSize: '14px',
-      marginTop: '0',
-      marginBottom: '0',
-    },
-    '& a,& a:hover,& a:focus': {
-      color: '#FFFFFF',
-    },
-  },
-  cardTitleWhite: {
-    color: '#FFFFFF',
-    marginTop: '0px',
+  cardTitle: {
+    color: theme.palette.text.a,
+    marginTop: '1em',
     minHeight: 'auto',
-    fontFamily: "'Roboto', 'Helvetica', 'Arial', sans-serif",
+    fontWeight: '300',
     marginBottom: '3px',
     textDecoration: 'none',
+    textAlign: 'left',
+    textIndent: '2em',
     '& small': {
-      color: '#777',
-      fontSize: '65%',
+      color: theme.palette.text.a,
       fontWeight: '400',
       lineHeight: '1',
     },
   },
-  indicator: {
-    backgroundColor: theme.palette.highlight.secondary,
-  },
 });
 
-export default styles;
+export default makeStyles(styles);

@@ -4,8 +4,7 @@
  *
  */
 
-import React, { createRef } from 'react';
-import { findDOMNode } from 'react-dom';
+import React, { createRef, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
@@ -14,79 +13,37 @@ import { bindActionCreators, compose } from 'redux';
 import moment from 'moment';
 import _ from 'lodash';
 
-import { withStyles } from '@material-ui/core/styles';
 import GridItem from 'components/Grid/GridItem';
 import GridContainer from 'components/Grid/GridContainer';
 import Card from 'components/Card/Card';
 import CardHeader from 'components/Card/CardHeader';
 import CardBody from 'components/Card/CardBody';
 import CardFooter from 'components/Card/CardFooter';
-
 import InnerServiceTree from 'components/tree/InnerServiceTree';
 
-import * as actions from 'ducks/serviceLinks/actions';
-import { makeSelectCurrentInnerServices } from 'ducks/serviceLinks/selectors';
-import styles from './cardStyles';
+import { makeSelectInnerServices } from 'ducks/innerServices/selectors';
 
+import useStyles from './styles';
 import messages from './messages';
 
 const separator = '$';
 
-/* eslint-disable react/prefer-stateless-function */
-export class InnerCharts extends React.PureComponent {
-  static propTypes = {
-    classes: PropTypes.object.isRequired,
-    innerServices: PropTypes.object.isRequired,
-  };
-
-  state = { reload: false, icardWidth: 400 };
-
-  t = null;
-
-  icardBodyRef = createRef();
-
-  componentDidMount() {
-    let iw = 400;
-    if (this.icardBodyRef.current) {
-      const icd = findDOMNode(this.icardBodyRef.current); // eslint-disable-line react/no-find-dom-node
-      const { width } = icd.getBoundingClientRect();
-      iw = width;
-    }
-    this.setState({ icardWidth: iw - 40 });
+export const InnerCharts = ({ innerServices }) => {
+  const classes = useStyles();
+  const icardBodyRef = useRef();
+  let width = 400;
+  if (icardBodyRef.current) {
+    const icd = icardBodyRef.current;
+    const { width: w } = icd.getBoundingClientRect();
+    width = w - 40;
   }
+  const is = innerServices.toJS() || [];
 
-  componentWillReceiveProps(nextProps) {
-    const { nextInnerServices } = nextProps;
-    const { innerServices } = this.props;
-    if (nextInnerServices !== innerServices) {
-      this.reload();
-    }
-  }
-
-  componentWillUnmount() {
-    clearTimeout(this.t);
-    this.t = null;
-  }
-
-  reload() {
-    this.setState(
-      (state, props) => ({ reload: true }),
-      () => {
-        this.t = setTimeout(() => {
-          this.setState({ reload: false });
-        }, 1000 / 8);
-      }
-    );
-  }
-
-  render() {
-    if (this.state.reload === true) return null;
-    const { classes, innerServices } = this.props;
-    const is = innerServices.toJS() || [];
-
-    return (
-      <GridContainer style={{ display: 'block' }}>
-        {is.map((s, i) => {
+  return (
+    <GridContainer style={{ display: 'block' }}>
+      {is &&
+        is.map &&
+        is.map((s, i) => {
           const [type, idx, name] = s.name.split(separator);
           const { children } = s;
           const count = _.reduce(
@@ -107,7 +64,7 @@ export class InnerCharts extends React.PureComponent {
               style={{ float: i % 2 === 0 ? 'left' : 'right' }}
             >
               <Card>
-                <CardHeader color="info" icon>
+                <CardHeader color="default" icon>
                   <h3 className={classes.cardTitle}>
                     <b>
                       <FormattedMessage {...messages.innerServiceName} />
@@ -116,9 +73,9 @@ export class InnerCharts extends React.PureComponent {
                     {name}
                   </h3>
                 </CardHeader>
-                <CardBody ref={i === 0 ? this.icardBodyRef : null}>
+                <CardBody ref={i === 0 ? icardBodyRef : null}>
                   <InnerServiceTree
-                    width={this.state.icardWidth}
+                    width={width}
                     height={75 * count > 300 ? 75 * count : 300}
                     data={s}
                   />
@@ -128,29 +85,19 @@ export class InnerCharts extends React.PureComponent {
             </GridItem>
           );
         })}
-      </GridContainer>
-    );
-  }
-}
+    </GridContainer>
+  );
+};
 
 const mapStateToProps = createStructuredSelector({
-  innerServices: makeSelectCurrentInnerServices(),
+  innerServices: makeSelectInnerServices(),
 });
 
-const mapDispatchToProps = (dispatch) =>
-  bindActionCreators(
-    {
-      ...actions,
-    },
-    dispatch
-  );
+const mapDispatchToProps = (dispatch) => bindActionCreators({}, dispatch);
 
 const withConnect = connect(
   mapStateToProps,
   mapDispatchToProps
 );
 
-export default compose(
-  withConnect,
-  withStyles(styles)
-)(InnerCharts);
+export default compose(withConnect)(InnerCharts);

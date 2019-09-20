@@ -10,7 +10,7 @@ import withStyles from '@material-ui/core/styles/withStyles';
 // core components
 import cardBodyStyle from './cardBodyStyle';
 
-function CardBody({ ...props }) {
+function CardBody({ ...props }, ref) {
   const { classes, className, children, plain, profile, ...rest } = props;
   const cardBodyClasses = classNames({
     [classes.cardBody]: true,
@@ -19,7 +19,7 @@ function CardBody({ ...props }) {
     [className]: className !== undefined,
   });
   return (
-    <div className={cardBodyClasses} {...rest}>
+    <div className={cardBodyClasses} {...rest} ref={ref}>
       {children}
     </div>
   );
@@ -32,4 +32,4 @@ CardBody.propTypes = {
   profile: PropTypes.bool,
 };
 
-export default withStyles(cardBodyStyle)(CardBody);
+export default withStyles(cardBodyStyle)(React.forwardRef(CardBody));
