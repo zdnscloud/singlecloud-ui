@@ -9,7 +9,14 @@ import EditIcon from 'components/Icons/Edit';
 import IconButton from 'components/CustomIconButtons/IconButton';
 import ConfirmDelete from 'components/ConfirmDelete/ConfirmDelete';
 
-const schema = ['storageType', 'hosts', 'size', 'usedSize', 'freeSize'];
+const schema = [
+  'storageType',
+  'phase',
+  'hosts',
+  'size',
+  'usedSize',
+  'freeSize',
+];
 
 const tableSchema = schema
   .map((id) => {
@@ -31,7 +38,13 @@ const tableSchema = schema
     {
       id: 'actions',
       label: 'Actions',
-      component: ({ pathname, data, removeStorageCluster, clusterID }) => (
+      component: ({
+        pathname,
+        data,
+        removeStorageCluster,
+        clusterID,
+        setError,
+      }) => (
         <Fragment>
           <IconButton
             aria-label="Edit"
@@ -46,6 +59,7 @@ const tableSchema = schema
             id={data.get('id')}
             url={data.getIn(['links', 'remove'])}
             clusterID={clusterID}
+            reject={(e) => setError(e)}
           />
         </Fragment>
       ),

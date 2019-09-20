@@ -59,7 +59,8 @@ const SelectMenu = ({
     const id = c.get('id');
     if (c.get('status') === 'Running') {
       setSelectCluster(id);
-      setSelectNamespace(null);
+      setSelectNamespace('default');
+      setLastNamespace('default');
       push(`/clusters/${id}/show`);
       handleClose();
     }

@@ -28,7 +28,12 @@ import messages from './messages';
 import useStyles from './styles';
 import schema from './tableSchema';
 
-export const StoragesTable = ({ clusterID, data, removeStorageCluster }) => {
+export const StoragesTable = ({
+  clusterID,
+  data,
+  removeStorageCluster,
+  setError,
+}) => {
   const classes = useStyles();
   const location = useLocation();
   const { pathname } = location;
@@ -37,7 +42,7 @@ export const StoragesTable = ({ clusterID, data, removeStorageCluster }) => {
       if (sch.id === 'actions') {
         return {
           ...sch,
-          props: { removeStorageCluster, clusterID, pathname },
+          props: { removeStorageCluster, clusterID, pathname, setError },
         };
       }
       if (sch.id === 'storageType') {
