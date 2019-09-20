@@ -2,7 +2,6 @@ import React, { useEffect, useState, memo, useRef } from 'react';
 import { bindActionCreators, compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
-import { push } from 'connected-react-router';
 import Button from '@material-ui/core/Button';
 import { FormattedMessage } from 'react-intl';
 import Menu from '@material-ui/core/Menu';
@@ -10,13 +9,18 @@ import MenuItem from '@material-ui/core/MenuItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import Popper from '@material-ui/core/Popper';
 
-import { makeSelectClustersAndNamespaces } from 'ducks/namespaces/selectors';
+import { makeSelectLastNamespace } from 'ducks/app/selectors';
+import { makeSelectData as makeSelectNamespacesData } from 'ducks/namespaces/selectors';
 import {
-  makeSelectClusterID,
-  makeSelectNamespaceID,
-} from 'ducks/app/selectors';
+  makeSelectClusters,
+  makeSelectCurrentID as makeSelectCurrentClusterID,
+  makeSelectURL,
+} from 'ducks/clusters/selectors';
 import * as actions from 'ducks/app/actions';
 import * as clusterActions from 'ducks/clusters/actions';
+import * as nsActions from 'ducks/namespaces/actions';
+
+import { usePush } from 'hooks/router';
 
 import SelectIcon from 'components/Icons/Select';
 import ChevronRight from 'components/Icons/ChevronRight';
@@ -24,23 +28,26 @@ import messages from './messages';
 import useStyles from './dashboardStyles';
 
 const SelectMenu = ({
+  url,
   clusters,
-  changeCluster,
+  namespacesData,
   clusterID,
   namespaceID,
-  loadClustersAndNamespaces,
-  itemLink,
+  loadClusters,
+  loadNamespaces,
+  setLastNamespace,
 }) => {
   const classes = useStyles();
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const [selectCluster, setSelectCluster] = React.useState(null);
-  const [nsAnchorEl, setNsAnchorEl] = React.useState(null);
-  const [selectNamespace, setSelectNamespace] = React.useState(null);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [nsAnchorEl, setNsAnchorEl] = useState(null);
+  const [selectCluster, setSelectCluster] = useState(clusterID);
+  const [selectNamespace, setSelectNamespace] = useState(namespaceID);
   const menuRef = useRef(null);
+  const push = usePush();
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
-    loadClustersAndNamespaces();
+    loadClusters(url);
   };
 
   const handleClose = () => {
@@ -49,34 +56,34 @@ const SelectMenu = ({
   };
 
   const handleSelectCluster = (c) => {
-    setSelectCluster(c.get('id'));
+    const id = c.get('id');
     if (c.get('status') === 'Running') {
-      changeCluster(selectCluster);
-      setSelectNamespace(null);
+      setSelectCluster(id);
+      setSelectNamespace('default');
+      setLastNamespace('default');
+      push(`/clusters/${id}/show`);
       handleClose();
     }
   };
 
   const handleSelectNamespace = (ns) => {
     setSelectNamespace(ns);
-    itemLink(`/clusters/${selectCluster}/namespaces/${ns}/applications`);
+    setLastNamespace(ns);
+    push(`/clusters/${selectCluster}/namespaces/${ns}/applications`);
     handleClose();
   };
 
   const openNamespanceMenu = (e, c) => {
     if (c && c.get('status') === 'Running') {
-      setSelectCluster(c.get('id'));
+      const id = c.get('id');
+      setSelectCluster(id);
       setNsAnchorEl(e.currentTarget);
+      const nsUrl = c.getIn(['links', 'namespaces']);
+      loadNamespaces(nsUrl, { clusterID: id });
     } else {
       setNsAnchorEl(null);
     }
   };
-
-  useEffect(() => {
-    if (namespaceID) {
-      setSelectNamespace(namespaceID);
-    }
-  }, [namespaceID]);
 
   useEffect(() => {
     if (anchorEl === null) {
@@ -85,6 +92,8 @@ const SelectMenu = ({
   }, [anchorEl]);
 
   const cluster = clusters.get(selectCluster);
+  const namespaces =
+    namespacesData.get(selectCluster) || namespacesData.clear();
 
   return (
     <div>
@@ -133,7 +142,6 @@ const SelectMenu = ({
         <MenuItem
           onClick={() => {
             setSelectCluster('');
-            changeCluster('');
             setSelectNamespace(null);
             handleClose();
           }}
@@ -174,25 +182,22 @@ const SelectMenu = ({
             placement="right-start"
             className={classes.secondMenu}
           >
-            {cluster
-              .get('namespaces')
-              .toList()
-              .map((nc, i) => (
-                <MenuItem
-                  key={i}
-                  onClick={(e) => handleSelectNamespace(nc.get('id'))}
-                  className={classes.menuItem}
-                >
-                  <ListItemText
-                    primary={nc.get('id')}
-                    className={
-                      selectNamespace === nc.get('id')
-                        ? classes.activeItemText
-                        : classes.ItemText
-                    }
-                  />
-                </MenuItem>
-              ))}
+            {namespaces.toList().map((nc, i) => (
+              <MenuItem
+                key={i}
+                onClick={(e) => handleSelectNamespace(nc.get('id'))}
+                className={classes.menuItem}
+              >
+                <ListItemText
+                  primary={nc.get('id')}
+                  className={
+                    selectNamespace === nc.get('id')
+                      ? classes.activeItemText
+                      : classes.ItemText
+                  }
+                />
+              </MenuItem>
+            ))}
           </Popper>
         ) : null}
       </Menu>
@@ -201,9 +206,11 @@ const SelectMenu = ({
 };
 
 const mapStateToProps = createStructuredSelector({
-  clusters: makeSelectClustersAndNamespaces(),
-  clusterID: makeSelectClusterID(),
-  namespaceID: makeSelectNamespaceID(),
+  namespacesData: makeSelectNamespacesData(),
+  clusters: makeSelectClusters(),
+  clusterID: makeSelectCurrentClusterID(),
+  namespaceID: makeSelectLastNamespace(),
+  url: makeSelectURL(),
 });
 
 const mapDispatchToProps = (dispatch) =>
@@ -211,7 +218,7 @@ const mapDispatchToProps = (dispatch) =>
     {
       ...actions,
       ...clusterActions,
-      itemLink: push,
+      ...nsActions,
     },
     dispatch
   );

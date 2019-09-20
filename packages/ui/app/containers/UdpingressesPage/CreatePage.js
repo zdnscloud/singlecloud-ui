@@ -16,6 +16,8 @@ import {
   submit,
 } from 'redux-form/immutable';
 
+import { usePush } from 'hooks/router';
+
 import Helmet from 'components/Helmet/Helmet';
 import { FormattedMessage } from 'react-intl';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -53,6 +55,7 @@ export const CreateUdpingressPage = ({
   location,
 }) => {
   const classes = useStyles();
+  const push = usePush();
   const search = location.get('search');
   let targetName = '';
   if (search && search.includes('from=true')) {
@@ -90,6 +93,7 @@ export const CreateUdpingressPage = ({
           namespaceID,
         });
       });
+      push(`/clusters/${clusterID}/namespaces/${namespaceID}/udpingresses`);
     } catch (error) {
       throw new SubmissionError({ _error: error });
     }

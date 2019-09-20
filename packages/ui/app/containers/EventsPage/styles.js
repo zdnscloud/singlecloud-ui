@@ -1,6 +1,7 @@
+import { makeStyles } from '@material-ui/styles';
 import pageStyles from 'jss/page';
 
-const styles = (theme) => ({
+export const styles = (theme) => ({
   ...pageStyles(theme),
   wrapper: {
     flex: 1,
@@ -75,4 +76,4 @@ const styles = (theme) => ({
   },
 });
 
-export default styles;
+export default makeStyles(styles);

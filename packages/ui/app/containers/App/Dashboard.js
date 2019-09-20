@@ -15,6 +15,7 @@ import { createStructuredSelector } from 'reselect';
 import { bindActionCreators, compose } from 'redux';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import classNames from 'classnames';
+import { procCollectionData } from '@gsmlg/utils/procData';
 
 // @material-ui/core components
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -23,11 +24,15 @@ import Footer from 'components/Footer/Footer';
 import TerminalDialog from 'containers/TerminalPage/TerminalDialog';
 import GlobalStyle from 'global-styles';
 
+import * as actions from 'ducks/clusters/actions';
+import * as nsActions from 'ducks/namespaces/actions';
 import * as roleActions from 'ducks/role/actions';
-import * as actions from 'ducks/app/actions';
 import * as eventsActions from 'ducks/events/actions';
 import { makeSelectShowEvents } from 'ducks/app/selectors';
-import { makeSelectCurrentID as makeSelectClusterID } from 'ducks/clusters/selectors';
+import {
+  makeSelectCurrentID as makeSelectClusterID,
+  makeSelectURL,
+} from 'ducks/clusters/selectors';
 import { makeSelectIsLogin } from 'ducks/role/selectors';
 
 import EventsList from 'containers/EventsPage/EventsList';
@@ -35,23 +40,34 @@ import EventsList from 'containers/EventsPage/EventsList';
 import useStyles from './dashboardStyles';
 
 import AppMenubar from './AppMenubar';
-import SelectCluster from './SelectCluster';
 import LeftMenu from './LeftMenu';
 import appRoutes from './routes';
 
 export const Dashboard = ({
   clusterID,
-  menus,
-  initAction,
   showEvents,
-  changeCluster,
-  toggleEventsView,
+  url,
+  loadClusters,
+  loadNamespaces,
   openCluster,
   closeCluster,
 }) => {
   useEffect(() => {
-    initAction();
-  }, [initAction]);
+    (async () => {
+      const resp = await new Promise((resolve, reject) => {
+        loadClusters(url, { resolve, reject });
+      });
+      const { data, list } = procCollectionData(resp);
+      for (let i = 0; i < list.length; i += 1) {
+        const cluster = data[list[i]];
+        const {
+          id,
+          links: { namespaces: nsUrl },
+        } = cluster;
+        loadNamespaces(nsUrl, { clusterID: id });
+      }
+    })();
+  }, [loadClusters, loadNamespaces, url]);
   useEffect(() => {
     if (clusterID) {
       openCluster(clusterID);
@@ -92,6 +108,7 @@ export const Dashboard = ({
 };
 
 const mapStateToProps = createStructuredSelector({
+  url: makeSelectURL(),
   clusterID: makeSelectClusterID(),
   showEvents: makeSelectShowEvents(),
   isLogin: makeSelectIsLogin(),
@@ -101,6 +118,7 @@ const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
       ...actions,
+      ...nsActions,
       ...roleActions,
       ...eventsActions,
     },

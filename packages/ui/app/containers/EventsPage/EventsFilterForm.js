@@ -49,85 +49,70 @@ import MinusIcon from 'components/Icons/Minus';
 
 import messages from './messages';
 
-class EventsFilterForm extends PureComponent {
-  state = {};
-
-  render() {
-    const {
-      types,
-      namespaces,
-      kinds,
-      names,
-      handleSubmit,
-      pristine,
-      reset,
-      submitting,
-      error,
-      classes,
-      initialValues,
-      formValues,
-      theme,
-    } = this.props;
-
-    return (
-      <form className={getByKey(classes, 'form')} onSubmit={handleSubmit}>
-        <GridContainer style={{ marginBottom: 15 }}>
-          <GridItem xs={2} sm={2} md={2}>
-            <SelectField
-              label={<FormattedMessage {...messages.tableTitleType} />}
-              name="type"
-              options={[{ label: 'ALL', value: '__all__' }].concat(types)}
-              inputProps={{ displayEmpty: true }}
-              formControlProps={{
-                style: {
-                  width: '100%',
-                },
-              }}
-            />
-          </GridItem>
-          <GridItem xs={2} sm={2} md={2}>
-            <SelectField
-              label={<FormattedMessage {...messages.tableTitleNamespace} />}
-              name="namespace"
-              options={[{ label: 'ALL', value: '__all__' }].concat(namespaces)}
-              inputProps={{ displayEmpty: true }}
-              formControlProps={{
-                style: {
-                  width: '100%',
-                },
-              }}
-            />
-          </GridItem>
-          <GridItem xs={2} sm={2} md={2}>
-            <SelectField
-              label={<FormattedMessage {...messages.tableTitleKind} />}
-              name="kind"
-              options={[{ label: 'ALL', value: '__all__' }].concat(kinds)}
-              inputProps={{ displayEmpty: true }}
-              formControlProps={{
-                style: {
-                  width: '100%',
-                },
-              }}
-            />
-          </GridItem>
-          <GridItem xs={2} sm={2} md={2}>
-            <SelectField
-              label={<FormattedMessage {...messages.tableTitleName} />}
-              name="name"
-              options={[{ label: 'ALL', value: '__all__' }].concat(names)}
-              inputProps={{ displayEmpty: true }}
-              formControlProps={{
-                style: {
-                  width: '100%',
-                },
-              }}
-            />
-          </GridItem>
-        </GridContainer>
-      </form>
-    );
-  }
-}
+const EventsFilterForm = ({
+  types,
+  namespaces,
+  kinds,
+  names,
+  handleSubmit,
+  classes,
+}) => (
+  <form className={getByKey(classes, 'form')} onSubmit={handleSubmit}>
+    <GridContainer style={{ marginBottom: 15 }}>
+      <GridItem xs={2} sm={2} md={2}>
+        <SelectField
+          label={<FormattedMessage {...messages.tableTitleType} />}
+          name="type"
+          options={[{ label: 'ALL', value: '__all__' }].concat(types)}
+          inputProps={{ displayEmpty: true }}
+          formControlProps={{
+            style: {
+              width: '100%',
+            },
+          }}
+        />
+      </GridItem>
+      <GridItem xs={2} sm={2} md={2}>
+        <SelectField
+          label={<FormattedMessage {...messages.tableTitleNamespace} />}
+          name="namespace"
+          options={[{ label: 'ALL', value: '__all__' }].concat(namespaces)}
+          inputProps={{ displayEmpty: true }}
+          formControlProps={{
+            style: {
+              width: '100%',
+            },
+          }}
+        />
+      </GridItem>
+      <GridItem xs={2} sm={2} md={2}>
+        <SelectField
+          label={<FormattedMessage {...messages.tableTitleKind} />}
+          name="kind"
+          options={[{ label: 'ALL', value: '__all__' }].concat(kinds)}
+          inputProps={{ displayEmpty: true }}
+          formControlProps={{
+            style: {
+              width: '100%',
+            },
+          }}
+        />
+      </GridItem>
+      <GridItem xs={2} sm={2} md={2}>
+        <SelectField
+          label={<FormattedMessage {...messages.tableTitleName} />}
+          name="name"
+          options={[{ label: 'ALL', value: '__all__' }].concat(names)}
+          inputProps={{ displayEmpty: true }}
+          formControlProps={{
+            style: {
+              width: '100%',
+            },
+          }}
+        />
+      </GridItem>
+    </GridContainer>
+  </form>
+);
 
 export default EventsFilterForm;

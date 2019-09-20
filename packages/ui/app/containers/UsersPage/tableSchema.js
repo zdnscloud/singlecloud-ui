@@ -20,20 +20,20 @@ const tableSchema = schema
     {
       id: 'actions',
       label: 'Actions',
-      component: (props) => (
+      component: ({ data, classes, removeUser }) => (
         <Fragment>
           <Link
-            to={`/users/${props.data.get('id')}/edit`}
-            className={props.classes.createBtnLink}
+            to={`/users/${data.get('id')}/edit`}
+            className={classes.createBtnLink}
           >
             <IconButton aria-label="Edit User">
               <EditIcon />
             </IconButton>
           </Link>
           <ConfirmDelete
-            actionName={props.removeUser}
-            id={props.data.get('id')}
-            url={props.data.getIn(['links', 'remove'])}
+            actionName={removeUser}
+            id={data.get('id')}
+            url={data.getIn(['links', 'remove'])}
           />
         </Fragment>
       ),
@@ -43,14 +43,13 @@ const tableSchema = schema
     if (c.id === 'name') {
       return {
         ...c,
-        component(props) {
-          const d = props.data;
+        component({ data }) {
           return (
             <Chip
               icon={<PersonIcon />}
               component={Link}
-              to={`/users/${d.get('id')}/profile`}
-              label={`${d.get('name')}`}
+              to={`/users/${data.get('id')}/profile`}
+              label={`${data.get('name')}`}
             />
           );
         },
@@ -59,8 +58,8 @@ const tableSchema = schema
     if (c.id === 'projects') {
       return {
         ...c,
-        component(props) {
-          const proj = props.data.get('projects') || [];
+        component({ data }) {
+          const proj = data.get('projects') || [];
           return proj.map((p, i) => (
             <Chip
               key={i}

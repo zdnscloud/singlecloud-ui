@@ -45,7 +45,7 @@ function ReadOnlyTextarea({ ...props }) {
         variant="outlined"
         multiline
         disabled
-        value={value}
+        value={`${value == null ? '' : value}`}
         {...inputProps}
       />
     </FormControl>

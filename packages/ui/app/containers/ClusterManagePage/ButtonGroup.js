@@ -1,29 +1,31 @@
-/* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { PureComponent, Fragment, useEffect, useState } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { bindActionCreators, compose } from 'redux';
-import {
-  makeSelectURL,
-  makeSelectCurrentCluster,
-} from 'ducks/clusters/selectors';
-import { makeSelectClusterID } from 'ducks/app/selectors';
-import * as actions from 'ducks/clusters/actions';
-import { FormattedMessage } from 'react-intl';
 
-import { openTerminal } from 'containers/TerminalPage/actions';
+import { FormattedMessage } from 'react-intl';
 import GridItem from 'components/Grid/GridItem';
 import GridContainer from 'components/Grid/GridContainer';
 import Button from '@material-ui/core/Button';
+import ShellIcon from 'components/Icons/Shell';
+import Confirm from 'components/Confirm/Confirm';
+
 import checkIcon from 'images/clusters/check.png';
 import failIcon from 'images/clusters/fail.png';
 import loadingIcon from 'images/clusters/loading.png';
 import logIcon from 'images/clusters/log.png';
 import stopIcon from 'images/clusters/stop.png';
 import unableStopIcon from 'images/clusters/unableStop.png';
-import ShellIcon from 'components/Icons/Shell';
-import Confirm from 'components/Confirm/Confirm';
+
+import {
+  makeSelectURL,
+  makeSelectCurrent,
+  makeSelectCurrentID,
+} from 'ducks/clusters/selectors';
+import * as actions from 'ducks/clusters/actions';
+import * as termActions from 'containers/TerminalPage/actions';
+
 import LogViewDialog from './LogViewDialog';
 import messages from './messages';
 
@@ -35,21 +37,17 @@ export const ButtonGroup = ({
   cluster,
   openTerminal,
   openClusterLog,
-  cancelCluster,
+  executeClusterAction,
   loadClusters,
   url,
 }) => {
-  useEffect(() => {
-    const timer = setInterval(() => loadClusters(url), 3000);
-    return () => clearInterval(timer);
-  }, [loadClusters, url]);
-
+  const [logOpen, setLogOpen] = useState(false);
   const status = cluster.get('status');
   let clusterStatus = null;
 
   const handleConfirm = () => {
-    cancelCluster(clusterID, {
-      url: `${cluster.getIn(['links', 'self'])}?action=cancel`,
+    executeClusterAction('cancel', null, {
+      url: cluster.getIn(['links', 'self']),
     });
   };
 
@@ -120,7 +118,7 @@ export const ButtonGroup = ({
 
   return (
     <Fragment>
-      <LogViewDialog />
+      <LogViewDialog isOpen={logOpen} closeDialog={() => setLogOpen(false)} />
       <GridContainer className={classes.btnGroup}>
         <GridItem xs={12} sm={12} md={12} className={classes.formLine}>
           {clusterStatus}
@@ -147,7 +145,7 @@ export const ButtonGroup = ({
             <Button
               className={classes.handleBtn}
               onClick={(evt) => {
-                openClusterLog(clusterID);
+                setLogOpen(true);
               }}
             >
               <img src={logIcon} alt="logIcon" className={classes.buttonIcon} />
@@ -195,15 +193,15 @@ export const ButtonGroup = ({
 
 const mapStateToProps = createStructuredSelector({
   url: makeSelectURL(),
-  cluster: makeSelectCurrentCluster(),
-  clusterID: makeSelectClusterID(),
+  cluster: makeSelectCurrent(),
+  clusterID: makeSelectCurrentID(),
 });
 
 const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
       ...actions,
-      openTerminal,
+      ...termActions,
     },
     dispatch
   );

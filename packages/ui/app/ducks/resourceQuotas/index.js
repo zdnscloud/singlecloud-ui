@@ -1,10 +1,11 @@
-/* eslint-disable no-undef */
 /**
- *
- * ResourceQuota Duck
+ * Duck: ResourceQuotas
+ * reducer: resourceQuotas
  *
  */
+import _ from 'lodash';
 import { fromJS } from 'immutable';
+import getByKey from '@gsmlg/utils/getByKey';
 import { procCollectionData } from '@gsmlg/utils/procData';
 
 import * as constants from './constants';
@@ -14,53 +15,70 @@ const { prefix } = constants;
 
 export { constants, actions, prefix };
 
-const c = constants;
-
 export const initialState = fromJS({
-  resourceQuota: {},
+  data: {},
+  list: {},
+  selectedData: null,
 });
 
-export const resourceQuotaReducer = (
+const c = constants;
+
+export const reducer = (
   state = initialState,
   { type, payload, error, meta }
 ) => {
   switch (type) {
-    case c.LOAD_RESOURCE_QUOTA:
+    case c.LOAD_RESOURCE_QUOTAS:
       return state;
-    case c.LOAD_RESOURCE_QUOTA_SUCCESS: {
-      const { clusterID, namespaceID } = meta;
+    case c.LOAD_RESOURCE_QUOTAS_SUCCESS: {
       const { data, list } = procCollectionData(payload);
+      const { clusterID, namespaceID } = meta;
       return state
-        .setIn(['resourcequotas', clusterID], fromJS(data))
-        .set('list', fromJS(list));
+        .setIn(['data', clusterID, namespaceID], fromJS(data))
+        .setIn(['list', clusterID, namespaceID], fromJS(list));
     }
-    case c.LOAD_RESOURCE_QUOTA_FAILURE:
+    case c.LOAD_RESOURCE_QUOTAS_FAILURE:
       return state;
 
     case c.CREATE_RESOURCE_QUOTA:
       return state;
     case c.CREATE_RESOURCE_QUOTA_SUCCESS: {
-      const { clusterID, namespaceID } = meta;
       const data = payload.response;
+      const { clusterID, namespaceID } = meta;
       return state.setIn(
-        ['resourcequotas', clusterID, namespaceID, data.id],
+        ['data', clusterID, namespaceID, data.id],
         fromJS(data)
       );
     }
     case c.CREATE_RESOURCE_QUOTA_FAILURE:
       return state;
 
-    case c.UPDATE_RESOURCE_QUOTA:
+    case c.READ_RESOURCE_QUOTA:
       return state;
-    case c.UPDATE_RESOURCE_QUOTA_SUCCESS: {
+    case c.READ_RESOURCE_QUOTA_SUCCESS: {
+      const id = getByKey(payload, ['response', 'id']);
+      const data = getByKey(payload, ['response']);
       const { clusterID, namespaceID } = meta;
-      const data = payload.response;
-      return state.setIn(
-        ['resourcequotas', clusterID, namespaceID, data.id],
-        fromJS(data)
-      );
+      if (id) {
+        return state.setIn(['data', clusterID, namespaceID, id], fromJS(data));
+      }
+      return state;
     }
-    case c.UPDATE_RESOURCE_QUOTA_FAILURE:
+    case c.READ_RESOURCE_QUOTA_FAILURE:
+      return state;
+
+    case c.REMOVE_RESOURCE_QUOTA:
+      return state;
+    case c.REMOVE_RESOURCE_QUOTA_SUCCESS: {
+      const { id } = meta;
+      const { clusterID, namespaceID } = meta;
+      return state
+        .removeIn(['data', clusterID, namespaceID, id])
+        .updateIn(['list', clusterID, namespaceID], (l) =>
+          l.filterNot((i) => i === id)
+        );
+    }
+    case c.REMOVE_RESOURCE_QUOTA_FAILURE:
       return state;
 
     default:
@@ -68,4 +86,4 @@ export const resourceQuotaReducer = (
   }
 };
 
-export default resourceQuotaReducer;
+export default reducer;

@@ -3,106 +3,89 @@
  * JobsPage
  *
  */
-
-import React from 'react';
+import React, { useEffect, useState, memo } from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { FormattedMessage } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import { bindActionCreators, compose } from 'redux';
+import { connect } from 'react-redux';
 
-import { withStyles } from '@material-ui/core/styles';
-import { Link } from 'react-router-dom';
-import Menubar from 'components/Menubar';
+import Helmet from 'components/Helmet/Helmet';
+import { FormattedMessage } from 'react-intl';
 import CssBaseline from '@material-ui/core/CssBaseline';
+import { Link } from 'react-router-dom';
 import Typography from '@material-ui/core/Typography';
 import Fab from '@material-ui/core/Fab';
 import IconButton from '@material-ui/core/IconButton';
 import AddIcon from 'components/Icons/Add';
 import GridItem from 'components/Grid/GridItem';
 import GridContainer from 'components/Grid/GridContainer';
-import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
 import Card from 'components/Card/Card';
 import CardHeader from 'components/Card/CardHeader';
 import CardBody from 'components/Card/CardBody';
+import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
 
-import {
-  makeSelectClusterID,
-  makeSelectNamespaceID,
-} from 'ducks/app/selectors';
-import * as actions from 'ducks/jobs/actions';
+import { makeSelectCurrentID as makeSelectClusterID } from 'ducks/clusters/selectors';
+import { makeSelectCurrentID as makeSelectNamespaceID } from 'ducks/namespaces/selectors';
 import { makeSelectURL } from 'ducks/jobs/selectors';
+import * as actions from 'ducks/jobs/actions';
 
+import useStyles from './styles';
 import messages from './messages';
-import JobsPageHelmet from './helmet';
-import styles from './styles';
-import JobsTable from './JobsTable';
+import JobsTable from './Table';
 
-/* eslint-disable react/prefer-stateless-function */
-export class JobsPage extends React.PureComponent {
-  static propTypes = {
-    classes: PropTypes.object.isRequired,
-  };
-
-  componentWillMount() {
-    const { clusterID, namespaceID, url, loadJobs } = this.props;
-    loadJobs({ url, clusterID, namespaceID });
-  }
-
-  componentDidUpdate(prevProps) {
-    const {
-      clusterID: prevClusterID,
-      namespaceID: prevNamespaceID,
-    } = prevProps;
-    const { clusterID, namespaceID, url, loadJobs } = this.props;
-    if (prevClusterID !== clusterID || prevNamespaceID !== namespaceID) {
-      loadJobs({ url, clusterID, namespaceID });
+const JobsPage = ({ clusterID, namespaceID, location, url, loadJobs }) => {
+  const classes = useStyles();
+  useEffect(() => {
+    if (url) {
+      loadJobs(url, {
+        clusterID,
+        namespaceID,
+      });
     }
-  }
+    return () => {
+      // try cancel something when unmount
+    };
+  }, [clusterID, loadJobs, namespaceID, url]);
 
-  render() {
-    const { classes, clusterID, namespaceID } = this.props;
-
-    return (
-      <div className={classes.root}>
-        <JobsPageHelmet />
-        <CssBaseline />
-        <div className={classes.content}>
-          <Breadcrumbs
-            data={[
-              {
-                path: `/clusters/${clusterID}/namespaces/${namespaceID}/jobs`,
-                name: <FormattedMessage {...messages.pageTitle} />,
-              },
-            ]}
-          />
-          <GridContainer className={classes.grid}>
-            <GridItem xs={12} sm={12} md={12}>
-              <Card>
-                <CardHeader>
-                  <h4>
-                    <FormattedMessage {...messages.jobs} />
-                  </h4>
-                  <Link
-                    to={`${this.props.location.pathname}/create`}
-                    className={classes.createBtnLink}
-                  >
-                    <IconButton>
-                      <AddIcon />
-                    </IconButton>
-                  </Link>
-                </CardHeader>
-                <CardBody>
-                  <JobsTable location={this.props.location} />
-                </CardBody>
-              </Card>
-            </GridItem>
-          </GridContainer>
-        </div>
+  return (
+    <div className={classes.root}>
+      <Helmet title={messages.pageTitle} description={messages.pageDesc} />
+      <CssBaseline />
+      <div className={classes.content}>
+        <Breadcrumbs
+          data={[
+            {
+              path: `/clusters/${clusterID}/namespaces/${namespaceID}/jobs`,
+              name: <FormattedMessage {...messages.pageTitle} />,
+            },
+          ]}
+        />
+        <GridContainer className={classes.grid}>
+          <GridItem xs={12} sm={12} md={12}>
+            <Card>
+              <CardHeader>
+                <h4>
+                  <FormattedMessage {...messages.jobs} />
+                </h4>
+                <Link
+                  to={`${location.pathname}/create`}
+                  className={classes.createBtnLink}
+                >
+                  <IconButton>
+                    <AddIcon />
+                  </IconButton>
+                </Link>
+              </CardHeader>
+              <CardBody>
+                <JobsTable />
+              </CardBody>
+            </Card>
+          </GridItem>
+        </GridContainer>
       </div>
-    );
-  }
-}
+    </div>
+  );
+};
 
 const mapStateToProps = createStructuredSelector({
   clusterID: makeSelectClusterID(),
@@ -125,5 +108,5 @@ const withConnect = connect(
 
 export default compose(
   withConnect,
-  withStyles(styles)
+  memo
 )(JobsPage);

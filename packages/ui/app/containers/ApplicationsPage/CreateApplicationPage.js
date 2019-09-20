@@ -14,7 +14,8 @@ import { reduxForm, getFormValues } from 'redux-form/immutable';
 import { SubmissionError, submit } from 'redux-form';
 import { Link } from 'react-router-dom';
 
-import { withStyles } from '@material-ui/core/styles';
+import { usePush } from 'hooks/router';
+
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
@@ -33,7 +34,7 @@ import * as actions from 'ducks/applications/actions';
 
 import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
 import messages from './messages';
-import styles from './styles';
+import useStyles from './styles';
 import ApplicationsPageHelmet from './helmet';
 import ApplicationForm from './ApplicationForm';
 
@@ -62,12 +63,14 @@ export const CreateApplicationPage = ({
   chartID,
   chartsUrl,
   readChart,
-  classes,
   submitForm,
   createApplication,
   chart,
   values,
 }) => {
+  const classes = useStyles();
+  const push = usePush();
+
   useEffect(() => {
     readChart(chartID, {
       clusterID,
@@ -95,6 +98,7 @@ export const CreateApplicationPage = ({
           namespaceID,
         });
       });
+      push(`/clusters/${clusterID}/namespaces/${namespaceID}/applications`);
     } catch (error) {
       throw new SubmissionError({ _error: error });
     }
@@ -136,7 +140,7 @@ export const CreateApplicationPage = ({
               <Button
                 variant="contained"
                 className={classes.cancleBtn}
-                to="/applicationStore"
+                to={`/clusters/${clusterID}/namespaces/${namespaceID}/charts`}
                 component={Link}
               >
                 <FormattedMessage {...messages.cancleApplicationButton} />
@@ -173,7 +177,4 @@ const withConnect = connect(
   mapDispatchToProps
 );
 
-export default compose(
-  withConnect,
-  withStyles(styles)
-)(CreateApplicationPage);
+export default compose(withConnect)(CreateApplicationPage);

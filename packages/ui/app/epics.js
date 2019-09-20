@@ -5,7 +5,7 @@
 import { combineEpics } from 'redux-observable';
 
 // import epics start
-import appEpic from 'ducks/app/epic';
+// import appEpic from 'ducks/app/epic';
 import eventsEpic from 'ducks/events/epic';
 import roleEpic from 'ducks/role/epic';
 import usersEpic from 'ducks/users/epic';
@@ -19,7 +19,6 @@ import daemonSetsEpic from 'ducks/daemonSets/epic';
 import cronJobsEpic from 'ducks/cronJobs/epic';
 import jobsEpic from 'ducks/jobs/epic';
 import podsEpic from 'ducks/pods/epic';
-import serviceLinksEpic from 'ducks/serviceLinks/epic';
 import networksEpic from 'ducks/networks/epic';
 import clustersEpic from 'ducks/clusters/epic';
 import resourceQuotasEpic from 'ducks/resourceQuotas/epic';
@@ -34,6 +33,8 @@ import chartsEpic from 'ducks/charts/epic';
 import storageClustersEpic from 'ducks/storageClusters/epic';
 import storageClassesEpic from 'ducks/storageClasses/epic';
 import blockDevicesEpic from 'ducks/blockDevices/epic';
+import innerServicesEpic from 'ducks/innerServices/epic';
+import outerServicesEpic from 'ducks/outerServices/epic';
 // import epics end
 
 /**
@@ -42,7 +43,7 @@ import blockDevicesEpic from 'ducks/blockDevices/epic';
 export default function createEpic(injectedEpics = {}) {
   const rootEpic = combineEpics(
     // combine epics start
-    appEpic,
+    // appEpic,
     clustersEpic,
     eventsEpic,
     roleEpic,
@@ -58,7 +59,6 @@ export default function createEpic(injectedEpics = {}) {
     cronJobsEpic,
     jobsEpic,
     podsEpic,
-    serviceLinksEpic,
     networksEpic,
     resourceQuotasEpic,
     servicesEpic,
@@ -70,7 +70,9 @@ export default function createEpic(injectedEpics = {}) {
     chartsEpic,
     storageClustersEpic,
     storageClassesEpic,
-    blockDevicesEpic
+    blockDevicesEpic,
+    innerServicesEpic,
+    outerServicesEpic
     // combine epics end
   );
 

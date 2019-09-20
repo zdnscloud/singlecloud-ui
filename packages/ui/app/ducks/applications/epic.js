@@ -1,3 +1,8 @@
+/**
+ * Duck: Applications
+ * epic: applications
+ *
+ */
 import { push } from 'connected-react-router';
 import { Observable, interval, of, timer, concat } from 'rxjs';
 import {
@@ -20,41 +25,16 @@ import * as a from './actions';
 export const loadApplicationsEpic = (action$, state$, { ajax }) =>
   action$.pipe(
     ofType(c.LOAD_APPLICATIONS),
-    mergeMap(({ meta: { url, clusterID, namespaceID } }) =>
-      ajax(url).pipe(
-        map((resp) =>
-          a.loadApplicationsSuccess(resp, { clusterID, namespaceID })
-        ),
-        catchError((error) =>
-          of(a.loadApplicationsFailure(error, { clusterID, namespaceID }))
-        )
-      )
-    )
-  );
-
-export const loadChartEpic = (action$, state$, { ajax }) =>
-  action$.pipe(
-    ofType(c.LOAD_CHART),
-    mergeMap(({ payload }) =>
+    mergeMap(({ payload, meta }) =>
       ajax(payload).pipe(
-        map((resp) => a.loadChartSuccess(resp)),
-        catchError((error) => of(a.loadChartFailure(error)))
-      )
-    )
-  );
-
-export const removeApplicationEpic = (action$, state$, { ajax }) =>
-  action$.pipe(
-    ofType(c.REMOVE_APPLICATION),
-    mergeMap(({ payload, meta: { url } }) =>
-      ajax({
-        url: `${url}`,
-        method: 'DELETE',
-      }).pipe(
-        map((resp) => a.removeApplicationSuccess(resp, { id: payload })),
-        catchError((error) =>
-          of(a.removeApplicationFailure(error, { id: payload }))
-        )
+        map((resp) => {
+          meta.resolve && meta.resolve(resp);
+          return a.loadApplicationsSuccess(resp, meta);
+        }),
+        catchError((error) => {
+          meta.reject && meta.reject(error);
+          return of(a.loadApplicationsFailure(error, meta));
+        })
       )
     )
   );
@@ -62,43 +42,69 @@ export const removeApplicationEpic = (action$, state$, { ajax }) =>
 export const createApplicationEpic = (action$, state$, { ajax }) =>
   action$.pipe(
     ofType(c.CREATE_APPLICATION),
-    mergeMap(
-      ({ payload, meta: { resolve, reject, url, clusterID, namespaceID } }) =>
-        ajax({
-          url,
-          method: 'POST',
-          body: payload,
-        }).pipe(
-          map((resp) => {
-            resolve(resp);
-            return a.createApplicationSuccess(resp, { clusterID, namespaceID });
-          }),
-          catchError((error) => {
-            reject(error);
-            return of(a.createApplicationFailure(error));
-          })
-        )
+    mergeMap(({ payload, meta }) =>
+      ajax({
+        url: `${meta.url}`,
+        method: 'POST',
+        body: payload,
+      }).pipe(
+        map((resp) => {
+          meta.resolve && meta.resolve(resp);
+          return a.createApplicationSuccess(resp, meta);
+        }),
+        catchError((error) => {
+          meta.reject && meta.reject(error);
+          return of(a.createApplicationFailure(error, meta));
+        })
+      )
     )
   );
 
-export const afterCreateEpic = (action$) =>
+export const readApplicationEpic = (action$, state$, { ajax }) =>
   action$.pipe(
-    ofType(c.CREATE_APPLICATION_SUCCESS),
+    ofType(c.READ_APPLICATION),
     mergeMap(({ payload, meta }) =>
-      timer(1000).pipe(
-        mapTo(
-          push(
-            `/clusters/${meta.clusterID}/namespaces/${meta.namespaceID}/applications`
-          )
-        )
+      ajax({
+        url: `${meta.url}`,
+        method: 'GET',
+      }).pipe(
+        map((resp) => {
+          meta.resolve && meta.resolve(resp);
+          return a.readApplicationSuccess(resp, { ...meta, id: payload });
+        }),
+        catchError((error) => {
+          meta.reject && meta.reject(error);
+          return of(a.readApplicationFailure(error, { ...meta, id: payload }));
+        })
+      )
+    )
+  );
+
+export const removeApplicationEpic = (action$, state$, { ajax }) =>
+  action$.pipe(
+    ofType(c.REMOVE_APPLICATION),
+    mergeMap(({ payload, meta }) =>
+      ajax({
+        url: `${meta.url}`,
+        method: 'DELETE',
+      }).pipe(
+        map((resp) => {
+          meta.resolve && meta.resolve(resp);
+          return a.removeApplicationSuccess(resp, { ...meta, id: payload });
+        }),
+        catchError((error) => {
+          meta.reject && meta.reject(error);
+          return of(
+            a.removeApplicationFailure(error, { ...meta, id: payload })
+          );
+        })
       )
     )
   );
 
 export default combineEpics(
   loadApplicationsEpic,
-  removeApplicationEpic,
-  loadChartEpic,
   createApplicationEpic,
-  afterCreateEpic
+  readApplicationEpic,
+  removeApplicationEpic
 );

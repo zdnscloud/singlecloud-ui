@@ -19,8 +19,8 @@ import AceEditor from 'react-ace';
 import 'brace/mode/yaml';
 import 'brace/theme/github';
 
-import { makeSelectCurrentID as makeSelectClusterID } from 'ducks/clusters/selectors';
-import { makeSelectCurrentID as makeSelectNamespaceID } from 'ducks/namespaces/selectors';
+import { makeSelectCurrentID as makeSelectCurrentClusterID } from 'ducks/clusters/selectors';
+import { makeSelectCurrentID as makeSelectCurrentNamespaceID } from 'ducks/namespaces/selectors';
 import * as actions from 'ducks/secrets/actions';
 import {
   makeSelectURL,
@@ -103,8 +103,8 @@ export class SecretsTable extends React.PureComponent {
 }
 
 const mapStateToProps = createStructuredSelector({
-  clusterID: makeSelectClusterID(),
-  namespaceID: makeSelectNamespaceID(),
+  clusterID: makeSelectCurrentClusterID(),
+  namespaceID: makeSelectCurrentNamespaceID(),
   secrets: makeSelectSecrets(),
   data: makeSelectSecretsList(),
 });

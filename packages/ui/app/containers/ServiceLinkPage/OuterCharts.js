@@ -4,7 +4,7 @@
  *
  */
 
-import React, { createRef } from 'react';
+import React, { useCallback, useState } from 'react';
 import { findDOMNode } from 'react-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -14,7 +14,6 @@ import { bindActionCreators, compose } from 'redux';
 import moment from 'moment';
 import _ from 'lodash';
 
-import { withStyles } from '@material-ui/core/styles';
 import GridItem from 'components/Grid/GridItem';
 import GridContainer from 'components/Grid/GridContainer';
 import Card from 'components/Card/Card';
@@ -23,78 +22,29 @@ import CardBody from 'components/Card/CardBody';
 import CardFooter from 'components/Card/CardFooter';
 import OuterServiceTree from 'components/tree/OuterServiceTree';
 
-import * as actions from 'ducks/serviceLinks/actions';
-import { makeSelectCurrentOuterServices } from 'ducks/serviceLinks/selectors';
-import styles from './cardStyles';
+import { makeSelectOuterServices } from 'ducks/outerServices/selectors';
 
+import useStyles from './styles';
 import messages from './messages';
 
 const separator = '$';
 
-/* eslint-disable react/prefer-stateless-function */
-export class OuterCharts extends React.PureComponent {
-  static propTypes = {
-    classes: PropTypes.object.isRequired,
-    outerServices: PropTypes.object.isRequired,
-  };
-
-  state = { reload: false, ocardWidth: 800 };
-
-  t = null;
-
-  ocardBodyRef = createRef();
-
-  componentDidMount() {
-    let ow = 800;
-    if (this.ocardBodyRef.current) {
-      const ocd = findDOMNode(this.ocardBodyRef.current); // eslint-disable-line react/no-find-dom-node
-      const { width } = ocd.getBoundingClientRect();
-      ow = width;
+export const OuterCharts = ({ outerServices }) => {
+  const classes = useStyles();
+  const [width, setWidth] = useState(400);
+  const ref = useCallback((el) => {
+    if (el) {
+      const { width: w } = el.getBoundingClientRect();
+      setWidth(w - 40);
     }
-    this.setState({ ocardWidth: ow - 40 });
-  }
+  }, []);
+  const os = outerServices.toJS() || [];
 
-  componentWillReceiveProps(nextProps) {
-    const { nextOuterServices } = nextProps;
-    const { outerServices } = this.props;
-    if (nextOuterServices !== outerServices) {
-      this.reload();
-    }
-  }
-
-  componentDidUpdate() {
-    if (this.ocardBodyRef.current) {
-      const ocd = findDOMNode(this.ocardBodyRef.current); // eslint-disable-line react/no-find-dom-node
-      const { width } = ocd.getBoundingClientRect();
-      const ow = width;
-      this.setState({ ocardWidth: ow - 40 });
-    }
-  }
-
-  componentWillUnmount() {
-    clearTimeout(this.t);
-    this.t = null;
-  }
-
-  reload() {
-    this.setState(
-      (state, props) => ({ reload: true }),
-      () => {
-        this.t = setTimeout(() => {
-          this.setState({ reload: false });
-        }, 1000 / 8);
-      }
-    );
-  }
-
-  render() {
-    if (this.state.reload === true) return null;
-    const { classes, outerServices } = this.props;
-    const os = outerServices.toJS() || [];
-
-    return (
-      <GridContainer>
-        {os.map((s, i) => {
+  return (
+    <GridContainer>
+      {os &&
+        os.map &&
+        os.map((s, i) => {
           const [type, idx, name] = s.name.split(separator);
           const { children } = s;
           const count = _.reduce(
@@ -108,7 +58,7 @@ export class OuterCharts extends React.PureComponent {
                     (nnn, ccc) => {
                       const mmm = _.reduce(
                         ccc.children,
-                        (nnnn, cccc) => (nnnn += 1),
+                        (nnnn, cccc) => nnnn + 1,
                         0
                       );
                       return nnn + mmm;
@@ -127,7 +77,7 @@ export class OuterCharts extends React.PureComponent {
           return (
             <GridItem xs={12} sm={12} md={12} key={i}>
               <Card>
-                <CardHeader color="info" icon>
+                <CardHeader color="default" icon>
                   <h3 className={classes.cardTitle}>
                     <b>
                       <FormattedMessage {...messages.outerServiceName} />
@@ -136,9 +86,9 @@ export class OuterCharts extends React.PureComponent {
                     {name}
                   </h3>
                 </CardHeader>
-                <CardBody ref={i === 0 ? this.ocardBodyRef : null}>
+                <CardBody ref={i === 0 ? ref : null}>
                   <OuterServiceTree
-                    width={this.state.ocardWidth}
+                    width={width}
                     height={75 * count > 300 ? 75 * count : 300}
                     data={s}
                   />
@@ -148,29 +98,19 @@ export class OuterCharts extends React.PureComponent {
             </GridItem>
           );
         })}
-      </GridContainer>
-    );
-  }
-}
+    </GridContainer>
+  );
+};
 
 const mapStateToProps = createStructuredSelector({
-  outerServices: makeSelectCurrentOuterServices(),
+  outerServices: makeSelectOuterServices(),
 });
 
-const mapDispatchToProps = (dispatch) =>
-  bindActionCreators(
-    {
-      ...actions,
-    },
-    dispatch
-  );
+const mapDispatchToProps = (dispatch) => bindActionCreators({}, dispatch);
 
 const withConnect = connect(
   mapStateToProps,
   mapDispatchToProps
 );
 
-export default compose(
-  withConnect,
-  withStyles(styles)
-)(OuterCharts);
+export default compose(withConnect)(OuterCharts);

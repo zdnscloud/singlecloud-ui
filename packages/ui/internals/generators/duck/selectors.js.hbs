@@ -42,6 +42,12 @@ export const makeSelectURL = () =>
   );
 {{/if}}
 
+export const makeSelectData = () =>
+  createSelector(
+    selectDomain,
+    (substate) => substate.get('data')
+  );
+
 export const makeSelect{{pProperCase name}} = () =>
   createSelector(
     selectDomain,

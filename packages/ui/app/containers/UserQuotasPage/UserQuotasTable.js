@@ -24,51 +24,37 @@ import {
 } from 'ducks/userQuotas/selectors';
 
 import messages from './messages';
-import styles from './styles';
+import useStyles from './styles';
 import schema from './tableSchema';
 
-/* eslint-disable react/prefer-stateless-function */
-export class UserQuotasTable extends React.PureComponent {
-  static propTypes = {
-    classes: PropTypes.object.isRequired,
-    data: PropTypes.object.isRequired,
-    userQuotas: PropTypes.object.isRequired,
-  };
+const UserQuotasTable = ({ data, removeUserQuota }) => {
+  const classes = useStyles();
 
-  render() {
-    const {
-      classes,
-      data,
-      // eslint-disable-next-line no-shadow
-      removeUserQuota,
-      theme,
-    } = this.props;
-    const mergedSchema = schema
-      .map((sch) => {
-        if (sch.id === 'actions') {
-          return {
-            ...sch,
-            props: { classes, removeUserQuota },
-          };
-        }
-        return sch;
-      })
-      .map((s) => ({
-        ...s,
-        label: <FormattedMessage {...messages[`tableTitle${s.label}`]} />,
-      }));
+  const mergedSchema = schema
+    .map((sch) => {
+      if (sch.id === 'actions') {
+        return {
+          ...sch,
+          props: { classes, removeUserQuota },
+        };
+      }
+      return sch;
+    })
+    .map((s) => ({
+      ...s,
+      label: <FormattedMessage {...messages[`tableTitle${s.label}`]} />,
+    }));
 
-    return (
-      <Paper className={classes.tableWrapper}>
-        <SimpleTable
-          className={classes.table}
-          schema={mergedSchema}
-          data={data}
-        />
-      </Paper>
-    );
-  }
-}
+  return (
+    <Paper className={classes.tableWrapper}>
+      <SimpleTable
+        className={classes.table}
+        schema={mergedSchema}
+        data={data}
+      />
+    </Paper>
+  );
+};
 
 const mapStateToProps = createStructuredSelector({
   userQuotas: makeSelectUserQuotas(),
@@ -88,7 +74,4 @@ const withConnect = connect(
   mapDispatchToProps
 );
 
-export default compose(
-  withConnect,
-  withStyles(styles, { withTheme: true })
-)(UserQuotasTable);
+export default compose(withConnect)(UserQuotasTable);

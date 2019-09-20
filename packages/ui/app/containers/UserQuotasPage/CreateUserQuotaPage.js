@@ -16,6 +16,8 @@ import { Link } from 'react-router-dom';
 import sha256 from 'crypto-js/sha256';
 import encHex from 'crypto-js/enc-hex';
 
+import { usePush } from 'hooks/router';
+
 import { withStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Typography from '@material-ui/core/Typography';
@@ -33,7 +35,7 @@ import * as actions from 'ducks/userQuotas/actions';
 
 import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
 import messages from './messages';
-import styles from './styles';
+import useStyles from './styles';
 import UserQuotasPageHelmet from './helmet';
 import UserQuotaForm from './UserQuotaForm';
 
@@ -55,106 +57,94 @@ const CreateUserQuotaForm = reduxForm({
   validate,
 })(UserQuotaForm);
 
-/* eslint-disable react/prefer-stateless-function */
-export class CreateUserQuotaPage extends React.PureComponent {
-  static propTypes = {
-    initAction: PropTypes.func,
-    classes: PropTypes.object.isRequired,
-    match: PropTypes.object,
-    location: PropTypes.object,
-  };
-
-  render() {
-    const { classes, submitForm, createUserQuota, url, role } = this.props;
-    const user = role.get('user');
-    const userHash = sha256(user)
-      .toString(encHex)
-      .slice(0, 6);
-    async function doSubmit(formValues) {
-      try {
-        const { memory, storage, namespace, ...formData } = formValues.toJS();
-        const data = {
-          namespace: `${namespace}-${userHash}`,
-          memory: `${memory}Gi`,
-          storage: `${storage}Gi`,
-          ...formData,
-        };
-        await new Promise((resolve, reject) => {
-          createUserQuota({ ...data }, { resolve, reject, url });
-        });
-      } catch (error) {
-        throw new SubmissionError({ _error: error });
-      }
+const CreateUserQuotaPage = ({ url, createUserQuota, submitForm, role }) => {
+  const classes = useStyles();
+  const push = usePush();
+  const user = role.get('user');
+  const userHash = sha256(user)
+    .toString(encHex)
+    .slice(0, 6);
+  async function doSubmit(formValues) {
+    try {
+      const { memory, storage, namespace, ...formData } = formValues.toJS();
+      const data = {
+        namespace: `${namespace}-${userHash}`,
+        memory: `${memory}Gi`,
+        storage: `${storage}Gi`,
+        ...formData,
+      };
+      await new Promise((resolve, reject) => {
+        createUserQuota({ ...data }, { resolve, reject, url });
+      });
+      push(`/userQuotas`);
+    } catch (error) {
+      throw new SubmissionError({ _error: error });
     }
-
-    return (
-      <div className={classes.root}>
-        <UserQuotasPageHelmet />
-        <CssBaseline />
-        <div className={classes.content}>
-          <Breadcrumbs
-            data={[
-              {
-                path: `/userQuotas`,
-                name: <FormattedMessage {...messages.pageTitle} />,
-              },
-              {
-                name: <FormattedMessage {...messages.createUserQuota} />,
-              },
-            ]}
-          />
-          <Typography component="div" className="">
-            <GridContainer className={classes.grid}>
-              <GridItem xs={12} sm={12} md={12}>
-                <Card>
-                  <CardHeader>
-                    <h4>
-                      <FormattedMessage {...messages.createUserQuota} />
-                    </h4>
-                  </CardHeader>
-                  <CardBody>
-                    <CreateUserQuotaForm
-                      classes={classes}
-                      onSubmit={doSubmit}
-                      userHash={userHash}
-                      formRole="create"
-                      role={role}
-                    />
-                  </CardBody>
-                  <CardFooter className={classes.cardFooter}>
-                    <GridContainer>
-                      <GridItem xs={12} sm={12} md={12}>
-                        <Button
-                          variant="contained"
-                          color="primary"
-                          onClick={submitForm}
-                        >
-                          <FormattedMessage
-                            {...messages.createUserQuotaButton}
-                          />
-                        </Button>
-                        <Button
-                          variant="contained"
-                          className={classes.cancleBtn}
-                          to="/userQuotas"
-                          component={Link}
-                        >
-                          <FormattedMessage
-                            {...messages.cancleUserQuotaButton}
-                          />
-                        </Button>
-                      </GridItem>
-                    </GridContainer>
-                  </CardFooter>
-                </Card>
-              </GridItem>
-            </GridContainer>
-          </Typography>
-        </div>
-      </div>
-    );
   }
-}
+
+  return (
+    <div className={classes.root}>
+      <UserQuotasPageHelmet />
+      <CssBaseline />
+      <div className={classes.content}>
+        <Breadcrumbs
+          data={[
+            {
+              path: `/userQuotas`,
+              name: <FormattedMessage {...messages.pageTitle} />,
+            },
+            {
+              name: <FormattedMessage {...messages.createUserQuota} />,
+            },
+          ]}
+        />
+        <Typography component="div" className="">
+          <GridContainer className={classes.grid}>
+            <GridItem xs={12} sm={12} md={12}>
+              <Card>
+                <CardHeader>
+                  <h4>
+                    <FormattedMessage {...messages.createUserQuota} />
+                  </h4>
+                </CardHeader>
+                <CardBody>
+                  <CreateUserQuotaForm
+                    classes={classes}
+                    onSubmit={doSubmit}
+                    userHash={userHash}
+                    formRole="create"
+                    role={role}
+                  />
+                </CardBody>
+                <CardFooter className={classes.cardFooter}>
+                  <GridContainer>
+                    <GridItem xs={12} sm={12} md={12}>
+                      <Button
+                        variant="contained"
+                        color="primary"
+                        onClick={submitForm}
+                      >
+                        <FormattedMessage {...messages.createUserQuotaButton} />
+                      </Button>
+                      <Button
+                        variant="contained"
+                        className={classes.cancleBtn}
+                        to="/userQuotas"
+                        component={Link}
+                      >
+                        <FormattedMessage {...messages.cancleUserQuotaButton} />
+                      </Button>
+                    </GridItem>
+                  </GridContainer>
+                </CardFooter>
+              </Card>
+            </GridItem>
+          </GridContainer>
+        </Typography>
+      </div>
+    </div>
+  );
+};
 
 const mapStateToProps = createStructuredSelector({
   url: makeSelectURL(),
@@ -175,7 +165,4 @@ const withConnect = connect(
   mapDispatchToProps
 );
 
-export default compose(
-  withConnect,
-  withStyles(styles)
-)(CreateUserQuotaPage);
+export default compose(withConnect)(CreateUserQuotaPage);

@@ -10,26 +10,22 @@ import { FormattedMessage, injectIntl } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import { bindActionCreators, compose } from 'redux';
 
-import { withStyles } from '@material-ui/core/styles';
-
 import GridItem from 'components/Grid/GridItem';
 import GridContainer from 'components/Grid/GridContainer';
 import ReadOnlyInput from 'components/CustomInput/ReadOnlyInput';
 
 import * as cActions from 'ducks/configMaps/actions';
 import * as actions from 'ducks/deployments/actions';
-import {
-  makeSelectClusterID,
-  makeSelectNamespaceID,
-} from 'ducks/app/selectors';
+import { makeSelectCurrentID as makeSelectCurrentClusterID } from 'ducks/clusters/selectors';
+import { makeSelectCurrentID as makeSelectCurrentNamespaceID } from 'ducks/namespaces/selectors';
 import { makeSelectConfigMaps } from 'ducks/configMaps/selectors';
 
 import messages from './messages';
-import styles from './styles';
+import useStyles from './styles';
 
 /* eslint-disable react/prefer-stateless-function */
-export const ResourceQuota = (props) => {
-  const { classes, resourceQuota, clusterID, namespaceID } = props;
+export const ResourceQuota = ({ resourceQuota, clusterID, namespaceID }) => {
+  const classes = useStyles();
   const reg = /^(\d+)([a-zA-Z]+)?$/;
   const storage = resourceQuota.getIn(['limits', 'requests.storage']);
 
@@ -63,8 +59,8 @@ export const ResourceQuota = (props) => {
 };
 
 const mapStateToProps = createStructuredSelector({
-  clusterID: makeSelectClusterID(),
-  namespaceID: makeSelectNamespaceID(),
+  clusterID: makeSelectCurrentClusterID(),
+  namespaceID: makeSelectCurrentNamespaceID(),
   configMaps: makeSelectConfigMaps(),
 });
 
@@ -84,6 +80,5 @@ const withConnect = connect(
 
 export default compose(
   injectIntl,
-  withConnect,
-  withStyles(styles)
+  withConnect
 )(ResourceQuota);

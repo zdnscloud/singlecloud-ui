@@ -19,10 +19,8 @@ import AceEditor from 'react-ace';
 import 'brace/mode/yaml';
 import 'brace/theme/github';
 
-import {
-  makeSelectClusterID,
-  makeSelectNamespaceID,
-} from 'ducks/app/selectors';
+import { makeSelectCurrentID as makeSelectCurrentClusterID } from 'ducks/clusters/selectors';
+import { makeSelectCurrentID as makeSelectCurrentNamespaceID } from 'ducks/namespaces/selectors';
 import * as actions from 'ducks/configMaps/actions';
 import {
   makeSelectURL,
@@ -105,8 +103,8 @@ export class ConfigMapsTable extends React.PureComponent {
 }
 
 const mapStateToProps = createStructuredSelector({
-  clusterID: makeSelectClusterID(),
-  namespaceID: makeSelectNamespaceID(),
+  clusterID: makeSelectCurrentClusterID(),
+  namespaceID: makeSelectCurrentNamespaceID(),
   configMaps: makeSelectConfigMaps(),
   data: makeSelectConfigMapsList(),
 });

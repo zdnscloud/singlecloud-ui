@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import { ucfirst } from '@gsmlg/utils';
 import { Link } from 'react-router-dom';
-import Button from '@material-ui/core/Button';
+import Button from 'components/CustomButtons/Button';
 import IconButton from 'components/CustomIconButtons/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
 import TimeCell from 'components/Cells/TimeCell';
@@ -56,7 +56,7 @@ const adminTableSchema = schema
         ...sch,
         component: (props) => (
           <Button
-            color="primary"
+            link
             to={`/userQuotas/${props.data.get('id')}/request`}
             component={Link}
           >
@@ -72,16 +72,12 @@ const adminTableSchema = schema
           switch (props.data.get('status')) {
             case 'processing':
               return <FormattedMessage {...messages.tableProcessing} />;
-              break;
             case 'approval':
               return <FormattedMessage {...messages.tableApproval} />;
-              break;
             case 'rejection':
               return <FormattedMessage {...messages.tableRejection} />;
-              break;
             default:
               return props.data.get('status');
-              break;
           }
         },
       };

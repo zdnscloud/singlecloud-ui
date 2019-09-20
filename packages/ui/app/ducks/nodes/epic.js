@@ -1,5 +1,10 @@
+/**
+ * Duck: Nodes
+ * epic: nodes
+ *
+ */
 import { push } from 'connected-react-router';
-import { Observable, interval, of, timer } from 'rxjs';
+import { Observable, interval, of, timer, concat } from 'rxjs';
 import {
   mergeMap,
   map,
@@ -20,62 +25,38 @@ import * as a from './actions';
 export const loadNodesEpic = (action$, state$, { ajax }) =>
   action$.pipe(
     ofType(c.LOAD_NODES),
-    mergeMap(({ payload, meta: { clusterID } }) =>
+    mergeMap(({ payload, meta }) =>
       ajax(payload).pipe(
-        map((resp) => a.loadNodesSuccess(resp, clusterID)),
-        catchError((error) => of(a.loadNodesFailure(error, clusterID)))
-      )
-    )
-  );
-
-export const createNodeEpic = (action$, state$, { ajax }) =>
-  action$.pipe(
-    ofType(c.CREATE_NODE),
-    mergeMap(({ payload, meta: { resolve, reject, url, clusterID } }) =>
-      ajax({
-        url,
-        method: 'POST',
-        body: payload,
-      }).pipe(
         map((resp) => {
-          resolve(resp);
-          return a.createNodeSuccess(resp, { clusterID });
+          meta.resolve && meta.resolve(resp);
+          return a.loadNodesSuccess(resp, meta);
         }),
         catchError((error) => {
-          reject(error);
-          return of(a.createNodeFailure(error, { clusterID }));
+          meta.reject && meta.reject(error);
+          return of(a.loadNodesFailure(error, meta));
         })
       )
     )
   );
 
-export const afterCreateEpic = (action$) =>
+export const readNodeEpic = (action$, state$, { ajax }) =>
   action$.pipe(
-    ofType(c.CREATE_NODE_SUCCESS),
+    ofType(c.READ_NODE),
     mergeMap(({ payload, meta }) =>
-      timer(1000).pipe(mapTo(push(`/clusters/${meta.clusterID}/nodes`)))
-    )
-  );
-
-export const removeNodeEpic = (action$, state$, { ajax }) =>
-  action$.pipe(
-    ofType(c.REMOVE_NODE),
-    mergeMap(({ payload, meta: { url, clusterID } }) =>
       ajax({
-        url: `${url}`,
-        method: 'DELETE',
+        url: `${meta.url}`,
+        method: 'GET',
       }).pipe(
-        map((resp) => a.removeNodeSuccess(resp, { id: payload, clusterID })),
-        catchError((error) =>
-          of(a.removeNodeFailure(error, { id: payload, clusterID }))
-        )
+        map((resp) => {
+          meta.resolve && meta.resolve(resp);
+          return a.readNodeSuccess(resp, { ...meta, id: payload });
+        }),
+        catchError((error) => {
+          meta.reject && meta.reject(error);
+          return of(a.readNodeFailure(error, { ...meta, id: payload }));
+        })
       )
     )
   );
 
-export default combineEpics(
-  loadNodesEpic,
-  createNodeEpic,
-  afterCreateEpic,
-  removeNodeEpic
-);
+export default combineEpics(loadNodesEpic, readNodeEpic);

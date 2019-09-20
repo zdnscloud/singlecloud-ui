@@ -14,9 +14,6 @@ import terminalPageReducer from 'containers/TerminalPage/reducer';
 import appReducer from 'ducks/app';
 import roleReducer, { prefix as rolePrefix } from 'ducks/role';
 import usersReducer, { prefix as usersPrefix } from 'ducks/users';
-import serviceLinksReducer, {
-  prefix as serviceLinksPrefix,
-} from 'ducks/serviceLinks';
 import secretsReducer, { prefix as secretsPrefix } from 'ducks/secrets';
 import cronJobsReducer, { prefix as cronJobsPrefix } from 'ducks/cronJobs';
 import jobsReducer, { prefix as jobsPrefix } from 'ducks/jobs';
@@ -68,6 +65,12 @@ import storageClassesReducer, {
 import blockDevicesReducer, {
   prefix as blockDevicesPrefix,
 } from 'ducks/blockDevices';
+import innerServicesReducer, {
+  prefix as innerServicesPrefix,
+} from 'ducks/innerServices';
+import outerServicesReducer, {
+  prefix as outerServicesPrefix,
+} from 'ducks/outerServices';
 // import reducers end
 
 /**
@@ -83,7 +86,6 @@ export default function createReducer(injectedReducers = {}) {
     app: appReducer,
     [rolePrefix]: roleReducer,
     [usersPrefix]: usersReducer,
-    [serviceLinksPrefix]: serviceLinksReducer,
     [configMapsPrefix]: configMapsReducer,
     [secretsPrefix]: secretsReducer,
     [deploymentsPrefix]: deploymentsReducer,
@@ -109,6 +111,8 @@ export default function createReducer(injectedReducers = {}) {
     [storageClustersPrefix]: storageClustersReducer,
     [storageClassesPrefix]: storageClassesReducer,
     [blockDevicesPrefix]: blockDevicesReducer,
+    [innerServicesPrefix]: innerServicesReducer,
+    [outerServicesPrefix]: outerServicesReducer,
     // combine reducers end
     ...injectedReducers,
   });

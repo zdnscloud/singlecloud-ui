@@ -1,6 +1,6 @@
 /**
- *
- * Namespaces Duck
+ * Duck: Namespaces
+ * reducer: namespaces
  *
  */
 import _ from 'lodash';
@@ -16,14 +16,14 @@ const { prefix } = constants;
 export { constants, actions, prefix };
 
 export const initialState = fromJS({
-  namespaces: {},
-  list: [],
-  selectedNamespace: {},
+  data: {},
+  list: {},
+  selectedData: null,
 });
 
 const c = constants;
 
-export const namespacesReducer = (
+export const reducer = (
   state = initialState,
   { type, payload, error, meta }
 ) => {
@@ -31,11 +31,11 @@ export const namespacesReducer = (
     case c.LOAD_NAMESPACES:
       return state;
     case c.LOAD_NAMESPACES_SUCCESS: {
-      const { clusterID } = meta;
       const { data, list } = procCollectionData(payload);
+      const { clusterID } = meta;
       return state
-        .setIn(['namespaces', clusterID], fromJS(data))
-        .set('list', fromJS(list));
+        .setIn(['data', clusterID], fromJS(data))
+        .setIn(['list', clusterID], fromJS(list));
     }
     case c.LOAD_NAMESPACES_FAILURE:
       return state;
@@ -43,33 +43,42 @@ export const namespacesReducer = (
     case c.CREATE_NAMESPACE:
       return state;
     case c.CREATE_NAMESPACE_SUCCESS: {
-      const { clusterID } = meta;
       const data = payload.response;
-      return state.setIn(['namespaces', clusterID, data.id], fromJS(data));
+      const { clusterID } = meta;
+      return state.setIn(['data', clusterID, data.id], fromJS(data));
     }
     case c.CREATE_NAMESPACE_FAILURE:
+      return state;
+
+    case c.READ_NAMESPACE:
+      return state;
+    case c.READ_NAMESPACE_SUCCESS: {
+      const id = getByKey(payload, ['response', 'id']);
+      const data = getByKey(payload, ['response']);
+      const { clusterID } = meta;
+      if (id) {
+        return state.setIn(['data', clusterID, id], fromJS(data));
+      }
+      return state;
+    }
+    case c.READ_NAMESPACE_FAILURE:
       return state;
 
     case c.REMOVE_NAMESPACE:
       return state;
     case c.REMOVE_NAMESPACE_SUCCESS: {
-      const { clusterID, id } = meta;
+      const { id } = meta;
+      const { clusterID } = meta;
       return state
-        .deleteIn(['namespaces', clusterID, id])
-        .update('list', (l) => l.filterNot((i) => i === id));
+        .removeIn(['data', clusterID, id])
+        .updateIn(['list', clusterID], (l) => l.filterNot((i) => i === id));
     }
     case c.REMOVE_NAMESPACE_FAILURE:
       return state;
-
-    case c.CHANGE_NAMESPACE:
-      return state.setIn(
-        ['selectedNamespace', payload.clusterID],
-        payload.namespaceID
-      );
 
     default:
       return state;
   }
 };
 
-export default namespacesReducer;
+export default reducer;

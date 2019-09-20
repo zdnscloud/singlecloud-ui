@@ -1,80 +1,80 @@
+/**
+ * Duck: Jobs
+ * selectors: jobs
+ *
+ */
+import { fromJS } from 'immutable';
 import { createSelector } from 'reselect';
 import {
   createMatchSelector,
   getLocation,
 } from 'connected-react-router/immutable';
 
-import { makeSelectCurrentID as makeSelectClusterID } from 'ducks/clusters/selectors';
 import {
-  makeSelectCurrentID as makeSelectNamespaceID,
-  makeSelectCurrentNamespace,
+  makeSelectCurrent as makeSelectCurrentNamespace,
+  makeSelectCurrentID as makeSelectCurrentNamespaceID,
 } from 'ducks/namespaces/selectors';
 
+import { makeSelectCurrentID as makeSelectCurrentClusterID } from 'ducks/clusters/selectors';
+
 import { prefix } from './constants';
+import { initialState } from './index';
 
 /**
- * Direct selector to the jobs duck
+ * Direct selector to the jobs domain
  */
-
-const selectJobsDomain = (state) => state.get(prefix);
+export const selectDomain = (state) => state.get(prefix) || initialState;
 
 /**
  * Other specific selectors
  */
+export const makeSelectURL = () =>
+  createSelector(
+    makeSelectCurrentNamespace(),
+    (pt) => pt.getIn(['links', 'jobs'])
+  );
+
 export const makeSelectJobs = () =>
   createSelector(
-    selectJobsDomain,
-    makeSelectClusterID(),
-    makeSelectNamespaceID(),
+    selectDomain,
+    makeSelectCurrentClusterID(),
+    makeSelectCurrentNamespaceID(),
+
     (substate, clusterID, namespaceID) =>
-      substate.getIn(['jobs', clusterID, namespaceID]) || substate.clear()
+      substate.getIn(['data', clusterID, namespaceID]) || substate.clear()
   );
 
 export const makeSelectJobsList = () =>
   createSelector(
-    selectJobsDomain,
+    selectDomain,
     makeSelectJobs(),
-    (substate, jobs) => substate.get('list').map((id) => jobs.get(id))
+    makeSelectCurrentClusterID(),
+    makeSelectCurrentNamespaceID(),
+
+    (substate, data, clusterID, namespaceID) =>
+      (substate.getIn(['list', clusterID, namespaceID]) || fromJS([])).map(
+        (id) => data.get(id)
+      ) || fromJS([])
   );
 
-export const makeSelectURL = () =>
+export const makeSelectCurrentID = () =>
   createSelector(
-    makeSelectCurrentNamespace(),
-    (ns) => ns.getIn(['links', 'jobs'])
-  );
-
-export const makeSelectJobID = () =>
-  createSelector(
-    createMatchSelector(
-      '/clusters/:cluster_id/namespaces/:namespace_id/jobs/:job_id'
-    ),
+    createMatchSelector('*/jobs/:id/*'),
     (match) => {
       if (match && match.params) {
-        return match.params.job_id;
+        return match.params.id;
       }
       return '';
     }
   );
 
-export const makeSelectCurrentJob = () =>
+export const makeSelectCurrent = () =>
   createSelector(
-    selectJobsDomain,
-    makeSelectClusterID(),
-    makeSelectNamespaceID(),
-    makeSelectJobID(),
-    (substate, clusterID, namespaceID, jobID) =>
-      substate.getIn(['jobs', clusterID, namespaceID, jobID]) ||
-      substate.clear()
+    selectDomain,
+    makeSelectCurrentClusterID(),
+    makeSelectCurrentNamespaceID(),
+
+    makeSelectCurrentID(),
+    (substate, clusterID, namespaceID, id) =>
+      substate.getIn(['data', clusterID, namespaceID, id]) || substate.clear()
   );
-
-/**
- * Default selector used by LoginPage
- */
-
-const makeSelectJobsDomain = () =>
-  createSelector(
-    selectJobsDomain,
-    (substate) => substate
-  );
-
-export default makeSelectJobsDomain;

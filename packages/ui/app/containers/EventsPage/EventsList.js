@@ -29,109 +29,104 @@ import IconButton from '@material-ui/core/IconButton';
 import NormalIcon from 'components/Icons/Normal';
 import WarningIcon from 'components/Icons/Warning';
 import MaxWindowIcon from 'components/Icons/MaxWindow';
+import { useTheme } from '@material-ui/styles';
 
-import { makeSelectClusterID } from 'ducks/app/selectors';
+import { makeSelectCurrentID as makeSelectClusterID } from 'ducks/clusters/selectors';
 import { makeSelectLatestEvents } from 'ducks/events/selectors';
 import * as actions from 'ducks/events/actions';
 
 import messages from './messages';
-import styles from './styles';
+import useStyles from './styles';
 
-/* eslint-disable react/prefer-stateless-function */
-export class EventsList extends React.PureComponent {
-  static propTypes = {
-    classes: PropTypes.object.isRequired,
-    events: PropTypes.array,
-  };
+const EventsList = ({ clusterID, events }) => {
+  const classes = useStyles();
+  const theme = useTheme();
 
-  render() {
-    const { classes, clusterID, events, theme } = this.props;
-    const rEvents = events.reverse();
+  const rEvents = events.reverse();
 
-    return (
-      <Paper className={classes.wrapper}>
-        <List className={classes.list}>
-          <ListItem className={classes.firstItem}>
-            <IconButton component={Link} to={`/clusters/${clusterID}/events`}>
-              <MaxWindowIcon
-                style={{
-                  color: theme.palette.icons.e,
-                  transform: 'scale(0.65)',
-                }}
+  return (
+    <Paper className={classes.wrapper}>
+      <List className={classes.list}>
+        <ListItem className={classes.firstItem}>
+          <IconButton component={Link} to={`/clusters/${clusterID}/events`}>
+            <MaxWindowIcon
+              style={{
+                color: theme.palette.icons.e,
+                transform: 'scale(0.65)',
+              }}
+            />
+          </IconButton>
+        </ListItem>
+        <ReactCSSTransitionGroup
+          transitionName="eventItem"
+          transitionEnterTimeout={500}
+          transitionLeaveTimeout={300}
+        >
+          {rEvents.map((evt, i) => (
+            <ListItem className={classes.item} key={evt.id}>
+              <ListItemAvatar className={classes.itemAvatar}>
+                {evt.type === 'Warning' ? (
+                  <WarningIcon
+                    style={{
+                      color: theme.palette.icons.f,
+                      transform: 'scale(0.85)',
+                    }}
+                  />
+                ) : (
+                  <NormalIcon
+                    style={{
+                      color: theme.palette.secondary.main,
+                      transform: 'scale(0.85)',
+                    }}
+                  />
+                )}
+              </ListItemAvatar>
+              <ListItemText
+                className={classes.itemText}
+                primary={
+                  <Typography className={classes.itemText1} component="div">
+                    <Typography
+                      className={classes.itemName}
+                      component="div"
+                      title={evt.name}
+                    >
+                      {evt.name}
+                    </Typography>
+                    <Typography
+                      className={classes.itemReason}
+                      component="div"
+                      title={evt.reason}
+                    >
+                      {evt.reason}
+                    </Typography>
+                  </Typography>
+                }
+                secondary={
+                  <Typography className={classes.itemText2} component="div">
+                    <Typography
+                      className={classes.itemMessage}
+                      component="div"
+                      title={evt.message}
+                    >
+                      {evt.message}
+                    </Typography>
+                    <Typography
+                      className={classes.itemTime}
+                      component="div"
+                      title={evt.time}
+                    >
+                      {evt.time}
+                    </Typography>
+                  </Typography>
+                }
               />
-            </IconButton>
-          </ListItem>
-          <ReactCSSTransitionGroup
-            transitionName="eventItem"
-            transitionEnterTimeout={500}
-            transitionLeaveTimeout={300}
-          >
-            {rEvents.map((evt, i) => (
-              <ListItem className={classes.item} key={evt.id}>
-                <ListItemAvatar className={classes.itemAvatar}>
-                  {evt.type === 'Warning' ? (
-                    <WarningIcon
-                      style={{
-                        color: theme.palette.icons.f,
-                        transform: 'scale(0.85)',
-                      }}
-                    />
-                  ) : (
-                    <NormalIcon
-                      style={{
-                        color: theme.palette.secondary.main,
-                        transform: 'scale(0.85)',
-                      }}
-                    />
-                  )}
-                </ListItemAvatar>
-                <ListItemText
-                  className={classes.itemText}
-                  primary={
-                    <Typography className={classes.itemText1} component="div">
-                      <Typography
-                        className={classes.itemName}
-                        component="div"
-                        title={evt.name}
-                      >
-                        {evt.name}
-                      </Typography>
-                      <Typography
-                        className={classes.itemReason}
-                        component="div"
-                        title={evt.reason}
-                      >
-                        {evt.reason}
-                      </Typography>
-                    </Typography>
-                  }
-                  secondary={
-                    <Typography className={classes.itemText2} component="div">
-                      <Typography
-                        className={classes.itemMessage}
-                        component="div"
-                        title={evt.message}
-                      >
-                        {evt.message}
-                      </Typography>
-                      <Typography
-                        className={classes.itemTime}
-                        component="div"
-                        title={evt.time}
-                      >
-                        {evt.time}
-                      </Typography>
-                    </Typography>
-                  }
-                />
-              </ListItem>
-            ))}
-          </ReactCSSTransitionGroup>
-        </List>
-      </Paper>
-    );
-  }
-}
+            </ListItem>
+          ))}
+        </ReactCSSTransitionGroup>
+      </List>
+    </Paper>
+  );
+};
 
 const mapStateToProps = createStructuredSelector({
   clusterID: makeSelectClusterID(),
@@ -151,7 +146,4 @@ const withConnect = connect(
   mapDispatchToProps
 );
 
-export default compose(
-  withConnect,
-  withStyles(styles, { withTheme: true })
-)(EventsList);
+export default compose(withConnect)(EventsList);

@@ -4,7 +4,7 @@
  *
  */
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
@@ -30,70 +30,59 @@ import { makeSelectURL } from 'ducks/userQuotas/selectors';
 import * as actions from 'ducks/userQuotas/actions';
 
 import messages from './messages';
-import styles from './styles';
+import useStyles from './styles';
 import UserQuotasTable from './UserQuotasTable';
 import UserQuotasPageHelmet from './helmet';
 
-/* eslint-disable react/prefer-stateless-function */
-export class UserQuotasPage extends React.PureComponent {
-  static propTypes = {};
+const UserQuotasPage = ({ url, loadUserQuotas }) => {
+  const classes = useStyles();
 
-  componentWillMount() {
-    this.load();
-    this.timer = setInterval(() => this.load(), 3000);
-  }
+  useEffect(() => {
+    if (url) {
+      loadUserQuotas(url);
+    }
+    const t = setInterval(() => loadUserQuotas(url), 3000);
+    return () => clearInterval(t);
+  }, [loadUserQuotas, url]);
 
-  componentWillUnmount() {
-    clearInterval(this.timer);
-  }
-
-  load() {
-    const { loadUserQuotas, url } = this.props;
-    loadUserQuotas(url);
-  }
-
-  render() {
-    const { classes } = this.props;
-
-    return (
-      <div className={classes.root}>
-        <UserQuotasPageHelmet />
-        <CssBaseline />
-        <div className={classes.content}>
-          <Breadcrumbs
-            data={[
-              {
-                path: '/userQuotas',
-                name: <FormattedMessage {...messages.userQuotas} />,
-              },
-            ]}
-          />
-          <GridContainer className={classes.grid}>
-            <GridItem xs={12} sm={12} md={12}>
-              <Card>
-                <CardHeader>
-                  <h4>
-                    <FormattedMessage {...messages.userQuotas} />
-                  </h4>
-                  <IconButton
-                    aria-label={<FormattedMessage {...messages.userQuotas} />}
-                    component={Link}
-                    to="/userQuotas/create"
-                  >
-                    <AddIcon />
-                  </IconButton>
-                </CardHeader>
-                <CardBody>
-                  <UserQuotasTable />
-                </CardBody>
-              </Card>
-            </GridItem>
-          </GridContainer>
-        </div>
+  return (
+    <div className={classes.root}>
+      <UserQuotasPageHelmet />
+      <CssBaseline />
+      <div className={classes.content}>
+        <Breadcrumbs
+          data={[
+            {
+              path: '/userQuotas',
+              name: <FormattedMessage {...messages.userQuotas} />,
+            },
+          ]}
+        />
+        <GridContainer className={classes.grid}>
+          <GridItem xs={12} sm={12} md={12}>
+            <Card>
+              <CardHeader>
+                <h4>
+                  <FormattedMessage {...messages.userQuotas} />
+                </h4>
+                <IconButton
+                  aria-label={<FormattedMessage {...messages.userQuotas} />}
+                  component={Link}
+                  to="/userQuotas/create"
+                >
+                  <AddIcon />
+                </IconButton>
+              </CardHeader>
+              <CardBody>
+                <UserQuotasTable />
+              </CardBody>
+            </Card>
+          </GridItem>
+        </GridContainer>
       </div>
-    );
-  }
-}
+    </div>
+  );
+};
 
 const mapStateToProps = createStructuredSelector({
   url: makeSelectURL(),
@@ -112,7 +101,4 @@ const withConnect = connect(
   mapDispatchToProps
 );
 
-export default compose(
-  withConnect,
-  withStyles(styles)
-)(UserQuotasPage);
+export default compose(withConnect)(UserQuotasPage);

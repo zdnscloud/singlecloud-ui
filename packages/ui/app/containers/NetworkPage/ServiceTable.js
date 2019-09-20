@@ -17,33 +17,25 @@ import Paper from '@material-ui/core/Paper';
 import { SimpleTable } from '@gsmlg/com';
 
 import messages from './messages';
-import styles from './styles';
+import useStyles from './styles';
 import schema from './tableSchema';
 
-/* eslint-disable react/prefer-stateless-function */
-export class ServiceTable extends React.PureComponent {
-  static propTypes = {
-    classes: PropTypes.object.isRequired,
-    data: PropTypes.object.isRequired,
-  };
+const ServiceTable = ({ data }) => {
+  const classes = useStyles();
+  const mergedSchema = schema.map((s) => ({
+    ...s,
+    label: <FormattedMessage {...messages[`tableTitle${s.label}`]} />,
+  }));
 
-  render() {
-    const { classes, data } = this.props;
-    const mergedSchema = schema.map((s) => ({
-      ...s,
-      label: <FormattedMessage {...messages[`tableTitle${s.label}`]} />,
-    }));
+  return (
+    <Paper className={classes.tableWrapper}>
+      <SimpleTable
+        className={classes.table}
+        schema={mergedSchema}
+        data={data}
+      />
+    </Paper>
+  );
+};
 
-    return (
-      <Paper className={classes.tableWrapper}>
-        <SimpleTable
-          className={classes.table}
-          schema={mergedSchema}
-          data={data}
-        />
-      </Paper>
-    );
-  }
-}
-
-export default compose(withStyles(styles))(ServiceTable);
+export default ServiceTable;

@@ -18,22 +18,21 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
+import Danger from 'components/Typography/Danger';
+import ClusterWatchIcon from 'components/Icons/ClusterWatch';
+import ImageRegistryIcon from 'components/Icons/ImageRegistry';
+import ConfirmDialog from 'components/Confirm/ConfirmDialog';
 
 import * as actions from 'ducks/app/actions';
 import * as mActions from 'ducks/monitors/actions';
 import * as rActions from 'ducks/registries/actions';
 import { makeSelectRole } from 'ducks/role/selectors';
-import { makeSelectCurrentCluster } from 'ducks/clusters/selectors';
 import { makeSelectError } from 'ducks/monitors/selectors';
+import { makeSelectShowMenuText } from 'ducks/app/selectors';
 import {
-  makeSelectClusterID,
-  makeSelectShowMenuText,
-} from 'ducks/app/selectors';
-
-import Danger from 'components/Typography/Danger';
-import ClusterWatchIcon from 'components/Icons/ClusterWatch';
-import ImageRegistryIcon from 'components/Icons/ImageRegistry';
-import ConfirmDialog from 'components/Confirm/ConfirmDialog';
+  makeSelectCurrentID as makeSelectCurrentClusterID,
+  makeSelectCurrent as makeSelectCurrentCluster,
+} from 'ducks/clusters/selectors';
 
 import messages from './messages';
 import useStyles from './LeftMenuStyle';
@@ -184,9 +183,9 @@ const OutLinks = ({
 };
 
 const mapStateToProps = createStructuredSelector({
-  clusterID: makeSelectClusterID(),
-  showText: makeSelectShowMenuText(),
+  clusterID: makeSelectCurrentClusterID(),
   cluster: makeSelectCurrentCluster(),
+  showText: makeSelectShowMenuText(),
   role: makeSelectRole(),
   formValues: getFormValues(formName),
   monitorsError: makeSelectError(),

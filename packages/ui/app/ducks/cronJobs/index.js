@@ -1,8 +1,9 @@
 /**
- *
- * CronJobs Duck
+ * Duck: Cronjobs
+ * reducer: cronJobs
  *
  */
+import _ from 'lodash';
 import { fromJS } from 'immutable';
 import getByKey from '@gsmlg/utils/getByKey';
 import { procCollectionData } from '@gsmlg/utils/procData';
@@ -15,96 +16,83 @@ const { prefix } = constants;
 export { constants, actions, prefix };
 
 export const initialState = fromJS({
-  cronJobs: {},
-  list: [],
+  data: {},
+  list: {},
+  selectedData: null,
 });
 
 const c = constants;
 
-export const cronJobsReducer = (
+export const reducer = (
   state = initialState,
   { type, payload, error, meta }
 ) => {
   switch (type) {
-    case c.LOAD_CRONJOBS:
+    case c.LOAD_CRON_JOBS:
       return state;
-    case c.LOAD_CRONJOBS_SUCCESS: {
-      const { clusterID, namespaceID } = meta;
+    case c.LOAD_CRON_JOBS_SUCCESS: {
       const { data, list } = procCollectionData(payload);
+      const { clusterID, namespaceID } = meta;
       return state
-        .setIn(['cronJobs', clusterID, namespaceID], fromJS(data))
-        .set('list', fromJS(list));
+        .setIn(['data', clusterID, namespaceID], fromJS(data))
+        .setIn(['list', clusterID, namespaceID], fromJS(list));
     }
-    case c.LOAD_CRONJOBS_FAILURE:
+    case c.LOAD_CRON_JOBS_FAILURE:
       return state;
 
-    case c.LOAD_CRONJOB:
+    case c.CREATE_CRON_JOB:
       return state;
-    case c.LOAD_CRONJOB_SUCCESS: {
-      const { clusterID, namespaceID } = meta;
-      const cronJob = payload.response;
-      // temporary add, may remove when support cancel load data
-      if (cronJob && cronJob.id) {
-        const { containers } = cronJob;
-        containers.forEach((item) => {
-          if (item && item.args) {
-            item.args = item.args.join(' ');
-          }
-          if (item && item.command) {
-            item.command = item.command.join(' ');
-          }
-        });
-        return state.setIn(
-          ['cronJobs', clusterID, namespaceID, cronJob.id],
-          fromJS(cronJob)
-        );
-      }
-      return state;
-    }
-    case c.LOAD_CRONJOB_FAILURE:
-      return state;
-
-    case c.CREATE_CRONJOB:
-      return state;
-    case c.CREATE_CRONJOB_SUCCESS: {
-      const { clusterID, namespaceID } = meta;
+    case c.CREATE_CRON_JOB_SUCCESS: {
       const data = payload.response;
+      const { clusterID, namespaceID } = meta;
       return state.setIn(
-        ['cronJobs', clusterID, namespaceID, data.id],
+        ['data', clusterID, namespaceID, data.id],
         fromJS(data)
       );
     }
-
-    case c.CREATE_CRONJOB_FAILURE:
+    case c.CREATE_CRON_JOB_FAILURE:
       return state;
 
-    case c.UPDATE_CRONJOB:
+    case c.UPDATE_CRON_JOB:
       return state;
-    case c.UPDATE_CRONJOB_SUCCESS:
-      return state;
-    case c.UPDATE_CRONJOB_FAILURE:
-      return state;
-
-    case c.REMOVE_CRONJOB:
-      return state;
-    case c.REMOVE_CRONJOB_SUCCESS:
-      return state
-        .deleteIn(['cronJobs', meta.id])
-        .update('list', (l) => l.filterNot((id) => id === meta.id));
-    case c.REMOVE_CRONJOB_FAILURE:
-      return state;
-
-    case c.SCALE_CRONJOB:
-      return state;
-    case c.SCALE_CRONJOB_SUCCESS: {
+    case c.UPDATE_CRON_JOB_SUCCESS: {
+      const id = getByKey(payload, ['response', 'id']);
+      const data = getByKey(payload, ['response']);
       const { clusterID, namespaceID } = meta;
-      const data = payload.response;
-      return state.setIn(
-        ['cronJobs', clusterID, namespaceID, data.id, 'replicas'],
-        data.replicas
-      );
+      if (id) {
+        return state.setIn(['data', clusterID, namespaceID, id], fromJS(data));
+      }
+      return state;
     }
-    case c.SCALE_CRONJOB_FAILURE:
+    case c.UPDATE_CRON_JOB_FAILURE:
+      return state;
+
+    case c.READ_CRON_JOB:
+      return state;
+    case c.READ_CRON_JOB_SUCCESS: {
+      const id = getByKey(payload, ['response', 'id']);
+      const data = getByKey(payload, ['response']);
+      const { clusterID, namespaceID } = meta;
+      if (id) {
+        return state.setIn(['data', clusterID, namespaceID, id], fromJS(data));
+      }
+      return state;
+    }
+    case c.READ_CRON_JOB_FAILURE:
+      return state;
+
+    case c.REMOVE_CRON_JOB:
+      return state;
+    case c.REMOVE_CRON_JOB_SUCCESS: {
+      const { id } = meta;
+      const { clusterID, namespaceID } = meta;
+      return state
+        .removeIn(['data', clusterID, namespaceID, id])
+        .updateIn(['list', clusterID, namespaceID], (l) =>
+          l.filterNot((i) => i === id)
+        );
+    }
+    case c.REMOVE_CRON_JOB_FAILURE:
       return state;
 
     default:
@@ -112,4 +100,4 @@ export const cronJobsReducer = (
   }
 };
 
-export default cronJobsReducer;
+export default reducer;

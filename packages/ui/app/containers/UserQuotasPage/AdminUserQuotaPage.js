@@ -4,7 +4,7 @@
  *
  */
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
@@ -33,12 +33,12 @@ import ErrorInfo from 'components/ErrorInfo/ErrorInfo';
 import {
   makeSelectURL,
   makeSelectUserQuotasList,
-  makeSelectDeleteUserQuotaError,
+  makeSelectDeleteError,
 } from 'ducks/userQuotas/selectors';
 import * as actions from 'ducks/userQuotas/actions';
 
 import messages from './messages';
-import styles from './styles';
+import useStyles from './styles';
 import AdminUserQuotasTable from './AdminUserQuotasTable';
 import AdminUserQuotaPageHelmet from './helmet';
 import UserQuotaForm from './form/searchForm';
@@ -61,98 +61,84 @@ const SearchUserQuotaForm = reduxForm({
   validate,
 })(UserQuotaForm);
 
-/* eslint-disable react/prefer-stateless-function */
-export class AdminUserQuotaPage extends React.PureComponent {
-  static propTypes = {};
+const AdminUserQuotaPage = ({
+  submitForm,
+  deleteError,
+  clearDeleteErrorInfo,
+  loadUserQuotas,
+  url,
+}) => {
+  const classes = useStyles();
+  const [filter, setFilter] = useState({});
 
-  state = {
-    filter: {},
+  useEffect(() => {
+    if (url) {
+      loadUserQuotas(url);
+    }
+    const t = setInterval(() => loadUserQuotas(url), 3000);
+    return () => clearInterval(t);
+  }, [loadUserQuotas, url]);
+
+  const doSubmit = (formValues) => {
+    setFilter(formValues.toJS());
   };
 
-  componentWillMount() {
-    this.load();
-    this.timer = setInterval(() => this.load(), 3000);
-  }
-
-  componentWillUnmount() {
-    clearInterval(this.timer);
-  }
-
-  load() {
-    const { loadUserQuotas, url } = this.props;
-    loadUserQuotas(url);
-  }
-
-  render() {
-    const {
-      classes,
-      submitForm,
-      deleteError,
-      clearDeleteErrorInfo,
-    } = this.props;
-    const doSubmit = (formValues) => {
-      this.setState({
-        filter: formValues.toJS(),
-      });
-    };
-
-    return (
-      <div className={classes.root}>
-        <AdminUserQuotaPageHelmet />
-        <CssBaseline />
-        <div className={classes.content}>
-          <Breadcrumbs
-            data={[
-              {
-                path: '/adminUserQuotas',
-                name: <FormattedMessage {...messages.adminRequestListPage} />,
-              },
-            ]}
-          />
-          <GridContainer className={classes.grid}>
-            {deleteError ? (
-              <ErrorInfo errorText={deleteError} close={clearDeleteErrorInfo} />
-            ) : null}
-            <GridItem xs={12} sm={12} md={12}>
-              <Card>
-                <CardHeader>
-                  <h4>
-                    <FormattedMessage {...messages.requestList} />
-                  </h4>
-                </CardHeader>
-                <CardBody>
-                  <GridContainer style={{ marginBottom: '20px' }}>
-                    <GridItem xs={6} sm={6} md={6}>
-                      <SearchUserQuotaForm
-                        classes={classes}
-                        onSubmit={doSubmit}
-                      />
-                    </GridItem>
-                    <GridItem xs={6} sm={6} md={6}>
-                      <Button
-                        variant="contained"
-                        color="primary"
-                        onClick={submitForm}
-                        style={{ marginTop: '10px' }}
-                      >
-                        <FormattedMessage {...messages.searchUserQuotaButton} />
-                      </Button>
-                    </GridItem>
-                  </GridContainer>
-                  <AdminUserQuotasTable filter={this.state.filter} />
-                </CardBody>
-              </Card>
-            </GridItem>
-          </GridContainer>
-        </div>
+  return (
+    <div className={classes.root}>
+      <AdminUserQuotaPageHelmet />
+      <CssBaseline />
+      <div className={classes.content}>
+        <Breadcrumbs
+          data={[
+            {
+              path: '/adminUserQuotas',
+              name: <FormattedMessage {...messages.adminRequestListPage} />,
+            },
+          ]}
+        />
+        <GridContainer className={classes.grid}>
+          {deleteError ? (
+            <ErrorInfo errorText={deleteError} close={clearDeleteErrorInfo} />
+          ) : null}
+          <GridItem xs={12} sm={12} md={12}>
+            <Card>
+              <CardHeader>
+                <h4>
+                  <FormattedMessage {...messages.requestList} />
+                </h4>
+              </CardHeader>
+              <CardBody>
+                <GridContainer style={{ marginBottom: '20px' }}>
+                  <GridItem xs={6} sm={6} md={6}>
+                    <SearchUserQuotaForm
+                      classes={classes}
+                      onSubmit={doSubmit}
+                    />
+                  </GridItem>
+                  <GridItem xs={6} sm={6} md={6}>
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      onClick={submitForm}
+                      style={{ marginTop: '10px' }}
+                    >
+                      <FormattedMessage {...messages.searchUserQuotaButton} />
+                    </Button>
+                  </GridItem>
+                </GridContainer>
+                <AdminUserQuotasTable filter={filter} />
+              </CardBody>
+            </Card>
+          </GridItem>
+        </GridContainer>
       </div>
-    );
-  }
-}
+    </div>
+  );
+};
 
 const mapStateToProps = createStructuredSelector({
   url: makeSelectURL(),
-  deleteError: makeSelectDeleteUserQuotaError(),
+  deleteError: makeSelectDeleteError(),
 });
 
 const mapDispatchToProps = (dispatch) =>
@@ -169,7 +155,4 @@ const withConnect = connect(
   mapDispatchToProps
 );
 
-export default compose(
-  withConnect,
-  withStyles(styles)
-)(AdminUserQuotaPage);
+export default compose(withConnect)(AdminUserQuotaPage);

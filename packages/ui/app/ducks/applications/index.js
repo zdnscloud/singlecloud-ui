@@ -1,6 +1,6 @@
 /**
- *
- * Applications Duck
+ * Duck: Applications
+ * reducer: applications
  *
  */
 import _ from 'lodash';
@@ -16,16 +16,15 @@ const { prefix } = constants;
 export { constants, actions, prefix };
 
 export const initialState = fromJS({
-  applications: {},
-  list: [],
-  selectedApplication: {},
+  data: {},
+  list: {},
+  selectedData: null,
   deleteError: '',
-  chart: {},
 });
 
 const c = constants;
 
-export const applicationsReducer = (
+export const reducer = (
   state = initialState,
   { type, payload, error, meta }
 ) => {
@@ -33,51 +32,64 @@ export const applicationsReducer = (
     case c.LOAD_APPLICATIONS:
       return state;
     case c.LOAD_APPLICATIONS_SUCCESS: {
-      const { clusterID, namespaceID } = meta;
       const { data, list } = procCollectionData(payload);
+      const { clusterID, namespaceID } = meta;
       return state
-        .setIn(['applications', clusterID, namespaceID], fromJS(data))
-        .set('list', fromJS(list));
+        .setIn(['data', clusterID, namespaceID], fromJS(data))
+        .setIn(['list', clusterID, namespaceID], fromJS(list));
     }
     case c.LOAD_APPLICATIONS_FAILURE:
-      return state;
-
-    case c.LOAD_CHART:
-      return state;
-    case c.LOAD_CHART_SUCCESS: {
-      const data = payload.response;
-      return state.set('chart', fromJS(data));
-    }
-    case c.LOAD_CHART_FAILURE:
       return state;
 
     case c.CREATE_APPLICATION:
       return state;
     case c.CREATE_APPLICATION_SUCCESS: {
       const data = payload.response;
-      return state.setIn(['charts', data.id], fromJS(data));
+      const { clusterID, namespaceID } = meta;
+      return state.setIn(
+        ['data', clusterID, namespaceID, data.id],
+        fromJS(data)
+      );
     }
     case c.CREATE_APPLICATION_FAILURE:
+      return state;
+
+    case c.READ_APPLICATION:
+      return state;
+    case c.READ_APPLICATION_SUCCESS: {
+      const id = getByKey(payload, ['response', 'id']);
+      const data = getByKey(payload, ['response']);
+      const { clusterID, namespaceID } = meta;
+      if (id) {
+        return state.setIn(['data', clusterID, namespaceID, id], fromJS(data));
+      }
+      return state;
+    }
+    case c.READ_APPLICATION_FAILURE:
       return state;
 
     case c.REMOVE_APPLICATION:
       return state;
     case c.REMOVE_APPLICATION_SUCCESS: {
-      return state;
+      const { id } = meta;
+      const { clusterID, namespaceID } = meta;
+      return state
+        .removeIn(['data', clusterID, namespaceID, id])
+        .updateIn(['list', clusterID, namespaceID], (l) =>
+          l.filterNot((i) => i === id)
+        );
     }
     case c.REMOVE_APPLICATION_FAILURE:
+      // eslint-disable-next-line no-case-declarations
       const data = payload.response.message;
       return state.set('deleteError', data);
 
     case c.CLEAR_DELETE_ERROR_INFO:
       return state.set('deleteError', '');
 
-    case c.CHANGE_APPLICATION:
-      return state.setIn(['selectedApplication'], payload.applicationID);
-
     default:
       return state;
   }
 };
 
-export default applicationsReducer;
+export default reducer;
