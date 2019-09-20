@@ -42,22 +42,11 @@ export class LoginPage extends React.PureComponent {
 
   t = null;
 
-  componentWillMount() {
+  componentDidMount() {
     const { isLogin, history, loadRole } = this.props;
-    if (isLogin) {
-    } else {
+    if (!isLogin) {
       loadRole('/web/role');
     }
-  }
-
-  componentWillUpdate(nextProps) {
-    const { isLogin, history, loadRole } = nextProps;
-    if (isLogin) {
-      // history.replace('/clusters');
-    }
-  }
-
-  componentDidMount() {
     // we add a hidden class to the card and after 700 ms we delete it and the transition appears
     this.cardTimer = setTimeout(() => {
       this.setState({ cardAnimaton: 'cardShown' });

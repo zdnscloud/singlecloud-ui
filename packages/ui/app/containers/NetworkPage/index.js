@@ -60,7 +60,7 @@ export class NetworkPage extends React.PureComponent {
 
   setTab = (evt, val) => this.setState({ tab: val });
 
-  componentWillMount() {
+  componentDidMount() {
     this.load();
   }
 
