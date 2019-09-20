@@ -89,6 +89,10 @@ export default defineMessages({
     id: `${scope}.tableTitleNode`,
     defaultMessage: 'Node',
   },
+  tableTitlePhase: {
+    id: `${scope}.tableTitlePhase`,
+    defaultMessage: 'Phase',
+  },
   nodeName: {
     id: `${scope}.nodeName`,
     defaultMessage: 'Node',

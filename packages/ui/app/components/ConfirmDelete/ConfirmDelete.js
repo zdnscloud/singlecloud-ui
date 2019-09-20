@@ -11,12 +11,19 @@ import { FormattedMessage, injectIntl } from 'react-intl';
 import warningIcon from 'images/warning.png';
 import messages from './messages';
 
-const ConfirmDelete = (props) => {
+const ConfirmDelete = ({
+  id,
+  actionName,
+  url,
+  clusterID,
+  namespaceID,
+  resolve,
+  reject,
+}) => {
   const [open, setOpen] = useState(false);
 
   const handleDelete = () => {
-    const { id, actionName, url, clusterID, namespaceID } = props;
-    actionName(id, { url, clusterID, namespaceID });
+    actionName(id, { url, clusterID, namespaceID, resolve, reject });
     setOpen(false);
   };
 

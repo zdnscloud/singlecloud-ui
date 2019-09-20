@@ -1,15 +1,16 @@
 /**
  *
- * ConfigMapsPage
+ * StorageClusters Page
  *
  */
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import { bindActionCreators, compose } from 'redux';
+import getByKey from '@gsmlg/utils/getByKey';
 
 import Helmet from 'components/Helmet/Helmet';
 import { Link } from 'react-router-dom';
@@ -20,7 +21,7 @@ import Paper from '@material-ui/core/Paper';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import IconButton from '@material-ui/core/IconButton';
-
+import ErrorInfo from 'components/ErrorInfo/ErrorInfo';
 import AddIcon from 'components/Icons/Add';
 import GridItem from 'components/Grid/GridItem';
 import GridContainer from 'components/Grid/GridContainer';
@@ -46,6 +47,7 @@ export const StoragesPage = ({ clusterID, loadStorageClusters, url }) => {
     const t = setInterval(() => loadStorageClusters(url, { clusterID }), 3000);
     return () => clearInterval(t);
   }, [clusterID, loadStorageClusters, url]);
+  const [error, setError] = useState(null);
 
   return (
     <div className={classes.root}>
@@ -61,6 +63,12 @@ export const StoragesPage = ({ clusterID, loadStorageClusters, url }) => {
           ]}
         />
         <GridContainer className={classes.grid}>
+          {error ? (
+            <ErrorInfo
+              errorText={getByKey(error, ['response', 'message'])}
+              close={() => setError(null)}
+            />
+          ) : null}
           <GridItem xs={12} sm={12} md={12}>
             <Card>
               <CardHeader>
@@ -75,7 +83,7 @@ export const StoragesPage = ({ clusterID, loadStorageClusters, url }) => {
                 </IconButton>
               </CardHeader>
               <CardBody>
-                <StoragesTable />
+                <StoragesTable setError={setError} />
               </CardBody>
             </Card>
           </GridItem>
