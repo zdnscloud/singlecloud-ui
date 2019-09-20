@@ -1,42 +1,67 @@
+/**
+ * Duck: Networks
+ * actions: networks
+ *
+ */
+
 import * as c from './constants';
 
 /*
   actions
 */
-export const loadPodNetworks = (url, clusterID) => ({
+export const loadPodNetworks = (url, meta = {}) => ({
   type: c.LOAD_POD_NETWORKS,
   payload: url,
-  meta: { clusterID },
+  meta,
 });
 
-export const loadPodNetworksSuccess = (resp, clusterID) => ({
+export const loadPodNetworksSuccess = (resp, meta = {}) => ({
   type: c.LOAD_POD_NETWORKS_SUCCESS,
   payload: resp,
-  meta: { clusterID },
+  meta,
 });
 
-export const loadPodNetworksFailure = (error, clusterID) => ({
+export const loadPodNetworksFailure = (error, meta = {}) => ({
   type: c.LOAD_POD_NETWORKS_FAILURE,
   payload: error,
-  meta: { clusterID },
+  meta,
   error: true,
 });
 
-export const loadServiceNetworks = (url, clusterID) => ({
+export const loadServiceNetworks = (url, meta = {}) => ({
   type: c.LOAD_SERVICE_NETWORKS,
   payload: url,
-  meta: { clusterID },
+  meta,
 });
 
-export const loadServiceNetworksSuccess = (resp, clusterID) => ({
+export const loadServiceNetworksSuccess = (resp, meta = {}) => ({
   type: c.LOAD_SERVICE_NETWORKS_SUCCESS,
   payload: resp,
-  meta: { clusterID },
+  meta,
 });
 
-export const loadServiceNetworksFailure = (error, clusterID) => ({
+export const loadServiceNetworksFailure = (error, meta = {}) => ({
   type: c.LOAD_SERVICE_NETWORKS_FAILURE,
   payload: error,
-  meta: { clusterID },
+  meta,
+  error: true,
+});
+
+export const loadNodeNetworks = (url, meta = {}) => ({
+  type: c.LOAD_NODE_NETWORKS,
+  payload: url,
+  meta,
+});
+
+export const loadNodeNetworksSuccess = (resp, meta = {}) => ({
+  type: c.LOAD_NODE_NETWORKS_SUCCESS,
+  payload: resp,
+  meta,
+});
+
+export const loadNodeNetworksFailure = (error, meta = {}) => ({
+  type: c.LOAD_NODE_NETWORKS_FAILURE,
+  payload: error,
+  meta,
   error: true,
 });

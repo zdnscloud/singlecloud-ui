@@ -1,6 +1,6 @@
 /**
- *
- * Networks Duck
+ * Duck: Networks
+ * reducer: networks
  *
  */
 import _ from 'lodash';
@@ -18,11 +18,12 @@ export { constants, actions, prefix };
 export const initialState = fromJS({
   podNetworks: {},
   serviceNetworks: {},
+  nodeNetworks: {},
 });
 
 const c = constants;
 
-export const networksReducer = (
+export const reducer = (
   state = initialState,
   { type, payload, error, meta }
 ) => {
@@ -47,9 +48,19 @@ export const networksReducer = (
     case c.LOAD_SERVICE_NETWORKS_FAILURE:
       return state;
 
+    case c.LOAD_NODE_NETWORKS:
+      return state;
+    case c.LOAD_NODE_NETWORKS_SUCCESS: {
+      const { clusterID } = meta;
+      const { data } = payload.response;
+      return state.setIn(['nodeNetworks', clusterID], fromJS(data));
+    }
+    case c.LOAD_NODE_NETWORKS_FAILURE:
+      return state;
+
     default:
       return state;
   }
 };
 
-export default networksReducer;
+export default reducer;

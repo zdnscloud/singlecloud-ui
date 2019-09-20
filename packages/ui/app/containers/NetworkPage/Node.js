@@ -28,11 +28,12 @@ export const Node = (props) => {
   const [rect, setRect] = useState({ width: 100, height: 86 });
   const measuredRef = useCallback((node) => {
     if (node !== null) {
+      // eslint-disable-next-line react/no-find-dom-node
       const el = findDOMNode(node);
       setRect(el.getBoundingClientRect());
     }
   }, []);
-  const { classes, theme, node } = props;
+  const { classes, node } = props;
   const width = rect.width / 2;
   const { height } = rect;
   const radius = Math.min(width, height) * 0.8;
@@ -110,4 +111,4 @@ export const Node = (props) => {
   );
 };
 
-export default compose(withStyles(styles, { withTheme: true }))(Node);
+export default Node;
