@@ -30,8 +30,8 @@ import { makeSelectEvents } from 'ducks/events/selectors';
 import * as actions from 'ducks/events/actions';
 
 import messages from './messages';
-import styles from './styles';
-import EventsTable from './EventsTable';
+import useStyles from './styles';
+import EventsTable from './Table';
 import EventsPageHelmet from './helmet';
 import FilterForm from './EventsFilterForm';
 
@@ -48,69 +48,63 @@ const formInitialValues = fromJS({
   name: '__all__',
 });
 
-/* eslint-disable react/prefer-stateless-function */
-export class EventsPage extends React.PureComponent {
-  render() {
-    const { classes, clusterID, events, filters } = this.props;
-    const options = events.reduce(
-      (
-        { types, namespaces, kinds, names },
-        { type, namespace, kind, name }
-      ) => ({
-        types: types.includes(type) ? types : types.concat([type]),
-        namespaces: namespaces.includes(namespace)
-          ? namespaces
-          : namespaces.concat([namespace]),
-        kinds: kinds.includes(kind) ? kinds : kinds.concat([kind]),
-        names: names.includes(name) ? names : names.concat([name]),
-      }),
-      {
-        types: [],
-        namespaces: [],
-        kinds: [],
-        names: [],
-      }
-    );
+const EventsPage = ({ clusterID, events, filters }) => {
+  const classes = useStyles();
+  const options = events.reduce(
+    ({ types, namespaces, kinds, names }, { type, namespace, kind, name }) => ({
+      types: types.includes(type) ? types : types.concat([type]),
+      namespaces: namespaces.includes(namespace)
+        ? namespaces
+        : namespaces.concat([namespace]),
+      kinds: kinds.includes(kind) ? kinds : kinds.concat([kind]),
+      names: names.includes(name) ? names : names.concat([name]),
+    }),
+    {
+      types: [],
+      namespaces: [],
+      kinds: [],
+      names: [],
+    }
+  );
 
-    return (
-      <div className={classes.root}>
-        <EventsPageHelmet />
-        <CssBaseline />
-        <div className={classes.content}>
-          <Breadcrumbs
-            data={[
-              {
-                path: `/clusters/${clusterID}/events`,
-                name: <FormattedMessage {...messages.pageTitle} />,
-              },
-            ]}
-          />
-          <Typography component="div">
-            <GridContainer className={classes.grid}>
-              <GridItem xs={12} sm={12} md={12}>
-                <Card>
-                  <CardHeader>
-                    <h4>
-                      <FormattedMessage {...messages.events} />
-                    </h4>
-                  </CardHeader>
-                  <CardBody>
-                    <EventsFilterForm
-                      classes={classes}
-                      initialValues={formInitialValues}
-                      {...options}
-                    />
-                    <EventsTable filters={filters} />
-                  </CardBody>
-                </Card>
-              </GridItem>
-            </GridContainer>
-          </Typography>
-        </div>
+  return (
+    <div className={classes.root}>
+      <EventsPageHelmet />
+      <CssBaseline />
+      <div className={classes.content}>
+        <Breadcrumbs
+          data={[
+            {
+              path: `/clusters/${clusterID}/events`,
+              name: <FormattedMessage {...messages.pageTitle} />,
+            },
+          ]}
+        />
+        <Typography component="div">
+          <GridContainer className={classes.grid}>
+            <GridItem xs={12} sm={12} md={12}>
+              <Card>
+                <CardHeader>
+                  <h4>
+                    <FormattedMessage {...messages.events} />
+                  </h4>
+                </CardHeader>
+                <CardBody>
+                  <EventsFilterForm
+                    classes={classes}
+                    initialValues={formInitialValues}
+                    {...options}
+                  />
+                  <EventsTable filters={filters} />
+                </CardBody>
+              </Card>
+            </GridItem>
+          </GridContainer>
+        </Typography>
       </div>
-    );
-  }
-}
+    </div>
+  );
+};
 
 const mapStateToProps = createStructuredSelector({
   events: makeSelectEvents(),
@@ -133,7 +127,4 @@ const withConnect = connect(
   mapDispatchToProps
 );
 
-export default compose(
-  withConnect,
-  withStyles(styles)
-)(EventsPage);
+export default compose(withConnect)(EventsPage);
