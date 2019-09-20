@@ -1,54 +1,84 @@
+/**
+ * Duck: Networks
+ * selectors: networks
+ *
+ */
 import { createSelector } from 'reselect';
 import {
   createMatchSelector,
   getLocation,
 } from 'connected-react-router/immutable';
-import { makeSelectCurrentID as makeSelectClusterID } from 'ducks/clusters/selectors';
+import {
+  makeSelectCurrent as makeSelectCurrentCluster,
+  makeSelectCurrentID as makeSelectCurrentClusterID,
+} from 'ducks/clusters/selectors';
+
 import { prefix } from './constants';
+import { initialState } from './index';
 
 /**
  * Direct selector to the podNetworks duck
  */
 
-const selectNetworksDomain = (state) => state.get(prefix);
+export const selectDomain = (state) => state.get(prefix) || initialState;
 
 /**
  * Other specific selectors
  */
+
+export const makeSelectPodURL = () =>
+  createSelector(
+    makeSelectCurrentCluster(),
+    (pt) => pt.getIn(['links', 'podnetworks'])
+  );
+
+export const makeSelectServiceURL = () =>
+  createSelector(
+    makeSelectCurrentCluster(),
+    (pt) => pt.getIn(['links', 'servicenetworks'])
+  );
+
+export const makeSelectNodeURL = () =>
+  createSelector(
+    makeSelectCurrentCluster(),
+    (pt) => pt.getIn(['links', 'nodenetworks'])
+  );
+
 export const makeSelectPodNetworks = () =>
   createSelector(
-    selectNetworksDomain,
+    selectDomain,
     (substate) => substate.get('podNetworks')
   );
 
 export const makeSelectServiceNetworks = () =>
   createSelector(
-    selectNetworksDomain,
+    selectDomain,
     (substate) => substate.get('serviceNetworks')
+  );
+
+export const makeSelectNodeNetworks = () =>
+  createSelector(
+    selectDomain,
+    (substate) => substate.get('nodeNetworks')
   );
 
 export const makeSelectCurrentPodNetworks = () =>
   createSelector(
     makeSelectPodNetworks(),
-    makeSelectClusterID(),
-    (networks, clusterID) => networks.getIn([clusterID]) || networks.clear()
+    makeSelectCurrentClusterID(),
+    (substate, clusterID) => substate.getIn([clusterID]) || substate.clear()
   );
 
 export const makeSelectCurrentServiceNetworks = () =>
   createSelector(
     makeSelectServiceNetworks(),
-    makeSelectClusterID(),
-    (networks, clusterID) => networks.getIn([clusterID]) || networks.clear()
+    makeSelectCurrentClusterID(),
+    (substate, clusterID) => substate.getIn([clusterID]) || substate.clear()
   );
 
-/**
- * Default selector used by LoginPage
- */
-
-const makeSelectNetworks = () =>
+export const makeSelectCurrentNodeNetworks = () =>
   createSelector(
-    selectNetworksDomain,
-    (substate) => substate
+    makeSelectNodeNetworks(),
+    makeSelectCurrentClusterID(),
+    (substate, clusterID) => substate.getIn([clusterID]) || substate.clear()
   );
-
-export default makeSelectNetworks;

@@ -1,9 +1,11 @@
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable no-shadow */
 /**
  *
  * Pods List
  *
  */
-import React, { Fragment } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
@@ -27,128 +29,117 @@ import DownIcon from 'components/Icons/Down';
 import HostIcon from 'components/Icons/Host';
 
 import messages from './messages';
-import styles from './styles';
+import useStyles from './styles';
 
-/* eslint-disable react/prefer-stateless-function */
-export class PodsList extends React.PureComponent {
-  static propTypes = {
-    classes: PropTypes.object.isRequired,
-    data: PropTypes.object.isRequired,
-  };
+const PodsList = ({ data }) => {
+  const classes = useStyles();
+  const [state, setState] = useState({});
 
-  state = {};
+  return (
+    <Paper className={classes.tableWrapper}>
+      {data.map((n, idx) => {
+        const id = n.get('id');
+        const podCIDR = n.get('podCIDR');
+        const podIPs = n.get('podIPs');
+        const [ip, mask] = podCIDR.split('/');
+        const total = 2 ** (32 - Number(mask));
+        const used = (podIPs && podIPs.size) || 0;
 
-  render() {
-    const { classes, data } = this.props;
+        return (
+          <ExpansionPanel key={id}>
+            <ExpansionPanelSummary
+              expandIcon={<DownIcon style={{ color: '#000' }} />}
+            >
+              <div className={classes.podNode}>
+                <div className={classes.c0}>
+                  <IconButton>
+                    <HostIcon style={{ color: '#fff' }} />
+                  </IconButton>
+                </div>
+                <div className={classes.c1}>
+                  <ReadOnlyInput
+                    labelText={<FormattedMessage {...messages.nodeName} />}
+                    value={n.get('nodeName')}
+                  />
+                </div>
+                <div className={classes.c2}>
+                  <ReadOnlyInput
+                    labelText={<FormattedMessage {...messages.podCIDR} />}
+                    value={n.get('podCIDR')}
+                  />
+                </div>
+                <div className={classes.c3}>
+                  <ReadOnlyInput
+                    labelText={<FormattedMessage {...messages.total} />}
+                    value={total}
+                  />
+                </div>
+                <div className={classes.c4}>
+                  <ReadOnlyInput
+                    labelText={<FormattedMessage {...messages.used} />}
+                    value={used}
+                  />
+                </div>
+                <div className={classes.c5}>
+                  <ReadOnlyInput
+                    labelText={<FormattedMessage {...messages.unused} />}
+                    value={total - used}
+                  />
+                </div>
+              </div>
+            </ExpansionPanelSummary>
+            <ExpansionPanelDetails>
+              <div className={classes.ipbox}>
+                {_.times(total, (n) => {
+                  const ipAddr = long2ip(ip2long(ip) + n);
+                  let active = false;
+                  if (podIPs)
+                    active = podIPs.find((n) => n.get('ip') === ipAddr);
+                  const mouseOver = (evt) => {
+                    setState({
+                      [id]: active ? active.toJS() : { ip: ipAddr },
+                    });
+                  };
 
-    return (
-      <Paper className={classes.tableWrapper}>
-        {data.map((n, idx) => {
-          const id = n.get('id');
-          const podCIDR = n.get('podCIDR');
-          const podIPs = n.get('podIPs');
-          const [ip, mask] = podCIDR.split('/');
-          const total = 2 ** (32 - Number(mask));
-          const used = (podIPs && podIPs.size) || 0;
-
-          return (
-            <ExpansionPanel key={id}>
-              <ExpansionPanelSummary
-                expandIcon={<DownIcon style={{ color: '#000' }} />}
-              >
-                <div className={classes.podNode}>
-                  <div className={classes.c0}>
-                    <IconButton>
-                      <HostIcon style={{ color: '#fff' }} />
-                    </IconButton>
+                  return (
+                    // eslint-disable-next-line jsx-a11y/no-static-element-interactions
+                    <div
+                      key={`index-${n}`}
+                      onClick={mouseOver}
+                      className={`${classes.ipitem} ${active ? 'active' : ''}`}
+                    ></div>
+                  );
+                })}
+              </div>
+              <div className={classes.infobox}>
+                <div className={classes.infoExample}>
+                  <div className={classes.infoLine}>
+                    <div className={`${classes.ipitem} active`}></div>
+                    <FormattedMessage {...messages.used} />
                   </div>
-                  <div className={classes.c1}>
-                    <ReadOnlyInput
-                      labelText={<FormattedMessage {...messages.nodeName} />}
-                      value={n.get('nodeName')}
-                    />
-                  </div>
-                  <div className={classes.c2}>
-                    <ReadOnlyInput
-                      labelText={<FormattedMessage {...messages.podCIDR} />}
-                      value={n.get('podCIDR')}
-                    />
-                  </div>
-                  <div className={classes.c3}>
-                    <ReadOnlyInput
-                      labelText={<FormattedMessage {...messages.total} />}
-                      value={total}
-                    />
-                  </div>
-                  <div className={classes.c4}>
-                    <ReadOnlyInput
-                      labelText={<FormattedMessage {...messages.used} />}
-                      value={used}
-                    />
-                  </div>
-                  <div className={classes.c5}>
-                    <ReadOnlyInput
-                      labelText={<FormattedMessage {...messages.unused} />}
-                      value={total - used}
-                    />
+                  <div className={classes.infoLine}>
+                    <div className={classes.ipitem}></div>
+                    <FormattedMessage {...messages.unused} />
                   </div>
                 </div>
-              </ExpansionPanelSummary>
-              <ExpansionPanelDetails>
-                <div className={classes.ipbox}>
-                  {_.times(total, (n) => {
-                    const ipAddr = long2ip(ip2long(ip) + n);
-                    let active = false;
-                    if (podIPs)
-                      active = podIPs.find((n) => n.get('ip') === ipAddr);
-                    const mouseOver = (evt) => {
-                      this.setState({
-                        [id]: active ? active.toJS() : { ip: ipAddr },
-                      });
-                    };
-
-                    return (
-                      <div
-                        key={`index-${n}`}
-                        onClick={mouseOver}
-                        className={`${classes.ipitem} ${
-                          active ? 'active' : ''
-                        }`}
-                      ></div>
-                    );
-                  })}
-                </div>
-                <div className={classes.infobox}>
-                  <div className={classes.infoExample}>
-                    <div className={classes.infoLine}>
-                      <div className={`${classes.ipitem} active`}></div>
-                      <FormattedMessage {...messages.used} />
-                    </div>
-                    <div className={classes.infoLine}>
-                      <div className={classes.ipitem}></div>
-                      <FormattedMessage {...messages.unused} />
-                    </div>
+                <div className={classes.activeIP}>
+                  <div className={classes.infoLine}>
+                    <FormattedMessage {...messages.activeIP} />
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    {state[id] && state[id].ip}
                   </div>
-                  <div className={classes.activeIP}>
-                    <div className={classes.infoLine}>
-                      <FormattedMessage {...messages.activeIP} />
-                      &nbsp;&nbsp;&nbsp;&nbsp;
-                      {this.state[id] && this.state[id].ip}
-                    </div>
-                    <div className={classes.infoLine}>
-                      <FormattedMessage {...messages.activePod} />
-                      &nbsp;&nbsp;&nbsp;&nbsp;
-                      {this.state[id] && this.state[id].name}
-                    </div>
+                  <div className={classes.infoLine}>
+                    <FormattedMessage {...messages.activePod} />
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    {state[id] && state[id].name}
                   </div>
                 </div>
-              </ExpansionPanelDetails>
-            </ExpansionPanel>
-          );
-        })}
-      </Paper>
-    );
-  }
-}
-
-export default compose(withStyles(styles))(PodsList);
+              </div>
+            </ExpansionPanelDetails>
+          </ExpansionPanel>
+        );
+      })}
+    </Paper>
+  );
+};
+export default PodsList;
