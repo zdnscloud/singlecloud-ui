@@ -60,20 +60,6 @@ export const createApplicationEpic = (action$, state$, { ajax }) =>
     )
   );
 
-export const afterCreateEpic = (action$) =>
-  action$.pipe(
-    ofType(c.CREATE_APPLICATION_SUCCESS),
-    mergeMap(({ payload, meta }) =>
-      timer(1000).pipe(
-        mapTo(
-          push(
-            `/clusters/${meta.clusterID}/namespaces/${meta.namespaceID}/applications`
-          )
-        )
-      )
-    )
-  );
-
 export const readApplicationEpic = (action$, state$, { ajax }) =>
   action$.pipe(
     ofType(c.READ_APPLICATION),
@@ -119,7 +105,6 @@ export const removeApplicationEpic = (action$, state$, { ajax }) =>
 export default combineEpics(
   loadApplicationsEpic,
   createApplicationEpic,
-  afterCreateEpic,
   readApplicationEpic,
   removeApplicationEpic
 );

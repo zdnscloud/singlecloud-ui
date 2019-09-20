@@ -16,6 +16,8 @@ import { Link } from 'react-router-dom';
 import sha256 from 'crypto-js/sha256';
 import encHex from 'crypto-js/enc-hex';
 
+import { usePush } from 'hooks/router';
+
 import { withStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Typography from '@material-ui/core/Typography';
@@ -57,6 +59,7 @@ const CreateUserQuotaForm = reduxForm({
 
 const CreateUserQuotaPage = ({ url, createUserQuota, submitForm, role }) => {
   const classes = useStyles();
+  const push = usePush();
   const user = role.get('user');
   const userHash = sha256(user)
     .toString(encHex)
@@ -73,6 +76,7 @@ const CreateUserQuotaPage = ({ url, createUserQuota, submitForm, role }) => {
       await new Promise((resolve, reject) => {
         createUserQuota({ ...data }, { resolve, reject, url });
       });
+      push(`/userQuotas`);
     } catch (error) {
       throw new SubmissionError({ _error: error });
     }

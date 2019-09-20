@@ -13,6 +13,8 @@ import { SubmissionError, submit } from 'redux-form';
 import { Link } from 'react-router-dom';
 import { reduxForm, getFormValues } from 'redux-form/immutable';
 
+import { usePush } from 'hooks/router';
+
 import { withStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import GridItem from 'components/Grid/GridItem';
@@ -66,6 +68,7 @@ const RequestUserQuotaPage = ({
   url,
 }) => {
   const classes = useStyles();
+  const push = usePush();
   const [actionType, setActionType] = useState(null);
 
   useEffect(() => {
@@ -87,6 +90,7 @@ const RequestUserQuotaPage = ({
       await new Promise((resolve, reject) => {
         requestUserQuota({ ...data }, { resolve, reject, url: aurl });
       });
+      push(`/adminUserQuotas`);
     } catch (error) {
       throw new SubmissionError({ _error: error });
     }

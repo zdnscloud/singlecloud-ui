@@ -14,6 +14,8 @@ import { reduxForm, getFormValues } from 'redux-form/immutable';
 import { SubmissionError, submit } from 'redux-form';
 import { Link } from 'react-router-dom';
 
+import { usePush } from 'hooks/router';
+
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
@@ -67,6 +69,8 @@ export const CreateApplicationPage = ({
   values,
 }) => {
   const classes = useStyles();
+  const push = usePush();
+
   useEffect(() => {
     readChart(chartID, {
       clusterID,
@@ -94,6 +98,7 @@ export const CreateApplicationPage = ({
           namespaceID,
         });
       });
+      push(`/clusters/${clusterID}/namespaces/${namespaceID}/applications`);
     } catch (error) {
       throw new SubmissionError({ _error: error });
     }

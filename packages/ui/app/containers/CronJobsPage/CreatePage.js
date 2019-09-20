@@ -16,6 +16,8 @@ import {
   submit,
 } from 'redux-form/immutable';
 
+import { usePush } from 'hooks/router';
+
 import Helmet from 'components/Helmet/Helmet';
 import { FormattedMessage } from 'react-intl';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -58,6 +60,8 @@ export const CreateCronjobPage = ({
   loadSecrets,
 }) => {
   const classes = useStyles();
+  const push = usePush();
+
   useEffect(() => {
     loadConfigMaps({ url: configMapURL, clusterID, namespaceID });
     loadSecrets({ url: secretURL, clusterID, namespaceID });
@@ -92,6 +96,7 @@ export const CreateCronjobPage = ({
           namespaceID,
         });
       });
+      push(`/clusters/${clusterID}/namespaces/${namespaceID}/cronJobs`);
     } catch (error) {
       throw new SubmissionError({ _error: error });
     }
