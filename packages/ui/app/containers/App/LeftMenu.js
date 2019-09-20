@@ -14,9 +14,12 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
+
 import logoICon from 'images/logo.svg';
 import ZcloudICon from 'images/Zcloud.svg';
+
 import * as actions from 'ducks/app/actions';
+import { makeSelectCurrentID as makeSelectCurrentClusterID } from 'ducks/clusters/selectors';
 import {
   makeSelectLeftMenus,
   makeSelectShowEvents,
@@ -215,6 +218,7 @@ const LeftMenu = ({
 };
 
 const mapStateToProps = createStructuredSelector({
+  clusterID: makeSelectCurrentClusterID(),
   menus: makeSelectLeftMenus(),
   location: makeSelectLocation(),
   showText: makeSelectShowMenuText(),
