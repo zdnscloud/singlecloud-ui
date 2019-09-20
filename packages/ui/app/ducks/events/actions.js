@@ -16,12 +16,6 @@ export const closeCluster = () => ({
   payload: {},
 });
 
-export const addEvent = (event, clusterID) => ({
-  type: c.ADD_EVENT,
-  payload: { event },
-  meta: { clusterID },
-});
-
 export const setEvents = (events, clusterID) => ({
   type: c.SET_EVENTS,
   payload: { events },
