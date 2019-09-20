@@ -100,22 +100,9 @@ export const removeUdpingressEpic = (action$, state$, { ajax }) =>
     )
   );
 
-export const afterCreateUdpingressEpic = (action$) =>
-  action$.pipe(
-    ofType(c.CREATE_UDPINGRESS_SUCCESS),
-    mergeMap(({ payload, meta }) =>
-      of(
-        push(
-          `/clusters/${meta.clusterID}/namespaces/${meta.namespaceID}/udpingresses`
-        )
-      )
-    )
-  );
-
 export default combineEpics(
   loadUdpingressesEpic,
   createUdpingressEpic,
   readUdpingressEpic,
-  removeUdpingressEpic,
-  afterCreateUdpingressEpic
+  removeUdpingressEpic
 );

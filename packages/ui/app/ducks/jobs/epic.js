@@ -60,20 +60,6 @@ export const createJobEpic = (action$, state$, { ajax }) =>
     )
   );
 
-export const afterCreateEpic = (action$) =>
-  action$.pipe(
-    ofType(c.CREATE_JOB_SUCCESS),
-    mergeMap(({ payload, meta }) =>
-      timer(1000).pipe(
-        mapTo(
-          push(
-            `/clusters/${meta.clusterID}/namespaces/${meta.namespaceID}/jobs`
-          )
-        )
-      )
-    )
-  );
-
 export const updateJobEpic = (action$, state$, { ajax }) =>
   action$.pipe(
     ofType(c.UPDATE_JOB),
@@ -138,7 +124,6 @@ export const removeJobEpic = (action$, state$, { ajax }) =>
 export default combineEpics(
   loadJobsEpic,
   createJobEpic,
-  afterCreateEpic,
   updateJobEpic,
   readJobEpic,
   removeJobEpic

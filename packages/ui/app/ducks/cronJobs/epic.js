@@ -60,20 +60,6 @@ export const createCronJobEpic = (action$, state$, { ajax }) =>
     )
   );
 
-export const afterCreateEpic = (action$) =>
-  action$.pipe(
-    ofType(c.CREATE_CRON_JOB_SUCCESS),
-    mergeMap(({ payload, meta }) =>
-      timer(1000).pipe(
-        mapTo(
-          push(
-            `/clusters/${meta.clusterID}/namespaces/${meta.namespaceID}/cronJobs`
-          )
-        )
-      )
-    )
-  );
-
 export const updateCronJobEpic = (action$, state$, { ajax }) =>
   action$.pipe(
     ofType(c.UPDATE_CRON_JOB),
@@ -137,7 +123,6 @@ export const removeCronJobEpic = (action$, state$, { ajax }) =>
 
 export default combineEpics(
   loadCronJobsEpic,
-  afterCreateEpic,
   createCronJobEpic,
   updateCronJobEpic,
   readCronJobEpic,

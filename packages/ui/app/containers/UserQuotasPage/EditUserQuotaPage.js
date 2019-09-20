@@ -15,6 +15,8 @@ import { reduxForm, getFormValues } from 'redux-form/immutable';
 import { SubmissionError, submit } from 'redux-form';
 import { Link } from 'react-router-dom';
 
+import { usePush } from 'hooks/router';
+
 import { withStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Typography from '@material-ui/core/Typography';
@@ -66,6 +68,8 @@ const EditUserQuotaPage = ({
   userQuota,
 }) => {
   const classes = useStyles();
+  const push = usePush();
+
   useEffect(() => {
     if (url) {
       readUserQuota(userQuotaID, {
@@ -89,6 +93,7 @@ const EditUserQuotaPage = ({
       await new Promise((resolve, reject) => {
         updateUserQuota({ ...data }, { resolve, reject, url: upurl });
       });
+      push(`/userQuotas`);
     } catch (error) {
       throw new SubmissionError({ _error: error });
     }
