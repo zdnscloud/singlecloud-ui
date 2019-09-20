@@ -26,11 +26,22 @@ import {
 
 import messages from './messages';
 import useStyles from './LeftMenuStyle';
+import OutLinks from './OutLinks';
 
 let timer = null;
 let ctimer = null;
 
-const LeftMenu = ({ logo, image, logoText, menus, showText, location }) => {
+const LeftMenu = ({
+  logo,
+  image,
+  logoText,
+  menus,
+  showText,
+  location,
+  clusterID,
+}) => {
+  const path = location.get('pathname');
+  const isManage = /^\/clusters\/[^/]+\/manage/.test(path);
   const classes = useStyles({ showText });
   const menuRef = useRef(null);
   const [openingMenu, setOpeningMenu] = useState(null);
@@ -197,6 +208,7 @@ const LeftMenu = ({ logo, image, logoText, menus, showText, location }) => {
       </div>
       <div className={classes.sidebarWrapper} ref={menuRef}>
         {links}
+        {clusterID !== '' && !isManage ? <OutLinks /> : null}
       </div>
     </div>
   );

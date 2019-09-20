@@ -17,7 +17,7 @@ export { constants, actions, prefix };
 
 export const initialState = fromJS({
   data: {},
-  list: [],
+  list: {},
   selectedData: null,
 });
 
@@ -32,8 +32,10 @@ export const reducer = (
       return state;
     case c.LOAD_REGISTRIES_SUCCESS: {
       const { data, list } = procCollectionData(payload);
-
-      return state.setIn(['data'], fromJS(data)).setIn(['list'], fromJS(list));
+      const { clusterID } = meta;
+      return state
+        .setIn(['data', clusterID], fromJS(data))
+        .setIn(['list', clusterID], fromJS(list));
     }
     case c.LOAD_REGISTRIES_FAILURE:
       return state;
@@ -42,8 +44,8 @@ export const reducer = (
       return state;
     case c.CREATE_REGISTRY_SUCCESS: {
       const data = payload.response;
-
-      return state.setIn(['data', data.id], fromJS(data));
+      const { clusterID } = meta;
+      return state.setIn(['data', clusterID, data.id], fromJS(data));
     }
     case c.CREATE_REGISTRY_FAILURE:
       return state;
@@ -52,10 +54,10 @@ export const reducer = (
       return state;
     case c.REMOVE_REGISTRY_SUCCESS: {
       const { id } = meta;
-
+      const { clusterID } = meta;
       return state
-        .removeIn(['data', id])
-        .updateIn(['list'], (l) => l.filterNot((i) => i === id));
+        .removeIn(['data', clusterID, id])
+        .updateIn(['list', clusterID], (l) => l.filterNot((i) => i === id));
     }
     case c.REMOVE_REGISTRY_FAILURE:
       return state;

@@ -18,6 +18,7 @@ export const styles = (theme) => ({
     fontSize: 14,
     margin: 0,
     color: '#000',
+    flexGrow: 1,
   },
   description: {
     color: '#838383',
@@ -29,8 +30,8 @@ export const styles = (theme) => ({
     marginBottom: 25,
   },
   aapName: {
-    color: '#1B9CCE',
     margin: 0,
+    fontSize: 14,
   },
   appLogo: {
     margin: '0 auto',

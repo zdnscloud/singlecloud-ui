@@ -23,6 +23,7 @@ const ConfirmDialog = ({
   children,
   title,
   content,
+  sureButtonText,
 }) => (
   <Dialog open={open} onClose={onClose}>
     <DialogTitle>{title}</DialogTitle>
@@ -39,7 +40,7 @@ const ConfirmDialog = ({
         variant="contained"
         style={{ marginLeft: 16, marginRight: 8 }}
       >
-        <FormattedMessage {...messages.sureButton} />
+        <FormattedMessage {...(sureButtonText || messages.sureButton)} />
       </Button>
     </DialogActions>
   </Dialog>
@@ -50,6 +51,7 @@ ConfirmDialog.defaultProps = {
   children: '',
   title: '',
   content: '',
+  sureButtonText: '',
 };
 
 export default ConfirmDialog;
