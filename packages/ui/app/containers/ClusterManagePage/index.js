@@ -66,6 +66,7 @@ export const ClusterManagePage = ({
   async function doSubmit(formValues) {
     try {
       const data = {
+        ...formValues.toJS(),
         nodes: nodes.toJS(),
       };
       await new Promise((resolve, reject) => {
@@ -99,15 +100,17 @@ export const ClusterManagePage = ({
         />
         <GridContainer className={classes.grid}>
           <GridItem xs={12} sm={12} md={12}>
-            <UpdateClusterForm
-              classes={classes}
-              onSubmit={doSubmit}
-              initialValues={cluster}
-              formValues={values}
-              cluster={cluster}
-              nodes={nodes}
-              setNodes={setNodes}
-            />
+            {cluster.size > 0 ? (
+              <UpdateClusterForm
+                classes={classes}
+                onSubmit={doSubmit}
+                initialValues={cluster}
+                formValues={values}
+                cluster={cluster}
+                nodes={nodes}
+                setNodes={setNodes}
+              />
+            ) : null}
             <Button variant="contained" color="primary" onClick={submitForm}>
               <FormattedMessage {...messages.createClusterButton} />
             </Button>
