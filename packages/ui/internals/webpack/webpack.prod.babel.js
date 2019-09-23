@@ -98,7 +98,7 @@ module.exports = require('./webpack.base.babel')({
 
       // No need to cache .htaccess. See http://mxs.is/googmp,
       // this is applied before any match in `caches` section
-      excludes: ['.htaccess'],
+      excludes: [],
 
       caches: {
         main: [':rest:'],
@@ -111,6 +111,22 @@ module.exports = require('./webpack.base.babel')({
 
       // Removes warning for about `additional` section usage
       safeToUseOptionalCaches: true,
+
+      // autoUpdate
+      autoUpdate: true,
+
+      // Service Worker generation
+      ServiceWorker: {
+        output: 'zcloud-sw.js',
+        // This option is very dangerous.
+        // This option should not be changed at all after you deploy ServiceWorker to production.
+        // Changing it may corrupt the cache and leave old caches on users' devices.
+        cacheName: 'zcloud',
+        events: true,
+      },
+      AppCache: {
+        events: true,
+      },
     }),
 
     new CompressionPlugin({
