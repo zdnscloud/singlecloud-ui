@@ -46,4 +46,16 @@ module.exports = (plop) => {
     exec(`npm run prettify -- "${folderPath}"`);
     return folderPath;
   });
+
+  plop.setActionType('cPrettify', (answers, config) => {
+    const folderPath = `${path.join(
+      __dirname,
+      '/../../app/',
+      config.path,
+      plop.getHelper('camelCase')(answers.name),
+      '**.js',
+    )}`;
+    exec(`npm run prettify -- "${folderPath}"`);
+    return folderPath;
+  });
 };

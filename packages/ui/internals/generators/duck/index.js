@@ -103,7 +103,7 @@ module.exports = {
     ];
 
     actions.push({
-      type: 'prettify',
+      type: 'cPrettify',
       path: '/ducks/',
     });
 
