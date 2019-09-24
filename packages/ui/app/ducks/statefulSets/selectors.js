@@ -26,7 +26,7 @@ export const selectDomain = (state) => state.get(prefix) || initialState;
 export const makeSelectURL = () =>
   createSelector(
     makeSelectCurrentNamespace(),
-    (pt) => pt.getIn(['links', 'statefulSets'])
+    (pt) => pt.getIn(['links', 'statefulsets'])
   );
 
 export const makeSelectData = () =>
