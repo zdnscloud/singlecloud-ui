@@ -32,13 +32,13 @@ export const selectDomain = (state) => state.get(prefix) || initialState;
 export const makeSelectURL = () =>
   createSelector(
     makeSelectCurrent{{lastSP parents}}(),
-    (pt) => pt.getIn(['links', '{{pluralize name}}'])
+    (pt) => pt.getIn(['links', '{{lowerCase name}}'])
   );
 {{else}}
 export const makeSelectURL = () =>
   createSelector(
     selectDomain,
-    (substate) => '/apis/zcloud.cn/v1/{{ name }}'
+    (substate) => '/apis/zcloud.cn/v1/{{lowerCase name}}'
   );
 {{/if}}
 
