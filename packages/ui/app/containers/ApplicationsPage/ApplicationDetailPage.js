@@ -40,18 +40,23 @@ export const ApplicationDetailPage = ({
   clusterID,
   namespaceID,
   url,
-  loadApplications,
+  readApplication,
   application,
+  applicationID,
 }) => {
   const classes = useStyles();
   useEffect(() => {
     if (url) {
-      loadApplications({ url, clusterID, namespaceID });
+      readApplication(applicationID, {
+        url: `${url}/${applicationID}`,
+        clusterID,
+        namespaceID,
+      });
     }
     return () => {
       // try cancel something when unmount
     };
-  }, [clusterID, loadApplications, namespaceID, url]);
+  }, [applicationID, clusterID, namespaceID, readApplication, url]);
 
   return (
     <div className={classes.root}>
