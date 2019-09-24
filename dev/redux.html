@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>视图 - SingleCloud UI Documents</title>
+        <title>Redux开发 - SingleCloud UI Documents</title>
         
 
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
@@ -11,19 +11,19 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff" />
 
-        <link rel="shortcut icon" href="favicon.png">
-        <link rel="stylesheet" href="css/variables.css">
-        <link rel="stylesheet" href="css/general.css">
-        <link rel="stylesheet" href="css/chrome.css">
-        <link rel="stylesheet" href="css/print.css" media="print">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
 
         <!-- Fonts -->
-        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
 
         <!-- Highlight.js Stylesheets -->
-        <link rel="stylesheet" href="highlight.css">
-        <link rel="stylesheet" href="tomorrow-night.css">
-        <link rel="stylesheet" href="ayu-highlight.css">
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
         
@@ -33,7 +33,7 @@
     <body class="light">
         <!-- Provide site root to javascript -->
         <script type="text/javascript">
-            var path_to_root = "";
+            var path_to_root = "../";
             var default_theme = "light";
         </script>
 
@@ -76,11 +76,11 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-brand">
-              <image class="sidebar-icon" src="images/icon.png" />
+              <image class="sidebar-icon" src="../images/icon.png" />
               <b class="sidebar-book-title">SingleCloud UI Documents</b>
             </div>
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li><a href="intro.html"><strong aria-hidden="true">1.</strong> 简介</a></li><li><ol class="section"><li><a href="view.html" class="active"><strong aria-hidden="true">1.1.</strong> 视图</a></li><li><a href="state.html"><strong aria-hidden="true">1.2.</strong> 状态</a></li><li><a href="intl.html"><strong aria-hidden="true">1.3.</strong> 页面语言</a></li></ol></li><li><a href="dev.html"><strong aria-hidden="true">2.</strong> 开发管理</a></li><li><ol class="section"><li><a href="dev/scaffold.html"><strong aria-hidden="true">2.1.</strong> 脚手架使用</a></li><li><a href="dev/scaffold_dev.html"><strong aria-hidden="true">2.2.</strong> 脚手架开发</a></li><li><a href="dev/react.html"><strong aria-hidden="true">2.3.</strong> React开发</a></li><li><a href="dev/redux.html"><strong aria-hidden="true">2.4.</strong> Redux开发</a></li></ol></li></ol>
+                <ol class="chapter"><li><a href="../intro.html"><strong aria-hidden="true">1.</strong> 简介</a></li><li><ol class="section"><li><a href="../view.html"><strong aria-hidden="true">1.1.</strong> 视图</a></li><li><a href="../state.html"><strong aria-hidden="true">1.2.</strong> 状态</a></li><li><a href="../intl.html"><strong aria-hidden="true">1.3.</strong> 页面语言</a></li></ol></li><li><a href="../dev.html"><strong aria-hidden="true">2.</strong> 开发管理</a></li><li><ol class="section"><li><a href="../dev/scaffold.html"><strong aria-hidden="true">2.1.</strong> 脚手架使用</a></li><li><a href="../dev/scaffold_dev.html"><strong aria-hidden="true">2.2.</strong> 脚手架开发</a></li><li><a href="../dev/react.html"><strong aria-hidden="true">2.3.</strong> React开发</a></li><li><a href="../dev/redux.html" class="active"><strong aria-hidden="true">2.4.</strong> Redux开发</a></li></ol></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -130,38 +130,88 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#视图管理" id="视图管理">视图管理</a></h1>
-<h2><a class="header" href="#视图引擎-react" id="视图引擎-react">视图引擎 <code>React</code></a></h2>
-<p><strong>SingleCloud</strong> 使用 <code>React</code> 开发用户UI</p>
-<p>当前 React 版本为 16.9</p>
-<h3><a class="header" href="#新特性启用" id="新特性启用">新特性启用</a></h3>
+                        <h1><a class="header" href="#redux开发" id="redux开发">Redux开发</a></h1>
+<p>我们的项目使用<code>redux</code>来做状态管理，<code>redux</code>是一个全局状态机，统一管理页面所有状态</p>
+<p>我们使用 <code>Ducks: Redux Reducer Bundles</code> 的设计建议来定义一个redux模块，我们认为一个模块为一个 <code>duck</code></p>
+<p>所有的 <code>duck</code> 保存在在项目目录 <code>app/ducks</code> 下</p>
+<h2><a class="header" href="#设计规则" id="设计规则">设计规则</a></h2>
+<h3><a class="header" href="#文件定义" id="文件定义"><strong>文件定义</strong></a></h3>
 <ul>
-<li>React 16.3 的 context API</li>
-<li>React 16.8 的 hooks API</li>
+<li><strong>必须</strong> 使用 <code>export default</code> 在<code>index.js</code>中导出 <code>reducer</code></li>
+<li><strong>必须</strong> 使用 <code>export</code> 在<code>actions.js</code>中导出 <code>actions</code></li>
+<li><strong>必须</strong> 使用 <code>export</code> 在<code>constants.js</code>中导出 <code>action types</code></li>
+<li><strong>必须</strong> 使用 <code>export</code> 在<code>selectors.js</code>中导出 <code>selector makers</code></li>
+<li><strong>必须</strong> 使用 <code>export default</code> 在<code>epic.js</code>中导出 <code>epic</code>, 多个 <code>epic</code> 通过 <code>combineEpic</code> 合并为一个</li>
 </ul>
-<p>当前开发使用 <code>hooks</code> 来做视图数据的引用绑定
-推荐使用 <code>function component</code></p>
-<h3><a class="header" href="#使用介绍" id="使用介绍">使用介绍</a></h3>
+<h3><a class="header" href="#action" id="action"><strong>action</strong></a></h3>
+<p><code>action</code> 包含</p>
 <ul>
-<li>Lifeycle method</li>
-<li>hooks</li>
+<li><code>type</code>, type: <code>&lt;string&gt;</code>, <code>action type</code> 在 <code>constants.js</code> 中定义，名称必须为大写</li>
+<li><code>payload</code>, type: <code>&lt;any&gt;</code>, <code>action</code> 所包含的数据</li>
+<li><code>meta</code>, type: <code>&lt;any&gt;</code>, <code>action</code> 关联数据，<code>context</code>, 如果是需要 <code>epic</code> 异步处理，则需要包含 <code>resolve</code>, <code>reject</code></li>
+<li><code>error</code>, type: <code>&lt;boolean&gt;</code>, 为<code>true</code>时表明这个<code>action</code>是一个<code>error</code>, <code>payload</code>装在着一个·<code>Error</code>对象</li>
 </ul>
-<h2><a class="header" href="#ui框架-material-ui" id="ui框架-material-ui">UI框架 <code>material-ui</code></a></h2>
+<h3><a class="header" href="#epic" id="epic"><strong>epic</strong></a></h3>
+<p>每个<code>epic.js</code>中可以包含多个<code>epic</code>，每个<code>epic</code>定义一个异步请求操作</p>
+<p><strong><code>ajax</code></strong></p>
+<p>我们定义一个 <code>ajax</code> 异步请求包含三个<code>action</code>，一个名为<code>loadClusters</code>的<code>action</code>会有三个<code>action</code>:</p>
+<ul>
+<li>loadClusters 发起请求</li>
+</ul>
+<pre><code class="language-js">export const loadClusters = (url, meta = {}) =&gt; ({
+   type: c.LOAD_CLUSTERS,
+   payload: url,
+   meta,
+ });
+</code></pre>
+<ul>
+<li>loadClustersSuccess 请求成功</li>
+</ul>
+<pre><code class="language-js"> export const loadClustersSuccess = (resp, meta = {}) =&gt; ({
+   type: c.LOAD_CLUSTERS_SUCCESS,
+   payload: resp,
+   meta,
+ });
+</code></pre>
+<ul>
+<li>loadClustersFailure 请求失败</li>
+</ul>
+<pre><code class="language-js"> export const loadClustersFailure = (error, meta = {}) =&gt; ({
+   type: c.LOAD_CLUSTERS_FAILURE,
+   payload: error,
+   meta,
+   error: true,
+ });
+</code></pre>
+<p>对应一个 <strong><code>epic</code></strong></p>
+<pre><code class="language-js">export const loadClustersEpic = (action$, state$, { ajax }) =&gt;
+   action$.pipe(
+     ofType(c.LOAD_CLUSTERS),
+     mergeMap(({ payload, meta }) =&gt;
+       ajax(payload).pipe(
+         map((resp) =&gt; {
+           meta.resolve &amp;&amp; meta.resolve(resp);
+           return a.loadClustersSuccess(resp, meta);
+         }),
+         catchError((error) =&gt; {
+           meta.reject &amp;&amp; meta.reject(error);
+           return of(a.loadClustersFailure(error, meta));
+         })
+       )
+     )
+   );
+</code></pre>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
                         
-                            <a rel="prev" href="intro.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../dev/react.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
                         
 
-                        
-                            <a rel="next" href="state.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
-                                <i class="fa fa-angle-right"></i>
-                            </a>
                         
 
                         <div style="clear: both"></div>
@@ -171,15 +221,11 @@
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
                 
-                    <a href="intro.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a href="../dev/react.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
                 
 
-                
-                    <a href="state.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
-                        <i class="fa fa-angle-right"></i>
-                    </a>
                 
             </nav>
 
@@ -207,14 +253,14 @@
         
 
         
-        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../searcher.js" type="text/javascript" charset="utf-8"></script>
         
 
-        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
-        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../book.js" type="text/javascript" charset="utf-8"></script>
 
         <!-- Custom JS scripts -->
         
