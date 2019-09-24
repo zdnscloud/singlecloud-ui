@@ -53,20 +53,6 @@ export const reducer = (
     case c.CREATE_DEPLOYMENT_FAILURE:
       return state;
 
-    case c.UPDATE_DEPLOYMENT:
-      return state;
-    case c.UPDATE_DEPLOYMENT_SUCCESS: {
-      const id = getByKey(payload, ['response', 'id']);
-      const data = getByKey(payload, ['response']);
-      const { clusterID, namespaceID } = meta;
-      if (id) {
-        return state.setIn(['data', clusterID, namespaceID, id], fromJS(data));
-      }
-      return state;
-    }
-    case c.UPDATE_DEPLOYMENT_FAILURE:
-      return state;
-
     case c.READ_DEPLOYMENT:
       return state;
     case c.READ_DEPLOYMENT_SUCCESS: {

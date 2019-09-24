@@ -1,5 +1,5 @@
 /**
- * Duck: Statefulsets
+ * Duck: StatefulSets
  * constants: statefulSets
  *
  */
@@ -15,10 +15,6 @@ export const LOAD_STATEFUL_SETS_FAILURE = `${prefix}/LOAD_STATEFUL_SETS_FAILURE`
 export const CREATE_STATEFUL_SET = `${prefix}/CREATE_STATEFUL_SET`;
 export const CREATE_STATEFUL_SET_SUCCESS = `${prefix}/CREATE_STATEFUL_SET_SUCCESS`;
 export const CREATE_STATEFUL_SET_FAILURE = `${prefix}/CREATE_STATEFUL_SET_FAILURE`;
-
-export const UPDATE_STATEFUL_SET = `${prefix}/UPDATE_STATEFUL_SET`;
-export const UPDATE_STATEFUL_SET_SUCCESS = `${prefix}/UPDATE_STATEFUL_SET_SUCCESS`;
-export const UPDATE_STATEFUL_SET_FAILURE = `${prefix}/UPDATE_STATEFUL_SET_FAILURE`;
 
 export const READ_STATEFUL_SET = `${prefix}/READ_STATEFUL_SET`;
 export const READ_STATEFUL_SET_SUCCESS = `${prefix}/READ_STATEFUL_SET_SUCCESS`;

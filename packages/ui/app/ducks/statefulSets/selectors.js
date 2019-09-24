@@ -1,5 +1,5 @@
 /**
- * Duck: Statefulsets
+ * Duck: StatefulSets
  * selectors: statefulSets
  *
  */
@@ -9,14 +9,9 @@ import {
   createMatchSelector,
   getLocation,
 } from 'connected-react-router/immutable';
-
-import {
-  makeSelectCurrent as makeSelectCurrentNamespace,
-  makeSelectCurrentID as makeSelectCurrentNamespaceID,
-} from 'ducks/namespaces/selectors';
-
+import { makeSelectCurrent as makeSelectCurrentNamespace } from 'ducks/namespaces/selectors';
 import { makeSelectCurrentID as makeSelectCurrentClusterID } from 'ducks/clusters/selectors';
-
+import { makeSelectCurrentID as makeSelectCurrentNamespaceID } from 'ducks/namespaces/selectors';
 import { prefix } from './constants';
 import { initialState } from './index';
 
@@ -31,7 +26,13 @@ export const selectDomain = (state) => state.get(prefix) || initialState;
 export const makeSelectURL = () =>
   createSelector(
     makeSelectCurrentNamespace(),
-    (pt) => pt.getIn(['links', 'statefulsets'])
+    (pt) => pt.getIn(['links', 'statefulSets'])
+  );
+
+export const makeSelectData = () =>
+  createSelector(
+    selectDomain,
+    (substate) => substate.get('data')
   );
 
 export const makeSelectStatefulSets = () =>
@@ -39,7 +40,6 @@ export const makeSelectStatefulSets = () =>
     selectDomain,
     makeSelectCurrentClusterID(),
     makeSelectCurrentNamespaceID(),
-
     (substate, clusterID, namespaceID) =>
       substate.getIn(['data', clusterID, namespaceID]) || substate.clear()
   );
@@ -50,7 +50,6 @@ export const makeSelectStatefulSetsList = () =>
     makeSelectStatefulSets(),
     makeSelectCurrentClusterID(),
     makeSelectCurrentNamespaceID(),
-
     (substate, data, clusterID, namespaceID) =>
       (substate.getIn(['list', clusterID, namespaceID]) || fromJS([])).map(
         (id) => data.get(id)
@@ -73,7 +72,6 @@ export const makeSelectCurrent = () =>
     selectDomain,
     makeSelectCurrentClusterID(),
     makeSelectCurrentNamespaceID(),
-
     makeSelectCurrentID(),
     (substate, clusterID, namespaceID, id) =>
       substate.getIn(['data', clusterID, namespaceID, id]) || substate.clear()
