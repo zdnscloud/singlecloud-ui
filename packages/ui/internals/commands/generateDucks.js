@@ -1,8 +1,11 @@
 const fs = require('fs');
+const path = require('path');
 
 const nodePlop = require('node-plop');
 
 const plop = nodePlop(`${__dirname}/../generators/index.js`);
+
+const duckDir = path.join(__dirname, '../../app/ducks');
 
 const runCreateDuck = async (action) => {
   const act = plop.getGenerator('duck');
@@ -27,20 +30,26 @@ const getResource = require('./getResources');
 
   const actions = data.map((res) => {
     const act = {
-      resourceType: res.resourceType,
       name: res.collectionName,
-      wannaCreateAction: res.collectionMethods && res.collectionMethods.includes('POST'),
-      wannaUpdateAction: res.resourceMethods && res.resourceMethods.includes('PUT'),
-      wannaReadOneAction: res.resourceMethods && res.resourceMethods.includes('GET'),
-      wannaRemoveAction: res.resourceMethods && res.resourceMethods.includes('DELETE'),
-      wannaResourceActions: res.resourceActions && res.resourceActions.length > 0,
-      hasParents: res.parentResources && res.parentResources.length > 0,
+      wannaCreateAction: !!(res.collectionMethods && res.collectionMethods.includes('POST')),
+      wannaUpdateAction: !!(res.resourceMethods && res.resourceMethods.includes('PUT')),
+      wannaReadOneAction: !!(res.resourceMethods && res.resourceMethods.includes('GET')),
+      wannaRemoveAction: !!(res.resourceMethods && res.resourceMethods.includes('DELETE')),
+      wannaResourceActions: !!(res.resourceActions && res.resourceActions.length > 0),
+      hasParents: !!(res.parentResources && res.parentResources.length > 0),
       parents: findParents(res),
     };
+
+    return act;
   });
 
   for (let i = 0; i < actions.length; i += 1) {
     const act = actions[i];
+
+    console.log('run act: ', act);
+
+    fs.rmdirSync(`${duckDir}/${act.name}`, { recursive: true });
+
     await runCreateDuck(act);
   }
 
