@@ -29,6 +29,8 @@ import {
 } from 'ducks/clusters/selectors';
 import * as actions from 'ducks/clusters/actions';
 
+import { usePush } from 'hooks/router';
+
 import messages from './messages';
 import styles from './styles';
 import ClusterManageForm from './ClusterManageForm';
@@ -55,6 +57,7 @@ export const ClusterManagePage = ({
   cluster,
   url,
 }) => {
+  const push = usePush();
   useEffect(() => {
     const timer = setInterval(() => {
       readCluster(id, { url: `${url}/${id}` });
@@ -77,6 +80,7 @@ export const ClusterManagePage = ({
           id,
         });
       });
+      push('/clusters');
     } catch (error) {
       throw new SubmissionError({ _error: error });
     }
