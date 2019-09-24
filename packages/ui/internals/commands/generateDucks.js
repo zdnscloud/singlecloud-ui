@@ -27,6 +27,7 @@ const mapName = (name) => {
     podnetworks: 'podNetworks',
     resourcequotas: 'resourceQuotas',
     servicenetworks: 'serviceNetworks',
+    statefulsets: 'statefulSets',
     storageclasses: 'storageClasses',
     storageclusters: 'storageClusters',
     udpingresses: 'udpIngresses',
