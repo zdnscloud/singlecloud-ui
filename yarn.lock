@@ -9278,7 +9278,7 @@ node-notifier@^5.4.2:
     shellwords "^0.1.1"
     which "^1.3.0"
 
-node-plop@0.19.0, node-plop@~0.19.0:
+node-plop@^0.19.0, node-plop@~0.19.0:
   version "0.19.0"
   resolved "https://registry.yarnpkg.com/node-plop/-/node-plop-0.19.0.tgz#da76aed327e1392fa9ba27d94262747004d0abdb"
   integrity sha512-qE0LsGdB793lMHZcg7tKg9kL/98kiakoOGTykFUEyl05UxE7jk3TygHRZK1EUDBe1gJKt9triaInNgjlUbTGYw==
