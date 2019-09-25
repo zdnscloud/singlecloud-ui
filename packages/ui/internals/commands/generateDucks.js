@@ -81,9 +81,9 @@ const sleep = (t) => new Promise((resolve, reject) => setTimeout(resolve, t));
   for (let i = 0; i < actions.length; i += 1) {
     const act = actions[i];
 
-    console.log('run act: ', act);
-
     if (!act.name || skips.includes(act.name)) continue;
+
+    console.log('run act: ', act);
 
     fs.rmdirSync(`${duckDir}/${act.name}`, { recursive: true });
 
