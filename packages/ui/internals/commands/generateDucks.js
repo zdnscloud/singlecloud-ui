@@ -10,6 +10,7 @@ const duckDir = path.join(__dirname, '../../app/ducks');
 const skips = [
   'innerServices',
   'outerServices',
+  'pods',
 ];
 
 const mapName = (name) => {
