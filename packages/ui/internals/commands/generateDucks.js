@@ -1,6 +1,6 @@
 const fs = require('fs');
 const path = require('path');
-
+const rimraf = require('rimraf');
 const nodePlop = require('node-plop');
 
 const plop = nodePlop(`${__dirname}/../generators/index.js`);
@@ -85,7 +85,7 @@ const sleep = (t) => new Promise((resolve, reject) => setTimeout(resolve, t));
 
     console.log('run act: ', act);
 
-    fs.rmdirSync(`${duckDir}/${act.name}`, { recursive: true });
+    rimraf.sync(`${duckDir}/${act.name}`);
 
     await runCreateDuck(act);
   }
