@@ -180,8 +180,8 @@ export const makeSelectLeftMenus = () =>
                 path: `/clusters/${cluster}/namespaces/${namespace}/ingresses`,
               },
               {
-                name: 'Udpingresses',
-                path: `/clusters/${cluster}/namespaces/${namespace}/udpingresses`,
+                name: 'UdpIngresses',
+                path: `/clusters/${cluster}/namespaces/${namespace}/udpIngresses`,
               },
             ],
             icon: BasicResourcesIcon,

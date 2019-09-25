@@ -26,7 +26,7 @@ import RuleTemplate from './form/RuleTemplate';
 import useStyles from './styles';
 import messages from './messages';
 
-export const formName = 'createUdpingressForm';
+export const formName = 'createUdpIngressForm';
 
 const validate = (values) => {
   const errors = {};
@@ -58,7 +58,7 @@ const Form = ({ formValues, handleSubmit, error, services }) => {
         <Card style={{ margin: 0, marginTop: 20 }}>
           <CardHeader>
             <h4>
-              <FormattedMessage {...messages.createUdpingress} />
+              <FormattedMessage {...messages.createUdpIngress} />
             </h4>
           </CardHeader>
           <CardBody>
@@ -91,9 +91,9 @@ const Form = ({ formValues, handleSubmit, error, services }) => {
   );
 };
 
-const CreateUdpingressForm = reduxForm({
+const CreateUdpIngressForm = reduxForm({
   form: formName,
   validate,
 })(Form);
 
-export default CreateUdpingressForm;
+export default CreateUdpIngressForm;

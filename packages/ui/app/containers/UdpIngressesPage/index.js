@@ -1,66 +1,57 @@
 /**
  *
- * UdpingressDetailPage
+ * UdpIngresses
  *
  */
-import React, { Fragment, useState, useEffect } from 'react';
+import React, { useEffect, useState, memo } from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { bindActionCreators, compose } from 'redux';
+import { connect } from 'react-redux';
 
 import Helmet from 'components/Helmet/Helmet';
 import { FormattedMessage } from 'react-intl';
-import { Link } from 'react-router-dom';
-import Menubar from 'components/Menubar';
 import CssBaseline from '@material-ui/core/CssBaseline';
+import { Link } from 'react-router-dom';
 import Typography from '@material-ui/core/Typography';
 import Fab from '@material-ui/core/Fab';
-import AddIcon from '@material-ui/icons/Add';
-import MinimizeIcon from '@material-ui/icons/Minimize';
+import IconButton from '@material-ui/core/IconButton';
+import AddIcon from 'components/Icons/Add';
 import GridItem from 'components/Grid/GridItem';
 import GridContainer from 'components/Grid/GridContainer';
 import Card from 'components/Card/Card';
 import CardHeader from 'components/Card/CardHeader';
 import CardBody from 'components/Card/CardBody';
 import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
-import ReadOnlyInput from 'components/CustomInput/ReadOnlyInput';
 
 import { makeSelectCurrentID as makeSelectClusterID } from 'ducks/clusters/selectors';
 import { makeSelectCurrentID as makeSelectNamespaceID } from 'ducks/namespaces/selectors';
-import {
-  makeSelectCurrentID,
-  makeSelectCurrent,
-  makeSelectURL,
-} from 'ducks/udpingresses/selectors';
+import { makeSelectURL } from 'ducks/udpIngresses/selectors';
+import * as actions from 'ducks/udpIngresses/actions';
 
-import * as actions from 'ducks/udpingresses/actions';
-
-import UdpingressRuleTable from './UdpingressRuleTable';
-import messages from './messages';
 import useStyles from './styles';
+import messages from './messages';
+import UdpIngressesTable from './Table';
 
-export const UdpingressDetailPage = ({
+const UdpIngressesPage = ({
   clusterID,
   namespaceID,
-  udpingressID,
-  udpingress,
+  location,
   url,
-  readUdpingress,
+  loadUdpIngresses,
 }) => {
   const classes = useStyles();
   useEffect(() => {
     if (url) {
-      readUdpingress(udpingressID, {
+      loadUdpIngresses(url, {
         clusterID,
         namespaceID,
-        url: `${url}/${udpingressID}`,
       });
     }
     return () => {
       // try cancel something when unmount
     };
-  }, [clusterID, namespaceID, readUdpingress, udpingressID, url]);
+  }, [clusterID, loadUdpIngresses, namespaceID, url]);
 
   return (
     <div className={classes.root}>
@@ -70,25 +61,29 @@ export const UdpingressDetailPage = ({
         <Breadcrumbs
           data={[
             {
-              path: `/clusters/${clusterID}/namespaces/${namespaceID}/udpingresses`,
+              path: `/clusters`,
               name: <FormattedMessage {...messages.pageTitle} />,
-            },
-            {
-              name: <FormattedMessage {...messages.udpingressDetail} />,
             },
           ]}
         />
-
         <GridContainer className={classes.grid}>
           <GridItem xs={12} sm={12} md={12}>
             <Card>
               <CardHeader>
                 <h4>
-                  <FormattedMessage {...messages.udpingressDetail} />
+                  <FormattedMessage {...messages.udpIngresses} />
                 </h4>
+                <Link
+                  to={`${location.pathname}/create`}
+                  className={classes.createBtnLink}
+                >
+                  <IconButton>
+                    <AddIcon />
+                  </IconButton>
+                </Link>
               </CardHeader>
               <CardBody>
-                <UdpingressRuleTable udpingress={udpingress} />
+                <UdpIngressesTable />
               </CardBody>
             </Card>
           </GridItem>
@@ -101,9 +96,7 @@ export const UdpingressDetailPage = ({
 const mapStateToProps = createStructuredSelector({
   clusterID: makeSelectClusterID(),
   namespaceID: makeSelectNamespaceID(),
-  udpingressID: makeSelectCurrentID(),
   url: makeSelectURL(),
-  udpingress: makeSelectCurrent(),
 });
 
 const mapDispatchToProps = (dispatch) =>
@@ -119,4 +112,7 @@ const withConnect = connect(
   mapDispatchToProps
 );
 
-export default compose(withConnect)(UdpingressDetailPage);
+export default compose(
+  withConnect,
+  memo
+)(UdpIngressesPage);

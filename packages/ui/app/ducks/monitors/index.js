@@ -19,7 +19,6 @@ export const initialState = fromJS({
   data: {},
   list: {},
   selectedData: null,
-  error: '',
 });
 
 const c = constants;
@@ -48,27 +47,22 @@ export const reducer = (
       const { clusterID } = meta;
       return state.setIn(['data', clusterID, data.id], fromJS(data));
     }
-    case c.CREATE_MONITOR_FAILURE: {
-      const data = payload.response.message;
-      return state.set('error', data);
-    }
-
-    case c.REMOVE_MONITOR:
+    case c.CREATE_MONITOR_FAILURE:
       return state;
-    case c.REMOVE_MONITOR_SUCCESS: {
-      const { id } = meta;
-      const { clusterID } = meta;
-      return state
-        .removeIn(['data', clusterID, id])
-        .updateIn(['list', clusterID], (l) => l.filterNot((i) => i === id));
-    }
-    case c.REMOVE_MONITOR_FAILURE: {
-      const data = payload.response.message;
-      return state.set('error', data);
-    }
 
-    case c.CLEAR_ERROR_INFO:
-      return state.set('error', '');
+    case c.READ_MONITOR:
+      return state;
+    case c.READ_MONITOR_SUCCESS: {
+      const id = getByKey(payload, ['response', 'id']);
+      const data = getByKey(payload, ['response']);
+      const { clusterID } = meta;
+      if (id) {
+        return state.setIn(['data', clusterID, id], fromJS(data));
+      }
+      return state;
+    }
+    case c.READ_MONITOR_FAILURE:
+      return state;
 
     default:
       return state;

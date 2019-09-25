@@ -1,6 +1,6 @@
 /**
- * Duck: Udpingresses
- * epic: udpingresses
+ * Duck: UdpIngresses
+ * epic: udpIngresses
  *
  */
 import { push } from 'connected-react-router';
@@ -22,26 +22,26 @@ import { ofType, combineEpics } from 'redux-observable';
 import * as c from './constants';
 import * as a from './actions';
 
-export const loadUdpingressesEpic = (action$, state$, { ajax }) =>
+export const loadUdpIngressesEpic = (action$, state$, { ajax }) =>
   action$.pipe(
-    ofType(c.LOAD_UDPINGRESSES),
+    ofType(c.LOAD_UDP_INGRESSES),
     mergeMap(({ payload, meta }) =>
       ajax(payload).pipe(
         map((resp) => {
           meta.resolve && meta.resolve(resp);
-          return a.loadUdpingressesSuccess(resp, meta);
+          return a.loadUdpIngressesSuccess(resp, meta);
         }),
         catchError((error) => {
           meta.reject && meta.reject(error);
-          return of(a.loadUdpingressesFailure(error, meta));
+          return of(a.loadUdpIngressesFailure(error, meta));
         })
       )
     )
   );
 
-export const createUdpingressEpic = (action$, state$, { ajax }) =>
+export const createUdpIngressEpic = (action$, state$, { ajax }) =>
   action$.pipe(
-    ofType(c.CREATE_UDPINGRESS),
+    ofType(c.CREATE_UDP_INGRESS),
     mergeMap(({ payload, meta }) =>
       ajax({
         url: `${meta.url}`,
@@ -50,19 +50,19 @@ export const createUdpingressEpic = (action$, state$, { ajax }) =>
       }).pipe(
         map((resp) => {
           meta.resolve && meta.resolve(resp);
-          return a.createUdpingressSuccess(resp, meta);
+          return a.createUdpIngressSuccess(resp, meta);
         }),
         catchError((error) => {
           meta.reject && meta.reject(error);
-          return of(a.createUdpingressFailure(error, meta));
+          return of(a.createUdpIngressFailure(error, meta));
         })
       )
     )
   );
 
-export const readUdpingressEpic = (action$, state$, { ajax }) =>
+export const readUdpIngressEpic = (action$, state$, { ajax }) =>
   action$.pipe(
-    ofType(c.READ_UDPINGRESS),
+    ofType(c.READ_UDP_INGRESS),
     mergeMap(({ payload, meta }) =>
       ajax({
         url: `${meta.url}`,
@@ -70,19 +70,19 @@ export const readUdpingressEpic = (action$, state$, { ajax }) =>
       }).pipe(
         map((resp) => {
           meta.resolve && meta.resolve(resp);
-          return a.readUdpingressSuccess(resp, { ...meta, id: payload });
+          return a.readUdpIngressSuccess(resp, { ...meta, id: payload });
         }),
         catchError((error) => {
           meta.reject && meta.reject(error);
-          return of(a.readUdpingressFailure(error, { ...meta, id: payload }));
+          return of(a.readUdpIngressFailure(error, { ...meta, id: payload }));
         })
       )
     )
   );
 
-export const removeUdpingressEpic = (action$, state$, { ajax }) =>
+export const removeUdpIngressEpic = (action$, state$, { ajax }) =>
   action$.pipe(
-    ofType(c.REMOVE_UDPINGRESS),
+    ofType(c.REMOVE_UDP_INGRESS),
     mergeMap(({ payload, meta }) =>
       ajax({
         url: `${meta.url}`,
@@ -90,19 +90,19 @@ export const removeUdpingressEpic = (action$, state$, { ajax }) =>
       }).pipe(
         map((resp) => {
           meta.resolve && meta.resolve(resp);
-          return a.removeUdpingressSuccess(resp, { ...meta, id: payload });
+          return a.removeUdpIngressSuccess(resp, { ...meta, id: payload });
         }),
         catchError((error) => {
           meta.reject && meta.reject(error);
-          return of(a.removeUdpingressFailure(error, { ...meta, id: payload }));
+          return of(a.removeUdpIngressFailure(error, { ...meta, id: payload }));
         })
       )
     )
   );
 
 export default combineEpics(
-  loadUdpingressesEpic,
-  createUdpingressEpic,
-  readUdpingressEpic,
-  removeUdpingressEpic
+  loadUdpIngressesEpic,
+  createUdpIngressEpic,
+  readUdpIngressEpic,
+  removeUdpIngressEpic
 );

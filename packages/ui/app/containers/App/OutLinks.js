@@ -13,6 +13,7 @@ import {
   submit,
 } from 'redux-form/immutable';
 // @material-ui/core components
+import getByKey from '@gsmlg/utils/getByKey';
 
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -27,7 +28,6 @@ import * as actions from 'ducks/app/actions';
 import * as mActions from 'ducks/monitors/actions';
 import * as rActions from 'ducks/registries/actions';
 import { makeSelectRole } from 'ducks/role/selectors';
-import { makeSelectError } from 'ducks/monitors/selectors';
 import { makeSelectShowMenuText } from 'ducks/app/selectors';
 import {
   makeSelectCurrentID as makeSelectCurrentClusterID,
@@ -51,8 +51,6 @@ const OutLinks = ({
   formValues,
   createMonitor,
   createRegistry,
-  monitorsError,
-  clearErrorInfo,
 }) => {
   const menus = [
     {
@@ -75,6 +73,7 @@ const OutLinks = ({
   };
   const [open, setOpen] = useState(false);
   const [memuRole, setMemuRole] = useState(null);
+  const [error, setError] = useState(null);
 
   const handleMemuClick = (role) => {
     setMemuRole(role);
@@ -121,7 +120,9 @@ const OutLinks = ({
         resolve() {
           setOpen(false);
         },
-        reject() {},
+        reject(e) {
+          setError(e);
+        },
       }
     );
   };
@@ -160,7 +161,7 @@ const OutLinks = ({
         open={!!open}
         onClose={() => {
           setOpen(false);
-          clearErrorInfo();
+          setError(null);
         }}
         title={<FormattedMessage {...messages.leftMenuDialogTitle} />}
         content={
@@ -168,7 +169,9 @@ const OutLinks = ({
             <RegistryForm role={role} onSubmit={doSubmit} />
           ) : (
             <>
-              {monitorsError ? <Danger>{monitorsError}</Danger> : null}
+              {error ? (
+                <Danger>{getByKey(error, ['response', 'message'])}</Danger>
+              ) : null}
               <FormattedMessage {...messages.leftMenuDialogContent} />
             </>
           )
@@ -188,7 +191,6 @@ const mapStateToProps = createStructuredSelector({
   showText: makeSelectShowMenuText(),
   role: makeSelectRole(),
   formValues: getFormValues(formName),
-  monitorsError: makeSelectError(),
 });
 
 const mapDispatchToProps = (dispatch) =>
@@ -197,7 +199,6 @@ const mapDispatchToProps = (dispatch) =>
       ...actions,
       loadMonitors: mActions.loadMonitors,
       createMonitor: mActions.createMonitor,
-      clearErrorInfo: mActions.clearErrorInfo,
       loadRegistries: rActions.loadRegistries,
       createRegistry: rActions.createRegistry,
       submitForm: () => submit(formName),

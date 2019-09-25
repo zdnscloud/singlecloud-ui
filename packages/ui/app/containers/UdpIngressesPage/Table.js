@@ -1,6 +1,6 @@
 /**
  *
- * Udpingresses Table
+ * UdpIngresses Table
  *
  */
 import React, { Fragment } from 'react';
@@ -21,20 +21,20 @@ import ConfirmDelete from 'components/ConfirmDelete/ConfirmDelete';
 import { makeSelectLocation } from 'ducks/app/selectors';
 import { makeSelectCurrentID as makeSelectClusterID } from 'ducks/clusters/selectors';
 import { makeSelectCurrentID as makeSelectNamespaceID } from 'ducks/namespaces/selectors';
-import { makeSelectUdpingressesList } from 'ducks/udpingresses/selectors';
-import * as actions from 'ducks/udpingresses/actions';
+import { makeSelectUdpIngressesList } from 'ducks/udpIngresses/selectors';
+import * as actions from 'ducks/udpIngresses/actions';
 
 import messages from './messages';
 import useStyles from './styles';
 import schema from './tableSchema';
 
 /* eslint-disable react/prefer-stateless-function */
-const UdpingressesTable = ({
+const UdpIngressesTable = ({
   location,
   data,
   clusterID,
   namespaceID,
-  removeUdpingress,
+  removeUdpIngress,
 }) => {
   const classes = useStyles();
   const pathname = location.get('pathname');
@@ -44,7 +44,7 @@ const UdpingressesTable = ({
         return {
           ...sch,
           props: {
-            removeUdpingress,
+            removeUdpIngress,
             clusterID,
             namespaceID,
           },
@@ -78,7 +78,7 @@ const mapStateToProps = createStructuredSelector({
   location: makeSelectLocation(),
   clusterID: makeSelectClusterID(),
   namespaceID: makeSelectNamespaceID(),
-  data: makeSelectUdpingressesList(),
+  data: makeSelectUdpIngressesList(),
 });
 
 const mapDispatchToProps = (dispatch) =>
@@ -94,4 +94,4 @@ const withConnect = connect(
   mapDispatchToProps
 );
 
-export default compose(withConnect)(UdpingressesTable);
+export default compose(withConnect)(UdpIngressesTable);

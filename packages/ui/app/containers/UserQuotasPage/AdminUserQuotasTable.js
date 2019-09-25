@@ -29,14 +29,14 @@ import messages from './messages';
 import useStyles from './styles';
 import schema from './adminTableSchema';
 
-const AdminUserQuotasTable = ({ data, removeUserQuota, filter }) => {
+const AdminUserQuotasTable = ({ data, removeUserQuota, filter, setError }) => {
   const classes = useStyles();
   const mergedSchema = schema
     .map((sch) => {
       if (sch.id === 'actions') {
         return {
           ...sch,
-          props: { classes, removeUserQuota },
+          props: { classes, removeUserQuota, setError },
         };
       }
       return sch;

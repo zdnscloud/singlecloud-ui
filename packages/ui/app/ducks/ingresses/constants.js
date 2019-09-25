@@ -1,9 +1,9 @@
 /**
- * Duck: Ingress
- * constants: ingress
+ * Duck: Ingresses
+ * constants: ingresses
  *
  */
-export const prefix = 'ingress';
+export const prefix = 'ingresses';
 
 /**
  *  constants

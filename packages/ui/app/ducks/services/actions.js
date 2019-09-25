@@ -46,25 +46,6 @@ export const createServiceFailure = (error, meta = {}) => ({
   error: true,
 });
 
-export const updateService = (data, meta = {}) => ({
-  type: c.UPDATE_SERVICE,
-  payload: data,
-  meta,
-});
-
-export const updateServiceSuccess = (resp, meta = {}) => ({
-  type: c.UPDATE_SERVICE_SUCCESS,
-  payload: resp,
-  meta,
-});
-
-export const updateServiceFailure = (error, meta = {}) => ({
-  type: c.UPDATE_SERVICE_FAILURE,
-  payload: error,
-  meta,
-  error: true,
-});
-
 export const readService = (id, meta = {}) => ({
   type: c.READ_SERVICE,
   payload: id,

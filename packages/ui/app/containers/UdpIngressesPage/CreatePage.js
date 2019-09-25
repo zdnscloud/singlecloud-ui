@@ -1,6 +1,6 @@
 /**
  *
- * Create Udpingress Page
+ * Create UdpIngress Page
  *
  */
 import React, { Fragment, useState, useEffect } from 'react';
@@ -29,20 +29,20 @@ import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
 import { makeSelectLocation } from 'ducks/app/selectors';
 import { makeSelectCurrentID as makeSelectClusterID } from 'ducks/clusters/selectors';
 import { makeSelectCurrentID as makeSelectNamespaceID } from 'ducks/namespaces/selectors';
-import { makeSelectServices } from 'ducks/services/selectors';
 import {
-  makeSelectURL,
-  makeSelectServicesURL,
-} from 'ducks/udpingresses/selectors';
-import * as actions from 'ducks/udpingresses/actions';
+  makeSelectServices,
+  makeSelectURL as makeSelectServicesURL,
+} from 'ducks/services/selectors';
+import { makeSelectURL } from 'ducks/udpIngresses/selectors';
+import * as actions from 'ducks/udpIngresses/actions';
 import { loadServices } from 'ducks/services/actions';
 
 import messages from './messages';
 import useStyles from './styles';
-import CreateUdpingressForm, { formName } from './CreateForm';
+import CreateUdpIngressForm, { formName } from './CreateForm';
 
-export const CreateUdpingressPage = ({
-  createUdpingress,
+export const CreateUdpIngressPage = ({
+  createUdpIngress,
   submitForm,
   url,
   clusterID,
@@ -85,7 +85,7 @@ export const CreateUdpingressPage = ({
         ...rulesArr[0],
       };
       await new Promise((resolve, reject) => {
-        createUdpingress(data, {
+        createUdpIngress(data, {
           resolve,
           reject,
           url,
@@ -93,7 +93,7 @@ export const CreateUdpingressPage = ({
           namespaceID,
         });
       });
-      push(`/clusters/${clusterID}/namespaces/${namespaceID}/udpingresses`);
+      push(`/clusters/${clusterID}/namespaces/${namespaceID}/udpIngresses`);
     } catch (error) {
       throw new SubmissionError({ _error: error });
     }
@@ -110,7 +110,7 @@ export const CreateUdpingressPage = ({
         <Breadcrumbs
           data={[
             {
-              path: `/clusters/${clusterID}/namespaces/${namespaceID}/udpingresses`,
+              path: `/clusters/${clusterID}/namespaces/${namespaceID}/udpIngresses`,
               name: <FormattedMessage {...messages.pageTitle} />,
             },
             {
@@ -120,7 +120,7 @@ export const CreateUdpingressPage = ({
         />
         <GridContainer className={classes.grid}>
           <GridItem xs={12} sm={12} md={12}>
-            <CreateUdpingressForm
+            <CreateUdpIngressForm
               onSubmit={doSubmit}
               formValues={values}
               services={services}
@@ -166,4 +166,4 @@ const withConnect = connect(
   mapDispatchToProps
 );
 
-export default compose(withConnect)(CreateUdpingressPage);
+export default compose(withConnect)(CreateUdpIngressPage);

@@ -1,5 +1,5 @@
 /**
- * Duck: Daemonsets
+ * Duck: DaemonSets
  * actions: daemonSets
  *
  */
@@ -41,25 +41,6 @@ export const createDaemonSetSuccess = (resp, meta = {}) => ({
 
 export const createDaemonSetFailure = (error, meta = {}) => ({
   type: c.CREATE_DAEMON_SET_FAILURE,
-  payload: error,
-  meta,
-  error: true,
-});
-
-export const updateDaemonSet = (data, meta = {}) => ({
-  type: c.UPDATE_DAEMON_SET,
-  payload: data,
-  meta,
-});
-
-export const updateDaemonSetSuccess = (resp, meta = {}) => ({
-  type: c.UPDATE_DAEMON_SET_SUCCESS,
-  payload: resp,
-  meta,
-});
-
-export const updateDaemonSetFailure = (error, meta = {}) => ({
-  type: c.UPDATE_DAEMON_SET_FAILURE,
   payload: error,
   meta,
   error: true,

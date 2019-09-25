@@ -9,14 +9,9 @@ import {
   createMatchSelector,
   getLocation,
 } from 'connected-react-router/immutable';
-
-import {
-  makeSelectCurrent as makeSelectCurrentNamespace,
-  makeSelectCurrentID as makeSelectCurrentNamespaceID,
-} from 'ducks/namespaces/selectors';
-
+import { makeSelectCurrent as makeSelectCurrentNamespace } from 'ducks/namespaces/selectors';
 import { makeSelectCurrentID as makeSelectCurrentClusterID } from 'ducks/clusters/selectors';
-
+import { makeSelectCurrentID as makeSelectCurrentNamespaceID } from 'ducks/namespaces/selectors';
 import { prefix } from './constants';
 import { initialState } from './index';
 
@@ -34,12 +29,17 @@ export const makeSelectURL = () =>
     (pt) => pt.getIn(['links', 'applications'])
   );
 
+export const makeSelectData = () =>
+  createSelector(
+    selectDomain,
+    (substate) => substate.get('data')
+  );
+
 export const makeSelectApplications = () =>
   createSelector(
     selectDomain,
     makeSelectCurrentClusterID(),
     makeSelectCurrentNamespaceID(),
-
     (substate, clusterID, namespaceID) =>
       substate.getIn(['data', clusterID, namespaceID]) || substate.clear()
   );
@@ -50,7 +50,6 @@ export const makeSelectApplicationsList = () =>
     makeSelectApplications(),
     makeSelectCurrentClusterID(),
     makeSelectCurrentNamespaceID(),
-
     (substate, data, clusterID, namespaceID) =>
       (substate.getIn(['list', clusterID, namespaceID]) || fromJS([])).map(
         (id) => data.get(id)
@@ -73,14 +72,7 @@ export const makeSelectCurrent = () =>
     selectDomain,
     makeSelectCurrentClusterID(),
     makeSelectCurrentNamespaceID(),
-
     makeSelectCurrentID(),
     (substate, clusterID, namespaceID, id) =>
       substate.getIn(['data', clusterID, namespaceID, id]) || substate.clear()
-  );
-
-export const makeSelectDeleteApplicationError = () =>
-  createSelector(
-    selectDomain,
-    (state) => state.get('deleteError')
   );

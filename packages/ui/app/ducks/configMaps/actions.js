@@ -1,5 +1,5 @@
 /**
- * Duck: Configmaps
+ * Duck: ConfigMaps
  * actions: configMaps
  *
  */

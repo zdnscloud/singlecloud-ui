@@ -1,5 +1,5 @@
 /**
- * Duck: Cronjobs
+ * Duck: CronJobs
  * reducer: cronJobs
  *
  */
@@ -51,20 +51,6 @@ export const reducer = (
       );
     }
     case c.CREATE_CRON_JOB_FAILURE:
-      return state;
-
-    case c.UPDATE_CRON_JOB:
-      return state;
-    case c.UPDATE_CRON_JOB_SUCCESS: {
-      const id = getByKey(payload, ['response', 'id']);
-      const data = getByKey(payload, ['response']);
-      const { clusterID, namespaceID } = meta;
-      if (id) {
-        return state.setIn(['data', clusterID, namespaceID, id], fromJS(data));
-      }
-      return state;
-    }
-    case c.UPDATE_CRON_JOB_FAILURE:
       return state;
 
     case c.READ_CRON_JOB:

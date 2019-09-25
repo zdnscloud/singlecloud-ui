@@ -26,6 +26,12 @@ export const makeSelectURL = () =>
     (substate) => '/apis/zcloud.cn/v1/clusters'
   );
 
+export const makeSelectData = () =>
+  createSelector(
+    selectDomain,
+    (substate) => substate.get('data')
+  );
+
 export const makeSelectClusters = () =>
   createSelector(
     selectDomain,

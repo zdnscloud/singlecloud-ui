@@ -19,7 +19,6 @@ export const initialState = fromJS({
   data: {},
   list: {},
   selectedData: null,
-  deleteError: '',
 });
 
 const c = constants;
@@ -80,12 +79,7 @@ export const reducer = (
         );
     }
     case c.REMOVE_APPLICATION_FAILURE:
-      // eslint-disable-next-line no-case-declarations
-      const data = payload.response.message;
-      return state.set('deleteError', data);
-
-    case c.CLEAR_DELETE_ERROR_INFO:
-      return state.set('deleteError', '');
+      return state;
 
     default:
       return state;

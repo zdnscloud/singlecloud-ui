@@ -58,10 +58,10 @@ import IngressesPage, {
   CreateIngressPage,
   ShowIngressPage,
 } from 'containers/IngressesPage/Loadable';
-import UdpingressesPage, {
-  CreateUdpingressPage,
-  ShowUdpingressPage,
-} from 'containers/UdpingressesPage/Loadable';
+import UdpIngressesPage, {
+  CreateUdpIngressPage,
+  ShowUdpIngressPage,
+} from 'containers/UdpIngressesPage/Loadable';
 import ServiceLinkPage from 'containers/ServiceLinkPage/Loadable';
 import StoragesPage, {
   CreateStoragePage,
@@ -352,27 +352,27 @@ const appRoutes = [
     component: ShowIngressPage,
   },
   // ingresses end
-  // udpingresses start
+  // udpIngresses start
   {
-    path: '/clusters/:cluster_id/namespaces/:namespace_id/udpingresses',
-    name: 'Udpingresses',
+    path: '/clusters/:cluster_id/namespaces/:namespace_id/udpIngresses',
+    name: 'UdpIngresses',
     icon: Dashboard,
-    component: UdpingressesPage,
+    component: UdpIngressesPage,
   },
   {
-    path: '/clusters/:cluster_id/namespaces/:namespace_id/udpingresses/create',
-    name: 'Create Udpingress',
+    path: '/clusters/:cluster_id/namespaces/:namespace_id/udpIngresses/create',
+    name: 'Create UdpIngress',
     icon: Dashboard,
-    component: CreateUdpingressPage,
+    component: CreateUdpIngressPage,
   },
   {
     path:
-      '/clusters/:cluster_id/namespaces/:namespace_id/udpingresses/:udpingress_id/show',
-    name: 'Show Udpingress',
+      '/clusters/:cluster_id/namespaces/:namespace_id/udpIngresses/:udpIngress_id/show',
+    name: 'Show UdpIngress',
     icon: Dashboard,
-    component: ShowUdpingressPage,
+    component: ShowUdpIngressPage,
   },
-  // udpingresses end
+  // udpIngresses end
   {
     path: '/clusters/:cluster_id/namespaces/:namespace_id/serviceLink',
     name: 'ServiceLink',

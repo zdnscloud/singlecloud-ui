@@ -1,6 +1,6 @@
 /**
- * Duck: Udpingresses
- * reducer: udpingresses
+ * Duck: UdpIngresses
+ * reducer: udpIngresses
  *
  */
 import _ from 'lodash';
@@ -28,21 +28,21 @@ export const reducer = (
   { type, payload, error, meta }
 ) => {
   switch (type) {
-    case c.LOAD_UDPINGRESSES:
+    case c.LOAD_UDP_INGRESSES:
       return state;
-    case c.LOAD_UDPINGRESSES_SUCCESS: {
+    case c.LOAD_UDP_INGRESSES_SUCCESS: {
       const { data, list } = procCollectionData(payload);
       const { clusterID, namespaceID } = meta;
       return state
         .setIn(['data', clusterID, namespaceID], fromJS(data))
         .setIn(['list', clusterID, namespaceID], fromJS(list));
     }
-    case c.LOAD_UDPINGRESSES_FAILURE:
+    case c.LOAD_UDP_INGRESSES_FAILURE:
       return state;
 
-    case c.CREATE_UDPINGRESS:
+    case c.CREATE_UDP_INGRESS:
       return state;
-    case c.CREATE_UDPINGRESS_SUCCESS: {
+    case c.CREATE_UDP_INGRESS_SUCCESS: {
       const data = payload.response;
       const { clusterID, namespaceID } = meta;
       return state.setIn(
@@ -50,12 +50,12 @@ export const reducer = (
         fromJS(data)
       );
     }
-    case c.CREATE_UDPINGRESS_FAILURE:
+    case c.CREATE_UDP_INGRESS_FAILURE:
       return state;
 
-    case c.READ_UDPINGRESS:
+    case c.READ_UDP_INGRESS:
       return state;
-    case c.READ_UDPINGRESS_SUCCESS: {
+    case c.READ_UDP_INGRESS_SUCCESS: {
       const id = getByKey(payload, ['response', 'id']);
       const data = getByKey(payload, ['response']);
       const { clusterID, namespaceID } = meta;
@@ -64,12 +64,12 @@ export const reducer = (
       }
       return state;
     }
-    case c.READ_UDPINGRESS_FAILURE:
+    case c.READ_UDP_INGRESS_FAILURE:
       return state;
 
-    case c.REMOVE_UDPINGRESS:
+    case c.REMOVE_UDP_INGRESS:
       return state;
-    case c.REMOVE_UDPINGRESS_SUCCESS: {
+    case c.REMOVE_UDP_INGRESS_SUCCESS: {
       const { id } = meta;
       const { clusterID, namespaceID } = meta;
       return state
@@ -78,7 +78,7 @@ export const reducer = (
           l.filterNot((i) => i === id)
         );
     }
-    case c.REMOVE_UDPINGRESS_FAILURE:
+    case c.REMOVE_UDP_INGRESS_FAILURE:
       return state;
 
     default:

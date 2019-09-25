@@ -1,5 +1,5 @@
 /**
- * Duck: Daemonsets
+ * Duck: DaemonSets
  * constants: daemonSets
  *
  */
@@ -15,10 +15,6 @@ export const LOAD_DAEMON_SETS_FAILURE = `${prefix}/LOAD_DAEMON_SETS_FAILURE`;
 export const CREATE_DAEMON_SET = `${prefix}/CREATE_DAEMON_SET`;
 export const CREATE_DAEMON_SET_SUCCESS = `${prefix}/CREATE_DAEMON_SET_SUCCESS`;
 export const CREATE_DAEMON_SET_FAILURE = `${prefix}/CREATE_DAEMON_SET_FAILURE`;
-
-export const UPDATE_DAEMON_SET = `${prefix}/UPDATE_DAEMON_SET`;
-export const UPDATE_DAEMON_SET_SUCCESS = `${prefix}/UPDATE_DAEMON_SET_SUCCESS`;
-export const UPDATE_DAEMON_SET_FAILURE = `${prefix}/UPDATE_DAEMON_SET_FAILURE`;
 
 export const READ_DAEMON_SET = `${prefix}/READ_DAEMON_SET`;
 export const READ_DAEMON_SET_SUCCESS = `${prefix}/READ_DAEMON_SET_SUCCESS`;

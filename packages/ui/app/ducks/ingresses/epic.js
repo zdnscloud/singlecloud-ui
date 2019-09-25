@@ -1,6 +1,6 @@
 /**
- * Duck: Ingress
- * epic: ingress
+ * Duck: Ingresses
+ * epic: ingresses
  *
  */
 import { push } from 'connected-react-router';

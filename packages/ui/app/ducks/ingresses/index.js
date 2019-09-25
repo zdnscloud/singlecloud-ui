@@ -1,6 +1,6 @@
 /**
- * Duck: Ingress
- * reducer: ingress
+ * Duck: Ingresses
+ * reducer: ingresses
  *
  */
 import _ from 'lodash';

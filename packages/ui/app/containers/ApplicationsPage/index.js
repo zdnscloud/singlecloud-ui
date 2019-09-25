@@ -13,6 +13,7 @@ import { bindActionCreators, compose } from 'redux';
 import { Link } from 'react-router-dom';
 import { SubmissionError, submit } from 'redux-form';
 import { reduxForm, getFormValues } from 'redux-form/immutable';
+import getByKey from '@gsmlg/utils/getByKey';
 
 import CssBaseline from '@material-ui/core/CssBaseline';
 import GridItem from 'components/Grid/GridItem';
@@ -23,10 +24,7 @@ import Button from '@material-ui/core/Button';
 
 import { makeSelectCurrentID as makeSelectCurrentClusterID } from 'ducks/clusters/selectors';
 import { makeSelectCurrentID as makeSelectCurrentNamespaceID } from 'ducks/namespaces/selectors';
-import {
-  makeSelectURL,
-  makeSelectDeleteApplicationError,
-} from 'ducks/applications/selectors';
+import { makeSelectURL } from 'ducks/applications/selectors';
 import * as actions from 'ducks/applications/actions';
 import ErrorInfo from 'components/ErrorInfo/ErrorInfo';
 
@@ -55,10 +53,11 @@ const ApplicationsPage = ({
   loadApplications,
   submitForm,
   clearDeleteErrorInfo,
-  deleteError,
 }) => {
   const classes = useStyles();
   const [filter, setFilter] = useState({});
+  const [error, setError] = useState(null);
+
   useEffect(() => {
     if (url) {
       loadApplications(url, { clusterID, namespaceID });
@@ -87,8 +86,11 @@ const ApplicationsPage = ({
           ]}
         />
         <GridContainer className={classes.grid}>
-          {deleteError ? (
-            <ErrorInfo errorText={deleteError} close={clearDeleteErrorInfo} />
+          {error ? (
+            <ErrorInfo
+              errorText={getByKey(error, ['response', 'message'])}
+              close={() => setError(null)}
+            />
           ) : null}
           <GridItem xs={12} sm={12} md={12}>
             <Card className={classes.card}>
@@ -120,7 +122,6 @@ const mapStateToProps = createStructuredSelector({
   clusterID: makeSelectCurrentClusterID(),
   namespaceID: makeSelectCurrentNamespaceID(),
   url: makeSelectURL(),
-  deleteError: makeSelectDeleteApplicationError(),
 });
 
 const mapDispatchToProps = (dispatch) =>

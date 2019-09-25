@@ -1,5 +1,5 @@
 /**
- * Duck: Cronjobs
+ * Duck: CronJobs
  * selectors: cronJobs
  *
  */
@@ -9,12 +9,10 @@ import {
   createMatchSelector,
   getLocation,
 } from 'connected-react-router/immutable';
-
 import {
   makeSelectCurrent as makeSelectCurrentNamespace,
   makeSelectCurrentID as makeSelectCurrentNamespaceID,
 } from 'ducks/namespaces/selectors';
-
 import { makeSelectCurrentID as makeSelectCurrentClusterID } from 'ducks/clusters/selectors';
 
 import { prefix } from './constants';
@@ -34,12 +32,17 @@ export const makeSelectURL = () =>
     (pt) => pt.getIn(['links', 'cronjobs'])
   );
 
+export const makeSelectData = () =>
+  createSelector(
+    selectDomain,
+    (substate) => substate.get('data')
+  );
+
 export const makeSelectCronJobs = () =>
   createSelector(
     selectDomain,
     makeSelectCurrentClusterID(),
     makeSelectCurrentNamespaceID(),
-
     (substate, clusterID, namespaceID) =>
       substate.getIn(['data', clusterID, namespaceID]) || substate.clear()
   );
@@ -50,7 +53,6 @@ export const makeSelectCronJobsList = () =>
     makeSelectCronJobs(),
     makeSelectCurrentClusterID(),
     makeSelectCurrentNamespaceID(),
-
     (substate, data, clusterID, namespaceID) =>
       (substate.getIn(['list', clusterID, namespaceID]) || fromJS([])).map(
         (id) => data.get(id)
@@ -73,7 +75,6 @@ export const makeSelectCurrent = () =>
     selectDomain,
     makeSelectCurrentClusterID(),
     makeSelectCurrentNamespaceID(),
-
     makeSelectCurrentID(),
     (substate, clusterID, namespaceID, id) =>
       substate.getIn(['data', clusterID, namespaceID, id]) || substate.clear()

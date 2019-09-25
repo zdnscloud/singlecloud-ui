@@ -29,12 +29,12 @@ import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
 import { makeSelectLocation } from 'ducks/app/selectors';
 import { makeSelectCurrentID as makeSelectClusterID } from 'ducks/clusters/selectors';
 import { makeSelectCurrentID as makeSelectNamespaceID } from 'ducks/namespaces/selectors';
-import { makeSelectServices } from 'ducks/services/selectors';
-
 import {
-  makeSelectURL,
-  makeSelectServicesURL,
-} from 'ducks/ingresses/selectors';
+  makeSelectServices,
+  makeSelectURL as makeSelectServicesURL,
+} from 'ducks/services/selectors';
+
+import { makeSelectURL } from 'ducks/ingresses/selectors';
 import * as actions from 'ducks/ingresses/actions';
 
 import { loadServices } from 'ducks/services/actions';

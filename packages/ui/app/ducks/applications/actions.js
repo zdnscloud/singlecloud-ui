@@ -83,8 +83,3 @@ export const removeApplicationFailure = (error, meta = {}) => ({
   meta,
   error: true,
 });
-
-export const clearDeleteErrorInfo = () => ({
-  type: c.CLEAR_DELETE_ERROR_INFO,
-  payload: {},
-});

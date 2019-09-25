@@ -1,25 +1,25 @@
 /*
- * Udpingresses Messages
+ * UdpIngresses Messages
  *
- * This contains all the text for the Udpingresses container.
+ * This contains all the text for the UdpIngresses container.
  */
 
 import { defineMessages } from 'react-intl';
 
-export const scope = 'app.containers.Udpingresses';
+export const scope = 'app.containers.UdpIngresses';
 
 export default defineMessages({
   pageTitle: {
     id: `${scope}.pageTitle`,
-    defaultMessage: 'Udpingresses',
+    defaultMessage: 'UdpIngresses',
   },
   pageDesc: {
     id: `${scope}.pageDesc`,
-    defaultMessage: 'Description of Udpingresses',
+    defaultMessage: 'Description of UdpIngresses',
   },
-  udpingresses: {
-    id: `${scope}.udpingresses`,
-    defaultMessage: 'udpingresses',
+  udpIngresses: {
+    id: `${scope}.udpIngresses`,
+    defaultMessage: 'udpIngresses',
   },
   tableTitleServiceName: {
     id: `${scope}.tableTitleServiceName`,
@@ -35,15 +35,15 @@ export default defineMessages({
   },
   createPageTitle: {
     id: `${scope}.createPageTitle`,
-    defaultMessage: 'Create Udpingress',
+    defaultMessage: 'Create UdpIngress',
   },
   createPageDesc: {
     id: `${scope}.createPageDesc`,
-    defaultMessage: 'Description of Create Udpingress',
+    defaultMessage: 'Description of Create UdpIngress',
   },
-  createUdpingress: {
-    id: `${scope}.createUdpingress`,
-    defaultMessage: 'Create Udpingress',
+  createUdpIngress: {
+    id: `${scope}.createUdpIngress`,
+    defaultMessage: 'Create UdpIngress',
   },
   save: {
     id: `${scope}.save`,
@@ -77,8 +77,8 @@ export default defineMessages({
     id: `${scope}.formActions`,
     defaultMessage: 'Actions',
   },
-  udpingressDetail: {
-    id: `${scope}.udpingressDetail`,
-    defaultMessage: 'Udpingress Detail',
+  udpIngressDetail: {
+    id: `${scope}.udpIngressDetail`,
+    defaultMessage: 'UdpIngress Detail',
   },
 });

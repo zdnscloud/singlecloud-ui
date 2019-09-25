@@ -1,5 +1,5 @@
 /**
- * Duck: Userquotas
+ * Duck: UserQuotas
  * actions: userQuotas
  *
  */
@@ -103,26 +103,24 @@ export const removeUserQuotaFailure = (error, meta = {}) => ({
   error: true,
 });
 
-export const requestUserQuota = (data, meta = {}) => ({
-  type: c.REQUEST_USER_QUOTA,
-  payload: data,
+export const executeUserQuotaAction = (action, data, meta = {}) => ({
+  type: c.EXECUTE_USER_QUOTA_ACTION,
+  payload: {
+    action,
+    data,
+  },
   meta,
 });
 
-export const requestUserQuotaSuccess = (resp, meta = {}) => ({
-  type: c.REQUEST_USER_QUOTA_SUCCESS,
+export const executeUserQuotaActionSuccess = (resp, meta = {}) => ({
+  type: c.EXECUTE_USER_QUOTA_ACTION_SUCCESS,
   payload: resp,
   meta,
 });
 
-export const requestUserQuotaFailure = (error, meta = {}) => ({
-  type: c.REQUEST_USER_QUOTA_FAILURE,
+export const executeUserQuotaActionFailure = (error, meta = {}) => ({
+  type: c.EXECUTE_USER_QUOTA_ACTION_FAILURE,
   payload: error,
-  error: true,
   meta,
-});
-
-export const clearDeleteErrorInfo = () => ({
-  type: c.CLEAR_DELETE_ERROR_INFO,
-  payload: {},
+  error: true,
 });

@@ -1,5 +1,5 @@
 /**
- * Duck: Storageclusters
+ * Duck: StorageClusters
  * actions: storageClusters
  *
  */

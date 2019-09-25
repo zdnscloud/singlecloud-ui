@@ -1,6 +1,6 @@
 /**
- * Duck: Ingress
- * actions: ingress
+ * Duck: Ingresses
+ * actions: ingresses
  *
  */
 import * as c from './constants';

@@ -9,12 +9,8 @@ import {
   createMatchSelector,
   getLocation,
 } from 'connected-react-router/immutable';
-
-import {
-  makeSelectCurrent as makeSelectCurrentCluster,
-  makeSelectCurrentID as makeSelectCurrentClusterID,
-} from 'ducks/clusters/selectors';
-
+import { makeSelectCurrent as makeSelectCurrentCluster } from 'ducks/clusters/selectors';
+import { makeSelectCurrentID as makeSelectCurrentClusterID } from 'ducks/clusters/selectors';
 import { prefix } from './constants';
 import { initialState } from './index';
 
@@ -30,6 +26,12 @@ export const makeSelectURL = () =>
   createSelector(
     makeSelectCurrentCluster(),
     (pt) => pt.getIn(['links', 'monitors'])
+  );
+
+export const makeSelectData = () =>
+  createSelector(
+    selectDomain,
+    (substate) => substate.get('data')
   );
 
 export const makeSelectMonitors = () =>
@@ -66,14 +68,7 @@ export const makeSelectCurrent = () =>
   createSelector(
     selectDomain,
     makeSelectCurrentClusterID(),
-
     makeSelectCurrentID(),
     (substate, clusterID, id) =>
       substate.getIn(['data', clusterID, id]) || substate.clear()
-  );
-
-export const makeSelectError = () =>
-  createSelector(
-    selectDomain,
-    (state) => state.get('error')
   );

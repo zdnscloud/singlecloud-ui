@@ -16,10 +16,6 @@ export const CREATE_SERVICE = `${prefix}/CREATE_SERVICE`;
 export const CREATE_SERVICE_SUCCESS = `${prefix}/CREATE_SERVICE_SUCCESS`;
 export const CREATE_SERVICE_FAILURE = `${prefix}/CREATE_SERVICE_FAILURE`;
 
-export const UPDATE_SERVICE = `${prefix}/UPDATE_SERVICE`;
-export const UPDATE_SERVICE_SUCCESS = `${prefix}/UPDATE_SERVICE_SUCCESS`;
-export const UPDATE_SERVICE_FAILURE = `${prefix}/UPDATE_SERVICE_FAILURE`;
-
 export const READ_SERVICE = `${prefix}/READ_SERVICE`;
 export const READ_SERVICE_SUCCESS = `${prefix}/READ_SERVICE_SUCCESS`;
 export const READ_SERVICE_FAILURE = `${prefix}/READ_SERVICE_FAILURE`;

@@ -1,5 +1,5 @@
 /**
- * Duck: Userquotas
+ * Duck: UserQuotas
  * selectors: userQuotas
  *
  */
@@ -9,7 +9,6 @@ import {
   createMatchSelector,
   getLocation,
 } from 'connected-react-router/immutable';
-
 import { prefix } from './constants';
 import { initialState } from './index';
 
@@ -27,10 +26,15 @@ export const makeSelectURL = () =>
     (substate) => '/apis/zcloud.cn/v1/userquotas'
   );
 
+export const makeSelectData = () =>
+  createSelector(
+    selectDomain,
+    (substate) => substate.get('data')
+  );
+
 export const makeSelectUserQuotas = () =>
   createSelector(
     selectDomain,
-
     (substate) => substate.getIn(['data']) || substate.clear()
   );
 
@@ -38,7 +42,6 @@ export const makeSelectUserQuotasList = () =>
   createSelector(
     selectDomain,
     makeSelectUserQuotas(),
-
     (substate, data) =>
       (substate.getIn(['list']) || fromJS([])).map((id) => data.get(id)) ||
       fromJS([])
@@ -58,13 +61,6 @@ export const makeSelectCurrentID = () =>
 export const makeSelectCurrent = () =>
   createSelector(
     selectDomain,
-
     makeSelectCurrentID(),
     (substate, id) => substate.getIn(['data', id]) || substate.clear()
-  );
-
-export const makeSelectDeleteError = () =>
-  createSelector(
-    selectDomain,
-    (state) => state.get('deleteError')
   );

@@ -50,16 +50,18 @@ export const reducer = (
     case c.CREATE_REGISTRY_FAILURE:
       return state;
 
-    case c.REMOVE_REGISTRY:
+    case c.READ_REGISTRY:
       return state;
-    case c.REMOVE_REGISTRY_SUCCESS: {
-      const { id } = meta;
+    case c.READ_REGISTRY_SUCCESS: {
+      const id = getByKey(payload, ['response', 'id']);
+      const data = getByKey(payload, ['response']);
       const { clusterID } = meta;
-      return state
-        .removeIn(['data', clusterID, id])
-        .updateIn(['list', clusterID], (l) => l.filterNot((i) => i === id));
+      if (id) {
+        return state.setIn(['data', clusterID, id], fromJS(data));
+      }
+      return state;
     }
-    case c.REMOVE_REGISTRY_FAILURE:
+    case c.READ_REGISTRY_FAILURE:
       return state;
 
     default:

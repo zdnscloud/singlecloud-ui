@@ -1,5 +1,5 @@
 /**
- * Duck: Storageclasses
+ * Duck: StorageClasses
  * reducer: storageClasses
  *
  */
@@ -38,20 +38,6 @@ export const reducer = (
         .setIn(['list', clusterID], fromJS(list));
     }
     case c.LOAD_STORAGE_CLASSES_FAILURE:
-      return state;
-
-    case c.READ_STORAGE_CLASS:
-      return state;
-    case c.READ_STORAGE_CLASS_SUCCESS: {
-      const id = getByKey(payload, ['response', 'id']);
-      const data = getByKey(payload, ['response']);
-      const { clusterID } = meta;
-      if (id) {
-        return state.setIn(['data', clusterID, id], fromJS(data));
-      }
-      return state;
-    }
-    case c.READ_STORAGE_CLASS_FAILURE:
       return state;
 
     default:

@@ -9,12 +9,8 @@ import {
   createMatchSelector,
   getLocation,
 } from 'connected-react-router/immutable';
-
-import {
-  makeSelectCurrent as makeSelectCurrentCluster,
-  makeSelectCurrentID as makeSelectCurrentClusterID,
-} from 'ducks/clusters/selectors';
-
+import { makeSelectCurrent as makeSelectCurrentCluster } from 'ducks/clusters/selectors';
+import { makeSelectCurrentID as makeSelectCurrentClusterID } from 'ducks/clusters/selectors';
 import { prefix } from './constants';
 import { initialState } from './index';
 
@@ -32,11 +28,16 @@ export const makeSelectURL = () =>
     (pt) => pt.getIn(['links', 'registries'])
   );
 
+export const makeSelectData = () =>
+  createSelector(
+    selectDomain,
+    (substate) => substate.get('data')
+  );
+
 export const makeSelectRegistries = () =>
   createSelector(
     selectDomain,
     makeSelectCurrentClusterID(),
-
     (substate, clusterID) =>
       substate.getIn(['data', clusterID]) || substate.clear()
   );
@@ -46,7 +47,6 @@ export const makeSelectRegistriesList = () =>
     selectDomain,
     makeSelectRegistries(),
     makeSelectCurrentClusterID(),
-
     (substate, data, clusterID) =>
       (substate.getIn(['list', clusterID]) || fromJS([])).map((id) =>
         data.get(id)
@@ -68,7 +68,6 @@ export const makeSelectCurrent = () =>
   createSelector(
     selectDomain,
     makeSelectCurrentClusterID(),
-
     makeSelectCurrentID(),
     (substate, clusterID, id) =>
       substate.getIn(['data', clusterID, id]) || substate.clear()

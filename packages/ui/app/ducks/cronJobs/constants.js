@@ -1,5 +1,5 @@
 /**
- * Duck: Cronjobs
+ * Duck: CronJobs
  * constants: cronJobs
  *
  */
@@ -15,10 +15,6 @@ export const LOAD_CRON_JOBS_FAILURE = `${prefix}/LOAD_CRON_JOBS_FAILURE`;
 export const CREATE_CRON_JOB = `${prefix}/CREATE_CRON_JOB`;
 export const CREATE_CRON_JOB_SUCCESS = `${prefix}/CREATE_CRON_JOB_SUCCESS`;
 export const CREATE_CRON_JOB_FAILURE = `${prefix}/CREATE_CRON_JOB_FAILURE`;
-
-export const UPDATE_CRON_JOB = `${prefix}/UPDATE_CRON_JOB`;
-export const UPDATE_CRON_JOB_SUCCESS = `${prefix}/UPDATE_CRON_JOB_SUCCESS`;
-export const UPDATE_CRON_JOB_FAILURE = `${prefix}/UPDATE_CRON_JOB_FAILURE`;
 
 export const READ_CRON_JOB = `${prefix}/READ_CRON_JOB`;
 export const READ_CRON_JOB_SUCCESS = `${prefix}/READ_CRON_JOB_SUCCESS`;

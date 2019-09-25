@@ -1,6 +1,5 @@
-/* eslint-disable no-case-declarations */
 /**
- * Duck: Userquotas
+ * Duck: UserQuotas
  * reducer: userQuotas
  *
  */
@@ -20,7 +19,6 @@ export const initialState = fromJS({
   data: {},
   list: [],
   selectedData: null,
-  deleteError: '',
 });
 
 const c = constants;
@@ -34,7 +32,6 @@ export const reducer = (
       return state;
     case c.LOAD_USER_QUOTAS_SUCCESS: {
       const { data, list } = procCollectionData(payload);
-
       return state.setIn(['data'], fromJS(data)).setIn(['list'], fromJS(list));
     }
     case c.LOAD_USER_QUOTAS_FAILURE:
@@ -44,7 +41,6 @@ export const reducer = (
       return state;
     case c.CREATE_USER_QUOTA_SUCCESS: {
       const data = payload.response;
-
       return state.setIn(['data', data.id], fromJS(data));
     }
     case c.CREATE_USER_QUOTA_FAILURE:
@@ -55,7 +51,6 @@ export const reducer = (
     case c.UPDATE_USER_QUOTA_SUCCESS: {
       const id = getByKey(payload, ['response', 'id']);
       const data = getByKey(payload, ['response']);
-
       if (id) {
         return state.setIn(['data', id], fromJS(data));
       }
@@ -69,7 +64,6 @@ export const reducer = (
     case c.READ_USER_QUOTA_SUCCESS: {
       const id = getByKey(payload, ['response', 'id']);
       const data = getByKey(payload, ['response']);
-
       if (id) {
         return state.setIn(['data', id], fromJS(data));
       }
@@ -82,25 +76,19 @@ export const reducer = (
       return state;
     case c.REMOVE_USER_QUOTA_SUCCESS: {
       const { id } = meta;
-
       return state
         .removeIn(['data', id])
         .updateIn(['list'], (l) => l.filterNot((i) => i === id));
     }
     case c.REMOVE_USER_QUOTA_FAILURE:
-      const data = payload.response.message;
-      return state.set('deleteError', data);
-
-    case c.REQUEST_USER_QUOTA:
-      return state;
-    case c.REQUEST_USER_QUOTA_SUCCESS: {
-      return state;
-    }
-    case c.REQUEST_USER_QUOTA_FAILURE:
       return state;
 
-    case c.CLEAR_DELETE_ERROR_INFO:
-      return state.set('deleteError', '');
+    case c.EXECUTE_USER_QUOTA_ACTION:
+      return state;
+    case c.EXECUTE_USER_QUOTA_ACTION_SUCCESS:
+      return state;
+    case c.EXECUTE_USER_QUOTA_ACTION_FAILURE:
+      return state;
 
     default:
       return state;

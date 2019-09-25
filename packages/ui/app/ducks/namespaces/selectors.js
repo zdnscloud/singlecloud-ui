@@ -9,11 +9,8 @@ import {
   createMatchSelector,
   getLocation,
 } from 'connected-react-router/immutable';
-import {
-  makeSelectCurrent as makeSelectCurrentCluster,
-  makeSelectCurrentID as makeSelectCurrentClusterID,
-} from 'ducks/clusters/selectors';
-
+import { makeSelectCurrent as makeSelectCurrentCluster } from 'ducks/clusters/selectors';
+import { makeSelectCurrentID as makeSelectCurrentClusterID } from 'ducks/clusters/selectors';
 import { prefix } from './constants';
 import { initialState } from './index';
 

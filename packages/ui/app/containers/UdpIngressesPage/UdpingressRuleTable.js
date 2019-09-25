@@ -1,6 +1,6 @@
 /**
  *
- * udpingress Table
+ * udpIngress Table
  *
  */
 import React, { Fragment } from 'react';
@@ -20,7 +20,7 @@ import useStyles from './styles';
 import schema from './ruleTableSchema';
 
 /* eslint-disable react/prefer-stateless-function */
-const UdpingressRuleTable = ({ udpingress }) => {
+const UdpIngressRuleTable = ({ udpIngress }) => {
   const classes = useStyles();
   const mergedSchema = schema.map((s) => ({
     ...s,
@@ -32,7 +32,7 @@ const UdpingressRuleTable = ({ udpingress }) => {
       <SimpleTable
         className={classes.table}
         schema={mergedSchema}
-        data={[udpingress] || []}
+        data={[udpIngress] || []}
       />
     </Paper>
   );
@@ -53,4 +53,4 @@ const withConnect = connect(
   mapDispatchToProps
 );
 
-export default compose(withConnect)(UdpingressRuleTable);
+export default compose(withConnect)(UdpIngressRuleTable);

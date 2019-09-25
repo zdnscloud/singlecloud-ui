@@ -1,5 +1,5 @@
 /**
- * Duck: Daemonsets
+ * Duck: DaemonSets
  * reducer: daemonSets
  *
  */
@@ -51,20 +51,6 @@ export const reducer = (
       );
     }
     case c.CREATE_DAEMON_SET_FAILURE:
-      return state;
-
-    case c.UPDATE_DAEMON_SET:
-      return state;
-    case c.UPDATE_DAEMON_SET_SUCCESS: {
-      const id = getByKey(payload, ['response', 'id']);
-      const data = getByKey(payload, ['response']);
-      const { clusterID, namespaceID } = meta;
-      if (id) {
-        return state.setIn(['data', clusterID, namespaceID, id], fromJS(data));
-      }
-      return state;
-    }
-    case c.UPDATE_DAEMON_SET_FAILURE:
       return state;
 
     case c.READ_DAEMON_SET:

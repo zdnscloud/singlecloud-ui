@@ -1,5 +1,5 @@
 /**
- * Duck: Blockdevices
+ * Duck: BlockDevices
  * constants: blockDevices
  *
  */
