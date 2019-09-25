@@ -24,7 +24,7 @@ const mapName = (name) => {
     nodenetworks: 'nodeNetworks',
     outerservices: 'outerServices',
     persistentvolumes: 'persistentVolumes',
-    persistentvolumesclaims: 'persistentVolumesClaims',
+    persistentvolumeclaims: 'persistentVolumeClaims',
     podnetworks: 'podNetworks',
     resourcequotas: 'resourceQuotas',
     servicenetworks: 'serviceNetworks',
