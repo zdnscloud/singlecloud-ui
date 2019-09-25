@@ -134,3 +134,9 @@ export const execute{{sProperCase name}}ActionFailure = (error, meta = {}) => ({
   error: true,
 });
 {{/if}}
+
+export const clearErrorsList = (payload, meta) => ({
+  type: c.CLEAR_ERRORS_LIST,
+  payload,
+  meta,
+});
