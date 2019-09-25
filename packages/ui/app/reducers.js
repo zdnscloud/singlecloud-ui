@@ -42,9 +42,9 @@ import daemonSetsReducer, {
   prefix as daemonSetsPrefix,
 } from 'ducks/daemonSets';
 import ingressesReducer, { prefix as ingressesPrefix } from 'ducks/ingresses';
-import udpingressesReducer, {
-  prefix as udpingressesPrefix,
-} from 'ducks/udpingresses';
+import udpIngressesReducer, {
+  prefix as udpIngressesPrefix,
+} from 'ducks/udpIngresses';
 import applicationsReducer, {
   prefix as applicationsPrefix,
 } from 'ducks/applications';
@@ -103,7 +103,7 @@ export default function createReducer(injectedReducers = {}) {
     [userQuotasPrefix]: userQuotasReducer,
     [servicesPrefix]: servicesReducer,
     [ingressesPrefix]: ingressesReducer,
-    [udpingressesPrefix]: udpingressesReducer,
+    [udpIngressesPrefix]: udpIngressesReducer,
     [applicationsPrefix]: applicationsReducer,
     [registriesPrefix]: registriesReducer,
     [monitorsPrefix]: monitorsReducer,

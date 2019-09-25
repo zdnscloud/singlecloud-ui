@@ -25,7 +25,7 @@ import resourceQuotasEpic from 'ducks/resourceQuotas/epic';
 import userQuotasEpic from 'ducks/userQuotas/epic';
 import servicesEpic from 'ducks/services/epic';
 import ingressesEpic from 'ducks/ingresses/epic';
-import udpingressesEpic from 'ducks/udpingresses/epic';
+import udpIngressesEpic from 'ducks/udpIngresses/epic';
 import applicationsEpic from 'ducks/applications/epic';
 import registriesEpic from 'ducks/registries/epic';
 import monitorsEpic from 'ducks/monitors/epic';
@@ -63,7 +63,7 @@ export default function createEpic(injectedEpics = {}) {
     resourceQuotasEpic,
     servicesEpic,
     ingressesEpic,
-    udpingressesEpic,
+    udpIngressesEpic,
     applicationsEpic,
     registriesEpic,
     monitorsEpic,
