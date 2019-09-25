@@ -97,7 +97,6 @@
     "prop-types": "15.7.2",
     "react": "^16.8.0",
     "react-ace": "^7.0.2",
-    "react-addons-css-transition-group": "^15.6.2",
     "react-app-polyfill": "1",
     "react-dom": "^16.8.0",
     "react-helmet": "5.2.1",
