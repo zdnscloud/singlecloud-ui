@@ -33,18 +33,23 @@ import Helmet from 'components/Helmet/Helmet';
 
 import * as sActions from 'ducks/serviceNetworks/actions';
 import * as pActions from 'ducks/podNetworks/actions';
+import * as nActions from 'ducks/nodeNetworks/actions';
 import {
   makeSelectCurrentID as makeSelectClusterID,
   makeSelectCurrent as makeSelectCurrentCluster,
 } from 'ducks/clusters/selectors';
 import {
-  makeSelectServiceNetworks,
+  makeSelectServiceNetworksList,
   makeSelectURL as makeSelectServiceNetworksURL,
 } from 'ducks/serviceNetworks/selectors';
 import {
-  makeSelectPodNetworks,
+  makeSelectPodNetworksList,
   makeSelectURL as makeSelectPodNetworksURL,
 } from 'ducks/podNetworks/selectors';
+import {
+  makeSelectNodeNetworksList,
+  makeSelectURL as makeSelectNodeNetworksURL,
+} from 'ducks/nodeNetworks/selectors';
 
 import messages from './messages';
 import useStyles from './styles';
@@ -54,33 +59,45 @@ import PodsList from './PodsList';
 
 const NetworkPage = ({
   clusterID,
-  loadPodNetworks,
   loadServiceNetworks,
+  loadPodNetworks,
+  loadNodeNetworks,
   serviceNetworks,
   podNetworks,
-  podurl,
-  serviceurl,
+  nodeNetworks,
+  serviceUrl,
+  podUrl,
+  nodeUrl,
 }) => {
   const classes = useStyles();
   const [tab, setTab] = useState(0);
 
   useEffect(() => {
-    if (podurl) {
-      loadPodNetworks(podurl, { clusterID });
+    if (podUrl) {
+      loadPodNetworks(podUrl, { clusterID });
     }
     return () => {
       // try cancel something when unmount
     };
-  }, [clusterID, loadPodNetworks, podurl]);
+  }, [clusterID, loadPodNetworks, podUrl]);
 
   useEffect(() => {
-    if (serviceurl) {
-      loadServiceNetworks(serviceurl, { clusterID });
+    if (serviceUrl) {
+      loadServiceNetworks(serviceUrl, { clusterID });
     }
     return () => {
       // try cancel something when unmount
     };
-  }, [clusterID, loadServiceNetworks, serviceurl]);
+  }, [clusterID, loadServiceNetworks, serviceUrl]);
+
+  useEffect(() => {
+    if (nodeUrl) {
+      loadNodeNetworks(nodeUrl, { clusterID });
+    }
+    return () => {
+      // try cancel something when unmount
+    };
+  }, [clusterID, loadNodeNetworks, nodeUrl]);
 
   return (
     <div className={classes.root}>
@@ -117,7 +134,10 @@ const NetworkPage = ({
                 {tab === 0 ? (
                   <GridContainer>
                     <GridItem xs={12} sm={12} md={12}>
-                      <PodsList data={podNetworks} />
+                      <PodsList
+                        data={podNetworks}
+                        nodeNetworks={nodeNetworks}
+                      />
                     </GridItem>
                   </GridContainer>
                 ) : (
@@ -138,10 +158,12 @@ const NetworkPage = ({
 
 const mapStateToProps = createStructuredSelector({
   clusterID: makeSelectClusterID(),
-  serviceNetworks: makeSelectServiceNetworks(),
-  podNetworks: makeSelectPodNetworks(),
-  podurl: makeSelectPodNetworksURL(),
-  serviceurl: makeSelectServiceNetworksURL(),
+  serviceNetworks: makeSelectServiceNetworksList(),
+  podNetworks: makeSelectPodNetworksList(),
+  nodeNetworks: makeSelectNodeNetworksList(),
+  serviceUrl: makeSelectServiceNetworksURL(),
+  podUrl: makeSelectPodNetworksURL(),
+  nodeUrl: makeSelectNodeNetworksURL(),
 });
 
 const mapDispatchToProps = (dispatch) =>
@@ -149,6 +171,7 @@ const mapDispatchToProps = (dispatch) =>
     {
       ...sActions,
       ...pActions,
+      ...nActions,
     },
     dispatch
   );
