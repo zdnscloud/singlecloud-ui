@@ -46,7 +46,7 @@ const PodsList = ({ data, nodeNetworks }) => {
         const nodeNetwork = nodeNetworks.find(
           (node) => node.get('name') === nodeName
         );
-        const nodeIp = nodeNetwork.get('ip');
+        const nodeIp = nodeNetwork && nodeNetwork.get('ip');
         const podWithNodeNetwork = podIPs.filter((p) => p.get('ip') === nodeIp);
 
         return (
