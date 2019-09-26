@@ -31,35 +31,27 @@ const tableSchema = schema
     {
       id: 'actions',
       label: 'Actions',
-      component: (props) => (
+      component: ({ classes, data, removeCluster }) => (
         <Fragment>
           <IconButton
             variant="outlined"
             size="small"
-            className={props.classes.button}
-            to={`/clusters/${props.data.get('id')}/manage`}
+            className={classes.button}
+            to={`/clusters/${data.get('id')}/manage`}
             component={Link}
+            disabled={data.get('status') === 'Deleting'}
           >
             <img src={manageIcon} alt="manageIcon" />
           </IconButton>
           <ConfirmDelete
-            actionName={props.removeCluster}
-            id={props.data.get('id')}
-            url={props.data.getIn(['links', 'remove'])}
+            actionName={removeCluster}
+            id={data.get('id')}
+            url={data.getIn(['links', 'remove'])}
           />
         </Fragment>
       ),
     },
   ])
-  .map((sch) => {
-    if (sch.id === 'status') {
-      return {
-        ...sch,
-        component: (props) => props.data.get('status'),
-      };
-    }
-    return sch;
-  })
   .map((sch) => {
     if (sch.id === 'name') {
       return {
