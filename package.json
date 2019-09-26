@@ -16,6 +16,5 @@
   "workspaces": [
     "packages/*"
   ],
-  "dependencies": {
-  }
+  "dependencies": {}
 }
