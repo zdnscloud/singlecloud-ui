@@ -9,13 +9,13 @@ import {
   createMatchSelector,
   getLocation,
 } from 'connected-react-router/immutable';
-import { prefix } from './constants';
+import * as c from './constants';
 import { initialState } from './index';
 
 /**
  * Direct selector to the userQuotas domain
  */
-export const selectDomain = (state) => state.get(prefix) || initialState;
+export const selectDomain = (state) => state.get(c.prefix) || initialState;
 
 /**
  * Other specific selectors
@@ -63,4 +63,64 @@ export const makeSelectCurrent = () =>
     selectDomain,
     makeSelectCurrentID(),
     (substate, id) => substate.getIn(['data', id]) || substate.clear()
+  );
+
+export const makeSelectErrorsList = () =>
+  createSelector(
+    selectDomain,
+    (substate) => substate.get('errorsList')
+  );
+
+export const makeSelectLoadErrorsList = () =>
+  createSelector(
+    selectDomain,
+    (substate) =>
+      substate
+        .get('errorsList')
+        .filter(({ type }) => type === c.LOAD_USER_QUOTAS_FAILURE)
+  );
+
+export const makeSelectCreateErrorsList = () =>
+  createSelector(
+    selectDomain,
+    (substate) =>
+      substate
+        .get('errorsList')
+        .filter(({ type }) => type === c.CREATE_USER_QUOTA_FAILURE)
+  );
+
+export const makeSelectUpdateErrorsList = () =>
+  createSelector(
+    selectDomain,
+    (substate) =>
+      substate
+        .get('errorsList')
+        .filter(({ type }) => type === c.UPDATE_USER_QUOTA_FAILURE)
+  );
+
+export const makeSelectReadErrorsList = () =>
+  createSelector(
+    selectDomain,
+    (substate) =>
+      substate
+        .get('errorsList')
+        .filter(({ type }) => type === c.READ_USER_QUOTA_FAILURE)
+  );
+
+export const makeSelectRemoveErrorsList = () =>
+  createSelector(
+    selectDomain,
+    (substate) =>
+      substate
+        .get('errorsList')
+        .filter(({ type }) => type === c.REMOVE_USER_QUOTA_FAILURE)
+  );
+
+export const makeSelectActionErrorsList = () =>
+  createSelector(
+    selectDomain,
+    (substate) =>
+      substate
+        .get('errorsList')
+        .filter(({ type }) => type === c.EXECUTE_USER_QUOTA_ACTION_FAILURE)
   );

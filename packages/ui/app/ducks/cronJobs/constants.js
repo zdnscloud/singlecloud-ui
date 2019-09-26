@@ -23,3 +23,5 @@ export const READ_CRON_JOB_FAILURE = `${prefix}/READ_CRON_JOB_FAILURE`;
 export const REMOVE_CRON_JOB = `${prefix}/REMOVE_CRON_JOB`;
 export const REMOVE_CRON_JOB_SUCCESS = `${prefix}/REMOVE_CRON_JOB_SUCCESS`;
 export const REMOVE_CRON_JOB_FAILURE = `${prefix}/REMOVE_CRON_JOB_FAILURE`;
+
+export const CLEAR_ERRORS_LIST = `${prefix}/CLEAR_ERRORS_LIST`;

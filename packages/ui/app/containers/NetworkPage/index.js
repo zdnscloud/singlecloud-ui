@@ -31,19 +31,20 @@ import ReadOnlyInput from 'components/CustomInput/ReadOnlyInput';
 import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
 import Helmet from 'components/Helmet/Helmet';
 
-import * as actions from 'ducks/networks/actions';
+import * as sActions from 'ducks/serviceNetworks/actions';
+import * as pActions from 'ducks/podNetworks/actions';
 import {
   makeSelectCurrentID as makeSelectClusterID,
   makeSelectCurrent as makeSelectCurrentCluster,
 } from 'ducks/clusters/selectors';
 import {
   makeSelectServiceNetworks,
+  makeSelectURL as makeSelectServiceNetworksURL,
+} from 'ducks/serviceNetworks/selectors';
+import {
   makeSelectPodNetworks,
-  makeSelectCurrentServiceNetworks,
-  makeSelectCurrentPodNetworks,
-  makeSelectPodURL,
-  makeSelectServiceURL,
-} from 'ducks/networks/selectors';
+  makeSelectURL as makeSelectPodNetworksURL,
+} from 'ducks/podNetworks/selectors';
 
 import messages from './messages';
 import useStyles from './styles';
@@ -53,11 +54,10 @@ import PodsList from './PodsList';
 
 const NetworkPage = ({
   clusterID,
-  cluster,
   loadPodNetworks,
   loadServiceNetworks,
-  services,
-  pods,
+  serviceNetworks,
+  podNetworks,
   podurl,
   serviceurl,
 }) => {
@@ -117,13 +117,13 @@ const NetworkPage = ({
                 {tab === 0 ? (
                   <GridContainer>
                     <GridItem xs={12} sm={12} md={12}>
-                      <PodsList data={pods} />
+                      <PodsList data={podNetworks} />
                     </GridItem>
                   </GridContainer>
                 ) : (
                   <GridContainer>
                     <GridItem xs={12} sm={12} md={12}>
-                      <ServiceTable data={services} />
+                      <ServiceTable data={serviceNetworks} />
                     </GridItem>
                   </GridContainer>
                 )}
@@ -138,17 +138,17 @@ const NetworkPage = ({
 
 const mapStateToProps = createStructuredSelector({
   clusterID: makeSelectClusterID(),
-  cluster: makeSelectCurrentCluster(),
-  services: makeSelectCurrentServiceNetworks(),
-  pods: makeSelectCurrentPodNetworks(),
-  podurl: makeSelectPodURL(),
-  serviceurl: makeSelectServiceURL(),
+  serviceNetworks: makeSelectServiceNetworks(),
+  podNetworks: makeSelectPodNetworks(),
+  podurl: makeSelectPodNetworksURL(),
+  serviceurl: makeSelectServiceNetworksURL(),
 });
 
 const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
-      ...actions,
+      ...sActions,
+      ...pActions,
     },
     dispatch
   );

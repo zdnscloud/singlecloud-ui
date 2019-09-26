@@ -19,3 +19,5 @@ export const CREATE_MONITOR_FAILURE = `${prefix}/CREATE_MONITOR_FAILURE`;
 export const READ_MONITOR = `${prefix}/READ_MONITOR`;
 export const READ_MONITOR_SUCCESS = `${prefix}/READ_MONITOR_SUCCESS`;
 export const READ_MONITOR_FAILURE = `${prefix}/READ_MONITOR_FAILURE`;
+
+export const CLEAR_ERRORS_LIST = `${prefix}/CLEAR_ERRORS_LIST`;

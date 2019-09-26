@@ -15,3 +15,5 @@ export const LOAD_NODES_FAILURE = `${prefix}/LOAD_NODES_FAILURE`;
 export const READ_NODE = `${prefix}/READ_NODE`;
 export const READ_NODE_SUCCESS = `${prefix}/READ_NODE_SUCCESS`;
 export const READ_NODE_FAILURE = `${prefix}/READ_NODE_FAILURE`;
+
+export const CLEAR_ERRORS_LIST = `${prefix}/CLEAR_ERRORS_LIST`;

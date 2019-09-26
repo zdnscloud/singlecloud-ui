@@ -9,16 +9,19 @@ import {
   createMatchSelector,
   getLocation,
 } from 'connected-react-router/immutable';
-import { makeSelectCurrent as makeSelectCurrentNamespace } from 'ducks/namespaces/selectors';
+import {
+  makeSelectCurrent as makeSelectCurrentNamespace,
+  makeSelectCurrentID as makeSelectCurrentNamespaceID,
+} from 'ducks/namespaces/selectors';
 import { makeSelectCurrentID as makeSelectCurrentClusterID } from 'ducks/clusters/selectors';
-import { makeSelectCurrentID as makeSelectCurrentNamespaceID } from 'ducks/namespaces/selectors';
-import { prefix } from './constants';
+
+import * as c from './constants';
 import { initialState } from './index';
 
 /**
  * Direct selector to the daemonSets domain
  */
-export const selectDomain = (state) => state.get(prefix) || initialState;
+export const selectDomain = (state) => state.get(c.prefix) || initialState;
 
 /**
  * Other specific selectors
@@ -75,4 +78,55 @@ export const makeSelectCurrent = () =>
     makeSelectCurrentID(),
     (substate, clusterID, namespaceID, id) =>
       substate.getIn(['data', clusterID, namespaceID, id]) || substate.clear()
+  );
+
+export const makeSelectErrorsList = () =>
+  createSelector(
+    selectDomain,
+    (substate) => substate.get('errorsList')
+  );
+
+export const makeSelectLoadErrorsList = () =>
+  createSelector(
+    selectDomain,
+    (substate) =>
+      substate
+        .get('errorsList')
+        .filter(({ type }) => type === c.LOAD_DAEMON_SETS_FAILURE)
+  );
+
+export const makeSelectCreateErrorsList = () =>
+  createSelector(
+    selectDomain,
+    (substate) =>
+      substate
+        .get('errorsList')
+        .filter(({ type }) => type === c.CREATE_DAEMON_SET_FAILURE)
+  );
+
+export const makeSelectReadErrorsList = () =>
+  createSelector(
+    selectDomain,
+    (substate) =>
+      substate
+        .get('errorsList')
+        .filter(({ type }) => type === c.READ_DAEMON_SET_FAILURE)
+  );
+
+export const makeSelectRemoveErrorsList = () =>
+  createSelector(
+    selectDomain,
+    (substate) =>
+      substate
+        .get('errorsList')
+        .filter(({ type }) => type === c.REMOVE_DAEMON_SET_FAILURE)
+  );
+
+export const makeSelectActionErrorsList = () =>
+  createSelector(
+    selectDomain,
+    (substate) =>
+      substate
+        .get('errorsList')
+        .filter(({ type }) => type === c.EXECUTE_DAEMON_SET_ACTION_FAILURE)
   );

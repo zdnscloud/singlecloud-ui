@@ -19,3 +19,5 @@ export const CREATE_REGISTRY_FAILURE = `${prefix}/CREATE_REGISTRY_FAILURE`;
 export const READ_REGISTRY = `${prefix}/READ_REGISTRY`;
 export const READ_REGISTRY_SUCCESS = `${prefix}/READ_REGISTRY_SUCCESS`;
 export const READ_REGISTRY_FAILURE = `${prefix}/READ_REGISTRY_FAILURE`;
+
+export const CLEAR_ERRORS_LIST = `${prefix}/CLEAR_ERRORS_LIST`;

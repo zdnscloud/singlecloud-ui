@@ -23,3 +23,5 @@ export const READ_JOB_FAILURE = `${prefix}/READ_JOB_FAILURE`;
 export const REMOVE_JOB = `${prefix}/REMOVE_JOB`;
 export const REMOVE_JOB_SUCCESS = `${prefix}/REMOVE_JOB_SUCCESS`;
 export const REMOVE_JOB_FAILURE = `${prefix}/REMOVE_JOB_FAILURE`;
+
+export const CLEAR_ERRORS_LIST = `${prefix}/CLEAR_ERRORS_LIST`;

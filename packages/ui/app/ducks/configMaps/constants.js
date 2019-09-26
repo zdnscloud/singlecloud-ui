@@ -27,3 +27,5 @@ export const READ_CONFIG_MAP_FAILURE = `${prefix}/READ_CONFIG_MAP_FAILURE`;
 export const REMOVE_CONFIG_MAP = `${prefix}/REMOVE_CONFIG_MAP`;
 export const REMOVE_CONFIG_MAP_SUCCESS = `${prefix}/REMOVE_CONFIG_MAP_SUCCESS`;
 export const REMOVE_CONFIG_MAP_FAILURE = `${prefix}/REMOVE_CONFIG_MAP_FAILURE`;
+
+export const CLEAR_ERRORS_LIST = `${prefix}/CLEAR_ERRORS_LIST`;
