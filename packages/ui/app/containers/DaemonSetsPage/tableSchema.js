@@ -9,7 +9,7 @@ import UpgradeIcon from 'components/Icons/Upgrade';
 import RollbackIcon from 'components/Icons/Rollback';
 import ConfirmDelete from 'components/ConfirmDelete/ConfirmDelete';
 
-const schema = ['name', 'creationTimestamp', 'status'];
+const schema = ['name', 'replicas', 'creationTimestamp'];
 
 const tableSchema = schema
   .map((id) => ({
@@ -66,7 +66,7 @@ const tableSchema = schema
       };
     }
 
-    if (sch.id === 'status') {
+    if (sch.id === 'replicas') {
       return {
         ...sch,
         component: ({ data }) => (
