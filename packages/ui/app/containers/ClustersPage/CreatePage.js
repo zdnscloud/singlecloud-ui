@@ -39,7 +39,7 @@ const validate = (values) => {
   const requiredFields = [
     'name',
     'clusterDomain',
-    'singlecloudAddress',
+    'singleCloudAddress',
     'sshUser',
   ];
   requiredFields.forEach((field) => {
