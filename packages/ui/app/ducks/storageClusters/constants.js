@@ -1,5 +1,5 @@
 /**
- * Duck: Storageclusters
+ * Duck: StorageClusters
  * constants: storageClusters
  *
  */
@@ -27,3 +27,5 @@ export const READ_STORAGE_CLUSTER_FAILURE = `${prefix}/READ_STORAGE_CLUSTER_FAIL
 export const REMOVE_STORAGE_CLUSTER = `${prefix}/REMOVE_STORAGE_CLUSTER`;
 export const REMOVE_STORAGE_CLUSTER_SUCCESS = `${prefix}/REMOVE_STORAGE_CLUSTER_SUCCESS`;
 export const REMOVE_STORAGE_CLUSTER_FAILURE = `${prefix}/REMOVE_STORAGE_CLUSTER_FAILURE`;
+
+export const CLEAR_ERRORS_LIST = `${prefix}/CLEAR_ERRORS_LIST`;

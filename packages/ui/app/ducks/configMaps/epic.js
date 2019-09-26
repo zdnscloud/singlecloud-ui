@@ -1,8 +1,9 @@
 /**
- * Duck: Configmaps
+ * Duck: ConfigMaps
  * epic: configMaps
  *
  */
+import { push } from 'connected-react-router';
 import { Observable, interval, of, timer, concat } from 'rxjs';
 import {
   mergeMap,

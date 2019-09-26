@@ -11,7 +11,6 @@ import { FormattedMessage } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import { bindActionCreators, compose } from 'redux';
 
-import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import { Link } from 'react-router-dom';
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
@@ -57,72 +56,66 @@ const EventsList = ({ clusterID, events }) => {
             />
           </IconButton>
         </ListItem>
-        <ReactCSSTransitionGroup
-          transitionName="eventItem"
-          transitionEnterTimeout={500}
-          transitionLeaveTimeout={300}
-        >
-          {rEvents.map((evt, i) => (
-            <ListItem className={classes.item} key={evt.id}>
-              <ListItemAvatar className={classes.itemAvatar}>
-                {evt.type === 'Warning' ? (
-                  <WarningIcon
-                    style={{
-                      color: theme.palette.icons.f,
-                      transform: 'scale(0.85)',
-                    }}
-                  />
-                ) : (
-                  <NormalIcon
-                    style={{
-                      color: theme.palette.secondary.main,
-                      transform: 'scale(0.85)',
-                    }}
-                  />
-                )}
-              </ListItemAvatar>
-              <ListItemText
-                className={classes.itemText}
-                primary={
-                  <Typography className={classes.itemText1} component="div">
-                    <Typography
-                      className={classes.itemName}
-                      component="div"
-                      title={evt.name}
-                    >
-                      {evt.name}
-                    </Typography>
-                    <Typography
-                      className={classes.itemReason}
-                      component="div"
-                      title={evt.reason}
-                    >
-                      {evt.reason}
-                    </Typography>
+        {rEvents.map((evt, i) => (
+          <ListItem className={classes.item} key={evt.id}>
+            <ListItemAvatar className={classes.itemAvatar}>
+              {evt.type === 'Warning' ? (
+                <WarningIcon
+                  style={{
+                    color: theme.palette.icons.f,
+                    transform: 'scale(0.85)',
+                  }}
+                />
+              ) : (
+                <NormalIcon
+                  style={{
+                    color: theme.palette.secondary.main,
+                    transform: 'scale(0.85)',
+                  }}
+                />
+              )}
+            </ListItemAvatar>
+            <ListItemText
+              className={classes.itemText}
+              primary={
+                <Typography className={classes.itemText1} component="div">
+                  <Typography
+                    className={classes.itemName}
+                    component="div"
+                    title={evt.name}
+                  >
+                    {evt.name}
                   </Typography>
-                }
-                secondary={
-                  <Typography className={classes.itemText2} component="div">
-                    <Typography
-                      className={classes.itemMessage}
-                      component="div"
-                      title={evt.message}
-                    >
-                      {evt.message}
-                    </Typography>
-                    <Typography
-                      className={classes.itemTime}
-                      component="div"
-                      title={evt.time}
-                    >
-                      {evt.time}
-                    </Typography>
+                  <Typography
+                    className={classes.itemReason}
+                    component="div"
+                    title={evt.reason}
+                  >
+                    {evt.reason}
                   </Typography>
-                }
-              />
-            </ListItem>
-          ))}
-        </ReactCSSTransitionGroup>
+                </Typography>
+              }
+              secondary={
+                <Typography className={classes.itemText2} component="div">
+                  <Typography
+                    className={classes.itemMessage}
+                    component="div"
+                    title={evt.message}
+                  >
+                    {evt.message}
+                  </Typography>
+                  <Typography
+                    className={classes.itemTime}
+                    component="div"
+                    title={evt.time}
+                  >
+                    {evt.time}
+                  </Typography>
+                </Typography>
+              }
+            />
+          </ListItem>
+        ))}
       </List>
     </Paper>
   );

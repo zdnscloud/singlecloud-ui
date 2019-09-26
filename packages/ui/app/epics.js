@@ -19,13 +19,15 @@ import daemonSetsEpic from 'ducks/daemonSets/epic';
 import cronJobsEpic from 'ducks/cronJobs/epic';
 import jobsEpic from 'ducks/jobs/epic';
 import podsEpic from 'ducks/pods/epic';
-import networksEpic from 'ducks/networks/epic';
+import podNetworksEpic from 'ducks/podNetworks/epic';
+import serviceNetworksEpic from 'ducks/serviceNetworks/epic';
+import nodeNetworksEpic from 'ducks/nodeNetworks/epic';
 import clustersEpic from 'ducks/clusters/epic';
 import resourceQuotasEpic from 'ducks/resourceQuotas/epic';
 import userQuotasEpic from 'ducks/userQuotas/epic';
 import servicesEpic from 'ducks/services/epic';
 import ingressesEpic from 'ducks/ingresses/epic';
-import udpingressesEpic from 'ducks/udpingresses/epic';
+import udpIngressesEpic from 'ducks/udpIngresses/epic';
 import applicationsEpic from 'ducks/applications/epic';
 import registriesEpic from 'ducks/registries/epic';
 import monitorsEpic from 'ducks/monitors/epic';
@@ -59,11 +61,13 @@ export default function createEpic(injectedEpics = {}) {
     cronJobsEpic,
     jobsEpic,
     podsEpic,
-    networksEpic,
+    podNetworksEpic,
+    serviceNetworksEpic,
+    nodeNetworksEpic,
     resourceQuotasEpic,
     servicesEpic,
     ingressesEpic,
-    udpingressesEpic,
+    udpIngressesEpic,
     applicationsEpic,
     registriesEpic,
     monitorsEpic,

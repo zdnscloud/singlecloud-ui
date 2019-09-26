@@ -22,7 +22,7 @@ export const initialState = fromJS({
 {{else}}
   list: [],
 {{/if}}
-  selectedData: null,
+  errorsList: [],
 });
 
 const c = constants;
@@ -44,6 +44,7 @@ export const reducer = (
       } = meta;
       {{/if}}
       return state
+        .update('errorsList', (errors) => errors.filterNot((e) => e.type === c.LOAD_{{pcCase name}}_FAILURE))
         .setIn([
           'data',
           {{#each parents}}
@@ -58,7 +59,7 @@ export const reducer = (
         ], fromJS(list));
     }
     case c.LOAD_{{pcCase name}}_FAILURE:
-      return state;
+      return state.update('errorsList', (errors) => errors.filterNot((e) => e.type === type).push({ type, payload, meta }));
 
 {{#if wannaCreateAction }}
     case c.CREATE_{{scCase name}}:
@@ -78,10 +79,11 @@ export const reducer = (
         {{singularize this}}ID,
         {{/each}}
         data.id,
-      ], fromJS(data));
+      ], fromJS(data))
+      .update('errorsList', (errors) => errors.filterNot((e) => e.type === c.CREATE_{{scCase name}}_FAILURE));
     }
     case c.CREATE_{{scCase name}}_FAILURE:
-      return state;
+      return state.update('errorsList', (errors) => errors.filterNot((e) => e.type === type).push({ type, payload, meta }));
 {{/if}}
 
 {{#if wannaUpdateAction }}
@@ -104,12 +106,13 @@ export const reducer = (
           {{singularize this}}ID,
           {{/each}}
           id,
-        ], fromJS(data));
+        ], fromJS(data))
+        .update('errorsList', (errors) => errors.filterNot((e) => e.type === c.UPDATE_{{scCase name}}_FAILURE));
       }
       return state;
-      }
+    }
     case c.UPDATE_{{scCase name}}_FAILURE:
-      return state;
+      return state.update('errorsList', (errors) => errors.filterNot((e) => e.type === type).push({ type, payload, meta }));
 {{/if}}
 
 {{#if wannaReadOneAction }}
@@ -132,12 +135,13 @@ export const reducer = (
           {{singularize this}}ID,
           {{/each}}
           id,
-        ], fromJS(data));
+        ], fromJS(data))
+        .update('errorsList', (errors) => errors.filterNot((e) => e.type === c.READ_{{scCase name}}_FAILURE));
       }
       return state;
     }
     case c.READ_{{scCase name}}_FAILURE:
-      return state;
+      return state.update('errorsList', (errors) => errors.filterNot((e) => e.type === type).push({ type, payload, meta }));
 {{/if}}
 
 {{#if wannaRemoveAction }}
@@ -165,20 +169,24 @@ export const reducer = (
           {{#each parents}}
           {{singularize this}}ID,
           {{/each}}
-        ], (l) => l.filterNot((i) => i === id));
+        ], (l) => l.filterNot((i) => i === id))
+        .update('errorsList', (errors) => errors.filterNot((e) => e.type === c.REMOVE_{{scCase name}}_FAILURE));
     }
     case c.REMOVE_{{scCase name}}_FAILURE:
-      return state;
+      return state.update('errorsList', (errors) => errors.filterNot((e) => e.type === type).push({ type, payload, meta }));
 {{/if}}
 
 {{#if wannaResourceActions }}
     case c.EXECUTE_{{scCase name}}_ACTION:
       return state;
     case c.EXECUTE_{{scCase name}}_ACTION_SUCCESS:
-      return state;
+      return state.update('errorsList', (errors) => errors.filterNot((e) => e.type === c.EXECUTE_{{scCase name}}_ACTION_FAILURE));
     case c.EXECUTE_{{scCase name}}_ACTION_FAILURE:
-      return state;
+      return state.update('errorsList', (errors) => errors.filterNot((e) => e.type === type).push({ type, payload, meta }));
 {{/if}}
+
+    case c.CLEAR_ERRORS_LIST:
+      return state.update('errorsList', (errors) => errors.clear());
 
     default:
       return state;

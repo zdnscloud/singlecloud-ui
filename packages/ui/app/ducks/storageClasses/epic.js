@@ -1,5 +1,5 @@
 /**
- * Duck: Storageclasses
+ * Duck: StorageClasses
  * epic: storageClasses
  *
  */
@@ -39,24 +39,4 @@ export const loadStorageClassesEpic = (action$, state$, { ajax }) =>
     )
   );
 
-export const readStorageClassEpic = (action$, state$, { ajax }) =>
-  action$.pipe(
-    ofType(c.READ_STORAGE_CLASS),
-    mergeMap(({ payload, meta }) =>
-      ajax({
-        url: `${meta.url}`,
-        method: 'GET',
-      }).pipe(
-        map((resp) => {
-          meta.resolve && meta.resolve(resp);
-          return a.readStorageClassSuccess(resp, { ...meta, id: payload });
-        }),
-        catchError((error) => {
-          meta.reject && meta.reject(error);
-          return of(a.readStorageClassFailure(error, { ...meta, id: payload }));
-        })
-      )
-    )
-  );
-
-export default combineEpics(loadStorageClassesEpic, readStorageClassEpic);
+export default combineEpics(loadStorageClassesEpic);

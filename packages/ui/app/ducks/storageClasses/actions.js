@@ -1,5 +1,5 @@
 /**
- * Duck: Storageclasses
+ * Duck: StorageClasses
  * actions: storageClasses
  *
  */
@@ -27,21 +27,8 @@ export const loadStorageClassesFailure = (error, meta = {}) => ({
   error: true,
 });
 
-export const readStorageClass = (id, meta = {}) => ({
-  type: c.READ_STORAGE_CLASS,
-  payload: id,
+export const clearErrorsList = (payload, meta) => ({
+  type: c.CLEAR_ERRORS_LIST,
+  payload,
   meta,
-});
-
-export const readStorageClassSuccess = (resp, meta = {}) => ({
-  type: c.READ_STORAGE_CLASS_SUCCESS,
-  payload: resp,
-  meta,
-});
-
-export const readStorageClassFailure = (error, meta = {}) => ({
-  type: c.READ_STORAGE_CLASS_FAILURE,
-  payload: error,
-  meta,
-  error: true,
 });

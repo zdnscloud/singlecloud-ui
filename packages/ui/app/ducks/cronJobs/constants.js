@@ -1,5 +1,5 @@
 /**
- * Duck: Cronjobs
+ * Duck: CronJobs
  * constants: cronJobs
  *
  */
@@ -16,10 +16,6 @@ export const CREATE_CRON_JOB = `${prefix}/CREATE_CRON_JOB`;
 export const CREATE_CRON_JOB_SUCCESS = `${prefix}/CREATE_CRON_JOB_SUCCESS`;
 export const CREATE_CRON_JOB_FAILURE = `${prefix}/CREATE_CRON_JOB_FAILURE`;
 
-export const UPDATE_CRON_JOB = `${prefix}/UPDATE_CRON_JOB`;
-export const UPDATE_CRON_JOB_SUCCESS = `${prefix}/UPDATE_CRON_JOB_SUCCESS`;
-export const UPDATE_CRON_JOB_FAILURE = `${prefix}/UPDATE_CRON_JOB_FAILURE`;
-
 export const READ_CRON_JOB = `${prefix}/READ_CRON_JOB`;
 export const READ_CRON_JOB_SUCCESS = `${prefix}/READ_CRON_JOB_SUCCESS`;
 export const READ_CRON_JOB_FAILURE = `${prefix}/READ_CRON_JOB_FAILURE`;
@@ -27,3 +23,5 @@ export const READ_CRON_JOB_FAILURE = `${prefix}/READ_CRON_JOB_FAILURE`;
 export const REMOVE_CRON_JOB = `${prefix}/REMOVE_CRON_JOB`;
 export const REMOVE_CRON_JOB_SUCCESS = `${prefix}/REMOVE_CRON_JOB_SUCCESS`;
 export const REMOVE_CRON_JOB_FAILURE = `${prefix}/REMOVE_CRON_JOB_FAILURE`;
+
+export const CLEAR_ERRORS_LIST = `${prefix}/CLEAR_ERRORS_LIST`;

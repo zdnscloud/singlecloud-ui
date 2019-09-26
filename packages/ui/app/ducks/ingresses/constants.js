@@ -1,9 +1,9 @@
 /**
- * Duck: Ingress
- * constants: ingress
+ * Duck: Ingresses
+ * constants: ingresses
  *
  */
-export const prefix = 'ingress';
+export const prefix = 'ingresses';
 
 /**
  *  constants
@@ -23,3 +23,5 @@ export const READ_INGRESS_FAILURE = `${prefix}/READ_INGRESS_FAILURE`;
 export const REMOVE_INGRESS = `${prefix}/REMOVE_INGRESS`;
 export const REMOVE_INGRESS_SUCCESS = `${prefix}/REMOVE_INGRESS_SUCCESS`;
 export const REMOVE_INGRESS_FAILURE = `${prefix}/REMOVE_INGRESS_FAILURE`;
+
+export const CLEAR_ERRORS_LIST = `${prefix}/CLEAR_ERRORS_LIST`;

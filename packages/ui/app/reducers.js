@@ -18,7 +18,15 @@ import secretsReducer, { prefix as secretsPrefix } from 'ducks/secrets';
 import cronJobsReducer, { prefix as cronJobsPrefix } from 'ducks/cronJobs';
 import jobsReducer, { prefix as jobsPrefix } from 'ducks/jobs';
 import podsReducer, { prefix as podsPrefix } from 'ducks/pods';
-import networksReducer, { prefix as networksPrefix } from 'ducks/networks';
+import podNetworksReducer, {
+  prefix as podNetworksPrefix,
+} from 'ducks/podNetworks';
+import serviceNetworksReducer, {
+  prefix as serviceNetworksPrefix,
+} from 'ducks/serviceNetworks';
+import nodeNetworksReducer, {
+  prefix as nodeNetworksPrefix,
+} from 'ducks/nodeNetworks';
 import namespacesReducer, {
   prefix as namespacesPrefix,
 } from 'ducks/namespaces';
@@ -42,9 +50,9 @@ import daemonSetsReducer, {
   prefix as daemonSetsPrefix,
 } from 'ducks/daemonSets';
 import ingressesReducer, { prefix as ingressesPrefix } from 'ducks/ingresses';
-import udpingressesReducer, {
-  prefix as udpingressesPrefix,
-} from 'ducks/udpingresses';
+import udpIngressesReducer, {
+  prefix as udpIngressesPrefix,
+} from 'ducks/udpIngresses';
 import applicationsReducer, {
   prefix as applicationsPrefix,
 } from 'ducks/applications';
@@ -94,7 +102,9 @@ export default function createReducer(injectedReducers = {}) {
     [cronJobsPrefix]: cronJobsReducer,
     [jobsPrefix]: jobsReducer,
     [podsPrefix]: podsReducer,
-    [networksPrefix]: networksReducer,
+    [podNetworksPrefix]: podNetworksReducer,
+    [serviceNetworksPrefix]: serviceNetworksReducer,
+    [nodeNetworksPrefix]: nodeNetworksReducer,
     [namespacesPrefix]: namespacesReducer,
     [resourceQuotasPrefix]: resourceQuotasReducer,
     [nodesPrefix]: nodesReducer,
@@ -103,7 +113,7 @@ export default function createReducer(injectedReducers = {}) {
     [userQuotasPrefix]: userQuotasReducer,
     [servicesPrefix]: servicesReducer,
     [ingressesPrefix]: ingressesReducer,
-    [udpingressesPrefix]: udpingressesReducer,
+    [udpIngressesPrefix]: udpIngressesReducer,
     [applicationsPrefix]: applicationsReducer,
     [registriesPrefix]: registriesReducer,
     [monitorsPrefix]: monitorsReducer,

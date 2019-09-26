@@ -1,5 +1,5 @@
 /**
- * Duck: Statefulsets
+ * Duck: StatefulSets
  * epic: statefulSets
  *
  */

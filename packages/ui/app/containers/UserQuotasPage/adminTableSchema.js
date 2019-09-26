@@ -45,6 +45,7 @@ const adminTableSchema = schema
             actionName={props.removeUserQuota}
             id={props.data.get('id')}
             url={props.data.getIn(['links', 'remove'])}
+            reject={(e) => props.setError(e)}
           />
         </Fragment>
       ),

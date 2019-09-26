@@ -1,5 +1,5 @@
 /**
- * Duck: Cronjobs
+ * Duck: CronJobs
  * actions: cronJobs
  *
  */
@@ -46,25 +46,6 @@ export const createCronJobFailure = (error, meta = {}) => ({
   error: true,
 });
 
-export const updateCronJob = (data, meta = {}) => ({
-  type: c.UPDATE_CRON_JOB,
-  payload: data,
-  meta,
-});
-
-export const updateCronJobSuccess = (resp, meta = {}) => ({
-  type: c.UPDATE_CRON_JOB_SUCCESS,
-  payload: resp,
-  meta,
-});
-
-export const updateCronJobFailure = (error, meta = {}) => ({
-  type: c.UPDATE_CRON_JOB_FAILURE,
-  payload: error,
-  meta,
-  error: true,
-});
-
 export const readCronJob = (id, meta = {}) => ({
   type: c.READ_CRON_JOB,
   payload: id,
@@ -101,4 +82,10 @@ export const removeCronJobFailure = (error, meta = {}) => ({
   payload: error,
   meta,
   error: true,
+});
+
+export const clearErrorsList = (payload, meta) => ({
+  type: c.CLEAR_ERRORS_LIST,
+  payload,
+  meta,
 });

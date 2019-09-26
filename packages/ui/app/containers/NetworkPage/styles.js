@@ -95,19 +95,31 @@ export const styles = (theme) => ({
     margin: '0 20px',
   },
   infoExample: {
-    width: '100%',
-    height: '45%',
+    flex: '0 0 45%',
     borderBottom: '1px #eeeeee solid',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'flex-start',
   },
   activeIP: {
-    width: '100%',
-    paddingTop: '10px',
+    flex: '1 1 0',
+    display: 'flex',
+    flexDirection: 'column',
+    // alignItems: 'flex-start',
   },
   infoLine: {
     display: 'flex',
     alignItems: 'center',
-    marginBottom: '10px',
+    flex: '1 1 0',
     whiteSpace: 'nowrap',
+  },
+  infoLineTitle: {
+    flex: '0 0 70px',
+  },
+  infoLineContent: {
+    flex: '1 1 0',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
   },
 });
 

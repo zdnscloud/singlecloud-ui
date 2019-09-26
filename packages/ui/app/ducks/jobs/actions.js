@@ -46,25 +46,6 @@ export const createJobFailure = (error, meta = {}) => ({
   error: true,
 });
 
-export const updateJob = (data, meta = {}) => ({
-  type: c.UPDATE_JOB,
-  payload: data,
-  meta,
-});
-
-export const updateJobSuccess = (resp, meta = {}) => ({
-  type: c.UPDATE_JOB_SUCCESS,
-  payload: resp,
-  meta,
-});
-
-export const updateJobFailure = (error, meta = {}) => ({
-  type: c.UPDATE_JOB_FAILURE,
-  payload: error,
-  meta,
-  error: true,
-});
-
 export const readJob = (id, meta = {}) => ({
   type: c.READ_JOB,
   payload: id,
@@ -101,4 +82,10 @@ export const removeJobFailure = (error, meta = {}) => ({
   payload: error,
   meta,
   error: true,
+});
+
+export const clearErrorsList = (payload, meta) => ({
+  type: c.CLEAR_ERRORS_LIST,
+  payload,
+  meta,
 });
