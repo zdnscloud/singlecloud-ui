@@ -36,7 +36,7 @@ import {
 
 import * as actions from 'ducks/udpIngresses/actions';
 
-import UdpIngressRuleTable from './UdpIngressRuleTable';
+import UdpIngressRuleTable from './RuleTable';
 import messages from './messages';
 import useStyles from './styles';
 
