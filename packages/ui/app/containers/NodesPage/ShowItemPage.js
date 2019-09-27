@@ -10,7 +10,7 @@ import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import { bindActionCreators, compose } from 'redux';
-import moment from 'moment';
+import dayjs from 'dayjs';
 
 import { withStyles } from '@material-ui/core/styles';
 import Menubar from 'components/Menubar';
@@ -147,7 +147,7 @@ export const NodeDetailPage = ({ clusterID, url, readNode, node, nodeID }) => {
                         <FormattedMessage {...messages.creationTimestamp} />
                       }
                       fullWidth
-                      value={moment(node.get('creationTimestamp')).format(
+                      value={dayjs(node.get('creationTimestamp')).format(
                         'YYYY-MM-DD HH:mm:ss'
                       )}
                     />

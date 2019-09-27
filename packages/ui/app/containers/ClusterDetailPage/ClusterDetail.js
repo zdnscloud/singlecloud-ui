@@ -11,7 +11,7 @@ import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import { bindActionCreators, compose } from 'redux';
-import moment from 'moment';
+import dayjs from 'dayjs';
 
 import GridItem from 'components/Grid/GridItem';
 import GridContainer from 'components/Grid/GridContainer';
@@ -71,7 +71,7 @@ export const ClusterDetail = ({ cluster }) => {
       key: 'creationTimestamp',
       Icon: TimeIcon,
       message: 'clusterCreated',
-      value: moment(cluster.get('creationTimestamp')).format('YYYY-MM-DD'),
+      value: dayjs(cluster.get('creationTimestamp')).format('YYYY-MM-DD'),
     },
   ];
 
