@@ -2,8 +2,6 @@ import React from 'react';
 import { makeStyles } from '@material-ui/styles';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
-import Layout from './index';
-
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
@@ -13,16 +11,14 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function Loading(props, ref) {
+const Loading = React.forwardRef((props, ref) => {
   const classes = useStyles();
 
   return (
-    <Layout ref={ref}>
-      <div className={classes.root}>
-        <CircularProgress />
-      </div>
-    </Layout>
+    <div className={classes.root}>
+      <CircularProgress />
+    </div>
   );
-}
+});
 
-export default React.forwardRef(Loading);
+export default Loading;
