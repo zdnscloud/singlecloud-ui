@@ -1,9 +1,9 @@
 import React from 'react';
-import moment from 'moment';
+import dayjs from 'dayjs';
 
 const TimeCell = ({ value }) => {
   if (value == null) return 'N/A';
-  const time = moment(value);
+  const time = dayjs(value);
   const format = 'YYYY-MM-DD HH:mm:ss';
 
   return <time dateTime={value}>{time.format(format)}</time>;

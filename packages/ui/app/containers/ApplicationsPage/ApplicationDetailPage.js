@@ -28,7 +28,7 @@ import { makeSelectCurrentID as makeSelectCurrentNamespaceID } from 'ducks/names
 import * as actions from 'ducks/applications/actions';
 
 import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
-import moment from 'moment';
+import dayjs from 'dayjs';
 import messages from './messages';
 import useStyles from './styles';
 import ApplicationsPageHelmet from './helmet';
@@ -84,7 +84,7 @@ export const ApplicationDetailPage = ({
             <GridItem xs={6} sm={6} md={6}>
               <p className={classes.tag}>
                 Created at{' '}
-                {moment(application.get('creationTimestamp')).format(
+                {dayjs(application.get('creationTimestamp')).format(
                   'YYYY-MM-DD HH:mm:ss'
                 )}{' '}
               </p>
