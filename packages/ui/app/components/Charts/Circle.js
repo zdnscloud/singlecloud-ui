@@ -5,7 +5,7 @@ import { Pie } from '@vx/shape';
 import { Group } from '@vx/group';
 
 const Circle = (props) => {
-  const { total, value, ...rest } = props;
+  const { total, value, colorType, ...rest } = props;
   const [rect, setRect] = useState({ width: 300, height: 280 });
   const measuredRef = useCallback((node) => {
     if (node !== null) {
@@ -22,6 +22,18 @@ const Circle = (props) => {
   ];
   const percent = Math.round((value / total) * 100);
 
+  let usedFillColor = null;
+  switch (colorType) {
+    case 'green':
+      usedFillColor = '#66CDAA';
+      break;
+    case 'yellow':
+      usedFillColor = '#FCB642';
+      break;
+    default:
+      usedFillColor = '#40B7E8';
+      break;
+  }
   return (
     <div ref={measuredRef} {...rest}>
       <svg width={width} height={height}>
@@ -41,7 +53,7 @@ const Circle = (props) => {
                 const [centroidX, centroidY] = pie.path.centroid(arc);
                 const { startAngle, endAngle } = arc;
                 const hasSpaceForLabel = endAngle - startAngle >= 0.1;
-                const fillColor = label === 'used' ? '#40B7E8' : '#eee';
+                const fillColor = label === 'used' ? usedFillColor : '#eee';
                 return (
                   <g key={`usage-${label}-${i}`}>
                     <path d={pie.path(arc)} fill={fillColor} />
@@ -51,7 +63,7 @@ const Circle = (props) => {
             }
           </Pie>
           <text
-            fill="#40B7E8"
+            fill="#000"
             x={0}
             y={0}
             dy=".5em"

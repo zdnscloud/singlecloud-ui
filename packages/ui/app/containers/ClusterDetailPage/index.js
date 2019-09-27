@@ -36,7 +36,14 @@ import useStyles from './styles';
 import ClusterDetailPageHelmet from './helmet';
 import ClusterDetail from './ClusterDetail';
 
-export const ClusterDetailPage = ({ readCluster, cluster, id, url, lastNamespace, setLastNamespace }) => {
+export const ClusterDetailPage = ({
+  readCluster,
+  cluster,
+  id,
+  url,
+  lastNamespace,
+  setLastNamespace,
+}) => {
   const classes = useStyles();
   useEffect(() => {
     if (!lastNamespace) {
@@ -47,7 +54,7 @@ export const ClusterDetailPage = ({ readCluster, cluster, id, url, lastNamespace
       readCluster(id, { url: `${url}/${id}` });
     }, 3000);
     return () => clearInterval(t);
-  }, [id, readCluster, url]);
+  }, [id, lastNamespace, readCluster, setLastNamespace, url]);
 
   return (
     <div className={classes.root}>
@@ -64,19 +71,7 @@ export const ClusterDetailPage = ({ readCluster, cluster, id, url, lastNamespace
         />
         <GridContainer className={classes.grid}>
           <GridItem xs={12} sm={12} md={12}>
-            <Card>
-              <CardHeader>
-                <h4>
-                  <FormattedMessage
-                    {...messages.clusterDetail}
-                    values={cluster.toJS()}
-                  />
-                </h4>
-              </CardHeader>
-              <CardBody>
-                <ClusterDetail cluster={cluster} />
-              </CardBody>
-            </Card>
+            <ClusterDetail cluster={cluster} />
           </GridItem>
         </GridContainer>
       </div>
