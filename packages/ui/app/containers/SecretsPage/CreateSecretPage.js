@@ -33,7 +33,7 @@ import { makeSelectURL } from 'ducks/secrets/selectors';
 
 import messages from './messages';
 import SecretsPageHelmet from './helmet';
-import styles from './styles';
+import useStyles from './styles';
 import SecretForm from './SecretForm';
 export const formName = 'createSecretForm';
 
@@ -73,7 +73,6 @@ const CreateSecretForm = reduxForm({
 
 /* eslint-disable react/prefer-stateless-function */
 export const CreateSecret = ({
-  classes,
   createSecret,
   submitForm,
   url,
@@ -81,6 +80,7 @@ export const CreateSecret = ({
   namespaceID,
   routeTo,
 }) => {
+  const classes = useStyles();
   async function doSubmit(formValues) {
     try {
       const data = formValues.toJS();
@@ -171,7 +171,4 @@ const withConnect = connect(
   mapDispatchToProps
 );
 
-export default compose(
-  withConnect,
-  withStyles(styles)
-)(CreateSecret);
+export default compose(withConnect)(CreateSecret);

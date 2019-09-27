@@ -37,7 +37,7 @@ import {
 import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
 import messages from './messages';
 import SecretsPageHelmet from './helmet';
-import styles from './styles';
+import useStyles from './styles';
 import SecretForm from './SecretForm';
 
 export const formName = 'createSecretForm';
@@ -77,7 +77,6 @@ const CreateSecretForm = reduxForm({
 })(SecretForm);
 
 export const EditSecret = ({
-  classes,
   readSecret,
   updateSecret,
   submitForm,
@@ -88,6 +87,7 @@ export const EditSecret = ({
   secret,
   routeTo,
 }) => {
+  const classes = useStyles();
   useEffect(() => {
     readSecret(id, { url: `${url}/${id}`, clusterID, namespaceID });
   }, [clusterID, id, namespaceID, readSecret, url]);
@@ -187,7 +187,4 @@ const withConnect = connect(
   mapDispatchToProps
 );
 
-export default compose(
-  withConnect,
-  withStyles(styles)
-)(EditSecret);
+export default compose(withConnect)(EditSecret);

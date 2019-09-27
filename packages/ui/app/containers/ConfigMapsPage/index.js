@@ -33,18 +33,18 @@ import { makeSelectURL } from 'ducks/configMaps/selectors';
 
 import messages from './messages';
 import ConfigMapsPageHelmet from './helmet';
-import styles from './styles';
+import useStyles from './styles';
 import ConfigMapsTable from './ConfigMapsTable';
 
 /* eslint-disable react/prefer-stateless-function */
 export const ConfigMapsPage = ({
-  classes,
   clusterID,
   namespaceID,
   url,
   loadConfigMaps,
   location,
 }) => {
+  const classes = useStyles();
   useEffect(() => {
     loadConfigMaps(url, { clusterID, namespaceID });
   }, [clusterID, loadConfigMaps, namespaceID, url]);
@@ -105,7 +105,4 @@ const withConnect = connect(
   mapDispatchToProps
 );
 
-export default compose(
-  withConnect,
-  withStyles(styles)
-)(ConfigMapsPage);
+export default compose(withConnect)(ConfigMapsPage);

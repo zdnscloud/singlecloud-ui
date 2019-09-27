@@ -51,10 +51,9 @@ import {
 
 import messages from './messages';
 import ConfigMapsPageHelmet from './helmet';
-import styles from './styles';
+import useStyles from './styles';
 
 export const ShowConfigMap = ({
-  classes,
   clusterID,
   namespaceID,
   id,
@@ -62,6 +61,7 @@ export const ShowConfigMap = ({
   configMap,
   readConfigMap,
 }) => {
+  const classes = useStyles();
   useEffect(() => {
     readConfigMap(id, { url: `${url}/${id}`, clusterID, namespaceID });
   }, [clusterID, id, namespaceID, readConfigMap, url]);
@@ -216,7 +216,4 @@ const withConnect = connect(
   mapDispatchToProps
 );
 
-export default compose(
-  withConnect,
-  withStyles(styles)
-)(ShowConfigMap);
+export default compose(withConnect)(ShowConfigMap);

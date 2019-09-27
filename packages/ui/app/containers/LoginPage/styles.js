@@ -1,7 +1,9 @@
+import { makeStyles } from '@material-ui/styles';
+
 import boxImage from 'images/login-bg-box.png';
 import image from 'images/login-bg.jpg';
 
-const signupPageStyle = (theme) => ({
+const styles = (theme) => ({
   container: {
     paddingRight: '15px',
     paddingLeft: '15px',
@@ -29,6 +31,7 @@ const signupPageStyle = (theme) => ({
     // zIndex: 0,
     backgroundImage: `url(${boxImage})`,
     backgroundRepeat: 'no-repeat',
+    backgroundPosition: '380px 190px',
     transition: '10s all',
     position: 'absolute',
     top: 0,
@@ -142,4 +145,4 @@ const signupPageStyle = (theme) => ({
   },
 });
 
-export default signupPageStyle;
+export default makeStyles(styles);

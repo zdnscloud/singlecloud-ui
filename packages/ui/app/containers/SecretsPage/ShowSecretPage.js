@@ -46,10 +46,9 @@ import {
 
 import messages from './messages';
 import SecretsPageHelmet from './helmet';
-import styles from './styles';
+import useStyles from './styles';
 
 export const ShowSecret = ({
-  classes,
   clusterID,
   namespaceID,
   id,
@@ -57,6 +56,7 @@ export const ShowSecret = ({
   readSecret,
   secret,
 }) => {
+  const classes = useStyles();
   useEffect(() => {
     readSecret(id, { url: `${url}/${id}`, clusterID, namespaceID });
   }, [clusterID, id, namespaceID, readSecret, url]);
@@ -160,7 +160,4 @@ const withConnect = connect(
   mapDispatchToProps
 );
 
-export default compose(
-  withConnect,
-  withStyles(styles)
-)(ShowSecret);
+export default compose(withConnect)(ShowSecret);

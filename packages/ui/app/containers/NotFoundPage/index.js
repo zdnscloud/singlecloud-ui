@@ -17,27 +17,19 @@ import { withStyles } from '@material-ui/core/styles';
 import Menubar from 'components/Menubar';
 
 import messages from './messages';
-import styles from './styles';
+import useStyles from './styles';
 
 /* eslint-disable react/prefer-stateless-function */
-class NotFound extends React.PureComponent {
-  static propTypes = {
-    classes: PropTypes.object.isRequired,
-  };
-
-  render() {
-    const { classes } = this.props;
-
-    return (
-      <div className={classes.root}>
-        <Menubar headerContent={<FormattedMessage {...messages.header} />} />
-        <div className={classes.content}>
-          <div className={classes.appBarSpacer} />
-          <h1>404</h1>
-        </div>
+const NotFound = () => {
+  const classes = useStyles();
+  return (
+    <div className={classes.root}>
+      <Menubar headerContent={<FormattedMessage {...messages.header} />} />
+      <div className={classes.content}>
+        <div className={classes.appBarSpacer} />
+        <h1>404</h1>
       </div>
-    );
-  }
-}
-
-export default withStyles(styles)(NotFound);
+    </div>
+  );
+};
+export default NotFound;
