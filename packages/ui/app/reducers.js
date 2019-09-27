@@ -8,7 +8,6 @@ import { reducer as formReducer } from 'redux-form/immutable';
 
 import history from 'utils/history';
 import languageProviderReducer from 'containers/LanguageProvider/reducer';
-import terminalPageReducer from 'containers/TerminalPage/reducer';
 
 // import reducers start
 import appReducer from 'ducks/app';
@@ -87,7 +86,6 @@ import outerServicesReducer, {
 export default function createReducer(injectedReducers = {}) {
   const rootReducer = combineReducers({
     // combine reducers start
-    terminalPage: terminalPageReducer,
     language: languageProviderReducer,
     router: connectRouter(history),
     form: formReducer,

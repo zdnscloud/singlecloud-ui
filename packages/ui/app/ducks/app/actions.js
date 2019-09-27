@@ -20,3 +20,13 @@ export const setLastNamespace = (ns) => ({
   type: c.SET_LAST_NAMESPACE,
   payload: ns,
 });
+
+export const openTerminal = (kind, data = {}) => ({
+  type: c.OPEN_TERMINAL,
+  payload: { kind, data },
+});
+
+export const closeTerminal = () => ({
+  type: c.CLOSE_TERMINAL,
+  payload: {},
+});

@@ -21,11 +21,10 @@ import IconButton from '@material-ui/core/IconButton';
 import ShellIcon from 'components/Icons/Shell';
 import LogIcon from 'components/Icons/Log';
 import Chip from '@material-ui/core/Chip';
-import ContainerTerminalDialog from 'containers/TerminalPage/ContainerTerminalDialog';
 
 import { makeSelectCurrentID as makeSelectCurrentClusterID } from 'ducks/clusters/selectors';
 import { makeSelectCurrentID as makeSelectCurrentNamespaceID } from 'ducks/namespaces/selectors';
-import { openContainerTerminal } from 'containers/TerminalPage/actions';
+import * as appActions from 'ducks/app/actions';
 import {
   makeSelectPodsList,
   makeSelectSTSPodsList,
@@ -96,16 +95,12 @@ const PodsTable = ({
                       edge="end"
                       style={{ transform: 'scale(0.7)' }}
                       onClick={(evt) => {
-                        openTerminal(
-                          {
-                            podID: props.data.get('id'),
-                            containerName: ctn.get('name'),
-                          },
-                          {
-                            clusterID,
-                            namespaceID,
-                          }
-                        );
+                        openTerminal('pod', {
+                          clusterID,
+                          namespaceID,
+                          podID: props.data.get('id'),
+                          containerName: ctn.get('name'),
+                        });
                       }}
                     >
                       <ShellIcon />
@@ -144,7 +139,6 @@ const PodsTable = ({
   return (
     <Paper className={classes.tableWrapper}>
       <LogViewDialog />
-      <ContainerTerminalDialog />
       <SimpleTable
         className={classes.table}
         schema={mergedSchema}
@@ -167,8 +161,8 @@ const mapStateToProps = createStructuredSelector({
 const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
+      ...appActions,
       ...actions,
-      openTerminal: openContainerTerminal,
     },
     dispatch
   );
