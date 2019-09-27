@@ -1992,7 +1992,7 @@
     npmlog "^4.1.2"
     write-file-atomic "^2.3.0"
 
-"@loadable/component@^5.6.1":
+"@loadable/component@^5.10.3":
   version "5.10.3"
   resolved "https://registry.yarnpkg.com/@loadable/component/-/component-5.10.3.tgz#e1ad811ac4834a6ed187605d8464351d0c52896f"
   integrity sha512-/aSO+tXw4vFMwZ6fgLaNQgLuEa7bgTpoBE4PxNzf08/ewAjymrCS3J7v3SbGE7IjGmmKL6vVwkpb7S3cYrk+ag==

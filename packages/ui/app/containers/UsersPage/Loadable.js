@@ -4,7 +4,7 @@
  *
  */
 
-import loadable from '@loadable/component';
+import loadable from '@gsmlg/com/loadable';
 
 export default loadable(() =>
   import(/* webpackChunkName: "UsersPage" */ './index')
