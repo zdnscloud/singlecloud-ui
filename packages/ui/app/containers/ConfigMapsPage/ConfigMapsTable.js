@@ -1,6 +1,6 @@
 /**
  *
- * ConfigMapsPage
+ * ConfigMaps Table
  *
  */
 
@@ -29,78 +29,68 @@ import {
 } from 'ducks/configMaps/selectors';
 
 import messages from './messages';
-import styles from './styles';
+import useStyles from './styles';
 import schema from './tableSchema';
 
 /* eslint-disable react/prefer-stateless-function */
-export class ConfigMapsTable extends React.PureComponent {
-  static propTypes = {
-    classes: PropTypes.object.isRequired,
-    configMaps: PropTypes.object,
-  };
+const ConfigMapsTable = ({
+  data,
+  configMaps,
+  clusterID,
+  namespaceID,
+  removeConfigMap,
+}) => {
+  const classes = useStyles();
+  const [openID, setOpenID] = useState(null);
+  const [openIndex, setOpenIndex] = useState(null);
 
-  state = { openID: null, openIndex: null };
+  const mergedSchema = schema
+    .map((s) => ({
+      ...s,
+      label: <FormattedMessage {...messages[`tableTitle${s.label}`]} />,
+    }))
+    .map((sch) => {
+      if (sch.id === 'actions') {
+        return {
+          ...sch,
+          props: { removeConfigMap, clusterID, namespaceID },
+        };
+      }
+      if (sch.id === 'name') {
+        return {
+          ...sch,
+          props: { clusterID, namespaceID },
+        };
+      }
+      return sch;
+    });
 
-  render() {
-    const {
-      classes,
-      data,
-      configMaps,
-      clusterID,
-      namespaceID,
-      removeConfigMap,
-    } = this.props;
-
-    const mergedSchema = schema
-      .map((s) => ({
-        ...s,
-        label: <FormattedMessage {...messages[`tableTitle${s.label}`]} />,
-      }))
-      .map((sch) => {
-        if (sch.id === 'actions') {
-          return {
-            ...sch,
-            props: { removeConfigMap, clusterID, namespaceID },
-          };
-        }
-        if (sch.id === 'name') {
-          return {
-            ...sch,
-            props: { clusterID, namespaceID },
-          };
-        }
-        return sch;
-      });
-
-    return (
-      <Paper className={classes.tableWrapper}>
-        <Dialog
-          open={this.state.openID != null}
-          onClose={() => this.setState({ openID: null, openIndex: null })}
-          aria-labelledby="form-dialog-title"
-        >
-          <AceEditor
-            focus
-            mode="yaml"
-            theme="github"
-            value={configMaps.getIn([
-              this.state.openID,
-              'configs',
-              this.state.openIndex,
-              'data',
-            ])}
-            readOnly
-          />
-        </Dialog>
-        <SimpleTable
-          className={classes.table}
-          schema={mergedSchema}
-          data={data}
+  return (
+    <Paper className={classes.tableWrapper}>
+      <Dialog
+        open={openID != null}
+        onClose={() => {
+          setOpenID(null);
+          setOpenIndex(null);
+        }}
+        aria-labelledby="form-dialog-title"
+      >
+        <AceEditor
+          focus
+          mode="yaml"
+          theme="github"
+          value={configMaps.getIn([openID, 'configs', openIndex, 'data'])}
+          readOnly
         />
-      </Paper>
-    );
-  }
-}
+      </Dialog>
+      <SimpleTable
+        className={classes.table}
+        schema={mergedSchema}
+        data={data}
+      />
+    </Paper>
+  );
+};
 
 const mapStateToProps = createStructuredSelector({
   clusterID: makeSelectCurrentClusterID(),
@@ -122,7 +112,4 @@ const withConnect = connect(
   mapDispatchToProps
 );
 
-export default compose(
-  withConnect,
-  withStyles(styles)
-)(ConfigMapsTable);
+export default compose(withConnect)(ConfigMapsTable);
