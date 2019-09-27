@@ -60,21 +60,21 @@ export const createRegistryEpic = (action$, state$, { ajax }) =>
     )
   );
 
-export const removeRegistryEpic = (action$, state$, { ajax }) =>
+export const readRegistryEpic = (action$, state$, { ajax }) =>
   action$.pipe(
-    ofType(c.REMOVE_REGISTRY),
+    ofType(c.READ_REGISTRY),
     mergeMap(({ payload, meta }) =>
       ajax({
         url: `${meta.url}`,
-        method: 'DELETE',
+        method: 'GET',
       }).pipe(
         map((resp) => {
           meta.resolve && meta.resolve(resp);
-          return a.removeRegistrySuccess(resp, { ...meta, id: payload });
+          return a.readRegistrySuccess(resp, { ...meta, id: payload });
         }),
         catchError((error) => {
           meta.reject && meta.reject(error);
-          return of(a.removeRegistryFailure(error, { ...meta, id: payload }));
+          return of(a.readRegistryFailure(error, { ...meta, id: payload }));
         })
       )
     )
@@ -83,5 +83,5 @@ export const removeRegistryEpic = (action$, state$, { ajax }) =>
 export default combineEpics(
   loadRegistriesEpic,
   createRegistryEpic,
-  removeRegistryEpic
+  readRegistryEpic
 );

@@ -1,5 +1,5 @@
 /**
- * Duck: Userquotas
+ * Duck: UserQuotas
  * epic: userQuotas
  *
  */
@@ -121,22 +121,24 @@ export const removeUserQuotaEpic = (action$, state$, { ajax }) =>
     )
   );
 
-export const requestUserQuotaEpic = (action$, state$, { ajax }) =>
+export const executeUserQuotaActionEpic = (action$, state$, { ajax }) =>
   action$.pipe(
-    ofType(c.REQUEST_USER_QUOTA),
-    mergeMap(({ payload, meta }) =>
+    ofType(c.EXECUTE_USER_QUOTA_ACTION),
+    mergeMap(({ payload: { action, data }, meta }) =>
       ajax({
-        url: `${meta.url}`,
+        url: `${meta.url}?action=${action}`,
         method: 'POST',
-        body: payload,
+        body: data,
       }).pipe(
         map((resp) => {
           meta.resolve && meta.resolve(resp);
-          return a.requestUserQuotaSuccess(resp, meta);
+          return a.executeUserQuotaActionSuccess(resp, { ...meta, action });
         }),
         catchError((error) => {
           meta.reject && meta.reject(error);
-          return of(a.requestUserQuotaFailure(error, meta));
+          return of(
+            a.executeUserQuotaActionFailure(error, { ...meta, action })
+          );
         })
       )
     )
@@ -148,5 +150,5 @@ export default combineEpics(
   updateUserQuotaEpic,
   readUserQuotaEpic,
   removeUserQuotaEpic,
-  requestUserQuotaEpic
+  executeUserQuotaActionEpic
 );

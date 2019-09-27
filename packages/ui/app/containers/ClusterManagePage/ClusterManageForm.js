@@ -113,7 +113,7 @@ const ClusterManageForm = ({
                 <ReadOnlyInput
                   labelText={<FormattedMessage {...messages.formClustersNet} />}
                   fullWidth
-                  value={cluster.get('network.plugin')}
+                  value={cluster.getIn(['network', 'plugin'])}
                 />
               </GridItem>
             </GridContainer>

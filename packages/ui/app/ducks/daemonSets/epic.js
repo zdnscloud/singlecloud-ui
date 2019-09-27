@@ -1,5 +1,5 @@
 /**
- * Duck: Daemonsets
+ * Duck: DaemonSets
  * epic: daemonSets
  *
  */
@@ -55,27 +55,6 @@ export const createDaemonSetEpic = (action$, state$, { ajax }) =>
         catchError((error) => {
           meta.reject && meta.reject(error);
           return of(a.createDaemonSetFailure(error, meta));
-        })
-      )
-    )
-  );
-
-export const updateDaemonSetEpic = (action$, state$, { ajax }) =>
-  action$.pipe(
-    ofType(c.UPDATE_DAEMON_SET),
-    mergeMap(({ payload, meta }) =>
-      ajax({
-        url: `${meta.url}`,
-        method: 'PUT',
-        body: payload,
-      }).pipe(
-        map((resp) => {
-          meta.resolve && meta.resolve(resp);
-          return a.updateDaemonSetSuccess(resp, meta);
-        }),
-        catchError((error) => {
-          meta.reject && meta.reject(error);
-          return of(a.updateDaemonSetFailure(error, meta));
         })
       )
     )
@@ -147,7 +126,6 @@ export const executeDaemonSetActionEpic = (action$, state$, { ajax }) =>
 export default combineEpics(
   loadDaemonSetsEpic,
   createDaemonSetEpic,
-  updateDaemonSetEpic,
   readDaemonSetEpic,
   removeDaemonSetEpic,
   executeDaemonSetActionEpic

@@ -37,7 +37,7 @@ import {
 
 import messages from './messages';
 import ConfigMapsPageHelmet from './helmet';
-import styles from './styles';
+import useStyles from './styles';
 import ConfigMapForm from './ConfigMapForm';
 
 export const formName = 'createConfigMapForm';
@@ -78,7 +78,6 @@ const CreateConfigMapForm = reduxForm({
 })(ConfigMapForm);
 
 export const EditConfigMap = ({
-  classes,
   readConfigMap,
   updateConfigMap,
   submitForm,
@@ -89,6 +88,7 @@ export const EditConfigMap = ({
   configMap,
   routeTo,
 }) => {
+  const classes = useStyles();
   useEffect(() => {
     readConfigMap(id, { url: `${url}/${id}`, clusterID, namespaceID });
   }, [clusterID, id, namespaceID, readConfigMap, url]);
@@ -186,7 +186,4 @@ const withConnect = connect(
   mapDispatchToProps
 );
 
-export default compose(
-  withConnect,
-  withStyles(styles)
-)(EditConfigMap);
+export default compose(withConnect)(EditConfigMap);

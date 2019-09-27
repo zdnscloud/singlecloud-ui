@@ -1,5 +1,5 @@
 /**
- * Duck: Configmaps
+ * Duck: ConfigMaps
  * actions: configMaps
  *
  */
@@ -101,4 +101,10 @@ export const removeConfigMapFailure = (error, meta = {}) => ({
   payload: error,
   meta,
   error: true,
+});
+
+export const clearErrorsList = (payload, meta) => ({
+  type: c.CLEAR_ERRORS_LIST,
+  payload,
+  meta,
 });

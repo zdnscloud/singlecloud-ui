@@ -9,19 +9,18 @@ import {
   createMatchSelector,
   getLocation,
 } from 'connected-react-router/immutable';
-
 import {
   makeSelectCurrent as makeSelectCurrentCluster,
   makeSelectCurrentID as makeSelectCurrentClusterID,
 } from 'ducks/clusters/selectors';
 
-import { prefix } from './constants';
+import * as c from './constants';
 import { initialState } from './index';
 
 /**
  * Direct selector to the monitors domain
  */
-export const selectDomain = (state) => state.get(prefix) || initialState;
+export const selectDomain = (state) => state.get(c.prefix) || initialState;
 
 /**
  * Other specific selectors
@@ -30,6 +29,12 @@ export const makeSelectURL = () =>
   createSelector(
     makeSelectCurrentCluster(),
     (pt) => pt.getIn(['links', 'monitors'])
+  );
+
+export const makeSelectData = () =>
+  createSelector(
+    selectDomain,
+    (substate) => substate.get('data')
   );
 
 export const makeSelectMonitors = () =>
@@ -66,14 +71,40 @@ export const makeSelectCurrent = () =>
   createSelector(
     selectDomain,
     makeSelectCurrentClusterID(),
-
     makeSelectCurrentID(),
     (substate, clusterID, id) =>
       substate.getIn(['data', clusterID, id]) || substate.clear()
   );
 
-export const makeSelectError = () =>
+export const makeSelectErrorsList = () =>
   createSelector(
     selectDomain,
-    (state) => state.get('error')
+    (substate) => substate.get('errorsList')
+  );
+
+export const makeSelectLoadErrorsList = () =>
+  createSelector(
+    selectDomain,
+    (substate) =>
+      substate
+        .get('errorsList')
+        .filter(({ type }) => type === c.LOAD_MONITORS_FAILURE)
+  );
+
+export const makeSelectCreateErrorsList = () =>
+  createSelector(
+    selectDomain,
+    (substate) =>
+      substate
+        .get('errorsList')
+        .filter(({ type }) => type === c.CREATE_MONITOR_FAILURE)
+  );
+
+export const makeSelectReadErrorsList = () =>
+  createSelector(
+    selectDomain,
+    (substate) =>
+      substate
+        .get('errorsList')
+        .filter(({ type }) => type === c.READ_MONITOR_FAILURE)
   );

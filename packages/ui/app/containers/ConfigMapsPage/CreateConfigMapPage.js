@@ -46,7 +46,7 @@ import { makeSelectURL } from 'ducks/configMaps/selectors';
 
 import messages from './messages';
 import ConfigMapsPageHelmet from './helmet';
-import styles from './styles';
+import useStyles from './styles';
 import ConfigMapForm from './ConfigMapForm';
 
 export const formName = 'createConfigMapForm';
@@ -87,7 +87,6 @@ const CreateConfigMapForm = reduxForm({
 })(ConfigMapForm);
 
 export const CreateConfigMap = ({
-  classes,
   createConfigMap,
   submitForm,
   url,
@@ -95,6 +94,7 @@ export const CreateConfigMap = ({
   namespaceID,
   routeTo,
 }) => {
+  const classes = useStyles();
   async function doSubmit(formValues) {
     try {
       const data = formValues.toJS();
@@ -184,7 +184,4 @@ const withConnect = connect(
   mapDispatchToProps
 );
 
-export default compose(
-  withConnect,
-  withStyles(styles)
-)(CreateConfigMap);
+export default compose(withConnect)(CreateConfigMap);

@@ -60,27 +60,6 @@ export const createServiceEpic = (action$, state$, { ajax }) =>
     )
   );
 
-export const updateServiceEpic = (action$, state$, { ajax }) =>
-  action$.pipe(
-    ofType(c.UPDATE_SERVICE),
-    mergeMap(({ payload, meta }) =>
-      ajax({
-        url: `${meta.url}`,
-        method: 'PUT',
-        body: payload,
-      }).pipe(
-        map((resp) => {
-          meta.resolve && meta.resolve(resp);
-          return a.updateServiceSuccess(resp, meta);
-        }),
-        catchError((error) => {
-          meta.reject && meta.reject(error);
-          return of(a.updateServiceFailure(error, meta));
-        })
-      )
-    )
-  );
-
 export const readServiceEpic = (action$, state$, { ajax }) =>
   action$.pipe(
     ofType(c.READ_SERVICE),
@@ -124,7 +103,6 @@ export const removeServiceEpic = (action$, state$, { ajax }) =>
 export default combineEpics(
   loadServicesEpic,
   createServiceEpic,
-  updateServiceEpic,
   readServiceEpic,
   removeServiceEpic
 );

@@ -53,9 +53,8 @@ module.exports = (plop) => {
       '/../../app/',
       config.path,
       plop.getHelper('camelCase')(answers.name),
-      '**.js',
     )}`;
-    exec(`npm run prettify -- "${folderPath}"`);
+    exec(`npm run lint:eslint:fix -- "${folderPath}"`);
     return folderPath;
   });
 };

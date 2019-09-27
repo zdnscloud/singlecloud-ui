@@ -51,6 +51,12 @@ export const makeSelectLastNamespace = () =>
     (appState) => appState.get('lastNamespace')
   );
 
+export const makeSelectTermUrl = () =>
+  createSelector(
+    selectDomain,
+    (appState) => appState.get('termUrl')
+  );
+
 export const makeSelectUserMenus = () =>
   createSelector(
     selectDomain,
@@ -180,8 +186,8 @@ export const makeSelectLeftMenus = () =>
                 path: `/clusters/${cluster}/namespaces/${namespace}/ingresses`,
               },
               {
-                name: 'Udpingresses',
-                path: `/clusters/${cluster}/namespaces/${namespace}/udpingresses`,
+                name: 'UdpIngresses',
+                path: `/clusters/${cluster}/namespaces/${namespace}/udpIngresses`,
               },
             ],
             icon: BasicResourcesIcon,

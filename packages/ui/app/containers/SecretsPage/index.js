@@ -33,17 +33,17 @@ import { makeSelectURL } from 'ducks/secrets/selectors';
 import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
 import messages from './messages';
 import SecretsPageHelmet from './helmet';
-import styles from './styles';
+import useStyles from './styles';
 import SecretsTable from './SecretsTable';
 
 export const SecretsPage = ({
-  classes,
   clusterID,
   namespaceID,
   url,
   loadSecrets,
   location,
 }) => {
+  const classes = useStyles();
   useEffect(() => {
     loadSecrets(url, { clusterID, namespaceID });
   }, [clusterID, loadSecrets, namespaceID, url]);
@@ -107,7 +107,4 @@ const withConnect = connect(
   mapDispatchToProps
 );
 
-export default compose(
-  withConnect,
-  withStyles(styles)
-)(SecretsPage);
+export default compose(withConnect)(SecretsPage);

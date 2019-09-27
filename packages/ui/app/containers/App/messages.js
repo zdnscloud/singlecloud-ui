@@ -193,9 +193,9 @@ export default defineMessages({
     id: `${scope}.leftMenuIngresses`,
     defaultMessage: 'Ingresses',
   },
-  leftMenuUdpingresses: {
-    id: `${scope}.leftMenuUdpingresses`,
-    defaultMessage: 'Udpingresses',
+  leftMenuUdpIngresses: {
+    id: `${scope}.leftMenuUdpIngresses`,
+    defaultMessage: 'UdpIngresses',
   },
   leftMenuApplicationManagement: {
     id: `${scope}.leftMenuApplicationManagement`,

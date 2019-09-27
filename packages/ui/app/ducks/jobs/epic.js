@@ -60,27 +60,6 @@ export const createJobEpic = (action$, state$, { ajax }) =>
     )
   );
 
-export const updateJobEpic = (action$, state$, { ajax }) =>
-  action$.pipe(
-    ofType(c.UPDATE_JOB),
-    mergeMap(({ payload, meta }) =>
-      ajax({
-        url: `${meta.url}`,
-        method: 'PUT',
-        body: payload,
-      }).pipe(
-        map((resp) => {
-          meta.resolve && meta.resolve(resp);
-          return a.updateJobSuccess(resp, meta);
-        }),
-        catchError((error) => {
-          meta.reject && meta.reject(error);
-          return of(a.updateJobFailure(error, meta));
-        })
-      )
-    )
-  );
-
 export const readJobEpic = (action$, state$, { ajax }) =>
   action$.pipe(
     ofType(c.READ_JOB),
@@ -124,7 +103,6 @@ export const removeJobEpic = (action$, state$, { ajax }) =>
 export default combineEpics(
   loadJobsEpic,
   createJobEpic,
-  updateJobEpic,
   readJobEpic,
   removeJobEpic
 );

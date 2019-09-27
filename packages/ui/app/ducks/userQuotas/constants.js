@@ -1,5 +1,5 @@
 /**
- * Duck: Userquotas
+ * Duck: UserQuotas
  * constants: userQuotas
  *
  */
@@ -28,8 +28,8 @@ export const REMOVE_USER_QUOTA = `${prefix}/REMOVE_USER_QUOTA`;
 export const REMOVE_USER_QUOTA_SUCCESS = `${prefix}/REMOVE_USER_QUOTA_SUCCESS`;
 export const REMOVE_USER_QUOTA_FAILURE = `${prefix}/REMOVE_USER_QUOTA_FAILURE`;
 
-export const REQUEST_USER_QUOTA = `${prefix}/REQUEST_USER_QUOTA`;
-export const REQUEST_USER_QUOTA_SUCCESS = `${prefix}/REQUEST_USER_QUOTA_SUCCESS`;
-export const REQUEST_USER_QUOTA_FAILURE = `${prefix}/REQUEST_USER_QUOTA_FAILURE`;
+export const EXECUTE_USER_QUOTA_ACTION = `${prefix}/EXECUTE_USER_QUOTA_ACTION`;
+export const EXECUTE_USER_QUOTA_ACTION_SUCCESS = `${prefix}/EXECUTE_USER_QUOTA_ACTION_SUCCESS`;
+export const EXECUTE_USER_QUOTA_ACTION_FAILURE = `${prefix}/EXECUTE_USER_QUOTA_ACTION_FAILURE`;
 
-export const CLEAR_DELETE_ERROR_INFO = `${prefix}/CLEAR_DELETE_ERROR_INFO`;
+export const CLEAR_ERRORS_LIST = `${prefix}/CLEAR_ERRORS_LIST`;

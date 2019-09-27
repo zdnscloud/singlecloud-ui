@@ -65,7 +65,7 @@ export const CreateForm = ({ handleSubmit, error, classes, formValues }) => (
                   label={<FormattedMessage {...messages.formSinglecloudUrl} />}
                   fullWidth
                   inputProps={{ type: 'text', autoComplete: 'off' }}
-                  name="singlecloudAddress"
+                  name="singleCloudAddress"
                 />
               </GridItem>
             </GridContainer>

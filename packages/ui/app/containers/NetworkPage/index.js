@@ -31,19 +31,25 @@ import ReadOnlyInput from 'components/CustomInput/ReadOnlyInput';
 import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
 import Helmet from 'components/Helmet/Helmet';
 
-import * as actions from 'ducks/networks/actions';
+import * as sActions from 'ducks/serviceNetworks/actions';
+import * as pActions from 'ducks/podNetworks/actions';
+import * as nActions from 'ducks/nodeNetworks/actions';
 import {
   makeSelectCurrentID as makeSelectClusterID,
   makeSelectCurrent as makeSelectCurrentCluster,
 } from 'ducks/clusters/selectors';
 import {
-  makeSelectServiceNetworks,
-  makeSelectPodNetworks,
-  makeSelectCurrentServiceNetworks,
-  makeSelectCurrentPodNetworks,
-  makeSelectPodURL,
-  makeSelectServiceURL,
-} from 'ducks/networks/selectors';
+  makeSelectServiceNetworksList,
+  makeSelectURL as makeSelectServiceNetworksURL,
+} from 'ducks/serviceNetworks/selectors';
+import {
+  makeSelectPodNetworksList,
+  makeSelectURL as makeSelectPodNetworksURL,
+} from 'ducks/podNetworks/selectors';
+import {
+  makeSelectNodeNetworksList,
+  makeSelectURL as makeSelectNodeNetworksURL,
+} from 'ducks/nodeNetworks/selectors';
 
 import messages from './messages';
 import useStyles from './styles';
@@ -53,34 +59,45 @@ import PodsList from './PodsList';
 
 const NetworkPage = ({
   clusterID,
-  cluster,
-  loadPodNetworks,
   loadServiceNetworks,
-  services,
-  pods,
-  podurl,
-  serviceurl,
+  loadPodNetworks,
+  loadNodeNetworks,
+  serviceNetworks,
+  podNetworks,
+  nodeNetworks,
+  serviceUrl,
+  podUrl,
+  nodeUrl,
 }) => {
   const classes = useStyles();
   const [tab, setTab] = useState(0);
 
   useEffect(() => {
-    if (podurl) {
-      loadPodNetworks(podurl, { clusterID });
+    if (podUrl) {
+      loadPodNetworks(podUrl, { clusterID });
     }
     return () => {
       // try cancel something when unmount
     };
-  }, [clusterID, loadPodNetworks, podurl]);
+  }, [clusterID, loadPodNetworks, podUrl]);
 
   useEffect(() => {
-    if (serviceurl) {
-      loadServiceNetworks(serviceurl, { clusterID });
+    if (serviceUrl) {
+      loadServiceNetworks(serviceUrl, { clusterID });
     }
     return () => {
       // try cancel something when unmount
     };
-  }, [clusterID, loadServiceNetworks, serviceurl]);
+  }, [clusterID, loadServiceNetworks, serviceUrl]);
+
+  useEffect(() => {
+    if (nodeUrl) {
+      loadNodeNetworks(nodeUrl, { clusterID });
+    }
+    return () => {
+      // try cancel something when unmount
+    };
+  }, [clusterID, loadNodeNetworks, nodeUrl]);
 
   return (
     <div className={classes.root}>
@@ -117,13 +134,16 @@ const NetworkPage = ({
                 {tab === 0 ? (
                   <GridContainer>
                     <GridItem xs={12} sm={12} md={12}>
-                      <PodsList data={pods} />
+                      <PodsList
+                        data={podNetworks}
+                        nodeNetworks={nodeNetworks}
+                      />
                     </GridItem>
                   </GridContainer>
                 ) : (
                   <GridContainer>
                     <GridItem xs={12} sm={12} md={12}>
-                      <ServiceTable data={services} />
+                      <ServiceTable data={serviceNetworks} />
                     </GridItem>
                   </GridContainer>
                 )}
@@ -138,17 +158,20 @@ const NetworkPage = ({
 
 const mapStateToProps = createStructuredSelector({
   clusterID: makeSelectClusterID(),
-  cluster: makeSelectCurrentCluster(),
-  services: makeSelectCurrentServiceNetworks(),
-  pods: makeSelectCurrentPodNetworks(),
-  podurl: makeSelectPodURL(),
-  serviceurl: makeSelectServiceURL(),
+  serviceNetworks: makeSelectServiceNetworksList(),
+  podNetworks: makeSelectPodNetworksList(),
+  nodeNetworks: makeSelectNodeNetworksList(),
+  serviceUrl: makeSelectServiceNetworksURL(),
+  podUrl: makeSelectPodNetworksURL(),
+  nodeUrl: makeSelectNodeNetworksURL(),
 });
 
 const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
-      ...actions,
+      ...sActions,
+      ...pActions,
+      ...nActions,
     },
     dispatch
   );

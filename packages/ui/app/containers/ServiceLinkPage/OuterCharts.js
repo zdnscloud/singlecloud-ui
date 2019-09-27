@@ -11,7 +11,6 @@ import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import { bindActionCreators, compose } from 'redux';
-import moment from 'moment';
 import _ from 'lodash';
 
 import GridItem from 'components/Grid/GridItem';

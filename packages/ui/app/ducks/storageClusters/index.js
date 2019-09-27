@@ -1,5 +1,5 @@
 /**
- * Duck: Storageclusters
+ * Duck: StorageClusters
  * reducer: storageClusters
  *
  */
@@ -18,7 +18,7 @@ export { constants, actions, prefix };
 export const initialState = fromJS({
   data: {},
   list: {},
-  selectedData: null,
+  errorsList: [],
 });
 
 const c = constants;
@@ -34,21 +34,32 @@ export const reducer = (
       const { data, list } = procCollectionData(payload);
       const { clusterID } = meta;
       return state
+        .update('errorsList', (errors) =>
+          errors.filterNot((e) => e.type === c.LOAD_STORAGE_CLUSTERS_FAILURE)
+        )
         .setIn(['data', clusterID], fromJS(data))
         .setIn(['list', clusterID], fromJS(list));
     }
     case c.LOAD_STORAGE_CLUSTERS_FAILURE:
-      return state;
+      return state.update('errorsList', (errors) =>
+        errors.filterNot((e) => e.type === type).push({ type, payload, meta })
+      );
 
     case c.CREATE_STORAGE_CLUSTER:
       return state;
     case c.CREATE_STORAGE_CLUSTER_SUCCESS: {
       const data = payload.response;
       const { clusterID } = meta;
-      return state.setIn(['data', clusterID, data.id], fromJS(data));
+      return state
+        .setIn(['data', clusterID, data.id], fromJS(data))
+        .update('errorsList', (errors) =>
+          errors.filterNot((e) => e.type === c.CREATE_STORAGE_CLUSTER_FAILURE)
+        );
     }
     case c.CREATE_STORAGE_CLUSTER_FAILURE:
-      return state;
+      return state.update('errorsList', (errors) =>
+        errors.filterNot((e) => e.type === type).push({ type, payload, meta })
+      );
 
     case c.UPDATE_STORAGE_CLUSTER:
       return state;
@@ -57,12 +68,18 @@ export const reducer = (
       const data = getByKey(payload, ['response']);
       const { clusterID } = meta;
       if (id) {
-        return state.setIn(['data', clusterID, id], fromJS(data));
+        return state
+          .setIn(['data', clusterID, id], fromJS(data))
+          .update('errorsList', (errors) =>
+            errors.filterNot((e) => e.type === c.UPDATE_STORAGE_CLUSTER_FAILURE)
+          );
       }
       return state;
     }
     case c.UPDATE_STORAGE_CLUSTER_FAILURE:
-      return state;
+      return state.update('errorsList', (errors) =>
+        errors.filterNot((e) => e.type === type).push({ type, payload, meta })
+      );
 
     case c.READ_STORAGE_CLUSTER:
       return state;
@@ -71,12 +88,18 @@ export const reducer = (
       const data = getByKey(payload, ['response']);
       const { clusterID } = meta;
       if (id) {
-        return state.setIn(['data', clusterID, id], fromJS(data));
+        return state
+          .setIn(['data', clusterID, id], fromJS(data))
+          .update('errorsList', (errors) =>
+            errors.filterNot((e) => e.type === c.READ_STORAGE_CLUSTER_FAILURE)
+          );
       }
       return state;
     }
     case c.READ_STORAGE_CLUSTER_FAILURE:
-      return state;
+      return state.update('errorsList', (errors) =>
+        errors.filterNot((e) => e.type === type).push({ type, payload, meta })
+      );
 
     case c.REMOVE_STORAGE_CLUSTER:
       return state;
@@ -85,10 +108,18 @@ export const reducer = (
       const { clusterID } = meta;
       return state
         .removeIn(['data', clusterID, id])
-        .updateIn(['list', clusterID], (l) => l.filterNot((i) => i === id));
+        .updateIn(['list', clusterID], (l) => l.filterNot((i) => i === id))
+        .update('errorsList', (errors) =>
+          errors.filterNot((e) => e.type === c.REMOVE_STORAGE_CLUSTER_FAILURE)
+        );
     }
     case c.REMOVE_STORAGE_CLUSTER_FAILURE:
-      return state;
+      return state.update('errorsList', (errors) =>
+        errors.filterNot((e) => e.type === type).push({ type, payload, meta })
+      );
+
+    case c.CLEAR_ERRORS_LIST:
+      return state.update('errorsList', (errors) => errors.clear());
 
     default:
       return state;

@@ -15,3 +15,6 @@ export const TOGGLE_EVENTS_VIEW = `${prefix}/TOGGLE_EVENTS_VIEW`;
 export const TOGGLE_MENU_TEXT = `${prefix}/TOGGLE_MENU_TEXT`;
 
 export const SET_LAST_NAMESPACE = `${prefix}/SET_LAST_NAMESPACE`;
+
+export const OPEN_TERMINAL = `${prefix}/OPEN_TERMINAL`;
+export const CLOSE_TERMINAL = `${prefix}/CLOSE_TERMINAL`;

@@ -14,6 +14,7 @@ import { Link } from 'react-router-dom';
 import { SubmissionError, submit } from 'redux-form';
 import { reduxForm, getFormValues } from 'redux-form/immutable';
 import { fromJS } from 'immutable';
+import getByKey from '@gsmlg/utils/getByKey';
 
 import { withStyles } from '@material-ui/core/styles';
 import Menubar from 'components/Menubar';
@@ -33,7 +34,6 @@ import ErrorInfo from 'components/ErrorInfo/ErrorInfo';
 import {
   makeSelectURL,
   makeSelectUserQuotasList,
-  makeSelectDeleteError,
 } from 'ducks/userQuotas/selectors';
 import * as actions from 'ducks/userQuotas/actions';
 
@@ -61,15 +61,10 @@ const SearchUserQuotaForm = reduxForm({
   validate,
 })(UserQuotaForm);
 
-const AdminUserQuotaPage = ({
-  submitForm,
-  deleteError,
-  clearDeleteErrorInfo,
-  loadUserQuotas,
-  url,
-}) => {
+const AdminUserQuotaPage = ({ submitForm, loadUserQuotas, url }) => {
   const classes = useStyles();
   const [filter, setFilter] = useState({});
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     if (url) {
@@ -97,8 +92,11 @@ const AdminUserQuotaPage = ({
           ]}
         />
         <GridContainer className={classes.grid}>
-          {deleteError ? (
-            <ErrorInfo errorText={deleteError} close={clearDeleteErrorInfo} />
+          {error ? (
+            <ErrorInfo
+              errorText={getByKey(error, ['response', 'message'])}
+              close={() => setError(null)}
+            />
           ) : null}
           <GridItem xs={12} sm={12} md={12}>
             <Card>
@@ -126,7 +124,7 @@ const AdminUserQuotaPage = ({
                     </Button>
                   </GridItem>
                 </GridContainer>
-                <AdminUserQuotasTable filter={filter} />
+                <AdminUserQuotasTable filter={filter} setError={setError} />
               </CardBody>
             </Card>
           </GridItem>
@@ -138,7 +136,6 @@ const AdminUserQuotaPage = ({
 
 const mapStateToProps = createStructuredSelector({
   url: makeSelectURL(),
-  deleteError: makeSelectDeleteError(),
 });
 
 const mapDispatchToProps = (dispatch) =>

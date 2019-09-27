@@ -1,6 +1,6 @@
 /**
- * Duck: Ingress
- * actions: ingress
+ * Duck: Ingresses
+ * actions: ingresses
  *
  */
 import * as c from './constants';
@@ -82,4 +82,10 @@ export const removeIngressFailure = (error, meta = {}) => ({
   payload: error,
   meta,
   error: true,
+});
+
+export const clearErrorsList = (payload, meta) => ({
+  type: c.CLEAR_ERRORS_LIST,
+  payload,
+  meta,
 });

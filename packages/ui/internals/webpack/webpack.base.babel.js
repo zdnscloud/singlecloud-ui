@@ -109,7 +109,6 @@ module.exports = (options) => ({
         NODE_ENV: JSON.stringify(process.env.NODE_ENV),
       },
     }),
-    new webpack.ContextReplacementPlugin(/moment[/\\]locale$/, /zh-cn/),
     new WebappWebpackPlugin(path.resolve(__dirname, '..', '..', 'app', 'images', 'logo.svg')),
   ]),
   resolve: {

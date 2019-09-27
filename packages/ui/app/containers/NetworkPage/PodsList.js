@@ -1,5 +1,3 @@
-/* eslint-disable jsx-a11y/click-events-have-key-events */
-/* eslint-disable no-shadow */
 /**
  *
  * Pods List
@@ -31,19 +29,25 @@ import HostIcon from 'components/Icons/Host';
 import messages from './messages';
 import useStyles from './styles';
 
-const PodsList = ({ data }) => {
+const PodsList = ({ data, nodeNetworks }) => {
   const classes = useStyles();
   const [state, setState] = useState({});
 
   return (
     <Paper className={classes.tableWrapper}>
-      {data.toList().map((n, idx) => {
+      {data.map((n, idx) => {
         const id = n.get('id');
+        const nodeName = n.get('nodeName');
         const podCIDR = n.get('podCIDR');
         const podIPs = n.get('podIPs');
         const [ip, mask] = podCIDR.split('/');
         const total = 2 ** (32 - Number(mask));
         const used = (podIPs && podIPs.size) || 0;
+        const nodeNetwork = nodeNetworks.find(
+          (node) => node.get('name') === nodeName
+        );
+        const nodeIp = nodeNetwork && nodeNetwork.get('ip');
+        const podWithNodeNetwork = podIPs.filter((p) => p.get('ip') === nodeIp);
 
         return (
           <ExpansionPanel key={id}>
@@ -59,13 +63,13 @@ const PodsList = ({ data }) => {
                 <div className={classes.c1}>
                   <ReadOnlyInput
                     labelText={<FormattedMessage {...messages.nodeName} />}
-                    value={n.get('nodeName')}
+                    value={nodeName}
                   />
                 </div>
                 <div className={classes.c2}>
                   <ReadOnlyInput
                     labelText={<FormattedMessage {...messages.podCIDR} />}
-                    value={n.get('podCIDR')}
+                    value={podCIDR}
                   />
                 </div>
                 <div className={classes.c3}>
@@ -90,11 +94,11 @@ const PodsList = ({ data }) => {
             </ExpansionPanelSummary>
             <ExpansionPanelDetails>
               <div className={classes.ipbox}>
-                {_.times(total, (n) => {
-                  const ipAddr = long2ip(ip2long(ip) + n);
+                {_.times(total, (nn) => {
+                  const ipAddr = long2ip(ip2long(ip) + nn);
                   let active = false;
                   if (podIPs)
-                    active = podIPs.find((n) => n.get('ip') === ipAddr);
+                    active = podIPs.find((nnn) => nnn.get('ip') === ipAddr);
                   const mouseOver = (evt) => {
                     setState({
                       [id]: active ? active.toJS() : { ip: ipAddr },
@@ -102,11 +106,27 @@ const PodsList = ({ data }) => {
                   };
 
                   return (
-                    // eslint-disable-next-line jsx-a11y/no-static-element-interactions
                     <div
-                      key={`index-${n}`}
+                      key={`index-${nn}`}
+                      role="cell"
                       onClick={mouseOver}
                       className={`${classes.ipitem} ${active ? 'active' : ''}`}
+                    ></div>
+                  );
+                })}
+                {podWithNodeNetwork.map((p) => {
+                  const mouseOver = (evt) => {
+                    setState({
+                      [id]: p.toJS(),
+                    });
+                  };
+
+                  return (
+                    <div
+                      key={`index-${p.get('name')}`}
+                      role="cell"
+                      onClick={mouseOver}
+                      className={`${classes.ipitem} active`}
                     ></div>
                   );
                 })}
@@ -124,14 +144,26 @@ const PodsList = ({ data }) => {
                 </div>
                 <div className={classes.activeIP}>
                   <div className={classes.infoLine}>
-                    <FormattedMessage {...messages.activeIP} />
-                    &nbsp;&nbsp;&nbsp;&nbsp;
-                    {state[id] && state[id].ip}
+                    <div className={classes.infoLineTitle}>
+                      <FormattedMessage {...messages.activeIP} />
+                    </div>
+                    <div className={classes.infoLineContent}>
+                      {state[id] && state[id].ip}
+                    </div>
                   </div>
                   <div className={classes.infoLine}>
-                    <FormattedMessage {...messages.activePod} />
-                    &nbsp;&nbsp;&nbsp;&nbsp;
-                    {state[id] && state[id].name}
+                    <div
+                      className={classes.infoLineTitle}
+                      title={<FormattedMessage {...messages.activePod} />}
+                    >
+                      <FormattedMessage {...messages.activePod} />
+                    </div>
+                    <div
+                      className={classes.infoLineContent}
+                      title={state[id] && state[id].name}
+                    >
+                      {state[id] && state[id].name}
+                    </div>
                   </div>
                 </div>
               </div>

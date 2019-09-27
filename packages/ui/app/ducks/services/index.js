@@ -18,7 +18,7 @@ export { constants, actions, prefix };
 export const initialState = fromJS({
   data: {},
   list: {},
-  selectedData: null,
+  errorsList: [],
 });
 
 const c = constants;
@@ -34,38 +34,32 @@ export const reducer = (
       const { data, list } = procCollectionData(payload);
       const { clusterID, namespaceID } = meta;
       return state
+        .update('errorsList', (errors) =>
+          errors.filterNot((e) => e.type === c.LOAD_SERVICES_FAILURE)
+        )
         .setIn(['data', clusterID, namespaceID], fromJS(data))
         .setIn(['list', clusterID, namespaceID], fromJS(list));
     }
     case c.LOAD_SERVICES_FAILURE:
-      return state;
+      return state.update('errorsList', (errors) =>
+        errors.filterNot((e) => e.type === type).push({ type, payload, meta })
+      );
 
     case c.CREATE_SERVICE:
       return state;
     case c.CREATE_SERVICE_SUCCESS: {
       const data = payload.response;
       const { clusterID, namespaceID } = meta;
-      return state.setIn(
-        ['data', clusterID, namespaceID, data.id],
-        fromJS(data)
-      );
+      return state
+        .setIn(['data', clusterID, namespaceID, data.id], fromJS(data))
+        .update('errorsList', (errors) =>
+          errors.filterNot((e) => e.type === c.CREATE_SERVICE_FAILURE)
+        );
     }
     case c.CREATE_SERVICE_FAILURE:
-      return state;
-
-    case c.UPDATE_SERVICE:
-      return state;
-    case c.UPDATE_SERVICE_SUCCESS: {
-      const id = getByKey(payload, ['response', 'id']);
-      const data = getByKey(payload, ['response']);
-      const { clusterID, namespaceID } = meta;
-      if (id) {
-        return state.setIn(['data', clusterID, namespaceID, id], fromJS(data));
-      }
-      return state;
-    }
-    case c.UPDATE_SERVICE_FAILURE:
-      return state;
+      return state.update('errorsList', (errors) =>
+        errors.filterNot((e) => e.type === type).push({ type, payload, meta })
+      );
 
     case c.READ_SERVICE:
       return state;
@@ -74,12 +68,18 @@ export const reducer = (
       const data = getByKey(payload, ['response']);
       const { clusterID, namespaceID } = meta;
       if (id) {
-        return state.setIn(['data', clusterID, namespaceID, id], fromJS(data));
+        return state
+          .setIn(['data', clusterID, namespaceID, id], fromJS(data))
+          .update('errorsList', (errors) =>
+            errors.filterNot((e) => e.type === c.READ_SERVICE_FAILURE)
+          );
       }
       return state;
     }
     case c.READ_SERVICE_FAILURE:
-      return state;
+      return state.update('errorsList', (errors) =>
+        errors.filterNot((e) => e.type === type).push({ type, payload, meta })
+      );
 
     case c.REMOVE_SERVICE:
       return state;
@@ -90,10 +90,18 @@ export const reducer = (
         .removeIn(['data', clusterID, namespaceID, id])
         .updateIn(['list', clusterID, namespaceID], (l) =>
           l.filterNot((i) => i === id)
+        )
+        .update('errorsList', (errors) =>
+          errors.filterNot((e) => e.type === c.REMOVE_SERVICE_FAILURE)
         );
     }
     case c.REMOVE_SERVICE_FAILURE:
-      return state;
+      return state.update('errorsList', (errors) =>
+        errors.filterNot((e) => e.type === type).push({ type, payload, meta })
+      );
+
+    case c.CLEAR_ERRORS_LIST:
+      return state.update('errorsList', (errors) => errors.clear());
 
     default:
       return state;

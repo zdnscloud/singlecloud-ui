@@ -1,5 +1,5 @@
 /**
- * Duck: Cronjobs
+ * Duck: CronJobs
  * epic: cronJobs
  *
  */
@@ -60,27 +60,6 @@ export const createCronJobEpic = (action$, state$, { ajax }) =>
     )
   );
 
-export const updateCronJobEpic = (action$, state$, { ajax }) =>
-  action$.pipe(
-    ofType(c.UPDATE_CRON_JOB),
-    mergeMap(({ payload, meta }) =>
-      ajax({
-        url: `${meta.url}`,
-        method: 'PUT',
-        body: payload,
-      }).pipe(
-        map((resp) => {
-          meta.resolve && meta.resolve(resp);
-          return a.updateCronJobSuccess(resp, meta);
-        }),
-        catchError((error) => {
-          meta.reject && meta.reject(error);
-          return of(a.updateCronJobFailure(error, meta));
-        })
-      )
-    )
-  );
-
 export const readCronJobEpic = (action$, state$, { ajax }) =>
   action$.pipe(
     ofType(c.READ_CRON_JOB),
@@ -124,7 +103,6 @@ export const removeCronJobEpic = (action$, state$, { ajax }) =>
 export default combineEpics(
   loadCronJobsEpic,
   createCronJobEpic,
-  updateCronJobEpic,
   readCronJobEpic,
   removeCronJobEpic
 );

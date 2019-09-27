@@ -61,7 +61,7 @@ const CreateRequestUserQuotaForm = reduxForm({
 const RequestUserQuotaPage = ({
   userQuota,
   submitForm,
-  requestUserQuota,
+  executeUserQuotaAction,
   clusters,
   readUserQuota,
   userQuotaID,
@@ -85,10 +85,14 @@ const RequestUserQuotaPage = ({
   async function doSubmit(formValues) {
     try {
       const { clusterName, reason } = formValues.toJS();
-      const aurl = `${userQuota.getIn(['links', 'self'])}?action=${actionType}`;
+      const aurl = `${userQuota.getIn(['links', 'self'])}`;
       const data = actionType === 'approval' ? { clusterName } : { reason };
       await new Promise((resolve, reject) => {
-        requestUserQuota({ ...data }, { resolve, reject, url: aurl });
+        executeUserQuotaAction(
+          actionType,
+          { ...data },
+          { resolve, reject, url: aurl }
+        );
       });
       push(`/adminUserQuotas`);
     } catch (error) {
