@@ -32,7 +32,7 @@ import * as actions from 'ducks/clusters/actions';
 import { usePush } from 'hooks/router';
 
 import messages from './messages';
-import styles from './styles';
+import useStyles from './styles';
 import ClusterManageForm from './ClusterManageForm';
 
 export const formName = 'updateClusterForm';
@@ -48,7 +48,6 @@ const UpdateClusterForm = reduxForm({
 })(ClusterManageForm);
 
 export const ClusterManagePage = ({
-  classes,
   submitForm,
   readCluster,
   updateCluster,
@@ -58,6 +57,7 @@ export const ClusterManagePage = ({
   url,
 }) => {
   const push = usePush();
+  const classes = useStyles();
   useEffect(() => {
     const timer = setInterval(() => {
       readCluster(id, { url: `${url}/${id}` });
@@ -95,10 +95,10 @@ export const ClusterManagePage = ({
           data={[
             {
               path: '/clusters',
-              name: <FormattedMessage {...messages.pageTitleClusters} />,
+              name: <FormattedMessage {...messages.pageTitle} />,
             },
             {
-              name: <FormattedMessage {...messages.pageTitle} />,
+              name: <FormattedMessage {...messages.pageTitleClusterManage} />,
             },
           ]}
         />
@@ -154,7 +154,4 @@ const withConnect = connect(
   mapDispatchToProps
 );
 
-export default compose(
-  withConnect,
-  withStyles(styles)
-)(ClusterManagePage);
+export default compose(withConnect)(ClusterManagePage);

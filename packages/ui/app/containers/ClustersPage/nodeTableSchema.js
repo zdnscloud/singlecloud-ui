@@ -7,7 +7,7 @@ import ConfirmDelete from 'components/ConfirmDelete/ConfirmDelete';
 
 const schema = ['name', 'address', 'roles'];
 
-const tableSchema = schema
+const nodeTableSchema = schema
   .map((id) => ({
     id,
     label: ucfirst(id),
@@ -61,4 +61,4 @@ const tableSchema = schema
       },
     },
   ]);
-export default tableSchema;
+export default nodeTableSchema;

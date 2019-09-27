@@ -13,3 +13,7 @@ export default loadable(() =>
 export const CreateClusterPage = loadable(() =>
   import(/* webpackChunkName: "CreateClusterPage" */ './CreatePage')
 );
+
+export const ClusterManagePage = loadable(() =>
+  import(/* webpackChunkName: "ClusterManagePage" */ './ClusterManagePage')
+);

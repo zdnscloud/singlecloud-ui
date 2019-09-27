@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import React, { PureComponent, Fragment, useEffect, useState } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux';
@@ -29,10 +30,9 @@ import * as termActions from 'containers/TerminalPage/actions';
 import LogViewDialog from './LogViewDialog';
 import messages from './messages';
 
-import styles from './styles';
+import useStyles from './styles';
 
 export const ButtonGroup = ({
-  classes,
   clusterID,
   cluster,
   openTerminal,
@@ -41,6 +41,7 @@ export const ButtonGroup = ({
   loadClusters,
   url,
 }) => {
+  const classes = useStyles();
   const [logOpen, setLogOpen] = useState(false);
   const status = cluster.get('status');
   let clusterStatus = null;
@@ -142,49 +143,49 @@ export const ButtonGroup = ({
           {status === 'Updating' ||
           status === 'Creating' ||
           status === 'Unavailable' ? (
-            <Button
-              className={classes.handleBtn}
-              onClick={(evt) => {
-                setLogOpen(true);
-              }}
-            >
-              <img src={logIcon} alt="logIcon" className={classes.buttonIcon} />
-              <FormattedMessage {...messages.updateLogButton} />
-            </Button>
-          ) : (
-            <Button className={classes.unableBtn}>
-              <img src={logIcon} alt="logIcon" className={classes.buttonIcon} />
-              <FormattedMessage {...messages.updateLogButton} />
-            </Button>
-          )}
+              <Button
+                className={classes.handleBtn}
+                onClick={(evt) => {
+                  setLogOpen(true);
+                }}
+              >
+                <img src={logIcon} alt="logIcon" className={classes.buttonIcon} />
+                <FormattedMessage {...messages.updateLogButton} />
+              </Button>
+            ) : (
+              <Button className={classes.unableBtn}>
+                <img src={logIcon} alt="logIcon" className={classes.buttonIcon} />
+                <FormattedMessage {...messages.updateLogButton} />
+              </Button>
+            )}
 
           {status === 'Updating' ||
           status === 'Connecting' ||
           status === 'Creating' ? (
-            <Confirm
-              handleConfirm={handleConfirm}
-              dialogContentText={messages.stopPromptText}
-              component={
-                <Button className={classes.handleBtn}>
-                  <img
-                    src={stopIcon}
-                    alt="stopIcon"
-                    className={classes.buttonIcon}
-                  />
-                  <FormattedMessage {...messages.stopButton} />
-                </Button>
-              }
-            />
-          ) : (
-            <Button className={classes.unableBtn}>
-              <img
-                src={unableStopIcon}
-                alt="stopIcon"
-                className={classes.buttonIcon}
+              <Confirm
+                handleConfirm={handleConfirm}
+                dialogContentText={messages.stopPromptText}
+                component={
+                  <Button className={classes.handleBtn}>
+                    <img
+                      src={stopIcon}
+                      alt="stopIcon"
+                      className={classes.buttonIcon}
+                    />
+                    <FormattedMessage {...messages.stopButton} />
+                  </Button>
+                }
               />
-              <FormattedMessage {...messages.stopButton} />
-            </Button>
-          )}
+            ) : (
+              <Button className={classes.unableBtn}>
+                <img
+                  src={unableStopIcon}
+                  alt="stopIcon"
+                  className={classes.buttonIcon}
+                />
+                <FormattedMessage {...messages.stopButton} />
+              </Button>
+            )}
         </GridItem>
       </GridContainer>
     </Fragment>
@@ -211,7 +212,4 @@ const withConnect = connect(
   mapDispatchToProps
 );
 
-export default compose(
-  withConnect,
-  withStyles(styles)
-)(ButtonGroup);
+export default compose(withConnect)(ButtonGroup);

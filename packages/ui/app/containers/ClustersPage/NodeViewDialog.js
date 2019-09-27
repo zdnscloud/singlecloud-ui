@@ -1,5 +1,5 @@
 import React from 'react';
-import { bindActionCreators } from 'redux';
+import { bindActionCreators, compose } from 'redux';
 import PropTypes from 'prop-types';
 import { reduxForm, getFormValues } from 'redux-form/immutable';
 import { SubmissionError, submit } from 'redux-form';
@@ -25,7 +25,7 @@ import { map, scan, throttleTime, debounceTime } from 'rxjs/operators';
 
 import * as actions from 'ducks/clusters/actions';
 
-import styles from './styles';
+import useStyles from './styles';
 import messages from './messages';
 import NodeForm from './NodeForm';
 
@@ -43,13 +43,13 @@ const CreateNodeForm = reduxForm({
 
 export const NodeViewDialog = ({
   isOpen,
-  classes,
   closeDialog,
   values,
   submitForm,
   nodes,
   setNodes,
 }) => {
+  const classes = useStyles();
   const doSubmit = (formValues) => {
     const main = formValues.getIn(['nodes', 'main']).reduce((all, node) => {
       if (node.get('name') && node.get('address')) {
@@ -104,14 +104,14 @@ export const NodeViewDialog = ({
           <GridContainer className={classes.grid}>
             <GridItem xs={12} sm={12} md={12}>
               <Button onClick={submitForm} color="primary" variant="contained">
-                <FormattedMessage {...messages.nodeSave} />
+                <FormattedMessage {...messages.createClusterButton} />
               </Button>
               <Button
                 onClick={closeDialog}
                 variant="contained"
                 className={classes.cancleBtn}
               >
-                <FormattedMessage {...messages.nodeClose} />
+                <FormattedMessage {...messages.cancleClustersButton} />
               </Button>
             </GridItem>
           </GridContainer>
@@ -134,7 +134,9 @@ const mapDispatchToProps = (dispatch) =>
     dispatch
   );
 
-export default connect(
+const withConnect = connect(
   mapStateToProps,
   mapDispatchToProps
-)(withStyles(styles)(NodeViewDialog));
+);
+
+export default compose(withConnect)(NodeViewDialog);

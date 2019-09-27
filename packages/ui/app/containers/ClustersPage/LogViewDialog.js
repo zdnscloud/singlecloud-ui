@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { bindActionCreators } from 'redux';
+import { bindActionCreators, compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
@@ -26,13 +26,14 @@ import { map, scan, throttleTime, debounceTime } from 'rxjs/operators';
 import { makeSelectCurrentID } from 'ducks/clusters/selectors';
 import * as actions from 'ducks/clusters/actions';
 
-import styles from './styles';
+import useStyles from './styles';
 import messages from './messages';
 
 let socket = null;
 let observer = null;
 
-const LogViewDialog = ({ isOpen, id, closeDialog, classes }) => {
+const LogViewDialog = ({ isOpen, id, closeDialog }) => {
+  const classes = useStyles();
   const url = `${window.location.protocol}//${window.location.hostname}:${window.location.port}/apis/ws.zcloud.cn/v1/clusters/${id}/zkelog`;
   const [logs, setLogs] = useState([]);
 
@@ -85,8 +86,8 @@ const LogViewDialog = ({ isOpen, id, closeDialog, classes }) => {
             <CloseIcon style={{ color: '#fff' }} />
           </IconButton>
         </CardHeader>
-        <CardBody className={classes.dialogCardBody}>
-          <Paper className={classes.dialogCardBodyPaper}>
+        <CardBody className={classes.logCardBody}>
+          <Paper className={classes.logCardBodyPaper}>
             <div className={classes.logsWrapper}>
               <pre className={classes.logs}>
                 {logs &&
@@ -121,7 +122,9 @@ const mapDispatchToProps = (dispatch) =>
     dispatch
   );
 
-export default connect(
+const withConnect = connect(
   mapStateToProps,
   mapDispatchToProps
-)(withStyles(styles)(LogViewDialog));
+);
+
+export default compose(withConnect)(LogViewDialog);
