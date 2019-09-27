@@ -24,7 +24,7 @@ import {
   makeSelectCurrentID,
 } from 'ducks/clusters/selectors';
 import * as actions from 'ducks/clusters/actions';
-import * as termActions from 'containers/TerminalPage/actions';
+import * as appActions from 'ducks/app/actions';
 
 import LogViewDialog from './LogViewDialog';
 import messages from './messages';
@@ -126,7 +126,7 @@ export const ButtonGroup = ({
             <Button
               className={classes.handleBtn}
               onClick={(evt) => {
-                openTerminal(clusterID);
+                openTerminal('cluster', { clusterID });
               }}
             >
               <ShellIcon className={classes.shellIcon} />
@@ -201,7 +201,7 @@ const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
       ...actions,
-      ...termActions,
+      ...appActions,
     },
     dispatch
   );

@@ -18,8 +18,6 @@ import { Switch, Route, Redirect, Link } from 'react-router-dom';
 import { withRouter } from 'react-router';
 
 // @material-ui/core components
-import withStyles from '@material-ui/core/styles/withStyles';
-import CssBaseline from '@material-ui/core/CssBaseline';
 import IconButton from '@material-ui/core/IconButton';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
@@ -32,7 +30,6 @@ import AccountIcon from 'components/Icons/Account';
 
 import { makeSelectRole } from 'ducks/role/selectors';
 import * as roleActions from 'ducks/role/actions';
-import * as termActions from 'containers/TerminalPage/actions';
 import * as actions from 'ducks/app/actions';
 import { makeSelectCurrentID as makeSelectCurrentClusterID } from 'ducks/clusters/selectors';
 import {
@@ -69,7 +66,7 @@ const AppMenubar = ({
       headerRightContent={
         <Fragment>
           {clusterID && !isManage && (
-            <IconButton onClick={() => openTerminal(clusterID)}>
+            <IconButton onClick={() => openTerminal('cluster', { clusterID })}>
               <ShellIcon />
             </IconButton>
           )}
@@ -127,9 +124,8 @@ const mapStateToProps = createStructuredSelector({
 const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
+      ...roleActions,
       ...actions,
-      openTerminal: termActions.openTerminal,
-      logout: roleActions.logout,
     },
     dispatch
   );
