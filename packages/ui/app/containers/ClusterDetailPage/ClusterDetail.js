@@ -115,7 +115,7 @@ export const ClusterDetail = ({ cluster }) => {
         <GridItem xs={12} sm={12} md={4}>
           <Card chart className={classes.card}>
             <CardHeader color="azure" className={classes.cardHeaderLine}>
-              <CircleChart value={memoryRatio} total={100} colorType="green" />
+              <CircleChart value={memoryRatio} total={100} />
             </CardHeader>
             <CardBody className={classes.cardBody}>
               <h4 className={classes.cardTitle}>
@@ -129,7 +129,7 @@ export const ClusterDetail = ({ cluster }) => {
         <GridItem xs={12} sm={12} md={4}>
           <Card chart className={classes.card}>
             <CardHeader color="azure" className={classes.cardHeaderLine}>
-              <CircleChart value={podRatio} total={100} colorType="yellow" />
+              <CircleChart value={podRatio} total={100} />
             </CardHeader>
             <CardBody className={classes.cardBody}>
               <h4 className={classes.cardTitle}>
