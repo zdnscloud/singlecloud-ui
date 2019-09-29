@@ -95,7 +95,7 @@ export const ClusterManagePage = ({
           data={[
             {
               path: '/clusters',
-              name: <FormattedMessage {...messages.pageTitle} />,
+              name: <FormattedMessage {...messages.clusters} />,
             },
             {
               name: <FormattedMessage {...messages.pageTitleClusterManage} />,
