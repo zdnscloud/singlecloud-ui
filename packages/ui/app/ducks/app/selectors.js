@@ -51,6 +51,12 @@ export const makeSelectLastNamespace = () =>
     (appState) => appState.get('lastNamespace')
   );
 
+export const makeSelectTermUrl = () =>
+  createSelector(
+    selectDomain,
+    (appState) => appState.get('termUrl')
+  );
+
 export const makeSelectUserMenus = () =>
   createSelector(
     selectDomain,
