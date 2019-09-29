@@ -36,6 +36,11 @@ export const styles = (theme) => ({
     padding: theme.spacing(2),
     paddingTop: 0,
   },
+  shellIcon: {
+    marginRight: 5,
+    width: 14,
+    height: 14,
+  },
   runningBtn: {
     background: 'rgba(56,158,13,0.2)',
     color: '#389E0D',
