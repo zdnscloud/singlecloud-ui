@@ -84,9 +84,6 @@ const styles = (theme) => ({
       lineHeight: '1',
     },
   },
-  cardBorder: {
-    border: '1px solid #C1C1C1',
-  },
   separateLineWrap: {
     marginTop: '8px',
     marginRight: '5px',

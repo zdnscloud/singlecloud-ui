@@ -18,6 +18,7 @@ function Card({ ...props }) {
     plain,
     profile,
     chart,
+    border,
     ...rest
   } = props;
   const cardClasses = classNames({
@@ -25,6 +26,7 @@ function Card({ ...props }) {
     [classes.cardPlain]: plain,
     [classes.cardProfile]: profile,
     [classes.cardChart]: chart,
+    [classes.cardBorder]: border,
     [className]: className !== undefined,
   });
   return (

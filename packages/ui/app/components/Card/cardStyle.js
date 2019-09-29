@@ -31,6 +31,9 @@ const cardStyle = (theme) => ({
       paddingTop: '0px',
     },
   },
+  cardBorder: {
+    border: '1px solid #C1C1C1',
+  },
 });
 
 export default cardStyle;
