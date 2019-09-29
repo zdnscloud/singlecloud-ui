@@ -25,18 +25,17 @@ import NodesTable from './NodesTable';
 import messages from './messages';
 import ButtonGroup from './ButtonGroup';
 import NodeViewDialog from './NodeViewDialog';
-import styles from './styles';
+import useStyles from './styles';
 
 const ClusterManageForm = ({
   handleSubmit,
   error,
-  classes,
   cluster,
   nodes,
   setNodes,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
-
+  const classes = useStyles();
   return (
     <form className={getByKey(classes, 'form')} onSubmit={handleSubmit}>
       <GridContainer className={classes.formGrid}>
@@ -48,7 +47,7 @@ const ClusterManageForm = ({
         <Card>
           <CardHeader>
             <h4>
-              <FormattedMessage {...messages.basicInfo} />
+              <FormattedMessage {...messages.formCreate} />
             </h4>
             <span>
               <FormattedMessage {...messages.zcloudVersion} />
@@ -151,7 +150,7 @@ const ClusterManageForm = ({
         <Card style={{ margin: 0, marginTop: 20 }}>
           <CardHeader>
             <h4>
-              <FormattedMessage {...messages.nodeList} />
+              <FormattedMessage {...messages.formNode} />
             </h4>
             <IconButton
               aria-label={<FormattedMessage {...messages.clusters} />}
@@ -195,7 +194,4 @@ const withConnect = connect(
   mapDispatchToProps
 );
 
-export default compose(
-  withConnect,
-  withStyles(styles)
-)(ClusterManageForm);
+export default compose(withConnect)(ClusterManageForm);

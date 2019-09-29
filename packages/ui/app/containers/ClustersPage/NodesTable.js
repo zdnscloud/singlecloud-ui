@@ -15,17 +15,16 @@ import { withStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import { SimpleTable } from '@gsmlg/com';
 
-import {
-  makeSelectCurrentID as makeSelectClusterID,
-} from 'ducks/clusters/selectors';
+import { makeSelectCurrentID as makeSelectClusterID } from 'ducks/clusters/selectors';
 import * as actions from 'ducks/clusters/actions';
 
 import messages from './messages';
-import styles from './styles';
-import schema from './tableSchema';
+import useStyles from './styles';
+import schema from './nodeTableSchema';
 
 /* eslint-disable react/prefer-stateless-function */
-export const NodesTable = ({ classes, data, clusterID, setNodes, nodes }) => {
+export const NodesTable = ({ data, clusterID, setNodes, nodes }) => {
+  const classes = useStyles();
   const mapedSchema = schema
     .map((sche) => ({
       ...sche,
@@ -69,7 +68,4 @@ const withConnect = connect(
   mapDispatchToProps
 );
 
-export default compose(
-  withConnect,
-  withStyles(styles)
-)(NodesTable);
+export default compose(withConnect)(NodesTable);

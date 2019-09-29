@@ -11,8 +11,8 @@ import Language from '@material-ui/icons/Language';
 
 import ClustersPage, {
   CreateClusterPage,
+  ClusterManagePage,
 } from 'containers/ClustersPage/Loadable';
-import ClusterManagePage from 'containers/ClusterManagePage/Loadable';
 import ClusterDetailPage from 'containers/ClusterDetailPage/Loadable';
 import NodesPage, { NodeDetailPage } from 'containers/NodesPage/Loadable';
 import NamespacesPage, {

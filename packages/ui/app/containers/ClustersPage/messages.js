@@ -13,6 +13,10 @@ export default defineMessages({
     id: `${scope}.pageTitle`,
     defaultMessage: 'This is the ClustersPage title!',
   },
+  pageTitleClusterManage: {
+    id: `${scope}.pageTitleClusterManage`,
+    defaultMessage: 'Cluster Manage',
+  },
   pageDesc: {
     id: `${scope}.pageDesc`,
     defaultMessage: 'This is the ClustersPage description!',
@@ -156,5 +160,77 @@ export default defineMessages({
   formAddWorkNode: {
     id: `${scope}.formAddWorkNode`,
     defaultMessage: 'formAddWorkNode',
+  },
+  basicInfo: {
+    id: `${scope}.basicInfo`,
+    defaultMessage: 'BasicInfo',
+  },
+  zcloudVersion: {
+    id: `${scope}.zcloudVersion`,
+    defaultMessage: 'zcloudVersion',
+  },
+  runningStatus: {
+    id: `${scope}.runningStatus`,
+    defaultMessage: 'Running',
+  },
+  updatingStatus: {
+    id: `${scope}.updatingStatus`,
+    defaultMessage: 'Updating',
+  },
+  connectingStatus: {
+    id: `${scope}.connectingStatus`,
+    defaultMessage: 'Connecting',
+  },
+  creatingStatus: {
+    id: `${scope}.creatingStatus`,
+    defaultMessage: 'Creating',
+  },
+  unavailableStatus: {
+    id: `${scope}.unavailableStatus`,
+    defaultMessage: 'Unavailable',
+  },
+  unreachableStatus: {
+    id: `${scope}.unreachableStatus`,
+    defaultMessage: 'Unreachable',
+  },
+  shellButton: {
+    id: `${scope}.shellButton`,
+    defaultMessage: 'Shell',
+  },
+  updateLogButton: {
+    id: `${scope}.updateLogButton`,
+    defaultMessage: 'UpdateLog',
+  },
+  stopButton: {
+    id: `${scope}.stopButton`,
+    defaultMessage: 'Stop',
+  },
+  nodeList: {
+    id: `${scope}.nodeList`,
+    defaultMessage: 'NodeList',
+  },
+  tableTitleAddress: {
+    id: `${scope}.tableTitleAddress`,
+    defaultMessage: 'Address',
+  },
+  tableTitleRoles: {
+    id: `${scope}.tableTitleRoles`,
+    defaultMessage: 'Role',
+  },
+  nodeTitle: {
+    id: `${scope}.nodeTitle`,
+    defaultMessage: 'Cluster Node Title',
+  },
+  stopPromptText: {
+    id: `${scope}.dialogContentText`,
+    defaultMessage: 'This action  stop the content. Continue or not？',
+  },
+  logTitle: {
+    id: `${scope}.logTitle`,
+    defaultMessage: 'Cluster Log Title',
+  },
+  logClose: {
+    id: `${scope}.logClose`,
+    defaultMessage: 'Close Log',
   },
 });
