@@ -7,8 +7,16 @@ export const styles = (theme) => ({
     display: 'flex',
     flexDirection: 'column',
   },
+  card: {
+    marginTop: 0,
+  },
   infoCardHeader: {
-    height: 85,
+    height: 106,
+    '& :last-child': {
+      '& div': {
+        borderRight: 'none',
+      },
+    },
   },
   infoCardIcon: {
     display: 'flex',
@@ -20,13 +28,17 @@ export const styles = (theme) => ({
     flex: 1,
     flexDirection: 'column',
     justifyContent: 'center',
-    paddingRight: 15,
+    alignItems: 'center',
+    borderRight: '1px solid #E8E8E8',
     '& h3': {
       color: '#000',
-      fontSize: 14,
+      fontSize: 24,
+      fontWeight: 'normal',
+      lineHeight: '32px',
     },
     '& p': {
-      color: '#4A4A4A',
+      fontSize: 14,
+      color: '#838383',
       margin: 0,
       fontFamily: "'Roboto', 'Helvetica', 'Arial', sans-serif",
     },
@@ -35,13 +47,23 @@ export const styles = (theme) => ({
     marginLeft: '15px !important',
     marginRight: '15px !important',
   },
+  cardBody: {
+    padding: '0 18px',
+  },
+  cardTitle: {
+    margin: 0,
+    fontSize: 16,
+  },
   cardTitleValue: {
     float: 'right',
-    color: theme.palette.highlight.light,
+    color: '#838383',
+    fontSize: 14,
   },
   cardHeaderLine: {
     justifyContent: 'center',
     borderBottom: '1px #DFE0DF solid',
+    padding: '0 !important',
+    margin: '0 17px 17px 20px !important',
   },
 });
 

@@ -80,7 +80,7 @@ const Containers = ({
           )}
           {fields.map((f, i) => (
             <ListItem key={i}>
-              <Card key={i}>
+              <Card key={i} border>
                 <CardBody>
                   <ListItemText>
                     <GridContainer>

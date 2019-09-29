@@ -77,38 +77,30 @@ export const ClusterDetail = ({ cluster }) => {
 
   return (
     <div className={classes.wrapper}>
-      <GridContainer>
-        {infoList.map((info) => (
-          <GridItem xs={12} sm={6} md={3} key={info.key}>
-            <Card>
-              <CardHeader
-                color="cyanInverse"
-                stats
-                icon
-                className={classes.infoCardHeader}
-              >
-                <CardIcon color="cyanInverse" className={classes.infoCardIcon}>
-                  <info.Icon />
-                </CardIcon>
+      <GridContainer className={classes.grid}>
+        <Card className={classes.card}>
+          <CardHeader className={classes.infoCardHeader}>
+            {infoList.map((info) => (
+              <GridItem xs={3} sm={3} md={3} key={info.key}>
                 <div className={classes.infoCardText}>
-                  <h3 className={classes.info}>
+                  <p className={classes.info}>
                     <FormattedMessage {...messages[info.message]} />
-                  </h3>
-                  <p className={classes.info}>{info.value}</p>
+                  </p>
+                  <h3 className={classes.info}>{info.value}</h3>
                 </div>
-              </CardHeader>
-            </Card>
-          </GridItem>
-        ))}
+              </GridItem>
+            ))}
+          </CardHeader>
+        </Card>
       </GridContainer>
 
       <GridContainer>
         <GridItem xs={12} sm={12} md={4}>
-          <Card chart>
+          <Card chart className={classes.card}>
             <CardHeader color="azure" className={classes.cardHeaderLine}>
               <CircleChart value={cpuRatio} total={100} />
             </CardHeader>
-            <CardBody>
+            <CardBody className={classes.cardBody}>
               <h4 className={classes.cardTitle}>
                 <FormattedMessage {...messages.clusterCPU} />
                 <span className={classes.cardTitleValue}>
@@ -116,37 +108,34 @@ export const ClusterDetail = ({ cluster }) => {
                   <FormattedMessage {...messages.clusterCPUCore} />
                 </span>
               </h4>
-              <p className={classes.cardCategory} />
             </CardBody>
             <CardFooter />
           </Card>
         </GridItem>
         <GridItem xs={12} sm={12} md={4}>
-          <Card chart>
+          <Card chart className={classes.card}>
             <CardHeader color="azure" className={classes.cardHeaderLine}>
               <CircleChart value={memoryRatio} total={100} />
             </CardHeader>
-            <CardBody>
+            <CardBody className={classes.cardBody}>
               <h4 className={classes.cardTitle}>
                 <FormattedMessage {...messages.clusterMemory} />
                 <span className={classes.cardTitleValue}>{memory}</span>
               </h4>
-              <p className={classes.cardCategory} />
             </CardBody>
             <CardFooter />
           </Card>
         </GridItem>
         <GridItem xs={12} sm={12} md={4}>
-          <Card chart>
+          <Card chart className={classes.card}>
             <CardHeader color="azure" className={classes.cardHeaderLine}>
               <CircleChart value={podRatio} total={100} />
             </CardHeader>
-            <CardBody>
+            <CardBody className={classes.cardBody}>
               <h4 className={classes.cardTitle}>
                 <FormattedMessage {...messages.clusterPods} />
                 <span className={classes.cardTitleValue}>{pod}</span>
               </h4>
-              <p className={classes.cardCategory} />
             </CardBody>
             <CardFooter />
           </Card>

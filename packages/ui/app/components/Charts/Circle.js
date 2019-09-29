@@ -51,7 +51,7 @@ const Circle = (props) => {
             }
           </Pie>
           <text
-            fill="#40B7E8"
+            fill="#000"
             x={0}
             y={0}
             dy=".5em"
