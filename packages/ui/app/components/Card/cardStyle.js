@@ -9,7 +9,7 @@ const cardStyle = (theme) => ({
     color: `rgba(${hexToRgb(theme.palette.text.a)}, 0.87)`,
     background: theme.palette.light.main,
     width: '100%',
-    boxShadow: `0 1px 4px 0 rgba(${hexToRgb(theme.palette.text.a)}, 0.14)`,
+    // boxShadow: `0 1px 4px 0 rgba(${hexToRgb(theme.palette.text.a)}, 0.14)`,
     position: 'relative',
     display: 'flex',
     flexDirection: 'column',
