@@ -18,6 +18,7 @@ import NodesPage, { NodeDetailPage } from 'containers/NodesPage/Loadable';
 import NamespacesPage, {
   CreateNamespacePage,
   NamespaceDetailPage,
+  NamespaceOverviewPage,
 } from 'containers/NamespacesPage/Loadable';
 import EventsPage from 'containers/EventsPage/Loadable';
 import DeploymentsPage, {
@@ -149,6 +150,12 @@ const appRoutes = [
     name: 'namespaces',
     icon: Dashboard,
     component: NamespaceDetailPage,
+  },
+  {
+    path: '/clusters/:cluster_id/namespaces/:namespace_id/overview',
+    name: 'namespaces',
+    icon: Dashboard,
+    component: NamespaceOverviewPage,
   },
   // configmap
   {

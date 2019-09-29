@@ -13,6 +13,10 @@ export default defineMessages({
     id: `${scope}.pageTitle`,
     defaultMessage: 'This is the NamespacesPage title!',
   },
+  pageTitleOverview: {
+    id: `${scope}.pageTitleOverview`,
+    defaultMessage: 'Namespaces Overview',
+  },
   pageDesc: {
     id: `${scope}.pageDesc`,
     defaultMessage: 'This is the NamespacesPage description!',
@@ -92,5 +96,61 @@ export default defineMessages({
   edit: {
     id: `${scope}.edit`,
     defaultMessage: 'Edit',
+  },
+  namespaceCreated: {
+    id: `${scope}.namespaceCreated`,
+    defaultMessage: 'Created',
+  },
+  namespaceName: {
+    id: `${scope}.namespaceName`,
+    defaultMessage: 'Namespace Name',
+  },
+  namespaceCPU: {
+    id: `${scope}.namespaceCPU`,
+    defaultMessage: 'CPU',
+  },
+  namespaceCPUCore: {
+    id: `${scope}.namespaceCPUCore`,
+    defaultMessage: 'Core',
+  },
+  namespaceMemory: {
+    id: `${scope}.namespaceMemory`,
+    defaultMessage: 'Memory',
+  },
+  namespacePods: {
+    id: `${scope}.namespacePods`,
+    defaultMessage: 'Pods',
+  },
+  tableTitleCName: {
+    id: `${scope}.tableTitleCName`,
+    defaultMessage: 'Name',
+  },
+  tableTitleCCpuUsed: {
+    id: `${scope}.tableTitleCCpuUsed`,
+    defaultMessage: 'cpuUsed',
+  },
+  tableTitleMMemoryUsed: {
+    id: `${scope}.tableTitleMMemoryUsed`,
+    defaultMessage: 'MemoryUsed',
+  },
+  tableTitleMName: {
+    id: `${scope}.tableTitleMName`,
+    defaultMessage: 'Name',
+  },
+  tableTitleMActions: {
+    id: `${scope}.tableTitleMActions`,
+    defaultMessage: 'Actions',
+  },
+  tableTitleCActions: {
+    id: `${scope}.tableTitleCActions`,
+    defaultMessage: 'Actions',
+  },
+  podsUseMostCPUTable: {
+    id: `${scope}.podsUseMostCPUTable`,
+    defaultMessage: 'PodsUseMostCPU',
+  },
+  podsUseMostMemoryTable: {
+    id: `${scope}.podsUseMostMemoryTable`,
+    defaultMessage: 'PodsUseMostMemory',
   },
 });

@@ -89,6 +89,10 @@ export default defineMessages({
     id: `${scope}.leftMenuStatefulSet`,
     defaultMessage: 'StatefulSet',
   },
+  leftMenuNamespaceOverview: {
+    id: `${scope}.leftMenuNamespaceOverview`,
+    defaultMessage: 'NamespaceOverview',
+  },
   leftMenuDaemonSet: {
     id: `${scope}.leftMenuDaemonSet`,
     defaultMessage: 'DaemonSet',

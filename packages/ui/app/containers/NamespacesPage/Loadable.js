@@ -17,3 +17,9 @@ export const CreateNamespacePage = loadable(() =>
 export const NamespaceDetailPage = loadable(() =>
   import(/* webpackChunkName: "NamespaceDetailPage" */ './NamespaceDetailPage')
 );
+
+export const NamespaceOverviewPage = loadable(() =>
+  import(
+    /* webpackChunkName: "NamespaceOverviewPage" */ './NamespaceOverviewPage'
+  )
+);
