@@ -44,6 +44,7 @@ export const StatefulSet = ({
   const classes = useStyles();
   const intl = useIntl();
   const replicas = statefulSet.get('replicas');
+  const id = deployment.get('id');
   const selfUrl = statefulSet.getIn(['links', 'self']);
   const typeMap = {
     configmap: intl.formatMessage(messages.formVolumeTypeConfigMap),
@@ -97,6 +98,8 @@ export const StatefulSet = ({
                                   statefulSet,
                                   clusterID,
                                   namespaceID,
+                                  id,
+                                  patch: true,
                                 }
                               );
                             }}
@@ -116,6 +119,8 @@ export const StatefulSet = ({
                                   statefulSet,
                                   clusterID,
                                   namespaceID,
+                                  id,
+                                  patch: true,
                                 }
                               );
                             }}

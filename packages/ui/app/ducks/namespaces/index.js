@@ -101,6 +101,17 @@ export const reducer = (
     case c.EXECUTE_NAMESPACE_ACTION:
       return state;
     case c.EXECUTE_NAMESPACE_ACTION_SUCCESS:
+      if (meta.patch === true) {
+        const { clusterID, id } = meta;
+        const data = getByKey(payload, ['response']);
+        return state
+          .mergeDeepIn(['data', clusterID, id], data)
+          .update('errorsList', (errors) =>
+            errors.filterNot(
+              (e) => e.type === c.EXECUTE_NAMESPACE_ACTION_FAILURE
+            )
+          );
+      }
       return state.update('errorsList', (errors) =>
         errors.filterNot((e) => e.type === c.EXECUTE_NAMESPACE_ACTION_FAILURE)
       );

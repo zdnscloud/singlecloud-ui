@@ -180,6 +180,25 @@ export const reducer = (
     case c.EXECUTE_{{scCase name}}_ACTION:
       return state;
     case c.EXECUTE_{{scCase name}}_ACTION_SUCCESS:
+      if (meta.patch === true) {
+        const {
+        {{#if hasParents}}
+        {{#each parents}}
+          {{singularize this}}ID,
+        {{/each}}
+        {{/if}}
+          id,
+        } = meta;
+        const data = getByKey(payload, ['response']);
+        return state.mergeDeepIn([
+          'data',
+          {{#each parents}}
+          {{singularize this}}ID,
+          {{/each}}
+          id,
+        ], data)
+          .update('errorsList', (errors) => errors.filterNot((e) => e.type === c.EXECUTE_{{scCase name}}_ACTION_FAILURE));
+      }
       return state.update('errorsList', (errors) => errors.filterNot((e) => e.type === c.EXECUTE_{{scCase name}}_ACTION_FAILURE));
     case c.EXECUTE_{{scCase name}}_ACTION_FAILURE:
       return state.update('errorsList', (errors) => errors.filterNot((e) => e.type === type).push({ type, payload, meta }));

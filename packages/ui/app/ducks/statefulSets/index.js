@@ -103,6 +103,17 @@ export const reducer = (
     case c.EXECUTE_STATEFUL_SET_ACTION:
       return state;
     case c.EXECUTE_STATEFUL_SET_ACTION_SUCCESS:
+      if (meta.patch === true) {
+        const { clusterID, namespaceID, id } = meta;
+        const data = getByKey(payload, ['response']);
+        return state
+          .mergeDeepIn(['data', clusterID, namespaceID, id], data)
+          .update('errorsList', (errors) =>
+            errors.filterNot(
+              (e) => e.type === c.EXECUTE_STATEFUL_SET_ACTION_FAILURE
+            )
+          );
+      }
       return state.update('errorsList', (errors) =>
         errors.filterNot(
           (e) => e.type === c.EXECUTE_STATEFUL_SET_ACTION_FAILURE

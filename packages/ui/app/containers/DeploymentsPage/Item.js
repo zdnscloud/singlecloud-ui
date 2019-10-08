@@ -44,6 +44,7 @@ export const Deployment = ({
   const classes = useStyles();
   const intl = useIntl();
   const replicas = deployment.get('replicas');
+  const id = deployment.get('id');
   const selfUrl = deployment.getIn(['links', 'self']);
   const typeMap = {
     configmap: intl.formatMessage(messages.formVolumeTypeConfigMap),
@@ -97,6 +98,8 @@ export const Deployment = ({
                                   deployment,
                                   clusterID,
                                   namespaceID,
+                                  id,
+                                  patch: true,
                                 }
                               );
                             }}
@@ -116,6 +119,8 @@ export const Deployment = ({
                                   deployment,
                                   clusterID,
                                   namespaceID,
+                                  id,
+                                  patch: true,
                                 }
                               );
                             }}

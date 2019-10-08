@@ -116,6 +116,17 @@ export const reducer = (
     case c.EXECUTE_USER_QUOTA_ACTION:
       return state;
     case c.EXECUTE_USER_QUOTA_ACTION_SUCCESS:
+      if (meta.patch === true) {
+        const { id } = meta;
+        const data = getByKey(payload, ['response']);
+        return state
+          .mergeDeepIn(['data', id], data)
+          .update('errorsList', (errors) =>
+            errors.filterNot(
+              (e) => e.type === c.EXECUTE_USER_QUOTA_ACTION_FAILURE
+            )
+          );
+      }
       return state.update('errorsList', (errors) =>
         errors.filterNot((e) => e.type === c.EXECUTE_USER_QUOTA_ACTION_FAILURE)
       );

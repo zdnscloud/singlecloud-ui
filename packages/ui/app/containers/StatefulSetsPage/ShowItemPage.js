@@ -52,12 +52,12 @@ export const StatefulSetDetailPage = ({
   const classes = useStyles();
   const podUrl = statefulSet.getIn(['links', 'pods']);
   useEffect(() => {
+    readStatefulSet(statefulSetID, {
+      clusterID,
+      namespaceID,
+      url: `${url}/${statefulSetID}`,
+    });
     const loadStatefulSetAndPods = () => {
-      readStatefulSet(statefulSetID, {
-        clusterID,
-        namespaceID,
-        url: `${url}/${statefulSetID}`,
-      });
       if (podUrl) {
         loadPods({ url: podUrl, clusterID, namespaceID, statefulSetID });
       }

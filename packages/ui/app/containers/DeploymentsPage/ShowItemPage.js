@@ -52,12 +52,12 @@ export const DeploymentDetailPage = ({
   const classes = useStyles();
   const podUrl = deployment.getIn(['links', 'pods']);
   useEffect(() => {
+    readDeployment(deploymentID, {
+      clusterID,
+      namespaceID,
+      url: `${url}/${deploymentID}`,
+    });
     const loadDeploymentAndPods = () => {
-      readDeployment(deploymentID, {
-        clusterID,
-        namespaceID,
-        url: `${url}/${deploymentID}`,
-      });
       if (podUrl) {
         loadPods({ url: podUrl, clusterID, namespaceID, deploymentID });
       }
