@@ -98,6 +98,17 @@ export const reducer = (
         errors.filterNot((e) => e.type === type).push({ type, payload, meta })
       );
 
+    case c.EXECUTE_NAMESPACE_ACTION:
+      return state;
+    case c.EXECUTE_NAMESPACE_ACTION_SUCCESS:
+      return state.update('errorsList', (errors) =>
+        errors.filterNot((e) => e.type === c.EXECUTE_NAMESPACE_ACTION_FAILURE)
+      );
+    case c.EXECUTE_NAMESPACE_ACTION_FAILURE:
+      return state.update('errorsList', (errors) =>
+        errors.filterNot((e) => e.type === type).push({ type, payload, meta })
+      );
+
     case c.CLEAR_ERRORS_LIST:
       return state.update('errorsList', (errors) => errors.clear());
 

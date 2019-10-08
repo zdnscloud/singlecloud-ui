@@ -30,6 +30,10 @@ export const styles = (theme) => ({
   cancleBtn: {
     marginLeft: '10px',
   },
+  linkIcon: {
+    width: 18,
+    color: theme.palette.highlight.main,
+  },
 });
 
 export default makeStyles(styles);

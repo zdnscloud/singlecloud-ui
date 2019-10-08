@@ -69,7 +69,7 @@ const SelectMenu = ({
 
   const handleSelectNamespace = (ns) => {
     setLastNamespace(ns);
-    push(`/clusters/${selectCluster}/namespaces/${ns}/applications`);
+    push(`/clusters/${selectCluster}/namespaces/${ns}/overview`);
     handleClose();
   };
 
@@ -94,7 +94,7 @@ const SelectMenu = ({
     if (!lastNamespace && namespaceID) {
       setLastNamespace(namespaceID);
     }
-  }, []);
+  }, [lastNamespace, namespaceID, setLastNamespace]);
 
   const cluster = clusters.get(selectCluster);
   const namespaces =
