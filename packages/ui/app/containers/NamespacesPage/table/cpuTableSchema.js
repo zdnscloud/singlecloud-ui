@@ -13,8 +13,15 @@ const cpuTableSchema = schema
     id,
     label: ucfirst(id),
   }))
-  .map((item) => item)
-  .map((sch) => sch)
+  .map((sch) => {
+    if (sch.id === 'cpuUsed') {
+      return {
+        ...sch,
+        component: ({ value }) => `${value / 1000}Core`,
+      };
+    }
+    return sch;
+  })
   .concat([
     {
       id: 'actions',

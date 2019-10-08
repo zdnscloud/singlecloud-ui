@@ -13,8 +13,15 @@ const memoryTableSchema = schema
     id,
     label: ucfirst(id),
   }))
-  .map((item) => item)
-  .map((sch) => sch)
+  .map((sch) => {
+    if (sch.id === 'memoryUsed') {
+      return {
+        ...sch,
+        component: ({ value }) => `${(value / 1024 ** 3).toFixed(2)}GiB`,
+      };
+    }
+    return sch;
+  })
   .concat([
     {
       id: 'actions',
