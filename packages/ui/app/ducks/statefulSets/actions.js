@@ -46,25 +46,6 @@ export const createStatefulSetFailure = (error, meta = {}) => ({
   error: true,
 });
 
-export const updateStatefulSet = (data, meta = {}) => ({
-  type: c.UPDATE_STATEFUL_SET,
-  payload: data,
-  meta,
-});
-
-export const updateStatefulSetSuccess = (resp, meta = {}) => ({
-  type: c.UPDATE_STATEFUL_SET_SUCCESS,
-  payload: resp,
-  meta,
-});
-
-export const updateStatefulSetFailure = (error, meta = {}) => ({
-  type: c.UPDATE_STATEFUL_SET_FAILURE,
-  payload: error,
-  meta,
-  error: true,
-});
-
 export const readStatefulSet = (id, meta = {}) => ({
   type: c.READ_STATEFUL_SET,
   payload: id,

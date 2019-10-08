@@ -60,27 +60,6 @@ export const createStatefulSetEpic = (action$, state$, { ajax }) =>
     )
   );
 
-export const updateStatefulSetEpic = (action$, state$, { ajax }) =>
-  action$.pipe(
-    ofType(c.UPDATE_STATEFUL_SET),
-    mergeMap(({ payload, meta }) =>
-      ajax({
-        url: `${meta.url}`,
-        method: 'PUT',
-        body: payload,
-      }).pipe(
-        map((resp) => {
-          meta.resolve && meta.resolve(resp);
-          return a.updateStatefulSetSuccess(resp, meta);
-        }),
-        catchError((error) => {
-          meta.reject && meta.reject(error);
-          return of(a.updateStatefulSetFailure(error, meta));
-        })
-      )
-    )
-  );
-
 export const readStatefulSetEpic = (action$, state$, { ajax }) =>
   action$.pipe(
     ofType(c.READ_STATEFUL_SET),
@@ -149,7 +128,6 @@ export const executeStatefulSetActionEpic = (action$, state$, { ajax }) =>
 export default combineEpics(
   loadStatefulSetsEpic,
   createStatefulSetEpic,
-  updateStatefulSetEpic,
   readStatefulSetEpic,
   removeStatefulSetEpic,
   executeStatefulSetActionEpic

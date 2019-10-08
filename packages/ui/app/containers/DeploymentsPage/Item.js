@@ -36,7 +36,7 @@ import useStyles from './styles';
 
 /* eslint-disable react/prefer-stateless-function */
 export const Deployment = ({
-  updateDeployment,
+  executeDeploymentAction,
   deployment,
   clusterID,
   namespaceID,
@@ -44,7 +44,7 @@ export const Deployment = ({
   const classes = useStyles();
   const intl = useIntl();
   const replicas = deployment.get('replicas');
-  const updateUrl = deployment.getIn(['links', 'update']);
+  const selfUrl = deployment.getIn(['links', 'self']);
   const typeMap = {
     configmap: intl.formatMessage(messages.formVolumeTypeConfigMap),
     secret: intl.formatMessage(messages.formVolumeTypeSecret),
@@ -87,12 +87,13 @@ export const Deployment = ({
                           <ButtonBase
                             disabled={replicas === 1}
                             onClick={(evt) => {
-                              updateDeployment(
+                              executeDeploymentAction(
+                                'setPodCount',
                                 {
                                   replicas: replicas - 1,
                                 },
                                 {
-                                  url: updateUrl,
+                                  url: selfUrl,
                                   deployment,
                                   clusterID,
                                   namespaceID,
@@ -105,12 +106,13 @@ export const Deployment = ({
                           <ButtonBase
                             disabled={replicas >= 50}
                             onClick={(evt) => {
-                              updateDeployment(
+                              executeDeploymentAction(
+                                'setPodCount',
                                 {
                                   replicas: replicas + 1,
                                 },
                                 {
-                                  url: updateUrl,
+                                  url: selfUrl,
                                   deployment,
                                   clusterID,
                                   namespaceID,

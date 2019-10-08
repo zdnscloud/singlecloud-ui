@@ -36,7 +36,7 @@ import useStyles from './styles';
 
 /* eslint-disable react/prefer-stateless-function */
 export const StatefulSet = ({
-  updateStatefulSet,
+  executeStatefulSetAction,
   statefulSet,
   clusterID,
   namespaceID,
@@ -44,7 +44,7 @@ export const StatefulSet = ({
   const classes = useStyles();
   const intl = useIntl();
   const replicas = statefulSet.get('replicas');
-  const updateUrl = statefulSet.getIn(['links', 'update']);
+  const selfUrl = statefulSet.getIn(['links', 'self']);
   const typeMap = {
     configmap: intl.formatMessage(messages.formVolumeTypeConfigMap),
     secret: intl.formatMessage(messages.formVolumeTypeSecret),
@@ -87,12 +87,13 @@ export const StatefulSet = ({
                           <ButtonBase
                             disabled={replicas === 1}
                             onClick={(evt) => {
-                              updateStatefulSet(
+                              executeStatefulSetAction(
+                                'setPodCount',
                                 {
                                   replicas: replicas - 1,
                                 },
                                 {
-                                  url: updateUrl,
+                                  url: selfUrl,
                                   statefulSet,
                                   clusterID,
                                   namespaceID,
@@ -105,12 +106,13 @@ export const StatefulSet = ({
                           <ButtonBase
                             disabled={replicas >= 50}
                             onClick={(evt) => {
-                              updateStatefulSet(
+                              executeStatefulSetAction(
+                                'setPodCount',
                                 {
                                   replicas: replicas + 1,
                                 },
                                 {
-                                  url: updateUrl,
+                                  url: selfUrl,
                                   statefulSet,
                                   clusterID,
                                   namespaceID,

@@ -60,27 +60,6 @@ export const createDeploymentEpic = (action$, state$, { ajax }) =>
     )
   );
 
-export const updateDeploymentEpic = (action$, state$, { ajax }) =>
-  action$.pipe(
-    ofType(c.UPDATE_DEPLOYMENT),
-    mergeMap(({ payload, meta }) =>
-      ajax({
-        url: `${meta.url}`,
-        method: 'PUT',
-        body: payload,
-      }).pipe(
-        map((resp) => {
-          meta.resolve && meta.resolve(resp);
-          return a.updateDeploymentSuccess(resp, meta);
-        }),
-        catchError((error) => {
-          meta.reject && meta.reject(error);
-          return of(a.updateDeploymentFailure(error, meta));
-        })
-      )
-    )
-  );
-
 export const readDeploymentEpic = (action$, state$, { ajax }) =>
   action$.pipe(
     ofType(c.READ_DEPLOYMENT),
@@ -147,7 +126,6 @@ export const executeDeploymentActionEpic = (action$, state$, { ajax }) =>
 export default combineEpics(
   loadDeploymentsEpic,
   createDeploymentEpic,
-  updateDeploymentEpic,
   readDeploymentEpic,
   removeDeploymentEpic,
   executeDeploymentActionEpic
