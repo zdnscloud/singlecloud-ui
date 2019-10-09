@@ -136,16 +136,16 @@ export const makeSelectLeftMenus = () =>
             name: 'AppManagement',
             children: [
               {
+                name: 'NamespaceOverview',
+                path: `/clusters/${cluster}/namespaces/${namespace}/overview`,
+              },
+              {
                 name: 'Applications',
                 path: `/clusters/${cluster}/namespaces/${namespace}/applications`,
               },
               {
                 name: 'ServiceLink',
                 path: `/clusters/${cluster}/namespaces/${namespace}/serviceLink`,
-              },
-              {
-                name: 'NamespaceOverview',
-                path: `/clusters/${cluster}/namespaces/${namespace}/overview`,
               },
             ],
             icon: SystemIcon,
