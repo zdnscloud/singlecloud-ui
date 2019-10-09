@@ -17,7 +17,7 @@ const cpuTableSchema = schema
     if (sch.id === 'cpuUsed') {
       return {
         ...sch,
-        component: ({ value }) => `${value / 1000}Core`,
+        component: ({ value }) => `${value / 1000}`,
       };
     }
     return sch;
