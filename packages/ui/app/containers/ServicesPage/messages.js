@@ -61,6 +61,10 @@ export default defineMessages({
     id: `${scope}.save`,
     defaultMessage: 'Save',
   },
+  cancle: {
+    id: `${scope}.cancle`,
+    defaultMessage: 'Cancle',
+  },
   formName: {
     id: `${scope}.formName`,
     defaultMessage: 'Name',

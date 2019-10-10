@@ -185,6 +185,9 @@ const styles = (theme) => ({
     color: '#838383',
     fontSize: 14,
   },
+  cancleBtn: {
+    marginLeft: '10px',
+  },
 });
 
 export default styles;
