@@ -117,7 +117,7 @@ module.exports = require('./webpack.base.babel')({
 
       // Service Worker generation
       ServiceWorker: {
-        output: 'zcloud-sw.js',
+        output: 'sw.js',
         // This option is very dangerous.
         // This option should not be changed at all after you deploy ServiceWorker to production.
         // Changing it may corrupt the cache and leave old caches on users' devices.
@@ -146,11 +146,11 @@ module.exports = require('./webpack.base.babel')({
       ios: true,
       icons: [
         {
-          src: path.resolve('app/images/icon-512x512.png'),
+          src: path.resolve(__dirname, '..', '..', 'app/images/icon-512x512.png'),
           sizes: [72, 96, 128, 144, 192, 384, 512],
         },
         {
-          src: path.resolve('app/images/icon-512x512.png'),
+          src: path.resolve(__dirname, '..', '..', 'app/images/icon-512x512.png'),
           sizes: [120, 152, 167, 180],
           ios: true,
         },

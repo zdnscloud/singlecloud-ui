@@ -5,7 +5,10 @@
   "scripts": {
     "start": "node packages/ui/server",
     "bootstrap": "lerna bootstrap",
-    "generate": "plop --plopfile packages/ui/internals/generators/index.js",
+    "prebuild": "npm run build:clean",
+    "build": "NODE_ENV=production webpack --config packages/ui/internals/webpack/webpack.prod.babel.js --color -p --progress --hide-modules --display-optimization-bailout",
+    "build:clean": "rimraf ./build",
+    "generate": "plop --plopfile generators/index.js",
     "lint:staged": "lerna run lint:staged"
   },
   "pre-commit": "lint:staged",
