@@ -18,6 +18,9 @@ export const styles = (theme) => ({
     color: theme.palette.highlight.main,
     cursor: 'pointer',
   },
+  cardFooter: {
+    display: 'block',
+  },
 });
 
 export default makeStyles(styles);

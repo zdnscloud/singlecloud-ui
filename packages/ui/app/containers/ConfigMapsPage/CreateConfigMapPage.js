@@ -13,7 +13,8 @@ import { bindActionCreators, compose } from 'redux';
 import { fromJS } from 'immutable';
 import { reduxForm, getFormValues } from 'redux-form/immutable';
 import { SubmissionError, submit } from 'redux-form';
-import { push } from 'connected-react-router';
+
+import { usePush } from 'hooks/router';
 
 import classNames from 'classnames';
 import { withStyles } from '@material-ui/core/styles';
@@ -92,9 +93,10 @@ export const CreateConfigMap = ({
   url,
   clusterID,
   namespaceID,
-  routeTo,
 }) => {
   const classes = useStyles();
+  const push = usePush();
+
   async function doSubmit(formValues) {
     try {
       const data = formValues.toJS();
@@ -107,7 +109,7 @@ export const CreateConfigMap = ({
           namespaceID,
         });
       });
-      routeTo(`/clusters/${clusterID}/namespaces/${namespaceID}/configmaps`);
+      push(`/clusters/${clusterID}/namespaces/${namespaceID}/configmaps`);
     } catch (error) {
       throw new SubmissionError({ _error: error });
     }
@@ -149,10 +151,20 @@ export const CreateConfigMap = ({
                 <Button
                   variant="contained"
                   color="primary"
-                  size="large"
                   onClick={submitForm}
                 >
                   <FormattedMessage {...messages.formCreate} />
+                </Button>
+                <Button
+                  variant="contained"
+                  className={classes.cancleBtn}
+                  onClick={() => {
+                    push(
+                      `/clusters/${clusterID}/namespaces/${namespaceID}/configmaps`
+                    );
+                  }}
+                >
+                  <FormattedMessage {...messages.formCancle} />
                 </Button>
               </CardFooter>
             </Card>
@@ -173,7 +185,6 @@ const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
       ...actions,
-      routeTo: push,
       submitForm: () => submit(formName),
     },
     dispatch

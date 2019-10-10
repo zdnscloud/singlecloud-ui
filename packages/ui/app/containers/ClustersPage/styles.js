@@ -29,9 +29,6 @@ export const styles = (theme) => ({
     flexDirection: 'row',
     marginLeft: '0.8rem',
   },
-  cancleBtn: {
-    marginLeft: '10px',
-  },
   formGrid: {
     padding: theme.spacing(2),
     paddingTop: 0,

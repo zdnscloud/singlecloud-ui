@@ -53,10 +53,6 @@ export default defineMessages({
     id: `${scope}.createPageDesc`,
     defaultMessage: 'Description of Create Cronjob',
   },
-  createCronjob: {
-    id: `${scope}.createCronjob`,
-    defaultMessage: 'Create Cronjob',
-  },
   pods: {
     id: `${scope}.pods`,
     defaultMessage: 'Pods',
@@ -68,6 +64,10 @@ export default defineMessages({
   save: {
     id: `${scope}.save`,
     defaultMessage: 'Save',
+  },
+  cancle: {
+    id: `${scope}.cancle`,
+    defaultMessage: 'Cancle',
   },
   formAddContainer: {
     id: `${scope}.formAddContainer`,

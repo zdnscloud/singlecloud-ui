@@ -133,13 +133,17 @@ export const CreateJobPage = ({
                 containers: [{ name: '' }],
               })}
             />
+            <Button variant="contained" color="primary" onClick={submitForm}>
+              <FormattedMessage {...messages.save} />
+            </Button>
             <Button
               variant="contained"
-              color="primary"
-              size="large"
-              onClick={submitForm}
+              className={classes.cancleBtn}
+              onClick={() => {
+                push(`/clusters/${clusterID}/namespaces/${namespaceID}/jobs`);
+              }}
             >
-              <FormattedMessage {...messages.save} />
+              <FormattedMessage {...messages.cancle} />
             </Button>
           </GridItem>
         </GridContainer>

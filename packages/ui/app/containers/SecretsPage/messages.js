@@ -65,6 +65,10 @@ export default defineMessages({
     id: `${scope}.formCreate`,
     defaultMessage: 'Create',
   },
+  formCancle: {
+    id: `${scope}.cancle`,
+    defaultMessage: 'Cancle',
+  },
   formEditFile: {
     id: `${scope}.formEditFile`,
     defaultMessage: 'Edit File Content',
