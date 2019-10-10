@@ -178,7 +178,6 @@
   "app.containers.ConfigMapsPage.tableTitleName": "名称",
   "app.containers.CronJobsPage.cancle": "取消",
   "app.containers.CronJobsPage.createCronJob": "创建定时任务",
-  "app.containers.CronJobsPage.createCronjob": "Create Cronjob",
   "app.containers.CronJobsPage.createPageDesc": "描述",
   "app.containers.CronJobsPage.createPageTitle": "创建定时任务",
   "app.containers.CronJobsPage.cronJobDetail": "定时任务详情",

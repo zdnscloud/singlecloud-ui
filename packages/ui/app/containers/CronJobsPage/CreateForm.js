@@ -55,7 +55,7 @@ const Form = ({ formValues, handleSubmit, error, secrets, configMaps }) => {
           <Card>
             <CardHeader>
               <h4>
-                <FormattedMessage {...messages.createPageTitle} />
+                <FormattedMessage {...messages.createCronJob} />
               </h4>
             </CardHeader>
             <CardBody>

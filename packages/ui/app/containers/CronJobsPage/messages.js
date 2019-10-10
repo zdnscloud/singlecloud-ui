@@ -53,10 +53,6 @@ export default defineMessages({
     id: `${scope}.createPageDesc`,
     defaultMessage: 'Description of Create Cronjob',
   },
-  createCronjob: {
-    id: `${scope}.createCronjob`,
-    defaultMessage: 'Create Cronjob',
-  },
   pods: {
     id: `${scope}.pods`,
     defaultMessage: 'Pods',
