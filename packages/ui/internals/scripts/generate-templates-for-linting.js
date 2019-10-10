@@ -1,5 +1,5 @@
 /**
- * This script is for internal `singlecloud ui`'s usage. The only purpose of generating all of these templates is
+ * This script is for internal `zcloud ui`'s usage. The only purpose of generating all of these templates is
  * to be able to lint them and detect critical errors. Every generated component's name has to start with
  * 'RbGenerated' so it can be easily excluded from the test coverage reports.
  */

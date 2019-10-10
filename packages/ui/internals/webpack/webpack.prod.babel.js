@@ -59,7 +59,7 @@ module.exports = require('./webpack.base.babel')({
           name: 'vendor',
           chunks: 'all',
         },
-        singlecloud: {
+        zcloud: {
           chunks: 'all',
           minChunks: 2,
           reuseExistingChunk: true,
@@ -137,9 +137,9 @@ module.exports = require('./webpack.base.babel')({
     }),
 
     new WebpackPwaManifest({
-      name: 'SingleCloud UI',
-      short_name: 'SingleCloud',
-      description: 'SingleCloud UI project!',
+      name: 'Zcloud UI',
+      short_name: 'Zcloud',
+      description: 'Zcloud UI project!',
       background_color: '#fafafa',
       theme_color: '#b1624d',
       inject: true,

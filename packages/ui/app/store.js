@@ -7,11 +7,11 @@ import configureStore from './configureStore';
 
 localforage.config({
   // driver: localforage.WEBSQL, // Force WebSQL; same as using setDriver()
-  name: 'SingleCloud',
+  name: 'Zcloud',
   version: 1.0,
   size: 4980736, // Size of database, in bytes. WebSQL-only for now.
   storeName: 'gsmlg', // Should be alphanumeric, with underscores.
-  description: 'single cloud database',
+  description: 'zcloud database',
 });
 
 // Create redux store with history

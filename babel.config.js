@@ -11,7 +11,7 @@ function resolvePath(sourcePath, currentFile, opts) {
 
 let defaultPresets;
 
-// We release a ES version of SingleCloud-UI.
+// We release a ES version of Zcloud-UI.
 // It's something that matches the latest official supported features of JavaScript.
 // Nothing more (stage-1, etc), nothing less (require, etc).
 if (process.env.BABEL_ENV === 'es') {
