@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 /**
  *
  * Create Deployment Page
@@ -15,7 +16,8 @@ import {
   SubmissionError,
   submit,
 } from 'redux-form/immutable';
-import { push } from 'connected-react-router';
+
+import { usePush } from 'hooks/router';
 
 import Helmet from 'components/Helmet/Helmet';
 import { FormattedMessage } from 'react-intl';
@@ -87,9 +89,10 @@ export const CreateDeployment = ({
   storageClassesURL,
   storageClasses,
   values,
-  routeTo,
 }) => {
   const classes = useStyles();
+  const push = usePush();
+
   useEffect(() => {
     loadStorageClasses(storageClassesURL, { clusterID });
   }, [clusterID, loadStorageClasses, storageClassesURL]);
@@ -146,12 +149,10 @@ export const CreateDeployment = ({
       <ConfirmDialog
         open={!!open}
         onClose={() => {
-          routeTo(
-            `/clusters/${clusterID}/namespaces/${namespaceID}/deployments`
-          );
+          push(`/clusters/${clusterID}/namespaces/${namespaceID}/deployments`);
         }}
         onAction={() => {
-          routeTo(
+          push(
             `/clusters/${clusterID}/namespaces/${namespaceID}/services/create?from=true&targetResourceType=deployments&targetName=${open}`
           );
         }}
@@ -186,13 +187,19 @@ export const CreateDeployment = ({
               })}
               formValues={values}
             />
+            <Button variant="contained" color="primary" onClick={submitForm}>
+              <FormattedMessage {...messages.save} />
+            </Button>
             <Button
               variant="contained"
-              color="primary"
-              size="large"
-              onClick={submitForm}
+              className={classes.cancleBtn}
+              onClick={() => {
+                push(
+                  `/clusters/${clusterID}/namespaces/${namespaceID}/deployments`
+                );
+              }}
             >
-              <FormattedMessage {...messages.save} />
+              <FormattedMessage {...messages.cancle} />
             </Button>
           </GridItem>
         </GridContainer>
@@ -222,7 +229,6 @@ const mapDispatchToProps = (dispatch) =>
       loadSecrets: sActions.loadSecrets,
       loadStorageClasses: storagesAction.loadStorageClasses,
       submitForm: () => submit(formName),
-      routeTo: push,
     },
     dispatch
   );

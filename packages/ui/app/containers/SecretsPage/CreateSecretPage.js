@@ -13,8 +13,8 @@ import { bindActionCreators, compose } from 'redux';
 import { fromJS } from 'immutable';
 import { reduxForm, getFormValues } from 'redux-form/immutable';
 import { SubmissionError, submit } from 'redux-form';
-import { push } from 'connected-react-router';
-import { withStyles } from '@material-ui/core/styles';
+
+import { usePush } from 'hooks/router';
 
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Button from '@material-ui/core/Button';
@@ -78,9 +78,9 @@ export const CreateSecret = ({
   url,
   clusterID,
   namespaceID,
-  routeTo,
 }) => {
   const classes = useStyles();
+  const push = usePush();
   async function doSubmit(formValues) {
     try {
       const data = formValues.toJS();
@@ -93,7 +93,7 @@ export const CreateSecret = ({
           namespaceID,
         });
       });
-      routeTo(`/clusters/${clusterID}/namespaces/${namespaceID}/secrets`);
+      push(`/clusters/${clusterID}/namespaces/${namespaceID}/secrets`);
     } catch (error) {
       throw new SubmissionError({ _error: error });
     }
@@ -111,7 +111,6 @@ export const CreateSecret = ({
               name: <FormattedMessage {...messages.pageTitle} />,
             },
             {
-              path: `/clusters/${clusterID}/namespaces/${namespaceID}/secrets/create`,
               name: <FormattedMessage {...messages.createSecret} />,
             },
           ]}
@@ -136,10 +135,20 @@ export const CreateSecret = ({
                 <Button
                   variant="contained"
                   color="primary"
-                  size="large"
                   onClick={submitForm}
                 >
                   <FormattedMessage {...messages.formCreate} />
+                </Button>
+                <Button
+                  variant="contained"
+                  className={classes.cancleBtn}
+                  onClick={() => {
+                    push(
+                      `/clusters/${clusterID}/namespaces/${namespaceID}/secrets`
+                    );
+                  }}
+                >
+                  <FormattedMessage {...messages.formCancle} />
                 </Button>
               </CardFooter>
             </Card>
@@ -160,7 +169,6 @@ const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
       ...actions,
-      routeTo: push,
       submitForm: () => submit(formName),
     },
     dispatch

@@ -1,3 +1,4 @@
+/* eslint-disable no-shadow */
 /**
  *
  * Create Service Page
@@ -16,7 +17,8 @@ import {
   submit,
   change,
 } from 'redux-form/immutable';
-import { push } from 'connected-react-router';
+
+import { usePush } from 'hooks/router';
 
 import Helmet from 'components/Helmet/Helmet';
 import { FormattedMessage } from 'react-intl';
@@ -70,9 +72,9 @@ export const CreateServicePage = ({
   daemonSets,
   statefulSets,
   location,
-  routeTo,
 }) => {
   const classes = useStyles();
+  const push = usePush();
   const search = location.get('search');
   let from = false;
   let targetResourceType = '';
@@ -158,7 +160,7 @@ export const CreateServicePage = ({
       <ConfirmDialog
         open={!!open}
         onClose={() => {
-          routeTo(`/clusters/${clusterID}/namespaces/${namespaceID}/services`);
+          push(`/clusters/${clusterID}/namespaces/${namespaceID}/services`);
         }}
         onAction={() => {
           const p = values
@@ -168,7 +170,7 @@ export const CreateServicePage = ({
             .get('protocol');
           const page = p === 'udp' ? 'udpingresses' : 'ingresses';
 
-          routeTo(
+          push(
             `/clusters/${clusterID}/namespaces/${namespaceID}/${page}/create?from=true&targetResourceType=services&targetName=${open}`
           );
         }}
@@ -198,13 +200,19 @@ export const CreateServicePage = ({
               statefulSets={statefulSets.toList()}
               changeFormValue={changeFormValue}
             />
+            <Button variant="contained" color="primary" onClick={submitForm}>
+              <FormattedMessage {...messages.save} />
+            </Button>
             <Button
               variant="contained"
-              color="primary"
-              size="large"
-              onClick={submitForm}
+              className={classes.cancleBtn}
+              onClick={() => {
+                push(
+                  `/clusters/${clusterID}/namespaces/${namespaceID}/services`
+                );
+              }}
             >
-              <FormattedMessage {...messages.save} />
+              <FormattedMessage {...messages.cancle} />
             </Button>
           </GridItem>
         </GridContainer>
@@ -236,7 +244,6 @@ const mapDispatchToProps = (dispatch) =>
       loadStatefulSets: stsActions.loadStatefulSets,
       changeFormValue: (...args) => change(formName, ...args),
       submitForm: () => submit(formName),
-      routeTo: push,
     },
     dispatch
   );
