@@ -1,9 +1,6 @@
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable jsx-a11y/no-static-element-interactions */
 import React, { Fragment, useState } from 'react';
-// nodejs library that concatenates classes
-import classNames from 'classnames';
-// nodejs library to set properties for components
-import PropTypes from 'prop-types';
-
 // @material-ui/core components
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
@@ -26,7 +23,6 @@ const Confirm = (props) => {
   return (
     <Fragment>
       <div
-        aria-label="Delete"
         onClick={() => {
           setOpen(true);
         }}
@@ -40,9 +36,7 @@ const Confirm = (props) => {
           setOpen(false);
         }}
       >
-        <DialogTitle id="alert-dialog-title">
-          {<FormattedMessage {...messages.dialogTitle} />}
-        </DialogTitle>
+        <DialogTitle id="alert-dialog-title"></DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
             <img
