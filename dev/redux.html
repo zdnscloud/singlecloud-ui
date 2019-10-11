@@ -1,9 +1,9 @@
 <!DOCTYPE HTML>
-<html lang="zh" class="sidebar-visible no-js">
+<html lang="en" class="sidebar-visible no-js">
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>User Guide - Zcloud Source to Image</title>
+        <title>Redux开发 - Zcloud UI Documents</title>
         
 
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
@@ -77,10 +77,10 @@
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-brand">
               <image class="sidebar-icon" src="../images/icon.png" />
-              <b class="sidebar-book-title">Zcloud Source to Image</b>
+              <b class="sidebar-book-title">Zcloud UI Documents</b>
             </div>
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li><a href="../s2i.html"><strong aria-hidden="true">1.</strong> S2I Intro</a></li><li><ol class="section"><li><a href="../s2i/builder_image.html"><strong aria-hidden="true">1.1.</strong> Builder Requirements</a></li><li><a href="../s2i/cli.html"><strong aria-hidden="true">1.2.</strong> CLI</a></li><li><a href="../s2i/debugging-s2i.html"><strong aria-hidden="true">1.3.</strong> Debugging</a></li><li><a href="../s2i/new_labels.html"><strong aria-hidden="true">1.4.</strong> New Lables</a></li><li><a href="../s2i/runtime_image.html"><strong aria-hidden="true">1.5.</strong> Runtime Image</a></li><li><a href="../s2i/user_guide.html" class="active"><strong aria-hidden="true">1.6.</strong> User Guide</a></li></ol></li><li><a href="../builders.html"><strong aria-hidden="true">2.</strong> Builders</a></li><li><ol class="section"><li><a href="../builders/php.html"><strong aria-hidden="true">2.1.</strong> php</a></li><li><a href="../builders/nodejs.html"><strong aria-hidden="true">2.2.</strong> nodejs</a></li><li><a href="../builders/java.html"><strong aria-hidden="true">2.3.</strong> java</a></li><li><a href="../'./builders/go.html"><strong aria-hidden="true">2.4.</strong> go</a></li></ol></li></ol>
+                <ol class="chapter"><li><a href="../intro.html"><strong aria-hidden="true">1.</strong> 简介</a></li><li><ol class="section"><li><a href="../view.html"><strong aria-hidden="true">1.1.</strong> 视图</a></li><li><a href="../state.html"><strong aria-hidden="true">1.2.</strong> 状态</a></li><li><a href="../intl.html"><strong aria-hidden="true">1.3.</strong> 页面语言</a></li></ol></li><li><a href="../dev.html"><strong aria-hidden="true">2.</strong> 开发管理</a></li><li><ol class="section"><li><a href="../dev/scaffold.html"><strong aria-hidden="true">2.1.</strong> 脚手架使用</a></li><li><a href="../dev/scaffold_dev.html"><strong aria-hidden="true">2.2.</strong> 脚手架开发</a></li><li><a href="../dev/react.html"><strong aria-hidden="true">2.3.</strong> React开发</a></li><li><a href="../dev/redux.html" class="active"><strong aria-hidden="true">2.4.</strong> Redux开发</a></li></ol></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -102,7 +102,7 @@
                             
                         </div>
 
-                        <h1 class="menu-title">Zcloud Source to Image</h1>
+                        <h1 class="menu-title">Zcloud UI Documents</h1>
                     </div>
                 </div>
 
@@ -130,37 +130,76 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#using-s2i-images" id="using-s2i-images">Using S2I images</a></h1>
-<p>S2I builder images normally include <a href="https://docs.okd.io/latest/creating_images/s2i.html#s2i-scripts"><code>assemble</code> and <code>run</code> scripts</a>, but the default behavior of those scripts may not be suitable for all users. This topic covers a few approaches for customizing the behavior of an S2I builder that includes default scripts.</p>
-<h2><a class="header" href="#invoking-scripts-embedded-in-an-image" id="invoking-scripts-embedded-in-an-image">Invoking scripts embedded in an image</a></h2>
-<p>Typically, builder images provide their own version of the <a href="builder_image.html#s2i-scripts">S2I scripts</a> that cover the most common use-cases. If these scripts do not fulfill your needs, S2I provides a way of overriding them by adding custom ones in the <code>.s2i/bin</code> directory. However, by doing this you are <a href="https://docs.okd.io/latest/creating_images/s2i.html#s2i-scripts">completely replacing the standard scripts</a>. In some cases this is acceptable, but in other scenarios you may prefer to execute a few commands before (or after) the scripts while retaining the logic of the script provided in the image. In this case, it is possible to create a wrapper script that executes custom logic and delegates further work to the default script in the image.</p>
-<p>To determine the location of the scripts inside of the builder image, look at the value of <code>io.openshift.s2i.scripts-url</code> label. Use <code>docker inspect</code>:</p>
-<pre><code class="language-console">$ docker inspect --format='{{ index .Config.Labels &quot;io.openshift.s2i.scripts-url&quot; }}' openshift/wildfly-100-centos7
-image:///usr/libexec/s2i
+                        <h1><a class="header" href="#redux开发" id="redux开发">Redux开发</a></h1>
+<p>我们的项目使用<code>redux</code>来做状态管理，<code>redux</code>是一个全局状态机，统一管理页面所有状态</p>
+<p>我们使用 <code>Ducks: Redux Reducer Bundles</code> 的设计建议来定义一个redux模块，我们认为一个模块为一个 <code>duck</code></p>
+<p>所有的 <code>duck</code> 保存在在项目目录 <code>app/ducks</code> 下</p>
+<h2><a class="header" href="#设计规则" id="设计规则">设计规则</a></h2>
+<h3><a class="header" href="#文件定义" id="文件定义"><strong>文件定义</strong></a></h3>
+<ul>
+<li><strong>必须</strong> 使用 <code>export default</code> 在<code>index.js</code>中导出 <code>reducer</code></li>
+<li><strong>必须</strong> 使用 <code>export</code> 在<code>actions.js</code>中导出 <code>actions</code></li>
+<li><strong>必须</strong> 使用 <code>export</code> 在<code>constants.js</code>中导出 <code>action types</code></li>
+<li><strong>必须</strong> 使用 <code>export</code> 在<code>selectors.js</code>中导出 <code>selector makers</code></li>
+<li><strong>必须</strong> 使用 <code>export default</code> 在<code>epic.js</code>中导出 <code>epic</code>, 多个 <code>epic</code> 通过 <code>combineEpic</code> 合并为一个</li>
+</ul>
+<h3><a class="header" href="#action" id="action"><strong>action</strong></a></h3>
+<p><code>action</code> 包含</p>
+<ul>
+<li><code>type</code>, type: <code>&lt;string&gt;</code>, <code>action type</code> 在 <code>constants.js</code> 中定义，名称必须为大写</li>
+<li><code>payload</code>, type: <code>&lt;any&gt;</code>, <code>action</code> 所包含的数据</li>
+<li><code>meta</code>, type: <code>&lt;any&gt;</code>, <code>action</code> 关联数据，<code>context</code>, 如果是需要 <code>epic</code> 异步处理，则需要包含 <code>resolve</code>, <code>reject</code></li>
+<li><code>error</code>, type: <code>&lt;boolean&gt;</code>, 为<code>true</code>时表明这个<code>action</code>是一个<code>error</code>, <code>payload</code>装在着一个·<code>Error</code>对象</li>
+</ul>
+<h3><a class="header" href="#epic" id="epic"><strong>epic</strong></a></h3>
+<p>每个<code>epic.js</code>中可以包含多个<code>epic</code>，每个<code>epic</code>定义一个异步请求操作</p>
+<p><strong><code>ajax</code></strong></p>
+<p>我们定义一个 <code>ajax</code> 异步请求包含三个<code>action</code>，一个名为<code>loadClusters</code>的<code>action</code>会有三个<code>action</code>:</p>
+<ul>
+<li>loadClusters 发起请求</li>
+</ul>
+<pre><code class="language-js">export const loadClusters = (url, meta = {}) =&gt; ({
+   type: c.LOAD_CLUSTERS,
+   payload: url,
+   meta,
+ });
 </code></pre>
-<p>You inspected the <code>openshift/wildfly-100-centos7</code> builder image and found out that the scripts are in the <code>/usr/libexec/s2i</code> directory.</p>
-<p>With this knowledge, invoke any of these scripts from your own by wrapping its invocation.</p>
-<p>Example of <code>.s2i/bin/assemble</code> script:</p>
-<pre><code class="language-bash">#!/bin/bash
-echo &quot;Before assembling&quot;
-
-/usr/libexec/s2i/assemble
-rc=$?
-
-if [ $rc -eq 0 ]; then
-    echo &quot;After successful assembling&quot;
-else
-    echo &quot;After failed assembling&quot;
-fi
-
-exit $rc
+<ul>
+<li>loadClustersSuccess 请求成功</li>
+</ul>
+<pre><code class="language-js"> export const loadClustersSuccess = (resp, meta = {}) =&gt; ({
+   type: c.LOAD_CLUSTERS_SUCCESS,
+   payload: resp,
+   meta,
+ });
 </code></pre>
-<p>The example shows a custom <code>assemble</code> script that prints the message, executes standard <code>assemble</code> script from the image and prints another message depending on the exit code of the <code>assemble</code> script.</p>
-<p>When wrapping the <code>run</code> script, you must <a href="https://docs.okd.io/latest/creating_images/guidelines.html#general-docker-guidelines">use <code>exec</code> for invoking it</a> to ensure signals are handled properly. Unfortunately, the use of <code>exec</code> also precludes the ability to run additional commands after invoking the default image run script.</p>
-<p>Example of <code>.s2i/bin/run</code> script:</p>
-<pre><code class="language-bash">#!/bin/bash
-echo &quot;Before running application&quot;
-exec /usr/libexec/s2i/run
+<ul>
+<li>loadClustersFailure 请求失败</li>
+</ul>
+<pre><code class="language-js"> export const loadClustersFailure = (error, meta = {}) =&gt; ({
+   type: c.LOAD_CLUSTERS_FAILURE,
+   payload: error,
+   meta,
+   error: true,
+ });
+</code></pre>
+<p>对应一个 <strong><code>epic</code></strong></p>
+<pre><code class="language-js">export const loadClustersEpic = (action$, state$, { ajax }) =&gt;
+   action$.pipe(
+     ofType(c.LOAD_CLUSTERS),
+     mergeMap(({ payload, meta }) =&gt;
+       ajax(payload).pipe(
+         map((resp) =&gt; {
+           meta.resolve &amp;&amp; meta.resolve(resp);
+           return a.loadClustersSuccess(resp, meta);
+         }),
+         catchError((error) =&gt; {
+           meta.reject &amp;&amp; meta.reject(error);
+           return of(a.loadClustersFailure(error, meta));
+         })
+       )
+     )
+   );
 </code></pre>
 
                     </main>
@@ -168,15 +207,11 @@ exec /usr/libexec/s2i/run
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
                         
-                            <a rel="prev" href="../s2i/runtime_image.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../dev/react.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
                         
 
-                        
-                            <a rel="next" href="../builders.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
-                                <i class="fa fa-angle-right"></i>
-                            </a>
                         
 
                         <div style="clear: both"></div>
@@ -186,35 +221,16 @@ exec /usr/libexec/s2i/run
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
                 
-                    <a href="../s2i/runtime_image.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a href="../dev/react.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
                 
 
                 
-                    <a href="../builders.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
-                        <i class="fa fa-angle-right"></i>
-                    </a>
-                
             </nav>
 
         </div>
 
-        
-        <!-- Livereload script (if served using the cli tool) -->
-        <script type="text/javascript">
-            var socket = new WebSocket("ws://localhost:8089");
-            socket.onmessage = function (event) {
-                if (event.data === "reload") {
-                    socket.close();
-                    location.reload(true); // force reload from server (not from cache)
-                }
-            };
-
-            window.onbeforeunload = function() {
-                socket.close();
-            }
-        </script>
         
 
         

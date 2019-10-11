@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>简介 - Zcloud UI Documents</title>
+        <title>视图 - Zcloud UI Documents</title>
         
 
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
@@ -80,7 +80,7 @@
               <b class="sidebar-book-title">Zcloud UI Documents</b>
             </div>
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li><a href="intro.html"><strong aria-hidden="true">1.</strong> 简介</a></li><li><ol class="section"><li><a href="view.html"><strong aria-hidden="true">1.1.</strong> 视图</a></li><li><a href="state.html"><strong aria-hidden="true">1.2.</strong> 状态</a></li><li><a href="intl.html"><strong aria-hidden="true">1.3.</strong> 页面语言</a></li></ol></li><li><a href="dev.html"><strong aria-hidden="true">2.</strong> 开发管理</a></li><li><ol class="section"><li><a href="dev/scaffold.html"><strong aria-hidden="true">2.1.</strong> 脚手架使用</a></li><li><a href="dev/scaffold_dev.html"><strong aria-hidden="true">2.2.</strong> 脚手架开发</a></li><li><a href="dev/react.html"><strong aria-hidden="true">2.3.</strong> React开发</a></li><li><a href="dev/redux.html"><strong aria-hidden="true">2.4.</strong> Redux开发</a></li></ol></li></ol>
+                <ol class="chapter"><li><a href="intro.html"><strong aria-hidden="true">1.</strong> 简介</a></li><li><ol class="section"><li><a href="view.html" class="active"><strong aria-hidden="true">1.1.</strong> 视图</a></li><li><a href="state.html"><strong aria-hidden="true">1.2.</strong> 状态</a></li><li><a href="intl.html"><strong aria-hidden="true">1.3.</strong> 页面语言</a></li></ol></li><li><a href="dev.html"><strong aria-hidden="true">2.</strong> 开发管理</a></li><li><ol class="section"><li><a href="dev/scaffold.html"><strong aria-hidden="true">2.1.</strong> 脚手架使用</a></li><li><a href="dev/scaffold_dev.html"><strong aria-hidden="true">2.2.</strong> 脚手架开发</a></li><li><a href="dev/react.html"><strong aria-hidden="true">2.3.</strong> React开发</a></li><li><a href="dev/redux.html"><strong aria-hidden="true">2.4.</strong> Redux开发</a></li></ol></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -130,18 +130,38 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#简介" id="简介">简介</a></h1>
-<h2><a class="header" href="#什么是-zcloud" id="什么是-zcloud">什么是 <code>Zcloud</code></a></h2>
-<p>Zcloud是一个企业级容器云的完整解决方案。为用户提供以多集群、多租户为核心的资源管理能力和以应用商店、可视化编排为核心的应用部署能力，帮助企业在不同环境中简便快捷的部署和管理容器。同时，Zcloud也是云原生技术体系和方法论的最佳实践，具备了以下特点：可自动化弹性扩展、持续交付、微服务化，承载着云原生应用安全、可靠的运行。Zcloud助力企业适应云原生，应用云原生，最终实现企业IT支撑系统的迭代升级，降低成本、提升企业竞争力。Zcloud定位于原生Kubernetes发行版本，与操作系统和内核的关系一致。Zcloud不仅提供了强大的便捷UI操作界面，而且还对DNS、网络、存储、资源管理、多集群等众多方面做了极大的改进，降低了其使用门槛，同时也为企业建立自己的私有容器云平台提供了基础支撑。</p>
-<h2><a class="header" href="#ui" id="ui">UI</a></h2>
-<p>UI项目是Zcloud的用户界面</p>
+                        <h1><a class="header" href="#视图管理" id="视图管理">视图管理</a></h1>
+<h2><a class="header" href="#视图引擎-react" id="视图引擎-react">视图引擎 <code>React</code></a></h2>
+<p><strong>Zcloud</strong> 使用 <code>React</code> 开发用户UI</p>
+<p>当前 React 版本为 16.9</p>
+<h3><a class="header" href="#新特性启用" id="新特性启用">新特性启用</a></h3>
+<ul>
+<li>React 16.3 的 context API</li>
+<li>React 16.8 的 hooks API</li>
+</ul>
+<p>当前开发使用 <code>hooks</code> 来做视图数据的引用绑定
+推荐使用 <code>function component</code></p>
+<h3><a class="header" href="#使用介绍" id="使用介绍">使用介绍</a></h3>
+<ul>
+<li>Lifeycle method</li>
+<li>hooks</li>
+</ul>
+<h2><a class="header" href="#ui框架-material-ui" id="ui框架-material-ui">UI框架 <code>material-ui</code></a></h2>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
                         
+                            <a rel="prev" href="intro.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
 
+                        
+                            <a rel="next" href="state.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
                         
 
                         <div style="clear: both"></div>
@@ -151,7 +171,15 @@
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
                 
+                    <a href="intro.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
 
+                
+                    <a href="state.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
                 
             </nav>
 

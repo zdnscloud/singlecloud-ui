@@ -1,9 +1,9 @@
 <!DOCTYPE HTML>
-<html lang="zh" class="sidebar-visible no-js">
+<html lang="en" class="sidebar-visible no-js">
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Zcloud Source to Image</title>
+        <title>Zcloud UI Documents</title>
         
         <meta name="robots" content="noindex" />
         
@@ -79,10 +79,10 @@
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-brand">
               <image class="sidebar-icon" src="images/icon.png" />
-              <b class="sidebar-book-title">Zcloud Source to Image</b>
+              <b class="sidebar-book-title">Zcloud UI Documents</b>
             </div>
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li><a href="s2i.html"><strong aria-hidden="true">1.</strong> S2I Intro</a></li><li><ol class="section"><li><a href="s2i/builder_image.html"><strong aria-hidden="true">1.1.</strong> Builder Requirements</a></li><li><a href="s2i/cli.html"><strong aria-hidden="true">1.2.</strong> CLI</a></li><li><a href="s2i/debugging-s2i.html"><strong aria-hidden="true">1.3.</strong> Debugging</a></li><li><a href="s2i/new_labels.html"><strong aria-hidden="true">1.4.</strong> New Lables</a></li><li><a href="s2i/runtime_image.html"><strong aria-hidden="true">1.5.</strong> Runtime Image</a></li><li><a href="s2i/user_guide.html"><strong aria-hidden="true">1.6.</strong> User Guide</a></li></ol></li><li><a href="builders.html"><strong aria-hidden="true">2.</strong> Builders</a></li><li><ol class="section"><li><a href="builders/php.html"><strong aria-hidden="true">2.1.</strong> php</a></li><li><a href="builders/nodejs.html"><strong aria-hidden="true">2.2.</strong> nodejs</a></li><li><a href="builders/java.html"><strong aria-hidden="true">2.3.</strong> java</a></li><li><a href="'./builders/go.html"><strong aria-hidden="true">2.4.</strong> go</a></li></ol></li></ol>
+                <ol class="chapter"><li><a href="intro.html"><strong aria-hidden="true">1.</strong> 简介</a></li><li><ol class="section"><li><a href="view.html"><strong aria-hidden="true">1.1.</strong> 视图</a></li><li><a href="state.html"><strong aria-hidden="true">1.2.</strong> 状态</a></li><li><a href="intl.html"><strong aria-hidden="true">1.3.</strong> 页面语言</a></li></ol></li><li><a href="dev.html"><strong aria-hidden="true">2.</strong> 开发管理</a></li><li><ol class="section"><li><a href="dev/scaffold.html"><strong aria-hidden="true">2.1.</strong> 脚手架使用</a></li><li><a href="dev/scaffold_dev.html"><strong aria-hidden="true">2.2.</strong> 脚手架开发</a></li><li><a href="dev/react.html"><strong aria-hidden="true">2.3.</strong> React开发</a></li><li><a href="dev/redux.html"><strong aria-hidden="true">2.4.</strong> Redux开发</a></li></ol></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -104,7 +104,7 @@
                             
                         </div>
 
-                        <h1 class="menu-title">Zcloud Source to Image</h1>
+                        <h1 class="menu-title">Zcloud UI Documents</h1>
                     </div>
                 </div>
 
@@ -132,649 +132,270 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#s2i-builder-image-requirements" id="s2i-builder-image-requirements">s2i builder image requirements</a></h1>
-<p>The main advantage of using s2i for building reproducible docker images is ease
-of use for developers. To meet that criteria you, as a builder image author,
-should be aware of the two basic requirements for the best possible s2i
-performance. These are:</p>
+                        <h1><a class="header" href="#简介" id="简介">简介</a></h1>
+<h2><a class="header" href="#什么是-zcloud" id="什么是-zcloud">什么是 <code>Zcloud</code></a></h2>
+<p>Zcloud是一个企业级容器云的完整解决方案。为用户提供以多集群、多租户为核心的资源管理能力和以应用商店、可视化编排为核心的应用部署能力，帮助企业在不同环境中简便快捷的部署和管理容器。同时，Zcloud也是云原生技术体系和方法论的最佳实践，具备了以下特点：可自动化弹性扩展、持续交付、微服务化，承载着云原生应用安全、可靠的运行。Zcloud助力企业适应云原生，应用云原生，最终实现企业IT支撑系统的迭代升级，降低成本、提升企业竞争力。Zcloud定位于原生Kubernetes发行版本，与操作系统和内核的关系一致。Zcloud不仅提供了强大的便捷UI操作界面，而且还对DNS、网络、存储、资源管理、多集群等众多方面做了极大的改进，降低了其使用门槛，同时也为企业建立自己的私有容器云平台提供了基础支撑。</p>
+<h2><a class="header" href="#ui" id="ui">UI</a></h2>
+<p>UI项目是Zcloud的用户界面</p>
+<h1><a class="header" href="#视图管理" id="视图管理">视图管理</a></h1>
+<h2><a class="header" href="#视图引擎-react" id="视图引擎-react">视图引擎 <code>React</code></a></h2>
+<p><strong>Zcloud</strong> 使用 <code>React</code> 开发用户UI</p>
+<p>当前 React 版本为 16.9</p>
+<h3><a class="header" href="#新特性启用" id="新特性启用">新特性启用</a></h3>
 <ul>
-<li><a href="s2i/builder_image.html#required-image-contents">required image contents</a></li>
-<li><a href="s2i/builder_image.html#s2i-scripts">s2i scripts</a></li>
+<li>React 16.3 的 context API</li>
+<li>React 16.8 的 hooks API</li>
 </ul>
-<h1><a class="header" href="#required-image-contents" id="required-image-contents">Required image contents</a></h1>
-<p>The build process consists of three fundamental elements which are combined into the
-final docker image. These are: source code, s2i scripts, and the builder image. During the
-build process s2i must place sources and scripts inside that builder image. To do
-so s2i creates a tar file containing the two and then streams that file into the
-builder image. Before executing the <code>assemble</code> script, s2i untars that file and places
-its contents into the destination specified with either the <code>--destination</code> flag or the value of
-the <code>io.openshift.s2i.destination</code> label set in the builder image (the default destination is <code>/tmp</code>).
-If your image does not have either <code>tar</code> or <code>/bin/sh</code> the s2i build will perform an additional
-docker build to place the source code and scripts into an appropriate image and then run
-the normal s2i build.</p>
-<p>The following diagram illustrates the build workflow:</p>
-<p><img src="s2i/./sti-flow.png" alt="s2i workflow" title="s2i workflow" /></p>
-<p>* Run build's responsibility is to untar the sources, scripts and (optionally) artifacts
-and invoke the <code>assemble</code> script. If this is the second run after any previous runs with
-<code>tar</code>/<code>/bin/sh</code> errors, it will only run the <code>assemble</code> script, since both the source and
-scripts are already present.</p>
-<h1><a class="header" href="#s2i-scripts" id="s2i-scripts">s2i scripts</a></h1>
-<p><code>s2i</code> expects you (the builder image author) to supply the following scripts:</p>
+<p>当前开发使用 <code>hooks</code> 来做视图数据的引用绑定
+推荐使用 <code>function component</code></p>
+<h3><a class="header" href="#使用介绍" id="使用介绍">使用介绍</a></h3>
 <ul>
-<li>required:
+<li>Lifeycle method</li>
+<li>hooks</li>
+</ul>
+<h2><a class="header" href="#ui框架-material-ui" id="ui框架-material-ui">UI框架 <code>material-ui</code></a></h2>
+<h1><a class="header" href="#状态管理" id="状态管理">状态管理</a></h1>
+<h2><a class="header" href="#全局状态机-redux" id="全局状态机-redux">全局状态机 <code>Redux</code></a></h2>
+<h2><a class="header" href="#异步处理-rxjs" id="异步处理-rxjs">异步处理 <code>rxjs</code></a></h2>
+<h1><a class="header" href="#页面语言管理" id="页面语言管理">页面语言管理</a></h1>
+<h2><a class="header" href="#基础框架-react-intl" id="基础框架-react-intl">基础框架 <code>react-intl</code></a></h2>
+<p>Zcloud UI 使用了 <code>React-Intl</code> 来管理页面的语言显示</p>
+<p>关于<a href="https://github.com/formatjs/react-intl/blob/master/docs/README.md">React-intl</a></p>
+<h2><a class="header" href="#使用规则" id="使用规则">使用规则</a></h2>
+<h4><a class="header" href="#命名规则简述" id="命名规则简述">命名规则简述：</a></h4>
 <ul>
-<li><a href="s2i/builder_image.html#assemble">assemble</a></li>
-<li><a href="s2i/builder_image.html#run">run</a></li>
-</ul>
-</li>
-<li>optional:
-<ul>
-<li><a href="s2i/builder_image.html#save-artifacts">save-artifacts</a></li>
-<li><a href="s2i/builder_image.html#usage">usage</a></li>
-<li><a href="s2i/builder_image.html#testrun">test/run</a></li>
-</ul>
-</li>
-</ul>
-<p>All of the scripts can be written in any programming language, as long as the scripts
-are executable inside the builder image. The build searches the following locations for
-these scripts in the following order:</p>
-<ol>
-<li>A script found at the <code>--scripts-url</code> URL</li>
-<li>A script found in the application source <code>.s2i/bin</code> directory</li>
-<li>A script found at the default image URL (<code>io.openshift.s2i.scripts-url</code> label)</li>
-</ol>
-<p>Both the <code>io.openshift.s2i.scripts-url</code> label specified in the image and <code>--scripts-url</code> flag
-can be supplied in any of the following forms to indicate where the scripts are located:</p>
-<ul>
-<li><code>image://path_to_scripts_dir</code> - absolute path inside the image</li>
-<li><code>file://path_to_scripts_dir</code> - relative or absolute path on the host machine</li>
-<li><code>http(s)://path_to_scripts_dir</code> - URL to a directory</li>
-</ul>
-<p><strong>NOTE</strong>: In the case where the scripts are already placed inside the image (ie when
-using <code>--scripts-url</code> flag or the <code>io.openshift.s2i.scripts-url</code> with the format
-<code>image:///path/in/image</code>), then the <code>--destination</code> flag or the <code>io.openshift.s2i.destination</code>
-label applies only to sources and artifacts.</p>
-<h2><a class="header" href="#assemble" id="assemble">assemble</a></h2>
-<p>The <code>assemble</code> script is responsible for building the application artifacts from source
-and placing them into the appropriate directories inside the image. The workflow for the
-<code>assemble</code> script is:</p>
-<ol>
-<li>Restore build artifacts (in case you want to support incremental builds (if using this,
-make sure you define <a href="s2i/builder_image.html#save-artifacts">save-artifacts</a>) as well.</li>
-<li>Place the application source code in the appropriate location.</li>
-<li>Build any application artifacts.</li>
-<li>Install the artifacts into locations appropriate for running.</li>
-</ol>
-<p>In the case you need to assemble the Image using a different user than the runtime user defined 
-in <code>USER</code> directive of Dockerfile, you can achive this by the following ways:</p>
-<ol>
-<li>use the <code>--assemble-user</code> in cmd line</li>
-<li>use the label <code>io.openshift.s2i.assemble-user</code></li>
-</ol>
-<h4><a class="header" href="#example-assemble-script" id="example-assemble-script">Example <code>assemble</code> script:</a></h4>
-<p><strong>NOTE</strong>: All the examples are written in <a href="http://www.gnu.org/software/bash/">Bash</a>
-and it is assumed that the tar contents unpack into the <code>/tmp</code> directory.</p>
-<pre><code>#!/bin/bash
-
-# restore build artifacts
-if [ &quot;$(ls /tmp/artifacts/ 2&gt;/dev/null)&quot; ]; then
-    mv /tmp/artifacts/* $HOME/.
-fi
-
-# move the application source
-mv /tmp/s2i/src $HOME/src
-
-# build application artifacts
-pushd ${HOME}
-make all
-
-# install the artifacts
-make install
-popd
-</code></pre>
-<h2><a class="header" href="#run" id="run">run</a></h2>
-<p>The <code>run</code> script is responsible for executing your application.</p>
-<h4><a class="header" href="#example-run-script" id="example-run-script">Example <code>run</code> script:</a></h4>
-<pre><code>#!/bin/bash
-
-# run the application
-/opt/application/run.sh
-</code></pre>
-<h2><a class="header" href="#save-artifacts" id="save-artifacts">save-artifacts</a></h2>
-<p>The <code>save-artifacts</code> script is responsible for gathering all the dependencies into a tar file and streaming it to the standard output (eg. for Ruby - gems installed by Bundler, for Java - <code>.m2</code> contents, etc.).  The existence of this can speed up the following build processes.  Note: it is critical that the <code>save-artifacts</code> script output only include the tar stream output and nothing else.  This is handled by redirecting output to /dev/null in the sample script below.</p>
-<h4><a class="header" href="#example-save-artifacts-script" id="example-save-artifacts-script">Example <code>save-artifacts</code> script:</a></h4>
-<pre><code>#!/bin/bash
-
-# Besides the tar command, all other output to standard out must 
-# be surpressed.  Otherwise, the tar stream will be corrupted.
-pushd ${HOME} &gt;/dev/null
-if [ -d deps ]; then
-    # all deps contents to tar stream
-    tar cf - deps
-fi
-popd &gt;/dev/null
-
-</code></pre>
-<h2><a class="header" href="#usage" id="usage">usage</a></h2>
-<p>The <code>usage</code> script is for you (as the builder image author) to inform the user
-how to use your image.</p>
-<h4><a class="header" href="#example-usage-script" id="example-usage-script">Example <code>usage</code> script:</a></h4>
-<pre><code>#!/bin/bash
-
-# inform the user how to use the image
-cat &lt;&lt;EOF
-This is a S2I sample builder image, to use it, install
-https://github.com/openshift/source-to-image
-EOF
-</code></pre>
-<h2><a class="header" href="#testrun" id="testrun">test/run</a></h2>
-<p>The <code>test/run</code> script is for you (as the builder image author) to create a simple
-process to check whether the image is working correctly. The workflow of that process
-should be the following:</p>
-<ol>
-<li>Build the image.</li>
-<li>Run the image to verify the <code>usage</code> script.</li>
-<li>Run the <code>s2i build</code> to verify <code>assemble</code> script.</li>
-<li>(Optional) Run the <code>s2i build</code> once more to verify <code>save-artifacts</code> script and
-<code>assemble</code>'s restore artifacts functionality.</li>
-<li>Run the image to verify the test application is working.</li>
-</ol>
-<p><strong>NOTE</strong> The suggested place to put your test application built by your
-<code>test/run</code> script is <code>test/test-app</code> in your image repository, see
-<a href="https://github.com/openshift/source-to-image/blob/master/docs/cli.md#s2i-create">s2i create</a>.</p>
-<h1><a class="header" href="#additional-steps" id="additional-steps">Additional steps</a></h1>
-<h2><a class="header" href="#openshift-support" id="openshift-support">OpenShift support</a></h2>
-<p>If you are intending to use this image with <a href="https://github.com/openshift/origin">OpenShift</a>, review and follow the OpenShift <a href="https://docs.okd.io/latest/creating_images/guidelines.html">image creation guidelines</a>.</p>
-<h1><a class="header" href="#s2i-command-line-interface" id="s2i-command-line-interface">s2i command line interface</a></h1>
-<p>This document describes thoroughly all <code>s2i</code> subcommands and flags with explanation
-of their purpose as well as an example usage.</p>
-<p>Currently <code>s2i</code> has five subcommands, each of which will be described in the
-following sections of this document:</p>
-<ul>
-<li><a href="s2i/cli.html#s2i-create">create</a></li>
-<li><a href="s2i/cli.html#s2i-build">build</a></li>
-<li><a href="s2i/cli.html#s2i-rebuild">rebuild</a></li>
-<li><a href="s2i/cli.html#s2i-usage">usage</a></li>
-<li><a href="s2i/cli.html#s2i-version">version</a></li>
-<li><a href="s2i/cli.html#s2i-help">help</a></li>
-</ul>
-<p>Before diving into each of the aforementioned commands, let's have a closer look
-at common flags that can be used with all of the subcommands.</p>
-<table><thead><tr><th align="left">Name</th><th align="left">Description</th></tr></thead><tbody>
-<tr><td align="left"><code>-h (--help)</code></td><td align="left">Display help for the specified command</td></tr>
-<tr><td align="left"><code>--loglevel</code></td><td align="left">Set the level of log output (0-5) (see <a href="s2i/cli.html#log-levels">Log levels</a>)</td></tr>
-<tr><td align="left"><code>-U (--url)</code></td><td align="left">URL of the Docker socket to use (default: <code>unix:///var/run/docker.sock</code>)</td></tr>
-</tbody></table>
-<h4><a class="header" href="#log-levels" id="log-levels">Log levels</a></h4>
-<p>There are six log levels:</p>
-<ul>
-<li>Level <code>0</code> - produces output from containers running <code>assemble</code> and <code>assemble-runtime</code> scripts and all encountered errors</li>
-<li>Level <code>1</code> - produces basic information about the executed process</li>
-<li>Level <code>2</code> - produces very detailed information about the executed process</li>
-<li>Level <code>3</code> - produces very detailed information about the executed process, along with listing tar contents</li>
-<li>Level <code>4</code> - currently produces same information as level <code>3</code></li>
-<li>Level <code>5</code> - produces very detailed information about the executed process, lists tar contents, Docker Registry credentials, and copied source files</li>
-</ul>
-<p><strong>NOTE</strong>: All of the commands and flags are case sensitive!</p>
-<h1><a class="header" href="#s2i-create" id="s2i-create">s2i create</a></h1>
-<p>The <code>s2i create</code> command is responsible for bootstrapping a new S2I enabled
-image repository. This command will generate a skeleton <code>.s2i</code> directory and
-populate it with sample S2I scripts you can start hacking on.</p>
-<p>Usage:</p>
-<pre><code>$ s2i create &lt;image name&gt; &lt;destination directory&gt;
-</code></pre>
-<h1><a class="header" href="#s2i-build" id="s2i-build">s2i build</a></h1>
-<p>The <code>s2i build</code> command is responsible for building the Docker image by combining
-the specified builder image and sources. The resulting image will be named according
-to the tag parameter.</p>
-<p>Usage:</p>
-<pre><code>$ s2i build &lt;source location&gt; &lt;builder image&gt; [&lt;tag&gt;] [flags]
-</code></pre>
-<p>The build command parameters are defined as follows:</p>
-<ol>
-<li><code>source location</code> - the URL of a Git repository or a local path to the source code</li>
-<li><code>builder image</code> - the Docker image to be used in building the final image</li>
-<li><code>tag</code> - the name of the final Docker image (if provided)</li>
-</ol>
-<p>If the build image is compatible with incremental builds, <code>s2i build</code> will look for
-an image tagged with the same name. If an image is present with that tag and a
-<code>save-artifacts</code> script is present in the scripts directory, <code>s2i build</code> will save the build artifacts from
-that image and add them to the tar streamed to the container into <code>/artifacts</code>.</p>
-<h4><a class="header" href="#build-flags" id="build-flags">Build flags</a></h4>
-<table><thead><tr><th align="left">Name</th><th align="left">Description</th></tr></thead><tbody>
-<tr><td align="left"><code>-u (--allowed-uids)</code></td><td align="left">Specify a range of allowed user ids for the builder and runtime images. Ranges can be bounded (<code>1-10001</code>) or unbounded (<code>1-</code>).</td></tr>
-<tr><td align="left"><code>-n (--application-name</code>)</td><td align="left">Specify the display name for the application (default: output image name)</td></tr>
-<tr><td align="left"><code>--as-dockerfile</code></td><td align="left">EXPERIMENTAL: Output a Dockerfile to this path instead of building a new image</td></tr>
-<tr><td align="left"><code>--assemble-user</code></td><td align="left">Specify the user to run assemble with</td></tr>
-<tr><td align="left"><code>--assemble-runtime-user</code></td><td align="left">Specify the user to run assemble-runtime with</td></tr>
-<tr><td align="left"><code>--callback-url</code></td><td align="left">URL to be invoked after a build (see <a href="s2i/cli.html#callback-url">Callback URL</a>)</td></tr>
-<tr><td align="left"><code>--cap-drop</code></td><td align="left">Specify a comma-separated list of capabilities to drop when running Docker containers</td></tr>
-<tr><td align="left"><code>--context-dir</code></td><td align="left">Specify the sub-directory inside the repository with the application sources</td></tr>
-<tr><td align="left"><code>-c (--copy)</code></td><td align="left">Use local file system copy instead of git cloning the source url (allows for inclusion of empty directories and uncommitted files)</td></tr>
-<tr><td align="left"><code>--description</code></td><td align="left">Specify the description of the application</td></tr>
-<tr><td align="left"><code>-d (--destination)</code></td><td align="left">Location where the scripts and sources will be placed prior doing build (see <a href="https://github.com/openshift/source-to-image/blob/master/docs/builder_image.md#s2i-scripts">S2I Scripts</a>)</td></tr>
-<tr><td align="left"><code>--dockercfg-path</code></td><td align="left">The path to the Docker configuration file</td></tr>
-<tr><td align="left"><code>-e (--env)</code></td><td align="left">Environment variable to be passed to the builder eg. <code>NAME=VALUE</code></td></tr>
-<tr><td align="left"><code>-E (--environment-file)</code></td><td align="left">Specify the path to the file with environment</td></tr>
-<tr><td align="left"><code>--exclude</code></td><td align="left">Regular expression for selecting files from the source tree to exclude from the build, where the default excludes the '.git' directory (see https://golang.org/pkg/regexp for syntax, but note that &quot;&quot; will be interpreted as allow all files and exclude no files)</td></tr>
-<tr><td align="left"><code>--ignore-submodules</code></td><td align="left">Ignore all git submodules when cloning application repository. (defaults to false)</td></tr>
-<tr><td align="left"><code>--incremental</code></td><td align="left">Try to perform an incremental build</td></tr>
-<tr><td align="left"><code>--incremental-pull-policy</code></td><td align="left">Specify when to pull the previous image for incremental builds (always, never or if-not-present) (default &quot;if-not-present&quot;)</td></tr>
-<tr><td align="left"><code>-i (--inject)</code></td><td align="left">Inject the content of the specified directory into the path in the container that runs the assemble script</td></tr>
-<tr><td align="left"><code>--network</code></td><td align="left">Specify the default Docker Network name to be used in build process</td></tr>
-<tr><td align="left"><code>-p (--pull-policy)</code></td><td align="left">Specify when to pull the builder image (<code>always</code>, <code>never</code> or <code>if-not-present</code>. Defaults to <code>if-not-present</code>)</td></tr>
-<tr><td align="left"><code>-q (--quiet)</code></td><td align="left">Operate quietly, suppressing all non-error output</td></tr>
-<tr><td align="left"><code>-r (--ref)</code></td><td align="left">A branch/tag that the build should use instead of MASTER (applies only to Git source)</td></tr>
-<tr><td align="left"><code>--rm</code></td><td align="left">Remove the previous image during incremental builds</td></tr>
-<tr><td align="left"><code>--run</code></td><td align="left">Launch the resulting image after a successful build. All output from the image is being printed to help determine image's validity. In case of a long running image you will have to Ctrl-C to exit both s2i and the running container.  (defaults to false)</td></tr>
-<tr><td align="left"><code>-a (--runtime-artifact)</code></td><td align="left">Specify a file or directory to be copied from the builder to the runtime image  (see <a href="https://github.com/openshift/source-to-image/blob/master/docs/runtime_image.md">How to use a non-builder image for the final application image</a>)</td></tr>
-<tr><td align="left"><code>--runtime-image</code></td><td align="left">Image that will be used as the base for the runtime image (see <a href="https://github.com/openshift/source-to-image/blob/master/docs/runtime_image.md">How to use a non-builder image for the final application image</a>)</td></tr>
-<tr><td align="left"><code>--runtime-pull-policy</code></td><td align="left">Specify when to pull the runtime image (always, never or if-not-present) (default &quot;if-not-present&quot;)</td></tr>
-<tr><td align="left"><code>--save-temp-dir</code></td><td align="left">Save the working directory used for fetching scripts and sources</td></tr>
-<tr><td align="left"><code>-s (--scripts-url)</code></td><td align="left">URL of S2I scripts (see <a href="https://github.com/openshift/source-to-image/blob/master/docs/builder_image.md#s2i-scripts">S2I Scripts</a>)</td></tr>
-<tr><td align="left"><code>--use-config</code></td><td align="left">Store command line options to .s2ifile</td></tr>
-<tr><td align="left"><code>-v (--volume)</code></td><td align="left">Bind mounts a local directory into the container that runs the assemble script</td></tr>
-</tbody></table>
-<h4><a class="header" href="#context-directory" id="context-directory">Context directory</a></h4>
-<p>In the case where your application resides in a directory other than your repository root
-folder, you can specify that directory using the <code>--context-dir</code> parameter. The
-specified directory will be used as your application root folder.</p>
-<h4><a class="header" href="#injecting-directories-to-build" id="injecting-directories-to-build">Injecting directories to build</a></h4>
-<p>If you want to inject files that should only be available during the build (ie
-when the assemble script is invoked), you can specify the directories from which
-the files will be copied into the container that runs the assemble script. To do
-so you can invoke S2I as follows:</p>
-<pre><code class="language-console">$ s2i build --inject /mydir:/container/dir file://source builder-image output-image
-</code></pre>
-<p>In this case the content of the <code>/mydir</code> directory will get copied into
-<code>/container/dir</code> inside the container which runs the assemble script.
-After the <code>assemble</code> script finishes, all files copied will be truncated and thus
-not available in the output image. The files are truncated instead of deleted
-because the user under which we run the container with the assemble script might not
-have permissions to delete files in the destination directory (eg. <code>/etc/ssl</code>).</p>
-<p>You can also specify multiple directories, for example: <code>--inject /dir1:/container/dir1 --inject /dir2:container/dir2</code>.</p>
-<p>You can use this feature to provide SSL certificates, private configuration
-files which contains credentials, etc.</p>
-<h4><a class="header" href="#callback-url" id="callback-url">Callback URL</a></h4>
-<p>Upon completion (or failure) of a build, <code>s2i</code> can execute a HTTP POST to a URL with information
-about the build:</p>
-<ul>
-<li><code>success</code> - flag indicating the result of the build process (<code>true</code> or <code>false</code>)</li>
-<li><code>labels</code>  - labels of the resulting image</li>
-</ul>
-<p>Example: data posted will be in the form:</p>
-<pre><code>{
-    &quot;success&quot;: true,
-    &quot;labels&quot;: {
-        &quot;io.k8s.display-name&quot;: &quot;my-app&quot;,
-        &quot;io.openshift.s2i.build.image&quot;: &quot;builder-image:latest&quot;,
-        ...
-    }
-}
-</code></pre>
-<h4><a class="header" href="#example-usage" id="example-usage">Example Usage</a></h4>
-<p>Build a Ruby application from a Git source, using the official <code>ruby-23-centos7</code> builder
-image, the resulting image will be named <code>ruby-app</code>:</p>
-<pre><code>$ s2i build https://github.com/openshift/ruby-hello-world centos/ruby-23-centos7 ruby-app
-</code></pre>
-<p>Build a Node.js application from a local directory, using a local image, the resulting
-image will be named <code>nodejs-app</code>:</p>
-<pre><code>$ s2i build /home/user/nodejs-app local-nodejs-builder nodejs-app
-</code></pre>
-<p>In case of building from the local directory, the sources will be copied into
-the builder images using plain filesystem copy if the Git binary is not
-available. In that case the output image will not have the Git specific labels.
-Use this method only for development or local testing.</p>
-<p><strong>NOTE</strong>: All your changes have to be committed by <code>git</code> in order to build them with S2I.</p>
-<p>Build a Java application from a Git source, using the official <code>openshift/wildfly-101-centos7</code>
-builder image but overriding the scripts URL from local directory.  The resulting
-image will be named <code>java-app</code>:</p>
-<pre><code>$ s2i build --scripts-url=file://s2iscripts --ref=7.1.x --context-dir=kitchensink https://github.com/jboss-developer/jboss-eap-quickstarts openshift/wildfly-101-centos7 java-app
-</code></pre>
-<p>Build a Ruby application from a Git source, specifying <code>ref</code>, and using the official
-<code>ruby-23-centos7</code> builder image.  The resulting image will be named <code>ruby-app</code>:</p>
-<pre><code>$ s2i build --ref=my-branch https://github.com/openshift/ruby-hello-world centos/ruby-23-centos7 ruby-app
-</code></pre>
-<p><em><strong>NOTE:</strong></em> If the ref is invalid or not present in the source repository then the build will fail.</p>
-<p>Build a Ruby application from a Git source, overriding the scripts URL from a local directory,
-and specifying the scripts and sources be placed in <code>/opt</code> directory:</p>
-<pre><code>$ s2i build --scripts-url=file://s2iscripts --destination=/opt https://github.com/openshift/ruby-hello-world centos/ruby-23-centos7 ruby-app
-</code></pre>
-<h1><a class="header" href="#s2i-rebuild" id="s2i-rebuild">s2i rebuild</a></h1>
-<p>The <code>s2i rebuild</code> command is used to rebuild an image already built using S2I,
-or the image that contains the required S2I labels.
-The rebuild will read the S2I labels and automatically set the builder image,
-source repository and other configuration options used to build the previous
-image according to the stored labels values.</p>
-<p>Optionally, you can set the new image name as a second argument to the rebuild
-command.</p>
-<p>Usage:</p>
-<pre><code>$ s2i rebuild &lt;image name&gt; [&lt;new-tag-name&gt;]
-</code></pre>
-<h1><a class="header" href="#s2i-usage" id="s2i-usage">s2i usage</a></h1>
-<p>The <code>s2i usage</code> command starts a container and runs the <code>usage</code> script which prints
-information about the builder image. This command expects <code>builder image</code> name as
-the only parameter.</p>
-<p>Usage:</p>
-<pre><code>$ s2i usage &lt;builder image&gt; [flags]
-</code></pre>
-<h4><a class="header" href="#usage-flags" id="usage-flags">Usage flags</a></h4>
-<table><thead><tr><th align="left">Name</th><th align="left">Description</th></tr></thead><tbody>
-<tr><td align="left"><code>-d (--destination)</code></td><td align="left">Location where the scripts and sources will be placed prior invoking usage (see <a href="https://github.com/openshift/source-to-image/blob/master/docs/builder_image.md#s2i-scripts">S2I Scripts</a>)</td></tr>
-<tr><td align="left"><code>-e (--env)</code></td><td align="left">Environment variable passed to the builder eg. <code>NAME=VALUE</code>)</td></tr>
-<tr><td align="left"><code>-p (--pull-policy)</code></td><td align="left">Specify when to pull the builder image (<code>always</code>, <code>never</code> or <code>if-not-present</code>)</td></tr>
-<tr><td align="left"><code>--save-temp-dir</code></td><td align="left">Save the working directory used for fetching scripts and sources</td></tr>
-<tr><td align="left"><code>-s (--scripts-url)</code></td><td align="left">URL of S2I scripts (see <a href="https://github.com/openshift/source-to-image/blob/master/docs/builder_image.md#s2i-scripts">Scripts URL</a>)</td></tr>
-</tbody></table>
-<h4><a class="header" href="#example-usage-1" id="example-usage-1">Example Usage</a></h4>
-<p>Print the official <code>ruby-23-centos7</code> builder image usage:</p>
-<pre><code>$ s2i usage centos/ruby-23-centos7
-</code></pre>
-<h1><a class="header" href="#s2i-version" id="s2i-version">s2i version</a></h1>
-<p>The <code>s2i version</code> command prints the version of S2I currently installed.</p>
-<h1><a class="header" href="#s2i-help" id="s2i-help">s2i help</a></h1>
-<p>The <code>s2i help</code> command prints help either for the <code>s2i</code> itself or for the specified
-subcommand.</p>
-<h3><a class="header" href="#example-usage-2" id="example-usage-2">Example Usage</a></h3>
-<p>Print the help page for the build command:</p>
-<pre><code>$ s2i help build
-</code></pre>
-<p><em><strong>Note:</strong></em> You can also accomplish this with:</p>
-<pre><code>$ s2i build --help
-</code></pre>
-<h1><a class="header" href="#troubleshooting" id="troubleshooting">Troubleshooting</a></h1>
-<p>This document contains some tips and suggestions for troubleshooting the use of source-to-image (&quot;s2i&quot;) to build Docker images.</p>
-<h2><a class="header" href="#cant-find-the-s2i-executable" id="cant-find-the-s2i-executable">Can't Find The <code>s2i</code> Executable</a></h2>
-<p>Whether by  running <code>make build</code> or <code>hack/build-release.sh</code>, look under the <code>_output/local/go/bin</code> directory.</p>
-<p>If you have downloaded one of the official releases (see <a href="https://github.com/openshift/source-to-image/releases">releases</a>), the <code>s2i</code> executable is the only file in the tar archive.</p>
-<h2><a class="header" href="#security-and-docker" id="security-and-docker">Security And Docker</a></h2>
-<p>As noted <a href="https://github.com/openshift/source-to-image/#security">here</a>, there are considerations to allow S2I to interact with Docker, including possibly running <code>sudo s2i</code>.</p>
-<h2><a class="header" href="#image-mechanics" id="image-mechanics">Image Mechanics</a></h2>
-<p>By default, s2i will use the local builder image if available on the host from
-which you are running the <code>s2i</code> command. However, if you want to always pull
-the image from the remote Docker repository to be sure that you are not using
-stale and out of date image you should provide <code>--pull-policy=always</code> option
-when running the <code>s2i</code> command.</p>
-<h2><a class="header" href="#permissions-needed-during-the-s2i-process" id="permissions-needed-during-the-s2i-process">Permissions Needed During the S2I Process</a></h2>
-<p>The s2i process will leverage the <code>/tmp</code> directory at various stages, such as when cloning the source repository, when augmenting the Dockerfile for layered builds, during various <code>tar</code> operations that are performed, and when executing the scripts you have provided.  Invalid permissions will result in a message like this:</p>
-<pre><code> E0720 21:07:17.145257 04202 main.go:328] An error occurred: creating temporary directory  failed
-</code></pre>
-<p>Hence, the user ID you execute the <code>s2i</code> command with must have the appropriate permission to read, create, and remove files under <code>/tmp</code>.</p>
-<h2><a class="header" href="#passing-in-environment-variables" id="passing-in-environment-variables">Passing In Environment Variables</a></h2>
-<p>If you are passing in environment variables with the -e option from the command line, and those environment variables have values with commas in them, Go command line processing will break.</p>
-<pre><code>   $ s2i build --loglevel=5 -e &quot;MAVEN_ARGS='-P some-repo,some-other-repo'&quot; file:///home/mfojtik/sandbox/ruby openshift/ruby-20-centos7 foo
-   	 I0519 14:20:51.410089 17228 util.go:34] Using my@cred.sk credentials for pulling openshift/ruby-20-centos7
- 	 I0519 14:20:51.410222 17228 main.go:239] An error occurred: malformed env string: some-other-repo'
-</code></pre>
-<p>To deal with this behavior, s2i by default will look for environment variables in the file <code>.s2i/environment</code> in your source repository.  You can also point to a separate file with environment variable settings with the -E option.
-With both approaches, leveraging a file instead of the command line allows for the values of environment variable to contain commas.  Environment variable processing is described in the <a href="https://github.com/openshift/source-to-image#anatomy-of-a-builder-image">README</a> as well.</p>
-<p>With the above example, whichever file you leverage for environment variables would have this line:</p>
-<pre><code>MAVEN_ARGS='-P some-repo,some-other-repo'
-</code></pre>
-<h2><a class="header" href="#providing-s2i-scripts" id="providing-s2i-scripts">Providing S2I Scripts</a></h2>
-<p>First, a basic reminder:  you should verify your scripts have executable permissions.</p>
-<p>Then, a few of the trickier obstacles that have arisen for users in the past:</p>
-<h4><a class="header" href="#interfacing-with-tar" id="interfacing-with-tar">Interfacing With <code>tar</code></a></h4>
-<p>As noted <a href="https://github.com/openshift/source-to-image/blob/master/docs/builder_image.md#save-artifacts">here</a>, if you employ a <code>save-artifacts</code> script, that script is responsible for properly receiving tar streams.  Issues with <code>tar</code> stream processing could result in messages like:</p>
-<pre><code>      W0720 21:07:52.145257 04204 sti.go:131 Clean build will be performed because of error saving previous build artifacts
-      E0720 21:07:52.145263 04204 sti.go:133] ERROR: timeout waiting for tar stream
-</code></pre>
-<p>Review the example <a href="https://github.com/gabemontero/source-to-image/blob/master/docs/builder_image.md#save-artifacts">here</a>, and perhaps revisit the tar man pages or the bash user manual, to help address any problems.</p>
-<h4><a class="header" href="#dowloading--finding-the-scripts" id="dowloading--finding-the-scripts">Dowloading / Finding The Scripts</a></h4>
-<p>Per this discussion point  <a href="https://github.com/openshift/source-to-image/blob/master/docs/builder_image.md#s2i-scripts">here</a>, if your s2i related scripts are already placed in the image, but their locations are not indicated by one of the provided means, attempts to download the scripts will fail.</p>
-<pre><code>E0720 21:08:37.166063 04204 main.go:328] An error occurred: scripts inside the image:  image:///path/to/image
-</code></pre>
-<p>Properly reference the script location with the methods described in the above link.</p>
-<h4><a class="header" href="#onbuild" id="onbuild">ONBUILD</a></h4>
-<p>At various points when executing ONBUILD instructions (these are defined in the Dockerfile of the builder image you are using with s2i), if those instructions result in the need for root user access, but your builder image is not configured to run as root,
-then attempts to reference that image in another Dockerfile will result in permission errors.</p>
-<p>If you consider the following Dockerfile pseudo-example:</p>
-<pre><code>FROM foo
-USER root
-RUN some-root-operation
-ONBUILD some-root-operation
-USER joe
-</code></pre>
-<p>You will be able to Docker build the image, but when you then reference that image in another Dockerfile, things will fail because the ONBUILD commands will execute as &quot;joe&quot; and not &quot;root&quot;.</p>
-<h2><a class="header" href="#must-gather" id="must-gather">Must Gather</a></h2>
-<p>If you find yourself still stuck, before seeking help in #openshift on freenode.net, please recreate your issue and gather the following:</p>
-<ol>
 <li>
-<p>s2i logs at level 5 (verbose logging):</p>
-<pre><code> $ s2i &lt; other options &gt;  --loglevel=5 &amp;&gt; /tmp/s2i.log
-</code></pre>
+<p>左侧菜单：app.containers.App.leftMenu***</p>
 </li>
 <li>
-<p>Container logs</p>
-<p>The following bit of scripting will pull logs for <strong>all</strong> containers that have been run on your system.  This might be excessive if you don't keep a clean history, so consider manually grabbing logs for the relevant containers instead:</p>
-<pre><code> for container in $(docker ps -aq); do
-     docker logs $container &gt;&amp; $LOG_DIR/container-$container.log
- done
-</code></pre>
+<p>头部菜单栏:</p>
+<ul>
+<li>内容：app.containers.App.menubar ***</li>
+<li>按钮: app.containers.App.menubarButton ***</li>
+</ul>
 </li>
 <li>
-<p>By default, the working directory under <code>/tmp</code> is removed when the <code>s2i</code> command completes.  The <code>--save-temp-dir=true</code> option will preserve the working directory under <code>/tmp</code>.  Those files can often provide useful diagnostics.</p>
+<p>面包屑: app.containers.***page.pageTitle</p>
 </li>
-</ol>
-<h2><a class="header" href="#debugging-integration-test-failures" id="debugging-integration-test-failures">Debugging Integration Test Failures</a></h2>
-<p>For diagnosing failures when running hack/test-integration.sh, passing the -v option to the hack/test-integration.sh script will not only turn on verbose bash tracing, but will set --loglevel=5 tracing for the S2I internals, in
-order to provide additional details that can help diagnose issues.</p>
-<h1><a class="header" href="#adding-new-labels" id="adding-new-labels">Adding New Labels</a></h1>
-<p>New Docker Labels may be created and/or updated for the output image via the image metadata file.</p>
-<p>If a new label is specified in the metadata file, the label will be added in the output image.  However, any label previously defined in the base builder image will be <em><strong>overwritten</strong></em> in the output image, if the same label name is specified in the image metadata file.</p>
-<h2><a class="header" href="#image-metadata-file-name-and-path" id="image-metadata-file-name-and-path">Image Metadata File Name and Path</a></h2>
-<p>The name and path of the file <em><strong>must</strong></em> be the following:</p>
-<pre><code class="language-bash">/tmp/.s2i/image_metadata.json
-</code></pre>
-<h2><a class="header" href="#example" id="example">Example</a></h2>
-<p>The file may have one or more label/value pairs.  Below is the JSON format of the labels, in the image metadata file:</p>
-<pre><code class="language-bash">{
-  &quot;labels&quot;: [
-    {&quot;labelkey1&quot;:&quot;value1&quot;},
-    {&quot;labelkey2&quot;:&quot;value2&quot;},
-    .........
-  ]
-}
-
-</code></pre>
-<p>Note: If the JSON format is different than shown above, it will cause an error.</p>
-<h2><a class="header" href="#creating-the-file" id="creating-the-file">Creating the File</a></h2>
-<p>The file should be created during the <code>assemble</code> step. </p>
-<h1><a class="header" href="#how-to-use-a-non-builder-image-for-the-final-application-image" id="how-to-use-a-non-builder-image-for-the-final-application-image">How to use a non-builder image for the final application image</a></h1>
-<h2><a class="header" href="#overview" id="overview">Overview</a></h2>
-<p>For dynamic languages like PHP, Python, or Ruby, the build-time and run-time environments are the same. In this case using the builder as a base image for a resulting application image is natural.</p>
-<p>For compiled languages like C, C++, Go, or Java, the dependencies necessary for compilation might dramatically outweigh the size of the actual runtime artifacts, or provide attack surface areas that are undesirable in an application image. To keep runtime images slim, S2I enables a multiple-step build processes, where a binary artifact such as an executable or Java WAR file is created in the first builder image, extracted, and injected into a second image that simply places the executable in the correct location for execution. To give you even more abilities to customize a resulting image, S2I is also executing an <code>assemble-runtime</code> script inside of this (runtime) image. In this way you may do final adjustments by modifying files before an image will be committed.</p>
-<p>The following diagram illustrates the build workflow:</p>
-<p><img src="s2i/./runtime-image-flow.png" alt="s2i workflow" title="s2i workflow" /></p>
-<h2><a class="header" href="#how-it-works" id="how-it-works">How it works</a></h2>
-<p>To make this work S2I needs to know the following:</p>
+<li>
+<p>内容标题: app.containers.***page.secondaryTitle *** </p>
+</li>
+<li>
+<p>表格： </p>
 <ul>
-<li>builder image</li>
-<li>mapping of the artifacts</li>
-<li>runtime image</li>
+<li>表头：app.containers.***page.tableTitle ***</li>
+<li>表体：app.containers.***page.tableContent ***</li>
+<li>表尾：app.containers.***page.tableFooter ***</li>
 </ul>
-<p>This information is specified during S2I invocation:</p>
-<pre><code>s2i build &lt;repo&gt; &lt;builder-image&gt; &lt;my-app&gt; --runtime-image &lt;runtime-image&gt; --runtime-artifact &lt;/path/to/artifact&gt;
-</code></pre>
-<p>The only arguments here are the <code>--runtime-image</code> and <code>--runtime-artifact</code> options. The first option specifies the image that will be used as the base image for the final application image. The second option specifies a full path to a file (or directory) that will exist in the builder container after assembly and will be copied into the <code>WORKDIR</code> of the runtime container.</p>
-<p>For our example S2I will do the following steps:</p>
-<ol>
-<li>run a builder container and invoke the assemble script (as usual)</li>
-<li>after the builder finishes but before stopping the builder container, download the requested artifacts from the builder and place them in a temporary directory on the host</li>
-<li>start a container using the specified runtime image</li>
-<li>upload the scripts and build artifacts from the temporary directory into <code>WORKDIR</code> of the runtime container</li>
-<li>run the <code>assemble-runtime</code> script in the runtime container</li>
-<li>commit the runtime container and tag it as the new application image</li>
-</ol>
-<h2><a class="header" href="#details" id="details">Details</a></h2>
-<h3><a class="header" href="#format-and-behavior-of-the---runtime-artifact-option" id="format-and-behavior-of-the---runtime-artifact-option">Format and behavior of the <code>--runtime-artifact</code> option</a></h3>
-<p><code>--runtime-artifact</code> option (or its short equivalent <code>-a</code>) have the format <code>&lt;source&gt;[:&lt;destination&gt;]</code>. Here are some example values:</p>
-<table><thead><tr><th>Value</th><th>Meaning</th></tr></thead><tbody>
-<tr><td><code>/tmp/app.war</code></td><td><code>/tmp/app.war</code> file will be extracted from the builder container and uploaded into the <code>WORKDIR</code> of the runtime container</td></tr>
-<tr><td><code>/tmp/app.war:.</code></td><td>the same as above</td></tr>
-<tr><td><code>/tmp/app.war:app/dist</code></td><td><code>/tmp/app.war</code> file will be copied from the builder container into the <code>app/dist</code> subdirectory of the <code>WORKDIR</code> of the runtime container</td></tr>
-<tr><td><code>/tmp/app-0.1.war:app.war</code></td><td><code>/tmp/app-0.1.war</code> file will be uploaded into the <em><code>app.war</code> subdirectory</em> of the <code>WORKDIR</code> of the runtime container</td></tr>
-<tr><td><code>/opt/data</code></td><td><code>/opt/data</code> directory will be copied from the builder container into the <code>WORKDIR</code> of the runtime container</td></tr>
-<tr><td><code>/opt/data/</code></td><td>the same as above</td></tr>
-<tr><td><code>/opt/data/*.jar</code></td><td>invalid mapping because wildcards are not supported. The build will fail</td></tr>
-</tbody></table>
-<p>You can specify this option multiple times (for example, <code>-a /first/artifact -a /second/artifact</code>).</p>
-<p>The <code>source</code> must be an absolute path. The <code>destination</code> must be a relative path and it must not start with <code>..</code> Because <code>destination</code> is always a <strong>path to a directory</strong>, it is impossible to rename artifacts during copying, you only able to choose where S2I will create this file.</p>
-<p>When copying the artifacts, S2I will modify their permissions. All directories and files with executable bit will be uploaded with <code>0755</code> mode. Other files will have <code>0644</code> mode.</p>
-<h3><a class="header" href="#assemble-runtime-script-requirements" id="assemble-runtime-script-requirements"><code>assemble-runtime</code> script requirements</a></h3>
-<p><code>assemble-runtime</code> can be any executable script or binary. S2I searches the following locations for this script in the following order:</p>
-<ol>
-<li>A script found at the <code>--scripts-url</code> URL</li>
-<li>A script found in the application source <code>.s2i/bin</code> directory</li>
-<li>A script found at the default image URL (<code>io.openshift.s2i.scripts-url</code> label)</li>
-</ol>
-<p>The <code>assemble-runtime</code> script is always executed as the runtime image <code>USER</code>.</p>
-<h3><a class="header" href="#runtime-image-requirements" id="runtime-image-requirements">Runtime image requirements</a></h3>
-<p>In most cases you can use any image as a runtime image. However, if you are using the <code>--allowed-uids</code> option then the image must have a numeric <code>USER</code> specified and the value must be within the range of allowed user ids.</p>
-<p>To simplify the build workflow and provide some reasonable defaults, the author of the runtime image can use the following techniques:</p>
+</li>
+<li>
+<p>表单： </p>
 <ul>
-<li><code>run</code> and <code>assemble-runtime</code> scripts can be placed inside of the runtime image. Scripts from the image will be used as a fallback when user does not provide them in the <code>.s2i/bin</code> directory of the source repository and an alternative location is not specified with the <code>--scripts-url</code> option. The location of the scripts is defined by the value of the <code>io.openshift.s2i.scripts-url</code> label that should be presented on the image. For example, you can set it to <code>image:///usr/libexec/s2i</code></li>
-<li>default mapping for the files can be specified by adding the <code>io.openshift.s2i.assemble-input-files</code> label to the runtime image. This mapping will be used as a fallback when the user does not specify the artifacts explicitly with the <code>--runtime-artifact</code> option.</li>
+<li>内容: app.containers.***page.form *** </li>
+<li>按钮：app.containers.***page.formButton ***</li>
+<li>过滤搜索：app.containers.***page.search *** </li>
+<li>搜索按钮：app.containers.***page.searchButton ***</li>
 </ul>
-<p>To specify mappings for multiple files, separate them with a semicolon. For example: <code>/tmp/app.war:app;/opt/data</code></p>
-<h3><a class="header" href="#build-and-runtime-environments" id="build-and-runtime-environments">Build and runtime environments</a></h3>
-<p>Builder and runtime containers have the same environment. In other words <code>assemble</code> and <code>assemble-runtime</code> scripts are able to use environment variables defined with <code>--env</code> and <code>--environment-file</code> options along with the values from <code>.s2i/environment</code> file in the source repository.</p>
-<h3><a class="header" href="#extended-build-and-incremental-build" id="extended-build-and-incremental-build">Extended build and incremental build</a></h3>
-<p>In the current implementation it is not possible to do an extended incremental build. This combination is invalid and the build will fail.</p>
-<h1><a class="header" href="#using-s2i-images" id="using-s2i-images">Using S2I images</a></h1>
-<p>S2I builder images normally include <a href="https://docs.okd.io/latest/creating_images/s2i.html#s2i-scripts"><code>assemble</code> and <code>run</code> scripts</a>, but the default behavior of those scripts may not be suitable for all users. This topic covers a few approaches for customizing the behavior of an S2I builder that includes default scripts.</p>
-<h2><a class="header" href="#invoking-scripts-embedded-in-an-image" id="invoking-scripts-embedded-in-an-image">Invoking scripts embedded in an image</a></h2>
-<p>Typically, builder images provide their own version of the <a href="s2i/builder_image.html#s2i-scripts">S2I scripts</a> that cover the most common use-cases. If these scripts do not fulfill your needs, S2I provides a way of overriding them by adding custom ones in the <code>.s2i/bin</code> directory. However, by doing this you are <a href="https://docs.okd.io/latest/creating_images/s2i.html#s2i-scripts">completely replacing the standard scripts</a>. In some cases this is acceptable, but in other scenarios you may prefer to execute a few commands before (or after) the scripts while retaining the logic of the script provided in the image. In this case, it is possible to create a wrapper script that executes custom logic and delegates further work to the default script in the image.</p>
-<p>To determine the location of the scripts inside of the builder image, look at the value of <code>io.openshift.s2i.scripts-url</code> label. Use <code>docker inspect</code>:</p>
-<pre><code class="language-console">$ docker inspect --format='{{ index .Config.Labels &quot;io.openshift.s2i.scripts-url&quot; }}' openshift/wildfly-100-centos7
-image:///usr/libexec/s2i
-</code></pre>
-<p>You inspected the <code>openshift/wildfly-100-centos7</code> builder image and found out that the scripts are in the <code>/usr/libexec/s2i</code> directory.</p>
-<p>With this knowledge, invoke any of these scripts from your own by wrapping its invocation.</p>
-<p>Example of <code>.s2i/bin/assemble</code> script:</p>
-<pre><code class="language-bash">#!/bin/bash
-echo &quot;Before assembling&quot;
-
-/usr/libexec/s2i/assemble
-rc=$?
-
-if [ $rc -eq 0 ]; then
-    echo &quot;After successful assembling&quot;
-else
-    echo &quot;After failed assembling&quot;
-fi
-
-exit $rc
-</code></pre>
-<p>The example shows a custom <code>assemble</code> script that prints the message, executes standard <code>assemble</code> script from the image and prints another message depending on the exit code of the <code>assemble</code> script.</p>
-<p>When wrapping the <code>run</code> script, you must <a href="https://docs.okd.io/latest/creating_images/guidelines.html#general-docker-guidelines">use <code>exec</code> for invoking it</a> to ensure signals are handled properly. Unfortunately, the use of <code>exec</code> also precludes the ability to run additional commands after invoking the default image run script.</p>
-<p>Example of <code>.s2i/bin/run</code> script:</p>
-<pre><code class="language-bash">#!/bin/bash
-echo &quot;Before running application&quot;
-exec /usr/libexec/s2i/run
-</code></pre>
-<h1><a class="header" href="#builders" id="builders">Builders</a></h1>
+</li>
+<li>
+<p>弹窗：</p>
 <ul>
-<li>php7</li>
-<li>nodejs</li>
-<li>java</li>
-<li>go</li>
+<li>标题：app.containers.***page.dialogTitle</li>
+<li>内容：app.containers.***page.dialog *** </li>
+<li>按钮：app.containers.***page.dialogButton ***</li>
 </ul>
-<h1><a class="header" href="#php" id="php">PHP</a></h1>
-<h2><a class="header" href="#php-7" id="php-7">PHP 7</a></h2>
-<p>目录 <code>builders/php7</code>
-基于 <code>alpine</code></p>
-<h3><a class="header" href="#构建builder镜像" id="构建builder镜像">构建<code>builder</code>镜像</a></h3>
-<pre><code>make build
-</code></pre>
-<h3><a class="header" href="#测试builder镜像" id="测试builder镜像">测试<code>builder</code>镜像</a></h3>
-<pre><code>make test
-</code></pre>
-<h3><a class="header" href="#发布builder镜像" id="发布builder镜像">发布<code>builder</code>镜像</a></h3>
-<pre><code>make docker
-</code></pre>
-<h3><a class="header" href="#使用builder镜像" id="使用builder镜像">使用<code>builder</code>镜像</a></h3>
-<pre><code>s2i build [source dir] zdnscloud/s2i-php-builder [app image name]
-</code></pre>
-<h4><a class="header" href="#构建过程" id="构建过程">构建过程</a></h4>
-<p>根据 <code>composer.json</code> 文件选择使用 <code>composer.phar</code> 安装相关依赖</p>
-<h4><a class="header" href="#运行" id="运行">运行</a></h4>
-<p>运行<code>app image</code>时，会调用<code>apache</code>，并以<code>/opt/app-root</code>目录为<code>DocumentRoot</code></p>
-<h5><a class="header" href="#支持的环境变量配置" id="支持的环境变量配置">支持的环境变量配置</a></h5>
-<p><code>httpd.conf</code>:</p>
+</li>
+<li>
+<p>列表：</p>
 <ul>
-<li>APACHE_SERVER_NAME</li>
+<li>标题：app.containers.***page.listTitle ***</li>
+<li>内容：app.containers.***page.list *** </li>
+<li>按钮：app.containers.***page.listButton ***</li>
 </ul>
-<p><code>php.ini</code>:</p>
+</li>
+<li>
+<p>标签页： </p>
 <ul>
-<li>PHP_SHORT_OPEN_TAG</li>
-<li>PHP_OUTPUT_BUFFERING</li>
-<li>PHP_OPEN_BASEDIR</li>
-<li>PHP_MAX_EXECUTION_TIME</li>
-<li>PHP_MAX_INPUT_TIME</li>
-<li>PHP_MAX_INPUT_VARS</li>
-<li>PHP_MEMORY_LIMIT</li>
-<li>PHP_ERROR_REPORTING</li>
-<li>PHP_DISPLAY_ERRORS</li>
-<li>PHP_DISPLAY_STARTUP_ERRORS</li>
-<li>PHP_LOG_ERRORS</li>
-<li>PHP_LOG_ERRORS_MAX_LEN</li>
-<li>PHP_IGNORE_REPEATED_ERRORS</li>
-<li>PHP_REPORT_MEMLEAKS</li>
-<li>PHP_HTML_ERRORS</li>
-<li>PHP_ERROR_LOG</li>
-<li>PHP_POST_MAX_SIZE</li>
-<li>PHP_DEFAULT_MIMETYPE</li>
-<li>PHP_DEFAULT_CHARSET</li>
-<li>PHP_FILE_UPLOADS</li>
-<li>PHP_UPLOAD_TMP_DIR</li>
-<li>PHP_UPLOAD_MAX_FILESIZE</li>
-<li>PHP_MAX_FILE_UPLOADS</li>
-<li>PHP_ALLOW_URL_FOPEN</li>
-<li>PHP_ALLOW_URL_INCLUDE</li>
-<li>PHP_DEFAULT_SOCKET_TIMEOUT</li>
-<li>PHP_DATE_TIMEZONE</li>
-<li>PHP_PDO_MYSQL_CACHE_SIZE</li>
-<li>PHP_PDO_MYSQL_DEFAULT_SOCKET</li>
-<li>PHP_SESSION_SAVE_HANDLER</li>
-<li>PHP_SESSION_SAVE_PATH</li>
-<li>PHP_SESSION_USE_STRICT_MODE</li>
-<li>PHP_SESSION_USE_COOKIES</li>
-<li>PHP_SESSION_COOKIE_SECURE</li>
-<li>PHP_SESSION_NAME</li>
-<li>PHP_SESSION_COOKIE_LIFETIME</li>
-<li>PHP_SESSION_COOKIE_PATH</li>
-<li>PHP_SESSION_COOKIE_DOMAIN</li>
-<li>PHP_SESSION_COOKIE_HTTPONLY</li>
-<li>PHP_XDEBUG_ENABLED</li>
+<li>标题：app.containers.***page.tabTitle ***</li>
+<li>内容：app.containers.***page.tab *** </li>
+<li>按钮：app.containers.***page.tabButton ***</li>
 </ul>
-<h1><a class="header" href="#nodejs" id="nodejs">nodejs</a></h1>
-<h2><a class="header" href="#node-latest" id="node-latest">Node Latest</a></h2>
-<p>目录 <code>builders/nodejs</code>
-基于 <code>node:alpine</code></p>
-<h3><a class="header" href="#构建builder镜像-1" id="构建builder镜像-1">构建<code>builder</code>镜像</a></h3>
-<pre><code>make build
+</li>
+</ul>
+<h1><a class="header" href="#开发管理" id="开发管理">开发管理</a></h1>
+<h2><a class="header" href="#javascript-项目" id="javascript-项目">Javascript 项目</a></h2>
+<p>开发使用 <code>lerna</code> 管理多个项目来协同开发，项目在目录 <code>/packages</code> 下</p>
+<ul>
+<li><code>ui</code> UI项目</li>
+<li><code>com</code> 自定UI组件</li>
+<li><code>utils</code> 自定utils</li>
+<li><code>helm-icons</code> 项目的helm图标</li>
+</ul>
+<h2><a class="header" href="#启动开发" id="启动开发">启动开发</a></h2>
+<p>在 <code>packages/ui</code> 目录下 执行</p>
+<pre><code class="language-shell">npm start
 </code></pre>
-<h3><a class="header" href="#测试builder镜像-1" id="测试builder镜像-1">测试<code>builder</code>镜像</a></h3>
-<pre><code>make test
+<h2><a class="header" href="#开发文档" id="开发文档">开发文档</a></h2>
+<p>开发文档位于分支 <code>docs</code> 下</p>
+<p>编辑修改完成后发布到 <code>github pages</code> ， 执行：</p>
+<pre><code class="language-shell">make deploy
 </code></pre>
-<h3><a class="header" href="#发布builder镜像-1" id="发布builder镜像-1">发布<code>builder</code>镜像</a></h3>
-<pre><code>make docker
+<h1><a class="header" href="#脚手架使用" id="脚手架使用">脚手架使用</a></h1>
+<h2><a class="header" href="#使用原则" id="使用原则">使用原则</a></h2>
+<p>新增模块尽量使用<code>generator</code>生成，如果特殊模块需要说明</p>
+<h2><a class="header" href="#基本使用" id="基本使用">基本使用</a></h2>
+<pre><code>npm run generate
 </code></pre>
-<h3><a class="header" href="#使用builder镜像-1" id="使用builder镜像-1">使用<code>builder</code>镜像</a></h3>
-<pre><code>s2i build [source dir] zdnscloud/s2i-nodejs-builder [app image name]
+<h2><a class="header" href="#generators" id="generators">Generators</a></h2>
+<p>即项目模板生成器，可快速生成：</p>
+<ul>
+<li><code>container</code></li>
+<li><code>duck</code></li>
+</ul>
+<h3><a class="header" href="#generator使用细则" id="generator使用细则">Generator使用细则</a></h3>
+<h4><a class="header" href="#container" id="container">container</a></h4>
+<p>配置项:</p>
+<ul>
+<li>name: <code>type</code>
+类型，<code>class</code> / <code>function</code> component</li>
+<li>name: <code>name</code>
+模块名称</li>
+<li>name: <code>duck</code>
+模块使用<code>duck</code>名称，必须存在</li>
+<li>name: <code>singular</code>
+<code>duck</code> 单数名称</li>
+<li>name: <code>wantHeaders</code>
+是否需要 <code>helmet</code>， <em>当前无效</em></li>
+<li>name: <code>wantMessages</code>
+是否需要语言文件</li>
+<li>name: <code>wantLoadable</code>
+是否异步加载</li>
+<li>name: <code>wantTable</code>
+是否需要<code>table</code></li>
+<li>name: <code>wantCreatePage</code>
+是否需要<code>CreatePage</code></li>
+<li>name: <code>wantUpdatePage</code>
+是否需要<code>UpdatePage</code></li>
+<li>name: <code>wantShowItemPage</code>
+是否需要<code>ShowItemPage</code></li>
+</ul>
+<h4><a class="header" href="#duck" id="duck">duck</a></h4>
+<p>生成<code>Redux Reducer Bundles</code></p>
+<p>配置项：</p>
+<ul>
+<li>name: <code>name</code>
+配置 <code>duck</code> 名称</li>
+<li>name: <code>wannaCreateAction</code>
+配置 是否支持 <code>create</code></li>
+<li>name: <code>wannaUpdateAction</code>
+配置 是否支持 <code>update</code></li>
+<li>name: <code>wannaReadOneAction</code>
+配置 是否支持 <code>readOne</code></li>
+<li>name: <code>wannaRemoveAction</code>
+配置 是否支持 <code>remove</code></li>
+<li>name: <code>wannaResourceActions</code>
+配置 是否支持 <code>resource action</code></li>
+<li>name: <code>hasParents</code>
+配置 是否有父级资源</li>
+<li>name: <code>parents</code>
+配置 父级资源列表，依次输入，用逗号分隔</li>
+</ul>
+<h1><a class="header" href="#脚手架开发" id="脚手架开发">脚手架开发</a></h1>
+<p>当前，项目代码基本骨架使用<code>plop</code>来生成</p>
+<p>关于<code>plop</code>可以在 <a href="https://plopjs.com">主页</a> 或 <a href="https://github.com/amwmedia/plop">plop github</a> 找到</p>
+<p><code>plop</code> 生成代码的模版是 <code>handlebars</code>，关于<code>handlebars</code> 可以在 <a href="https://handlebarsjs.com/">主页</a> 或 <a href="https://github.com/wycats/handlebars.js/">Github</a> 找到</p>
+<h1><a class="header" href="#react开发" id="react开发">React开发</a></h1>
+<p>当前开发中我们主要使用 <code>function component</code> 开发 <code>react</code> 组件</p>
+<p>在 <code>function component</code> 中，使用 <code>React</code> <code>16.8</code> 中引入的hooks机制来代替原有的 <code>class</code> <code>life cycle methods</code></p>
+<h2><a class="header" href="#hooks-简介" id="hooks-简介">Hooks 简介</a></h2>
+<p>下面是我们使用的 <code>react</code> hooks</p>
+<ul>
+<li>
+<p><code>useState</code></p>
+</li>
+<li>
+<p><code>useEffect</code></p>
+</li>
+<li>
+<p><code>useCallback</code></p>
+</li>
+<li>
+<p><code>useMeno</code></p>
+</li>
+</ul>
+<h3><a class="header" href="#custom-hooks" id="custom-hooks">Custom Hooks</a></h3>
+<p><code>hook</code> 机制带来的重用行，可以让我们使用 <code>custom hook</code> 来解决重用的问题</p>
+<h1><a class="header" href="#redux开发" id="redux开发">Redux开发</a></h1>
+<p>我们的项目使用<code>redux</code>来做状态管理，<code>redux</code>是一个全局状态机，统一管理页面所有状态</p>
+<p>我们使用 <code>Ducks: Redux Reducer Bundles</code> 的设计建议来定义一个redux模块，我们认为一个模块为一个 <code>duck</code></p>
+<p>所有的 <code>duck</code> 保存在在项目目录 <code>app/ducks</code> 下</p>
+<h2><a class="header" href="#设计规则" id="设计规则">设计规则</a></h2>
+<h3><a class="header" href="#文件定义" id="文件定义"><strong>文件定义</strong></a></h3>
+<ul>
+<li><strong>必须</strong> 使用 <code>export default</code> 在<code>index.js</code>中导出 <code>reducer</code></li>
+<li><strong>必须</strong> 使用 <code>export</code> 在<code>actions.js</code>中导出 <code>actions</code></li>
+<li><strong>必须</strong> 使用 <code>export</code> 在<code>constants.js</code>中导出 <code>action types</code></li>
+<li><strong>必须</strong> 使用 <code>export</code> 在<code>selectors.js</code>中导出 <code>selector makers</code></li>
+<li><strong>必须</strong> 使用 <code>export default</code> 在<code>epic.js</code>中导出 <code>epic</code>, 多个 <code>epic</code> 通过 <code>combineEpic</code> 合并为一个</li>
+</ul>
+<h3><a class="header" href="#action" id="action"><strong>action</strong></a></h3>
+<p><code>action</code> 包含</p>
+<ul>
+<li><code>type</code>, type: <code>&lt;string&gt;</code>, <code>action type</code> 在 <code>constants.js</code> 中定义，名称必须为大写</li>
+<li><code>payload</code>, type: <code>&lt;any&gt;</code>, <code>action</code> 所包含的数据</li>
+<li><code>meta</code>, type: <code>&lt;any&gt;</code>, <code>action</code> 关联数据，<code>context</code>, 如果是需要 <code>epic</code> 异步处理，则需要包含 <code>resolve</code>, <code>reject</code></li>
+<li><code>error</code>, type: <code>&lt;boolean&gt;</code>, 为<code>true</code>时表明这个<code>action</code>是一个<code>error</code>, <code>payload</code>装在着一个·<code>Error</code>对象</li>
+</ul>
+<h3><a class="header" href="#epic" id="epic"><strong>epic</strong></a></h3>
+<p>每个<code>epic.js</code>中可以包含多个<code>epic</code>，每个<code>epic</code>定义一个异步请求操作</p>
+<p><strong><code>ajax</code></strong></p>
+<p>我们定义一个 <code>ajax</code> 异步请求包含三个<code>action</code>，一个名为<code>loadClusters</code>的<code>action</code>会有三个<code>action</code>:</p>
+<ul>
+<li>loadClusters 发起请求</li>
+</ul>
+<pre><code class="language-js">export const loadClusters = (url, meta = {}) =&gt; ({
+   type: c.LOAD_CLUSTERS,
+   payload: url,
+   meta,
+ });
 </code></pre>
-<h4><a class="header" href="#构建过程-1" id="构建过程-1">构建过程</a></h4>
-<p>首先执行 <code>npm install</code> 或 <code>yarn install</code></p>
-<p>根据 <code>yarn.lock</code> 文件选择使用 <code>npm</code> 或 <code>yarn</code> 安装</p>
-<h4><a class="header" href="#运行-1" id="运行-1">运行</a></h4>
-<p>运行<code>app image</code>时，会调用<code>npm start</code></p>
-<h3><a class="header" href="#demo" id="demo">Demo:</a></h3>
-<pre><code class="language-shell">s2i build https://github.com/zdnscloud/singlecloud-ui zdnscloud/s2i-nodejs-builder sui
-docker run -p 8080:3000 --rm sui
+<ul>
+<li>loadClustersSuccess 请求成功</li>
+</ul>
+<pre><code class="language-js"> export const loadClustersSuccess = (resp, meta = {}) =&gt; ({
+   type: c.LOAD_CLUSTERS_SUCCESS,
+   payload: resp,
+   meta,
+ });
 </code></pre>
-<h1><a class="header" href="#java" id="java">java</a></h1>
-<h1><a class="header" href="#go" id="go">go</a></h1>
+<ul>
+<li>loadClustersFailure 请求失败</li>
+</ul>
+<pre><code class="language-js"> export const loadClustersFailure = (error, meta = {}) =&gt; ({
+   type: c.LOAD_CLUSTERS_FAILURE,
+   payload: error,
+   meta,
+   error: true,
+ });
+</code></pre>
+<p>对应一个 <strong><code>epic</code></strong></p>
+<pre><code class="language-js">export const loadClustersEpic = (action$, state$, { ajax }) =&gt;
+   action$.pipe(
+     ofType(c.LOAD_CLUSTERS),
+     mergeMap(({ payload, meta }) =&gt;
+       ajax(payload).pipe(
+         map((resp) =&gt; {
+           meta.resolve &amp;&amp; meta.resolve(resp);
+           return a.loadClustersSuccess(resp, meta);
+         }),
+         catchError((error) =&gt; {
+           meta.reject &amp;&amp; meta.reject(error);
+           return of(a.loadClustersFailure(error, meta));
+         })
+       )
+     )
+   );
+</code></pre>
 
                     </main>
 
@@ -797,21 +418,6 @@ docker run -p 8080:3000 --rm sui
 
         </div>
 
-        
-        <!-- Livereload script (if served using the cli tool) -->
-        <script type="text/javascript">
-            var socket = new WebSocket("ws://localhost:8089");
-            socket.onmessage = function (event) {
-                if (event.data === "reload") {
-                    socket.close();
-                    location.reload(true); // force reload from server (not from cache)
-                }
-            };
-
-            window.onbeforeunload = function() {
-                socket.close();
-            }
-        </script>
         
 
         
