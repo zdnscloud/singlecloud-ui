@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 /**
  *
  * Create Cluster Page
@@ -117,7 +118,7 @@ export const CreateClusterPage = ({
         <Breadcrumbs
           data={[
             {
-              path: '/clusters/',
+              path: '/clusters',
               name: <FormattedMessage {...messages.clusters} />,
             },
             {

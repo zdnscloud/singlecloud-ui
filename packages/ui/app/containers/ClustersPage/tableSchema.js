@@ -31,7 +31,7 @@ const tableSchema = schema
     {
       id: 'actions',
       label: 'Actions',
-      component: ({ classes, data, removeCluster }) => (
+      component: ({ classes, data, removeCluster, setError }) => (
         <Fragment>
           <IconButton
             variant="outlined"
@@ -47,6 +47,7 @@ const tableSchema = schema
             actionName={removeCluster}
             id={data.get('id')}
             url={data.getIn(['links', 'remove'])}
+            reject={(e) => setError(e)}
           />
         </Fragment>
       ),

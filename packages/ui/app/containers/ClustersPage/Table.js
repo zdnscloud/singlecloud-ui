@@ -28,14 +28,14 @@ import messages from './messages';
 import useStyles from './styles';
 import schema from './tableSchema';
 
-export const ClustersTable = ({ data, removeCluster }) => {
+export const ClustersTable = ({ data, removeCluster, setError }) => {
   const classes = useStyles();
   const mergedSchema = schema
     .map((sch) => {
       if (sch.id === 'actions') {
         return {
           ...sch,
-          props: { classes, removeCluster },
+          props: { classes, removeCluster, setError },
         };
       }
       return sch;

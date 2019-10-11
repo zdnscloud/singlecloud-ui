@@ -20,6 +20,7 @@ import ZcloudICon from 'images/Zcloud.svg';
 
 import * as actions from 'ducks/app/actions';
 import { makeSelectCurrentID as makeSelectCurrentClusterID } from 'ducks/clusters/selectors';
+import { makeSelectCurrentID as makeSelectNamespaceID } from 'ducks/namespaces/selectors';
 import {
   makeSelectLeftMenus,
   makeSelectShowEvents,
@@ -42,9 +43,19 @@ const LeftMenu = ({
   showText,
   location,
   clusterID,
+  namespaceID,
 }) => {
   const path = location.get('pathname');
+
   const isManage = /^\/clusters\/[^/]+\/manage/.test(path);
+  const isShow = /\/show$/.test(path);
+  const isEdit = /\/edit$/.test(path);
+  const isCreate = /\/create$/.test(path);
+  const isCCreate = /^\/clusters+\/create/.test(path);
+  const isNsCreate = path === `/clusters/${clusterID}/namespaces/create`;
+  const isNsShow =
+    path === `/clusters/${clusterID}/namespaces/${namespaceID}/show`;
+
   const classes = useStyles({ showText });
   const menuRef = useRef(null);
   const [openingMenu, setOpeningMenu] = useState(null);
@@ -69,8 +80,27 @@ const LeftMenu = ({
 
   // verifies if routeName is the one active (in browser input)
   const activeRoute = (routeName) => {
-    const pathname = location.get('pathname');
-    return pathname === routeName;
+    const rnIsClusters = routeName === '/clusters';
+    const rnIsNS = routeName === `/clusters/${clusterID}/namespaces`;
+    if (!rnIsClusters) {
+      if (!clusterID) {
+        return path.includes('adminUserQuotas') || path.includes('userQuotas');
+      }
+      if (
+        ((isShow || isCreate || isEdit) && !rnIsNS) ||
+        isNsCreate ||
+        isNsShow
+      ) {
+        return path.includes(routeName);
+      }
+    }
+    if (isManage || isCCreate) {
+      return path.includes(routeName);
+    }
+    if (path === routeName) {
+      return true;
+    }
+    return false;
   };
   const handleOpen = (name, notChange) => ({ currentTarget }) => {
     clearTimeout(ctimer);
@@ -237,6 +267,7 @@ const LeftMenu = ({
 
 const mapStateToProps = createStructuredSelector({
   clusterID: makeSelectCurrentClusterID(),
+  namespaceID: makeSelectNamespaceID(),
   menus: makeSelectLeftMenus(),
   location: makeSelectLocation(),
   showText: makeSelectShowMenuText(),
