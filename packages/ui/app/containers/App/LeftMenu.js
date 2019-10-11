@@ -1,4 +1,4 @@
-import React, { useRef, Fragment, useEffect, useState } from 'react';
+import React, { useRef, Fragment, useCallback, useEffect, useState } from 'react';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -48,6 +48,21 @@ const LeftMenu = ({
   const classes = useStyles({ showText });
   const menuRef = useRef(null);
   const [openingMenu, setOpeningMenu] = useState(null);
+  const [popperTop, setPopperTop] = useState(0);
+  const popperRef = useCallback((el) => {
+    if (el) {
+      setTimeout(() => {
+        const rect = el.getBoundingClientRect();
+        const { top, height } = rect;
+        const overflow = top + height - window.innerHeight;
+        if (overflow > 0) {
+          setPopperTop(-overflow);
+        }
+      }, 1000 / 60);
+    } else {
+      setPopperTop(0);
+    }
+  }, []);
   useEffect(() => {
     setOpeningMenu(null);
   }, [showText]);
@@ -152,10 +167,13 @@ const LeftMenu = ({
                 onMouseMove={handleOpen(prop.name, true)}
                 onClose={handleClose}
                 anchorEl={openingMenu && openingMenu[1]}
-                placement="right-start"
-                style={{ zIndex: 1200 }}
+                placement={'right-start'}
+                style={{ zIndex: 1200, top: popperTop }}
               >
-                <div className={classNames(classes.secondMenu)}>
+                <div
+                  ref={popperRef}
+                  className={classNames(classes.secondMenu)}
+                >
                   <List component="div" disablePadding>
                     {prop.children.map((menu, idx) => {
                       const itemClasses = classNames({
