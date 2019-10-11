@@ -1,9 +1,9 @@
 <!DOCTYPE HTML>
-<html lang="en" class="sidebar-visible no-js">
+<html lang="zh" class="sidebar-visible no-js">
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>脚手架使用 - Zcloud UI Documents</title>
+        <title>New Lables - Zcloud Source to Image</title>
         
 
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
@@ -77,10 +77,10 @@
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-brand">
               <image class="sidebar-icon" src="../images/icon.png" />
-              <b class="sidebar-book-title">Zcloud UI Documents</b>
+              <b class="sidebar-book-title">Zcloud Source to Image</b>
             </div>
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li><a href="../intro.html"><strong aria-hidden="true">1.</strong> 简介</a></li><li><ol class="section"><li><a href="../view.html"><strong aria-hidden="true">1.1.</strong> 视图</a></li><li><a href="../state.html"><strong aria-hidden="true">1.2.</strong> 状态</a></li><li><a href="../intl.html"><strong aria-hidden="true">1.3.</strong> 页面语言</a></li></ol></li><li><a href="../dev.html"><strong aria-hidden="true">2.</strong> 开发管理</a></li><li><ol class="section"><li><a href="../dev/scaffold.html" class="active"><strong aria-hidden="true">2.1.</strong> 脚手架使用</a></li><li><a href="../dev/scaffold_dev.html"><strong aria-hidden="true">2.2.</strong> 脚手架开发</a></li><li><a href="../dev/react.html"><strong aria-hidden="true">2.3.</strong> React开发</a></li><li><a href="../dev/redux.html"><strong aria-hidden="true">2.4.</strong> Redux开发</a></li></ol></li></ol>
+                <ol class="chapter"><li><a href="../s2i.html"><strong aria-hidden="true">1.</strong> S2I Intro</a></li><li><ol class="section"><li><a href="../s2i/builder_image.html"><strong aria-hidden="true">1.1.</strong> Builder Requirements</a></li><li><a href="../s2i/cli.html"><strong aria-hidden="true">1.2.</strong> CLI</a></li><li><a href="../s2i/debugging-s2i.html"><strong aria-hidden="true">1.3.</strong> Debugging</a></li><li><a href="../s2i/new_labels.html" class="active"><strong aria-hidden="true">1.4.</strong> New Lables</a></li><li><a href="../s2i/runtime_image.html"><strong aria-hidden="true">1.5.</strong> Runtime Image</a></li><li><a href="../s2i/user_guide.html"><strong aria-hidden="true">1.6.</strong> User Guide</a></li></ol></li><li><a href="../builders.html"><strong aria-hidden="true">2.</strong> Builders</a></li><li><ol class="section"><li><a href="../builders/php.html"><strong aria-hidden="true">2.1.</strong> php</a></li><li><a href="../builders/nodejs.html"><strong aria-hidden="true">2.2.</strong> nodejs</a></li><li><a href="../builders/java.html"><strong aria-hidden="true">2.3.</strong> java</a></li><li><a href="../'./builders/go.html"><strong aria-hidden="true">2.4.</strong> go</a></li></ol></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -102,7 +102,7 @@
                             
                         </div>
 
-                        <h1 class="menu-title">Zcloud UI Documents</h1>
+                        <h1 class="menu-title">Zcloud Source to Image</h1>
                     </div>
                 </div>
 
@@ -130,79 +130,40 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#脚手架使用" id="脚手架使用">脚手架使用</a></h1>
-<h2><a class="header" href="#使用原则" id="使用原则">使用原则</a></h2>
-<p>新增模块尽量使用<code>generator</code>生成，如果特殊模块需要说明</p>
-<h2><a class="header" href="#基本使用" id="基本使用">基本使用</a></h2>
-<pre><code>npm run generate
+                        <h1><a class="header" href="#adding-new-labels" id="adding-new-labels">Adding New Labels</a></h1>
+<p>New Docker Labels may be created and/or updated for the output image via the image metadata file.</p>
+<p>If a new label is specified in the metadata file, the label will be added in the output image.  However, any label previously defined in the base builder image will be <em><strong>overwritten</strong></em> in the output image, if the same label name is specified in the image metadata file.</p>
+<h2><a class="header" href="#image-metadata-file-name-and-path" id="image-metadata-file-name-and-path">Image Metadata File Name and Path</a></h2>
+<p>The name and path of the file <em><strong>must</strong></em> be the following:</p>
+<pre><code class="language-bash">/tmp/.s2i/image_metadata.json
 </code></pre>
-<h2><a class="header" href="#generators" id="generators">Generators</a></h2>
-<p>即项目模板生成器，可快速生成：</p>
-<ul>
-<li><code>container</code></li>
-<li><code>duck</code></li>
-</ul>
-<h3><a class="header" href="#generator使用细则" id="generator使用细则">Generator使用细则</a></h3>
-<h4><a class="header" href="#container" id="container">container</a></h4>
-<p>配置项:</p>
-<ul>
-<li>name: <code>type</code>
-类型，<code>class</code> / <code>function</code> component</li>
-<li>name: <code>name</code>
-模块名称</li>
-<li>name: <code>duck</code>
-模块使用<code>duck</code>名称，必须存在</li>
-<li>name: <code>singular</code>
-<code>duck</code> 单数名称</li>
-<li>name: <code>wantHeaders</code>
-是否需要 <code>helmet</code>， <em>当前无效</em></li>
-<li>name: <code>wantMessages</code>
-是否需要语言文件</li>
-<li>name: <code>wantLoadable</code>
-是否异步加载</li>
-<li>name: <code>wantTable</code>
-是否需要<code>table</code></li>
-<li>name: <code>wantCreatePage</code>
-是否需要<code>CreatePage</code></li>
-<li>name: <code>wantUpdatePage</code>
-是否需要<code>UpdatePage</code></li>
-<li>name: <code>wantShowItemPage</code>
-是否需要<code>ShowItemPage</code></li>
-</ul>
-<h4><a class="header" href="#duck" id="duck">duck</a></h4>
-<p>生成<code>Redux Reducer Bundles</code></p>
-<p>配置项：</p>
-<ul>
-<li>name: <code>name</code>
-配置 <code>duck</code> 名称</li>
-<li>name: <code>wannaCreateAction</code>
-配置 是否支持 <code>create</code></li>
-<li>name: <code>wannaUpdateAction</code>
-配置 是否支持 <code>update</code></li>
-<li>name: <code>wannaReadOneAction</code>
-配置 是否支持 <code>readOne</code></li>
-<li>name: <code>wannaRemoveAction</code>
-配置 是否支持 <code>remove</code></li>
-<li>name: <code>wannaResourceActions</code>
-配置 是否支持 <code>resource action</code></li>
-<li>name: <code>hasParents</code>
-配置 是否有父级资源</li>
-<li>name: <code>parents</code>
-配置 父级资源列表，依次输入，用逗号分隔</li>
-</ul>
+<h2><a class="header" href="#example" id="example">Example</a></h2>
+<p>The file may have one or more label/value pairs.  Below is the JSON format of the labels, in the image metadata file:</p>
+<pre><code class="language-bash">{
+  &quot;labels&quot;: [
+    {&quot;labelkey1&quot;:&quot;value1&quot;},
+    {&quot;labelkey2&quot;:&quot;value2&quot;},
+    .........
+  ]
+}
+
+</code></pre>
+<p>Note: If the JSON format is different than shown above, it will cause an error.</p>
+<h2><a class="header" href="#creating-the-file" id="creating-the-file">Creating the File</a></h2>
+<p>The file should be created during the <code>assemble</code> step. </p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
                         
-                            <a rel="prev" href="../dev.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../s2i/debugging-s2i.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
                         
 
                         
-                            <a rel="next" href="../dev/scaffold_dev.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next" href="../s2i/runtime_image.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
                         
@@ -214,13 +175,13 @@
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
                 
-                    <a href="../dev.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a href="../s2i/debugging-s2i.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
                 
 
                 
-                    <a href="../dev/scaffold_dev.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a href="../s2i/runtime_image.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
                 
@@ -228,6 +189,21 @@
 
         </div>
 
+        
+        <!-- Livereload script (if served using the cli tool) -->
+        <script type="text/javascript">
+            var socket = new WebSocket("ws://localhost:8089");
+            socket.onmessage = function (event) {
+                if (event.data === "reload") {
+                    socket.close();
+                    location.reload(true); // force reload from server (not from cache)
+                }
+            };
+
+            window.onbeforeunload = function() {
+                socket.close();
+            }
+        </script>
         
 
         

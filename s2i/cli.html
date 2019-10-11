@@ -1,0 +1,405 @@
+<!DOCTYPE HTML>
+<html lang="zh" class="sidebar-visible no-js">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>CLI - Zcloud Source to Image</title>
+        
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+
+        
+    </head>
+    <body class="light">
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../";
+            var default_theme = "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            document.body.className = theme;
+            document.querySelector('html').className = theme + ' js';
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-brand">
+              <image class="sidebar-icon" src="../images/icon.png" />
+              <b class="sidebar-book-title">Zcloud Source to Image</b>
+            </div>
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li><a href="../s2i.html"><strong aria-hidden="true">1.</strong> S2I Intro</a></li><li><ol class="section"><li><a href="../s2i/builder_image.html"><strong aria-hidden="true">1.1.</strong> Builder Requirements</a></li><li><a href="../s2i/cli.html" class="active"><strong aria-hidden="true">1.2.</strong> CLI</a></li><li><a href="../s2i/debugging-s2i.html"><strong aria-hidden="true">1.3.</strong> Debugging</a></li><li><a href="../s2i/new_labels.html"><strong aria-hidden="true">1.4.</strong> New Lables</a></li><li><a href="../s2i/runtime_image.html"><strong aria-hidden="true">1.5.</strong> Runtime Image</a></li><li><a href="../s2i/user_guide.html"><strong aria-hidden="true">1.6.</strong> User Guide</a></li></ol></li><li><a href="../builders.html"><strong aria-hidden="true">2.</strong> Builders</a></li><li><ol class="section"><li><a href="../builders/php.html"><strong aria-hidden="true">2.1.</strong> php</a></li><li><a href="../builders/nodejs.html"><strong aria-hidden="true">2.2.</strong> nodejs</a></li><li><a href="../builders/java.html"><strong aria-hidden="true">2.3.</strong> java</a></li><li><a href="../'./builders/go.html"><strong aria-hidden="true">2.4.</strong> go</a></li></ol></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar" class="menu-bar">
+                    <div id="menu-bar-sticky-container">
+                        <div class="left-buttons">
+                            <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                                <i class="fa fa-bars"></i>
+                            </button>
+                            
+                            <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                                <i class="fa fa-search"></i>
+                            </button>
+                            
+                        </div>
+
+                        <h1 class="menu-title">Zcloud Source to Image</h1>
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1><a class="header" href="#s2i-command-line-interface" id="s2i-command-line-interface">s2i command line interface</a></h1>
+<p>This document describes thoroughly all <code>s2i</code> subcommands and flags with explanation
+of their purpose as well as an example usage.</p>
+<p>Currently <code>s2i</code> has five subcommands, each of which will be described in the
+following sections of this document:</p>
+<ul>
+<li><a href="#s2i-create">create</a></li>
+<li><a href="#s2i-build">build</a></li>
+<li><a href="#s2i-rebuild">rebuild</a></li>
+<li><a href="#s2i-usage">usage</a></li>
+<li><a href="#s2i-version">version</a></li>
+<li><a href="#s2i-help">help</a></li>
+</ul>
+<p>Before diving into each of the aforementioned commands, let's have a closer look
+at common flags that can be used with all of the subcommands.</p>
+<table><thead><tr><th align="left">Name</th><th align="left">Description</th></tr></thead><tbody>
+<tr><td align="left"><code>-h (--help)</code></td><td align="left">Display help for the specified command</td></tr>
+<tr><td align="left"><code>--loglevel</code></td><td align="left">Set the level of log output (0-5) (see <a href="#log-levels">Log levels</a>)</td></tr>
+<tr><td align="left"><code>-U (--url)</code></td><td align="left">URL of the Docker socket to use (default: <code>unix:///var/run/docker.sock</code>)</td></tr>
+</tbody></table>
+<h4><a class="header" href="#log-levels" id="log-levels">Log levels</a></h4>
+<p>There are six log levels:</p>
+<ul>
+<li>Level <code>0</code> - produces output from containers running <code>assemble</code> and <code>assemble-runtime</code> scripts and all encountered errors</li>
+<li>Level <code>1</code> - produces basic information about the executed process</li>
+<li>Level <code>2</code> - produces very detailed information about the executed process</li>
+<li>Level <code>3</code> - produces very detailed information about the executed process, along with listing tar contents</li>
+<li>Level <code>4</code> - currently produces same information as level <code>3</code></li>
+<li>Level <code>5</code> - produces very detailed information about the executed process, lists tar contents, Docker Registry credentials, and copied source files</li>
+</ul>
+<p><strong>NOTE</strong>: All of the commands and flags are case sensitive!</p>
+<h1><a class="header" href="#s2i-create" id="s2i-create">s2i create</a></h1>
+<p>The <code>s2i create</code> command is responsible for bootstrapping a new S2I enabled
+image repository. This command will generate a skeleton <code>.s2i</code> directory and
+populate it with sample S2I scripts you can start hacking on.</p>
+<p>Usage:</p>
+<pre><code>$ s2i create &lt;image name&gt; &lt;destination directory&gt;
+</code></pre>
+<h1><a class="header" href="#s2i-build" id="s2i-build">s2i build</a></h1>
+<p>The <code>s2i build</code> command is responsible for building the Docker image by combining
+the specified builder image and sources. The resulting image will be named according
+to the tag parameter.</p>
+<p>Usage:</p>
+<pre><code>$ s2i build &lt;source location&gt; &lt;builder image&gt; [&lt;tag&gt;] [flags]
+</code></pre>
+<p>The build command parameters are defined as follows:</p>
+<ol>
+<li><code>source location</code> - the URL of a Git repository or a local path to the source code</li>
+<li><code>builder image</code> - the Docker image to be used in building the final image</li>
+<li><code>tag</code> - the name of the final Docker image (if provided)</li>
+</ol>
+<p>If the build image is compatible with incremental builds, <code>s2i build</code> will look for
+an image tagged with the same name. If an image is present with that tag and a
+<code>save-artifacts</code> script is present in the scripts directory, <code>s2i build</code> will save the build artifacts from
+that image and add them to the tar streamed to the container into <code>/artifacts</code>.</p>
+<h4><a class="header" href="#build-flags" id="build-flags">Build flags</a></h4>
+<table><thead><tr><th align="left">Name</th><th align="left">Description</th></tr></thead><tbody>
+<tr><td align="left"><code>-u (--allowed-uids)</code></td><td align="left">Specify a range of allowed user ids for the builder and runtime images. Ranges can be bounded (<code>1-10001</code>) or unbounded (<code>1-</code>).</td></tr>
+<tr><td align="left"><code>-n (--application-name</code>)</td><td align="left">Specify the display name for the application (default: output image name)</td></tr>
+<tr><td align="left"><code>--as-dockerfile</code></td><td align="left">EXPERIMENTAL: Output a Dockerfile to this path instead of building a new image</td></tr>
+<tr><td align="left"><code>--assemble-user</code></td><td align="left">Specify the user to run assemble with</td></tr>
+<tr><td align="left"><code>--assemble-runtime-user</code></td><td align="left">Specify the user to run assemble-runtime with</td></tr>
+<tr><td align="left"><code>--callback-url</code></td><td align="left">URL to be invoked after a build (see <a href="#callback-url">Callback URL</a>)</td></tr>
+<tr><td align="left"><code>--cap-drop</code></td><td align="left">Specify a comma-separated list of capabilities to drop when running Docker containers</td></tr>
+<tr><td align="left"><code>--context-dir</code></td><td align="left">Specify the sub-directory inside the repository with the application sources</td></tr>
+<tr><td align="left"><code>-c (--copy)</code></td><td align="left">Use local file system copy instead of git cloning the source url (allows for inclusion of empty directories and uncommitted files)</td></tr>
+<tr><td align="left"><code>--description</code></td><td align="left">Specify the description of the application</td></tr>
+<tr><td align="left"><code>-d (--destination)</code></td><td align="left">Location where the scripts and sources will be placed prior doing build (see <a href="https://github.com/openshift/source-to-image/blob/master/docs/builder_image.md#s2i-scripts">S2I Scripts</a>)</td></tr>
+<tr><td align="left"><code>--dockercfg-path</code></td><td align="left">The path to the Docker configuration file</td></tr>
+<tr><td align="left"><code>-e (--env)</code></td><td align="left">Environment variable to be passed to the builder eg. <code>NAME=VALUE</code></td></tr>
+<tr><td align="left"><code>-E (--environment-file)</code></td><td align="left">Specify the path to the file with environment</td></tr>
+<tr><td align="left"><code>--exclude</code></td><td align="left">Regular expression for selecting files from the source tree to exclude from the build, where the default excludes the '.git' directory (see https://golang.org/pkg/regexp for syntax, but note that &quot;&quot; will be interpreted as allow all files and exclude no files)</td></tr>
+<tr><td align="left"><code>--ignore-submodules</code></td><td align="left">Ignore all git submodules when cloning application repository. (defaults to false)</td></tr>
+<tr><td align="left"><code>--incremental</code></td><td align="left">Try to perform an incremental build</td></tr>
+<tr><td align="left"><code>--incremental-pull-policy</code></td><td align="left">Specify when to pull the previous image for incremental builds (always, never or if-not-present) (default &quot;if-not-present&quot;)</td></tr>
+<tr><td align="left"><code>-i (--inject)</code></td><td align="left">Inject the content of the specified directory into the path in the container that runs the assemble script</td></tr>
+<tr><td align="left"><code>--network</code></td><td align="left">Specify the default Docker Network name to be used in build process</td></tr>
+<tr><td align="left"><code>-p (--pull-policy)</code></td><td align="left">Specify when to pull the builder image (<code>always</code>, <code>never</code> or <code>if-not-present</code>. Defaults to <code>if-not-present</code>)</td></tr>
+<tr><td align="left"><code>-q (--quiet)</code></td><td align="left">Operate quietly, suppressing all non-error output</td></tr>
+<tr><td align="left"><code>-r (--ref)</code></td><td align="left">A branch/tag that the build should use instead of MASTER (applies only to Git source)</td></tr>
+<tr><td align="left"><code>--rm</code></td><td align="left">Remove the previous image during incremental builds</td></tr>
+<tr><td align="left"><code>--run</code></td><td align="left">Launch the resulting image after a successful build. All output from the image is being printed to help determine image's validity. In case of a long running image you will have to Ctrl-C to exit both s2i and the running container.  (defaults to false)</td></tr>
+<tr><td align="left"><code>-a (--runtime-artifact)</code></td><td align="left">Specify a file or directory to be copied from the builder to the runtime image  (see <a href="https://github.com/openshift/source-to-image/blob/master/docs/runtime_image.md">How to use a non-builder image for the final application image</a>)</td></tr>
+<tr><td align="left"><code>--runtime-image</code></td><td align="left">Image that will be used as the base for the runtime image (see <a href="https://github.com/openshift/source-to-image/blob/master/docs/runtime_image.md">How to use a non-builder image for the final application image</a>)</td></tr>
+<tr><td align="left"><code>--runtime-pull-policy</code></td><td align="left">Specify when to pull the runtime image (always, never or if-not-present) (default &quot;if-not-present&quot;)</td></tr>
+<tr><td align="left"><code>--save-temp-dir</code></td><td align="left">Save the working directory used for fetching scripts and sources</td></tr>
+<tr><td align="left"><code>-s (--scripts-url)</code></td><td align="left">URL of S2I scripts (see <a href="https://github.com/openshift/source-to-image/blob/master/docs/builder_image.md#s2i-scripts">S2I Scripts</a>)</td></tr>
+<tr><td align="left"><code>--use-config</code></td><td align="left">Store command line options to .s2ifile</td></tr>
+<tr><td align="left"><code>-v (--volume)</code></td><td align="left">Bind mounts a local directory into the container that runs the assemble script</td></tr>
+</tbody></table>
+<h4><a class="header" href="#context-directory" id="context-directory">Context directory</a></h4>
+<p>In the case where your application resides in a directory other than your repository root
+folder, you can specify that directory using the <code>--context-dir</code> parameter. The
+specified directory will be used as your application root folder.</p>
+<h4><a class="header" href="#injecting-directories-to-build" id="injecting-directories-to-build">Injecting directories to build</a></h4>
+<p>If you want to inject files that should only be available during the build (ie
+when the assemble script is invoked), you can specify the directories from which
+the files will be copied into the container that runs the assemble script. To do
+so you can invoke S2I as follows:</p>
+<pre><code class="language-console">$ s2i build --inject /mydir:/container/dir file://source builder-image output-image
+</code></pre>
+<p>In this case the content of the <code>/mydir</code> directory will get copied into
+<code>/container/dir</code> inside the container which runs the assemble script.
+After the <code>assemble</code> script finishes, all files copied will be truncated and thus
+not available in the output image. The files are truncated instead of deleted
+because the user under which we run the container with the assemble script might not
+have permissions to delete files in the destination directory (eg. <code>/etc/ssl</code>).</p>
+<p>You can also specify multiple directories, for example: <code>--inject /dir1:/container/dir1 --inject /dir2:container/dir2</code>.</p>
+<p>You can use this feature to provide SSL certificates, private configuration
+files which contains credentials, etc.</p>
+<h4><a class="header" href="#callback-url" id="callback-url">Callback URL</a></h4>
+<p>Upon completion (or failure) of a build, <code>s2i</code> can execute a HTTP POST to a URL with information
+about the build:</p>
+<ul>
+<li><code>success</code> - flag indicating the result of the build process (<code>true</code> or <code>false</code>)</li>
+<li><code>labels</code>  - labels of the resulting image</li>
+</ul>
+<p>Example: data posted will be in the form:</p>
+<pre><code>{
+    &quot;success&quot;: true,
+    &quot;labels&quot;: {
+        &quot;io.k8s.display-name&quot;: &quot;my-app&quot;,
+        &quot;io.openshift.s2i.build.image&quot;: &quot;builder-image:latest&quot;,
+        ...
+    }
+}
+</code></pre>
+<h4><a class="header" href="#example-usage" id="example-usage">Example Usage</a></h4>
+<p>Build a Ruby application from a Git source, using the official <code>ruby-23-centos7</code> builder
+image, the resulting image will be named <code>ruby-app</code>:</p>
+<pre><code>$ s2i build https://github.com/openshift/ruby-hello-world centos/ruby-23-centos7 ruby-app
+</code></pre>
+<p>Build a Node.js application from a local directory, using a local image, the resulting
+image will be named <code>nodejs-app</code>:</p>
+<pre><code>$ s2i build /home/user/nodejs-app local-nodejs-builder nodejs-app
+</code></pre>
+<p>In case of building from the local directory, the sources will be copied into
+the builder images using plain filesystem copy if the Git binary is not
+available. In that case the output image will not have the Git specific labels.
+Use this method only for development or local testing.</p>
+<p><strong>NOTE</strong>: All your changes have to be committed by <code>git</code> in order to build them with S2I.</p>
+<p>Build a Java application from a Git source, using the official <code>openshift/wildfly-101-centos7</code>
+builder image but overriding the scripts URL from local directory.  The resulting
+image will be named <code>java-app</code>:</p>
+<pre><code>$ s2i build --scripts-url=file://s2iscripts --ref=7.1.x --context-dir=kitchensink https://github.com/jboss-developer/jboss-eap-quickstarts openshift/wildfly-101-centos7 java-app
+</code></pre>
+<p>Build a Ruby application from a Git source, specifying <code>ref</code>, and using the official
+<code>ruby-23-centos7</code> builder image.  The resulting image will be named <code>ruby-app</code>:</p>
+<pre><code>$ s2i build --ref=my-branch https://github.com/openshift/ruby-hello-world centos/ruby-23-centos7 ruby-app
+</code></pre>
+<p><em><strong>NOTE:</strong></em> If the ref is invalid or not present in the source repository then the build will fail.</p>
+<p>Build a Ruby application from a Git source, overriding the scripts URL from a local directory,
+and specifying the scripts and sources be placed in <code>/opt</code> directory:</p>
+<pre><code>$ s2i build --scripts-url=file://s2iscripts --destination=/opt https://github.com/openshift/ruby-hello-world centos/ruby-23-centos7 ruby-app
+</code></pre>
+<h1><a class="header" href="#s2i-rebuild" id="s2i-rebuild">s2i rebuild</a></h1>
+<p>The <code>s2i rebuild</code> command is used to rebuild an image already built using S2I,
+or the image that contains the required S2I labels.
+The rebuild will read the S2I labels and automatically set the builder image,
+source repository and other configuration options used to build the previous
+image according to the stored labels values.</p>
+<p>Optionally, you can set the new image name as a second argument to the rebuild
+command.</p>
+<p>Usage:</p>
+<pre><code>$ s2i rebuild &lt;image name&gt; [&lt;new-tag-name&gt;]
+</code></pre>
+<h1><a class="header" href="#s2i-usage" id="s2i-usage">s2i usage</a></h1>
+<p>The <code>s2i usage</code> command starts a container and runs the <code>usage</code> script which prints
+information about the builder image. This command expects <code>builder image</code> name as
+the only parameter.</p>
+<p>Usage:</p>
+<pre><code>$ s2i usage &lt;builder image&gt; [flags]
+</code></pre>
+<h4><a class="header" href="#usage-flags" id="usage-flags">Usage flags</a></h4>
+<table><thead><tr><th align="left">Name</th><th align="left">Description</th></tr></thead><tbody>
+<tr><td align="left"><code>-d (--destination)</code></td><td align="left">Location where the scripts and sources will be placed prior invoking usage (see <a href="https://github.com/openshift/source-to-image/blob/master/docs/builder_image.md#s2i-scripts">S2I Scripts</a>)</td></tr>
+<tr><td align="left"><code>-e (--env)</code></td><td align="left">Environment variable passed to the builder eg. <code>NAME=VALUE</code>)</td></tr>
+<tr><td align="left"><code>-p (--pull-policy)</code></td><td align="left">Specify when to pull the builder image (<code>always</code>, <code>never</code> or <code>if-not-present</code>)</td></tr>
+<tr><td align="left"><code>--save-temp-dir</code></td><td align="left">Save the working directory used for fetching scripts and sources</td></tr>
+<tr><td align="left"><code>-s (--scripts-url)</code></td><td align="left">URL of S2I scripts (see <a href="https://github.com/openshift/source-to-image/blob/master/docs/builder_image.md#s2i-scripts">Scripts URL</a>)</td></tr>
+</tbody></table>
+<h4><a class="header" href="#example-usage-1" id="example-usage-1">Example Usage</a></h4>
+<p>Print the official <code>ruby-23-centos7</code> builder image usage:</p>
+<pre><code>$ s2i usage centos/ruby-23-centos7
+</code></pre>
+<h1><a class="header" href="#s2i-version" id="s2i-version">s2i version</a></h1>
+<p>The <code>s2i version</code> command prints the version of S2I currently installed.</p>
+<h1><a class="header" href="#s2i-help" id="s2i-help">s2i help</a></h1>
+<p>The <code>s2i help</code> command prints help either for the <code>s2i</code> itself or for the specified
+subcommand.</p>
+<h3><a class="header" href="#example-usage-2" id="example-usage-2">Example Usage</a></h3>
+<p>Print the help page for the build command:</p>
+<pre><code>$ s2i help build
+</code></pre>
+<p><em><strong>Note:</strong></em> You can also accomplish this with:</p>
+<pre><code>$ s2i build --help
+</code></pre>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="../s2i/builder_image.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+
+                        
+                            <a rel="next" href="../s2i/debugging-s2i.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+                    <a href="../s2i/builder_image.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+                    <a href="../s2i/debugging-s2i.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+            </nav>
+
+        </div>
+
+        
+        <!-- Livereload script (if served using the cli tool) -->
+        <script type="text/javascript">
+            var socket = new WebSocket("ws://localhost:8089");
+            socket.onmessage = function (event) {
+                if (event.data === "reload") {
+                    socket.close();
+                    location.reload(true); // force reload from server (not from cache)
+                }
+            };
+
+            window.onbeforeunload = function() {
+                socket.close();
+            }
+        </script>
+        
+
+        
+
+        
+
+        
+        <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+
+        
+
+    </body>
+</html>

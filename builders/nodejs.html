@@ -1,9 +1,9 @@
 <!DOCTYPE HTML>
-<html lang="en" class="sidebar-visible no-js">
+<html lang="zh" class="sidebar-visible no-js">
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>简介 - Zcloud UI Documents</title>
+        <title>nodejs - Zcloud Source to Image</title>
         
 
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
@@ -11,19 +11,19 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff" />
 
-        <link rel="shortcut icon" href="favicon.png">
-        <link rel="stylesheet" href="css/variables.css">
-        <link rel="stylesheet" href="css/general.css">
-        <link rel="stylesheet" href="css/chrome.css">
-        <link rel="stylesheet" href="css/print.css" media="print">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
 
         <!-- Fonts -->
-        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
 
         <!-- Highlight.js Stylesheets -->
-        <link rel="stylesheet" href="highlight.css">
-        <link rel="stylesheet" href="tomorrow-night.css">
-        <link rel="stylesheet" href="ayu-highlight.css">
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
         
@@ -33,7 +33,7 @@
     <body class="light">
         <!-- Provide site root to javascript -->
         <script type="text/javascript">
-            var path_to_root = "";
+            var path_to_root = "../";
             var default_theme = "light";
         </script>
 
@@ -76,11 +76,11 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-brand">
-              <image class="sidebar-icon" src="images/icon.png" />
-              <b class="sidebar-book-title">Zcloud UI Documents</b>
+              <image class="sidebar-icon" src="../images/icon.png" />
+              <b class="sidebar-book-title">Zcloud Source to Image</b>
             </div>
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li><a href="intro.html" class="active"><strong aria-hidden="true">1.</strong> 简介</a></li><li><ol class="section"><li><a href="view.html"><strong aria-hidden="true">1.1.</strong> 视图</a></li><li><a href="state.html"><strong aria-hidden="true">1.2.</strong> 状态</a></li><li><a href="intl.html"><strong aria-hidden="true">1.3.</strong> 页面语言</a></li></ol></li><li><a href="dev.html"><strong aria-hidden="true">2.</strong> 开发管理</a></li><li><ol class="section"><li><a href="dev/scaffold.html"><strong aria-hidden="true">2.1.</strong> 脚手架使用</a></li><li><a href="dev/scaffold_dev.html"><strong aria-hidden="true">2.2.</strong> 脚手架开发</a></li><li><a href="dev/react.html"><strong aria-hidden="true">2.3.</strong> React开发</a></li><li><a href="dev/redux.html"><strong aria-hidden="true">2.4.</strong> Redux开发</a></li></ol></li></ol>
+                <ol class="chapter"><li><a href="../s2i.html"><strong aria-hidden="true">1.</strong> S2I Intro</a></li><li><ol class="section"><li><a href="../s2i/builder_image.html"><strong aria-hidden="true">1.1.</strong> Builder Requirements</a></li><li><a href="../s2i/cli.html"><strong aria-hidden="true">1.2.</strong> CLI</a></li><li><a href="../s2i/debugging-s2i.html"><strong aria-hidden="true">1.3.</strong> Debugging</a></li><li><a href="../s2i/new_labels.html"><strong aria-hidden="true">1.4.</strong> New Lables</a></li><li><a href="../s2i/runtime_image.html"><strong aria-hidden="true">1.5.</strong> Runtime Image</a></li><li><a href="../s2i/user_guide.html"><strong aria-hidden="true">1.6.</strong> User Guide</a></li></ol></li><li><a href="../builders.html"><strong aria-hidden="true">2.</strong> Builders</a></li><li><ol class="section"><li><a href="../builders/php.html"><strong aria-hidden="true">2.1.</strong> php</a></li><li><a href="../builders/nodejs.html" class="active"><strong aria-hidden="true">2.2.</strong> nodejs</a></li><li><a href="../builders/java.html"><strong aria-hidden="true">2.3.</strong> java</a></li><li><a href="../'./builders/go.html"><strong aria-hidden="true">2.4.</strong> go</a></li></ol></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -102,7 +102,7 @@
                             
                         </div>
 
-                        <h1 class="menu-title">Zcloud UI Documents</h1>
+                        <h1 class="menu-title">Zcloud Source to Image</h1>
                     </div>
                 </div>
 
@@ -130,20 +130,44 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#简介" id="简介">简介</a></h1>
-<h2><a class="header" href="#什么是-zcloud" id="什么是-zcloud">什么是 <code>Zcloud</code></a></h2>
-<p>Zcloud是一个企业级容器云的完整解决方案。为用户提供以多集群、多租户为核心的资源管理能力和以应用商店、可视化编排为核心的应用部署能力，帮助企业在不同环境中简便快捷的部署和管理容器。同时，Zcloud也是云原生技术体系和方法论的最佳实践，具备了以下特点：可自动化弹性扩展、持续交付、微服务化，承载着云原生应用安全、可靠的运行。Zcloud助力企业适应云原生，应用云原生，最终实现企业IT支撑系统的迭代升级，降低成本、提升企业竞争力。Zcloud定位于原生Kubernetes发行版本，与操作系统和内核的关系一致。Zcloud不仅提供了强大的便捷UI操作界面，而且还对DNS、网络、存储、资源管理、多集群等众多方面做了极大的改进，降低了其使用门槛，同时也为企业建立自己的私有容器云平台提供了基础支撑。</p>
-<h2><a class="header" href="#ui" id="ui">UI</a></h2>
-<p>UI项目是Zcloud的用户界面</p>
+                        <h1><a class="header" href="#nodejs" id="nodejs">nodejs</a></h1>
+<h2><a class="header" href="#node-latest" id="node-latest">Node Latest</a></h2>
+<p>目录 <code>builders/nodejs</code>
+基于 <code>node:alpine</code></p>
+<h3><a class="header" href="#构建builder镜像" id="构建builder镜像">构建<code>builder</code>镜像</a></h3>
+<pre><code>make build
+</code></pre>
+<h3><a class="header" href="#测试builder镜像" id="测试builder镜像">测试<code>builder</code>镜像</a></h3>
+<pre><code>make test
+</code></pre>
+<h3><a class="header" href="#发布builder镜像" id="发布builder镜像">发布<code>builder</code>镜像</a></h3>
+<pre><code>make docker
+</code></pre>
+<h3><a class="header" href="#使用builder镜像" id="使用builder镜像">使用<code>builder</code>镜像</a></h3>
+<pre><code>s2i build [source dir] zdnscloud/s2i-nodejs-builder [app image name]
+</code></pre>
+<h4><a class="header" href="#构建过程" id="构建过程">构建过程</a></h4>
+<p>首先执行 <code>npm install</code> 或 <code>yarn install</code></p>
+<p>根据 <code>yarn.lock</code> 文件选择使用 <code>npm</code> 或 <code>yarn</code> 安装</p>
+<h4><a class="header" href="#运行" id="运行">运行</a></h4>
+<p>运行<code>app image</code>时，会调用<code>npm start</code></p>
+<h3><a class="header" href="#demo" id="demo">Demo:</a></h3>
+<pre><code class="language-shell">s2i build https://github.com/zdnscloud/singlecloud-ui zdnscloud/s2i-nodejs-builder sui
+docker run -p 8080:3000 --rm sui
+</code></pre>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
                         
+                            <a rel="prev" href="../builders/php.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
 
                         
-                            <a rel="next" href="view.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next" href="../builders/java.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
                         
@@ -155,9 +179,13 @@
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
                 
+                    <a href="../builders/php.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
 
                 
-                    <a href="view.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a href="../builders/java.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
                 
@@ -166,20 +194,35 @@
         </div>
 
         
+        <!-- Livereload script (if served using the cli tool) -->
+        <script type="text/javascript">
+            var socket = new WebSocket("ws://localhost:8089");
+            socket.onmessage = function (event) {
+                if (event.data === "reload") {
+                    socket.close();
+                    location.reload(true); // force reload from server (not from cache)
+                }
+            };
 
+            window.onbeforeunload = function() {
+                socket.close();
+            }
+        </script>
         
 
         
 
         
-        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
+
+        
+        <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../searcher.js" type="text/javascript" charset="utf-8"></script>
         
 
-        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
-        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../book.js" type="text/javascript" charset="utf-8"></script>
 
         <!-- Custom JS scripts -->
         

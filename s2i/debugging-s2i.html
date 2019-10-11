@@ -1,0 +1,285 @@
+<!DOCTYPE HTML>
+<html lang="zh" class="sidebar-visible no-js">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Debugging - Zcloud Source to Image</title>
+        
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+
+        
+    </head>
+    <body class="light">
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../";
+            var default_theme = "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            document.body.className = theme;
+            document.querySelector('html').className = theme + ' js';
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-brand">
+              <image class="sidebar-icon" src="../images/icon.png" />
+              <b class="sidebar-book-title">Zcloud Source to Image</b>
+            </div>
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li><a href="../s2i.html"><strong aria-hidden="true">1.</strong> S2I Intro</a></li><li><ol class="section"><li><a href="../s2i/builder_image.html"><strong aria-hidden="true">1.1.</strong> Builder Requirements</a></li><li><a href="../s2i/cli.html"><strong aria-hidden="true">1.2.</strong> CLI</a></li><li><a href="../s2i/debugging-s2i.html" class="active"><strong aria-hidden="true">1.3.</strong> Debugging</a></li><li><a href="../s2i/new_labels.html"><strong aria-hidden="true">1.4.</strong> New Lables</a></li><li><a href="../s2i/runtime_image.html"><strong aria-hidden="true">1.5.</strong> Runtime Image</a></li><li><a href="../s2i/user_guide.html"><strong aria-hidden="true">1.6.</strong> User Guide</a></li></ol></li><li><a href="../builders.html"><strong aria-hidden="true">2.</strong> Builders</a></li><li><ol class="section"><li><a href="../builders/php.html"><strong aria-hidden="true">2.1.</strong> php</a></li><li><a href="../builders/nodejs.html"><strong aria-hidden="true">2.2.</strong> nodejs</a></li><li><a href="../builders/java.html"><strong aria-hidden="true">2.3.</strong> java</a></li><li><a href="../'./builders/go.html"><strong aria-hidden="true">2.4.</strong> go</a></li></ol></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar" class="menu-bar">
+                    <div id="menu-bar-sticky-container">
+                        <div class="left-buttons">
+                            <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                                <i class="fa fa-bars"></i>
+                            </button>
+                            
+                            <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                                <i class="fa fa-search"></i>
+                            </button>
+                            
+                        </div>
+
+                        <h1 class="menu-title">Zcloud Source to Image</h1>
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1><a class="header" href="#troubleshooting" id="troubleshooting">Troubleshooting</a></h1>
+<p>This document contains some tips and suggestions for troubleshooting the use of source-to-image (&quot;s2i&quot;) to build Docker images.</p>
+<h2><a class="header" href="#cant-find-the-s2i-executable" id="cant-find-the-s2i-executable">Can't Find The <code>s2i</code> Executable</a></h2>
+<p>Whether by  running <code>make build</code> or <code>hack/build-release.sh</code>, look under the <code>_output/local/go/bin</code> directory.</p>
+<p>If you have downloaded one of the official releases (see <a href="https://github.com/openshift/source-to-image/releases">releases</a>), the <code>s2i</code> executable is the only file in the tar archive.</p>
+<h2><a class="header" href="#security-and-docker" id="security-and-docker">Security And Docker</a></h2>
+<p>As noted <a href="https://github.com/openshift/source-to-image/#security">here</a>, there are considerations to allow S2I to interact with Docker, including possibly running <code>sudo s2i</code>.</p>
+<h2><a class="header" href="#image-mechanics" id="image-mechanics">Image Mechanics</a></h2>
+<p>By default, s2i will use the local builder image if available on the host from
+which you are running the <code>s2i</code> command. However, if you want to always pull
+the image from the remote Docker repository to be sure that you are not using
+stale and out of date image you should provide <code>--pull-policy=always</code> option
+when running the <code>s2i</code> command.</p>
+<h2><a class="header" href="#permissions-needed-during-the-s2i-process" id="permissions-needed-during-the-s2i-process">Permissions Needed During the S2I Process</a></h2>
+<p>The s2i process will leverage the <code>/tmp</code> directory at various stages, such as when cloning the source repository, when augmenting the Dockerfile for layered builds, during various <code>tar</code> operations that are performed, and when executing the scripts you have provided.  Invalid permissions will result in a message like this:</p>
+<pre><code> E0720 21:07:17.145257 04202 main.go:328] An error occurred: creating temporary directory  failed
+</code></pre>
+<p>Hence, the user ID you execute the <code>s2i</code> command with must have the appropriate permission to read, create, and remove files under <code>/tmp</code>.</p>
+<h2><a class="header" href="#passing-in-environment-variables" id="passing-in-environment-variables">Passing In Environment Variables</a></h2>
+<p>If you are passing in environment variables with the -e option from the command line, and those environment variables have values with commas in them, Go command line processing will break.</p>
+<pre><code>   $ s2i build --loglevel=5 -e &quot;MAVEN_ARGS='-P some-repo,some-other-repo'&quot; file:///home/mfojtik/sandbox/ruby openshift/ruby-20-centos7 foo
+   	 I0519 14:20:51.410089 17228 util.go:34] Using my@cred.sk credentials for pulling openshift/ruby-20-centos7
+ 	 I0519 14:20:51.410222 17228 main.go:239] An error occurred: malformed env string: some-other-repo'
+</code></pre>
+<p>To deal with this behavior, s2i by default will look for environment variables in the file <code>.s2i/environment</code> in your source repository.  You can also point to a separate file with environment variable settings with the -E option.
+With both approaches, leveraging a file instead of the command line allows for the values of environment variable to contain commas.  Environment variable processing is described in the <a href="https://github.com/openshift/source-to-image#anatomy-of-a-builder-image">README</a> as well.</p>
+<p>With the above example, whichever file you leverage for environment variables would have this line:</p>
+<pre><code>MAVEN_ARGS='-P some-repo,some-other-repo'
+</code></pre>
+<h2><a class="header" href="#providing-s2i-scripts" id="providing-s2i-scripts">Providing S2I Scripts</a></h2>
+<p>First, a basic reminder:  you should verify your scripts have executable permissions.</p>
+<p>Then, a few of the trickier obstacles that have arisen for users in the past:</p>
+<h4><a class="header" href="#interfacing-with-tar" id="interfacing-with-tar">Interfacing With <code>tar</code></a></h4>
+<p>As noted <a href="https://github.com/openshift/source-to-image/blob/master/docs/builder_image.md#save-artifacts">here</a>, if you employ a <code>save-artifacts</code> script, that script is responsible for properly receiving tar streams.  Issues with <code>tar</code> stream processing could result in messages like:</p>
+<pre><code>      W0720 21:07:52.145257 04204 sti.go:131 Clean build will be performed because of error saving previous build artifacts
+      E0720 21:07:52.145263 04204 sti.go:133] ERROR: timeout waiting for tar stream
+</code></pre>
+<p>Review the example <a href="https://github.com/gabemontero/source-to-image/blob/master/docs/builder_image.md#save-artifacts">here</a>, and perhaps revisit the tar man pages or the bash user manual, to help address any problems.</p>
+<h4><a class="header" href="#dowloading--finding-the-scripts" id="dowloading--finding-the-scripts">Dowloading / Finding The Scripts</a></h4>
+<p>Per this discussion point  <a href="https://github.com/openshift/source-to-image/blob/master/docs/builder_image.md#s2i-scripts">here</a>, if your s2i related scripts are already placed in the image, but their locations are not indicated by one of the provided means, attempts to download the scripts will fail.</p>
+<pre><code>E0720 21:08:37.166063 04204 main.go:328] An error occurred: scripts inside the image:  image:///path/to/image
+</code></pre>
+<p>Properly reference the script location with the methods described in the above link.</p>
+<h4><a class="header" href="#onbuild" id="onbuild">ONBUILD</a></h4>
+<p>At various points when executing ONBUILD instructions (these are defined in the Dockerfile of the builder image you are using with s2i), if those instructions result in the need for root user access, but your builder image is not configured to run as root,
+then attempts to reference that image in another Dockerfile will result in permission errors.</p>
+<p>If you consider the following Dockerfile pseudo-example:</p>
+<pre><code>FROM foo
+USER root
+RUN some-root-operation
+ONBUILD some-root-operation
+USER joe
+</code></pre>
+<p>You will be able to Docker build the image, but when you then reference that image in another Dockerfile, things will fail because the ONBUILD commands will execute as &quot;joe&quot; and not &quot;root&quot;.</p>
+<h2><a class="header" href="#must-gather" id="must-gather">Must Gather</a></h2>
+<p>If you find yourself still stuck, before seeking help in #openshift on freenode.net, please recreate your issue and gather the following:</p>
+<ol>
+<li>
+<p>s2i logs at level 5 (verbose logging):</p>
+<pre><code> $ s2i &lt; other options &gt;  --loglevel=5 &amp;&gt; /tmp/s2i.log
+</code></pre>
+</li>
+<li>
+<p>Container logs</p>
+<p>The following bit of scripting will pull logs for <strong>all</strong> containers that have been run on your system.  This might be excessive if you don't keep a clean history, so consider manually grabbing logs for the relevant containers instead:</p>
+<pre><code> for container in $(docker ps -aq); do
+     docker logs $container &gt;&amp; $LOG_DIR/container-$container.log
+ done
+</code></pre>
+</li>
+<li>
+<p>By default, the working directory under <code>/tmp</code> is removed when the <code>s2i</code> command completes.  The <code>--save-temp-dir=true</code> option will preserve the working directory under <code>/tmp</code>.  Those files can often provide useful diagnostics.</p>
+</li>
+</ol>
+<h2><a class="header" href="#debugging-integration-test-failures" id="debugging-integration-test-failures">Debugging Integration Test Failures</a></h2>
+<p>For diagnosing failures when running hack/test-integration.sh, passing the -v option to the hack/test-integration.sh script will not only turn on verbose bash tracing, but will set --loglevel=5 tracing for the S2I internals, in
+order to provide additional details that can help diagnose issues.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="../s2i/cli.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+
+                        
+                            <a rel="next" href="../s2i/new_labels.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+                    <a href="../s2i/cli.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+                    <a href="../s2i/new_labels.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+            </nav>
+
+        </div>
+
+        
+        <!-- Livereload script (if served using the cli tool) -->
+        <script type="text/javascript">
+            var socket = new WebSocket("ws://localhost:8089");
+            socket.onmessage = function (event) {
+                if (event.data === "reload") {
+                    socket.close();
+                    location.reload(true); // force reload from server (not from cache)
+                }
+            };
+
+            window.onbeforeunload = function() {
+                socket.close();
+            }
+        </script>
+        
+
+        
+
+        
+
+        
+        <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+
+        
+
+    </body>
+</html>

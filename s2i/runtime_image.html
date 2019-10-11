@@ -1,0 +1,269 @@
+<!DOCTYPE HTML>
+<html lang="zh" class="sidebar-visible no-js">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Runtime Image - Zcloud Source to Image</title>
+        
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+
+        
+    </head>
+    <body class="light">
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../";
+            var default_theme = "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            document.body.className = theme;
+            document.querySelector('html').className = theme + ' js';
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-brand">
+              <image class="sidebar-icon" src="../images/icon.png" />
+              <b class="sidebar-book-title">Zcloud Source to Image</b>
+            </div>
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li><a href="../s2i.html"><strong aria-hidden="true">1.</strong> S2I Intro</a></li><li><ol class="section"><li><a href="../s2i/builder_image.html"><strong aria-hidden="true">1.1.</strong> Builder Requirements</a></li><li><a href="../s2i/cli.html"><strong aria-hidden="true">1.2.</strong> CLI</a></li><li><a href="../s2i/debugging-s2i.html"><strong aria-hidden="true">1.3.</strong> Debugging</a></li><li><a href="../s2i/new_labels.html"><strong aria-hidden="true">1.4.</strong> New Lables</a></li><li><a href="../s2i/runtime_image.html" class="active"><strong aria-hidden="true">1.5.</strong> Runtime Image</a></li><li><a href="../s2i/user_guide.html"><strong aria-hidden="true">1.6.</strong> User Guide</a></li></ol></li><li><a href="../builders.html"><strong aria-hidden="true">2.</strong> Builders</a></li><li><ol class="section"><li><a href="../builders/php.html"><strong aria-hidden="true">2.1.</strong> php</a></li><li><a href="../builders/nodejs.html"><strong aria-hidden="true">2.2.</strong> nodejs</a></li><li><a href="../builders/java.html"><strong aria-hidden="true">2.3.</strong> java</a></li><li><a href="../'./builders/go.html"><strong aria-hidden="true">2.4.</strong> go</a></li></ol></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar" class="menu-bar">
+                    <div id="menu-bar-sticky-container">
+                        <div class="left-buttons">
+                            <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                                <i class="fa fa-bars"></i>
+                            </button>
+                            
+                            <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                                <i class="fa fa-search"></i>
+                            </button>
+                            
+                        </div>
+
+                        <h1 class="menu-title">Zcloud Source to Image</h1>
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1><a class="header" href="#how-to-use-a-non-builder-image-for-the-final-application-image" id="how-to-use-a-non-builder-image-for-the-final-application-image">How to use a non-builder image for the final application image</a></h1>
+<h2><a class="header" href="#overview" id="overview">Overview</a></h2>
+<p>For dynamic languages like PHP, Python, or Ruby, the build-time and run-time environments are the same. In this case using the builder as a base image for a resulting application image is natural.</p>
+<p>For compiled languages like C, C++, Go, or Java, the dependencies necessary for compilation might dramatically outweigh the size of the actual runtime artifacts, or provide attack surface areas that are undesirable in an application image. To keep runtime images slim, S2I enables a multiple-step build processes, where a binary artifact such as an executable or Java WAR file is created in the first builder image, extracted, and injected into a second image that simply places the executable in the correct location for execution. To give you even more abilities to customize a resulting image, S2I is also executing an <code>assemble-runtime</code> script inside of this (runtime) image. In this way you may do final adjustments by modifying files before an image will be committed.</p>
+<p>The following diagram illustrates the build workflow:</p>
+<p><img src="./runtime-image-flow.png" alt="s2i workflow" title="s2i workflow" /></p>
+<h2><a class="header" href="#how-it-works" id="how-it-works">How it works</a></h2>
+<p>To make this work S2I needs to know the following:</p>
+<ul>
+<li>builder image</li>
+<li>mapping of the artifacts</li>
+<li>runtime image</li>
+</ul>
+<p>This information is specified during S2I invocation:</p>
+<pre><code>s2i build &lt;repo&gt; &lt;builder-image&gt; &lt;my-app&gt; --runtime-image &lt;runtime-image&gt; --runtime-artifact &lt;/path/to/artifact&gt;
+</code></pre>
+<p>The only arguments here are the <code>--runtime-image</code> and <code>--runtime-artifact</code> options. The first option specifies the image that will be used as the base image for the final application image. The second option specifies a full path to a file (or directory) that will exist in the builder container after assembly and will be copied into the <code>WORKDIR</code> of the runtime container.</p>
+<p>For our example S2I will do the following steps:</p>
+<ol>
+<li>run a builder container and invoke the assemble script (as usual)</li>
+<li>after the builder finishes but before stopping the builder container, download the requested artifacts from the builder and place them in a temporary directory on the host</li>
+<li>start a container using the specified runtime image</li>
+<li>upload the scripts and build artifacts from the temporary directory into <code>WORKDIR</code> of the runtime container</li>
+<li>run the <code>assemble-runtime</code> script in the runtime container</li>
+<li>commit the runtime container and tag it as the new application image</li>
+</ol>
+<h2><a class="header" href="#details" id="details">Details</a></h2>
+<h3><a class="header" href="#format-and-behavior-of-the---runtime-artifact-option" id="format-and-behavior-of-the---runtime-artifact-option">Format and behavior of the <code>--runtime-artifact</code> option</a></h3>
+<p><code>--runtime-artifact</code> option (or its short equivalent <code>-a</code>) have the format <code>&lt;source&gt;[:&lt;destination&gt;]</code>. Here are some example values:</p>
+<table><thead><tr><th>Value</th><th>Meaning</th></tr></thead><tbody>
+<tr><td><code>/tmp/app.war</code></td><td><code>/tmp/app.war</code> file will be extracted from the builder container and uploaded into the <code>WORKDIR</code> of the runtime container</td></tr>
+<tr><td><code>/tmp/app.war:.</code></td><td>the same as above</td></tr>
+<tr><td><code>/tmp/app.war:app/dist</code></td><td><code>/tmp/app.war</code> file will be copied from the builder container into the <code>app/dist</code> subdirectory of the <code>WORKDIR</code> of the runtime container</td></tr>
+<tr><td><code>/tmp/app-0.1.war:app.war</code></td><td><code>/tmp/app-0.1.war</code> file will be uploaded into the <em><code>app.war</code> subdirectory</em> of the <code>WORKDIR</code> of the runtime container</td></tr>
+<tr><td><code>/opt/data</code></td><td><code>/opt/data</code> directory will be copied from the builder container into the <code>WORKDIR</code> of the runtime container</td></tr>
+<tr><td><code>/opt/data/</code></td><td>the same as above</td></tr>
+<tr><td><code>/opt/data/*.jar</code></td><td>invalid mapping because wildcards are not supported. The build will fail</td></tr>
+</tbody></table>
+<p>You can specify this option multiple times (for example, <code>-a /first/artifact -a /second/artifact</code>).</p>
+<p>The <code>source</code> must be an absolute path. The <code>destination</code> must be a relative path and it must not start with <code>..</code> Because <code>destination</code> is always a <strong>path to a directory</strong>, it is impossible to rename artifacts during copying, you only able to choose where S2I will create this file.</p>
+<p>When copying the artifacts, S2I will modify their permissions. All directories and files with executable bit will be uploaded with <code>0755</code> mode. Other files will have <code>0644</code> mode.</p>
+<h3><a class="header" href="#assemble-runtime-script-requirements" id="assemble-runtime-script-requirements"><code>assemble-runtime</code> script requirements</a></h3>
+<p><code>assemble-runtime</code> can be any executable script or binary. S2I searches the following locations for this script in the following order:</p>
+<ol>
+<li>A script found at the <code>--scripts-url</code> URL</li>
+<li>A script found in the application source <code>.s2i/bin</code> directory</li>
+<li>A script found at the default image URL (<code>io.openshift.s2i.scripts-url</code> label)</li>
+</ol>
+<p>The <code>assemble-runtime</code> script is always executed as the runtime image <code>USER</code>.</p>
+<h3><a class="header" href="#runtime-image-requirements" id="runtime-image-requirements">Runtime image requirements</a></h3>
+<p>In most cases you can use any image as a runtime image. However, if you are using the <code>--allowed-uids</code> option then the image must have a numeric <code>USER</code> specified and the value must be within the range of allowed user ids.</p>
+<p>To simplify the build workflow and provide some reasonable defaults, the author of the runtime image can use the following techniques:</p>
+<ul>
+<li><code>run</code> and <code>assemble-runtime</code> scripts can be placed inside of the runtime image. Scripts from the image will be used as a fallback when user does not provide them in the <code>.s2i/bin</code> directory of the source repository and an alternative location is not specified with the <code>--scripts-url</code> option. The location of the scripts is defined by the value of the <code>io.openshift.s2i.scripts-url</code> label that should be presented on the image. For example, you can set it to <code>image:///usr/libexec/s2i</code></li>
+<li>default mapping for the files can be specified by adding the <code>io.openshift.s2i.assemble-input-files</code> label to the runtime image. This mapping will be used as a fallback when the user does not specify the artifacts explicitly with the <code>--runtime-artifact</code> option.</li>
+</ul>
+<p>To specify mappings for multiple files, separate them with a semicolon. For example: <code>/tmp/app.war:app;/opt/data</code></p>
+<h3><a class="header" href="#build-and-runtime-environments" id="build-and-runtime-environments">Build and runtime environments</a></h3>
+<p>Builder and runtime containers have the same environment. In other words <code>assemble</code> and <code>assemble-runtime</code> scripts are able to use environment variables defined with <code>--env</code> and <code>--environment-file</code> options along with the values from <code>.s2i/environment</code> file in the source repository.</p>
+<h3><a class="header" href="#extended-build-and-incremental-build" id="extended-build-and-incremental-build">Extended build and incremental build</a></h3>
+<p>In the current implementation it is not possible to do an extended incremental build. This combination is invalid and the build will fail.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="../s2i/new_labels.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+
+                        
+                            <a rel="next" href="../s2i/user_guide.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+                    <a href="../s2i/new_labels.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+                    <a href="../s2i/user_guide.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+            </nav>
+
+        </div>
+
+        
+        <!-- Livereload script (if served using the cli tool) -->
+        <script type="text/javascript">
+            var socket = new WebSocket("ws://localhost:8089");
+            socket.onmessage = function (event) {
+                if (event.data === "reload") {
+                    socket.close();
+                    location.reload(true); // force reload from server (not from cache)
+                }
+            };
+
+            window.onbeforeunload = function() {
+                socket.close();
+            }
+        </script>
+        
+
+        
+
+        
+
+        
+        <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+
+        
+
+    </body>
+</html>
