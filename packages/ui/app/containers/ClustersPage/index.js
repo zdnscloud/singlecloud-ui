@@ -4,12 +4,13 @@
  *
  */
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import { bindActionCreators, compose } from 'redux';
+import getByKey from '@gsmlg/utils/getByKey';
 
 import { Link } from 'react-router-dom';
 import Menubar from 'components/Menubar';
@@ -24,6 +25,7 @@ import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
 import IconButton from '@material-ui/core/IconButton';
 import AddIcon from 'components/Icons/Add';
 import Helmet from 'components/Helmet/Helmet';
+import ErrorInfo from 'components/ErrorInfo/ErrorInfo';
 
 import { makeSelectURL } from 'ducks/clusters/selectors';
 import * as actions from 'ducks/clusters/actions';
@@ -41,6 +43,7 @@ export const ClustersPage = ({ loadClusters, url }) => {
     }, 3000);
     return () => clearInterval(t);
   }, [loadClusters, url]);
+  const [error, setError] = useState(null);
 
   return (
     <div className={classes.root}>
@@ -56,6 +59,12 @@ export const ClustersPage = ({ loadClusters, url }) => {
           ]}
         />
         <GridContainer className={classes.grid}>
+          {error ? (
+            <ErrorInfo
+              errorText={getByKey(error, ['response', 'message'])}
+              close={() => setError(null)}
+            />
+          ) : null}
           <GridItem xs={12} sm={12} md={12}>
             <Card>
               <CardHeader>
@@ -67,7 +76,7 @@ export const ClustersPage = ({ loadClusters, url }) => {
                 </IconButton>
               </CardHeader>
               <CardBody>
-                <ClustersTable />
+                <ClustersTable setError={setError} />
               </CardBody>
             </Card>
           </GridItem>
