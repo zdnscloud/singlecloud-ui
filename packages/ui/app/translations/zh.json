@@ -99,7 +99,7 @@
   "app.containers.ClustersPage.createCluster": "创建集群",
   "app.containers.ClustersPage.createClusterButton": "保存",
   "app.containers.ClustersPage.creatingStatus": "创建中",
-  "app.containers.ClustersPage.dialogContentText": "确定执行删除操作吗？",
+  "app.containers.ClustersPage.dialogContentText": "确定执行终止操作吗？",
   "app.containers.ClustersPage.formAddMainNode": "控制节点",
   "app.containers.ClustersPage.formAddNode": "节点",
   "app.containers.ClustersPage.formAddWorkNode": "工作节点",
