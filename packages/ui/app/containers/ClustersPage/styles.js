@@ -26,7 +26,7 @@ export const styles = (theme) => ({
   },
   chexboxesGroup: {
     width: 600,
-    flexDirection: 'row',
+    flexDirection: 'row!important',
     marginLeft: '0.8rem',
   },
   formGrid: {
@@ -89,8 +89,9 @@ export const styles = (theme) => ({
   },
   nodesWrapper: {
     width: '70vw',
-    overflow: 'auto',
     overflowX: 'hidden',
+    overflowY: 'scroll',
+    maxHeight: 'calc(100vh - 255px)',
   },
   logCardBody: {
     height: 'calc(100vh - 225px)',
