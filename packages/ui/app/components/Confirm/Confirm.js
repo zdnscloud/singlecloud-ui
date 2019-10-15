@@ -36,9 +36,11 @@ const Confirm = (props) => {
           setOpen(false);
         }}
       >
-        <DialogTitle id="alert-dialog-title"></DialogTitle>
         <DialogContent>
-          <DialogContentText id="alert-dialog-description">
+          <DialogContentText
+            id="alert-dialog-description"
+            style={{ marginTop: 15 }}
+          >
             <img
               src={warningIcon}
               style={{ marginRight: 11, verticalAlign: 'middle' }}
