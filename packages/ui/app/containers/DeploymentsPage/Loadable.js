@@ -17,3 +17,7 @@ export const CreateDeploymentPage = loadable(() =>
 export const DeploymentDetailPage = loadable(() =>
   import(/* webpackChunkName: "DeploymentDetailPage" */ './ShowItemPage')
 );
+
+export const UpdateDeploymentPage = loadable(() =>
+  import(/* webpackChunkName: "UpdateDeploymentPage" */ './UpdatePage')
+);

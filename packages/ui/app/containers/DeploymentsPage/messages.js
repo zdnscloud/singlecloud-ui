@@ -262,4 +262,20 @@ export default defineMessages({
     id: `${scope}.dialogCancelButton`,
     defaultMessage: 'Cancel',
   },
+  updatePageTitle: {
+    id: `${scope}.updatePageTitle`,
+    defaultMessage: 'Update Deployments',
+  },
+  updatePageDesc: {
+    id: `${scope}.updatePageDesc`,
+    defaultMessage: 'Description of Update Deployments',
+  },
+  updateDeployments: {
+    id: `${scope}.updateDeployments`,
+    defaultMessage: 'Update Deployments',
+  },
+  update: {
+    id: `${scope}.update`,
+    defaultMessage: 'Update',
+  },
 });

@@ -1,7 +1,6 @@
-/* eslint-disable no-param-reassign */
 /**
  *
- * Create Deployment Page
+ * Update Deployment Page
  *
  */
 import React, { Fragment, useState, useEffect } from 'react';
@@ -17,8 +16,6 @@ import {
   submit,
 } from 'redux-form/immutable';
 
-import { usePush } from 'hooks/router';
-
 import Helmet from 'components/Helmet/Helmet';
 import { FormattedMessage } from 'react-intl';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -26,37 +23,45 @@ import Button from '@material-ui/core/Button';
 import GridItem from 'components/Grid/GridItem';
 import GridContainer from 'components/Grid/GridContainer';
 import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
-import ConfirmDialog from 'components/Confirm/ConfirmDialog';
 
-import { makeSelectCurrentID as makeSelectCurrentClusterID } from 'ducks/clusters/selectors';
-import { makeSelectCurrentID as makeSelectCurrentNamespaceID } from 'ducks/namespaces/selectors';
-
-import * as sActions from 'ducks/secrets/actions';
+import { makeSelectCurrentID as makeSelectClusterID } from 'ducks/clusters/selectors';
+import { makeSelectCurrentID as makeSelectNamespaceID } from 'ducks/namespaces/selectors';
 import {
-  makeSelectSecrets,
-  makeSelectURL as makeSelectSecretURL,
-} from 'ducks/secrets/selectors';
+  makeSelectURL,
+  makeSelectCurrent,
+  makeSelectCurrentID,
+} from 'ducks/deployments/selectors';
+import * as actions from 'ducks/deployments/actions';
 import * as cActions from 'ducks/configMaps/actions';
 import {
   makeSelectConfigMaps,
   makeSelectURL as makeSelectConfigMapURL,
 } from 'ducks/configMaps/selectors';
+import * as sActions from 'ducks/secrets/actions';
 import {
   makeSelectStorageClasses,
   makeSelectURL as makeSelectStorageClassesURL,
 } from 'ducks/storageClasses/selectors';
 import * as storagesAction from 'ducks/storageClasses/actions';
-import { makeSelectURL } from 'ducks/deployments/selectors';
-import * as actions from 'ducks/deployments/actions';
+import {
+  makeSelectSecrets,
+  makeSelectURL as makeSelectSecretURL,
+} from 'ducks/secrets/selectors';
 
 import messages from './messages';
 import useStyles from './styles';
 import DeploymentForm, { formName } from './CreateForm';
 
-/* eslint-disable react/prefer-stateless-function */
-export const CreateDeployment = ({
+export const UpdateDeploymentPage = ({
+  updateDeployment,
+  readDeployment,
+  submitForm,
+  url,
   clusterID,
   namespaceID,
+  id,
+  current,
+  values,
   cluster,
   configMapURL,
   loadConfigMaps,
@@ -64,17 +69,24 @@ export const CreateDeployment = ({
   loadSecrets,
   loadStorageClasses,
   createDeployment,
-  submitForm,
-  url,
   configMaps,
   secrets,
   storageClassesURL,
   storageClasses,
-  values,
 }) => {
   const classes = useStyles();
-  const push = usePush();
-
+  useEffect(() => {
+    if (current.size === 0) {
+      readDeployment(id, {
+        url: `${url}/${id}`,
+        clusterID,
+        namespaceID,
+      });
+    }
+    return () => {
+      // cancel someThing
+    };
+  }, [clusterID, namespaceID, id, current.size, readDeployment, url]);
   useEffect(() => {
     loadStorageClasses(storageClassesURL, { clusterID });
   }, [clusterID, loadStorageClasses, storageClassesURL]);
@@ -89,28 +101,13 @@ export const CreateDeployment = ({
     namespaceID,
     secretURL,
   ]);
-  const [open, setOpen] = useState(false);
 
   async function doSubmit(formValues) {
     try {
       const data = formValues.toJS();
-      const { containers, persistentVolumes } = data;
-      data.containers = containers.map((item) => {
-        if (item && item.args) {
-          item.args = item.args.split(' ');
-        }
-        if (item && item.command) {
-          item.command = item.command.split(' ');
-        }
-        return item;
-      });
-      persistentVolumes.forEach((item) => {
-        if (item && item.size) {
-          item.size = `${item.size}Gi`;
-        }
-      });
-      const { response } = await new Promise((resolve, reject) => {
-        createDeployment(data, {
+
+      await new Promise((resolve, reject) => {
+        updateDeployment(data, {
           resolve,
           reject,
           url,
@@ -118,7 +115,6 @@ export const CreateDeployment = ({
           namespaceID,
         });
       });
-      setOpen(response.name);
     } catch (error) {
       throw new SubmissionError({ _error: error });
     }
@@ -126,21 +122,11 @@ export const CreateDeployment = ({
 
   return (
     <div className={classes.root}>
-      <Helmet title={messages.pageTitle} description={messages.pageDesc} />
-      <CssBaseline />
-      <ConfirmDialog
-        open={!!open}
-        onClose={() => {
-          push(`/clusters/${clusterID}/namespaces/${namespaceID}/deployments`);
-        }}
-        onAction={() => {
-          push(
-            `/clusters/${clusterID}/namespaces/${namespaceID}/services/create?from=true&targetResourceType=deployments&targetName=${open}`
-          );
-        }}
-        title={<FormattedMessage {...messages.successTitle} />}
-        content={<FormattedMessage {...messages.successContent} />}
+      <Helmet
+        title={messages.updatePageTitle}
+        description={messages.updatePageDesc}
       />
+      <CssBaseline />
       <div className={classes.content}>
         <Breadcrumbs
           data={[
@@ -149,39 +135,36 @@ export const CreateDeployment = ({
               name: <FormattedMessage {...messages.pageTitle} />,
             },
             {
-              name: <FormattedMessage {...messages.createDeployment} />,
+              name: <FormattedMessage {...messages.updatePageTitle} />,
             },
           ]}
         />
         <GridContainer className={classes.grid}>
           <GridItem xs={12} sm={12} md={12}>
-            <DeploymentForm
-              classes={classes}
-              onSubmit={doSubmit}
-              configMaps={configMaps}
-              secrets={secrets}
-              storageClasses={storageClasses}
-              initialValues={fromJS({
-                replicas: 1,
-                containers: [{ name: '', exposedPorts: [] }],
-                persistentVolumes: [],
-                advancedOptions: {},
-              })}
-              formValues={values}
-            />
-            <Button variant="contained" color="primary" onClick={submitForm}>
-              <FormattedMessage {...messages.save} />
-            </Button>
+            {current.size === 0 ? null : (
+              <DeploymentForm
+                classes={classes}
+                onSubmit={doSubmit}
+                configMaps={configMaps}
+                secrets={secrets}
+                storageClasses={storageClasses}
+                // initialValues={fromJS({
+                //   replicas: 1,
+                //   containers: [{ name: '', exposedPorts: [] }],
+                //   persistentVolumes: [],
+                //   advancedOptions: {},
+                // })}
+                initialValues={current}
+                formValues={values}
+              />
+            )}
             <Button
               variant="contained"
-              className={classes.cancleBtn}
-              onClick={() => {
-                push(
-                  `/clusters/${clusterID}/namespaces/${namespaceID}/deployments`
-                );
-              }}
+              color="primary"
+              size="large"
+              onClick={submitForm}
             >
-              <FormattedMessage {...messages.cancle} />
+              <FormattedMessage {...messages.update} />
             </Button>
           </GridItem>
         </GridContainer>
@@ -191,16 +174,18 @@ export const CreateDeployment = ({
 };
 
 const mapStateToProps = createStructuredSelector({
-  clusterID: makeSelectCurrentClusterID(),
-  namespaceID: makeSelectCurrentNamespaceID(),
+  clusterID: makeSelectClusterID(),
+  namespaceID: makeSelectNamespaceID(),
   url: makeSelectURL(),
+  current: makeSelectCurrent(),
+  id: makeSelectCurrentID(),
+  values: getFormValues(formName),
   configMapURL: makeSelectConfigMapURL(),
   configMaps: makeSelectConfigMaps(),
   secretURL: makeSelectSecretURL(),
   secrets: makeSelectSecrets(),
   storageClasses: makeSelectStorageClasses(),
   storageClassesURL: makeSelectStorageClassesURL(),
-  values: getFormValues(formName),
 });
 
 const mapDispatchToProps = (dispatch) =>
@@ -220,4 +205,4 @@ const withConnect = connect(
   mapDispatchToProps
 );
 
-export default compose(withConnect)(CreateDeployment);
+export default compose(withConnect)(UpdateDeploymentPage);

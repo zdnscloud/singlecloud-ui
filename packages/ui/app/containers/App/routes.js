@@ -24,6 +24,7 @@ import EventsPage from 'containers/EventsPage/Loadable';
 import DeploymentsPage, {
   CreateDeploymentPage,
   DeploymentDetailPage,
+  UpdateDeploymentPage,
 } from 'containers/DeploymentsPage/Loadable';
 import StatefulSetsPage, {
   CreateStatefulSetPage,
@@ -232,6 +233,13 @@ const appRoutes = [
     name: 'Deployment Detail',
     icon: Dashboard,
     component: DeploymentDetailPage,
+  },
+  {
+    path:
+      '/clusters/:cluster_id/namespaces/:namespace_id/deployments/:deployment_id/update',
+    name: ' Update Deployment',
+    icon: Dashboard,
+    component: UpdateDeploymentPage,
   },
   // deployment end
   // statefulset

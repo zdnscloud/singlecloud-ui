@@ -26,7 +26,20 @@ import VolumeClaimTemplate from './form/VolumeClaimTemplate';
 import messages from './messages';
 import useStyles from './styles';
 
-export const DeploymentForm = ({
+export const formName = 'createDeploymentForm';
+
+const validate = (values) => {
+  const errors = {};
+  const requiredFields = ['name'];
+  requiredFields.forEach((field) => {
+    if (!values.get(field)) {
+      errors[field] = 'Required';
+    }
+  });
+  return errors;
+};
+
+export const Form = ({
   handleSubmit,
   error,
   configMaps,
@@ -169,5 +182,10 @@ export const DeploymentForm = ({
     </form>
   );
 };
+
+const DeploymentForm = reduxForm({
+  form: formName,
+  validate,
+})(Form);
 
 export default DeploymentForm;
