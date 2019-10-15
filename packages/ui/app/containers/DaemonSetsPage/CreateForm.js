@@ -117,7 +117,7 @@ export const DaemonSetForm = ({
                       label={
                         <FormattedMessage {...messages.formExposedMeticPort} />
                       }
-                      normalize={(val) => Number(val)}
+                      normalize={(val) => (val ? Number(val) : val)}
                       fullWidth
                       inputProps={{
                         type: 'number',

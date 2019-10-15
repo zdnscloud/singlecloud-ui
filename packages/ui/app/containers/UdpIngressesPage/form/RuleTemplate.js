@@ -105,7 +105,7 @@ const RuleTemplate = ({
                   name={`${f}.port`}
                   fullWidth
                   inputProps={{ type: 'number', autoComplete: 'off' }}
-                  normalize={(val) => Number(val)}
+                  normalize={(val) => (val ? Number(val) : val)}
                 />
               </TableCell>
               <TableCell className={classes.tableCell}>

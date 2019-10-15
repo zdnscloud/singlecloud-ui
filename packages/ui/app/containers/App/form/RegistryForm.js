@@ -60,7 +60,7 @@ const Form = ({ formValues, handleSubmit, error, role }) => {
             label={
               <FormattedMessage {...messages.leftMenuDialogFormStorageSize} />
             }
-            normalize={(val) => Number(val)}
+            normalize={(val) => (val ? Number(val) : val)}
             name="storageSize"
             fullWidth
             inputProps={{

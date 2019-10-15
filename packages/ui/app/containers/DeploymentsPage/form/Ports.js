@@ -89,7 +89,7 @@ const Ports = ({ fields, meta: { error, submitFailed } }) => {
             <InputField
               name={`${f}.port`}
               label={<FormattedMessage {...messages.formPort} />}
-              normalize={(val) => Number(val)}
+              normalize={(val) => (val ? Number(val) : val)}
               inputProps={{
                 type: 'number',
               }}

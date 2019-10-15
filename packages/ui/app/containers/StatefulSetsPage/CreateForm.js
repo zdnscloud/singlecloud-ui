@@ -65,7 +65,7 @@ export const StatefulSetForm = ({
                   <InputField
                     label={<FormattedMessage {...messages.formReplicas} />}
                     name="replicas"
-                    normalize={(val) => Number(val)}
+                    normalize={(val) => (val ? Number(val) : val)}
                     fullWidth
                     inputProps={{
                       type: 'number',
@@ -131,7 +131,7 @@ export const StatefulSetForm = ({
                       label={
                         <FormattedMessage {...messages.formExposedMeticPort} />
                       }
-                      normalize={(val) => Number(val)}
+                      normalize={(val) => (val ? Number(val) : val)}
                       fullWidth
                       inputProps={{
                         type: 'number',
