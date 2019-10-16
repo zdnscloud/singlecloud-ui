@@ -39,7 +39,7 @@ const DynamicForm = ({ fields, config, formValues }) => {
                 type: 'number',
                 autoComplete: 'off',
               }}
-              normalize={(val) => Number(val)}
+              normalize={(val) => (val ? Number(val) : val)}
             />
           </GridItem>
         );

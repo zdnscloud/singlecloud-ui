@@ -1,3 +1,5 @@
+/* eslint-disable no-shadow */
+/* eslint-disable no-console */
 import React, { PureComponent, Fragment, useState } from 'react';
 import { fromJS } from 'immutable';
 import { compose } from 'redux';
@@ -244,7 +246,7 @@ const Form = ({
                     <InputField
                       label={<FormattedMessage {...messages.formExposedPort} />}
                       name={`exposedPorts.${i}.port`}
-                      normalize={(val) => Number(val)}
+                      normalize={(val) => (val ? Number(val) : val)}
                       fullWidth
                       inputProps={{ type: 'number' }}
                     />

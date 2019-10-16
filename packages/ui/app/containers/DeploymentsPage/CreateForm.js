@@ -78,7 +78,7 @@ export const Form = ({
                   <InputField
                     label={<FormattedMessage {...messages.formReplicas} />}
                     name="replicas"
-                    normalize={(val) => Number(val)}
+                    normalize={(val) => (val ? Number(val) : val)}
                     fullWidth
                     inputProps={{
                       type: 'number',
@@ -144,7 +144,7 @@ export const Form = ({
                       label={
                         <FormattedMessage {...messages.formExposedMeticPort} />
                       }
-                      normalize={(val) => Number(val)}
+                      normalize={(val) => (val ? Number(val) : val)}
                       fullWidth
                       inputProps={{
                         type: 'number',

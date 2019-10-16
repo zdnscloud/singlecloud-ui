@@ -19,6 +19,8 @@ const ApplicationTemplate = ({
   const handleConfirm = () => {
     removeApplication(item.get('id'), {
       url: item.getIn(['links', 'remove']),
+      clusterID,
+      namespaceID,
     });
   };
 
