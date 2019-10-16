@@ -1,4 +1,10 @@
-import React, { useRef, Fragment, useCallback, useEffect, useState } from 'react';
+import React, {
+  useRef,
+  Fragment,
+  useCallback,
+  useEffect,
+  useState,
+} from 'react';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -16,7 +22,7 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 
 import logoICon from 'images/logo.svg';
-import ZcloudICon from 'images/Zcloud.svg';
+import ZcloudICon from 'images/Zcloud.png';
 
 import * as actions from 'ducks/app/actions';
 import { makeSelectCurrentID as makeSelectCurrentClusterID } from 'ducks/clusters/selectors';
@@ -197,13 +203,10 @@ const LeftMenu = ({
                 onMouseMove={handleOpen(prop.name, true)}
                 onClose={handleClose}
                 anchorEl={openingMenu && openingMenu[1]}
-                placement={'right-start'}
+                placement="right-start"
                 style={{ zIndex: 1200, top: popperTop }}
               >
-                <div
-                  ref={popperRef}
-                  className={classNames(classes.secondMenu)}
-                >
+                <div ref={popperRef} className={classNames(classes.secondMenu)}>
                   <List component="div" disablePadding>
                     {prop.children.map((menu, idx) => {
                       const itemClasses = classNames({
