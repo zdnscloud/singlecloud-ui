@@ -8,6 +8,7 @@ import IconButton from 'components/CustomIconButtons/IconButton';
 import UpgradeIcon from 'components/Icons/Upgrade';
 import RollbackIcon from 'components/Icons/Rollback';
 import ConfirmDelete from 'components/ConfirmDelete/ConfirmDelete';
+import EditIcon from 'components/Icons/Edit';
 
 const schema = ['name', 'replicas', 'creationTimestamp'];
 
@@ -31,6 +32,15 @@ const tableSchema = schema
       label: 'Actions',
       component: (props) => (
         <Fragment>
+          <IconButton
+            aria-label="Update"
+            component={Link}
+            to={`/clusters/${props.clusterID}/namespaces/${
+              props.namespaceID
+            }/statefulSets/${props.data.get('id')}/update`}
+          >
+            <EditIcon />
+          </IconButton>
           <IconButton onClick={() => props.setUpgrade(props.data.get('id'))}>
             <UpgradeIcon />
           </IconButton>

@@ -1,6 +1,6 @@
 /**
  *
- * Update Deployment Page
+ * Update StatefulSet Page
  *
  */
 import React, { Fragment, useState, useEffect } from 'react';
@@ -30,31 +30,16 @@ import {
   makeSelectURL,
   makeSelectCurrent,
   makeSelectCurrentID,
-} from 'ducks/deployments/selectors';
-import * as actions from 'ducks/deployments/actions';
-import * as cActions from 'ducks/configMaps/actions';
-import {
-  makeSelectConfigMaps,
-  makeSelectURL as makeSelectConfigMapURL,
-} from 'ducks/configMaps/selectors';
-import * as sActions from 'ducks/secrets/actions';
-import {
-  makeSelectStorageClasses,
-  makeSelectURL as makeSelectStorageClassesURL,
-} from 'ducks/storageClasses/selectors';
-import * as storagesAction from 'ducks/storageClasses/actions';
-import {
-  makeSelectSecrets,
-  makeSelectURL as makeSelectSecretURL,
-} from 'ducks/secrets/selectors';
+} from 'ducks/statefulSets/selectors';
+import * as actions from 'ducks/statefulSets/actions';
 
 import messages from './messages';
 import useStyles from './styles';
-import DeploymentForm, { formName } from './CreateForm';
+import UpdateStatefulSetForm, { formName } from './UpdateForm';
 
-export const UpdateDeploymentPage = ({
-  updateDeployment,
-  readDeployment,
+export const UpdateStatefulSetPage = ({
+  updateStatefulSet,
+  readStatefulSet,
   submitForm,
   url,
   clusterID,
@@ -62,22 +47,11 @@ export const UpdateDeploymentPage = ({
   id,
   current,
   values,
-  cluster,
-  configMapURL,
-  loadConfigMaps,
-  secretURL,
-  loadSecrets,
-  loadStorageClasses,
-  createDeployment,
-  configMaps,
-  secrets,
-  storageClassesURL,
-  storageClasses,
 }) => {
   const classes = useStyles();
   useEffect(() => {
     if (current.size === 0) {
-      readDeployment(id, {
+      readStatefulSet(id, {
         url: `${url}/${id}`,
         clusterID,
         namespaceID,
@@ -86,33 +60,19 @@ export const UpdateDeploymentPage = ({
     return () => {
       // cancel someThing
     };
-  }, [clusterID, namespaceID, id, current.size, readDeployment, url]);
-  useEffect(() => {
-    loadStorageClasses(storageClassesURL, { clusterID });
-  }, [clusterID, loadStorageClasses, storageClassesURL]);
-  useEffect(() => {
-    loadConfigMaps({ url: configMapURL, clusterID, namespaceID });
-    loadSecrets({ url: secretURL, clusterID, namespaceID });
-  }, [
-    clusterID,
-    configMapURL,
-    loadConfigMaps,
-    loadSecrets,
-    namespaceID,
-    secretURL,
-  ]);
+  }, [clusterID, namespaceID, id, current.size, readStatefulSet, url]);
 
   async function doSubmit(formValues) {
     try {
       const data = formValues.toJS();
 
       await new Promise((resolve, reject) => {
-        updateDeployment(data, {
+        updateStatefulSet(data, {
           resolve,
           reject,
           url,
-          clusterID,
-          namespaceID,
+          // clusterID,
+          // namespaceID,
         });
       });
     } catch (error) {
@@ -131,7 +91,7 @@ export const UpdateDeploymentPage = ({
         <Breadcrumbs
           data={[
             {
-              path: `/clusters/${clusterID}/namespaces/${namespaceID}/deployments`,
+              path: `/clusters/${clusterID}/namespaces/${namespaceID}/statefulSets`,
               name: <FormattedMessage {...messages.pageTitle} />,
             },
             {
@@ -142,14 +102,10 @@ export const UpdateDeploymentPage = ({
         <GridContainer className={classes.grid}>
           <GridItem xs={12} sm={12} md={12}>
             {current.size === 0 ? null : (
-              <DeploymentForm
-                classes={classes}
+              <UpdateStatefulSetForm
                 onSubmit={doSubmit}
-                configMaps={configMaps}
-                secrets={secrets}
-                storageClasses={storageClasses}
-                initialValues={current}
                 formValues={values}
+                initialValues={current}
               />
             )}
             <Button
@@ -174,21 +130,12 @@ const mapStateToProps = createStructuredSelector({
   current: makeSelectCurrent(),
   id: makeSelectCurrentID(),
   values: getFormValues(formName),
-  configMapURL: makeSelectConfigMapURL(),
-  configMaps: makeSelectConfigMaps(),
-  secretURL: makeSelectSecretURL(),
-  secrets: makeSelectSecrets(),
-  storageClasses: makeSelectStorageClasses(),
-  storageClassesURL: makeSelectStorageClassesURL(),
 });
 
 const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
       ...actions,
-      loadConfigMaps: cActions.loadConfigMaps,
-      loadSecrets: sActions.loadSecrets,
-      loadStorageClasses: storagesAction.loadStorageClasses,
       submitForm: () => submit(formName),
     },
     dispatch
@@ -199,4 +146,4 @@ const withConnect = connect(
   mapDispatchToProps
 );
 
-export default compose(withConnect)(UpdateDeploymentPage);
+export default compose(withConnect)(UpdateStatefulSetPage);

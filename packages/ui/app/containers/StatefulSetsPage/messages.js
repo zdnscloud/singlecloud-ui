@@ -262,4 +262,20 @@ export default defineMessages({
     id: `${scope}.dialogCancelButton`,
     defaultMessage: 'Cancel',
   },
+  updatePageTitle: {
+    id: `${scope}.updatePageTitle`,
+    defaultMessage: 'Update StatefulSet',
+  },
+  updatePageDesc: {
+    id: `${scope}.updatePageDesc`,
+    defaultMessage: 'Description of Update StatefulSet',
+  },
+  updateStatefulSet: {
+    id: `${scope}.updateStatefulSet`,
+    defaultMessage: 'Update StatefulSet',
+  },
+  update: {
+    id: `${scope}.update`,
+    defaultMessage: 'Update',
+  },
 });
