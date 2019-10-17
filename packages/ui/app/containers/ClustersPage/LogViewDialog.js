@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { bindActionCreators, compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
+
 import { FormattedMessage } from 'react-intl';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
@@ -17,11 +18,9 @@ import CardHeader from 'components/Card/CardHeader';
 import CardFooter from 'components/Card/CardFooter';
 import Paper from '@material-ui/core/Paper';
 
-import SockJS from 'sockjs-client';
-import { withStyles } from '@material-ui/core/styles';
 import List from 'react-virtualized/dist/es/List';
-import { Observable } from 'rxjs';
-import { map, scan, throttleTime, debounceTime } from 'rxjs/operators';
+
+import { useLogs } from 'hooks/logs';
 
 import { makeSelectCurrentID } from 'ducks/clusters/selectors';
 import * as actions from 'ducks/clusters/actions';
@@ -29,51 +28,21 @@ import * as actions from 'ducks/clusters/actions';
 import useStyles from './styles';
 import messages from './messages';
 
-let socket = null;
-let observer = null;
-
 const LogViewDialog = ({ isOpen, id, closeDialog }) => {
   const classes = useStyles();
   const url = `${window.location.protocol}//${window.location.hostname}:${window.location.port}/apis/ws.zcloud.cn/v1/clusters/${id}/zkelog`;
-  const [logs, setLogs] = useState([]);
+  const { open, close, logs } = useLogs();
 
   return (
     <Dialog
       open={isOpen}
       onClose={closeDialog}
       onEnter={() => {
-        socket = new SockJS(url, null, { transports: 'websocket' });
-        const logSource = Observable.create((ob) => {
-          observer = ob;
-          socket.onmessage = (e) => {
-            ob.next(e.data);
-          };
-        });
-        logSource
-          .pipe(
-            scan((acc, val) => {
-              const newAcc = acc.concat([val]);
-              if (newAcc.length > 2000) return newAcc.slice(-2000);
-              return newAcc;
-            }, [])
-          )
-          .subscribe((l) => {
-            setLogs(l);
-          });
-        socket.onclose = (e) => {
-          observer.next(`${new Date().toISOString()} Pull log timeout!!!`);
-          if (observer) observer.complete();
-          observer = null;
-        };
+        open(url);
       }}
       onExit={() => {
-        socket.close();
-        socket.onclose = null;
-        socket = null;
-        if (observer) observer.complete();
-        observer = null;
+        close();
       }}
-      aria-labelledby="form-dialog-title"
       maxWidth="lg"
       PaperProps={{ style: { overflow: 'hidden' } }}
     >
