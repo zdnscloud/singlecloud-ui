@@ -1,0 +1,9 @@
+[book]
+authors = ["gsmlg"]
+language = "zh-CN"
+multilingual = false
+src = "docs"
+title = "Zcloud UI Documents"
+
+[output.html]
+theme = "theme"
