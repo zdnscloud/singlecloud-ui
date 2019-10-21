@@ -45,7 +45,9 @@ export const SecretsPage = ({
 }) => {
   const classes = useStyles();
   useEffect(() => {
-    loadSecrets(url, { clusterID, namespaceID });
+    if (url) {
+      loadSecrets(url, { clusterID, namespaceID });
+    }
   }, [clusterID, loadSecrets, namespaceID, url]);
 
   return (

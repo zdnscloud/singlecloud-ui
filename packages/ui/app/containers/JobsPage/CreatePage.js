@@ -63,8 +63,12 @@ export const CreateJobPage = ({
   const push = usePush();
 
   useEffect(() => {
-    loadConfigMaps({ url: configMapURL, clusterID, namespaceID });
-    loadSecrets({ url: secretURL, clusterID, namespaceID });
+    if (configMapURL) {
+      loadConfigMaps(configMapURL, { clusterID, namespaceID });
+    }
+    if (secretURL) {
+      loadSecrets(secretURL, { clusterID, namespaceID });
+    }
   }, [
     clusterID,
     configMapURL,
