@@ -12,14 +12,10 @@ import { createStructuredSelector } from 'reselect';
 import { bindActionCreators, compose } from 'redux';
 import { push } from 'connected-react-router';
 
-import Menubar from 'components/Menubar';
+import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import Typography from '@material-ui/core/Typography';
 import GridItem from 'components/Grid/GridItem';
 import GridContainer from 'components/Grid/GridContainer';
-import Card from 'components/Card/Card';
-import CardHeader from 'components/Card/CardHeader';
-import CardBody from 'components/Card/CardBody';
 
 import { makeSelectLastNamespace } from 'ducks/app/selectors';
 import * as appActions from 'ducks/app/actions';
@@ -29,8 +25,8 @@ import {
   makeSelectURL,
 } from 'ducks/clusters/selectors';
 import * as actions from 'ducks/clusters/actions';
+import { makeSelectNamespaces } from 'ducks/namespaces/selectors';
 
-import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
 import messages from './messages';
 import useStyles from './styles';
 import ClusterDetailPageHelmet from './helmet';
@@ -43,11 +39,13 @@ export const ClusterDetailPage = ({
   url,
   lastNamespace,
   setLastNamespace,
+  namespaces,
 }) => {
   const classes = useStyles();
   useEffect(() => {
-    if (!lastNamespace) {
-      setLastNamespace('default');
+    if (!lastNamespace && namespaces.size > 0) {
+      const ns = namespaces.first();
+      setLastNamespace(ns.get('id'));
     }
     readCluster(id, { url: `${url}/${id}` });
     const t = setInterval(() => {
@@ -84,6 +82,7 @@ const mapStateToProps = createStructuredSelector({
   id: makeSelectCurrentID(),
   url: makeSelectURL(),
   lastNamespace: makeSelectLastNamespace(),
+  namespaces: makeSelectNamespaces(),
 });
 
 const mapDispatchToProps = (dispatch) =>
