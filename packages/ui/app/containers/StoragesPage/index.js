@@ -43,7 +43,9 @@ import useStyles from './styles';
 export const StoragesPage = ({ clusterID, loadStorageClusters, url }) => {
   const classes = useStyles();
   useEffect(() => {
-    loadStorageClusters(url, { clusterID });
+    if (url) {
+      loadStorageClusters(url, { clusterID });
+    }
     const t = setInterval(() => loadStorageClusters(url, { clusterID }), 3000);
     return () => clearInterval(t);
   }, [clusterID, loadStorageClusters, url]);

@@ -20,14 +20,16 @@ import * as a from './actions';
 export const loadPodsEpic = (action$, state$, { ajax }) =>
   action$.pipe(
     ofType(c.LOAD_PODS),
-    mergeMap(({ meta: { url, clusterID, namespaceID, deploymentID } }) =>
-      ajax(url).pipe(
-        map((resp) =>
-          a.loadPodsSuccess(resp, { clusterID, namespaceID, deploymentID })
-        ),
-        catchError((error) =>
-          of(a.loadPodsFailure(error, { clusterID, namespaceID, deploymentID }))
-        )
+    mergeMap(({ payload, meta }) =>
+      ajax(payload).pipe(
+        map((resp) => {
+          meta.resolve && meta.resolve(resp);
+          return a.loadPodsSuccess(resp, meta);
+        }),
+        catchError((error) => {
+          meta.reject && meta.reject(error);
+          return of(a.loadPodsFailure(error, meta));
+        })
       )
     )
   );
@@ -36,20 +38,16 @@ export const loadPodsEpic = (action$, state$, { ajax }) =>
 export const loadSTSPodsEpic = (action$, state$, { ajax }) =>
   action$.pipe(
     ofType(c.LOAD_STS_PODS),
-    mergeMap(({ meta: { url, clusterID, namespaceID, statefulSetID } }) =>
-      ajax(url).pipe(
-        map((resp) =>
-          a.loadSTSPodsSuccess(resp, { clusterID, namespaceID, statefulSetID })
-        ),
-        catchError((error) =>
-          of(
-            a.loadSTSPodsFailure(error, {
-              clusterID,
-              namespaceID,
-              statefulSetID,
-            })
-          )
-        )
+    mergeMap(({ payload, meta }) =>
+      ajax(payload).pipe(
+        map((resp) => {
+          meta.resolve && meta.resolve(resp);
+          return a.loadSTSPodsSuccess(resp, meta);
+        }),
+        catchError((error) => {
+          meta.reject && meta.reject(error);
+          return of(a.loadSTSPodsFailure(error, meta));
+        })
       )
     )
   );
@@ -58,16 +56,16 @@ export const loadSTSPodsEpic = (action$, state$, { ajax }) =>
 export const loadDSPodsEpic = (action$, state$, { ajax }) =>
   action$.pipe(
     ofType(c.LOAD_DS_PODS),
-    mergeMap(({ meta: { url, clusterID, namespaceID, daemonSetID } }) =>
-      ajax(url).pipe(
-        map((resp) =>
-          a.loadDSPodsSuccess(resp, { clusterID, namespaceID, daemonSetID })
-        ),
-        catchError((error) =>
-          of(
-            a.loadDSPodsFailure(error, { clusterID, namespaceID, daemonSetID })
-          )
-        )
+    mergeMap(({ payload, meta }) =>
+      ajax(payload).pipe(
+        map((resp) => {
+          meta.resolve && meta.resolve(resp);
+          return a.loadDSPodsSuccess(resp, meta);
+        }),
+        catchError((error) => {
+          meta.reject && meta.reject(error);
+          return of(a.loadDSPodsFailure(error, meta));
+        })
       )
     )
   );
@@ -76,14 +74,16 @@ export const loadDSPodsEpic = (action$, state$, { ajax }) =>
 export const loadCJPodsEpic = (action$, state$, { ajax }) =>
   action$.pipe(
     ofType(c.LOAD_CJ_PODS),
-    mergeMap(({ meta: { url, clusterID, namespaceID, cronJobID } }) =>
-      ajax(url).pipe(
-        map((resp) =>
-          a.loadCJPodsSuccess(resp, { clusterID, namespaceID, cronJobID })
-        ),
-        catchError((error) =>
-          of(a.loadCJPodsFailure(error, { clusterID, namespaceID, cronJobID }))
-        )
+    mergeMap(({ payload, meta }) =>
+      ajax(payload).pipe(
+        map((resp) => {
+          meta.resolve && meta.resolve(resp);
+          return a.loadCJPodsSuccess(resp, meta);
+        }),
+        catchError((error) => {
+          meta.reject && meta.reject(error);
+          return of(a.loadCJPodsFailure(error, meta));
+        })
       )
     )
   );
@@ -92,14 +92,16 @@ export const loadCJPodsEpic = (action$, state$, { ajax }) =>
 export const loadJOBPodsEpic = (action$, state$, { ajax }) =>
   action$.pipe(
     ofType(c.LOAD_JOB_PODS),
-    mergeMap(({ meta: { url, clusterID, namespaceID, jobID } }) =>
-      ajax(url).pipe(
-        map((resp) =>
-          a.loadJOBPodsSuccess(resp, { clusterID, namespaceID, jobID })
-        ),
-        catchError((error) =>
-          of(a.loadJOBPodsFailure(error, { clusterID, namespaceID, jobID }))
-        )
+    mergeMap(({ payload, meta }) =>
+      ajax(payload).pipe(
+        map((resp) => {
+          meta.resolve && meta.resolve(resp);
+          return a.loadJOBPodsSuccess(resp, meta);
+        }),
+        catchError((error) => {
+          meta.reject && meta.reject(error);
+          return of(a.loadJOBPodsFailure(error, meta));
+        })
       )
     )
   );

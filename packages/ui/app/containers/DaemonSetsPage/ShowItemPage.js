@@ -59,7 +59,7 @@ export const DaemonSetDetailPage = ({
         url: `${url}/${daemonSetID}`,
       });
       if (podUrl) {
-        loadPods({ url: podUrl, clusterID, namespaceID, daemonSetID });
+        loadPods(podUrl, { clusterID, namespaceID, daemonSetID });
       }
     };
     loadDaemonSetAndPods();

@@ -3,19 +3,19 @@ import * as c from './constants';
 /*
   actions
 */
-export const loadPods = (meta) => ({
+export const loadPods = (url, meta = {}) => ({
   type: c.LOAD_PODS,
-  payload: {},
+  payload: url,
   meta,
 });
 
-export const loadPodsSuccess = (resp, meta) => ({
+export const loadPodsSuccess = (resp, meta = {}) => ({
   type: c.LOAD_PODS_SUCCESS,
   payload: resp,
   meta,
 });
 
-export const loadPodsFailure = (error, meta) => ({
+export const loadPodsFailure = (error, meta = {}) => ({
   type: c.LOAD_PODS_FAILURE,
   payload: error,
   meta,
@@ -39,19 +39,19 @@ export const setOpeningLogs = (logs) => ({
 });
 
 // sts
-export const loadSTSPods = (meta) => ({
+export const loadSTSPods = (url, meta = {}) => ({
   type: c.LOAD_STS_PODS,
-  payload: {},
+  payload: url,
   meta,
 });
 
-export const loadSTSPodsSuccess = (resp, meta) => ({
+export const loadSTSPodsSuccess = (resp, meta = {}) => ({
   type: c.LOAD_STS_PODS_SUCCESS,
   payload: resp,
   meta,
 });
 
-export const loadSTSPodsFailure = (error, meta) => ({
+export const loadSTSPodsFailure = (error, meta = {}) => ({
   type: c.LOAD_STS_PODS_FAILURE,
   payload: error,
   meta,
@@ -59,19 +59,19 @@ export const loadSTSPodsFailure = (error, meta) => ({
 });
 
 // ds
-export const loadDSPods = (meta) => ({
+export const loadDSPods = (url, meta = {}) => ({
   type: c.LOAD_DS_PODS,
-  payload: {},
+  payload: url,
   meta,
 });
 
-export const loadDSPodsSuccess = (resp, meta) => ({
+export const loadDSPodsSuccess = (resp, meta = {}) => ({
   type: c.LOAD_DS_PODS_SUCCESS,
   payload: resp,
   meta,
 });
 
-export const loadDSPodsFailure = (error, meta) => ({
+export const loadDSPodsFailure = (error, meta = {}) => ({
   type: c.LOAD_DS_PODS_FAILURE,
   payload: error,
   meta,
@@ -79,19 +79,19 @@ export const loadDSPodsFailure = (error, meta) => ({
 });
 
 // cj
-export const loadCJPods = (meta) => ({
+export const loadCJPods = (url, meta = {}) => ({
   type: c.LOAD_CJ_PODS,
-  payload: {},
+  payload: url,
   meta,
 });
 
-export const loadCJPodsSuccess = (resp, meta) => ({
+export const loadCJPodsSuccess = (resp, meta = {}) => ({
   type: c.LOAD_CJ_PODS_SUCCESS,
   payload: resp,
   meta,
 });
 
-export const loadCJPodsFailure = (error, meta) => ({
+export const loadCJPodsFailure = (error, meta = {}) => ({
   type: c.LOAD_CJ_PODS_FAILURE,
   payload: error,
   meta,
@@ -99,19 +99,19 @@ export const loadCJPodsFailure = (error, meta) => ({
 });
 
 // job
-export const loadJOBPods = (meta) => ({
+export const loadJOBPods = (url, meta = {}) => ({
   type: c.LOAD_JOB_PODS,
-  payload: {},
+  payload: url,
   meta,
 });
 
-export const loadJOBPodsSuccess = (resp, meta) => ({
+export const loadJOBPodsSuccess = (resp, meta = {}) => ({
   type: c.LOAD_JOB_PODS_SUCCESS,
   payload: resp,
   meta,
 });
 
-export const loadJOBPodsFailure = (error, meta) => ({
+export const loadJOBPodsFailure = (error, meta = {}) => ({
   type: c.LOAD_JOB_PODS_FAILURE,
   payload: error,
   meta,

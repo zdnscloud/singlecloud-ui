@@ -59,7 +59,7 @@ export const JobDetailPage = ({
         url: `${url}/${jobID}`,
       });
       if (podUrl) {
-        loadPods({ url: podUrl, clusterID, namespaceID, jobID });
+        loadPods(podUrl, { clusterID, namespaceID, jobID });
       }
     };
     loadJobAndPods();
