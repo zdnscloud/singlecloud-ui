@@ -47,12 +47,14 @@ export const ClusterDetailPage = ({
       const ns = namespaces.first();
       setLastNamespace(ns.get('id'));
     }
+  }, [lastNamespace, setLastNamespace, namespaces]);
+  useEffect(() => {
     readCluster(id, { url: `${url}/${id}` });
     const t = setInterval(() => {
       readCluster(id, { url: `${url}/${id}` });
     }, 3000);
     return () => clearInterval(t);
-  }, [id, lastNamespace, readCluster, setLastNamespace, url]);
+  }, [id, readCluster, url]);
 
   return (
     <div className={classes.root}>
