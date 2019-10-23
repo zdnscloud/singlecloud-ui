@@ -664,7 +664,7 @@
   "app.containers.StoragePage.tableTitleHosts": "节点",
   "app.containers.StoragePage.tableTitleName": "名称",
   "app.containers.StoragePage.tableTitleNode": "节点",
-  "app.containers.StoragePage.tableTitlePhase": "Phase",
+  "app.containers.StoragePage.tableTitlePhase": "状态",
   "app.containers.StoragePage.tableTitlePods": "Pods",
   "app.containers.StoragePage.tableTitleSize": "大小",
   "app.containers.StoragePage.tableTitleStorageType": "类型",
