@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 import { createSelector } from 'reselect';
 import {
   createMatchSelector,
@@ -85,6 +86,7 @@ export const makeSelectLeftMenus = () =>
           name: 'Global',
           children: [{ name: 'ClusterList', path: `/clusters` }],
           icon: OverviewIcon,
+          adminOnly: true,
         },
       ];
       const path = location.get('pathname');
@@ -107,6 +109,7 @@ export const makeSelectLeftMenus = () =>
               },
             ],
             icon: ManagementIcon,
+            adminOnly: true,
           },
           // {
           //   name: 'ContainerManagement',
@@ -146,6 +149,7 @@ export const makeSelectLeftMenus = () =>
               {
                 name: 'ServiceLink',
                 path: `/clusters/${cluster}/namespaces/${namespace}/serviceLink`,
+                adminOnly: true,
               },
             ],
             icon: SystemIcon,
@@ -210,7 +214,13 @@ export const makeSelectLeftMenus = () =>
           icon: UserQuotasIcon,
         },
       ]);
-
+      if (!isAdmin) {
+        menus = menus.filter((m) => {
+          m.children = m.children.filter((c) => c.adminOnly === undefined);
+          return m.adminOnly === undefined;
+        });
+        console.log('menus', menus);
+      }
       return menus;
     }
   );

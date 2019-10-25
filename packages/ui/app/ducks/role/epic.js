@@ -1,3 +1,4 @@
+/* eslint-disable import/no-cycle */
 import { Observable, interval, of, concat } from 'rxjs';
 import {
   mergeMap,
@@ -80,7 +81,9 @@ export const loadRoleEpic = (action$, state$, { ajax }) =>
             import('store').then((exports) => {
               const store = getByKey(exports, ['default', 'instance']);
               setTimeout(() => {
-                store.dispatch(push('/clusters'));
+                user === 'admin'
+                  ? store.dispatch(push('/clusters'))
+                  : store.dispatch(push('/userQuotas'));
               }, 100);
             });
           }
