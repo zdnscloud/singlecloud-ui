@@ -59,7 +59,7 @@ export const StatefulSetDetailPage = ({
     });
     const loadStatefulSetAndPods = () => {
       if (podUrl) {
-        loadPods({ url: podUrl, clusterID, namespaceID, statefulSetID });
+        loadPods(podUrl, { clusterID, namespaceID, statefulSetID });
       }
     };
     loadStatefulSetAndPods();

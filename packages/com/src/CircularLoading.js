@@ -8,6 +8,7 @@ const useStyles = makeStyles((theme) => ({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+    height: 'calc(100vh - 100px)',
   },
 }));
 

@@ -26,3 +26,18 @@ clean-image:
 
 lint-staged:
 	npm run lint:staged
+
+docs:
+	mdbook build
+
+deploy-docs: docs
+	@echo "====> deploying to github"
+	@-rm -rf /tmp/sui-docs
+	-git worktree add -f /tmp/sui-docs gh-pages
+	rm -rf /tmp/sui-docs/*
+	cp -rp book/* /tmp/sui-docs/
+	cd /tmp/sui-docs && \
+		git add -A && \
+		git commit -m "deployed on $(shell date) by $(shell git config user.name)" && \
+		git push -f origin gh-pages
+

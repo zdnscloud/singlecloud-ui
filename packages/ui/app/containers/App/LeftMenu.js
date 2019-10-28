@@ -22,7 +22,7 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 
 import logoICon from 'images/logo.svg';
-import ZcloudICon from 'images/Zcloud.svg';
+import ZcloudICon from 'images/Zcloud.png';
 
 import * as actions from 'ducks/app/actions';
 import { makeSelectCurrentID as makeSelectCurrentClusterID } from 'ducks/clusters/selectors';

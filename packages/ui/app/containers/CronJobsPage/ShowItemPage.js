@@ -54,7 +54,7 @@ export const CronJobDetailPage = ({
         url: `${url}/${cronJobID}`,
       });
       if (podUrl) {
-        loadPods({ url: podUrl, clusterID, namespaceID, cronJobID });
+        loadPods(podUrl, { clusterID, namespaceID, cronJobID });
       }
     };
     loadCronJobAndPods();

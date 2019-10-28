@@ -51,6 +51,7 @@ export const DeploymentDetailPage = ({
 }) => {
   const classes = useStyles();
   const podUrl = deployment.getIn(['links', 'pods']);
+  console.log('podUrl', podUrl);
   useEffect(() => {
     readDeployment(deploymentID, {
       clusterID,
@@ -59,7 +60,7 @@ export const DeploymentDetailPage = ({
     });
     const loadDeploymentAndPods = () => {
       if (podUrl) {
-        loadPods({ url: podUrl, clusterID, namespaceID, deploymentID });
+        loadPods(podUrl, { clusterID, namespaceID, deploymentID });
       }
     };
     loadDeploymentAndPods();

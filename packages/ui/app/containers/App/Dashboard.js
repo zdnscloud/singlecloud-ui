@@ -30,7 +30,8 @@ import * as roleActions from 'ducks/role/actions';
 import * as eventsActions from 'ducks/events/actions';
 import { makeSelectShowEvents } from 'ducks/app/selectors';
 import {
-  makeSelectCurrentID as makeSelectClusterID,
+  makeSelectCurrentID as makeSelectCurrentClusterID,
+  makeSelectCurrent as makeSelectCurrentCluster,
   makeSelectURL,
 } from 'ducks/clusters/selectors';
 import { makeSelectIsLogin } from 'ducks/role/selectors';
@@ -44,6 +45,7 @@ import LeftMenu from './LeftMenu';
 import appRoutes from './routes';
 
 export const Dashboard = ({
+  cluster,
   clusterID,
   showEvents,
   url,
@@ -59,11 +61,11 @@ export const Dashboard = ({
       });
       const { data, list } = procCollectionData(resp);
       for (let i = 0; i < list.length; i += 1) {
-        const cluster = data[list[i]];
+        const c = data[list[i]];
         const {
           id,
           links: { namespaces: nsUrl },
-        } = cluster;
+        } = c;
         loadNamespaces(nsUrl, { clusterID: id });
       }
     })();
@@ -74,6 +76,12 @@ export const Dashboard = ({
     }
     return () => closeCluster();
   }, [closeCluster, clusterID, openCluster]);
+  const nsUrl = cluster.getIn(['links', 'namespaces']);
+  useEffect(() => {
+    if (nsUrl) {
+      loadNamespaces(nsUrl, { clusterID });
+    }
+  }, [nsUrl]);
   const hasEvents = clusterID && showEvents;
   const classes = useStyles({ hasEvents });
 
@@ -109,7 +117,8 @@ export const Dashboard = ({
 
 const mapStateToProps = createStructuredSelector({
   url: makeSelectURL(),
-  clusterID: makeSelectClusterID(),
+  cluster: makeSelectCurrentCluster(),
+  clusterID: makeSelectCurrentClusterID(),
   showEvents: makeSelectShowEvents(),
   isLogin: makeSelectIsLogin(),
 });
