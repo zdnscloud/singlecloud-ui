@@ -90,11 +90,17 @@ export const UpdateStatefulSetPage = ({
     };
   }, [clusterID, namespaceID, id, current.size, readStatefulSet, url]);
   useEffect(() => {
-    loadStorageClasses(storageClassesURL, { clusterID });
+    if (storageClassesURL) {
+      loadStorageClasses(storageClassesURL, { clusterID });
+    }
   }, [clusterID, loadStorageClasses, storageClassesURL]);
   useEffect(() => {
-    loadConfigMaps({ url: configMapURL, clusterID, namespaceID });
-    loadSecrets({ url: secretURL, clusterID, namespaceID });
+    if (configMapURL) {
+      loadConfigMaps(configMapURL, { clusterID, namespaceID });
+    }
+    if (secretURL) {
+      loadSecrets(secretURL, { clusterID, namespaceID });
+    }
   }, [
     clusterID,
     configMapURL,
