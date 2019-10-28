@@ -117,3 +117,22 @@ export const loadJOBPodsFailure = (error, meta = {}) => ({
   meta,
   error: true,
 });
+
+export const removePod = (id, meta = {}) => ({
+  type: c.REMOVE_POD,
+  payload: id,
+  meta,
+});
+
+export const removePodSuccess = (resp, meta = {}) => ({
+  type: c.REMOVE_POD_SUCCESS,
+  payload: resp,
+  meta,
+});
+
+export const removePodFailure = (error, meta = {}) => ({
+  type: c.REMOVE_POD_FAILURE,
+  payload: error,
+  meta,
+  error: true,
+});

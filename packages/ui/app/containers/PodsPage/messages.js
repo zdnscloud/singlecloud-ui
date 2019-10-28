@@ -53,6 +53,15 @@ export default defineMessages({
     id: `${scope}.tableTitleActions`,
     defaultMessage: 'Actions',
   },
+  restartButton: {
+    id: `${scope}.restartButton `,
+    defaultMessage: 'restart',
+  },
+  restartDialogContentText: {
+    id: `${scope}.restartDialogContentText `,
+    defaultMessage:
+      'This action permanently restart the pod. Continue or not？',
+  },
   viewLog: {
     id: `${scope}.viewLog`,
     defaultMessage: 'View Log',

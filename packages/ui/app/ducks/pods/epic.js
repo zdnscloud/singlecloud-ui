@@ -106,10 +106,31 @@ export const loadJOBPodsEpic = (action$, state$, { ajax }) =>
     )
   );
 
+export const removePodEpic = (action$, state$, { ajax }) =>
+  action$.pipe(
+    ofType(c.REMOVE_POD),
+    mergeMap(({ payload, meta }) =>
+      ajax({
+        url: `${meta.url}`,
+        method: 'DELETE',
+      }).pipe(
+        map((resp) => {
+          meta.resolve && meta.resolve(resp);
+          return a.removePodSuccess(resp, { ...meta, id: payload });
+        }),
+        catchError((error) => {
+          meta.reject && meta.reject(error);
+          return of(a.removePodFailure(error, { ...meta, id: payload }));
+        })
+      )
+    )
+  );
+
 export default combineEpics(
   loadPodsEpic,
   loadSTSPodsEpic,
   loadDSPodsEpic,
   loadCJPodsEpic,
-  loadJOBPodsEpic
+  loadJOBPodsEpic,
+  removePodEpic
 );

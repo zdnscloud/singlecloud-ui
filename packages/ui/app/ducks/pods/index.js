@@ -27,6 +27,7 @@ export const initialState = fromJS({
   cjList: [],
   jobPods: {},
   jobList: [],
+  errorsList: [],
 });
 
 const c = constants;
@@ -116,6 +117,16 @@ export const podsReducer = (
     }
     case c.LOAD_JOB_PODS_FAILURE:
       return state;
+
+    case c.REMOVE_POD:
+      return state;
+    case c.REMOVE_POD_SUCCESS: {
+      return state;
+    }
+    case c.REMOVE_POD_FAILURE:
+      return state.update('errorsList', (errors) =>
+        errors.filterNot((e) => e.type === type).push({ type, payload, meta })
+      );
 
     default:
       return state;

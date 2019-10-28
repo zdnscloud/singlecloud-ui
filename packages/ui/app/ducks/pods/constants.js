@@ -25,3 +25,7 @@ export const LOAD_CJ_PODS_FAILURE = `${prefix}/LOAD_CJ_PODS_FAILURE`;
 export const LOAD_JOB_PODS = `${prefix}/LOAD_JOB_PODS`;
 export const LOAD_JOB_PODS_SUCCESS = `${prefix}/LOAD_JOB_PODS_SUCCESS`;
 export const LOAD_JOB_PODS_FAILURE = `${prefix}/LOAD_JOB_PODS_FAILURE`;
+
+export const REMOVE_POD = `${prefix}/REMOVE_POD`;
+export const REMOVE_POD_SUCCESS = `${prefix}/REMOVE_POD_SUCCESS`;
+export const REMOVE_POD_FAILURE = `${prefix}/REMOVE_POD_FAILURE`;
