@@ -45,16 +45,14 @@ const nodeTableSchema = schema
     {
       id: 'actions',
       label: 'Actions',
-      component(props) {
+      component({ setNodes, index, nodes }) {
         return (
           <Fragment>
             <ConfirmDelete
-              actionName={props.setNodes}
-              id={fromJS(
-                props.nodes
-                  .toJS()
-                  .filter((v) => v.name !== props.data.get('name'))
-              )}
+              actionName={() => {
+                setNodes(nodes.splice(index, 1));
+              }}
+              id={index}
             />
           </Fragment>
         );
