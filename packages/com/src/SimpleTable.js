@@ -39,8 +39,8 @@ export const SimpleTable = ({
         </TableRow>
       </TableHead>
       <TableBody>
-        {data.filter((d) => !!d).map((rowData, id) => (
-          <TableRow key={id}>
+        {data.map((rowData, index) => (!!rowData ? (
+          <TableRow key={index}>
             {schema.map((column) => {
               const CustomComponent = getKey(column, 'component');
               return (
@@ -48,6 +48,7 @@ export const SimpleTable = ({
                   {(CustomComponent != null) ? (
                     <CustomComponent
                       {...(column.props || {})}
+                      index={index}
                       data={rowData}
                       column={column}
                       id={getKey(column, 'id')}
@@ -58,7 +59,7 @@ export const SimpleTable = ({
               );
             })}
           </TableRow>
-        ))}
+        ) : null)).filter((d) => d)}
       </TableBody>
     </Table>
   );
