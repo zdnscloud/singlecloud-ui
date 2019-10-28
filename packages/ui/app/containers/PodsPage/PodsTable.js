@@ -56,6 +56,14 @@ const PodsTable = ({
   const classes = useStyles();
   const mergedSchema = schema
     .map((item) => {
+      if (item.id === 'actions') {
+        return {
+          ...item,
+          props: {
+            removePod,
+          },
+        };
+      }
       if (item.id === 'containers') {
         return {
           ...item,
@@ -135,7 +143,6 @@ const PodsTable = ({
     default:
       data = deployPodList;
   }
-
   return (
     <Paper className={classes.tableWrapper}>
       <LogViewDialog />
