@@ -25,14 +25,27 @@ import Containers from './form/Containers';
 import VolumeClaimTemplate from './form/VolumeClaimTemplate';
 import messages from './messages';
 import useStyles from './styles';
+export const formName = 'createDaemonSetForm';
 
-export const DaemonSetForm = ({
+const validate = (values) => {
+  const errors = {};
+  const requiredFields = ['name'];
+  requiredFields.forEach((field) => {
+    if (!values.get(field)) {
+      errors[field] = 'Required';
+    }
+  });
+  return errors;
+};
+
+export const Form = ({
   handleSubmit,
   error,
   configMaps,
   secrets,
   storageClasses,
   formValues,
+  role,
 }) => {
   const classes = useStyles();
 
@@ -48,7 +61,11 @@ export const DaemonSetForm = ({
           <Card>
             <CardHeader>
               <h4>
-                <FormattedMessage {...messages.createDaemonSet} />
+                {role === 'update' ? (
+                  <FormattedMessage {...messages.updateDaemonSet} />
+                ) : (
+                  <FormattedMessage {...messages.createDaemonSet} />
+                )}
               </h4>
             </CardHeader>
             <CardBody>
@@ -58,6 +75,7 @@ export const DaemonSetForm = ({
                     label={<FormattedMessage {...messages.formName} />}
                     name="name"
                     fullWidth
+                    disabled={role === 'update'}
                     inputProps={{ type: 'text', autoComplete: 'off' }}
                   />
                 </GridItem>
@@ -73,6 +91,7 @@ export const DaemonSetForm = ({
             configMaps={configMaps}
             secrets={secrets}
             formValues={formValues}
+            role={role}
           />
         </GridItem>
         <GridItem xs={12} sm={12} md={12}>
@@ -98,6 +117,7 @@ export const DaemonSetForm = ({
                           {...messages.formReloadWhenConfigChange}
                         />
                       }
+                      disabled={role === 'update'}
                     />
                   </GridItem>
                 </GridContainer>
@@ -110,6 +130,7 @@ export const DaemonSetForm = ({
                       fullWidth
                       inputProps={{ type: 'text', autoComplete: 'off' }}
                       name="exposedMetric.path"
+                      disabled={role === 'update'}
                     />
                   </GridItem>
                   <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
@@ -126,6 +147,7 @@ export const DaemonSetForm = ({
                         max: 65535,
                       }}
                       name="exposedMetric.port"
+                      disabled={role === 'update'}
                     />
                   </GridItem>
                 </GridContainer>
@@ -147,6 +169,7 @@ export const DaemonSetForm = ({
                 component={VolumeClaimTemplate}
                 formValues={formValues}
                 storageClasses={storageClasses}
+                role={role}
               />
             </CardBody>
           </Card>
@@ -155,5 +178,10 @@ export const DaemonSetForm = ({
     </form>
   );
 };
+
+const DaemonSetForm = reduxForm({
+  form: formName,
+  validate,
+})(Form);
 
 export default DaemonSetForm;

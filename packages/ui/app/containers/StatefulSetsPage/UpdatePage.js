@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/aria-role */
 /**
  *
  * Update StatefulSet Page
@@ -16,6 +17,8 @@ import {
   submit,
 } from 'redux-form/immutable';
 
+import { usePush } from 'hooks/router';
+
 import Helmet from 'components/Helmet/Helmet';
 import { FormattedMessage } from 'react-intl';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -31,11 +34,26 @@ import {
   makeSelectCurrent,
   makeSelectCurrentID,
 } from 'ducks/statefulSets/selectors';
+import * as sActions from 'ducks/secrets/actions';
+import {
+  makeSelectSecrets,
+  makeSelectURL as makeSelectSecretURL,
+} from 'ducks/secrets/selectors';
+import * as cActions from 'ducks/configMaps/actions';
+import {
+  makeSelectConfigMaps,
+  makeSelectURL as makeSelectConfigMapURL,
+} from 'ducks/configMaps/selectors';
+import {
+  makeSelectStorageClasses,
+  makeSelectURL as makeSelectStorageClassesURL,
+} from 'ducks/storageClasses/selectors';
+import * as storagesAction from 'ducks/storageClasses/actions';
 import * as actions from 'ducks/statefulSets/actions';
 
 import messages from './messages';
 import useStyles from './styles';
-import UpdateStatefulSetForm, { formName } from './UpdateForm';
+import StatefulSetForm, { formName } from './CreateForm';
 
 export const UpdateStatefulSetPage = ({
   updateStatefulSet,
@@ -47,8 +65,18 @@ export const UpdateStatefulSetPage = ({
   id,
   current,
   values,
+  configMaps,
+  secrets,
+  storageClassesURL,
+  storageClasses,
+  loadConfigMaps,
+  secretURL,
+  loadSecrets,
+  loadStorageClasses,
+  configMapURL,
 }) => {
   const classes = useStyles();
+  const push = usePush();
   useEffect(() => {
     if (current.size === 0) {
       readStatefulSet(id, {
@@ -61,8 +89,23 @@ export const UpdateStatefulSetPage = ({
       // cancel someThing
     };
   }, [clusterID, namespaceID, id, current.size, readStatefulSet, url]);
+  useEffect(() => {
+    loadStorageClasses(storageClassesURL, { clusterID });
+  }, [clusterID, loadStorageClasses, storageClassesURL]);
+  useEffect(() => {
+    loadConfigMaps({ url: configMapURL, clusterID, namespaceID });
+    loadSecrets({ url: secretURL, clusterID, namespaceID });
+  }, [
+    clusterID,
+    configMapURL,
+    loadConfigMaps,
+    loadSecrets,
+    namespaceID,
+    secretURL,
+  ]);
 
   async function doSubmit(formValues) {
+    const updateUrl = current.getIn(['links', 'update']);
     try {
       const data = formValues.toJS();
 
@@ -70,11 +113,12 @@ export const UpdateStatefulSetPage = ({
         updateStatefulSet(data, {
           resolve,
           reject,
-          url,
-          // clusterID,
-          // namespaceID,
+          url: updateUrl,
+          clusterID,
+          namespaceID,
         });
       });
+      push(`/clusters/${clusterID}/namespaces/${namespaceID}/statefulSets`);
     } catch (error) {
       throw new SubmissionError({ _error: error });
     }
@@ -102,10 +146,14 @@ export const UpdateStatefulSetPage = ({
         <GridContainer className={classes.grid}>
           <GridItem xs={12} sm={12} md={12}>
             {current.size === 0 ? null : (
-              <UpdateStatefulSetForm
+              <StatefulSetForm
                 onSubmit={doSubmit}
                 formValues={values}
                 initialValues={current}
+                configMaps={configMaps}
+                secrets={secrets}
+                storageClasses={storageClasses}
+                role="update"
               />
             )}
             <Button
@@ -129,6 +177,12 @@ const mapStateToProps = createStructuredSelector({
   url: makeSelectURL(),
   current: makeSelectCurrent(),
   id: makeSelectCurrentID(),
+  configMapURL: makeSelectConfigMapURL(),
+  configMaps: makeSelectConfigMaps(),
+  secretURL: makeSelectSecretURL(),
+  secrets: makeSelectSecrets(),
+  storageClasses: makeSelectStorageClasses(),
+  storageClassesURL: makeSelectStorageClassesURL(),
   values: getFormValues(formName),
 });
 
@@ -136,6 +190,9 @@ const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
       ...actions,
+      loadConfigMaps: cActions.loadConfigMaps,
+      loadSecrets: sActions.loadSecrets,
+      loadStorageClasses: storagesAction.loadStorageClasses,
       submitForm: () => submit(formName),
     },
     dispatch

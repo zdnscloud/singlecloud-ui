@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/aria-role */
 /**
  *
  * Update Deployment Page
@@ -15,6 +16,8 @@ import {
   SubmissionError,
   submit,
 } from 'redux-form/immutable';
+
+import { usePush } from 'hooks/router';
 
 import Helmet from 'components/Helmet/Helmet';
 import { FormattedMessage } from 'react-intl';
@@ -75,6 +78,7 @@ export const UpdateDeploymentPage = ({
   storageClasses,
 }) => {
   const classes = useStyles();
+  const push = usePush();
   useEffect(() => {
     if (current.size === 0) {
       readDeployment(id, {
@@ -103,18 +107,19 @@ export const UpdateDeploymentPage = ({
   ]);
 
   async function doSubmit(formValues) {
+    const updateUrl = current.getIn(['links', 'update']);
     try {
       const data = formValues.toJS();
-
       await new Promise((resolve, reject) => {
         updateDeployment(data, {
           resolve,
           reject,
-          url,
+          url: updateUrl,
           clusterID,
           namespaceID,
         });
       });
+      push(`/clusters/${clusterID}/namespaces/${namespaceID}/deployments`);
     } catch (error) {
       throw new SubmissionError({ _error: error });
     }
@@ -150,6 +155,7 @@ export const UpdateDeploymentPage = ({
                 storageClasses={storageClasses}
                 initialValues={current}
                 formValues={values}
+                role="update"
               />
             )}
             <Button

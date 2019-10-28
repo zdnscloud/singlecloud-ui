@@ -46,6 +46,7 @@ export const Form = ({
   secrets,
   storageClasses,
   formValues,
+  role,
 }) => {
   const classes = useStyles();
 
@@ -61,7 +62,11 @@ export const Form = ({
           <Card>
             <CardHeader>
               <h4>
-                <FormattedMessage {...messages.createDeployment} />
+                {role === 'update' ? (
+                  <FormattedMessage {...messages.updateDeployment} />
+                ) : (
+                  <FormattedMessage {...messages.createDeployment} />
+                )}
               </h4>
             </CardHeader>
             <CardBody>
@@ -71,6 +76,7 @@ export const Form = ({
                     label={<FormattedMessage {...messages.formName} />}
                     name="name"
                     fullWidth
+                    disabled={role === 'update'}
                     inputProps={{ type: 'text', autoComplete: 'off' }}
                   />
                 </GridItem>
@@ -80,6 +86,7 @@ export const Form = ({
                     name="replicas"
                     normalize={(val) => (val ? Number(val) : val)}
                     fullWidth
+                    disabled={role === 'update'}
                     inputProps={{
                       type: 'number',
                       autoComplete: 'off',
@@ -100,6 +107,7 @@ export const Form = ({
             configMaps={configMaps}
             secrets={secrets}
             formValues={formValues}
+            role={role}
           />
         </GridItem>
         <GridItem xs={12} sm={12} md={12}>
@@ -125,6 +133,7 @@ export const Form = ({
                           {...messages.formReloadWhenConfigChange}
                         />
                       }
+                      disabled={role === 'update'}
                     />
                   </GridItem>
                 </GridContainer>
@@ -137,6 +146,7 @@ export const Form = ({
                       fullWidth
                       inputProps={{ type: 'text', autoComplete: 'off' }}
                       name="exposedMetric.path"
+                      disabled={role === 'update'}
                     />
                   </GridItem>
                   <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
@@ -153,6 +163,7 @@ export const Form = ({
                         max: 65535,
                       }}
                       name="exposedMetric.port"
+                      disabled={role === 'update'}
                     />
                   </GridItem>
                 </GridContainer>
@@ -174,6 +185,7 @@ export const Form = ({
                 component={VolumeClaimTemplate}
                 formValues={formValues}
                 storageClasses={storageClasses}
+                role={role}
               />
             </CardBody>
           </Card>

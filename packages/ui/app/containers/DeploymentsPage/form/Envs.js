@@ -48,14 +48,18 @@ import MinusIcon from 'components/Icons/Minus';
 
 import messages from '../messages';
 
-const Envs = ({ fields, meta: { error, submitFailed } }) => (
+const Envs = ({ fields, meta: { error, submitFailed }, role }) => (
   <List component="ul">
     <ListItem>
       <ListItemText>
-        <Button color="secondary" onClick={(evt) => fields.push(fromJS({}))}>
+        {role === 'update' ? (
           <FormattedMessage {...messages.formENV} />
-          <PlusIcon />
-        </Button>
+        ) : (
+          <Button color="secondary" onClick={(evt) => fields.push(fromJS({}))}>
+            <FormattedMessage {...messages.formENV} />
+            <PlusIcon />
+          </Button>
+        )}
       </ListItemText>
     </ListItem>
     {fields.map((f, i) => (
@@ -72,7 +76,7 @@ const Envs = ({ fields, meta: { error, submitFailed } }) => (
           />
         </ListItemText>
         <IconButton variant="contained" onClick={(evt) => fields.remove(i)}>
-          <MinusIcon />
+          {role === 'update' ? null : <MinusIcon />}
         </IconButton>
       </ListItem>
     ))}

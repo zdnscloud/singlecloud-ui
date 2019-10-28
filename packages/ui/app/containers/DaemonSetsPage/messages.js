@@ -45,6 +45,10 @@ export default defineMessages({
     id: `${scope}.createDaemonSet`,
     defaultMessage: 'Create DaemonSet',
   },
+  updateDaemonSet: {
+    id: `${scope}.updateDaemonSet`,
+    defaultMessage: 'Update DaemonSet',
+  },
   pods: {
     id: `${scope}.pods`,
     defaultMessage: 'Pods',
@@ -261,5 +265,21 @@ export default defineMessages({
   dialogCancelButton: {
     id: `${scope}.dialogCancelButton`,
     defaultMessage: 'Cancel',
+  },
+  updatePageTitle: {
+    id: `${scope}.updatePageTitle`,
+    defaultMessage: 'Update DaemonSets',
+  },
+  updatePageDesc: {
+    id: `${scope}.updatePageDesc`,
+    defaultMessage: 'Description of Update DaemonSets',
+  },
+  updateDaemonSets: {
+    id: `${scope}.updateDaemonSets`,
+    defaultMessage: 'Update DaemonSets',
+  },
+  update: {
+    id: `${scope}.update`,
+    defaultMessage: 'Update',
   },
 });

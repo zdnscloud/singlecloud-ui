@@ -45,6 +45,10 @@ export default defineMessages({
     id: `${scope}.createDeployment`,
     defaultMessage: 'Create Deployment',
   },
+  updateDeployment: {
+    id: `${scope}.updateDeployment`,
+    defaultMessage: 'Update Deployment',
+  },
   pods: {
     id: `${scope}.pods`,
     defaultMessage: 'Pods',

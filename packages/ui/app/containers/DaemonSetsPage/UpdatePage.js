@@ -1,7 +1,7 @@
-/* eslint-disable no-param-reassign */
+/* eslint-disable jsx-a11y/aria-role */
 /**
  *
- * Create StatefulSet Page
+ * Update DaemonSet Page
  *
  */
 import React, { Fragment, useState, useEffect } from 'react';
@@ -26,55 +26,71 @@ import Button from '@material-ui/core/Button';
 import GridItem from 'components/Grid/GridItem';
 import GridContainer from 'components/Grid/GridContainer';
 import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
-import ConfirmDialog from 'components/Confirm/ConfirmDialog';
 
-import { makeSelectCurrentID as makeSelectCurrentClusterID } from 'ducks/clusters/selectors';
-import { makeSelectCurrentID as makeSelectCurrentNamespaceID } from 'ducks/namespaces/selectors';
-
-import * as sActions from 'ducks/secrets/actions';
+import { makeSelectCurrentID as makeSelectClusterID } from 'ducks/clusters/selectors';
+import { makeSelectCurrentID as makeSelectNamespaceID } from 'ducks/namespaces/selectors';
 import {
-  makeSelectSecrets,
-  makeSelectURL as makeSelectSecretURL,
-} from 'ducks/secrets/selectors';
+  makeSelectURL,
+  makeSelectCurrent,
+  makeSelectCurrentID,
+} from 'ducks/daemonSets/selectors';
+import * as actions from 'ducks/daemonSets/actions';
 import * as cActions from 'ducks/configMaps/actions';
 import {
   makeSelectConfigMaps,
   makeSelectURL as makeSelectConfigMapURL,
 } from 'ducks/configMaps/selectors';
+import * as sActions from 'ducks/secrets/actions';
 import {
   makeSelectStorageClasses,
   makeSelectURL as makeSelectStorageClassesURL,
 } from 'ducks/storageClasses/selectors';
 import * as storagesAction from 'ducks/storageClasses/actions';
-import { makeSelectURL } from 'ducks/statefulSets/selectors';
-import * as actions from 'ducks/statefulSets/actions';
+import {
+  makeSelectSecrets,
+  makeSelectURL as makeSelectSecretURL,
+} from 'ducks/secrets/selectors';
 
 import messages from './messages';
 import useStyles from './styles';
-import StatefulSetForm, { formName } from './CreateForm';
+import DaemonSetForm, { formName } from './CreateForm';
 
-/* eslint-disable react/prefer-stateless-function */
-export const CreateStatefulSet = ({
+export const UpdateDaemonSetPage = ({
+  updateDaemonSet,
+  readDaemonSet,
+  submitForm,
+  url,
   clusterID,
   namespaceID,
+  id,
+  current,
+  values,
   cluster,
   configMapURL,
   loadConfigMaps,
   secretURL,
   loadSecrets,
   loadStorageClasses,
-  createStatefulSet,
-  submitForm,
-  url,
+  createDaemonSet,
   configMaps,
   secrets,
   storageClassesURL,
   storageClasses,
-  values,
 }) => {
   const classes = useStyles();
   const push = usePush();
-
+  useEffect(() => {
+    if (current.size === 0) {
+      readDaemonSet(id, {
+        url: `${url}/${id}`,
+        clusterID,
+        namespaceID,
+      });
+    }
+    return () => {
+      // cancel someThing
+    };
+  }, [clusterID, namespaceID, id, current.size, readDaemonSet, url]);
   useEffect(() => {
     loadStorageClasses(storageClassesURL, { clusterID });
   }, [clusterID, loadStorageClasses, storageClassesURL]);
@@ -89,36 +105,21 @@ export const CreateStatefulSet = ({
     namespaceID,
     secretURL,
   ]);
-  const [open, setOpen] = useState(false);
 
   async function doSubmit(formValues) {
+    const updateUrl = current.getIn(['links', 'update']);
     try {
       const data = formValues.toJS();
-      const { containers, persistentVolumes } = data;
-      data.containers = containers.map((item) => {
-        if (item && item.args) {
-          item.args = item.args.split(' ');
-        }
-        if (item && item.command) {
-          item.command = item.command.split(' ');
-        }
-        return item;
-      });
-      persistentVolumes.forEach((item) => {
-        if (item && item.size) {
-          item.size = `${item.size}Gi`;
-        }
-      });
-      const { response } = await new Promise((resolve, reject) => {
-        createStatefulSet(data, {
+      await new Promise((resolve, reject) => {
+        updateDaemonSet(data, {
           resolve,
           reject,
-          url,
+          url: updateUrl,
           clusterID,
           namespaceID,
         });
       });
-      setOpen(response.name);
+      push(`/clusters/${clusterID}/namespaces/${namespaceID}/daemonSets`);
     } catch (error) {
       throw new SubmissionError({ _error: error });
     }
@@ -126,62 +127,44 @@ export const CreateStatefulSet = ({
 
   return (
     <div className={classes.root}>
-      <Helmet title={messages.pageTitle} description={messages.pageDesc} />
-      <CssBaseline />
-      <ConfirmDialog
-        open={!!open}
-        onClose={() => {
-          push(`/clusters/${clusterID}/namespaces/${namespaceID}/statefulSets`);
-        }}
-        onAction={() => {
-          push(
-            `/clusters/${clusterID}/namespaces/${namespaceID}/services/create?from=true&targetResourceType=statefulSets&targetName=${open}`
-          );
-        }}
-        title={<FormattedMessage {...messages.successTitle} />}
-        content={<FormattedMessage {...messages.successContent} />}
+      <Helmet
+        title={messages.updatePageTitle}
+        description={messages.updatePageDesc}
       />
+      <CssBaseline />
       <div className={classes.content}>
         <Breadcrumbs
           data={[
             {
-              path: `/clusters/${clusterID}/namespaces/${namespaceID}/statefulSets`,
+              path: `/clusters/${clusterID}/namespaces/${namespaceID}/daemonSets`,
               name: <FormattedMessage {...messages.pageTitle} />,
             },
             {
-              name: <FormattedMessage {...messages.createStatefulSet} />,
+              name: <FormattedMessage {...messages.updatePageTitle} />,
             },
           ]}
         />
         <GridContainer className={classes.grid}>
           <GridItem xs={12} sm={12} md={12}>
-            <StatefulSetForm
-              classes={classes}
-              onSubmit={doSubmit}
-              configMaps={configMaps}
-              secrets={secrets}
-              storageClasses={storageClasses}
-              initialValues={fromJS({
-                replicas: 1,
-                containers: [{ name: '', exposedPorts: [] }],
-                persistentVolumes: [],
-                advancedOptions: {},
-              })}
-              formValues={values}
-            />
-            <Button variant="contained" color="primary" onClick={submitForm}>
-              <FormattedMessage {...messages.save} />
-            </Button>
+            {current.size === 0 ? null : (
+              <DaemonSetForm
+                classes={classes}
+                onSubmit={doSubmit}
+                configMaps={configMaps}
+                secrets={secrets}
+                storageClasses={storageClasses}
+                initialValues={current}
+                formValues={values}
+                role="update"
+              />
+            )}
             <Button
               variant="contained"
-              className={classes.cancleBtn}
-              onClick={() => {
-                push(
-                  `/clusters/${clusterID}/namespaces/${namespaceID}/statefulSets`
-                );
-              }}
+              color="primary"
+              size="large"
+              onClick={submitForm}
             >
-              <FormattedMessage {...messages.cancle} />
+              <FormattedMessage {...messages.update} />
             </Button>
           </GridItem>
         </GridContainer>
@@ -191,16 +174,18 @@ export const CreateStatefulSet = ({
 };
 
 const mapStateToProps = createStructuredSelector({
-  clusterID: makeSelectCurrentClusterID(),
-  namespaceID: makeSelectCurrentNamespaceID(),
+  clusterID: makeSelectClusterID(),
+  namespaceID: makeSelectNamespaceID(),
   url: makeSelectURL(),
+  current: makeSelectCurrent(),
+  id: makeSelectCurrentID(),
+  values: getFormValues(formName),
   configMapURL: makeSelectConfigMapURL(),
   configMaps: makeSelectConfigMaps(),
   secretURL: makeSelectSecretURL(),
   secrets: makeSelectSecrets(),
   storageClasses: makeSelectStorageClasses(),
   storageClassesURL: makeSelectStorageClassesURL(),
-  values: getFormValues(formName),
 });
 
 const mapDispatchToProps = (dispatch) =>
@@ -220,4 +205,4 @@ const withConnect = connect(
   mapDispatchToProps
 );
 
-export default compose(withConnect)(CreateStatefulSet);
+export default compose(withConnect)(UpdateDaemonSetPage);

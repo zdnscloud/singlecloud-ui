@@ -1,4 +1,10 @@
-import React, { useRef, Fragment, useCallback, useEffect, useState } from 'react';
+import React, {
+  useRef,
+  Fragment,
+  useCallback,
+  useEffect,
+  useState,
+} from 'react';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -50,6 +56,7 @@ const LeftMenu = ({
   const isManage = /^\/clusters\/[^/]+\/manage/.test(path);
   const isShow = /\/show$/.test(path);
   const isEdit = /\/edit$/.test(path);
+  const isUpdate = /\/update$/.test(path);
   const isCreate = /\/create$/.test(path);
   const isCCreate = /^\/clusters+\/create/.test(path);
   const isNsCreate = path === `/clusters/${clusterID}/namespaces/create`;
@@ -87,7 +94,7 @@ const LeftMenu = ({
         return path.includes('adminUserQuotas') || path.includes('userQuotas');
       }
       if (
-        ((isShow || isCreate || isEdit) && !rnIsNS) ||
+        ((isShow || isCreate || isEdit || isUpdate) && !rnIsNS) ||
         isNsCreate ||
         isNsShow
       ) {
@@ -197,13 +204,10 @@ const LeftMenu = ({
                 onMouseMove={handleOpen(prop.name, true)}
                 onClose={handleClose}
                 anchorEl={openingMenu && openingMenu[1]}
-                placement={'right-start'}
+                placement="right-start"
                 style={{ zIndex: 1200, top: popperTop }}
               >
-                <div
-                  ref={popperRef}
-                  className={classNames(classes.secondMenu)}
-                >
+                <div ref={popperRef} className={classNames(classes.secondMenu)}>
                   <List component="div" disablePadding>
                     {prop.children.map((menu, idx) => {
                       const itemClasses = classNames({

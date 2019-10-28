@@ -34,6 +34,7 @@ import StatefulSetsPage, {
 import DaemonSetsPage, {
   CreateDaemonSetPage,
   DaemonSetDetailPage,
+  UpdateDaemonSetPage,
 } from 'containers/DaemonSetsPage/Loadable';
 import CronJobsPage, {
   CreateCronJobPage,
@@ -284,6 +285,13 @@ const appRoutes = [
     name: 'Create DaemonSet',
     icon: Dashboard,
     component: CreateDaemonSetPage,
+  },
+  {
+    path:
+      '/clusters/:cluster_id/namespaces/:namespace_id/daemonSets/:daemonset_set_id/update',
+    name: 'Update DaemonSet',
+    icon: Dashboard,
+    component: UpdateDaemonSetPage,
   },
   {
     path:

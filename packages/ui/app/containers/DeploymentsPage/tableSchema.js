@@ -8,7 +8,6 @@ import IconButton from 'components/CustomIconButtons/IconButton';
 import UpgradeIcon from 'components/Icons/Upgrade';
 import RollbackIcon from 'components/Icons/Rollback';
 import ConfirmDelete from 'components/ConfirmDelete/ConfirmDelete';
-import EditIcon from 'components/Icons/Edit';
 
 const schema = ['name', 'replicas', 'creationTimestamp'];
 
@@ -39,12 +38,8 @@ const tableSchema = schema
               props.namespaceID
             }/deployments/${props.data.get('id')}/update`}
           >
-            <EditIcon />
-          </IconButton>
-          <IconButton onClick={() => props.setUpgrade(props.data.get('id'))}>
             <UpgradeIcon />
           </IconButton>
-
           <IconButton onClick={() => props.setRollback(props.data.get('id'))}>
             <RollbackIcon />
           </IconButton>

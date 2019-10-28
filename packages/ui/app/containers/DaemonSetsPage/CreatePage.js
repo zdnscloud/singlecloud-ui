@@ -51,25 +51,7 @@ import * as actions from 'ducks/daemonSets/actions';
 
 import messages from './messages';
 import useStyles from './styles';
-import DaemonSetForm from './CreateForm';
-
-export const formName = 'createDaemonSetForm';
-
-const validate = (values) => {
-  const errors = {};
-  const requiredFields = ['name'];
-  requiredFields.forEach((field) => {
-    if (!values.get(field)) {
-      errors[field] = 'Required';
-    }
-  });
-  return errors;
-};
-
-const CreateDaemonSetForm = reduxForm({
-  form: formName,
-  validate,
-})(DaemonSetForm);
+import DaemonSetForm, { formName } from './CreateForm';
 
 /* eslint-disable react/prefer-stateless-function */
 export const CreateDaemonSet = ({
@@ -173,7 +155,7 @@ export const CreateDaemonSet = ({
         />
         <GridContainer className={classes.grid}>
           <GridItem xs={12} sm={12} md={12}>
-            <CreateDaemonSetForm
+            <DaemonSetForm
               classes={classes}
               onSubmit={doSubmit}
               configMaps={configMaps}

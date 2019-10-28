@@ -16,6 +16,10 @@ export const CREATE_INGRESS = `${prefix}/CREATE_INGRESS`;
 export const CREATE_INGRESS_SUCCESS = `${prefix}/CREATE_INGRESS_SUCCESS`;
 export const CREATE_INGRESS_FAILURE = `${prefix}/CREATE_INGRESS_FAILURE`;
 
+export const UPDATE_INGRESS = `${prefix}/UPDATE_INGRESS`;
+export const UPDATE_INGRESS_SUCCESS = `${prefix}/UPDATE_INGRESS_SUCCESS`;
+export const UPDATE_INGRESS_FAILURE = `${prefix}/UPDATE_INGRESS_FAILURE`;
+
 export const READ_INGRESS = `${prefix}/READ_INGRESS`;
 export const READ_INGRESS_SUCCESS = `${prefix}/READ_INGRESS_SUCCESS`;
 export const READ_INGRESS_FAILURE = `${prefix}/READ_INGRESS_FAILURE`;

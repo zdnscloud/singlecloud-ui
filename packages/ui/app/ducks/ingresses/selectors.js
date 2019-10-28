@@ -104,6 +104,15 @@ export const makeSelectCreateErrorsList = () =>
         .filter(({ type }) => type === c.CREATE_INGRESS_FAILURE)
   );
 
+export const makeSelectUpdateErrorsList = () =>
+  createSelector(
+    selectDomain,
+    (substate) =>
+      substate
+        .get('errorsList')
+        .filter(({ type }) => type === c.UPDATE_INGRESS_FAILURE)
+  );
+
 export const makeSelectReadErrorsList = () =>
   createSelector(
     selectDomain,
