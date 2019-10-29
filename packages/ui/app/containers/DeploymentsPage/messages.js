@@ -282,4 +282,12 @@ export default defineMessages({
     id: `${scope}.update`,
     defaultMessage: 'Update',
   },
+  formUpdateMemo: {
+    id: `${scope}.UpdateMemo`,
+    defaultMessage: 'Update Memo',
+  },
+  formMemo: {
+    id: `${scope}.Memo`,
+    defaultMessage: 'Memo',
+  },
 });

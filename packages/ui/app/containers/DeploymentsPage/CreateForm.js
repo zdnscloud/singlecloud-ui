@@ -190,6 +190,27 @@ export const Form = ({
             </CardBody>
           </Card>
         </GridItem>
+        {role === 'update' ? (
+          <GridItem xs={12} sm={12} md={12}>
+            <Card>
+              <CardHeader>
+                <h4>
+                  <FormattedMessage {...messages.formUpdateMemo} />
+                </h4>
+              </CardHeader>
+              <CardBody>
+                <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
+                  <InputField
+                    label={<FormattedMessage {...messages.formMemo} />}
+                    fullWidth
+                    inputProps={{ type: 'text', autoComplete: 'off' }}
+                    name="meno"
+                  />
+                </GridItem>
+              </CardBody>
+            </Card>
+          </GridItem>
+        ) : null}
       </GridContainer>
     </form>
   );
