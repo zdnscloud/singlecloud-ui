@@ -85,7 +85,12 @@ const AppMenubar = ({
             onClose={(evt) => setUserEl(null)}
           >
             {userMenus.map((m, index) => (
-              <MenuItem key={m.name} component={Link} to={m.path}>
+              <MenuItem
+                key={m.name}
+                component={Link}
+                to={m.path}
+                onClick={() => setUserEl(null)}
+              >
                 <FormattedMessage {...messages[`user${m.name}`]} />
               </MenuItem>
             ))}
