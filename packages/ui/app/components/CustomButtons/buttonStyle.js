@@ -184,6 +184,7 @@ const buttonStyle = (theme) => ({
       color: theme.palette.highlight.main,
       boxShadow: 'none',
     },
+    userSelect: 'text',
   },
   justIcon: {
     paddingLeft: '12px',
