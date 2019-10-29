@@ -14,6 +14,9 @@ export const styles = (theme) => ({
     display: 'block',
     marginTop: '20px',
   },
+  detailsBtn: {
+    marginRight: 10,
+  },
 });
 
 export default makeStyles(styles);

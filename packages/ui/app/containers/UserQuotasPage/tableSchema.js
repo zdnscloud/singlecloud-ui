@@ -38,14 +38,21 @@ const tableSchema = schema
     {
       id: 'actions',
       label: 'Actions',
-      component: (props) => (
+      component: ({ data, classes }) => (
         <Fragment>
           <Button
-            variant="contained"
+            className={classes.detailsBtn}
             link
-            to={`/userQuotas/${props.data.get('id')}/edit`}
+            to={`/userQuotas/${data.get('id')}/show`}
             component={Link}
-            disabled={props.data.get('status') == 'processing'}
+          >
+            <FormattedMessage {...messages.quotaDetailsBtn} />
+          </Button>
+          <Button
+            link
+            to={`/userQuotas/${data.get('id')}/edit`}
+            component={Link}
+            disabled={data.get('status') === 'processing'}
           >
             <FormattedMessage {...messages.quotaAdjustmentBtn} />
           </Button>
@@ -54,20 +61,6 @@ const tableSchema = schema
     },
   ])
   .map((sch) => {
-    if (sch.id === 'namespace') {
-      return {
-        ...sch,
-        component: (props) => (
-          <Button
-            link
-            to={`/userQuotas/${props.data.get('id')}/show`}
-            component={Link}
-          >
-            {props.data.get('namespace')}
-          </Button>
-        ),
-      };
-    }
     if (sch.id === 'status') {
       return {
         ...sch,
@@ -75,16 +68,12 @@ const tableSchema = schema
           switch (props.data.get('status')) {
             case 'processing':
               return <FormattedMessage {...messages.tableProcessing} />;
-              break;
             case 'approval':
               return <FormattedMessage {...messages.tableApproval} />;
-              break;
             case 'rejection':
               return <FormattedMessage {...messages.tableRejection} />;
-              break;
             default:
               return props.data.get('status');
-              break;
           }
         },
       };
