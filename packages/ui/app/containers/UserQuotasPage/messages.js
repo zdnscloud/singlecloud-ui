@@ -193,4 +193,8 @@ export default defineMessages({
     id: `${scope}.quotaAdjustmentBtn`,
     defaultMessage: 'QuotaAdjustment',
   },
+  quotaDetailsBtn: {
+    id: `${scope}.quotaDetailsBtn`,
+    defaultMessage: 'Details',
+  },
 });

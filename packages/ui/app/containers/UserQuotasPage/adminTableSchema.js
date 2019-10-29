@@ -6,6 +6,7 @@ import IconButton from 'components/CustomIconButtons/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
 import TimeCell from 'components/Cells/TimeCell';
 import ShellIcon from 'components/Icons/Shell';
+import DetailsIcon from 'components/Icons/Details';
 import ConfirmDelete from 'components/ConfirmDelete/ConfirmDelete';
 import { FormattedMessage } from 'react-intl';
 import messages from './messages';
@@ -39,33 +40,28 @@ const adminTableSchema = schema
     {
       id: 'actions',
       label: 'Actions',
-      component: (props) => (
+      component: ({ data, removeUserQuota, setError }) => (
         <Fragment>
+          <IconButton
+            variant="outlined"
+            size="small"
+            to={`/userQuotas/${data.get('id')}/request`}
+            component={Link}
+            disabled={data.get('status') === 'Deleting'}
+          >
+            <DetailsIcon />
+          </IconButton>
           <ConfirmDelete
-            actionName={props.removeUserQuota}
-            id={props.data.get('id')}
-            url={props.data.getIn(['links', 'remove'])}
-            reject={(e) => props.setError(e)}
+            actionName={removeUserQuota}
+            id={data.get('id')}
+            url={data.getIn(['links', 'remove'])}
+            reject={(e) => setError(e)}
           />
         </Fragment>
       ),
     },
   ])
   .map((sch) => {
-    if (sch.id === 'namespace') {
-      return {
-        ...sch,
-        component: (props) => (
-          <Button
-            link
-            to={`/userQuotas/${props.data.get('id')}/request`}
-            component={Link}
-          >
-            {props.data.get('name')}
-          </Button>
-        ),
-      };
-    }
     if (sch.id === 'status') {
       return {
         ...sch,
