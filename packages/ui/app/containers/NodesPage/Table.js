@@ -25,7 +25,7 @@ import useStyles from './styles';
 import schema from './tableSchema';
 
 /* eslint-disable react/prefer-stateless-function */
-const NodesTable = ({ location, data, clusterID }) => {
+const NodesTable = ({ location, data, clusterID, executeNodeAction }) => {
   const classes = useStyles();
   const pathname = location.get('pathname');
   const mapedSchema = schema
@@ -34,6 +34,12 @@ const NodesTable = ({ location, data, clusterID }) => {
       label: <FormattedMessage {...messages[`tableTitle${sche.label}`]} />,
     }))
     .map((sch) => {
+      if (sch.id === 'actions') {
+        return {
+          ...sch,
+          props: { classes, executeNodeAction },
+        };
+      }
       if (sch.id === 'name') {
         return {
           ...sch,

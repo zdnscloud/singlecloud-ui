@@ -5,10 +5,13 @@ import { Link } from 'react-router-dom';
 import Button from 'components/CustomButtons/Button';
 import Chip from '@material-ui/core/Chip';
 import TimeCell from 'components/Cells/TimeCell';
+import { FormattedMessage } from 'react-intl';
+import messages from './messages';
 
 const schema = [
   'name',
   'address',
+  'status',
   'roles',
   // 'cpu',
   // 'memory',
@@ -71,6 +74,61 @@ const tableSchema = schema
       };
     }
     return item;
-  });
+  })
+  .concat([
+    {
+      id: 'actions',
+      label: 'Actions',
+      component: ({ data, classes, executeNodeAction }) => (
+        <Fragment>
+          <Button
+            className={classes.tableBtn}
+            link
+            onClick={() =>
+              executeNodeAction(
+                'cordon',
+                {},
+                {
+                  url: data.getIn(['links', 'self']),
+                }
+              )
+            }
+          >
+            <FormattedMessage {...messages.tableCordonBtn} />
+          </Button>
+          <Button
+            className={classes.tableBtn}
+            link
+            onClick={() =>
+              executeNodeAction(
+                'drain',
+                {},
+                {
+                  url: data.getIn(['links', 'self']),
+                }
+              )
+            }
+          >
+            <FormattedMessage {...messages.tableDrainBtn} />
+          </Button>
+          <Button
+            className={classes.tableBtn}
+            link
+            onClick={() =>
+              executeNodeAction(
+                'uncordon',
+                {},
+                {
+                  url: data.getIn(['links', 'self']),
+                }
+              )
+            }
+          >
+            <FormattedMessage {...messages.tableUncordonBtn} />
+          </Button>
+        </Fragment>
+      ),
+    },
+  ]);
 
 export default tableSchema;

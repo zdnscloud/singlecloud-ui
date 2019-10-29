@@ -41,6 +41,10 @@ export default defineMessages({
     id: `${scope}.tableTitleRoles`,
     defaultMessage: 'Role',
   },
+  tableTitleStatus: {
+    id: `${scope}.tableTitleStatus`,
+    defaultMessage: 'Status',
+  },
   tableTitleLabels: {
     id: `${scope}.tableTitleLabels`,
     defaultMessage: 'Labels',
@@ -112,5 +116,17 @@ export default defineMessages({
   value: {
     id: `${scope}.value`,
     defaultMessage: 'Value',
+  },
+  tableCordonBtn: {
+    id: `${scope}.tableCordonBtn`,
+    defaultMessage: 'Cordon',
+  },
+  tableDrainBtn: {
+    id: `${scope}.tableDrainBtn`,
+    defaultMessage: 'Drain',
+  },
+  tableUncordonBtn: {
+    id: `${scope}.tableUncordonBtn`,
+    defaultMessage: 'Uncordon',
   },
 });
