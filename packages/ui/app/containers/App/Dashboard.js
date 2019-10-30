@@ -1,3 +1,4 @@
+/* eslint-disable no-shadow */
 /**
  *
  * App.js
@@ -7,7 +8,7 @@
  *
  */
 
-import React, { useEffect, Fragment } from 'react';
+import React, { useEffect, Fragment, useCallback, useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
@@ -28,13 +29,14 @@ import * as actions from 'ducks/clusters/actions';
 import * as nsActions from 'ducks/namespaces/actions';
 import * as roleActions from 'ducks/role/actions';
 import * as eventsActions from 'ducks/events/actions';
+import * as appActions from 'ducks/app/actions';
 import { makeSelectShowEvents } from 'ducks/app/selectors';
 import {
   makeSelectCurrentID as makeSelectCurrentClusterID,
   makeSelectCurrent as makeSelectCurrentCluster,
   makeSelectURL,
 } from 'ducks/clusters/selectors';
-import { makeSelectIsLogin } from 'ducks/role/selectors';
+import { makeSelectIsLogin, makeSelectIsAdmin } from 'ducks/role/selectors';
 
 import EventsList from 'containers/EventsPage/EventsList';
 
@@ -53,6 +55,8 @@ export const Dashboard = ({
   loadNamespaces,
   openCluster,
   closeCluster,
+  isAdmin,
+  setLastNamespace,
 }) => {
   useEffect(() => {
     (async () => {
@@ -81,16 +85,49 @@ export const Dashboard = ({
     if (nsUrl) {
       loadNamespaces(nsUrl, { clusterID });
     }
-  }, [nsUrl]);
+  }, [clusterID, loadNamespaces, nsUrl]);
   const hasEvents = clusterID && showEvents;
   const classes = useStyles({ hasEvents });
+
+  const [redirectUrl, setRedirectUrl] = useState('/');
+  const redirectRef = useCallback(() => {
+    if (isAdmin) {
+      setRedirectUrl('/clusters');
+    } else {
+      loadClusters(url, {
+        resolve({ response: { data } }) {
+          if (data.length > 0) {
+            const nurl = data[0].links.namespaces;
+            const cID = data[0].id;
+            loadNamespaces(nurl, {
+              cID,
+              resolve({ response: { data } }) {
+                if (data.length > 0) {
+                  const nID = data[0].id;
+                  setLastNamespace(nID);
+                  setRedirectUrl(`/clusters/${cID}/namespaces/${nID}/overview`);
+                } else {
+                  setRedirectUrl('/userQuotas');
+                }
+              },
+              reject() {},
+              url,
+            });
+          } else {
+            setRedirectUrl('/userQuotas');
+          }
+        },
+        reject() {},
+      });
+    }
+  }, [isAdmin, loadClusters, loadNamespaces, setLastNamespace, url]);
 
   return (
     <div className={classes.wrapper}>
       <LeftMenu />
       <div className={classes.mainWrapper}>
         <AppMenubar />
-        <div className={classNames(classes.mainPanel)}>
+        <div className={classNames(classes.mainPanel)} ref={redirectRef}>
           <div className={classes.content}>
             <Switch>
               {appRoutes.map((route, key) => (
@@ -101,7 +138,7 @@ export const Dashboard = ({
                   component={route.component}
                 />
               ))}
-              <Redirect to="/clusters" />
+              <Redirect to={redirectUrl} />
             </Switch>
           </div>
           <div className={classes.events}>
@@ -121,6 +158,7 @@ const mapStateToProps = createStructuredSelector({
   clusterID: makeSelectCurrentClusterID(),
   showEvents: makeSelectShowEvents(),
   isLogin: makeSelectIsLogin(),
+  isAdmin: makeSelectIsAdmin(),
 });
 
 const mapDispatchToProps = (dispatch) =>
@@ -130,6 +168,7 @@ const mapDispatchToProps = (dispatch) =>
       ...nsActions,
       ...roleActions,
       ...eventsActions,
+      ...appActions,
     },
     dispatch
   );

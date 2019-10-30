@@ -27,7 +27,7 @@ import ConfirmDialog from 'components/Confirm/ConfirmDialog';
 import * as actions from 'ducks/app/actions';
 import * as mActions from 'ducks/monitors/actions';
 import * as rActions from 'ducks/registries/actions';
-import { makeSelectRole } from 'ducks/role/selectors';
+import { makeSelectRole, makeSelectIsAdmin } from 'ducks/role/selectors';
 import { makeSelectShowMenuText } from 'ducks/app/selectors';
 import {
   makeSelectCurrentID as makeSelectCurrentClusterID,
@@ -51,12 +51,14 @@ const OutLinks = ({
   formValues,
   createMonitor,
   createRegistry,
+  isAdmin,
 }) => {
-  const menus = [
+  let menus = [
     {
       name: 'ImageRegistry',
       icon: ImageRegistryIcon,
       role: 'registries',
+      adminOnly: true,
     },
     {
       name: 'ClusterWatch',
@@ -64,6 +66,9 @@ const OutLinks = ({
       role: 'monitors',
     },
   ];
+  if (!isAdmin) {
+    menus = menus.filter((m) => m.adminOnly === undefined);
+  }
   const classes = useStyles({ showText });
   const actions = {
     loadMonitors,
@@ -191,6 +196,7 @@ const mapStateToProps = createStructuredSelector({
   showText: makeSelectShowMenuText(),
   role: makeSelectRole(),
   formValues: getFormValues(formName),
+  isAdmin: makeSelectIsAdmin(),
 });
 
 const mapDispatchToProps = (dispatch) =>
