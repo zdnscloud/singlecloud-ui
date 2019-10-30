@@ -81,9 +81,7 @@ export const loadRoleEpic = (action$, state$, { ajax }) =>
             import('store').then((exports) => {
               const store = getByKey(exports, ['default', 'instance']);
               setTimeout(() => {
-                user === 'admin'
-                  ? store.dispatch(push('/clusters'))
-                  : store.dispatch(push('/userQuotas'));
+                store.dispatch(push('/'));
               }, 100);
             });
           }

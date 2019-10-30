@@ -149,7 +149,6 @@ export const makeSelectLeftMenus = () =>
               {
                 name: 'ServiceLink',
                 path: `/clusters/${cluster}/namespaces/${namespace}/serviceLink`,
-                adminOnly: true,
               },
             ],
             icon: SystemIcon,
