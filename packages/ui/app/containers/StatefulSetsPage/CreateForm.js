@@ -204,7 +204,7 @@ export const Form = ({
                     label={<FormattedMessage {...messages.formMemo} />}
                     fullWidth
                     inputProps={{ type: 'text', autoComplete: 'off' }}
-                    name="meno"
+                    name="memo"
                   />
                 </GridItem>
               </CardBody>
