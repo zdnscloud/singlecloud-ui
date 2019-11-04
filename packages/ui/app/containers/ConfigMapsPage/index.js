@@ -25,6 +25,7 @@ import CardBody from 'components/Card/CardBody';
 import GridItem from 'components/Grid/GridItem';
 import GridContainer from 'components/Grid/GridContainer';
 import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
+import Helmet from 'components/Helmet/Helmet';
 
 import { makeSelectCurrentID as makeSelectClusterID } from 'ducks/clusters/selectors';
 import { makeSelectCurrentID as makeSelectNamespaceID } from 'ducks/namespaces/selectors';
@@ -32,7 +33,6 @@ import * as actions from 'ducks/configMaps/actions';
 import { makeSelectURL } from 'ducks/configMaps/selectors';
 
 import messages from './messages';
-import ConfigMapsPageHelmet from './helmet';
 import useStyles from './styles';
 import ConfigMapsTable from './ConfigMapsTable';
 
@@ -51,7 +51,7 @@ export const ConfigMapsPage = ({
 
   return (
     <div className={classes.root}>
-      <ConfigMapsPageHelmet />
+      <Helmet title={messages.pageTitle} description={messages.pageDesc} />
       <CssBaseline />
       <div className={classes.content}>
         <Breadcrumbs

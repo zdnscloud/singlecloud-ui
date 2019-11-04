@@ -27,6 +27,7 @@ import Card from 'components/Card/Card';
 import CardHeader from 'components/Card/CardHeader';
 import CardBody from 'components/Card/CardBody';
 import CardFooter from 'components/Card/CardFooter';
+import Helmet from 'components/Helmet/Helmet';
 
 import {
   makeSelectURL,
@@ -38,7 +39,6 @@ import * as actions from 'ducks/userQuotas/actions';
 import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
 import messages from './messages';
 import useStyles from './styles';
-import UserQuotasPageHelmet from './helmet';
 import UserQuotaForm from './UserQuotaForm';
 
 export const formName = 'createUserQuotaForm';
@@ -107,7 +107,7 @@ const EditUserQuotaPage = ({
 
   return (
     <div className={classes.root}>
-      <UserQuotasPageHelmet />
+      <Helmet title={messages.pageTitle} description={messages.pageDesc} />
       <CssBaseline />
       <div className={classes.content}>
         <Breadcrumbs

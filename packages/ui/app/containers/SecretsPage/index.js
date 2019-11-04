@@ -24,6 +24,7 @@ import GridContainer from 'components/Grid/GridContainer';
 import Card from 'components/Card/Card';
 import CardHeader from 'components/Card/CardHeader';
 import CardBody from 'components/Card/CardBody';
+import Helmet from 'components/Helmet/Helmet';
 
 import { makeSelectCurrentID as makeSelectClusterID } from 'ducks/clusters/selectors';
 import { makeSelectCurrentID as makeSelectNamespaceID } from 'ducks/namespaces/selectors';
@@ -32,7 +33,6 @@ import { makeSelectURL } from 'ducks/secrets/selectors';
 
 import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
 import messages from './messages';
-import SecretsPageHelmet from './helmet';
 import useStyles from './styles';
 import SecretsTable from './SecretsTable';
 
@@ -52,7 +52,7 @@ export const SecretsPage = ({
 
   return (
     <div className={classes.root}>
-      <SecretsPageHelmet />
+      <Helmet title={messages.pageTitle} description={messages.pageDesc} />
       <CssBaseline />
       <div className={classes.content}>
         <Breadcrumbs

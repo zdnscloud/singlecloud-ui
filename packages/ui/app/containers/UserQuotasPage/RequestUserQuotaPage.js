@@ -24,6 +24,7 @@ import CardHeader from 'components/Card/CardHeader';
 import CardBody from 'components/Card/CardBody';
 import CardFooter from 'components/Card/CardFooter';
 import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
+import Helmet from 'components/Helmet/Helmet';
 import { makeSelectClusters } from 'ducks/clusters/selectors';
 
 import Button from '@material-ui/core/Button';
@@ -36,7 +37,6 @@ import {
 import * as actions from 'ducks/userQuotas/actions';
 
 import messages from './messages';
-import RequestUserQuotaPageHelmet from './helmet';
 import useStyles from './styles';
 import RequestUserQuotaForm from './RequestUserQuotaForm';
 
@@ -101,7 +101,7 @@ const RequestUserQuotaPage = ({
   }
   return (
     <div className={classes.root}>
-      <RequestUserQuotaPageHelmet />
+      <Helmet title={messages.pageTitle} description={messages.pageDesc} />
       <CssBaseline />
       <div className={classes.content}>
         <Breadcrumbs

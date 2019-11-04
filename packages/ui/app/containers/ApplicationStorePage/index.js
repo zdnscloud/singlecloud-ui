@@ -19,6 +19,7 @@ import GridItem from 'components/Grid/GridItem';
 import GridContainer from 'components/Grid/GridContainer';
 import Card from 'components/Card/Card';
 import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
+import Helmet from 'components/Helmet/Helmet';
 import Button from '@material-ui/core/Button';
 
 import { makeSelectCurrentID as makeSelectCurrentClusterID } from 'ducks/clusters/selectors';
@@ -29,7 +30,6 @@ import * as actions from 'ducks/charts/actions';
 import messages from './messages';
 import useStyles from './styles';
 import ApplicationsList from './ApplicationsList';
-import ApplicationStorePageHelmet from './helmet';
 import SearchForm from './form/searchForm';
 
 export const formName = 'searchApplicationsForm';
@@ -71,7 +71,7 @@ const ApplicationStorePage = ({
 
   return (
     <div className={classes.root}>
-      <ApplicationStorePageHelmet />
+      <Helmet title={messages.pageTitle} description={messages.pageDesc} />
       <CssBaseline />
       <div className={classes.content}>
         <Breadcrumbs
