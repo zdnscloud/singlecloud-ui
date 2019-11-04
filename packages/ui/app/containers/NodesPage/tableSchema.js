@@ -80,53 +80,72 @@ const tableSchema = schema
     {
       id: 'actions',
       label: 'Actions',
-      component: ({ data, classes, executeNodeAction }) => (
+      component: ({ data, classes, executeNodeAction, setError }) => (
         <Fragment>
-          <Button
-            className={classes.tableBtn}
-            link
-            onClick={() =>
+          <Confirm
+            handleConfirm={() =>
               executeNodeAction(
                 'cordon',
                 {},
                 {
                   url: data.getIn(['links', 'self']),
+                  resolve() {},
+                  reject(e) {
+                    setError(e);
+                  },
                 }
               )
             }
-          >
-            <FormattedMessage {...messages.tableCordonBtn} />
-          </Button>
-          <Button
-            className={classes.tableBtn}
-            link
-            onClick={() =>
+            dialogContentText={messages.cordonPromptText}
+            component={
+              <Button className={classes.tableBtn} link>
+                <FormattedMessage {...messages.tableCordonBtn} />
+              </Button>
+            }
+          />
+
+          <Confirm
+            handleConfirm={() =>
               executeNodeAction(
                 'drain',
                 {},
                 {
                   url: data.getIn(['links', 'self']),
+                  resolve() {},
+                  reject(e) {
+                    setError(e);
+                  },
                 }
               )
             }
-          >
-            <FormattedMessage {...messages.tableDrainBtn} />
-          </Button>
-          <Button
-            className={classes.tableBtn}
-            link
-            onClick={() =>
+            dialogContentText={messages.drainPromptText}
+            component={
+              <Button className={classes.tableBtn} link>
+                <FormattedMessage {...messages.tableDrainBtn} />
+              </Button>
+            }
+          />
+          <Confirm
+            handleConfirm={() =>
               executeNodeAction(
                 'uncordon',
                 {},
                 {
                   url: data.getIn(['links', 'self']),
+                  resolve() {},
+                  reject(e) {
+                    setError(e);
+                  },
                 }
               )
             }
-          >
-            <FormattedMessage {...messages.tableUncordonBtn} />
-          </Button>
+            dialogContentText={messages.uncordonPromptText}
+            component={
+              <Button className={classes.tableBtn} link>
+                <FormattedMessage {...messages.tableUncordonBtn} />
+              </Button>
+            }
+          />
         </Fragment>
       ),
     },

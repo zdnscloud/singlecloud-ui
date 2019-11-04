@@ -25,7 +25,13 @@ import useStyles from './styles';
 import schema from './tableSchema';
 
 /* eslint-disable react/prefer-stateless-function */
-const NodesTable = ({ location, data, clusterID, executeNodeAction }) => {
+const NodesTable = ({
+  location,
+  data,
+  clusterID,
+  executeNodeAction,
+  setError,
+}) => {
   const classes = useStyles();
   const pathname = location.get('pathname');
   const mapedSchema = schema
@@ -37,7 +43,7 @@ const NodesTable = ({ location, data, clusterID, executeNodeAction }) => {
       if (sch.id === 'actions') {
         return {
           ...sch,
-          props: { classes, executeNodeAction },
+          props: { classes, executeNodeAction, setError },
         };
       }
       if (sch.id === 'name') {
