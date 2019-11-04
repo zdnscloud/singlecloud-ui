@@ -46,9 +46,14 @@ const NodesPage = ({ clusterID, url, loadNodes }) => {
         clusterID,
       });
     }
-    return () => {
-      // try cancel something when unmount
-    };
+    const t = setInterval(() => {
+      if (url) {
+        loadNodes(url, {
+          clusterID,
+        });
+      }
+    }, 3000);
+    return () => clearInterval(t);
   }, [clusterID, loadNodes, url]);
 
   return (

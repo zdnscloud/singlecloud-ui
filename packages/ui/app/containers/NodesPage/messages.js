@@ -129,4 +129,16 @@ export default defineMessages({
     id: `${scope}.tableUncordonBtn`,
     defaultMessage: 'Uncordon',
   },
+  cordonPromptText: {
+    id: `${scope}.cordonPromptText`,
+    defaultMessage: 'Are you sure you want to do operation cordon ?',
+  },
+  drainPromptText: {
+    id: `${scope}.drainPromptText`,
+    defaultMessage: 'Are you sure you want to do operation drain',
+  },
+  uncordonPromptText: {
+    id: `${scope}.uncordonPromptText`,
+    defaultMessage: 'Are you sure you want to do operation uncordon',
+  },
 });

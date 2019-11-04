@@ -6,6 +6,7 @@ import Button from 'components/CustomButtons/Button';
 import Chip from '@material-ui/core/Chip';
 import TimeCell from 'components/Cells/TimeCell';
 import { FormattedMessage } from 'react-intl';
+import Confirm from 'components/Confirm/Confirm';
 import messages from './messages';
 
 const schema = [
