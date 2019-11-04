@@ -156,7 +156,7 @@ const Containers = ({
                   </ListItemText>
                 </CardBody>
               </Card>
-              {fields.length > 1 ? (
+              {fields.length > 1 && role !== 'update' ? (
                 <IconButton
                   variant="contained"
                   onClick={(evt) => fields.remove(i)}
