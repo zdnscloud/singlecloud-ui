@@ -1,5 +1,3 @@
-/* eslint-disable jsx-a11y/click-events-have-key-events */
-/* eslint-disable jsx-a11y/no-static-element-interactions */
 import React, { Fragment, useState } from 'react';
 // @material-ui/core components
 import Button from '@material-ui/core/Button';
