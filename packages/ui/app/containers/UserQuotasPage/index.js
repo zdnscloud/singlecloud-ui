@@ -25,6 +25,7 @@ import CardBody from 'components/Card/CardBody';
 import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
 import IconButton from '@material-ui/core/IconButton';
 import AddIcon from 'components/Icons/Add';
+import Helmet from 'components/Helmet/Helmet';
 
 import { makeSelectURL } from 'ducks/userQuotas/selectors';
 import * as actions from 'ducks/userQuotas/actions';
@@ -32,7 +33,6 @@ import * as actions from 'ducks/userQuotas/actions';
 import messages from './messages';
 import useStyles from './styles';
 import UserQuotasTable from './UserQuotasTable';
-import UserQuotasPageHelmet from './helmet';
 
 const UserQuotasPage = ({ url, loadUserQuotas }) => {
   const classes = useStyles();
@@ -47,7 +47,7 @@ const UserQuotasPage = ({ url, loadUserQuotas }) => {
 
   return (
     <div className={classes.root}>
-      <UserQuotasPageHelmet />
+      <Helmet title={messages.pageTitle} description={messages.pageDesc} />
       <CssBaseline />
       <div className={classes.content}>
         <Breadcrumbs

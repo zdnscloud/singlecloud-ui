@@ -23,6 +23,7 @@ import CardHeader from 'components/Card/CardHeader';
 import CardBody from 'components/Card/CardBody';
 import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
 import AddIcon from 'components/Icons/Add';
+import Helmet from 'components/Helmet/Helmet';
 import IconButton from '@material-ui/core/IconButton';
 
 import {
@@ -36,7 +37,6 @@ import { makeSelectURL } from 'ducks/nodes/selectors';
 import messages from './messages';
 import useStyles from './styles';
 import NodesTable from './Table';
-import NodesPageHelmet from './helmet';
 
 const NodesPage = ({ clusterID, url, loadNodes }) => {
   const classes = useStyles();
@@ -53,7 +53,7 @@ const NodesPage = ({ clusterID, url, loadNodes }) => {
 
   return (
     <div className={classes.root}>
-      <NodesPageHelmet />
+      <Helmet title={messages.pageTitle} description={messages.pageDesc} />
       <CssBaseline />
       <div className={classes.content}>
         <Breadcrumbs

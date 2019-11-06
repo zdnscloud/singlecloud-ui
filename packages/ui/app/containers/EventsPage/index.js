@@ -25,6 +25,7 @@ import Card from 'components/Card/Card';
 import CardHeader from 'components/Card/CardHeader';
 import CardBody from 'components/Card/CardBody';
 import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
+import Helmet from 'components/Helmet/Helmet';
 
 import { makeSelectEvents } from 'ducks/events/selectors';
 import * as actions from 'ducks/events/actions';
@@ -32,7 +33,6 @@ import * as actions from 'ducks/events/actions';
 import messages from './messages';
 import useStyles from './styles';
 import EventsTable from './Table';
-import EventsPageHelmet from './helmet';
 import FilterForm from './EventsFilterForm';
 
 export const formName = 'eventsFilterForm';
@@ -69,7 +69,7 @@ const EventsPage = ({ clusterID, events, filters }) => {
 
   return (
     <div className={classes.root}>
-      <EventsPageHelmet />
+      <Helmet title={messages.pageTitle} description={messages.pageDesc} />
       <CssBaseline />
       <div className={classes.content}>
         <Breadcrumbs

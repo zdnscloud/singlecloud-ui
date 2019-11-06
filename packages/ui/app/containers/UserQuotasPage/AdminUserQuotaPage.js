@@ -30,6 +30,7 @@ import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
 import IconButton from '@material-ui/core/IconButton';
 import Button from '@material-ui/core/Button';
 import ErrorInfo from 'components/ErrorInfo/ErrorInfo';
+import Helmet from 'components/Helmet/Helmet';
 
 import {
   makeSelectURL,
@@ -40,7 +41,6 @@ import * as actions from 'ducks/userQuotas/actions';
 import messages from './messages';
 import useStyles from './styles';
 import AdminUserQuotasTable from './AdminUserQuotasTable';
-import AdminUserQuotaPageHelmet from './helmet';
 import UserQuotaForm from './form/searchForm';
 
 export const formName = 'searchUserQuotaForm';
@@ -80,7 +80,7 @@ const AdminUserQuotaPage = ({ submitForm, loadUserQuotas, url }) => {
 
   return (
     <div className={classes.root}>
-      <AdminUserQuotaPageHelmet />
+      <Helmet title={messages.pageTitle} description={messages.pageDesc} />
       <CssBaseline />
       <div className={classes.content}>
         <Breadcrumbs

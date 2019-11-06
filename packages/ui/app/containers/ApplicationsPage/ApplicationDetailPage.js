@@ -17,6 +17,7 @@ import GridContainer from 'components/Grid/GridContainer';
 import Card from 'components/Card/Card';
 import CardHeader from 'components/Card/CardHeader';
 import CardBody from 'components/Card/CardBody';
+import Helmet from 'components/Helmet/Helmet';
 
 import {
   makeSelectURL,
@@ -31,7 +32,6 @@ import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
 import dayjs from 'dayjs';
 import messages from './messages';
 import useStyles from './styles';
-import ApplicationsPageHelmet from './helmet';
 import ApplicationsTable from './ApplicationsTable';
 
 export const ApplicationDetailPage = ({
@@ -60,7 +60,7 @@ export const ApplicationDetailPage = ({
 
   return (
     <div className={classes.root}>
-      <ApplicationsPageHelmet />
+      <Helmet title={messages.pageTitle} description={messages.pageDesc} />
       <CssBaseline />
       <div className={classes.content}>
         <Breadcrumbs

@@ -21,6 +21,7 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import GridItem from 'components/Grid/GridItem';
 import GridContainer from 'components/Grid/GridContainer';
+import Helmet from 'components/Helmet/Helmet';
 
 import { makeSelectCurrentID as makeSelectCurrentClusterID } from 'ducks/clusters/selectors';
 import { makeSelectCurrentID as makeSelectCurrentNamespaceID } from 'ducks/namespaces/selectors';
@@ -35,7 +36,6 @@ import * as actions from 'ducks/applications/actions';
 import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
 import messages from './messages';
 import useStyles from './styles';
-import ApplicationsPageHelmet from './helmet';
 import ApplicationForm from './ApplicationForm';
 
 export const formName = 'createApplicationForm';
@@ -106,7 +106,7 @@ export const CreateApplicationPage = ({
 
   return (
     <div className={classes.root}>
-      <ApplicationsPageHelmet />
+      <Helmet title={messages.pageTitle} description={messages.pageDesc} />
       <CssBaseline />
       <div className={classes.content}>
         <Breadcrumbs
