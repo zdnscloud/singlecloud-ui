@@ -31,7 +31,13 @@ const tableSchema = schema
       label: 'Actions',
       component: (props) => (
         <Fragment>
-          <IconButton onClick={() => props.setUpgrade(props.data.get('id'))}>
+          <IconButton
+            aria-label="Update"
+            component={Link}
+            to={`/clusters/${props.clusterID}/namespaces/${
+              props.namespaceID
+            }/statefulSets/${props.data.get('id')}/update`}
+          >
             <UpgradeIcon />
           </IconButton>
 

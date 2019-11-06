@@ -27,11 +27,11 @@ import { makeSelectCurrentID as makeSelectCurrentNamespaceID } from 'ducks/names
 import { makeSelectURL } from 'ducks/applications/selectors';
 import * as actions from 'ducks/applications/actions';
 import ErrorInfo from 'components/ErrorInfo/ErrorInfo';
+import Helmet from 'components/Helmet/Helmet';
 
 import messages from './messages';
 import useStyles from './styles';
 import ApplicationsList from './ApplicationsList';
-import ApplicationsPageHelmet from './helmet';
 import SearchForm from './form/searchForm';
 
 export const formName = 'searchApplicationsForm';
@@ -75,7 +75,7 @@ const ApplicationsPage = ({
 
   return (
     <div className={classes.root}>
-      <ApplicationsPageHelmet />
+      <Helmet title={messages.pageTitle} description={messages.pageDesc} />
       <CssBaseline />
       <div className={classes.content}>
         <Breadcrumbs

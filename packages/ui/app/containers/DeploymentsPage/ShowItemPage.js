@@ -102,9 +102,7 @@ export const DeploymentDetailPage = ({
                   <FormattedMessage {...messages.pods} />
                 </h4>
               </CardHeader>
-              <CardBody>
-                <PodsTable />
-              </CardBody>
+              <CardBody>{/* <PodsTable /> */}</CardBody>
             </Card>
           </GridItem>
         </GridContainer>

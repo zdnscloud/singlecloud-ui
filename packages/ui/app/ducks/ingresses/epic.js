@@ -60,6 +60,27 @@ export const createIngressEpic = (action$, state$, { ajax }) =>
     )
   );
 
+export const updateIngressEpic = (action$, state$, { ajax }) =>
+  action$.pipe(
+    ofType(c.UPDATE_INGRESS),
+    mergeMap(({ payload, meta }) =>
+      ajax({
+        url: `${meta.url}`,
+        method: 'PUT',
+        body: payload,
+      }).pipe(
+        map((resp) => {
+          meta.resolve && meta.resolve(resp);
+          return a.updateIngressSuccess(resp, meta);
+        }),
+        catchError((error) => {
+          meta.reject && meta.reject(error);
+          return of(a.updateIngressFailure(error, meta));
+        })
+      )
+    )
+  );
+
 export const readIngressEpic = (action$, state$, { ajax }) =>
   action$.pipe(
     ofType(c.READ_INGRESS),
@@ -103,6 +124,7 @@ export const removeIngressEpic = (action$, state$, { ajax }) =>
 export default combineEpics(
   loadIngressesEpic,
   createIngressEpic,
+  updateIngressEpic,
   readIngressEpic,
   removeIngressEpic
 );

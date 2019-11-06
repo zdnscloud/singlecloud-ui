@@ -29,6 +29,7 @@ import CardBody from 'components/Card/CardBody';
 import CardFooter from 'components/Card/CardFooter';
 import ReadOnlyInput from 'components/CustomInput/ReadOnlyInput';
 import CircleChart from 'components/Charts/Circle';
+import Helmet from 'components/Helmet/Helmet';
 
 import {
   makeSelectCurrentID as makeSelectCurrentClusterID,
@@ -44,7 +45,6 @@ import * as actions from 'ducks/nodes/actions';
 import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
 import messages from './messages';
 import useStyles from './styles';
-import NodesPageHelmet from './helmet';
 
 export const NodeDetailPage = ({ clusterID, url, readNode, node, nodeID }) => {
   const classes = useStyles();
@@ -62,7 +62,7 @@ export const NodeDetailPage = ({ clusterID, url, readNode, node, nodeID }) => {
 
   return (
     <div className={classes.root}>
-      <NodesPageHelmet />
+      <Helmet title={messages.pageTitle} description={messages.pageDesc} />
       <CssBaseline />
       <div className={classes.content}>
         <Breadcrumbs

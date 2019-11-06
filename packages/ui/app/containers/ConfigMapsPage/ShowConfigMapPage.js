@@ -39,6 +39,7 @@ import CardBody from 'components/Card/CardBody';
 import CardHeader from 'components/Card/CardHeader';
 import CardFooter from 'components/Card/CardFooter';
 import ReadOnlyInput from 'components/CustomInput/ReadOnlyInput';
+import Helmet from 'components/Helmet/Helmet';
 
 import { makeSelectCurrentID as makeSelectClusterID } from 'ducks/clusters/selectors';
 import { makeSelectCurrentID as makeSelectNamespaceID } from 'ducks/namespaces/selectors';
@@ -50,7 +51,6 @@ import {
 } from 'ducks/configMaps/selectors';
 
 import messages from './messages';
-import ConfigMapsPageHelmet from './helmet';
 import useStyles from './styles';
 
 export const ShowConfigMap = ({
@@ -72,7 +72,7 @@ export const ShowConfigMap = ({
 
   return (
     <div className={classes.root}>
-      <ConfigMapsPageHelmet />
+      <Helmet title={messages.pageTitle} description={messages.pageDesc} />
       <CssBaseline />
       <div className={classes.content}>
         <Breadcrumbs

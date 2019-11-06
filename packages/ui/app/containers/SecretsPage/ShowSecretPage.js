@@ -34,6 +34,7 @@ import CardHeader from 'components/Card/CardHeader';
 import CardFooter from 'components/Card/CardFooter';
 import ReadOnlyInput from 'components/CustomInput/ReadOnlyInput';
 import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
+import Helmet from 'components/Helmet/Helmet';
 
 import { makeSelectCurrentID as makeSelectClusterID } from 'ducks/clusters/selectors';
 import { makeSelectCurrentID as makeSelectNamespaceID } from 'ducks/namespaces/selectors';
@@ -45,7 +46,6 @@ import {
 } from 'ducks/secrets/selectors';
 
 import messages from './messages';
-import SecretsPageHelmet from './helmet';
 import useStyles from './styles';
 
 export const ShowSecret = ({
@@ -63,7 +63,7 @@ export const ShowSecret = ({
 
   return (
     <div className={classes.root}>
-      <SecretsPageHelmet />
+      <Helmet title={messages.pageTitle} description={messages.pageDesc} />
       <CssBaseline />
       <div className={classes.content}>
         <Breadcrumbs

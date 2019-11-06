@@ -46,6 +46,25 @@ export const createDeploymentFailure = (error, meta = {}) => ({
   error: true,
 });
 
+export const updateDeployment = (data, meta = {}) => ({
+  type: c.UPDATE_DEPLOYMENT,
+  payload: data,
+  meta,
+});
+
+export const updateDeploymentSuccess = (resp, meta = {}) => ({
+  type: c.UPDATE_DEPLOYMENT_SUCCESS,
+  payload: resp,
+  meta,
+});
+
+export const updateDeploymentFailure = (error, meta = {}) => ({
+  type: c.UPDATE_DEPLOYMENT_FAILURE,
+  payload: error,
+  meta,
+  error: true,
+});
+
 export const readDeployment = (id, meta = {}) => ({
   type: c.READ_DEPLOYMENT,
   payload: id,

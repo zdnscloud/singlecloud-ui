@@ -26,13 +26,27 @@ import VolumeClaimTemplate from './form/VolumeClaimTemplate';
 import messages from './messages';
 import useStyles from './styles';
 
-export const DeploymentForm = ({
+export const formName = 'createDeploymentForm';
+
+const validate = (values) => {
+  const errors = {};
+  const requiredFields = ['name'];
+  requiredFields.forEach((field) => {
+    if (!values.get(field)) {
+      errors[field] = 'Required';
+    }
+  });
+  return errors;
+};
+
+export const Form = ({
   handleSubmit,
   error,
   configMaps,
   secrets,
   storageClasses,
   formValues,
+  role,
 }) => {
   const classes = useStyles();
 
@@ -48,7 +62,11 @@ export const DeploymentForm = ({
           <Card>
             <CardHeader>
               <h4>
-                <FormattedMessage {...messages.createDeployment} />
+                {role === 'update' ? (
+                  <FormattedMessage {...messages.updateDeployment} />
+                ) : (
+                  <FormattedMessage {...messages.createDeployment} />
+                )}
               </h4>
             </CardHeader>
             <CardBody>
@@ -58,6 +76,7 @@ export const DeploymentForm = ({
                     label={<FormattedMessage {...messages.formName} />}
                     name="name"
                     fullWidth
+                    disabled={role === 'update'}
                     inputProps={{ type: 'text', autoComplete: 'off' }}
                   />
                 </GridItem>
@@ -67,6 +86,7 @@ export const DeploymentForm = ({
                     name="replicas"
                     normalize={(val) => (val ? Number(val) : val)}
                     fullWidth
+                    disabled={role === 'update'}
                     inputProps={{
                       type: 'number',
                       autoComplete: 'off',
@@ -87,6 +107,7 @@ export const DeploymentForm = ({
             configMaps={configMaps}
             secrets={secrets}
             formValues={formValues}
+            role={role}
           />
         </GridItem>
         <GridItem xs={12} sm={12} md={12}>
@@ -112,6 +133,7 @@ export const DeploymentForm = ({
                           {...messages.formReloadWhenConfigChange}
                         />
                       }
+                      disabled={role === 'update'}
                     />
                   </GridItem>
                 </GridContainer>
@@ -124,6 +146,7 @@ export const DeploymentForm = ({
                       fullWidth
                       inputProps={{ type: 'text', autoComplete: 'off' }}
                       name="exposedMetric.path"
+                      disabled={role === 'update'}
                     />
                   </GridItem>
                   <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
@@ -140,6 +163,7 @@ export const DeploymentForm = ({
                         max: 65535,
                       }}
                       name="exposedMetric.port"
+                      disabled={role === 'update'}
                     />
                   </GridItem>
                 </GridContainer>
@@ -161,13 +185,40 @@ export const DeploymentForm = ({
                 component={VolumeClaimTemplate}
                 formValues={formValues}
                 storageClasses={storageClasses}
+                role={role}
               />
             </CardBody>
           </Card>
         </GridItem>
+        {role === 'update' ? (
+          <GridItem xs={12} sm={12} md={12}>
+            <Card>
+              <CardHeader>
+                <h4>
+                  <FormattedMessage {...messages.formUpdateMemo} />
+                </h4>
+              </CardHeader>
+              <CardBody>
+                <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
+                  <InputField
+                    label={<FormattedMessage {...messages.formMemo} />}
+                    fullWidth
+                    inputProps={{ type: 'text', autoComplete: 'off' }}
+                    name="memo"
+                  />
+                </GridItem>
+              </CardBody>
+            </Card>
+          </GridItem>
+        ) : null}
       </GridContainer>
     </form>
   );
 };
+
+const DeploymentForm = reduxForm({
+  form: formName,
+  validate,
+})(Form);
 
 export default DeploymentForm;

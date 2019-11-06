@@ -26,7 +26,12 @@ const NodeWorkTemplate = ({
   <Fragment>
     <GridContainer>
       <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
-        <Button color="secondary" onClick={(evt) => fields.push(fromJS({}))}>
+        <Button
+          color="secondary"
+          onClick={(evt) =>
+            fields.push(fromJS({ name: '', addrsss: '', roles: [] }))
+          }
+        >
           <FormattedMessage {...messages.formAddWorkNode} />
           <PlusIcon />
         </Button>

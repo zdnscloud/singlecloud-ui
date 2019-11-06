@@ -21,6 +21,7 @@ import CardFooter from 'components/Card/CardFooter';
 import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
 import ReadOnlyInput from 'components/CustomInput/ReadOnlyInput';
 import ReadOnlyTextarea from 'components/CustomTextarea/ReadOnlyTextarea';
+import Helmet from 'components/Helmet/Helmet';
 
 import Button from '@material-ui/core/Button';
 import { Link } from 'react-router-dom';
@@ -33,7 +34,6 @@ import {
 import * as actions from 'ducks/userQuotas/actions';
 
 import messages from './messages';
-import UserQuotaDetailPageHelmet from './helmet';
 import useStyles from './styles';
 
 const UserQuotaDetailPage = ({
@@ -59,7 +59,7 @@ const UserQuotaDetailPage = ({
   const storage = userQuota.get('storage');
   return (
     <div className={classes.root}>
-      <UserQuotaDetailPageHelmet />
+      <Helmet title={messages.pageTitle} description={messages.pageDesc} />
       <CssBaseline />
       <div className={classes.content}>
         <Breadcrumbs

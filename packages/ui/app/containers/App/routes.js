@@ -24,14 +24,17 @@ import EventsPage from 'containers/EventsPage/Loadable';
 import DeploymentsPage, {
   CreateDeploymentPage,
   DeploymentDetailPage,
+  UpdateDeploymentPage,
 } from 'containers/DeploymentsPage/Loadable';
 import StatefulSetsPage, {
   CreateStatefulSetPage,
   StatefulSetDetailPage,
+  UpdateStatefulSetPage,
 } from 'containers/StatefulSetsPage/Loadable';
 import DaemonSetsPage, {
   CreateDaemonSetPage,
   DaemonSetDetailPage,
+  UpdateDaemonSetPage,
 } from 'containers/DaemonSetsPage/Loadable';
 import CronJobsPage, {
   CreateCronJobPage,
@@ -228,11 +231,19 @@ const appRoutes = [
   },
   {
     path:
+      '/clusters/:cluster_id/namespaces/:namespace_id/deployments/:deployment_id/update',
+    name: ' Update Deployment',
+    icon: Dashboard,
+    component: UpdateDeploymentPage,
+  },
+  {
+    path:
       '/clusters/:cluster_id/namespaces/:namespace_id/deployments/:deployment_id/show',
     name: 'Deployment Detail',
     icon: Dashboard,
     component: DeploymentDetailPage,
   },
+
   // deployment end
   // statefulset
   {
@@ -246,6 +257,13 @@ const appRoutes = [
     name: 'Create StatefulSet',
     icon: Dashboard,
     component: CreateStatefulSetPage,
+  },
+  {
+    path:
+      '/clusters/:cluster_id/namespaces/:namespace_id/statefulSets/:stateful_set_id/update',
+    name: 'Update StatefulSet',
+    icon: Dashboard,
+    component: UpdateStatefulSetPage,
   },
   {
     path:
@@ -267,6 +285,13 @@ const appRoutes = [
     name: 'Create DaemonSet',
     icon: Dashboard,
     component: CreateDaemonSetPage,
+  },
+  {
+    path:
+      '/clusters/:cluster_id/namespaces/:namespace_id/daemonSets/:daemonset_set_id/update',
+    name: 'Update DaemonSet',
+    icon: Dashboard,
+    component: UpdateDaemonSetPage,
   },
   {
     path:

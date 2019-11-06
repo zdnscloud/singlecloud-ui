@@ -16,6 +16,7 @@ import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import GridItem from 'components/Grid/GridItem';
 import GridContainer from 'components/Grid/GridContainer';
+import Helmet from 'components/Helmet/Helmet';
 
 import { makeSelectLastNamespace } from 'ducks/app/selectors';
 import * as appActions from 'ducks/app/actions';
@@ -29,7 +30,6 @@ import { makeSelectNamespaces } from 'ducks/namespaces/selectors';
 
 import messages from './messages';
 import useStyles from './styles';
-import ClusterDetailPageHelmet from './helmet';
 import ClusterDetail from './ClusterDetail';
 
 export const ClusterDetailPage = ({
@@ -58,7 +58,7 @@ export const ClusterDetailPage = ({
 
   return (
     <div className={classes.root}>
-      <ClusterDetailPageHelmet />
+      <Helmet title={messages.pageTitle} description={messages.pageDesc} />
       <CssBaseline />
       <div className={classes.content}>
         <Breadcrumbs
