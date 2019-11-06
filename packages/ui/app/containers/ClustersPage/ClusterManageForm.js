@@ -1,4 +1,3 @@
-/* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { PureComponent, Fragment, useState } from 'react';
 import { FormattedMessage } from 'react-intl';
 import getByKey from '@gsmlg/utils/getByKey';

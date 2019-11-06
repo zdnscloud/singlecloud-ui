@@ -45,6 +45,10 @@ export default defineMessages({
     id: `${scope}.createDeployment`,
     defaultMessage: 'Create Deployment',
   },
+  updateDeployment: {
+    id: `${scope}.updateDeployment`,
+    defaultMessage: 'Update Deployment',
+  },
   pods: {
     id: `${scope}.pods`,
     defaultMessage: 'Pods',
@@ -261,5 +265,29 @@ export default defineMessages({
   dialogCancelButton: {
     id: `${scope}.dialogCancelButton`,
     defaultMessage: 'Cancel',
+  },
+  updatePageTitle: {
+    id: `${scope}.updatePageTitle`,
+    defaultMessage: 'Update Deployments',
+  },
+  updatePageDesc: {
+    id: `${scope}.updatePageDesc`,
+    defaultMessage: 'Description of Update Deployments',
+  },
+  updateDeployments: {
+    id: `${scope}.updateDeployments`,
+    defaultMessage: 'Update Deployments',
+  },
+  update: {
+    id: `${scope}.update`,
+    defaultMessage: 'Update',
+  },
+  formUpdateMemo: {
+    id: `${scope}.UpdateMemo`,
+    defaultMessage: 'Update Memo',
+  },
+  formMemo: {
+    id: `${scope}.Memo`,
+    defaultMessage: 'Memo',
   },
 });

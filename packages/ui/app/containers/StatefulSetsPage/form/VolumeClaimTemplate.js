@@ -19,6 +19,7 @@ const VolumeClaimTemplate = ({
   fields,
   storageClasses,
   meta: { error, submitFailed },
+  role,
 }) => {
   const classes = useStyles();
   const storageClassesOptions = storageClasses.toList().map((sc) => ({
@@ -30,10 +31,15 @@ const VolumeClaimTemplate = ({
     <Fragment>
       <GridContainer>
         <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
-          <Button color="secondary" onClick={(evt) => fields.push(fromJS({}))}>
-            <FormattedMessage {...messages.formAddVolumeClaimTemplate} />
-            <PlusIcon />
-          </Button>
+          {role === 'update' ? null : (
+            <Button
+              color="secondary"
+              onClick={(evt) => fields.push(fromJS({}))}
+            >
+              <FormattedMessage {...messages.formAddVolumeClaimTemplate} />
+              <PlusIcon />
+            </Button>
+          )}
         </GridItem>
       </GridContainer>
       {submitFailed && error && (
@@ -51,6 +57,7 @@ const VolumeClaimTemplate = ({
               name={`${f}.name`}
               fullWidth
               inputProps={{ type: 'text', autoComplete: 'off' }}
+              disabled={role === 'update'}
             />
           </GridItem>
           <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
@@ -65,6 +72,7 @@ const VolumeClaimTemplate = ({
                 autoComplete: 'off',
                 endAdornment: 'Gi',
               }}
+              disabled={role === 'update'}
             />
           </GridItem>
           <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
@@ -82,19 +90,25 @@ const VolumeClaimTemplate = ({
               }}
               classes={classes}
               options={storageClassesOptions}
+              disabled={role === 'update'}
             />
           </GridItem>
-          <GridItem
-            xs={3}
-            sm={3}
-            md={3}
-            className={classes.formLine}
-            style={{ paddingTop: 10 }}
-          >
-            <IconButton variant="contained" onClick={(evt) => fields.remove(i)}>
-              <MinusIcon />
-            </IconButton>
-          </GridItem>
+          {role === 'update' ? null : (
+            <GridItem
+              xs={3}
+              sm={3}
+              md={3}
+              className={classes.formLine}
+              style={{ paddingTop: 10 }}
+            >
+              <IconButton
+                variant="contained"
+                onClick={(evt) => fields.remove(i)}
+              >
+                <MinusIcon />
+              </IconButton>
+            </GridItem>
+          )}
         </GridContainer>
       ))}
     </Fragment>

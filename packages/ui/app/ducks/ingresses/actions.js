@@ -46,6 +46,25 @@ export const createIngressFailure = (error, meta = {}) => ({
   error: true,
 });
 
+export const updateIngress = (data, meta = {}) => ({
+  type: c.UPDATE_INGRESS,
+  payload: data,
+  meta,
+});
+
+export const updateIngressSuccess = (resp, meta = {}) => ({
+  type: c.UPDATE_INGRESS_SUCCESS,
+  payload: resp,
+  meta,
+});
+
+export const updateIngressFailure = (error, meta = {}) => ({
+  type: c.UPDATE_INGRESS_FAILURE,
+  payload: error,
+  meta,
+  error: true,
+});
+
 export const readIngress = (id, meta = {}) => ({
   type: c.READ_INGRESS,
   payload: id,

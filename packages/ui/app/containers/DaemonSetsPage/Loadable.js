@@ -17,3 +17,7 @@ export const CreateDaemonSetPage = loadable(() =>
 export const DaemonSetDetailPage = loadable(() =>
   import(/* webpackChunkName: "DaemonSetDetailPage" */ './ShowItemPage')
 );
+
+export const UpdateDaemonSetPage = loadable(() =>
+  import(/* webpackChunkName: "UpdateDaemonSetPage" */ './UpdatePage')
+);

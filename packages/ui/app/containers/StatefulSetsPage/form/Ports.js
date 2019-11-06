@@ -48,7 +48,7 @@ import MinusIcon from 'components/Icons/Minus';
 
 import messages from '../messages';
 
-const Ports = ({ fields, meta: { error, submitFailed } }) => {
+const Ports = ({ fields, meta: { error, submitFailed }, role }) => {
   const options = [
     { label: 'TCP', value: 'tcp' },
     { label: 'UDP', value: 'udp' },
@@ -58,13 +58,17 @@ const Ports = ({ fields, meta: { error, submitFailed } }) => {
     <List component="ul">
       <ListItem>
         <ListItemText>
-          <Button
-            color="secondary"
-            onClick={(evt) => fields.push(fromJS({ protocol: 'tcp' }))}
-          >
+          {role === 'update' ? (
             <FormattedMessage {...messages.formExposedPorts} />
-            <PlusIcon />
-          </Button>
+          ) : (
+            <Button
+              color="secondary"
+              onClick={(evt) => fields.push(fromJS({ protocol: 'tcp' }))}
+            >
+              <FormattedMessage {...messages.formExposedPorts} />
+              <PlusIcon />
+            </Button>
+          )}
         </ListItemText>
       </ListItem>
       {fields.map((f, i) => (
@@ -73,6 +77,7 @@ const Ports = ({ fields, meta: { error, submitFailed } }) => {
             <InputField
               label={<FormattedMessage {...messages.formPortName} />}
               name={`${f}.name`}
+              disabled={role === 'update'}
             />
             &nbsp;&nbsp;&nbsp;&nbsp;
             <SelectField
@@ -84,6 +89,7 @@ const Ports = ({ fields, meta: { error, submitFailed } }) => {
                   width: '146px',
                 },
               }}
+              disabled={role === 'update'}
             />
             &nbsp;&nbsp;&nbsp;&nbsp;
             <InputField
@@ -93,10 +99,11 @@ const Ports = ({ fields, meta: { error, submitFailed } }) => {
               inputProps={{
                 type: 'number',
               }}
+              disabled={role === 'update'}
             />
           </ListItemText>
           <IconButton variant="contained" onClick={(evt) => fields.remove(i)}>
-            <MinusIcon />
+            {role === 'update' ? null : <MinusIcon />}
           </IconButton>
         </ListItem>
       ))}

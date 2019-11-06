@@ -104,6 +104,15 @@ export const makeSelectCreateErrorsList = () =>
         .filter(({ type }) => type === c.CREATE_STATEFUL_SET_FAILURE)
   );
 
+export const makeSelectUpdateErrorsList = () =>
+  createSelector(
+    selectDomain,
+    (substate) =>
+      substate
+        .get('errorsList')
+        .filter(({ type }) => type === c.UPDATE_STATEFUL_SET_FAILURE)
+  );
+
 export const makeSelectReadErrorsList = () =>
   createSelector(
     selectDomain,

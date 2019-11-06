@@ -51,25 +51,7 @@ import * as actions from 'ducks/deployments/actions';
 
 import messages from './messages';
 import useStyles from './styles';
-import DeploymentForm from './CreateForm';
-
-export const formName = 'createDeploymentForm';
-
-const validate = (values) => {
-  const errors = {};
-  const requiredFields = ['name'];
-  requiredFields.forEach((field) => {
-    if (!values.get(field)) {
-      errors[field] = 'Required';
-    }
-  });
-  return errors;
-};
-
-const CreateDeploymentForm = reduxForm({
-  form: formName,
-  validate,
-})(DeploymentForm);
+import DeploymentForm, { formName } from './CreateForm';
 
 /* eslint-disable react/prefer-stateless-function */
 export const CreateDeployment = ({
@@ -179,7 +161,7 @@ export const CreateDeployment = ({
         />
         <GridContainer className={classes.grid}>
           <GridItem xs={12} sm={12} md={12}>
-            <CreateDeploymentForm
+            <DeploymentForm
               classes={classes}
               onSubmit={doSubmit}
               configMaps={configMaps}

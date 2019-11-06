@@ -30,6 +30,7 @@ const Containers = ({
   configMaps,
   secrets,
   formValues,
+  role,
 }) => {
   const classes = useStyles();
   const configMapsOptions = configMaps
@@ -62,17 +63,20 @@ const Containers = ({
       </CardHeader>
       <CardBody>
         <List component="ul">
-          <ListItem>
-            <ListItemText>
-              <Button
-                color="secondary"
-                onClick={(evt) => fields.push(fromJS({}))}
-              >
-                <FormattedMessage {...messages.formAddContainer} />
-                <PlusIcon />
-              </Button>
-            </ListItemText>
-          </ListItem>
+          {role === 'update' ? null : (
+            <ListItem>
+              <ListItemText>
+                <Button
+                  color="secondary"
+                  onClick={(evt) => fields.push(fromJS({}))}
+                >
+                  <FormattedMessage {...messages.formAddContainer} />
+                  <PlusIcon />
+                </Button>
+              </ListItemText>
+            </ListItem>
+          )}
+
           {submitFailed && error && (
             <ListItem>
               <Danger>{error}</Danger>
@@ -91,6 +95,7 @@ const Containers = ({
                             <FormattedMessage {...messages.formContainerName} />
                           }
                           fullWidth
+                          disabled={role === 'update'}
                         />
                       </GridItem>
                       <GridItem xs={3} sm={3} md={3}>
@@ -119,7 +124,11 @@ const Containers = ({
                     </GridContainer>
                     <GridContainer>
                       <GridItem xs={6} sm={6} md={6}>
-                        <FieldArray name={`${f}.env`} component={Envs} />
+                        <FieldArray
+                          name={`${f}.env`}
+                          component={Envs}
+                          role={role}
+                        />
                       </GridItem>
                     </GridContainer>
                     <GridContainer>
@@ -131,6 +140,7 @@ const Containers = ({
                           configMapsOptions={configMapsOptions}
                           secretsOptions={secretsOptions}
                           formValues={formValues}
+                          role={role}
                         />
                       </GridItem>
                     </GridContainer>
@@ -139,13 +149,14 @@ const Containers = ({
                         <FieldArray
                           name={`${f}.exposedPorts`}
                           component={Ports}
+                          role={role}
                         />
                       </GridItem>
                     </GridContainer>
                   </ListItemText>
                 </CardBody>
               </Card>
-              {fields.length > 1 ? (
+              {fields.length > 1 && role !== 'update' ? (
                 <IconButton
                   variant="contained"
                   onClick={(evt) => fields.remove(i)}

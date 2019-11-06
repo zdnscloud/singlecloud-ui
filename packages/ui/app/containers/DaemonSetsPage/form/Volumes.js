@@ -1,3 +1,4 @@
+/* eslint-disable default-case */
 import React, { PureComponent, Fragment, useState } from 'react';
 import { fromJS, is } from 'immutable';
 import { compose } from 'redux';
@@ -56,14 +57,19 @@ const Volumes = ({
   fields,
   formValues,
   meta: { error, submitFailed },
+  role,
 }) => (
   <List component="ul">
     <ListItem>
       <ListItemText>
-        <Button color="secondary" onClick={(evt) => fields.push(fromJS({}))}>
+        {role === 'update' ? (
           <FormattedMessage {...messages.formVolumes} />
-          <PlusIcon />
-        </Button>
+        ) : (
+          <Button color="secondary" onClick={(evt) => fields.push(fromJS({}))}>
+            <FormattedMessage {...messages.formVolumes} />
+            <PlusIcon />
+          </Button>
+        )}
       </ListItemText>
     </ListItem>
     {fields.map((f, i) => {
@@ -121,6 +127,7 @@ const Volumes = ({
                   width: 146,
                 },
               }}
+              disabled={role === 'update'}
             />
             &nbsp;&nbsp;&nbsp;&nbsp;
             <SelectField
@@ -132,6 +139,7 @@ const Volumes = ({
                   width: 146,
                 },
               }}
+              disabled={role === 'update'}
             />
             &nbsp;&nbsp;&nbsp;&nbsp;
             <InputField
@@ -140,7 +148,7 @@ const Volumes = ({
             />
           </ListItemText>
           <IconButton variant="contained" onClick={(evt) => fields.remove(i)}>
-            <MinusIcon />
+            {role === 'update' ? null : <MinusIcon />}
           </IconButton>
         </ListItem>
       );

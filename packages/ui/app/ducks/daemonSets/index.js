@@ -61,6 +61,26 @@ export const reducer = (
         errors.filterNot((e) => e.type === type).push({ type, payload, meta })
       );
 
+    case c.UPDATE_DAEMON_SET:
+      return state;
+    case c.UPDATE_DAEMON_SET_SUCCESS: {
+      const id = getByKey(payload, ['response', 'id']);
+      const data = getByKey(payload, ['response']);
+      const { clusterID, namespaceID } = meta;
+      if (id) {
+        return state
+          .setIn(['data', clusterID, namespaceID, id], fromJS(data))
+          .update('errorsList', (errors) =>
+            errors.filterNot((e) => e.type === c.UPDATE_DAEMON_SET_FAILURE)
+          );
+      }
+      return state;
+    }
+    case c.UPDATE_DAEMON_SET_FAILURE:
+      return state.update('errorsList', (errors) =>
+        errors.filterNot((e) => e.type === type).push({ type, payload, meta })
+      );
+
     case c.READ_DAEMON_SET:
       return state;
     case c.READ_DAEMON_SET_SUCCESS: {

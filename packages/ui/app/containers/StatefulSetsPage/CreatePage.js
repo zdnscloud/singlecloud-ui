@@ -51,25 +51,7 @@ import * as actions from 'ducks/statefulSets/actions';
 
 import messages from './messages';
 import useStyles from './styles';
-import StatefulSetForm from './CreateForm';
-
-export const formName = 'createStatefulSetForm';
-
-const validate = (values) => {
-  const errors = {};
-  const requiredFields = ['name'];
-  requiredFields.forEach((field) => {
-    if (!values.get(field)) {
-      errors[field] = 'Required';
-    }
-  });
-  return errors;
-};
-
-const CreateStatefulSetForm = reduxForm({
-  form: formName,
-  validate,
-})(StatefulSetForm);
+import StatefulSetForm, { formName } from './CreateForm';
 
 /* eslint-disable react/prefer-stateless-function */
 export const CreateStatefulSet = ({
@@ -179,7 +161,7 @@ export const CreateStatefulSet = ({
         />
         <GridContainer className={classes.grid}>
           <GridItem xs={12} sm={12} md={12}>
-            <CreateStatefulSetForm
+            <StatefulSetForm
               classes={classes}
               onSubmit={doSubmit}
               configMaps={configMaps}
