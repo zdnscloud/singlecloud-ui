@@ -18,6 +18,7 @@ import GridContainer from 'components/Grid/GridContainer';
 import InputField from 'components/Field/InputField';
 import IconButton from '@material-ui/core/IconButton';
 import AddIcon from 'components/Icons/Add';
+import FileReaderField from 'components/Field/FileReaderField';
 import ReadOnlyInput from 'components/CustomInput/ReadOnlyInput';
 
 import NodesTable from './NodesTable';
@@ -76,17 +77,29 @@ const ClusterManageForm = ({
             </GridContainer>
             <GridContainer>
               <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
-                <ReadOnlyInput
+                <InputField
                   labelText={<FormattedMessage {...messages.formSSHPort} />}
                   fullWidth
-                  value={cluster.get('sshPort')}
+                  inputProps={{ type: 'text', autoComplete: 'off' }}
+                  name="sshPort"
                 />
               </GridItem>
               <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
-                <ReadOnlyInput
+                <InputField
                   labelText={<FormattedMessage {...messages.formSSHUser} />}
                   fullWidth
-                  value={cluster.get('sshUser')}
+                  inputProps={{ type: 'text', autoComplete: 'off' }}
+                  name="sshUser"
+                />
+              </GridItem>
+              <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
+                <FileReaderField
+                  label={<FormattedMessage {...messages.formSSHKey} />}
+                  name="sshKey"
+                  buttonProps={{
+                    color: 'default',
+                    variant: 'text',
+                  }}
                 />
               </GridItem>
             </GridContainer>
