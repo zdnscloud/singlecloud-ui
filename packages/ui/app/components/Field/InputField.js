@@ -1,5 +1,5 @@
 import React from 'react';
-import { Field } from 'redux-form/immutable';
+import { Field } from 'react-final-form';
 import CustomInput from 'components/CustomInput/CustomInput';
 
 const Input = ({ label, input, meta, inputProps, ...custom }) => (
@@ -12,6 +12,7 @@ const Input = ({ label, input, meta, inputProps, ...custom }) => (
       ...inputProps,
     }}
     {...custom}
+    errorText={meta.touched ? meta.error : ''}
   />
 );
 

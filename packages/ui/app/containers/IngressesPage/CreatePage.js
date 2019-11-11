@@ -9,12 +9,14 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { bindActionCreators, compose } from 'redux';
 import { fromJS } from 'immutable';
-import {
-  reduxForm,
-  getFormValues,
-  SubmissionError,
-  submit,
-} from 'redux-form/immutable';
+// import {
+//   reduxForm,
+//   getFormValues,
+//   SubmissionError,
+//   submit,
+// } from 'redux-form/immutable';
+
+import { getFieldState } from 'react-final-form';
 
 import { usePush } from 'hooks/router';
 
@@ -41,16 +43,16 @@ import { loadServices } from 'ducks/services/actions';
 
 import messages from './messages';
 import useStyles from './styles';
-import CreateIngressForm, { formName } from './CreateForm';
-
+// import CreateIngressForm, { formName } from './CreateForm';
+import CreateIngressForm from './CreateForm';
 export const CreateIngressPage = ({
   createIngress,
-  submitForm,
+  // submitForm,
   url,
   clusterID,
   namespaceID,
   services,
-  values,
+  // values,
   // eslint-disable-next-line no-shadow
   loadServices,
   surl,
@@ -76,6 +78,7 @@ export const CreateIngressPage = ({
 
   async function doSubmit(formValues) {
     try {
+      console.log('formValues', formValues);
       const { name, rules } = formValues.toJS();
       const rulesArr = [];
       rules.forEach((item) => {
@@ -98,7 +101,7 @@ export const CreateIngressPage = ({
       });
       push(`/clusters/${clusterID}/namespaces/${namespaceID}/ingresses`);
     } catch (error) {
-      throw new SubmissionError({ _error: error });
+      // throw new submitError({ _error: error });
     }
   }
 
@@ -125,11 +128,16 @@ export const CreateIngressPage = ({
           <GridItem xs={12} sm={12} md={12}>
             <CreateIngressForm
               onSubmit={doSubmit}
-              formValues={values}
+              // formValues={values}
               services={services}
-              initialValues={fromJS({ serviceName: targetName })}
+              targetName={targetName}
             />
-            <Button variant="contained" color="primary" onClick={submitForm}>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={doSubmit}
+              type="submit"
+            >
               <FormattedMessage {...messages.save} />
             </Button>
             <Button
@@ -154,7 +162,7 @@ const mapStateToProps = createStructuredSelector({
   clusterID: makeSelectClusterID(),
   namespaceID: makeSelectNamespaceID(),
   url: makeSelectURL(),
-  values: getFormValues(formName),
+  // values: getFormValues(formName),
   services: makeSelectServices(),
   surl: makeSelectServicesURL(),
   location: makeSelectLocation(),
@@ -165,7 +173,7 @@ const mapDispatchToProps = (dispatch) =>
     {
       ...actions,
       loadServices,
-      submitForm: () => submit(formName),
+      // submitForm: () => submit(formName),
     },
     dispatch
   );
