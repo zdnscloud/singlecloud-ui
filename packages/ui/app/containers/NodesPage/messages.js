@@ -45,6 +45,10 @@ export default defineMessages({
     id: `${scope}.tableTitleLabels`,
     defaultMessage: 'Labels',
   },
+  tableTitleStatus: {
+    id: `${scope}.tableTitleStatus`,
+    defaultMessage: 'Status',
+  },
   tableTitleCreationTimestamp: {
     id: `${scope}.tableTitleCreationTimestamp`,
     defaultMessage: 'CreationTimestamp',
