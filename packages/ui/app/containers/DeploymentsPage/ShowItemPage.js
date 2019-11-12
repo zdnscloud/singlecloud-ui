@@ -51,7 +51,6 @@ export const DeploymentDetailPage = ({
 }) => {
   const classes = useStyles();
   const podUrl = deployment.getIn(['links', 'pods']);
-  console.log('podUrl', podUrl);
   useEffect(() => {
     readDeployment(deploymentID, {
       clusterID,
@@ -102,7 +101,9 @@ export const DeploymentDetailPage = ({
                   <FormattedMessage {...messages.pods} />
                 </h4>
               </CardHeader>
-              <CardBody>{/* <PodsTable /> */}</CardBody>
+              <CardBody>
+                <PodsTable />
+              </CardBody>
             </Card>
           </GridItem>
         </GridContainer>

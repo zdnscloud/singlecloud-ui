@@ -11,6 +11,7 @@ import messages from './messages';
 
 const schema = [
   'name',
+  'status',
   'address',
   'status',
   'roles',
