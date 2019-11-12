@@ -3,20 +3,14 @@
  * Create Ingress Page
  *
  */
-import React, { Fragment, useState, useEffect } from 'react';
+import React, { Fragment, useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { bindActionCreators, compose } from 'redux';
 import { fromJS } from 'immutable';
-// import {
-//   reduxForm,
-//   getFormValues,
-//   SubmissionError,
-//   submit,
-// } from 'redux-form/immutable';
 
-import { getFieldState } from 'react-final-form';
+import { FORM_ERROR } from 'final-form';
 
 import { usePush } from 'hooks/router';
 
@@ -43,16 +37,13 @@ import { loadServices } from 'ducks/services/actions';
 
 import messages from './messages';
 import useStyles from './styles';
-// import CreateIngressForm, { formName } from './CreateForm';
 import CreateIngressForm from './CreateForm';
 export const CreateIngressPage = ({
   createIngress,
-  // submitForm,
   url,
   clusterID,
   namespaceID,
   services,
-  // values,
   // eslint-disable-next-line no-shadow
   loadServices,
   surl,
@@ -60,13 +51,15 @@ export const CreateIngressPage = ({
 }) => {
   const classes = useStyles();
   const push = usePush();
+  const formRef = useRef(null);
+  const [init, setInit] = useState(null);
+  const [isInit, setIsInit] = useState(false);
   const search = location.get('search');
   let targetName = '';
   if (search && search.includes('from=true')) {
     const [tn, name] = /targetName=([a-zA-Z0-9-]+)/i.exec(search);
     targetName = name;
   }
-
   useEffect(() => {
     if (url) {
       loadServices(surl, {
@@ -78,14 +71,15 @@ export const CreateIngressPage = ({
 
   async function doSubmit(formValues) {
     try {
-      console.log('formValues', formValues);
-      const { name, rules } = formValues.toJS();
+      const { name, rules } = formValues;
       const rulesArr = [];
-      rules.forEach((item) => {
-        const { host, path, servicePort, serviceName } = item;
-        const rule = { host, path, servicePort, serviceName };
-        rulesArr.push(rule);
-      });
+      if (rules) {
+        rules.forEach((item) => {
+          const { host, path, servicePort, serviceName } = item;
+          const rule = { host, path, servicePort, serviceName };
+          rulesArr.push(rule);
+        });
+      }
       const data = {
         name,
         rules: rulesArr,
@@ -99,9 +93,12 @@ export const CreateIngressPage = ({
           namespaceID,
         });
       });
+      setIsInit(false);
       push(`/clusters/${clusterID}/namespaces/${namespaceID}/ingresses`);
     } catch (error) {
-      // throw new submitError({ _error: error });
+      setInit(formValues);
+      setIsInit(true);
+      return { [FORM_ERROR]: error };
     }
   }
 
@@ -128,14 +125,21 @@ export const CreateIngressPage = ({
           <GridItem xs={12} sm={12} md={12}>
             <CreateIngressForm
               onSubmit={doSubmit}
-              // formValues={values}
               services={services}
               targetName={targetName}
+              formRef={formRef}
+              initialValues={
+                isInit ? init : fromJS({ serviceName: targetName })
+              }
             />
             <Button
               variant="contained"
               color="primary"
-              onClick={doSubmit}
+              onClick={() => {
+                formRef.current.dispatchEvent(
+                  new Event('submit', { cancelable: true })
+                );
+              }}
               type="submit"
             >
               <FormattedMessage {...messages.save} />
@@ -162,7 +166,6 @@ const mapStateToProps = createStructuredSelector({
   clusterID: makeSelectClusterID(),
   namespaceID: makeSelectNamespaceID(),
   url: makeSelectURL(),
-  // values: getFormValues(formName),
   services: makeSelectServices(),
   surl: makeSelectServicesURL(),
   location: makeSelectLocation(),
@@ -173,7 +176,6 @@ const mapDispatchToProps = (dispatch) =>
     {
       ...actions,
       loadServices,
-      // submitForm: () => submit(formName),
     },
     dispatch
   );

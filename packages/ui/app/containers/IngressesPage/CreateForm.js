@@ -32,18 +32,22 @@ import RuleTemplate from './form/RuleTemplate';
 
 const validate = (values) => {
   const errors = {};
-  console.log('values', values);
   const requiredFields = ['name'];
-  // requiredFields.forEach((field) => {
-  //   if (!values.get(field)) {
-  //     errors[field] = 'Required';
-  //   }
-  // });
-
+  requiredFields.forEach((field) => {
+    if (!values[field]) {
+      errors[field] = 'Required';
+    }
+  });
   return errors;
 };
 
-const CreateIngressForm = ({ onSubmit, error, services, targetName }) => {
+const CreateIngressForm = ({
+  onSubmit,
+  services,
+  targetName,
+  formRef,
+  initialValues,
+}) => {
   const classes = useStyles();
   const servicesOptions = services.toList().map((sc) => ({
     label: sc.get('name'),
@@ -53,17 +57,23 @@ const CreateIngressForm = ({ onSubmit, error, services, targetName }) => {
     <Form
       onSubmit={(values) => onSubmit(values)}
       validate={validate}
-      initialValues={fromJS({ serviceName: targetName })}
+      initialValues={initialValues}
       mutators={{
         ...arrayMutators,
       }}
     >
-      {({ handleSubmit, pristine, reset, submitting }) => (
-        <form onSubmit={handleSubmit} className={getByKey(classes, 'form')}>
+      {({ handleSubmit, pristine, reset, submitting, values, submitError }) => (
+        <form
+          onSubmit={handleSubmit}
+          className={getByKey(classes, 'form')}
+          ref={formRef}
+        >
           <GridContainer className={classes.contentGrid}>
-            {error ? (
+            {submitError ? (
               <GridItem xs={12} sm={12} md={12}>
-                <Danger>{getByKey(error, ['response', 'message'])}</Danger>
+                <Danger>
+                  {getByKey(submitError, ['response', 'message'])}
+                </Danger>
               </GridItem>
             ) : null}
             <Card>
@@ -94,7 +104,7 @@ const CreateIngressForm = ({ onSubmit, error, services, targetName }) => {
               <CardBody>
                 <GridContainer style={{ margin: 0 }}>
                   <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
-                    {/* <SelectField
+                    <SelectField
                       label={<FormattedMessage {...messages.formServiceName} />}
                       name="serviceName"
                       formControlProps={{
@@ -103,16 +113,16 @@ const CreateIngressForm = ({ onSubmit, error, services, targetName }) => {
                         },
                       }}
                       options={servicesOptions}
-                    /> */}
+                    />
                   </GridItem>
                   <GridItem xs={12} sm={12} md={12}>
-                    {/* <FieldArray
+                    <FieldArray
                       name="rules"
                       classes={classes}
                       component={RuleTemplate}
-                      formValues={values}
+                      formValues={fromJS(values)}
                       services={services}
-                    /> */}
+                    />
                   </GridItem>
                 </GridContainer>
               </CardBody>
@@ -123,10 +133,5 @@ const CreateIngressForm = ({ onSubmit, error, services, targetName }) => {
     </Form>
   );
 };
-
-// const CreateIngressForm = reduxForm({
-//   form: formName,
-//   validate,
-// })(Form);
 
 export default CreateIngressForm;

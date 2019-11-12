@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import React from 'react';
-import { Field } from 'redux-form/immutable';
+import { Field } from 'react-final-form';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormHelperText from '@material-ui/core/FormHelperText';

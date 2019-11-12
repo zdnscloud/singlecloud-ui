@@ -12,7 +12,6 @@ const Input = ({ label, input, meta, inputProps, ...custom }) => (
       ...inputProps,
     }}
     {...custom}
-    errorText={meta.touched ? meta.error : ''}
   />
 );
 

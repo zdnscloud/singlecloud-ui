@@ -41,14 +41,12 @@ const RuleTemplate = ({
           exposedPorts
             .filter((p) => p.get('protocol') === 'tcp')
             .forEach((p) => {
-              fields.push(
-                fromJS({
-                  serviceName,
-                  serviceProtocol: 'tcp',
-                  servicePort: p.get('port'),
-                  protocol: 'HTTP',
-                })
-              );
+              fields.push({
+                serviceName,
+                serviceProtocol: 'tcp',
+                servicePort: p.get('port'),
+                protocol: 'HTTP',
+              });
             })
         }
         className={classes.formPlusIcon}
