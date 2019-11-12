@@ -8,6 +8,7 @@ import TimeCell from 'components/Cells/TimeCell';
 
 const schema = [
   'name',
+  'status',
   'address',
   'roles',
   // 'cpu',
