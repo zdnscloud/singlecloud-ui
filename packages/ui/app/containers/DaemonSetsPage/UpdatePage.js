@@ -158,8 +158,23 @@ export const UpdateDaemonSetPage = ({
                 configMaps={configMaps}
                 secrets={secrets}
                 storageClasses={storageClasses}
-                initialValues={current}
-                formValues={values}
+                initialValues={current.update((c) => {
+                  const data = c.toJS();
+                  const { containers } = data;
+                  if (containers) {
+                    containers.forEach((item) => {
+                      if (item && item.args) {
+                        item.args = item.args.join(' ');
+                      }
+                      if (item && item.command) {
+                        item.command = item.command.join(' ');
+                      }
+                      return item;
+                    });
+                  }
+                  data.containers = containers;
+                  return data;
+                })}
                 role="update"
               />
             )}
