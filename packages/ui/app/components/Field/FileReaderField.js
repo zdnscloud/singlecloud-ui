@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from 'react';
-import { Field } from 'redux-form/immutable';
+import { Field } from 'react-final-form';
 // import CustomInput from 'components/CustomInput/CustomInput';
 import FormControl from '@material-ui/core/FormControl';
 import Button from 'components/CustomButtons/Button';

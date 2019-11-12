@@ -4,15 +4,14 @@
  * Create Cluster Page
  *
  */
-import React from 'react';
+import React, { useRef } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import { bindActionCreators, compose } from 'redux';
 import { fromJS } from 'immutable';
-import { reduxForm, getFormValues } from 'redux-form/immutable';
-import { SubmissionError, submit } from 'redux-form';
+import { FORM_ERROR } from 'final-form';
 import { Link } from 'react-router-dom';
 
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -31,72 +30,58 @@ import * as actions from 'ducks/clusters/actions';
 import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
 import messages from './messages';
 import useStyles from './styles';
-import ClusterForm from './CreateForm';
+import CreateClusterForm from './CreateForm';
 
-export const formName = 'createClusterForm';
-
-const validate = (values) => {
-  const errors = {};
-  const requiredFields = [
-    'name',
-    'clusterDomain',
-    'singleCloudAddress',
-    'sshUser',
-  ];
-  requiredFields.forEach((field) => {
-    if (!values.get(field)) {
-      errors[field] = 'Required';
-    }
-  });
-  return errors;
-};
-
-const CreateClusterForm = reduxForm({
-  form: formName,
-  validate,
-})(ClusterForm);
-
-export const CreateClusterPage = ({
-  submitForm,
-  createCluster,
-  url,
-  values,
-}) => {
+export const CreateClusterPage = ({ createCluster, url }) => {
   const classes = useStyles();
   const push = usePush();
+  const formRef = useRef(null);
   async function doSubmit(formValues) {
+    console.log('formValues', formValues);
     try {
-      const {
-        advancedOptions,
-        enableAdvancedOptions,
-        nodes,
-        ...formData
-      } = formValues.toJS();
-      const { main, work } = nodes;
-      main.forEach((item) => {
-        if (Object.keys(item).length !== 0) {
-          if (item.roles) {
-            item.roles.push('controlplane');
-          } else {
-            item.roles = ['controlplane'];
-          }
+      const { enableAdvancedOptions, nodes, ...formData } = formValues;
+      let nodeArr = [];
+      if (nodes) {
+        const { main, work } = nodes;
+        if (main) {
+          main.forEach((item) => {
+            if (Object.keys(item).length !== 0) {
+              if (item.roles) {
+                item.roles.push('controlplane');
+              } else {
+                item.roles = ['controlplane'];
+              }
+            }
+          });
         }
-      });
-      work.forEach((item) => {
-        if (Object.keys(item).length !== 0) {
-          if (item.roles) {
-            item.roles.push('worker');
-          } else {
-            item.roles = ['worker'];
-          }
+        if (work) {
+          work.forEach((item) => {
+            if (Object.keys(item).length !== 0) {
+              if (item.roles) {
+                item.roles.push('worker');
+              } else {
+                item.roles = ['worker'];
+              }
+            }
+          });
         }
-      });
-      const nodeArr = main.concat(work).filter((v) => v.roles);
+        if (main && work) {
+          nodeArr = main.concat(work).filter((v) => v.roles);
+        } else if (main && !work) {
+          nodeArr = main;
+        } else if (!!main && work) {
+          nodeArr = work;
+        }
+      }
+
       const data = {
         nodes: nodeArr,
         ...formData,
-        ...(enableAdvancedOptions ? advancedOptions : {}),
       };
+      if (enableAdvancedOptions) {
+        delete data.enableAdvancedOptions;
+      }
+      console.log('data', data);
       await new Promise((resolve, reject) => {
         createCluster(data, {
           resolve,
@@ -106,7 +91,7 @@ export const CreateClusterPage = ({
       });
       push('/clusters');
     } catch (error) {
-      throw new SubmissionError({ _error: error });
+      return { [FORM_ERROR]: error };
     }
   }
 
@@ -132,13 +117,22 @@ export const CreateClusterPage = ({
               <CreateClusterForm
                 classes={classes}
                 onSubmit={doSubmit}
+                formRef={formRef}
                 initialValues={fromJS({
                   name: '',
                   nodes: { main: [], work: [] },
                 })}
-                formValues={values}
               />
-              <Button variant="contained" color="primary" onClick={submitForm}>
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={() => {
+                  formRef.current.dispatchEvent(
+                    new Event('submit', { cancelable: true })
+                  );
+                }}
+                type="submit"
+              >
                 <FormattedMessage {...messages.createClusterButton} />
               </Button>
               <Button
@@ -159,14 +153,12 @@ export const CreateClusterPage = ({
 
 const mapStateToProps = createStructuredSelector({
   url: makeSelectURL(),
-  values: getFormValues(formName),
 });
 
 const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
       ...actions,
-      submitForm: () => submit(formName),
     },
     dispatch
   );
