@@ -3,20 +3,20 @@
  * Create UserQuota Page
  *
  */
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import { bindActionCreators, compose } from 'redux';
 import { fromJS } from 'immutable';
-import { reduxForm, getFormValues } from 'redux-form/immutable';
-import { SubmissionError, submit } from 'redux-form';
 import { Link } from 'react-router-dom';
 import sha256 from 'crypto-js/sha256';
 import encHex from 'crypto-js/enc-hex';
 
 import { usePush } from 'hooks/router';
+
+import { FORM_ERROR } from 'final-form';
 
 import { withStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -37,36 +37,19 @@ import * as actions from 'ducks/userQuotas/actions';
 import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
 import messages from './messages';
 import useStyles from './styles';
-import UserQuotaForm from './UserQuotaForm';
+import CreateUserQuotaForm from './UserQuotaForm';
 
-export const formName = 'createUserQuotaForm';
-
-const validate = (values) => {
-  const errors = {};
-  const requiredFields = ['namespace', 'cpu', 'memory', 'storage', 'purpose'];
-  requiredFields.forEach((field) => {
-    if (!values.get(field)) {
-      errors[field] = 'Required';
-    }
-  });
-  return errors;
-};
-
-const CreateUserQuotaForm = reduxForm({
-  form: formName,
-  validate,
-})(UserQuotaForm);
-
-const CreateUserQuotaPage = ({ url, createUserQuota, submitForm, role }) => {
+const CreateUserQuotaPage = ({ url, createUserQuota, role }) => {
   const classes = useStyles();
   const push = usePush();
+  const formRef = useRef(null);
   const user = role.get('user');
   const userHash = sha256(user)
     .toString(encHex)
     .slice(0, 6);
   async function doSubmit(formValues) {
     try {
-      const { memory, storage, namespace, ...formData } = formValues.toJS();
+      const { memory, storage, namespace, ...formData } = formValues;
       const data = {
         namespace: `${namespace}-${userHash}`,
         memory: `${memory}Gi`,
@@ -78,7 +61,7 @@ const CreateUserQuotaPage = ({ url, createUserQuota, submitForm, role }) => {
       });
       push(`/userQuotas`);
     } catch (error) {
-      throw new SubmissionError({ _error: error });
+      return { [FORM_ERROR]: error };
     }
   }
 
@@ -112,6 +95,7 @@ const CreateUserQuotaPage = ({ url, createUserQuota, submitForm, role }) => {
                     classes={classes}
                     onSubmit={doSubmit}
                     userHash={userHash}
+                    formRef={formRef}
                     formRole="create"
                     role={role}
                   />
@@ -122,7 +106,12 @@ const CreateUserQuotaPage = ({ url, createUserQuota, submitForm, role }) => {
                       <Button
                         variant="contained"
                         color="primary"
-                        onClick={submitForm}
+                        onClick={() => {
+                          formRef.current.dispatchEvent(
+                            new Event('submit', { cancelable: true })
+                          );
+                        }}
+                        type="submit"
                       >
                         <FormattedMessage {...messages.createUserQuotaButton} />
                       </Button>
@@ -155,7 +144,6 @@ const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
       ...actions,
-      submitForm: () => submit(formName),
     },
     dispatch
   );

@@ -2,13 +2,6 @@ import React, { PureComponent, Fragment, useState } from 'react';
 import { fromJS } from 'immutable';
 import { compose } from 'redux';
 import { FormattedMessage } from 'react-intl';
-// import {
-//   Field,
-//   Fields,
-//   FieldArray,
-//   FormSection,
-//   reduxForm,
-// } from 'redux-form/immutable';
 import { Form, Field } from 'react-final-form';
 import { render } from 'react-dom';
 import arrayMutators from 'final-form-arrays';
@@ -25,7 +18,6 @@ import InputField from 'components/Field/InputField';
 import SwitchField from 'components/Field/SwitchField';
 import RadioField from 'components/Field/RadioField';
 import SelectField from 'components/Field/SelectField';
-
 import useStyles from './styles';
 import messages from './messages';
 import RuleTemplate from './form/RuleTemplate';
@@ -41,13 +33,7 @@ const validate = (values) => {
   return errors;
 };
 
-const CreateIngressForm = ({
-  onSubmit,
-  services,
-  targetName,
-  formRef,
-  initialValues,
-}) => {
+const CreateIngressForm = ({ onSubmit, services, formRef, initialValues }) => {
   const classes = useStyles();
   const servicesOptions = services.toList().map((sc) => ({
     label: sc.get('name'),

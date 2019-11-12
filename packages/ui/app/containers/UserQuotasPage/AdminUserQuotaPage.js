@@ -4,15 +4,13 @@
  *
  */
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import { bindActionCreators, compose } from 'redux';
 import { Link } from 'react-router-dom';
-import { SubmissionError, submit } from 'redux-form';
-import { reduxForm, getFormValues } from 'redux-form/immutable';
 import { fromJS } from 'immutable';
 import getByKey from '@gsmlg/utils/getByKey';
 
@@ -41,30 +39,13 @@ import * as actions from 'ducks/userQuotas/actions';
 import messages from './messages';
 import useStyles from './styles';
 import AdminUserQuotasTable from './AdminUserQuotasTable';
-import UserQuotaForm from './form/searchForm';
+import SearchUserQuotaForm from './form/searchForm';
 
-export const formName = 'searchUserQuotaForm';
-
-const validate = (values) => {
-  const errors = {};
-  const requiredFields = [];
-  requiredFields.forEach((field) => {
-    if (!values.get(field)) {
-      errors[field] = 'Required';
-    }
-  });
-  return errors;
-};
-
-const SearchUserQuotaForm = reduxForm({
-  form: formName,
-  validate,
-})(UserQuotaForm);
-
-const AdminUserQuotaPage = ({ submitForm, loadUserQuotas, url }) => {
+const AdminUserQuotaPage = ({ loadUserQuotas, url }) => {
   const classes = useStyles();
   const [filter, setFilter] = useState({});
   const [error, setError] = useState(null);
+  const formRef = useRef(null);
 
   useEffect(() => {
     if (url) {
@@ -75,7 +56,7 @@ const AdminUserQuotaPage = ({ submitForm, loadUserQuotas, url }) => {
   }, [loadUserQuotas, url]);
 
   const doSubmit = (formValues) => {
-    setFilter(formValues.toJS());
+    setFilter(formValues);
   };
 
   return (
@@ -111,13 +92,19 @@ const AdminUserQuotaPage = ({ submitForm, loadUserQuotas, url }) => {
                     <SearchUserQuotaForm
                       classes={classes}
                       onSubmit={doSubmit}
+                      formRef={formRef}
                     />
                   </GridItem>
                   <GridItem xs={6} sm={6} md={6}>
                     <Button
                       variant="contained"
                       color="primary"
-                      onClick={submitForm}
+                      onClick={() => {
+                        formRef.current.dispatchEvent(
+                          new Event('submit', { cancelable: true })
+                        );
+                      }}
+                      type="submit"
                       style={{ marginTop: '10px' }}
                     >
                       <FormattedMessage {...messages.searchUserQuotaButton} />
@@ -142,7 +129,6 @@ const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
       ...actions,
-      submitForm: () => submit(formName),
     },
     dispatch
   );

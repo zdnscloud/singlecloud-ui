@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import React, { Fragment } from 'react';
-import { Field } from 'redux-form/immutable';
+import { Field } from 'react-final-form';
 import { Map, List } from 'immutable';
 
 import FormControlLabel from '@material-ui/core/FormControlLabel';
