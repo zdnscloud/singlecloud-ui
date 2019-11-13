@@ -94,7 +94,10 @@ const Hosts = ({
               <TableCell className={`${classes.tableCell}`}>
                 {b && b.get('nodeName')}
               </TableCell>
-              <TableCell className={`${classes.tableCell}`}>
+              <TableCell
+                className={`${classes.tableCell}`}
+                style={{ wordBreak: 'break-all' }}
+              >
                 {b &&
                   b.get('blockDevices') &&
                   b.get('blockDevices').map((bd, j) => (

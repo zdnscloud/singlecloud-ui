@@ -115,6 +115,16 @@ export const UpdateDaemonSetPage = ({
     const updateUrl = current.getIn(['links', 'update']);
     try {
       const data = formValues.toJS();
+      const { containers } = data;
+      data.containers = containers.map((item) => {
+        if (item && item.args) {
+          item.args = item.args.split(' ');
+        }
+        if (item && item.command) {
+          item.command = item.command.split(' ');
+        }
+        return item;
+      });
       await new Promise((resolve, reject) => {
         updateDaemonSet(data, {
           resolve,
@@ -158,8 +168,23 @@ export const UpdateDaemonSetPage = ({
                 configMaps={configMaps}
                 secrets={secrets}
                 storageClasses={storageClasses}
-                initialValues={current}
-                formValues={values}
+                initialValues={current.update((c) => {
+                  const data = c.toJS();
+                  const { containers } = data;
+                  if (containers) {
+                    containers.forEach((item) => {
+                      if (item && item.args) {
+                        item.args = item.args.join(' ');
+                      }
+                      if (item && item.command) {
+                        item.command = item.command.join(' ');
+                      }
+                      return item;
+                    });
+                  }
+                  data.containers = containers;
+                  return data;
+                })}
                 role="update"
               />
             )}

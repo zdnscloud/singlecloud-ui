@@ -18,6 +18,8 @@ import {
 
 import { usePush } from 'hooks/router';
 
+import list2str from '@gsmlg/utils/list2str';
+
 import Helmet from 'components/Helmet/Helmet';
 import { FormattedMessage } from 'react-intl';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -113,7 +115,16 @@ export const UpdateStatefulSetPage = ({
     const updateUrl = current.getIn(['links', 'update']);
     try {
       const data = formValues.toJS();
-
+      const { containers } = data;
+      data.containers = containers.map((item) => {
+        if (item && item.args) {
+          item.args = item.args.split(' ');
+        }
+        if (item && item.command) {
+          item.command = item.command.split(' ');
+        }
+        return item;
+      });
       await new Promise((resolve, reject) => {
         updateStatefulSet(data, {
           resolve,
@@ -148,13 +159,30 @@ export const UpdateStatefulSetPage = ({
             },
           ]}
         />
+
         <GridContainer className={classes.grid}>
           <GridItem xs={12} sm={12} md={12}>
             {current.size === 0 ? null : (
               <StatefulSetForm
                 onSubmit={doSubmit}
                 formValues={values}
-                initialValues={current}
+                initialValues={current.update((c) => {
+                  const data = c.toJS();
+                  const { containers } = data;
+                  if (containers) {
+                    containers.forEach((item) => {
+                      if (item && item.args) {
+                        item.args = item.args.join(' ');
+                      }
+                      if (item && item.command) {
+                        item.command = item.command.join(' ');
+                      }
+                      return item;
+                    });
+                  }
+                  data.containers = containers;
+                  return data;
+                })}
                 configMaps={configMaps}
                 secrets={secrets}
                 storageClasses={storageClasses}
