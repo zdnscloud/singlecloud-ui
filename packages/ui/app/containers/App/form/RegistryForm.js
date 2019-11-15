@@ -27,7 +27,7 @@ const validate = (values) => {
   return errors;
 };
 
-const Form = ({ formValues, handleSubmit, error, role }) => {
+const Form = ({ formValues, handleSubmit, error, role, memuRole }) => {
   const classes = useStyles();
 
   return (
@@ -38,14 +38,16 @@ const Form = ({ formValues, handleSubmit, error, role }) => {
             <Danger>{getByKey(error, ['response', 'message'])}</Danger>
           </GridItem>
         ) : null}
-        <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
-          <ReadOnlyInput
-            label={<FormattedMessage {...messages.leftMenuDialogFormUser} />}
-            value={role.get('user')}
-            fullWidth
-          />
-        </GridItem>
-        <GridItem xs={3} sm={3} md={3}>
+        {memuRole === 'registries' ? (
+          <GridItem xs={4} sm={4} md={4} className={classes.formLine}>
+            <ReadOnlyInput
+              label={<FormattedMessage {...messages.leftMenuDialogFormUser} />}
+              value={role.get('user')}
+              fullWidth
+            />
+          </GridItem>
+        ) : null}
+        <GridItem xs={4} sm={4} md={4}>
           <InputField
             label={
               <FormattedMessage {...messages.leftMenuDialogFormIngressDomain} />
@@ -55,7 +57,7 @@ const Form = ({ formValues, handleSubmit, error, role }) => {
             inputProps={{ type: 'text', autoComplete: 'off' }}
           />
         </GridItem>
-        <GridItem xs={3} sm={3} md={3}>
+        <GridItem xs={4} sm={4} md={4}>
           <InputField
             label={
               <FormattedMessage {...messages.leftMenuDialogFormStorageSize} />

@@ -27,6 +27,7 @@ import ConfirmDialog from 'components/Confirm/ConfirmDialog';
 import * as actions from 'ducks/app/actions';
 import * as mActions from 'ducks/monitors/actions';
 import * as rActions from 'ducks/registries/actions';
+import * as eActions from 'ducks/efks/actions';
 import { makeSelectRole, makeSelectIsAdmin } from 'ducks/role/selectors';
 import { makeSelectShowMenuText } from 'ducks/app/selectors';
 import {
@@ -46,12 +47,16 @@ const OutLinks = ({
   clusterID,
   loadMonitors,
   loadRegistries,
+  loadEfks,
   role,
   submitForm,
   formValues,
   createMonitor,
   createRegistry,
+  createEfk,
   isAdmin,
+  handleClose,
+  setHidden,
 }) => {
   let menus = [
     {
@@ -65,6 +70,10 @@ const OutLinks = ({
       icon: ClusterWatchIcon,
       role: 'monitors',
     },
+    {
+      name: 'LogAnalysis',
+      role: 'efks',
+    },
   ];
   if (!isAdmin) {
     menus = menus.filter((m) => m.adminOnly === undefined);
@@ -73,8 +82,10 @@ const OutLinks = ({
   const actions = {
     loadMonitors,
     loadRegistries,
+    loadEfks,
     createMonitor,
     createRegistry,
+    createEfk,
   };
   const [open, setOpen] = useState(false);
   const [memuRole, setMemuRole] = useState(null);
@@ -95,16 +106,21 @@ const OutLinks = ({
       },
       reject() {},
     });
+    setHidden('hidden');
   };
 
   async function doSubmit() {
     try {
       const data = formValues ? formValues.toJS() : {};
       const url = cluster.getIn(['links', memuRole]);
+      const createAction = `create${inflection.camelize(
+        inflection.singularize(memuRole)
+      )}`;
       await new Promise((resolve, reject) => {
-        createRegistry(data, {
+        actions[createAction](data, {
           resolve() {
             setOpen(false);
+            setHidden('inherit');
           },
           reject,
           url,
@@ -143,11 +159,6 @@ const OutLinks = ({
               className={classes.itemLink}
               onClick={() => handleMemuClick(prop.role)}
             >
-              {prop.icon ? (
-                <ListItemIcon className={classes.itemIcon}>
-                  <prop.icon fontSize="small" />
-                </ListItemIcon>
-              ) : null}
               <ListItemText
                 primary={<FormattedMessage {...msgName} />}
                 className={classNames(classes.itemText)}
@@ -167,22 +178,23 @@ const OutLinks = ({
         onClose={() => {
           setOpen(false);
           setError(null);
+          handleClose();
         }}
         title={<FormattedMessage {...messages.leftMenuDialogTitle} />}
         content={
-          memuRole === 'registries' ? (
-            <RegistryForm role={role} onSubmit={doSubmit} />
-          ) : (
+          memuRole === 'monitors' ? (
             <>
               {error ? (
                 <Danger>{getByKey(error, ['response', 'message'])}</Danger>
               ) : null}
               <FormattedMessage {...messages.leftMenuDialogContent} />
             </>
+          ) : (
+            <RegistryForm role={role} onSubmit={doSubmit} memuRole={memuRole} />
           )
         }
         onAction={() =>
-          memuRole === 'registries' ? submitForm() : handleMonitorInstall()
+          memuRole === 'monitors' ? handleMonitorInstall() : submitForm()
         }
         sureButtonText={messages.leftMenuDialogButtonInstall}
       />
@@ -207,6 +219,8 @@ const mapDispatchToProps = (dispatch) =>
       createMonitor: mActions.createMonitor,
       loadRegistries: rActions.loadRegistries,
       createRegistry: rActions.createRegistry,
+      loadEfks: eActions.loadEfks,
+      createEfk: eActions.createEfk,
       submitForm: () => submit(formName),
     },
     dispatch

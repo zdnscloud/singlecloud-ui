@@ -68,6 +68,7 @@ const LeftMenu = ({
   const menuRef = useRef(null);
   const [openingMenu, setOpeningMenu] = useState(null);
   const [popperTop, setPopperTop] = useState(0);
+  const [hidden, setHidden] = useState('inherit');
   const popperRef = useCallback((el) => {
     if (el) {
       setTimeout(() => {
@@ -131,7 +132,13 @@ const LeftMenu = ({
   };
 
   const links = (
-    <List className={classes.list} onMouseLeave={handleClose}>
+    <List
+      className={classes.list}
+      onMouseLeave={handleClose}
+      onMouseEnter={() => {
+        setHidden('inherit');
+      }}
+    >
       {menus.map((prop, key) => {
         const msgName = messages[`leftMenu${prop.name}`];
         if (prop.path) {
@@ -206,45 +213,52 @@ const LeftMenu = ({
                 onClose={handleClose}
                 anchorEl={openingMenu && openingMenu[1]}
                 placement="right-start"
-                style={{ zIndex: 1200, top: popperTop }}
+                style={{ zIndex: 1200, top: popperTop, visibility: hidden }}
               >
                 <div ref={popperRef} className={classNames(classes.secondMenu)}>
                   <List component="div" disablePadding>
-                    {prop.children.map((menu, idx) => {
-                      const itemClasses = classNames({
-                        [` ${classes.active}`]: activeRoute(menu.path),
-                      });
-                      const msgSubName = messages[`leftMenu${menu.name}`];
+                    {prop.name === 'SystemTools' ? (
+                      <OutLinks
+                        handleClose={handleClose}
+                        setHidden={setHidden}
+                      />
+                    ) : (
+                      prop.children.map((menu, idx) => {
+                        const itemClasses = classNames({
+                          [` ${classes.active}`]: activeRoute(menu.path),
+                        });
+                        const msgSubName = messages[`leftMenu${menu.name}`];
 
-                      return (
-                        <NavLink
-                          to={menu.path}
-                          className={classes.item}
-                          activeClassName="active"
-                          key={idx}
-                        >
-                          <ListItem
-                            button
-                            className={classNames(
-                              classes.itemLink,
-                              classes.nested,
-                              itemClasses
-                            )}
-                            onClick={() => {
-                              setOpeningMenu(null);
-                              clearTimeout(timer);
-                              timer = null;
-                            }}
+                        return (
+                          <NavLink
+                            to={menu.path}
+                            className={classes.item}
+                            activeClassName="active"
+                            key={idx}
                           >
-                            <ListItemText
-                              primary={<FormattedMessage {...msgSubName} />}
-                              className={classNames(classes.itemText)}
-                              disableTypography
-                            />
-                          </ListItem>
-                        </NavLink>
-                      );
-                    })}
+                            <ListItem
+                              button
+                              className={classNames(
+                                classes.itemLink,
+                                classes.nested,
+                                itemClasses
+                              )}
+                              onClick={() => {
+                                setOpeningMenu(null);
+                                clearTimeout(timer);
+                                timer = null;
+                              }}
+                            >
+                              <ListItemText
+                                primary={<FormattedMessage {...msgSubName} />}
+                                className={classNames(classes.itemText)}
+                                disableTypography
+                              />
+                            </ListItem>
+                          </NavLink>
+                        );
+                      })
+                    )}
                   </List>
                 </div>
               </Popper>
@@ -264,7 +278,6 @@ const LeftMenu = ({
       </div>
       <div className={classes.sidebarWrapper} ref={menuRef}>
         {links}
-        {clusterID !== '' && !isManage ? <OutLinks /> : null}
       </div>
     </div>
   );
