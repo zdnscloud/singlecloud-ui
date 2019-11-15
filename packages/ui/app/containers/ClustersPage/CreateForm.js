@@ -41,7 +41,7 @@ const validate = (values) => {
 export const CreateForm = ({ onSubmit, classes, initialValues, formRef }) => (
   <Form
     onSubmit={(values) => onSubmit(values)}
-    // validate={validate}
+    validate={validate}
     initialValues={initialValues}
     mutators={{
       ...arrayMutators,
@@ -283,7 +283,7 @@ export const CreateForm = ({ onSubmit, classes, initialValues, formRef }) => (
                   name="nodes.main"
                   classes={classes}
                   component={NodeMainTemplate}
-                  formValues={fromJS(values)}
+                  formValues={values}
                 />
               </GridItem>
               <GridItem xs={12} sm={12} md={12}>
@@ -291,7 +291,7 @@ export const CreateForm = ({ onSubmit, classes, initialValues, formRef }) => (
                   name="nodes.work"
                   classes={classes}
                   component={NodeWorkTemplate}
-                  formValues={fromJS(values)}
+                  formValues={values}
                 />
               </GridItem>
             </CardBody>

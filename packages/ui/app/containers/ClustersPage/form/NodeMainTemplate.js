@@ -27,9 +27,7 @@ const NodeMainTemplate = ({
       <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
         <Button
           color="secondary"
-          onClick={(evt) =>
-            fields.push(fromJS({ name: '', addrsss: '', roles: [] }))
-          }
+          onClick={(evt) => fields.push({ name: '', address: '', roles: [] })}
         >
           <FormattedMessage {...messages.formAddMainNode} />
           <PlusIcon />

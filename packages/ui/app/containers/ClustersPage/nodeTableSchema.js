@@ -17,9 +17,7 @@ const nodeTableSchema = schema
       return {
         ...item,
         component({ value }) {
-          return value
-            .map((val, key) => <Chip key={key} label={`${val}`} />)
-            .toList();
+          return value.map((val, key) => <Chip key={key} label={`${val}`} />);
         },
       };
     }
@@ -27,9 +25,9 @@ const nodeTableSchema = schema
       return {
         ...item,
         component({ value }) {
-          return value
-            .map((val, key) => <Chip key={key} label={`${key}=${val}`} />)
-            .toList();
+          return value.map((val, key) => (
+            <Chip key={key} label={`${key}=${val}`} />
+          ));
         },
       };
     }

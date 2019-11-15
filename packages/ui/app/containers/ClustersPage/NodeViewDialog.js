@@ -1,8 +1,6 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { bindActionCreators, compose } from 'redux';
 import PropTypes from 'prop-types';
-import { reduxForm, getFormValues } from 'redux-form/immutable';
-import { SubmissionError, submit } from 'redux-form';
 import { createStructuredSelector } from 'reselect';
 import { fromJS, Map, List } from 'immutable';
 import { connect } from 'react-redux';
@@ -27,43 +25,33 @@ import * as actions from 'ducks/clusters/actions';
 
 import useStyles from './styles';
 import messages from './messages';
-import NodeForm from './NodeForm';
+import CreateNodeForm from './NodeForm';
 
-export const formName = 'createNodeForm';
-
-const validate = (values) => {
-  const errors = {};
-  return errors;
-};
-
-const CreateNodeForm = reduxForm({
-  form: formName,
-  validate,
-})(NodeForm);
-
-export const NodeViewDialog = ({
-  isOpen,
-  closeDialog,
-  values,
-  submitForm,
-  nodes,
-  setNodes,
-}) => {
+export const NodeViewDialog = ({ isOpen, closeDialog, nodes, setNodes }) => {
   const classes = useStyles();
+  const formRef = useRef(null);
+
   const doSubmit = (formValues) => {
-    const main = formValues.getIn(['nodes', 'main']).reduce((all, node) => {
-      if (node.get('name') && node.get('address')) {
-        return all.push(node.update('roles', (r) => r.push('controlplane')));
+    const main = formValues.nodes.main || [];
+    const work = formValues.nodes.work || [];
+    main.forEach((item) => {
+      const { roles } = item;
+      if (roles.length > 0) {
+        roles.push('controlplane');
+      } else {
+        item.roles = ['controlplane'];
       }
-      return all;
-    }, fromJS([]));
-    const work = formValues.getIn(['nodes', 'work']).reduce((all, node) => {
-      if (node.get('name') && node.get('address')) {
-        return all.push(node.update('roles', (r) => r.push('worker')));
+    });
+    work.forEach((item) => {
+      const { roles } = item;
+      if (roles.length > 0) {
+        roles.push('worker');
+      } else {
+        item.roles = ['worker'];
       }
-      return all;
-    }, fromJS([]));
-    setNodes(nodes.concat(main).concat(work));
+    });
+
+    setNodes(fromJS(nodes.concat(main).concat(work)));
     closeDialog();
   };
 
@@ -89,13 +77,13 @@ export const NodeViewDialog = ({
               <CreateNodeForm
                 classes={classes}
                 onSubmit={doSubmit}
-                formValues={values}
-                initialValues={fromJS({
-                  nodes: {
-                    main: [{ name: '', addrsss: '', roles: [] }],
-                    work: [{ name: '', addrsss: '', roles: [] }],
-                  },
-                })}
+                formRef={formRef}
+                // initialValues={{
+                //   nodes: {
+                //     main: [{ name: '', addrsss: '', roles: [] }],
+                //     work: [{ name: '', addrsss: '', roles: [] }],
+                //   },
+                // }}
               />
             </div>
           </Paper>
@@ -103,7 +91,16 @@ export const NodeViewDialog = ({
         <CardFooter>
           <GridContainer className={classes.grid}>
             <GridItem xs={12} sm={12} md={12}>
-              <Button onClick={submitForm} color="primary" variant="contained">
+              <Button
+                onClick={() => {
+                  formRef.current.dispatchEvent(
+                    new Event('submit', { cancelable: true })
+                  );
+                }}
+                type="submit"
+                color="primary"
+                variant="contained"
+              >
                 <FormattedMessage {...messages.createClusterButton} />
               </Button>
               <Button
@@ -121,15 +118,12 @@ export const NodeViewDialog = ({
   );
 };
 
-const mapStateToProps = createStructuredSelector({
-  values: getFormValues(formName),
-});
+const mapStateToProps = createStructuredSelector({});
 
 const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
       ...actions,
-      submitForm: () => submit(formName),
     },
     dispatch
   );

@@ -37,43 +37,39 @@ export const CreateClusterPage = ({ createCluster, url }) => {
   const push = usePush();
   const formRef = useRef(null);
   async function doSubmit(formValues) {
-    console.log('formValues', formValues);
     try {
-      const { enableAdvancedOptions, nodes, ...formData } = formValues;
+      const {
+        advancedOptions,
+        enableAdvancedOptions,
+        nodes,
+        ...formData
+      } = formValues;
       let nodeArr = [];
       if (nodes) {
-        const { main, work } = nodes;
-        if (main) {
-          main.forEach((item) => {
-            if (Object.keys(item).length !== 0) {
-              if (item.roles) {
-                item.roles.push('controlplane');
-              } else {
-                item.roles = ['controlplane'];
-              }
+        const main = nodes.main || [];
+        const work = nodes.work || [];
+        main.forEach((item) => {
+          const { roles } = item;
+          if (roles.length > 0) {
+            if (roles.indexOf('controlplane') === -1) {
+              roles.push('controlplane');
             }
-          });
-        }
-        if (work) {
-          work.forEach((item) => {
-            if (Object.keys(item).length !== 0) {
-              if (item.roles) {
-                item.roles.push('worker');
-              } else {
-                item.roles = ['worker'];
-              }
+          } else {
+            item.roles = ['controlplane'];
+          }
+        });
+        work.forEach((item) => {
+          const { roles } = item;
+          if (roles.length > 0) {
+            if (roles.indexOf('worker') === -1) {
+              roles.push('worker');
             }
-          });
-        }
-        if (main && work) {
-          nodeArr = main.concat(work).filter((v) => v.roles);
-        } else if (main && !work) {
-          nodeArr = main;
-        } else if (!!main && work) {
-          nodeArr = work;
-        }
+          } else {
+            item.roles = ['worker'];
+          }
+        });
+        nodeArr = main.concat(work);
       }
-
       const data = {
         nodes: nodeArr,
         ...formData,
@@ -81,7 +77,6 @@ export const CreateClusterPage = ({ createCluster, url }) => {
       if (enableAdvancedOptions) {
         delete data.enableAdvancedOptions;
       }
-      console.log('data', data);
       await new Promise((resolve, reject) => {
         createCluster(data, {
           resolve,
@@ -118,10 +113,6 @@ export const CreateClusterPage = ({ createCluster, url }) => {
                 classes={classes}
                 onSubmit={doSubmit}
                 formRef={formRef}
-                initialValues={fromJS({
-                  name: '',
-                  nodes: { main: [], work: [] },
-                })}
               />
               <Button
                 variant="contained"

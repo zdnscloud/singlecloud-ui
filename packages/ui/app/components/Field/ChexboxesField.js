@@ -24,11 +24,11 @@ const renderChexboxesGroup = ({
   ...custom
 }) => {
   const onChange = (event, ...args) => {
-    let val = input.value || List([]);
+    let val = input.value || [];
     const { checked, value } = event.target;
 
     if (checked) {
-      val = val.push(value);
+      val.push(value);
     } else {
       val = val.filter((v) => v !== value);
     }

@@ -3,14 +3,13 @@
  * Mange Cluster Page
  *
  */
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import { bindActionCreators, compose } from 'redux';
 import { fromJS } from 'immutable';
-import { reduxForm, getFormValues } from 'redux-form/immutable';
-import { SubmissionError, submit } from 'redux-form';
+import { FORM_ERROR } from 'final-form';
 import { Link } from 'react-router-dom';
 
 import { withStyles } from '@material-ui/core/styles';
@@ -33,31 +32,19 @@ import { usePush } from 'hooks/router';
 
 import messages from './messages';
 import useStyles from './styles';
-import ClusterManageForm from './ClusterManageForm';
-
-export const formName = 'updateClusterForm';
-
-const validate = (values) => {
-  const errors = {};
-  return errors;
-};
-
-const UpdateClusterForm = reduxForm({
-  form: formName,
-  validate,
-})(ClusterManageForm);
+import UpdateClusterForm from './ClusterManageForm';
 
 export const ClusterManagePage = ({
-  submitForm,
   readCluster,
   updateCluster,
-  values,
   id,
   cluster,
   url,
 }) => {
   const push = usePush();
+  const formRef = useRef(null);
   const classes = useStyles();
+
   useEffect(() => {
     const timer = setInterval(() => {
       readCluster(id, { url: `${url}/${id}` });
@@ -72,6 +59,7 @@ export const ClusterManagePage = ({
         ...formValues.toJS(),
         nodes: nodes.toJS(),
       };
+      console.log('data', data);
       await new Promise((resolve, reject) => {
         updateCluster(data, {
           resolve,
@@ -82,7 +70,7 @@ export const ClusterManagePage = ({
       });
       push('/clusters');
     } catch (error) {
-      throw new SubmissionError({ _error: error });
+      return { [FORM_ERROR]: error };
     }
   }
 
@@ -106,16 +94,23 @@ export const ClusterManagePage = ({
           <GridItem xs={12} sm={12} md={12}>
             {cluster.size > 0 ? (
               <UpdateClusterForm
-                classes={classes}
                 onSubmit={doSubmit}
-                initialValues={cluster}
-                formValues={values}
                 cluster={cluster}
                 nodes={nodes}
                 setNodes={setNodes}
+                formRef={formRef}
               />
             ) : null}
-            <Button variant="contained" color="primary" onClick={submitForm}>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={() => {
+                formRef.current.dispatchEvent(
+                  new Event('submit', { cancelable: true })
+                );
+              }}
+              type="submit"
+            >
               <FormattedMessage {...messages.createClusterButton} />
             </Button>
             <Button
@@ -134,7 +129,6 @@ export const ClusterManagePage = ({
 };
 
 const mapStateToProps = createStructuredSelector({
-  values: getFormValues(formName),
   cluster: makeSelectCurrent(),
   id: makeSelectCurrentID(),
   url: makeSelectURL(),
@@ -144,7 +138,6 @@ const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
       ...actions,
-      submitForm: () => submit(formName),
     },
     dispatch
   );
