@@ -31,7 +31,11 @@ const Form = ({ formValues, handleSubmit, error, role, memuRole }) => {
   const classes = useStyles();
 
   return (
-    <form className={classes.form} onSubmit={handleSubmit}>
+    <form
+      className={classes.form}
+      onSubmit={handleSubmit}
+      style={{ width: 560 }}
+    >
       <GridContainer>
         {error ? (
           <GridItem xs={12} sm={12} md={12}>
