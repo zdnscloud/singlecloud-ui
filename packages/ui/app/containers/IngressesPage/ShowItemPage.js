@@ -49,7 +49,6 @@ export const IngressDetailPage = ({
   readIngress,
 }) => {
   const classes = useStyles();
-  console.log('ingressID', ingressID);
   useEffect(() => {
     if (url) {
       readIngress(ingressID, {

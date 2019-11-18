@@ -218,7 +218,6 @@ export const makeSelectLeftMenus = () =>
           m.children = m.children.filter((c) => c.adminOnly === undefined);
           return m.adminOnly === undefined;
         });
-        console.log('menus', menus);
       }
       return menus;
     }
