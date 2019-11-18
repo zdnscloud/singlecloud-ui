@@ -13,7 +13,6 @@ const schema = [
   'name',
   'status',
   'address',
-  'status',
   'roles',
   // 'cpu',
   // 'memory',
@@ -85,17 +84,13 @@ const tableSchema = schema
         <Fragment>
           <Confirm
             handleConfirm={() =>
-              executeNodeAction(
-                'cordon',
-                {},
-                {
-                  url: data.getIn(['links', 'self']),
-                  resolve() {},
-                  reject(e) {
-                    setError(e);
-                  },
-                }
-              )
+              executeNodeAction('cordon', null, {
+                url: data.getIn(['links', 'self']),
+                resolve() {},
+                reject(e) {
+                  setError(e);
+                },
+              })
             }
             dialogContentText={messages.cordonPromptText}
             component={
@@ -107,17 +102,13 @@ const tableSchema = schema
 
           <Confirm
             handleConfirm={() =>
-              executeNodeAction(
-                'drain',
-                {},
-                {
-                  url: data.getIn(['links', 'self']),
-                  resolve() {},
-                  reject(e) {
-                    setError(e);
-                  },
-                }
-              )
+              executeNodeAction('drain', null, {
+                url: data.getIn(['links', 'self']),
+                resolve() {},
+                reject(e) {
+                  setError(e);
+                },
+              })
             }
             dialogContentText={messages.drainPromptText}
             component={
@@ -128,17 +119,13 @@ const tableSchema = schema
           />
           <Confirm
             handleConfirm={() =>
-              executeNodeAction(
-                'uncordon',
-                {},
-                {
-                  url: data.getIn(['links', 'self']),
-                  resolve() {},
-                  reject(e) {
-                    setError(e);
-                  },
-                }
-              )
+              executeNodeAction('uncordon', null, {
+                url: data.getIn(['links', 'self']),
+                resolve() {},
+                reject(e) {
+                  setError(e);
+                },
+              })
             }
             dialogContentText={messages.uncordonPromptText}
             component={
