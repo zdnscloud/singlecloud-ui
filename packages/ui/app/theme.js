@@ -1,6 +1,29 @@
 import { createMuiTheme } from '@material-ui/core/styles';
 import hexToRgb from '@gsmlg/utils/hexToRgb';
 
+import green from '@material-ui/core/colors/green';
+import grey from '@material-ui/core/colors/grey';
+import orange from '@material-ui/core/colors/orange';
+import red from '@material-ui/core/colors/red';
+
+const status = {
+  // custom variables for success rate indicators
+  dark: {
+    danger: red[500],
+    warning: orange[500],
+    good: green[500],
+    default: grey[500],
+  },
+  // custom variables for progress bars, which need both the normal colors
+  // as well as a lighter version of them for the bar background
+  light: {
+    danger: red[200],
+    warning: orange[200],
+    good: green[200],
+    default: grey[200],
+  }
+};
+
 const theme = createMuiTheme({
   appBarHeight: 65,
   leftMenuWidth: 232,
@@ -96,6 +119,7 @@ const theme = createMuiTheme({
       },
     },
   },
+  status,
 });
 
 export default theme;

@@ -36,6 +36,8 @@ let selectedNamespace = "default";
 class App extends React.Component {
   state = {
     productName: 'Linkerd',
+    releaseVersion: '2.6.0',
+    uuid: 'Qz194r6a6wSIWpCaohYXI2xv9Jjv8C1z',
     api: ApiHelpers(`/apis/zcloud.cn/v1/clusters/${this.props.clusterID}/linkerd`),
     updateNamespaceInContext: (name) => {
       this.setState({selectedNamespace: name});
@@ -58,6 +60,7 @@ class App extends React.Component {
       if (prevProps.clusterID !== clusterID) {
         this.setState({
           api: ApiHelpers(`/apis/zcloud.cn/v1${pathPrefix}`),
+          pathPrefix,
         });
       }
       if (prevProps.namespaceID !== namespaceID) {
@@ -69,6 +72,7 @@ class App extends React.Component {
       this.setState({
         selectedNamespace: namespaceID,
         api: ApiHelpers(`/apis/zcloud.cn/v1${pathPrefix}`),
+        pathPrefix,
       });
     }
   }
@@ -83,56 +87,56 @@ class App extends React.Component {
         <Switch>
           <Route
             path={`${pathPrefix}/controlplane`}
-            render={props => <Navigation releaseVersion="2.6.0" {...props} ChildComponent={ServiceMesh} />} />
+            render={props => <Navigation {...props} ChildComponent={ServiceMesh} />} />
           <Route
             exact
             path={`${pathPrefix}/namespaces/:namespace`}
-            render={props => <Navigation releaseVersion="2.6.0" {...props} ChildComponent={Namespace} />} />
+            render={props => <Navigation {...props} ChildComponent={Namespace} />} />
           <Route
             path={`${pathPrefix}/namespaces/:namespace/pods/:pod`}
-            render={props => <Navigation releaseVersion="2.6.0" {...props} ChildComponent={ResourceDetail} />} />
+            render={props => <Navigation {...props} ChildComponent={ResourceDetail} />} />
           <Route
             path={`${pathPrefix}/namespaces/:namespace/pods`}
-            render={props => <Navigation releaseVersion="2.6.0" {...props} ChildComponent={ResourceList} resource="pod" />} />
+            render={props => <Navigation {...props} ChildComponent={ResourceList} resource="pod" />} />
           <Route
             path={`${pathPrefix}/namespaces/:namespace/daemonsets/:daemonset`}
-            render={props => <Navigation releaseVersion="2.6.0" {...props} ChildComponent={ResourceDetail} />} />
+            render={props => <Navigation {...props} ChildComponent={ResourceDetail} />} />
           <Route
             path={`${pathPrefix}/namespaces/:namespace/daemonsets`}
-            render={props => <Navigation releaseVersion="2.6.0" {...props} ChildComponent={ResourceList} resource="daemonset" />} />
+            render={props => <Navigation {...props} ChildComponent={ResourceList} resource="daemonset" />} />
           <Route
             path={`${pathPrefix}/namespaces/:namespace/statefulsets/:statefulset`}
-            render={props => <Navigation releaseVersion="2.6.0" {...props} ChildComponent={ResourceDetail} />} />
+            render={props => <Navigation {...props} ChildComponent={ResourceDetail} />} />
           <Route
             path={`${pathPrefix}/namespaces/:namespace/statefulsets`}
-            render={props => <Navigation releaseVersion="2.6.0" {...props} ChildComponent={ResourceList} resource="statefulset" />} />
+            render={props => <Navigation {...props} ChildComponent={ResourceList} resource="statefulset" />} />
           <Route
             path={`${pathPrefix}/namespaces/:namespace/trafficsplits/:trafficsplit`}
-            render={props => <Navigation releaseVersion="2.6.0" {...props} ChildComponent={ResourceDetail} />} />
+            render={props => <Navigation {...props} ChildComponent={ResourceDetail} />} />
           <Route
             path={`${pathPrefix}/namespaces/:namespace/trafficsplits`}
-            render={props => <Navigation releaseVersion="2.6.0" {...props} ChildComponent={ResourceList} resource="trafficsplit" />} />
+            render={props => <Navigation {...props} ChildComponent={ResourceList} resource="trafficsplit" />} />
           <Route
             path={`${pathPrefix}/namespaces/:namespace/jobs/:job`}
-            render={props => <Navigation releaseVersion="2.6.0" {...props} ChildComponent={ResourceDetail} />} />
+            render={props => <Navigation {...props} ChildComponent={ResourceDetail} />} />
           <Route
             path={`${pathPrefix}/namespaces/:namespace/jobs`}
-            render={props => <Navigation releaseVersion="2.6.0" {...props} ChildComponent={ResourceList} resource="job" />} />
+            render={props => <Navigation {...props} ChildComponent={ResourceList} resource="job" />} />
           <Route
             path={`${pathPrefix}/namespaces/:namespace/deployments/:deployment`}
-            render={props => <Navigation releaseVersion="2.6.0" {...props} ChildComponent={ResourceDetail} />} />
+            render={props => <Navigation {...props} ChildComponent={ResourceDetail} />} />
           <Route
             path={`${pathPrefix}/namespaces/:namespace/deployments`}
-            render={props => <Navigation releaseVersion="2.6.0" {...props} ChildComponent={ResourceList} resource="deployment" />} />
+            render={props => <Navigation {...props} ChildComponent={ResourceList} resource="deployment" />} />
           <Route
             path={`${pathPrefix}/namespaces/:namespace/replicationcontrollers/:replicationcontroller`}
-            render={props => <Navigation releaseVersion="2.6.0" {...props} ChildComponent={ResourceDetail} />} />
+            render={props => <Navigation {...props} ChildComponent={ResourceDetail} />} />
           <Route
             path={`${pathPrefix}/namespaces/:namespace/replicationcontrollers`}
-            render={props => <Navigation releaseVersion="2.6.0" {...props} ChildComponent={ResourceList} resource="replicationcontroller" />} />
+            render={props => <Navigation {...props} ChildComponent={ResourceList} resource="replicationcontroller" />} />
           <Route
             path={`${pathPrefix}/namespaces`}
-            render={props => <Navigation releaseVersion="2.6.0" {...props} ChildComponent={ResourceList} resource="namespace" />} />
+            render={props => <Navigation {...props} ChildComponent={ResourceList} resource="namespace" />} />
           <Route component={NoMatch} />
         </Switch>
         </RouterToUrlQuery>

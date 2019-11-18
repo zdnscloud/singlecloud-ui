@@ -22,6 +22,7 @@ const linkerd = proxy({
   pathRewrite: {
     '^/apis/zcloud.cn/v1/clusters/cluster.local/linkerd': '',
   },
+  ws: true,
 });
 app.use('/apis/zcloud.cn/v1/clusters/cluster.local/linkerd', linkerd);
 

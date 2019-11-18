@@ -196,7 +196,7 @@ const ApiHelpers = (pathPrefix, defaultMetricsWindow = '1m') => {
     }
   }
 
-  const prefixLink = to => `${pathPrefix}${to}`;
+  const prefixLink = to => `${pathPrefix.slice(18)}${to}`;
 
   const generateResourceURL = r => {
     if (r.type === "namespace") {

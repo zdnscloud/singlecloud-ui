@@ -193,7 +193,7 @@ class Tap extends React.Component {
     });
 
     let protocol = window.location.protocol === "https:" ? "wss" : "ws";
-    let tapWebSocket = `${protocol}://${window.location.host}${this.props.pathPrefix}/api/tap`;
+    let tapWebSocket = `${protocol}://${window.location.host}/apis/zcloud.cn/v1${this.props.pathPrefix}/api/tap`;
 
     this.ws = new WebSocket(tapWebSocket);
     this.ws.onmessage = this.onWebsocketRecv;
