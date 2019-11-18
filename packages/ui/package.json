@@ -47,6 +47,10 @@
       "npm run lint:eslint:fix",
       "git add --force"
     ],
+    "*.jsx": [
+      "npm run lint:eslint:fix",
+      "git add --force"
+    ],
     "*.json": [
       "prettier --write",
       "git add --force"
@@ -57,6 +61,10 @@
     "babel-core": "7.0.0-bridge.0"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.25",
+    "@fortawesome/free-regular-svg-icons": "^5.11.2",
+    "@fortawesome/free-solid-svg-icons": "^5.11.2",
+    "@fortawesome/react-fontawesome": "^0.1.7",
     "@material-ui/core": "^4.1.0",
     "@material-ui/icons": "^4.1.0",
     "@vx/gradient": "^0.0.189",
@@ -73,6 +81,9 @@
     "core-js": "^3.1.4",
     "cross-env": "^6.0.0",
     "crypto-js": "^3.1.9-1",
+    "d3-drag": "^1.2.4",
+    "d3-force": "^2.0.1",
+    "d3-selection": "^1.4.0",
     "dayjs": "^1.8.16",
     "express": "4.17.1",
     "fontfaceobserver": "2.1.0",
@@ -93,13 +104,17 @@
     "react-app-polyfill": "1",
     "react-dom": "^16.8.0",
     "react-helmet": "5.2.1",
+    "react-iframe": "^1.8.0",
     "react-intl": "^3.0.0",
+    "react-linkify": "^1.0.0-alpha",
     "react-move": "^6.0.0",
     "react-redux": "7",
     "react-router": "5",
     "react-router-dom": "5",
+    "react-router-prop-types": "^1.0.4",
     "react-spring": "^8.0.19",
     "react-transition-group": "^4.3.0",
+    "react-url-query": "^1.5.0",
     "react-virtualized": "^9.21.0",
     "redux": "^4.0.4",
     "redux-form": "^8.1.0",

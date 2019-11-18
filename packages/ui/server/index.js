@@ -16,6 +16,15 @@ const appRoot = resolve(__dirname, '..');
 
 process.chdir(appRoot);
 
+const linkerd = proxy({
+  target: `http://202.173.9.57:50750`,
+  changeOrigin: false,
+  pathRewrite: {
+    '^/apis/zcloud.cn/v1/clusters/cluster.local/linkerd': '',
+  },
+});
+app.use('/apis/zcloud.cn/v1/clusters/cluster.local/linkerd', linkerd);
+
 // If you need a backend, e.g. an API, add your custom backend-specific middleware here
 let backend = process.env.BACKEND || 'localhost:8088';
 

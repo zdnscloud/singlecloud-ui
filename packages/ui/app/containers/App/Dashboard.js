@@ -40,11 +40,17 @@ import { makeSelectIsLogin, makeSelectIsAdmin } from 'ducks/role/selectors';
 
 import EventsList from 'containers/EventsPage/EventsList';
 
+import LinkerdModule from 'containers/LinkerdModule';
+
 import useStyles from './dashboardStyles';
 
 import AppMenubar from './AppMenubar';
 import LeftMenu from './LeftMenu';
 import appRoutes from './routes';
+
+const LinkerdComponent = ({ pathPrefix }) => (
+  <LinkerdModule pathPrefix={pathPrefix} />
+);
 
 export const Dashboard = ({
   cluster,
@@ -138,6 +144,10 @@ export const Dashboard = ({
                   component={route.component}
                 />
               ))}
+              <Route
+                path="/clusters/cluster.local/linkerd"
+                component={LinkerdComponent}
+              />
               <Redirect to={redirectUrl} />
             </Switch>
           </div>
