@@ -126,6 +126,24 @@ export const makeSelectLeftMenus = () =>
           //   icon: SystemIcon,
           // },
           {
+            name: 'ServiceMesh',
+            children: [
+              {
+                name: 'ServiceMeshOverview',
+                path: `/clusters/${cluster}/linkerd/namespaces/${namespace}`,
+              },
+              {
+                name: 'ServiceMeshDeployments',
+                path: `/clusters/${cluster}/linkerd/namespaces/${namespace}/deployments`,
+              },
+              {
+                name: 'ServiceMeshPods',
+                path: `/clusters/${cluster}/linkerd/namespaces/${namespace}/pods`,
+              },
+            ],
+            icon: SystemIcon,
+          },
+          {
             name: 'AppStore',
             children: [
               {

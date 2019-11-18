@@ -48,10 +48,6 @@ import AppMenubar from './AppMenubar';
 import LeftMenu from './LeftMenu';
 import appRoutes from './routes';
 
-const LinkerdComponent = ({ pathPrefix }) => (
-  <LinkerdModule pathPrefix={pathPrefix} />
-);
-
 export const Dashboard = ({
   cluster,
   clusterID,
@@ -145,8 +141,8 @@ export const Dashboard = ({
                 />
               ))}
               <Route
-                path="/clusters/cluster.local/linkerd"
-                component={LinkerdComponent}
+                path="/clusters/:cluster_id/linkerd"
+                component={LinkerdModule}
               />
               <Redirect to={redirectUrl} />
             </Switch>

@@ -189,6 +189,22 @@ export default defineMessages({
   //   id: `${scope}.leftMenuImageManagement`,
   //   defaultMessage: 'ImageManagement',
   // },
+  leftMenuServiceMesh: {
+    id: `${scope}.leftMenuServiceMesh`,
+    defaultMessage: 'ServiceMesh',
+  },
+  leftMenuServiceMeshOverview: {
+    id: `${scope}.leftMenuServiceMeshOverview`,
+    defaultMessage: 'ServiceMeshOverview',
+  },
+  leftMenuServiceMeshDeployments: {
+    id: `${scope}.leftMenuServiceMeshDeployments`,
+    defaultMessage: 'ServiceMeshDeployments',
+  },
+  leftMenuServiceMeshPods: {
+    id: `${scope}.leftMenuServiceMeshPods`,
+    defaultMessage: 'ServiceMeshPods',
+  },
   leftMenuServices: {
     id: `${scope}.leftMenuServices`,
     defaultMessage: 'Services',

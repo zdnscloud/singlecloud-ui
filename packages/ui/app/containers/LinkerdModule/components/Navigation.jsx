@@ -41,10 +41,6 @@ import { withContext } from './util/AppContext.jsx';
 import { withStyles } from '@material-ui/core/styles';
 import yellow from '@material-ui/core/colors/yellow';
 
-const jsonFeedUrl = "https://linkerd.io/dashboard/index.json";
-const localStorageKey = "linkerd-updates-last-clicked";
-const minBrowserWidth = 960;
-
 const styles = theme => {
   const drawerWidth = theme.spacing.unit * 38;
   const navLogoWidth = theme.spacing.unit * 22.5;
@@ -179,16 +175,10 @@ class NavigationBase extends React.Component {
     this.timerId = window.setInterval(this.loadFromServer, this.state.pollingInterval);
   }
 
-  componentWillUpdate() {
-    if (this.props.history) {
-      this.props.checkNamespaceMatch(this.props.history.location.pathname);
-    }
-  }
-
   componentWillUnmount() {
     window.removeEventListener("resize", this.updateWindowDimensions);
     window.clearInterval(this.timerId);
-    this.api.cancelCurrentRequests();
+    this.api && this.api.cancelCurrentRequests();
   }
 
   // API returns namespaces for namespace select button. No metrics returned.
@@ -222,56 +212,12 @@ class NavigationBase extends React.Component {
     });
   }
 
-  handleNamespaceChange = (event, namespace) => {
-    // ensure that mobile drawer will not close on click
-    event.stopPropagation();
-    this.setState({ namespaceMenuOpen: false });
-    if (namespace === this.props.selectedNamespace) {
-      return;
-    }
-    let path = this.props.history.location.pathname;
-    let pathParts = path.split("/");
-    if (pathParts.length === 3 || pathParts.length === 4) {
-      // path is /namespaces/someNamespace/resourceType
-      //      or /namespaces/someNamespace
-      path = path.replace(this.props.selectedNamespace, namespace);
-      this.props.history.push(path);
-      this.props.updateNamespaceInContext(namespace);
-    } else if (pathParts.length === 5) {
-      // path is /namespace/someNamespace/resourceType/someResource
-      this.setState({ showNamespaceChangeDialog: true,
-        newNamespace: namespace });
-    } else {
-      // update the selectedNamespace in context with no path changes
-      this.props.updateNamespaceInContext(namespace);
-    }
-  }
-
-  menuItem(path, title, icon, onClick) {
-    const { classes, api } = this.props;
-    let normalizedPath = this.props.location.pathname.replace(this.props.pathPrefix, "");
-    let isCurrentPage = path => path === normalizedPath;
-
-    return (
-      <MenuItem
-        component={Link}
-        onClick={onClick}
-        to={api.prefixLink(path)}
-        className={classes.navMenuItem}
-        selected={isCurrentPage(path)}>
-        <ListItemIcon>{icon}</ListItemIcon>
-        <ListItemText primary={title} />
-      </MenuItem>
-    );
-  }
-
   render() {
     const { api, classes, selectedNamespace, ChildComponent, ...otherProps } = this.props;
 
     return (
       <div className={classes.root}>
         <main className={classes.content}>
-          <div className={classes.toolbar} />
           <div>
             <ChildComponent {...otherProps} />
           </div>

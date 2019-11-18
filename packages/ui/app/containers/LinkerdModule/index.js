@@ -1,11 +1,23 @@
 import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { connect } from 'react-redux';
+import { FormattedMessage } from 'react-intl';
+import { createStructuredSelector } from 'reselect';
+import { bindActionCreators, compose } from 'redux';
+
+import {
+  makeSelectCurrentID as makeSelectCurrentClusterID,
+  makeSelectCurrent as makeSelectCurrentCluster,
+  makeSelectURL,
+} from 'ducks/clusters/selectors';
+import {
+  makeSelectCurrentID as makeSelectCurrentNamespaceID,
+} from 'ducks/namespaces/selectors';
+
+import CssBaseline from '@material-ui/core/CssBaseline';
 
 import ApiHelpers from './components/util/ApiHelpers.jsx';
 import AppContext from './components/util/AppContext.jsx';
-import Community from './components/Community.jsx';
-import CssBaseline from '@material-ui/core/CssBaseline';
 import Namespace from './components/Namespace.jsx';
 import Navigation from './components/Navigation.jsx';
 import NoMatch from './components/NoMatch.jsx';
@@ -18,129 +30,133 @@ import Top from './components/Top.jsx';
 import TopRoutes from './components/TopRoutes.jsx';
 import { dashboardTheme } from './components/util/theme.js';
 
-let appData = {};
-
-let pathPrefix = "/clusters/cluster.local/linkerd";
-
 let selectedNamespace = "default";
-let pathArray = window.location.pathname.split("/");
 
-// if the current URL path specifies a namespace, this should become the
-// selectedNamespace
-if (pathArray[0] === "" && pathArray[1] === "namespaces" && pathArray[2]) {
-  selectedNamespace = pathArray[2];
-// if the current URL path is a legacy path such as `/daemonsets`, the
-// selectedNamespace should be "_all", unless the path is `/namespaces`
-} else if (pathArray.length === 2 && pathArray[1] !== "" && pathArray[1] !== "namespaces") {
-  selectedNamespace = "_all";
-}
 
 class App extends React.Component {
-  constructor(props) {
-    super(props);
+  state = {
+    productName: 'Linkerd',
+    api: ApiHelpers(`/apis/zcloud.cn/v1/clusters/${this.props.clusterID}/linkerd`),
+    updateNamespaceInContext: (name) => {
+      this.setState({selectedNamespace: name});
+    },
+    checkNamespaceMatch(){},
+  };
 
-    this.state = {
-      ...appData
-    };
+  componentDidMount() {
+    this.setup();
+  }
 
-    pathPrefix = props.pathPrefix || pathPrefix;
+  componentDidUpdate(prevProps) {
+    this.setup(prevProps);
+  }
 
-    this.state.api = ApiHelpers(`/apis/zcloud.cn/v1${pathPrefix}`);
-    this.state.pathPrefix = pathPrefix;
-    this.state.productName = "Linkerd";
-    this.state.selectedNamespace = selectedNamespace;
-
-    this.state.updateNamespaceInContext = name => {
-      this.setState({selectedNamespace:name});
-    };
-
-    this.state.checkNamespaceMatch = path => {
-      let pathNamespace = path.split("/")[2];
-      if (pathNamespace && pathNamespace !== this.state.selectedNamespace) {
-        this.setState({selectedNamespace:pathNamespace});
+  setup(prevProps) {
+    const { clusterID, namespaceID } = this.props;
+    const pathPrefix = `/clusters/${clusterID}/linkerd`;
+    if (prevProps) {
+      if (prevProps.clusterID !== clusterID) {
+        this.setState({
+          api: ApiHelpers(`/apis/zcloud.cn/v1${pathPrefix}`),
+        });
       }
-    };
+      if (prevProps.namespaceID !== namespaceID) {
+        this.setState({
+          selectedNamespace: namespaceID,
+        });
+      }
+    } else {
+      this.setState({
+        selectedNamespace: namespaceID,
+        api: ApiHelpers(`/apis/zcloud.cn/v1${pathPrefix}`),
+      });
+    }
   }
 
   render() {
+    const { clusterID, namespaceID } = this.props;
+    const pathPrefix = `/clusters/${clusterID}/linkerd`;
+
     return (
       <AppContext.Provider value={this.state}>
-        <AppHTML pathPrefix={pathPrefix} />
+        <RouterToUrlQuery>
+        <Switch>
+          <Route
+            path={`${pathPrefix}/controlplane`}
+            render={props => <Navigation releaseVersion="2.6.0" {...props} ChildComponent={ServiceMesh} />} />
+          <Route
+            exact
+            path={`${pathPrefix}/namespaces/:namespace`}
+            render={props => <Navigation releaseVersion="2.6.0" {...props} ChildComponent={Namespace} />} />
+          <Route
+            path={`${pathPrefix}/namespaces/:namespace/pods/:pod`}
+            render={props => <Navigation releaseVersion="2.6.0" {...props} ChildComponent={ResourceDetail} />} />
+          <Route
+            path={`${pathPrefix}/namespaces/:namespace/pods`}
+            render={props => <Navigation releaseVersion="2.6.0" {...props} ChildComponent={ResourceList} resource="pod" />} />
+          <Route
+            path={`${pathPrefix}/namespaces/:namespace/daemonsets/:daemonset`}
+            render={props => <Navigation releaseVersion="2.6.0" {...props} ChildComponent={ResourceDetail} />} />
+          <Route
+            path={`${pathPrefix}/namespaces/:namespace/daemonsets`}
+            render={props => <Navigation releaseVersion="2.6.0" {...props} ChildComponent={ResourceList} resource="daemonset" />} />
+          <Route
+            path={`${pathPrefix}/namespaces/:namespace/statefulsets/:statefulset`}
+            render={props => <Navigation releaseVersion="2.6.0" {...props} ChildComponent={ResourceDetail} />} />
+          <Route
+            path={`${pathPrefix}/namespaces/:namespace/statefulsets`}
+            render={props => <Navigation releaseVersion="2.6.0" {...props} ChildComponent={ResourceList} resource="statefulset" />} />
+          <Route
+            path={`${pathPrefix}/namespaces/:namespace/trafficsplits/:trafficsplit`}
+            render={props => <Navigation releaseVersion="2.6.0" {...props} ChildComponent={ResourceDetail} />} />
+          <Route
+            path={`${pathPrefix}/namespaces/:namespace/trafficsplits`}
+            render={props => <Navigation releaseVersion="2.6.0" {...props} ChildComponent={ResourceList} resource="trafficsplit" />} />
+          <Route
+            path={`${pathPrefix}/namespaces/:namespace/jobs/:job`}
+            render={props => <Navigation releaseVersion="2.6.0" {...props} ChildComponent={ResourceDetail} />} />
+          <Route
+            path={`${pathPrefix}/namespaces/:namespace/jobs`}
+            render={props => <Navigation releaseVersion="2.6.0" {...props} ChildComponent={ResourceList} resource="job" />} />
+          <Route
+            path={`${pathPrefix}/namespaces/:namespace/deployments/:deployment`}
+            render={props => <Navigation releaseVersion="2.6.0" {...props} ChildComponent={ResourceDetail} />} />
+          <Route
+            path={`${pathPrefix}/namespaces/:namespace/deployments`}
+            render={props => <Navigation releaseVersion="2.6.0" {...props} ChildComponent={ResourceList} resource="deployment" />} />
+          <Route
+            path={`${pathPrefix}/namespaces/:namespace/replicationcontrollers/:replicationcontroller`}
+            render={props => <Navigation releaseVersion="2.6.0" {...props} ChildComponent={ResourceDetail} />} />
+          <Route
+            path={`${pathPrefix}/namespaces/:namespace/replicationcontrollers`}
+            render={props => <Navigation releaseVersion="2.6.0" {...props} ChildComponent={ResourceList} resource="replicationcontroller" />} />
+          <Route
+            path={`${pathPrefix}/namespaces`}
+            render={props => <Navigation releaseVersion="2.6.0" {...props} ChildComponent={ResourceList} resource="namespace" />} />
+          <Route component={NoMatch} />
+        </Switch>
+        </RouterToUrlQuery>
       </AppContext.Provider>
     );
   }
 }
 
+const mapStateToProps = createStructuredSelector({
+  url: makeSelectURL(),
+  cluster: makeSelectCurrentCluster(),
+  clusterID: makeSelectCurrentClusterID(),
+  namespaceID: makeSelectCurrentNamespaceID(),
+});
 
-function AppHTML({ pathPrefix }) {
-
-  return (
-    <React.Fragment>
-      <CssBaseline />
-        <BrowserRouter>
-          <RouterToUrlQuery>
-            <Switch>
-              <Redirect exact from={`${pathPrefix}/`} to={`${pathPrefix}/namespaces`} />
-
-              <Route
-                path={`${pathPrefix}/controlplane`}
-                render={props => <Navigation releaseVersion="2.6.0" {...props} ChildComponent={ServiceMesh} />} />
-              <Route
-                exact
-                path={`${pathPrefix}/namespaces/:namespace`}
-                render={props => <Navigation releaseVersion="2.6.0" {...props} ChildComponent={Namespace} />} />
-              <Route
-                path={`${pathPrefix}/namespaces/:namespace/pods/:pod`}
-                render={props => <Navigation releaseVersion="2.6.0" {...props} ChildComponent={ResourceDetail} />} />
-              <Route
-                path={`${pathPrefix}/namespaces/:namespace/pods`}
-                render={props => <Navigation releaseVersion="2.6.0" {...props} ChildComponent={ResourceList} resource="pod" />} />
-              <Route
-                path={`${pathPrefix}/namespaces/:namespace/daemonsets/:daemonset`}
-                render={props => <Navigation releaseVersion="2.6.0" {...props} ChildComponent={ResourceDetail} />} />
-              <Route
-                path={`${pathPrefix}/namespaces/:namespace/daemonsets`}
-                render={props => <Navigation releaseVersion="2.6.0" {...props} ChildComponent={ResourceList} resource="daemonset" />} />
-              <Route
-                path={`${pathPrefix}/namespaces/:namespace/statefulsets/:statefulset`}
-                render={props => <Navigation releaseVersion="2.6.0" {...props} ChildComponent={ResourceDetail} />} />
-              <Route
-                path={`${pathPrefix}/namespaces/:namespace/statefulsets`}
-                render={props => <Navigation releaseVersion="2.6.0" {...props} ChildComponent={ResourceList} resource="statefulset" />} />
-              <Route
-                path={`${pathPrefix}/namespaces/:namespace/trafficsplits/:trafficsplit`}
-                render={props => <Navigation releaseVersion="2.6.0" {...props} ChildComponent={ResourceDetail} />} />
-              <Route
-                path={`${pathPrefix}/namespaces/:namespace/trafficsplits`}
-                render={props => <Navigation releaseVersion="2.6.0" {...props} ChildComponent={ResourceList} resource="trafficsplit" />} />
-              <Route
-                path={`${pathPrefix}/namespaces/:namespace/jobs/:job`}
-                render={props => <Navigation releaseVersion="2.6.0" {...props} ChildComponent={ResourceDetail} />} />
-              <Route
-                path={`${pathPrefix}/namespaces/:namespace/jobs`}
-                render={props => <Navigation releaseVersion="2.6.0" {...props} ChildComponent={ResourceList} resource="job" />} />
-              <Route
-                path={`${pathPrefix}/namespaces/:namespace/deployments/:deployment`}
-                render={props => <Navigation releaseVersion="2.6.0" {...props} ChildComponent={ResourceDetail} />} />
-              <Route
-                path={`${pathPrefix}/namespaces/:namespace/deployments`}
-                render={props => <Navigation releaseVersion="2.6.0" {...props} ChildComponent={ResourceList} resource="deployment" />} />
-              <Route
-                path={`${pathPrefix}/namespaces/:namespace/replicationcontrollers/:replicationcontroller`}
-                render={props => <Navigation releaseVersion="2.6.0" {...props} ChildComponent={ResourceDetail} />} />
-              <Route
-                path={`${pathPrefix}/namespaces/:namespace/replicationcontrollers`}
-                render={props => <Navigation releaseVersion="2.6.0" {...props} ChildComponent={ResourceList} resource="replicationcontroller" />} />
-              <Route
-                path={`${pathPrefix}/namespaces`}
-                render={props => <Navigation releaseVersion="2.6.0" {...props} ChildComponent={ResourceList} resource="namespace" />} />
-              <Route component={NoMatch} />
-            </Switch>
-          </RouterToUrlQuery>
-        </BrowserRouter>
-    </React.Fragment>
+const mapDispatchToProps = (dispatch) =>
+  bindActionCreators(
+    {},
+    dispatch
   );
-}
 
+const withConnect = connect(
+  mapStateToProps,
+  mapDispatchToProps
+);
 
-export default App;
+export default compose(withConnect)(App);
