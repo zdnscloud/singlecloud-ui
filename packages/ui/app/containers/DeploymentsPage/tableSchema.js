@@ -8,6 +8,7 @@ import IconButton from 'components/CustomIconButtons/IconButton';
 import UpgradeIcon from 'components/Icons/Upgrade';
 import RollbackIcon from 'components/Icons/Rollback';
 import ConfirmDelete from 'components/ConfirmDelete/ConfirmDelete';
+import LogcollectionDialog from 'containers/LogcollectionPage/LogcollectionDialog';
 
 const schema = ['name', 'replicas', 'creationTimestamp'];
 
@@ -29,27 +30,39 @@ const tableSchema = schema
     {
       id: 'actions',
       label: 'Actions',
-      component: (props) => (
+      component: ({
+        clusterID,
+        namespaceID,
+        data,
+        setRollback,
+        removeDeployment,
+      }) => (
         <Fragment>
           <IconButton
             aria-label="Update"
             component={Link}
-            to={`/clusters/${props.clusterID}/namespaces/${
-              props.namespaceID
-            }/deployments/${props.data.get('id')}/update`}
+            to={`/clusters/${clusterID}/namespaces/${namespaceID}/deployments/${data.get(
+              'id'
+            )}/update`}
           >
             <UpgradeIcon />
           </IconButton>
-          <IconButton onClick={() => props.setRollback(props.data.get('id'))}>
+          <IconButton onClick={() => setRollback(data.get('id'))}>
             <RollbackIcon />
           </IconButton>
 
+          <LogcollectionDialog
+            surl={data.getIn(['links', 'self'])}
+            kind="deployments"
+            name={data.get('id')}
+          />
+
           <ConfirmDelete
-            actionName={props.removeDeployment}
-            id={props.data.get('id')}
-            url={props.data.getIn(['links', 'remove'])}
-            clusterID={props.clusterID}
-            namespaceID={props.namespaceID}
+            actionName={removeDeployment}
+            id={data.get('id')}
+            url={data.getIn(['links', 'remove'])}
+            clusterID={clusterID}
+            namespaceID={namespaceID}
           />
         </Fragment>
       ),
