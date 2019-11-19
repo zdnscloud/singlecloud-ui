@@ -21,20 +21,21 @@ server {
   listen 80 default_server;
   listen [::]:80 default_server;
   server_name _;
+  root /singlecloud-ui;
   # return 301 https://$host$request_uri;
 
   location /assets {
-    root /singlecloud-ui;
+    alias /singlecloud-ui;
   }
 
-  location ^/apis/zcloud.cn/v1/clusters/([^\/]+)/linkerd {
+  location ~ ^/apis/zcloud.cn/v1/clusters/([^\/]+)/linkerd {
     # Allow websocket connections
     proxy_set_header Upgrade $http_upgrade;
     proxy_set_header Connection $connection_upgrade;
     proxy_pass http://@linkerd;
   }
 
-  location ^/(apis|web) {
+  location ~ ^/(apis|web) {
     proxy_connect_timeout 3600s;
     proxy_read_timeout 3600s;
     proxy_send_timeout 3600s;
