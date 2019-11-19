@@ -22,20 +22,82 @@ import MinusIcon from 'components/Icons/Minus';
 import messages from '../messages';
 import useStyles from '../styles';
 
-const Metrics = ({
-  fields,
-  meta: { error, submitFailed },
-  configMaps,
-  secrets,
-  formValues,
-}) => {
+const Metrics = ({ fields, meta: { error, submitFailed }, formValues }) => {
   const classes = useStyles();
+  const renderNumerical = (f, i) => {
+    const targetType =
+      formValues && formValues.getIn(['metrics', i, 'targetType']);
+    switch (targetType) {
+      case 'Utilization':
+        return (
+          <InputField
+            label={<FormattedMessage {...messages.formNumerical} />}
+            normalize={(val) => (val ? Number(val) : val)}
+            name={`${f}.averageUtilization`}
+            fullWidth
+            inputProps={{
+              type: 'number',
+              autoComplete: 'off',
+              min: 1,
+              max: 255,
+            }}
+          />
+        );
+      case 'AverageValue':
+        return (
+          <InputField
+            label={<FormattedMessage {...messages.formNumerical} />}
+            name={`${f}.averageValue`}
+            normalize={(val) => (val ? Number(val) : val)}
+            fullWidth
+            inputProps={{
+              type: 'text',
+              autoComplete: 'off',
+              endAdornment: '%',
+            }}
+          />
+        );
+
+      default:
+        break;
+    }
+  };
+
   return (
     <List component="ul" style={{ width: '100%' }}>
       <ListItem>
         <ListItemText>
-          <Button color="secondary" onClick={(evt) => fields.push(fromJS({}))}>
-            <FormattedMessage {...messages.formAddMetricsBtn} />
+          <Button
+            className={classes.formPlusIcon}
+            color="secondary"
+            onClick={(evt) => {
+              const metricsType = formValues && formValues.get('metricsType');
+              let metricsName;
+              let targetType;
+              let metricsNameValue;
+              switch (metricsType) {
+                case 'resourceMetrics':
+                  metricsName = 'resourceName';
+                  targetType = 'Utilization';
+                  metricsNameValue = 'cpu';
+                  break;
+                case 'customMetrics':
+                  metricsName = 'metricName';
+                  targetType = 'AverageValue';
+                  metricsNameValue = '';
+                  break;
+                default:
+                  break;
+              }
+              return fields.push(
+                fromJS({
+                  metricsType,
+                  [metricsName]: metricsNameValue,
+                  targetType,
+                })
+              );
+            }}
+          >
             <PlusIcon />
           </Button>
         </ListItemText>
@@ -47,7 +109,33 @@ const Metrics = ({
         </ListItem>
       )}
       {fields.map((f, i) => {
-        console.log('f', f);
+        const metricsType =
+          formValues && formValues.getIn(['metrics', i, 'metricsType']);
+        let targetTypeOptins = [
+          {
+            label: <FormattedMessage {...messages.formUtilization} />,
+            value: 'Utilization',
+          },
+          {
+            label: <FormattedMessage {...messages.formAverageValue} />,
+            value: 'AverageValue',
+          },
+        ];
+        let metricsName;
+        switch (metricsType) {
+          case 'resourceMetrics':
+            metricsName = 'resourceName';
+            break;
+          case 'customMetrics':
+            metricsName = 'metricName';
+            targetTypeOptins = targetTypeOptins.filter(
+              (p) => p.value === 'AverageValue'
+            );
+            break;
+          default:
+            metricsName = 'resourceName';
+            break;
+        }
         return (
           <ListItem key={i}>
             <Card key={i} border>
@@ -55,42 +143,25 @@ const Metrics = ({
                 <ListItemText>
                   <GridContainer>
                     <GridItem xs={3} sm={3} md={3}>
-                      <SelectField
+                      <InputField
                         label={
                           <FormattedMessage {...messages.formMetricsType} />
                         }
                         name={`${f}.metricsType`}
-                        formControlProps={{
-                          style: {
-                            width: '100%',
-                          },
+                        fullWidth
+                        inputProps={{
+                          type: 'text',
+                          autoComplete: 'off',
                         }}
-                        options={[
-                          {
-                            label: (
-                              <FormattedMessage
-                                {...messages.formResourceMetrics}
-                              />
-                            ),
-                            value: 'resourceMetrics',
-                          },
-                          {
-                            label: (
-                              <FormattedMessage
-                                {...messages.formCustomMetrics}
-                              />
-                            ),
-                            value: 'customMetrics',
-                          },
-                        ]}
+                        disabled
                       />
                     </GridItem>
                     <GridItem xs={3} sm={3} md={3}>
                       <SelectField
                         label={
-                          <FormattedMessage {...messages.formResourceName} />
+                          <FormattedMessage {...messages.formMetricName} />
                         }
-                        name={`${f}.resourceName`}
+                        name={`${f}.${metricsName}`}
                         formControlProps={{
                           style: {
                             width: '100%',
@@ -123,56 +194,11 @@ const Metrics = ({
                             width: '100%',
                           },
                         }}
-                        options={[
-                          {
-                            label: (
-                              <FormattedMessage {...messages.formUtilization} />
-                            ),
-                            value: 'Utilization',
-                          },
-                          {
-                            label: (
-                              <FormattedMessage
-                                {...messages.formAverageValue}
-                              />
-                            ),
-                            value: 'AverageValue',
-                          },
-                        ]}
+                        options={targetTypeOptins}
                       />
                     </GridItem>
                     <GridItem xs={3} sm={3} md={3}>
-                      {f ? (
-                        // {f && f.get('targetType') === 'Utilization' ? (
-                        <InputField
-                          label={
-                            <FormattedMessage {...messages.formNumerical} />
-                          }
-                          name={`${f}.averageUtilization`}
-                          normalize={(val) => (val ? Number(val) : val)}
-                          fullWidth
-                          inputProps={{
-                            type: 'text',
-                            autoComplete: 'off',
-                            endAdornment: '%',
-                          }}
-                        />
-                      ) : (
-                        <InputField
-                          label={
-                            <FormattedMessage {...messages.formNumerical} />
-                          }
-                          name={`${f}.averageValue`}
-                          normalize={(val) => (val ? Number(val) : val)}
-                          fullWidth
-                          inputProps={{
-                            type: 'number',
-                            autoComplete: 'off',
-                            min: 1,
-                            max: 255,
-                          }}
-                        />
-                      )}
+                      {renderNumerical(f, i)}
                     </GridItem>
                   </GridContainer>
                 </ListItemText>

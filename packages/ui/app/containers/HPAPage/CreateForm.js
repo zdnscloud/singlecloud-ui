@@ -182,13 +182,40 @@ const Form = ({
                   />
                 </GridItem>
               </GridContainer>
-              <GridContainer>
-                <FieldArray
-                  name="Metrics"
-                  classes={classes}
-                  component={Metrics}
-                  formValues={formValues}
-                />
+              <GridContainer style={{ marginTop: 30 }}>
+                <GridItem xs={3} sm={3} md={3}>
+                  <SelectField
+                    label={<FormattedMessage {...messages.formMetricsType} />}
+                    name="metricsType"
+                    formControlProps={{
+                      style: {
+                        width: '100%',
+                      },
+                    }}
+                    options={[
+                      {
+                        label: (
+                          <FormattedMessage {...messages.formResourceMetrics} />
+                        ),
+                        value: 'resourceMetrics',
+                      },
+                      {
+                        label: (
+                          <FormattedMessage {...messages.formCustomMetrics} />
+                        ),
+                        value: 'customMetrics',
+                      },
+                    ]}
+                  />
+                </GridItem>
+                <GridItem xs={12} sm={12} md={12}>
+                  <FieldArray
+                    name="metrics"
+                    classes={classes}
+                    component={Metrics}
+                    formValues={formValues}
+                  />
+                </GridItem>
               </GridContainer>
             </CardBody>
           </Card>

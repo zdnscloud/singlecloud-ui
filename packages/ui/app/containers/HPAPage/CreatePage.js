@@ -86,8 +86,19 @@ export const CreateHPAPage = ({
 
   async function doSubmit(formValues) {
     try {
-      const data = formValues.toJS();
+      const { metrics, ...formData } = formValues.toJS();
+      const resourceMetrics =
+        metrics.filter((r) => r.metricsType === 'resourceMetrics') || [];
+      const customMetrics =
+        metrics.filter((r) => r.metricsType === 'customMetrics') || [];
+      const data = {
+        resourceMetrics,
+        customMetrics,
+        ...formData,
+      };
+      delete data.metricsType;
       console.log('data', data);
+
       await new Promise((resolve, reject) => {
         createHorizontalpodautoscaler(data, {
           resolve,
@@ -127,7 +138,7 @@ export const CreateHPAPage = ({
             <CreateHPAForm
               onSubmit={doSubmit}
               formValues={values}
-              initialValues={fromJS({})}
+              initialValues={fromJS({ metricsType: 'resourceMetrics' })}
               deployments={deployments}
               statefulsets={statefulsets}
             />

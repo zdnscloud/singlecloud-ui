@@ -101,10 +101,6 @@ export default defineMessages({
     id: `${scope}.formMinReplicas`,
     defaultMessage: 'MinReplicas',
   },
-  formAddMetricsBtn: {
-    id: `${scope}.formAddMetricsBtn`,
-    defaultMessage: 'AddMetrics',
-  },
   formMetricsType: {
     id: `${scope}.formMetricsType`,
     defaultMessage: 'MetricsType',
@@ -117,9 +113,9 @@ export default defineMessages({
     id: `${scope}.formCustomMetrics`,
     defaultMessage: 'CustomMetrics',
   },
-  formResourceName: {
-    id: `${scope}.formResourceName`,
-    defaultMessage: 'ResourceName',
+  formMetricName: {
+    id: `${scope}.formMetricName`,
+    defaultMessage: 'MetricName',
   },
   formCpu: {
     id: `${scope}.formCpu`,

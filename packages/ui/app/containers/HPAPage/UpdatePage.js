@@ -8,7 +8,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { bindActionCreators, compose } from 'redux';
-import { fromJS } from 'immutable';
+import { fromJS, Map, List } from 'immutable';
 import {
   reduxForm,
   getFormValues,
@@ -68,6 +68,7 @@ export const UpdateHPAPage = ({
 }) => {
   const classes = useStyles();
   const push = usePush();
+  let hpa = Map({});
   useEffect(() => {
     if (deployUrl) {
       loadDeployments(deployUrl, {
@@ -95,9 +96,7 @@ export const UpdateHPAPage = ({
         namespaceID,
       });
     }
-    return () => {
-      // cancel someThing
-    };
+    return () => {};
   }, [
     clusterID,
     namespaceID,
@@ -109,20 +108,59 @@ export const UpdateHPAPage = ({
 
   async function doSubmit(formValues) {
     try {
-      const data = formValues.toJS();
+      const { metrics, ...formData } = formValues.toJS();
+
+      console.log('data', formValues.toJS());
+      const resourceMetrics =
+        metrics.filter((r) => r.metricsType === 'resourceMetrics') || [];
+      const customMetrics =
+        metrics.filter((r) => r.metricsType === 'customMetrics') || [];
+      const data = {
+        resourceMetrics,
+        customMetrics,
+        ...formData,
+      };
+      delete data.metricsType;
+      console.log('data', data);
 
       await new Promise((resolve, reject) => {
         updateHorizontalpodautoscaler(data, {
           resolve,
           reject,
-          url,
+          url: `${url}/${id}`,
           clusterID,
           namespaceID,
         });
       });
+      push(`/clusters/${clusterID}/namespaces/${namespaceID}/hpa`);
     } catch (error) {
       throw new SubmissionError({ _error: error });
     }
+  }
+
+  if (current.size !== 0) {
+    const data = current.toJS();
+    const { resourceMetrics, customMetrics, ...formData } = data;
+    let arr = [];
+    data.resourceMetrics =
+      resourceMetrics &&
+      resourceMetrics.map((item) => {
+        item.metricsType = 'resourceMetrics';
+        return item;
+      });
+    data.customMetrics =
+      customMetrics &&
+      customMetrics.map((item) => {
+        item.metricsType = 'customMetrics';
+        return item;
+      });
+    arr = arr.concat(data.resourceMetrics).concat(data.customMetrics);
+    data.metrics = arr.filter((l) => l !== undefined);
+    data.metricsType = 'resourceMetrics';
+    delete data.resourceMetrics;
+    delete data.customMetrics;
+    hpa = fromJS(data);
+    // console.log('data', data, 'hpa', hpa);
   }
 
   return (
@@ -150,7 +188,7 @@ export const UpdateHPAPage = ({
               <UpdateHPAForm
                 onSubmit={doSubmit}
                 formValues={values}
-                initialValues={current}
+                initialValues={hpa}
                 deployments={deployments}
                 statefulsets={statefulsets}
                 type="update"
