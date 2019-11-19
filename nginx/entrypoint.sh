@@ -2,16 +2,16 @@
 
 set -e
 
-SINGLECLOUD=${SINGLECLOUD:-http://202.173.9.57:8088}
+SINGLECLOUD=${SINGLECLOUD:-202.173.9.57:8088}
 
-LINKERD=${LINKERD:-http://202.173.9.57:50750}
+LINKERD=${LINKERD:-202.173.9.57:50750}
 
 cat <<EOF > /etc/nginx/conf.d/upstream.conf
-upstream singlecloud {
+upstream @singlecloud {
   server ${SINGLECLOUD};
 }
 
-upstream linkerd {
+upstream @linkerd {
   server ${LINKERD};
 }
 EOF
@@ -32,7 +32,7 @@ server {
     # Allow websocket connections
     proxy_set_header Upgrade $http_upgrade;
     proxy_set_header Connection $connection_upgrade;
-    proxy_pass http://linkerd;
+    proxy_pass http://@linkerd;
   }
 
   location ^/(apis|web) {
@@ -52,7 +52,7 @@ server {
     proxy_cache_bypass $http_pragma;
     proxy_cache_revalidate on;
     proxy_redirect off;
-    proxy_pass https://singlecloud;
+    proxy_pass http://@singlecloud;
   }
 
   location / {
