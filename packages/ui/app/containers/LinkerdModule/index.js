@@ -83,6 +83,7 @@ class App extends React.Component {
 
     return (
       <AppContext.Provider value={this.state}>
+        <BrowserRouter>
         <RouterToUrlQuery>
         <Switch>
           <Route
@@ -140,6 +141,7 @@ class App extends React.Component {
           <Route component={NoMatch} />
         </Switch>
         </RouterToUrlQuery>
+        </BrowserRouter>
       </AppContext.Provider>
     );
   }
