@@ -14,8 +14,6 @@ import {
   makeSelectCurrentID as makeSelectCurrentNamespaceID,
 } from 'ducks/namespaces/selectors';
 
-import CssBaseline from '@material-ui/core/CssBaseline';
-
 import ApiHelpers from './components/util/ApiHelpers.jsx';
 import AppContext from './components/util/AppContext.jsx';
 import Namespace from './components/Namespace.jsx';
@@ -23,7 +21,6 @@ import Navigation from './components/Navigation.jsx';
 import NoMatch from './components/NoMatch.jsx';
 import ResourceDetail from './components/ResourceDetail.jsx';
 import ResourceList from './components/ResourceList.jsx';
-import { RouterToUrlQuery } from 'react-url-query';
 import ServiceMesh from './components/ServiceMesh.jsx';
 import Tap from './components/Tap.jsx';
 import Top from './components/Top.jsx';
@@ -85,8 +82,6 @@ class App extends React.Component {
 
     return (
       <AppContext.Provider value={this.state}>
-        <BrowserRouter>
-        <RouterToUrlQuery>
         <Switch>
           <Route
             path={`${pathPrefix}/controlplane`}
@@ -142,8 +137,6 @@ class App extends React.Component {
             render={props => <Navigation {...props} ChildComponent={ResourceList} resource="namespace" />} />
           <Route component={NoMatch} />
         </Switch>
-        </RouterToUrlQuery>
-        </BrowserRouter>
       </AppContext.Provider>
     );
   }

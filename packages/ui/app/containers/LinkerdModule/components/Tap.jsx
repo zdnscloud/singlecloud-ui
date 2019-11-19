@@ -1,4 +1,3 @@
-import { UrlQueryParamTypes, addUrlProps } from 'react-url-query';
 import { WS_ABNORMAL_CLOSURE, WS_NORMAL_CLOSURE, WS_POLICY_VIOLATION, emptyTapQuery, processTapEvent, setMaxRps, wsCloseCodes } from './util/TapUtils.jsx';
 
 import ErrorBanner from './ErrorBanner.jsx';
@@ -15,10 +14,6 @@ import _throttle from 'lodash/throttle';
 import _values from 'lodash/values';
 import { groupResourcesByNs } from './util/MetricUtils.jsx';
 import { withContext } from './util/AppContext.jsx';
-
-const urlPropsQueryConfig = {
-  autostart: { type: UrlQueryParamTypes.string }
-};
 
 class Tap extends React.Component {
   static propTypes = {
@@ -303,4 +298,4 @@ class Tap extends React.Component {
   }
 }
 
-export default addUrlProps({ urlPropsQueryConfig })(withContext(Tap));
+export default withContext(Tap);

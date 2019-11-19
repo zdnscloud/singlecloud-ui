@@ -1,4 +1,3 @@
-import { UrlQueryParamTypes, addUrlProps } from 'react-url-query';
 import {
   defaultMaxRps,
   emptyTapQuery,
@@ -47,10 +46,6 @@ import { withStyles } from '@material-ui/core/styles';
 const getResourceList = (resourcesByNs, ns) => {
   return resourcesByNs[ns] || _uniq(_flatten(_values(resourcesByNs)));
 };
-
-const urlPropsQueryConfig = _mapValues(tapQueryProps, () => {
-  return { type: UrlQueryParamTypes.string };
-});
 
 const styles = theme => ({
   root: {
@@ -168,13 +163,11 @@ class TapQueryForm extends React.Component {
     return event => {
       let formVal = event.target.value;
       state.query[name] = formVal;
-      this.handleUrlUpdate(name, formVal);
 
       if (!_isNil(scopeResource)) {
         // scope the available typeahead resources to the selected namespace
         state.autocomplete[scopeResource] = this.state.resourcesByNs[formVal];
         state.query[scopeResource] = `namespace/${formVal}`;
-        this.handleUrlUpdate(scopeResource, `namespace/${formVal}`);
       }
 
       if (shouldScopeAuthority) {
@@ -186,13 +179,6 @@ class TapQueryForm extends React.Component {
     };
   }
 
-  // Each time state.query is updated, this method calls the equivalent
-  // onChange method to reflect the update in url query params. These onChange
-  // methods are automatically added to props by react-url-query.
-  handleUrlUpdate = (name, formVal) => {
-    this.props[`onChange${_upperFirst(name)}`](formVal);
-  }
-
   handleFormEvent = name => {
     let state = {
       query: this.state.query
@@ -200,7 +186,6 @@ class TapQueryForm extends React.Component {
 
     return event => {
       state.query[name] = event.target.value;
-      this.handleUrlUpdate(name, event.target.value);
       this.setState(state);
       this.props.updateQuery(state.query);
     };
@@ -222,7 +207,6 @@ class TapQueryForm extends React.Component {
     });
 
     _each(this.state.query, (_val, name) => {
-      this.handleUrlUpdate(name, null);
     });
 
     this.props.updateQuery(emptyTapQuery(), true);
@@ -435,4 +419,4 @@ class TapQueryForm extends React.Component {
   }
 }
 
-export default addUrlProps({ urlPropsQueryConfig })(withStyles(styles)(TapQueryForm));
+export default withStyles(styles)(TapQueryForm);

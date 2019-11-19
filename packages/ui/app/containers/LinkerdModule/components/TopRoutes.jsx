@@ -1,5 +1,3 @@
-import { UrlQueryParamTypes, addUrlProps } from 'react-url-query';
-
 import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
@@ -38,10 +36,6 @@ const topRoutesQueryProps = {
   to_namespace: PropTypes.string,
 };
 const topRoutesQueryPropType = PropTypes.shape(topRoutesQueryProps);
-
-const urlPropsQueryConfig = _mapValues(topRoutesQueryProps, () => {
-  return { type: UrlQueryParamTypes.string };
-});
 
 const toResourceName = (query, typeKey, nameKey) => {
   return `${query[typeKey] || ""}${!query[nameKey] ? "" : "/"}${query[nameKey] || ""}`;
@@ -159,20 +153,10 @@ class TopRoutes extends React.Component {
     });
   }
 
-  // Each time state.query is updated, this method calls the equivalent
-  // onChange method to reflect the update in url query params. These onChange
-  // methods are automatically added to props by react-url-query.
-  handleUrlUpdate = query => {
-    for (let key in query) {
-      this.props[`onChange${_upperFirst(key)}`](query[key]);
-    }
-  }
-
   handleNamespaceSelect = nsKey => e => {
     let query = this.state.query;
     let formVal = _get(e, 'target.value');
     query[nsKey] = formVal;
-    this.handleUrlUpdate(query);
     this.setState({ query });
   };
 
@@ -185,7 +169,6 @@ class TopRoutes extends React.Component {
     query[nameKey] = resourceName;
     query[typeKey] = resourceType;
 
-    this.handleUrlUpdate(query);
     this.setState({ query });
   }
 
@@ -340,4 +323,4 @@ class TopRoutes extends React.Component {
   }
 }
 
-export default addUrlProps({ urlPropsQueryConfig })(withContext(withStyles(styles, { withTheme: true })(TopRoutes)));
+export default withContext(withStyles(styles, { withTheme: true })(TopRoutes));
