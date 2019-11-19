@@ -48,7 +48,7 @@ const styles = theme => ({
   },
   content: {
     fontSize: "14px",
-    padding: theme.spacing.unit * 2,
+    padding: theme.spacing(2),
     color: "white",
   },
   title: {

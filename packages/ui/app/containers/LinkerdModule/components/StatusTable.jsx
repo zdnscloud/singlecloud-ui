@@ -10,12 +10,12 @@ import { withStyles } from '@material-ui/core/styles';
 
 const styles = theme => _merge({}, statusClassNames(theme), {
   statusTableDot: {
-    width: 2 * theme.spacing.unit,
-    height: 2 * theme.spacing.unit,
-    minWidth: 2 * theme.spacing.unit,
+    width: 2 * theme.spacing(1),
+    height: 2 * theme.spacing(1),
+    minWidth: 2 * theme.spacing(1),
     borderRadius: "50%",
     display: "inline-block",
-    marginRight: theme.spacing.unit,
+    marginRight: theme.spacing(1),
   }
 });
 

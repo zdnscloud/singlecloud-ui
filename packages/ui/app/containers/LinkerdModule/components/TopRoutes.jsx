@@ -49,8 +49,8 @@ const toResourceName = (query, typeKey, nameKey) => {
 
 const styles = theme => ({
   root: {
-    marginTop: 3 * theme.spacing.unit,
-    marginBottom:theme.spacing.unit,
+    marginTop: 3 * theme.spacing(1),
+    marginBottom:theme.spacing(1),
   },
   formControl: {
     minWidth: 200,

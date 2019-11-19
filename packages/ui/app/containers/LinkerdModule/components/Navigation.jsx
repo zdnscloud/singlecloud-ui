@@ -42,9 +42,9 @@ import { withStyles } from '@material-ui/core/styles';
 import yellow from '@material-ui/core/colors/yellow';
 
 const styles = theme => {
-  const drawerWidth = theme.spacing.unit * 38;
-  const navLogoWidth = theme.spacing.unit * 22.5;
-  const contentPadding = theme.spacing.unit * 3;
+  const drawerWidth = theme.spacing(38);
+  const navLogoWidth = theme.spacing(22.5);
+  const contentPadding = theme.spacing(3);
 
   const enteringFn = prop => theme.transitions.create(prop, {
     easing: theme.transitions.easing.sharp,
@@ -71,7 +71,7 @@ const styles = theme => {
     bars: {
       color: 'white',
       position: "fixed",
-      left: theme.spacing.unit * 2.5,
+      left: theme.spacing(2.5),
     },
     breadcrumbs: {
       color: 'white',
@@ -85,7 +85,7 @@ const styles = theme => {
     navToolbar: {
       display: 'flex',
       alignItems: 'center',
-      padding: `0 0 0 ${theme.spacing.unit*2}px`,
+      padding: `0 0 0 ${theme.spacing(2)}px`,
       boxShadow: theme.shadows[4], // to match elevation == 4 on main AppBar
       ...theme.mixins.toolbar,
       backgroundColor: theme.palette.primary.main,

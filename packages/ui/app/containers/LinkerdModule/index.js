@@ -38,7 +38,9 @@ class App extends React.Component {
     productName: 'Linkerd',
     releaseVersion: '2.6.0',
     uuid: 'Qz194r6a6wSIWpCaohYXI2xv9Jjv8C1z',
+    pathPrefix: `/clusters/${this.props.clusterID}/linkerd`,
     api: ApiHelpers(`/apis/zcloud.cn/v1/clusters/${this.props.clusterID}/linkerd`),
+    selectedNamespace: this.props.namespaceID,
     updateNamespaceInContext: (name) => {
       this.setState({selectedNamespace: name});
     },

@@ -42,7 +42,7 @@ const grpcStatusCodes = {
 
 const spinnerStyles = theme => ({
   progress: {
-    margin: theme.spacing.unit * 2,
+    margin: theme.spacing(2),
   },
 });
 const SpinnerBase = () => <CircularProgress size={20} />;

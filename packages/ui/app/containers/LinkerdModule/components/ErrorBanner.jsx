@@ -14,7 +14,7 @@ const defaultMessage = "An error has occurred.";
 
 const styles = theme => ({
   close: {
-    padding: theme.spacing.unit / 2,
+    padding: theme.spacing(0.5),
   },
   error: {
     backgroundColor: theme.palette.error.dark,
@@ -22,10 +22,10 @@ const styles = theme => ({
   backgroundColor: theme.palette.error.dark,
   iconVariant: {
     opacity: 0.9,
-    marginRight: theme.spacing.unit,
+    marginRight: theme.spacing(1),
   },
   margin: {
-    margin: theme.spacing.unit,
+    margin: theme.spacing(1),
   },
   message: {
     display: 'flex',
