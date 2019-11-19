@@ -21,6 +21,7 @@ server {
   listen 80 default_server;
   listen [::]:80 default_server;
   server_name _;
+  root /singlecloud-ui;
   # return 301 https://$host$request_uri;
 
   location /assets {

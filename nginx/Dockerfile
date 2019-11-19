@@ -17,4 +17,6 @@ COPY nginx.conf /etc/nginx/
 
 COPY entrypoint.sh /
 
+COPY --from=zdnscloud/singlecloud-ui:linkerd /www /singlecloud-ui
+
 ENTRYPOINT ["/entrypoint.sh"]
