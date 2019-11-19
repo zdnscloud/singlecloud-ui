@@ -32,6 +32,7 @@ server {
     # Allow websocket connections
     proxy_set_header Upgrade $http_upgrade;
     proxy_set_header Connection $connection_upgrade;
+    proxy_redirect ~*/apis/zcloud.cn/v1/clusters/([^\/]+)/linkerd(.+)$ $1;
     proxy_pass http://@linkerd;
   }
 
