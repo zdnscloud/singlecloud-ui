@@ -50,7 +50,18 @@ const HPAPage = ({
         namespaceID,
       });
     }
-    return () => {};
+    const t = setInterval(() => {
+      // if (url) {
+      //   loadHorizontalpodautoscalers(url, {
+      //     clusterID,
+      //     namespaceID,
+      //   });
+      // }
+    }, 3000);
+
+    return () => {
+      clearInterval(t);
+    };
   }, [clusterID, loadHorizontalpodautoscalers, namespaceID, url]);
 
   return (

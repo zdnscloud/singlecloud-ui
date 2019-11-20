@@ -10,7 +10,7 @@ import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { createStructuredSelector, createSelector } from 'reselect';
 import { bindActionCreators, compose } from 'redux';
-import { fromJS } from 'immutable';
+import { fromJS, List as list } from 'immutable';
 import { reduxForm, getFormValues } from 'redux-form/immutable';
 import { SubmissionError, submit } from 'redux-form';
 
@@ -55,13 +55,8 @@ export const HPADetailPage = ({
   hpa,
   readHorizontalpodautoscaler,
 }) => {
-  console.log(
-    'url',
-    url,
-    'readHorizontalpodautoscaler',
-    readHorizontalpodautoscaler
-  );
   const classes = useStyles();
+  let metrics = list([]);
   useEffect(() => {
     readHorizontalpodautoscaler(id, {
       url: `${url}/${id}`,
@@ -70,6 +65,55 @@ export const HPADetailPage = ({
     });
     return () => {};
   }, [clusterID, namespaceID, id, readHorizontalpodautoscaler, url]);
+
+  if (hpa.size !== 0) {
+    const data = hpa.toJS();
+    const { resourceMetrics, customMetrics, ...formData } = data;
+    let arr = [];
+    data.resourceMetrics =
+      resourceMetrics &&
+      resourceMetrics.map((item) => {
+        item.metricsType = 'resourceMetrics';
+        return item;
+      });
+    data.customMetrics =
+      customMetrics &&
+      customMetrics.map((item) => {
+        item.metricsType = 'customMetrics';
+        item.targetType = 'AverageValue';
+        return item;
+      });
+    arr = arr.concat(data.resourceMetrics).concat(data.customMetrics);
+    metrics = fromJS(arr.filter((l) => l !== undefined));
+  }
+
+  const renderNumerical = (c, i) => {
+    const targetType = metrics && metrics.getIn([i, 'targetType']);
+    switch (targetType) {
+      case 'Utilization':
+        return (
+          <ReadOnlyInput
+            labelText={<FormattedMessage {...messages.formNumerical} />}
+            fullWidth
+            value={c.get('averageUtilization')}
+            inputProps={{
+              autoComplete: 'off',
+              endAdornment: '%',
+            }}
+          />
+        );
+      case 'AverageValue':
+        return (
+          <ReadOnlyInput
+            labelText={<FormattedMessage {...messages.formNumerical} />}
+            fullWidth
+            value={c.get('averageValue')}
+          />
+        );
+      default:
+        break;
+    }
+  };
 
   return (
     <div className={classes.root}>
@@ -145,6 +189,75 @@ export const HPADetailPage = ({
                     />
                   </GridItem>
                 </GridContainer>
+                <List component="ul">
+                  {metrics.size > 0 &&
+                    metrics.map((c, i) => {
+                      const metricsType =
+                        metrics && metrics.getIn([i, 'metricsType']);
+                      let metricsName;
+                      switch (metricsType) {
+                        case 'resourceMetrics':
+                          metricsName = 'resourceName';
+                          break;
+                        case 'customMetrics':
+                          metricsName = 'metricName';
+                          break;
+                        default:
+                          metricsName = 'resourceName';
+                          break;
+                      }
+                      return (
+                        <Card key={i} border>
+                          <CardBody>
+                            <ListItem key={i}>
+                              <ListItemText>
+                                <GridContainer>
+                                  <GridItem xs={3} sm={3} md={3}>
+                                    <ReadOnlyInput
+                                      labelText={
+                                        <FormattedMessage
+                                          {...messages.formMetricsType}
+                                        />
+                                      }
+                                      fullWidth
+                                      value={c.get('metricsType')}
+                                    />
+                                  </GridItem>
+                                  <GridItem xs={3} sm={3} md={3}>
+                                    <ReadOnlyInput
+                                      labelText={
+                                        <FormattedMessage
+                                          {...messages.formMetricName}
+                                        />
+                                      }
+                                      fullWidth
+                                      value={c.get(`${metricsName}`)}
+                                    />
+                                  </GridItem>
+                                </GridContainer>
+                                <GridContainer>
+                                  <GridItem xs={3} sm={3} md={3}>
+                                    <ReadOnlyInput
+                                      labelText={
+                                        <FormattedMessage
+                                          {...messages.formTargetType}
+                                        />
+                                      }
+                                      fullWidth
+                                      value={c.get('targetType')}
+                                    />
+                                  </GridItem>
+                                  <GridItem xs={3} sm={3} md={3}>
+                                    {renderNumerical(c, i)}
+                                  </GridItem>
+                                </GridContainer>
+                              </ListItemText>
+                            </ListItem>
+                          </CardBody>
+                        </Card>
+                      );
+                    })}
+                </List>
               </CardBody>
             </Card>
           </GridItem>

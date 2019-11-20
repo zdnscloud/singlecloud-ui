@@ -109,8 +109,6 @@ export const UpdateHPAPage = ({
   async function doSubmit(formValues) {
     try {
       const { metrics, ...formData } = formValues.toJS();
-
-      console.log('data', formValues.toJS());
       const resourceMetrics =
         metrics.filter((r) => r.metricsType === 'resourceMetrics') || [];
       const customMetrics =
@@ -121,7 +119,6 @@ export const UpdateHPAPage = ({
         ...formData,
       };
       delete data.metricsType;
-      console.log('data', data);
 
       await new Promise((resolve, reject) => {
         updateHorizontalpodautoscaler(data, {
@@ -152,6 +149,7 @@ export const UpdateHPAPage = ({
       customMetrics &&
       customMetrics.map((item) => {
         item.metricsType = 'customMetrics';
+        item.targetType = 'AverageValue';
         return item;
       });
     arr = arr.concat(data.resourceMetrics).concat(data.customMetrics);
@@ -160,7 +158,6 @@ export const UpdateHPAPage = ({
     delete data.resourceMetrics;
     delete data.customMetrics;
     hpa = fromJS(data);
-    // console.log('data', data, 'hpa', hpa);
   }
 
   return (

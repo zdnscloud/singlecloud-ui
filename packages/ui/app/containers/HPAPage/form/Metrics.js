@@ -24,6 +24,7 @@ import useStyles from '../styles';
 
 const Metrics = ({ fields, meta: { error, submitFailed }, formValues }) => {
   const classes = useStyles();
+
   const renderNumerical = (f, i) => {
     const targetType =
       formValues && formValues.getIn(['metrics', i, 'targetType']);
@@ -38,6 +39,7 @@ const Metrics = ({ fields, meta: { error, submitFailed }, formValues }) => {
             inputProps={{
               type: 'number',
               autoComplete: 'off',
+              endAdornment: '%',
               min: 1,
               max: 255,
             }}
@@ -48,16 +50,57 @@ const Metrics = ({ fields, meta: { error, submitFailed }, formValues }) => {
           <InputField
             label={<FormattedMessage {...messages.formNumerical} />}
             name={`${f}.averageValue`}
-            normalize={(val) => (val ? Number(val) : val)}
             fullWidth
             inputProps={{
               type: 'text',
               autoComplete: 'off',
-              endAdornment: '%',
             }}
           />
         );
 
+      default:
+        break;
+    }
+  };
+
+  const renderMetricsName = (f, i) => {
+    const metricsType =
+      formValues && formValues.getIn(['metrics', i, 'metricsType']);
+    switch (metricsType) {
+      case 'resourceMetrics':
+        return (
+          <SelectField
+            label={<FormattedMessage {...messages.formMetricName} />}
+            name={`${f}.resourceName`}
+            formControlProps={{
+              style: {
+                width: '100%',
+              },
+            }}
+            options={[
+              {
+                label: <FormattedMessage {...messages.formCpu} />,
+                value: 'cpu',
+              },
+              {
+                label: <FormattedMessage {...messages.formMemory} />,
+                value: 'memory',
+              },
+            ]}
+          />
+        );
+      case 'customMetrics':
+        return (
+          <InputField
+            label={<FormattedMessage {...messages.formMetricName} />}
+            name={`${f}.metricName`}
+            fullWidth
+            inputProps={{
+              type: 'text',
+              autoComplete: 'off',
+            }}
+          />
+        );
       default:
         break;
     }
@@ -111,7 +154,7 @@ const Metrics = ({ fields, meta: { error, submitFailed }, formValues }) => {
       {fields.map((f, i) => {
         const metricsType =
           formValues && formValues.getIn(['metrics', i, 'metricsType']);
-        let targetTypeOptins = [
+        let targetTypeOptions = [
           {
             label: <FormattedMessage {...messages.formUtilization} />,
             value: 'Utilization',
@@ -128,9 +171,10 @@ const Metrics = ({ fields, meta: { error, submitFailed }, formValues }) => {
             break;
           case 'customMetrics':
             metricsName = 'metricName';
-            targetTypeOptins = targetTypeOptins.filter(
+            targetTypeOptions = targetTypeOptions.filter(
               (p) => p.value === 'AverageValue'
             );
+
             break;
           default:
             metricsName = 'resourceName';
@@ -157,29 +201,7 @@ const Metrics = ({ fields, meta: { error, submitFailed }, formValues }) => {
                       />
                     </GridItem>
                     <GridItem xs={3} sm={3} md={3}>
-                      <SelectField
-                        label={
-                          <FormattedMessage {...messages.formMetricName} />
-                        }
-                        name={`${f}.${metricsName}`}
-                        formControlProps={{
-                          style: {
-                            width: '100%',
-                          },
-                        }}
-                        options={[
-                          {
-                            label: <FormattedMessage {...messages.formCpu} />,
-                            value: 'cpu',
-                          },
-                          {
-                            label: (
-                              <FormattedMessage {...messages.formMemory} />
-                            ),
-                            value: 'memory',
-                          },
-                        ]}
-                      />
+                      {renderMetricsName(f, i)}
                     </GridItem>
                   </GridContainer>
                   <GridContainer>
@@ -194,7 +216,7 @@ const Metrics = ({ fields, meta: { error, submitFailed }, formValues }) => {
                             width: '100%',
                           },
                         }}
-                        options={targetTypeOptins}
+                        options={targetTypeOptions}
                       />
                     </GridItem>
                     <GridItem xs={3} sm={3} md={3}>

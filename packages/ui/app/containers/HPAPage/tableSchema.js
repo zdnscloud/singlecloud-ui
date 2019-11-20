@@ -92,25 +92,85 @@ tableSchema.splice(1, 0, {
 tableSchema.splice(2, 0, {
   id: 'metrics',
   label: 'Metrics',
-  // component: ({ data }) =>
-  //   data
-  //     .getIn(['status', 'currentMetrics', 'resourceMetrics'])
-  //     .map((val, key) => <Chip key={key} label={`${val}`} />),
-  component: ({ data }) => <span></span>,
+  component: ({ data }) => {
+    const val = data.toJS() || {};
+    const {
+      resourceMetrics,
+      customMetrics,
+      status: { currentMetrics },
+    } = val;
+    let arr = [];
+    const rarr = [];
+    const carr = [];
+    const currentResourceMetrics = currentMetrics.resourceMetrics || [];
+    const currentCustomMetrics = currentMetrics.customMetrics || [];
+    const mefactorMetrics = (rm, crm, marr, type) => {
+      if (rm && rm.length > 0) {
+        rm.forEach((r, i) => {
+          const item = {
+            name: type === 'resourceMetrics' ? r.resourceName : r.metricName,
+          };
+
+          if (r.targetType === 'Utilization' && type === 'resourceMetrics') {
+            item.systemVal =
+              crm.length > 0 && crm[i].averageUtilization
+                ? `${crm[i].averageUtilization}%`
+                : '--';
+            item.thresholdVal = `${r.averageUtilization}%`;
+          } else {
+            item.systemVal =
+              crm.length > 0 && crm[i].averageValue
+                ? crm[i].averageValue
+                : '--';
+            item.thresholdVal = r.averageValue;
+          }
+
+          marr.push(item);
+        });
+        return marr;
+      }
+    };
+
+    mefactorMetrics(
+      resourceMetrics,
+      currentResourceMetrics,
+      rarr,
+      'resourceMetrics'
+    );
+    mefactorMetrics(customMetrics, currentCustomMetrics, carr, 'customMetrics');
+    arr = arr.concat(rarr, carr);
+
+    return arr.length > 0
+      ? arr.map((val, key) => (
+          <Chip
+            key={key}
+            label={`${val.name} : ${val.systemVal} / ${val.thresholdVal} `}
+        />
+        ))
+      : '--';
+  },
 });
 tableSchema.splice(3, 0, {
   id: 'currentReplicas',
   label: 'CurrentReplicas',
-  component: ({ data }) => (
-    <span>{data.getIn(['status', 'currentReplicas'])}</span>
-  ),
+  component: ({ data }) => {
+    const item = data.getIn(['status', 'currentReplicas']);
+    if (item) {
+      return <span>{item}</span>;
+    }
+    return <span>--</span>;
+  },
 });
 tableSchema.splice(4, 0, {
   id: 'desiredReplicas',
   label: 'DesiredReplicas',
-  component: ({ data }) => (
-    <span>{data.getIn(['status', 'desiredReplicas'])}</span>
-  ),
+  component: ({ data }) => {
+    const item = data.getIn(['status', 'desiredReplicas']);
+    if (item) {
+      return <span>{item}</span>;
+    }
+    return <span>--</span>;
+  },
 });
 tableSchema.splice(5, 0, {
   id: 'replicasScope',

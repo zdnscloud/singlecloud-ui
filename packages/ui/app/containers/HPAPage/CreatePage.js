@@ -96,6 +96,7 @@ export const CreateHPAPage = ({
         customMetrics,
         ...formData,
       };
+      delete data.metrics;
       delete data.metricsType;
       console.log('data', data);
 
