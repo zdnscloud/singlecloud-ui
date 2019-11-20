@@ -48,7 +48,7 @@ server {
   }
 
   location @passlinkerd {
-    rewrite ^ /$redirect_uri break;
+    rewrite ^ $redirect_uri break;
     proxy_pass http://@linkerd;
   }
 
