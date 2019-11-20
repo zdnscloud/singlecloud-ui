@@ -32,8 +32,22 @@ server {
     # Allow websocket connections
     proxy_set_header Upgrade $http_upgrade;
     proxy_set_header Connection $connection_upgrade;
-    proxy_redirect ~*/apis/zcloud.cn/v1/clusters/([^\/]+)/linkerd(.+)$ $1;
+    proxy_set_header X-Real-IP  $remote_addr;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header Host $http_host:$server_port;
+    proxy_http_version 1.1;
+    chunked_transfer_encoding off;
+    proxy_buffering off;
+    proxy_cache_bypass $http_pragma;
+    proxy_cache_revalidate on;
+    if ($uri ~ ^/apis/zcloud.cn/v1/clusters/([^\/]+)/linkerd(.+)$) {
+      set $cluster $1;
+      set $linkerduri $2;
+    }
+    rewrite ^/apis/zcloud.cn/v1/clusters/[^\/]+/linkerd(.+)$ $1 break;
     proxy_pass http://@linkerd;
+    #proxy_redirect off;
+    #proxy_redirect $linkerduri /apis/zcloud.cn/v1/clusters/$cluster/linkerd$linkerduri;
   }
 
   location ~ ^/(apis|web) {
@@ -42,11 +56,10 @@ server {
     proxy_send_timeout 3600s;
     proxy_set_header Upgrade $http_upgrade;
     proxy_set_header Connection $connection_upgrade;
-    proxy_set_header X_FORWARDED_PROTO https;
+    #proxy_set_header X_FORWARDED_PROTO https;
     proxy_set_header X-Real-IP  $remote_addr;
     proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
     proxy_set_header Host $http_host:$server_port;
-    proxy_set_header Connection '';
     proxy_http_version 1.1;
     chunked_transfer_encoding off;
     proxy_buffering off;
