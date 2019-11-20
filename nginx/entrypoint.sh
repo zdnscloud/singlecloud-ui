@@ -28,13 +28,13 @@ server {
     alias /singlecloud-ui;
   }
 
-  location ~ ^/apis/zcloud.cn/v1/clusters/([^\/]+)/linkerd {
+  location ~* (^/apis/zcloud.cn/v1/clusters/([^\/]+)/linkerd)|(^/clusters/([^\/]+)/linkerd/grafana) {
     # Allow websocket connections
     proxy_set_header Upgrade $http_upgrade;
     proxy_set_header Connection $connection_upgrade;
     proxy_set_header X-Real-IP  $remote_addr;
     proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-    proxy_set_header Host $http_host:$server_port;
+    proxy_set_header Host $http_host;
     proxy_http_version 1.1;
     chunked_transfer_encoding off;
     proxy_buffering off;
@@ -45,6 +45,7 @@ server {
       set $linkerduri $2;
     }
     rewrite ^/apis/zcloud.cn/v1/clusters/[^\/]+/linkerd(.+)$ $1 break;
+    rewrite ^/clusters/[^\/]+/linkerd/grafana(.+)$ /grafana$1 break;
     proxy_pass http://@linkerd;
     #proxy_redirect off;
     #proxy_redirect $linkerduri /apis/zcloud.cn/v1/clusters/$cluster/linkerd$linkerduri;
@@ -59,7 +60,7 @@ server {
     #proxy_set_header X_FORWARDED_PROTO https;
     proxy_set_header X-Real-IP  $remote_addr;
     proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-    proxy_set_header Host $http_host:$server_port;
+    proxy_set_header Host $http_host;
     proxy_http_version 1.1;
     chunked_transfer_encoding off;
     proxy_buffering off;

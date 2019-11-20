@@ -7,7 +7,6 @@ const GrafanaLink = ({PrefixedLink, name, namespace, resource}) => {
     <PrefixedLink
       to={`/grafana/dashboard/db/linkerd-${resource}?var-namespace=${namespace}&var-${resource}=${name}`}
       targetBlank={true}>
-      &nbsp;&nbsp;
       {grafanaIcon}
     </PrefixedLink>
   );
