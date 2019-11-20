@@ -14,11 +14,12 @@ export const styles = (theme) => ({
   },
   logTime: {
     color: 'green',
+    marginLeft: '1em',
   },
   log: {
     backgroundColor: 'black',
     color: 'white',
-    marginLeft: '2em',
+    marginLeft: '1em',
   },
 });
 
