@@ -27,7 +27,7 @@ server {
     alias /singlecloud-ui;
   }
 
-  location ~* (^/apis/zcloud.cn/v1/clusters/([^\/]+)/linkerd)|(^/clusters/([^\/]+)/linkerd/grafana) {
+  location ~* (^/apis/zcloud.cn/v1/clusters/([^\/]+)/linkerd)|(^/clusters/([^\/]+)/linkerd/grafana)|(^/grafana) {
     # Allow websocket connections
     proxy_set_header Upgrade $http_upgrade;
     proxy_set_header Connection $connection_upgrade;
@@ -41,14 +41,6 @@ server {
     proxy_cache_revalidate on;
     rewrite ^/apis/zcloud.cn/v1/clusters/[^\/]+/linkerd(.+)$ $1 break;
     rewrite ^/clusters/[^\/]+/linkerd/grafana(.+)$ /grafana$1 break;
-    proxy_pass http://@linkerd;
-    proxy_intercept_errors on;
-    error_page 301 302 = @passlinkerd;
-  }
-
-  location @passlinkerd {
-    proxy_set_header Host $http_host;
-    rewrite ^ $redirect_uri break;
     proxy_pass http://@linkerd;
   }
 
