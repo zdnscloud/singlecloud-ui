@@ -133,6 +133,15 @@ class App extends React.Component {
             path={`${pathPrefix}/namespaces/:namespace/replicationcontrollers`}
             render={props => <Navigation {...props} ChildComponent={ResourceList} resource="replicationcontroller" />} />
           <Route
+            path={`${pathPrefix}/tap`}
+            render={props => <Navigation {...props} ChildComponent={Tap} />} />
+          <Route
+            path={`${pathPrefix}/top`}
+            render={props => <Navigation {...props} ChildComponent={Top} />} />
+          <Route
+            path={`${pathPrefix}/routes`}
+            render={props => <Navigation {...props} ChildComponent={TopRoutes} />} />
+          <Route
             path={`${pathPrefix}/namespaces`}
             render={props => <Navigation {...props} ChildComponent={ResourceList} resource="namespace" />} />
           <Route component={NoMatch} />
