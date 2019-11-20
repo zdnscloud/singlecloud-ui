@@ -2,7 +2,6 @@ import React from 'react';
 import { bindActionCreators, compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
-import dayjs from 'dayjs';
 
 import { FormattedMessage } from 'react-intl';
 import Button from '@material-ui/core/Button';
@@ -18,11 +17,10 @@ import CardBody from 'components/Card/CardBody';
 import CardHeader from 'components/Card/CardHeader';
 import CardFooter from 'components/Card/CardFooter';
 import Paper from '@material-ui/core/Paper';
+import LogView from 'components/Log/LogView';
 
 import {
   makeSelectPodLogIsOpening,
-  makeSelectPodLog,
-  makeSelectOpeningLogs,
   makeSelectLogURL,
 } from 'ducks/pods/selectors';
 import * as actions from 'ducks/pods/actions';
@@ -60,24 +58,7 @@ const LogViewDialog = ({ isOpen, url, closePodLog }) => {
         </CardHeader>
         <CardBody className={classes.dialogCardBody}>
           <Paper className={classes.dialogCardBodyPaper}>
-            <div className={classes.logsWrapper}>
-              <pre className={classes.logs}>
-                {logs &&
-                  logs.map((log, i) => {
-                    const idx = log.indexOf(' ');
-                    const t = log.slice(0, idx);
-                    const l = log.slice(idx + 1);
-                    return (
-                      <div key={i}>
-                        <time className={classes.logTime}>
-                          {dayjs(t).format('YYYY-MM-DD HH:mm:ss')}
-                        </time>
-                        <span className={classes.log}>{l}</span>
-                      </div>
-                    );
-                  })}
-              </pre>
-            </div>
+            <LogView logs={logs} />
           </Paper>
         </CardBody>
         <CardFooter>
