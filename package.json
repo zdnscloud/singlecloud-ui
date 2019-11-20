@@ -13,7 +13,7 @@
   },
   "pre-commit": "lint:staged",
   "devDependencies": {
-    "lerna": "3.18.4",
+    "lerna": "3.18.5",
     "plop": "2.5.3"
   },
   "workspaces": [

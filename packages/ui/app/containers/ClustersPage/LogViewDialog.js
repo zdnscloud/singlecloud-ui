@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { bindActionCreators, compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
+import dayjs from 'dayjs';
 
 import { FormattedMessage } from 'react-intl';
 import Button from '@material-ui/core/Button';
@@ -60,11 +61,19 @@ const LogViewDialog = ({ isOpen, id, closeDialog }) => {
             <div className={classes.logsWrapper}>
               <pre className={classes.logs}>
                 {logs &&
-                  logs.map((log, i) => (
-                    <div key={i}>
-                      <span className={classes.log}>{log}</span>
-                    </div>
-                  ))}
+                  logs.map((log, i) => {
+                    const idx = log.indexOf(' ');
+                    const t = log.slice(0, idx);
+                    const l = log.slice(idx + 1);
+                    return (
+                      <div key={i}>
+                        <time className={classes.logTime}>
+                          {dayjs(t).format('YYYY-MM-DD HH:mm:ss')}
+                        </time>
+                        <span className={classes.log}>{l}</span>
+                      </div>
+                    );
+                  })}
               </pre>
             </div>
           </Paper>
@@ -91,9 +100,6 @@ const mapDispatchToProps = (dispatch) =>
     dispatch
   );
 
-const withConnect = connect(
-  mapStateToProps,
-  mapDispatchToProps
-);
+const withConnect = connect(mapStateToProps, mapDispatchToProps);
 
 export default compose(withConnect)(LogViewDialog);

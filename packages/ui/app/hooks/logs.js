@@ -9,18 +9,19 @@ export const useLogs = () => {
   const [logs, setLogs] = useState([]);
 
   useEffect(() => {
+    let ob = null;
     if (url) {
-      Observable.create((observer) => {
+      ob = Observable.create((observer) => {
         const socket = new SockJS(url, null, { transports: 'websocket' });
         socket.onmessage = (e) => {
           observer.next(e.data);
         };
         socket.onerror = (e) => {
-          const time = dayjs().format('YYYY-MM-DD HH:mm:ss');
+          const time = dayjs().toISOString();
           observer.next(`${time} [Error] ${e && e.message}`);
         };
         socket.onclose = ({ code, reason }) => {
-          const time = dayjs().format('YYYY-MM-DD HH:mm:ss');
+          const time = dayjs().toISOString();
           observer.next(`${time} [Close ${code}] ${reason}`);
           observer.complete();
         };
@@ -32,13 +33,21 @@ export const useLogs = () => {
             return acc;
           }, [])
         )
+        .pipe(debounceTime(100))
         .subscribe((l) => {
-          setLogs(l);
+          setLogs(l.slice(-2000));
         });
     }
+    return () => ob && ob.complete();
   }, [url]);
-  const open = (l) => setUrl(l);
-  const close = () => setUrl(null);
+  const open = (l) => {
+    setUrl(l);
+    setLogs([]);
+  };
+  const close = () => {
+    setUrl(null);
+    setLogs([]);
+  };
 
   return { open, close, logs };
 };
