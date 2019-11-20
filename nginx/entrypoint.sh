@@ -22,7 +22,6 @@ server {
   listen [::]:80 default_server;
   server_name _;
   root /singlecloud-ui;
-  # return 301 https://$host$request_uri;
 
   location /assets {
     alias /singlecloud-ui;
@@ -48,6 +47,7 @@ server {
   }
 
   location @passlinkerd {
+    proxy_set_header Host $http_host;
     rewrite ^ $redirect_uri break;
     proxy_pass http://@linkerd;
   }
@@ -58,7 +58,6 @@ server {
     proxy_send_timeout 3600s;
     proxy_set_header Upgrade $http_upgrade;
     proxy_set_header Connection $connection_upgrade;
-    #proxy_set_header X_FORWARDED_PROTO https;
     proxy_set_header X-Real-IP  $remote_addr;
     proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
     proxy_set_header Host $http_host;
