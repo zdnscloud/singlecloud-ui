@@ -40,19 +40,16 @@ server {
     proxy_buffering off;
     proxy_cache_bypass $http_pragma;
     proxy_cache_revalidate on;
-    if ($uri ~ ^/apis/zcloud.cn/v1/clusters/([^\/]+)/linkerd(.+)$) {
-      set $cluster $1;
-      set $linkerduri $2;
-    }
     rewrite ^/apis/zcloud.cn/v1/clusters/[^\/]+/linkerd(.+)$ $1 break;
     rewrite ^/clusters/[^\/]+/linkerd/grafana(.+)$ /grafana$1 break;
     proxy_pass http://@linkerd;
-    error_page 301 = @passlinkerd;
+    proxy_intercept_errors on;
+    error_page 301 302 = @passlinkerd;
   }
 
   location @passlinkerd {
-    set $saved_redirect_location '$upstream_http_location';
-    proxy_pass $saved_redirect_location;
+    rewrite ^ /$redirect_uri break;
+    proxy_pass http://@linkerd;
   }
 
   location ~ ^/(apis|web) {
