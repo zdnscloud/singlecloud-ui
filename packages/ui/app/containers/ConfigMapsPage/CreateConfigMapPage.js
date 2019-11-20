@@ -29,8 +29,8 @@ import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import AttachmentIcon from '@material-ui/icons/Attachment';
 import AceEditor from 'react-ace';
-import 'brace/mode/yaml';
-import 'brace/theme/github';
+import 'ace-builds/src-noconflict/mode-yaml';
+import 'ace-builds/src-noconflict/theme-github';
 
 import Card from 'components/Card/Card';
 import CardBody from 'components/Card/CardBody';

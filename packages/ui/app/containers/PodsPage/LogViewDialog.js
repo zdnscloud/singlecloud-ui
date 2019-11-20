@@ -2,6 +2,7 @@ import React from 'react';
 import { bindActionCreators, compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
+
 import { FormattedMessage } from 'react-intl';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
@@ -16,77 +17,33 @@ import CardBody from 'components/Card/CardBody';
 import CardHeader from 'components/Card/CardHeader';
 import CardFooter from 'components/Card/CardFooter';
 import Paper from '@material-ui/core/Paper';
-
-import SockJS from 'sockjs-client';
-import { withStyles } from '@material-ui/core/styles';
-import List from 'react-virtualized/dist/es/List';
-import { Observable } from 'rxjs';
-import { map, scan, throttleTime, debounceTime } from 'rxjs/operators';
+import LogView from 'components/Log/LogView';
 
 import {
   makeSelectPodLogIsOpening,
-  makeSelectPodLog,
-  makeSelectOpeningLogs,
   makeSelectLogURL,
 } from 'ducks/pods/selectors';
 import * as actions from 'ducks/pods/actions';
+
+import { useLogs } from 'hooks/logs';
+
 import useStyles from './styles';
 import messages from './messages';
 
-let socket = null;
-let observer = null;
-
-/* eslint-disable react/prefer-stateless-function */
-const LogViewDialog = ({ isOpen, logs, url, closePodLog, setOpeningLogs }) => {
+const LogViewDialog = ({ isOpen, url, closePodLog }) => {
   const classes = useStyles();
-  let t;
+  const { open, close, logs } = useLogs();
 
   return (
     <Dialog
       open={isOpen}
       onClose={closePodLog}
       onEnter={() => {
-        socket = new SockJS(url, null, { transports: 'websocket' });
-        const logSource = Observable.create((ob) => {
-          observer = ob;
-          socket.onmessage = (e) => {
-            ob.next(e.data);
-          };
-        });
-        logSource
-          .pipe(
-            map((log) => {
-              const i = log.indexOf(' ');
-              const tt = new Date(log.slice(0, i));
-              const l = log.slice(i + 1);
-              return [tt, l];
-            })
-          )
-          .pipe(
-            scan((acc, val) => {
-              const newAcc = acc.concat([val]);
-              if (newAcc.length > 2000) return newAcc.slice(-2000);
-              return newAcc;
-            }, [])
-          )
-          /* .pipe(throttleTime(1000 / 60)) */
-          .subscribe((l) => {
-            setOpeningLogs(l);
-          });
-        socket.onclose = (e) => {
-          observer.next(`${new Date().toISOString()} Pull log timeout!!!`);
-          if (observer) observer.complete();
-          observer = null;
-        };
+        open(url);
       }}
       onExit={() => {
-        socket.close();
-        socket.onclose = null;
-        socket = null;
-        if (observer) observer.complete();
-        observer = null;
+        close();
       }}
-      aria-labelledby="form-dialog-title"
       maxWidth="lg"
       PaperProps={{ style: { overflow: 'hidden' } }}
     >
@@ -101,19 +58,7 @@ const LogViewDialog = ({ isOpen, logs, url, closePodLog, setOpeningLogs }) => {
         </CardHeader>
         <CardBody className={classes.dialogCardBody}>
           <Paper className={classes.dialogCardBodyPaper}>
-            <div className={classes.logsWrapper}>
-              <pre className={classes.logs}>
-                {logs &&
-                  logs.map((log, i) => (
-                    <div key={i}>
-                      <time className={classes.logTime}>
-                        {log[0].toLocaleString()}
-                      </time>
-                      <span className={classes.log}>{log[1]}</span>
-                    </div>
-                  ))}
-              </pre>
-            </div>
+            <LogView logs={logs} />
           </Paper>
         </CardBody>
         <CardFooter>
@@ -128,9 +73,7 @@ const LogViewDialog = ({ isOpen, logs, url, closePodLog, setOpeningLogs }) => {
 
 const mapStateToProps = createStructuredSelector({
   isOpen: makeSelectPodLogIsOpening(),
-  podLog: makeSelectPodLog(),
   url: makeSelectLogURL(),
-  logs: makeSelectOpeningLogs(),
 });
 
 const mapDispatchToProps = (dispatch) =>
@@ -141,9 +84,6 @@ const mapDispatchToProps = (dispatch) =>
     dispatch
   );
 
-const withConnect = connect(
-  mapStateToProps,
-  mapDispatchToProps
-);
+const withConnect = connect(mapStateToProps, mapDispatchToProps);
 
 export default compose(withConnect)(LogViewDialog);
