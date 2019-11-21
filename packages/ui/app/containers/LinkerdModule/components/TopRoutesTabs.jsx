@@ -11,6 +11,8 @@ import TopRoutesModule from './TopRoutesModule.jsx';
 import _isEmpty from 'lodash/isEmpty';
 import _noop from 'lodash/noop';
 import { withStyles } from '@material-ui/core/styles';
+import Message from 'components/Intl/Message';
+import messages from '../messages';
 
 const styles = theme => ({
   root: {
@@ -88,8 +90,8 @@ class TopRoutesTabs extends React.Component {
             onChange={this.handleChange}
             indicatorColor="primary"
             textColor="primary">
-            <Tab label="Live Calls" />
-            <Tab label="Route Metrics" />
+            <Tab label={<Message messages={messages} keyName="labelLiveCalls" />/*"Live Calls"*/} />
+            <Tab label={<Message messages={messages} keyName="labelRouteMetrics" />/*"Route Metrics"*/} />
           </Tabs>
         </AppBar>
         {value === 0 && this.renderTopComponent()}

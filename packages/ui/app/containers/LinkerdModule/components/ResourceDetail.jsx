@@ -321,11 +321,11 @@ export class ResourceDetailBase extends React.Component {
           <Grid item><Typography variant="h5">{resourceType}/{resourceName}</Typography></Grid>
           <Grid item>
             <Grid container spacing={8}>
-              {showNoTrafficMsg ? <Grid item><SimpleChip label="no traffic" type="warning" /></Grid> : null}
+              {showNoTrafficMsg ? <Grid item><SimpleChip label={<Message messages={messages} keyName="labelNoTraffic" />/*"no traffic"*/} type="warning" /></Grid> : null}
               <Grid item>
                 {resourceIsMeshed ?
-                  <SimpleChip label="meshed" type="good" /> :
-                  <SimpleChip label="unmeshed" type="bad" />
+                  <SimpleChip label={<Message messages={messages} keyName="labelMeshed" />/*"meshed"*/} type="good" /> :
+                  <SimpleChip label={<Message messages={messages} keyName="labelUnmeshed" />/*"unmeshed"*/} type="bad" />
                 }
               </Grid>
             </Grid>

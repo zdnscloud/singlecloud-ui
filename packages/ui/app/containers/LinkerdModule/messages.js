@@ -17,6 +17,14 @@ export default defineMessages({
     id: `${scope}.pageDesc`,
     defaultMessage: 'Description of Linkerd',
   },
+  titleEdges: {
+    id: `${scope}.titleEdges`,
+    defaultMessage: 'titleEdges',
+  },
+  titleEdgesIdentity: {
+    id: `${scope}.titleEdgesIdentity`,
+    defaultMessage: 'titleEdges (Identity: {identity})',
+  },
   titleDeployment: {
     id: `${scope}.titleDeployment`,
     defaultMessage: 'titleDeployment',
@@ -61,9 +69,17 @@ export default defineMessages({
     id: `${scope}.colApexService`,
     defaultMessage: 'colApexService',
   },
+  colBest: {
+    id: `${scope}.colBest`,
+    defaultMessage: 'colBest',
+  },
   colConnections: {
     id: `${scope}.colConnections`,
     defaultMessage: 'colConnections',
+  },
+  colCount: {
+    id: `${scope}.colCount`,
+    defaultMessage: 'colCount',
   },
   colDeployment: {
     id: `${scope}.colDeployment`,
@@ -200,5 +216,25 @@ export default defineMessages({
   colWriteBytessec: {
     id: `${scope}.colWriteBytessec`,
     defaultMessage: 'colWriteBytessec',
+  },
+  labelLiveCalls: {
+    id: `${scope}.labelLiveCalls`,
+    defaultMessage: 'labelLiveCalls',
+  },
+  labelRouteMetrics: {
+    id: `${scope}.labelRouteMetrics`,
+    defaultMessage: 'labelRouteMetrics',
+  },
+  labelNoTraffic: {
+    id: `${scope}.labelNoTraffic`,
+    defaultMessage: 'labelNoTraffic',
+  },
+  labelMeshed: {
+    id: `${scope}.labelMeshed`,
+    defaultMessage: 'labelMeshed',
+  },
+  labelUnmeshed: {
+    id: `${scope}.labelUnmeshed`,
+    defaultMessage: 'labelUnmeshed',
   },
 });

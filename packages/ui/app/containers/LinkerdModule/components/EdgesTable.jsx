@@ -85,12 +85,12 @@ const edgesColumnDefinitions = (PrefixedLink, namespace, type, classes) => {
 };
 
 const generateEdgesTableTitle = edges => {
-  let title = "Edges";
+  let title = <Message messages={messages} keyName="titleEdges" />; //"Edges";
   if (edges.length > 0) {
     let identity = edges[0].direction === "INBOUND" ? edges[0].serverId : edges[0].clientId;
     if (identity) {
       identity = identity.split('.')[0] + '.' + identity.split('.')[1];
-      title = `${title} (Identity: ${identity})`;
+      title = <Message messages={messages} keyName="titleEdgesIdentity" values={{ identity }} />; //`${title} (Identity: ${identity})`;
     }
   }
   return title;
