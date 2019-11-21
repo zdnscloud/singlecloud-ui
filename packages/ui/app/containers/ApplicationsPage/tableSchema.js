@@ -18,19 +18,21 @@ const tableSchema = schema
     {
       id: 'actions',
       label: 'Actions',
-      component: ({ data, clusterID, namespaceID }) => (
-        <Fragment>
-          <IconButton
-            aria-label="Update"
-            component={Link}
-            to={`/clusters/${clusterID}/namespaces/${namespaceID}/deployments/${data.get(
-              'id'
-            )}/update`}
-          >
-            <MonitorIcon />
-          </IconButton>
-        </Fragment>
-      ),
+      component: ({ data, clusterID, namespaceID }) => {
+        const workload = ['deployment', 'daemonset', 'statefulset'];
+        return workload.includes(data.get('type')) ? (
+          <Fragment>
+            <IconButton
+              aria-label="Update"
+              onClick={() => window.open('https://www.baidu.com/')}
+            >
+              <MonitorIcon />
+            </IconButton>
+          </Fragment>
+        ) : (
+          '--'
+        );
+      },
     },
   ])
   .map((sch) => {
@@ -53,20 +55,31 @@ const tableSchema = schema
     if (sch.id === 'replicas') {
       return {
         ...sch,
-        component: ({ data }) => (
-          <>
-            {data.getIn(['status', 'readyReplicas']) || 0}/
-            {data.getIn(['replicas'])}
-            <LinearProgress
-              variant="determinate"
-              value={
-                ((data.getIn(['status', 'readyReplicas']) || 0) /
-                  data.getIn(['replicas'])) *
-                100
-              }
-            />
-          </>
-        ),
+        component: ({ data }) => {
+          const workload = [
+            'deployment',
+            'daemonset',
+            'statefulset',
+            'cronjob',
+            'job',
+          ];
+          return workload.includes(data.get('type')) ? (
+            <>
+              {data.getIn(['status', 'readyReplicas']) || 0}/
+              {data.getIn(['replicas'])}
+              <LinearProgress
+                variant="determinate"
+                value={
+                  ((data.getIn(['status', 'readyReplicas']) || 0) /
+                    data.getIn(['replicas'])) *
+                  100
+                }
+              />
+            </>
+          ) : (
+            '--'
+          );
+        },
       };
     }
     return sch;

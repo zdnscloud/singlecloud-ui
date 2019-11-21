@@ -50,10 +50,11 @@ const ApplicationTemplate = ({
                     <p className={classes.aapName}>{item.get('name')}</p>
                   </Button>
                 )}
-                <p
+                <span
                   className={classes.status}
                   style={
-                    item.get('status') === 'delete'
+                    item.get('status') === 'delete' ||
+                    item.get('status') === 'failed'
                       ? {
                           color: '#E02020',
                           background: 'rgba(224,32,32,0.1)',
@@ -67,20 +68,14 @@ const ApplicationTemplate = ({
                   }
                 >
                   {item.get('status')}
-                </p>
-              </div>
-              <div>
-                <span>
-                  {item.get('readyWorkloadCount')} / {item.get('workloadCount')}{' '}
                 </span>
+              </div>
+              <div className={classes.count}>
+                {item.get('readyWorkloadCount')} / {item.get('workloadCount')}
                 <Confirm
                   handleConfirm={handleConfirm}
                   dialogContentText={messages.removeAppText}
-                  component={
-                    <IconButton className={classes.appDeleteBtn}>
-                      <DeleteIcon className={classes.deleteIcon} />
-                    </IconButton>
-                  }
+                  component={<DeleteIcon className={classes.deleteIcon} />}
                 />
               </div>
             </div>
