@@ -7,6 +7,8 @@ import WarningIcon from '@material-ui/icons/Warning';
 import { directionColumn } from './util/TapUtils.jsx';
 import { processedEdgesPropType } from './util/EdgesUtils.jsx';
 import { withStyles } from '@material-ui/core/styles';
+import Message from 'components/Intl/Message';
+import messages from '../messages';
 
 const styles = theme => ({
   secure: {
@@ -25,7 +27,7 @@ const edgesColumnDefinitions = (PrefixedLink, namespace, type, classes) => {
       render: d => directionColumn(d.direction),
     },
     {
-      title: "Namespace",
+      title: <Message messages={messages} keyName="colNamespace" />, //"Namespace",
       dataIndex: "namespace",
       isNumeric: false,
       filter: d => d.namespace,
@@ -37,7 +39,7 @@ const edgesColumnDefinitions = (PrefixedLink, namespace, type, classes) => {
       sorter: d => d.namespace
     },
     {
-      title: "Name",
+      title: <Message messages={messages} keyName="colName" />, //"Name",
       dataIndex: "name",
       isNumeric: false,
       filter: d => d.name,
@@ -56,7 +58,7 @@ const edgesColumnDefinitions = (PrefixedLink, namespace, type, classes) => {
       sorter: d => d.name
     },
     {
-      title: "Identity",
+      title: <Message messages={messages} keyName="colIdentity" />, //"Identity",
       dataIndex: "identity",
       isNumeric: false,
       filter: d => d.identity,
@@ -64,7 +66,7 @@ const edgesColumnDefinitions = (PrefixedLink, namespace, type, classes) => {
       sorter: d => d.identity
     },
     {
-      title: "Secured",
+      title: <Message messages={messages} keyName="colSecured" />, //"Secured",
       dataIndex: "message",
       isNumeric: true,
       render: d => {

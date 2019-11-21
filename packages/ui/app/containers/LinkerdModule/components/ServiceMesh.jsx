@@ -24,14 +24,16 @@ import _mapKeys from 'lodash/mapKeys';
 import _sumBy from 'lodash/sumBy';
 import { incompleteMeshMessage } from './util/CopyUtils.jsx';
 import { withContext } from './util/AppContext.jsx';
+import Message from 'components/Intl/Message';
+import messages from '../messages';
 
 const serviceMeshDetailsColumns = [
   {
-    title: "Name",
+    title: <Message messages={messages} keyName="colName" />, //"Name",
     dataIndex: "name"
   },
   {
-    title: "Value",
+    title: <Message messages={messages} keyName="colValue" />, //"Value",
     dataIndex: "value",
     isNumeric: true
   }

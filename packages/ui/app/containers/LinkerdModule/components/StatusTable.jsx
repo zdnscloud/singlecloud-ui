@@ -7,6 +7,8 @@ import _merge from 'lodash/merge';
 import classNames from 'classnames';
 import { statusClassNames } from './util/theme.js';
 import { withStyles } from '@material-ui/core/styles';
+import Message from 'components/Intl/Message';
+import messages from '../messages';
 
 const styles = theme => _merge({}, statusClassNames(theme), {
   statusTableDot: {
@@ -74,11 +76,11 @@ StatusDot.propTypes = {
 
 const columns = {
   resourceName: {
-    title: "Deployment",
+    title: <Message messages={messages} keyName="colDeployment" />, //"Deployment",
     dataIndex: "name"
   },
   pods: {
-    title: "Pods",
+    title: <Message messages={messages} keyName="colPods" />, //"Pods",
     key: "numEntities",
     isNumeric: true,
     render: d => d.pods.length

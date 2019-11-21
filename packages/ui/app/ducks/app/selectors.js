@@ -142,7 +142,7 @@ export const makeSelectLeftMenus = () =>
                 path: `/clusters/${cluster}/linkerd/namespaces/${namespace}/daemonsets`,
               },
               {
-                name: 'ServiceMeshDaemonSets',
+                name: 'ServiceMeshStatefulSets',
                 path: `/clusters/${cluster}/linkerd/namespaces/${namespace}/statefulsets`,
               },
               {

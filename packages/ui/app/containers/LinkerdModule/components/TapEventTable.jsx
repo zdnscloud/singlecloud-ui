@@ -18,6 +18,8 @@ import _isNull from 'lodash/isNull';
 import { headersDisplay } from './TapEventHeadersTable.jsx';
 import { withContext } from './util/AppContext.jsx';
 import { withStyles } from '@material-ui/core/styles';
+import Message from 'components/Intl/Message';
+import messages from '../messages';
 
 // https://godoc.org/google.golang.org/grpc/codes#Code
 const grpcStatusCodes = {
@@ -49,7 +51,7 @@ const SpinnerBase = () => <CircularProgress size={20} />;
 const Spinner = withStyles(spinnerStyles)(SpinnerBase);
 
 const httpStatusCol = {
-  title: "HTTP status",
+  title: <Message messages={messages} keyName="colHTTPstatus" />, //"HTTP status",
   key: "http-status",
   render: datum => {
     let d = _get(datum, "responseInit.http.responseInit");
@@ -58,7 +60,7 @@ const httpStatusCol = {
 };
 
 const responseInitLatencyCol = {
-  title: "Latency",
+  title: <Message messages={messages} keyName="colLatency" />, //"Latency",
   key: "rsp-latency",
   isNumeric: true,
   render: datum => {
@@ -68,7 +70,7 @@ const responseInitLatencyCol = {
 };
 
 const grpcStatusCol = {
-  title: "GRPC status",
+  title: <Message messages={messages} keyName="colGRPCstatus" />, //"GRPC status",
   key: "grpc-status",
   render: datum => {
     let d = _get(datum, "responseEnd.http.responseEnd");
@@ -78,7 +80,7 @@ const grpcStatusCol = {
 };
 
 const pathCol = {
-  title: "Path",
+  title: <Message messages={messages} keyName="colPath" />, //"Path",
   key: "path",
   render: datum => {
     let d = _get(datum, "requestInit.http.requestInit");
@@ -87,7 +89,7 @@ const pathCol = {
 };
 
 const methodCol = {
-  title: "Method",
+  title: <Message messages={messages} keyName="colMethod" />, //"Method",
   key: "method",
   render: datum => {
     let d = _get(datum, "requestInit.http.requestInit");
@@ -97,12 +99,12 @@ const methodCol = {
 
 const topLevelColumns = (resourceType, ResourceLink) => [
   {
-    title: "Direction",
+    title: <Message messages={messages} keyName="colDirection" />, //"Direction",
     key: "direction",
     render: d => directionColumn(d.base.proxyDirection)
   },
   {
-    title: "Name",
+    title: <Message messages={messages} keyName="colName" />, //"Name",
     key: "src-dst",
     render: d => {
       let datum = {

@@ -5,6 +5,8 @@ import { FormattedMessage } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import { bindActionCreators, compose } from 'redux';
 
+import Helmet from 'components/Helmet/Helmet';
+
 import {
   makeSelectCurrentID as makeSelectCurrentClusterID,
   makeSelectCurrent as makeSelectCurrentCluster,
@@ -26,9 +28,7 @@ import Tap from './components/Tap.jsx';
 import Top from './components/Top.jsx';
 import TopRoutes from './components/TopRoutes.jsx';
 import { dashboardTheme } from './components/util/theme.js';
-
-let selectedNamespace = "default";
-
+import messages from './messages';
 
 class App extends React.Component {
   state = {
@@ -82,6 +82,7 @@ class App extends React.Component {
 
     return (
       <AppContext.Provider value={this.state}>
+        <Helmet title={messages.pageTitle} description={messages.pageDesc} />
         <Switch>
           <Route
             path={`${pathPrefix}/controlplane`}

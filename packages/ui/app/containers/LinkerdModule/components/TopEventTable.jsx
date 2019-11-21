@@ -8,6 +8,8 @@ import SuccessRateMiniChart from './util/SuccessRateMiniChart.jsx';
 import _isEmpty from 'lodash/isEmpty';
 import _isNil from 'lodash/isNil';
 import { withContext } from './util/AppContext.jsx';
+import Message from 'components/Intl/Message';
+import messages from '../messages';
 
 const topColumns = (resourceType, ResourceLink, PrefixedLink) => [
   {
@@ -16,7 +18,7 @@ const topColumns = (resourceType, ResourceLink, PrefixedLink) => [
     render: d => directionColumn(d.direction)
   },
   {
-    title: "Name",
+    title: <Message messages={messages} keyName="colNamespace" />, //"Name",
     filter: d => {
       let [labels, display] = extractDisplayName(d);
       return _isEmpty(labels[resourceType]) ?
@@ -27,33 +29,33 @@ const topColumns = (resourceType, ResourceLink, PrefixedLink) => [
     render: d => srcDstColumn(d, resourceType, ResourceLink)
   },
   {
-    title: "Method",
+    title: <Message messages={messages} keyName="colNamespace" />, //"Method",
     dataIndex: "httpMethod",
     filter: d => d.httpMethod,
     sorter: d => d.httpMethod
   },
   {
-    title: "Path",
+    title: <Message messages={messages} keyName="colNamespace" />, //"Path",
     dataIndex: "path",
     filter: d => d.path,
     sorter: d => d.path
   },
   {
-    title: "Count",
+    title: <Message messages={messages} keyName="colNamespace" />, //"Count",
     dataIndex: "count",
     isNumeric: true,
     defaultSortOrder: "desc",
     sorter: d => d.count
   },
   {
-    title: "Best",
+    title: <Message messages={messages} keyName="colNamespace" />, //"Best",
     dataIndex: "best",
     isNumeric: true,
     render: d => formatLatencySec(d.best),
     sorter: d => d.best
   },
   {
-    title: "Worst",
+    title: <Message messages={messages} keyName="colWorst" />, //"Worst",
     dataIndex: "worst",
     isNumeric: true,
     defaultSortOrder: "desc",
@@ -61,14 +63,14 @@ const topColumns = (resourceType, ResourceLink, PrefixedLink) => [
     sorter: d => d.worst
   },
   {
-    title: "Last",
+    title: <Message messages={messages} keyName="colLast" />, //"Last",
     dataIndex: "last",
     isNumeric: true,
     render: d => formatLatencySec(d.last),
     sorter: d => d.last
   },
   {
-    title: "Success Rate",
+    title: <Message messages={messages} keyName="colSuccessRate" />, //"Success Rate",
     dataIndex: "successRate",
     isNumeric: true,
     render: d => _isNil(d) || _isNil(d.successRate) ? "---" :
@@ -76,7 +78,7 @@ const topColumns = (resourceType, ResourceLink, PrefixedLink) => [
     sorter: d => d.successRate.get()
   },
   {
-    title: "Tap",
+    title: <Message messages={messages} keyName="colTap" />, //"Tap",
     key: "tap",
     isNumeric: true,
     render: d => tapLink(d, resourceType, PrefixedLink)

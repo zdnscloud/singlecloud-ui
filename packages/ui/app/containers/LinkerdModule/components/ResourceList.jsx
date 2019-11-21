@@ -1,5 +1,8 @@
 import 'whatwg-fetch';
 
+import Message from 'components/Intl/Message';
+import messages from '../messages';
+
 import { metricsPropType, processSingleResourceRollup } from './util/MetricUtils.jsx';
 
 import ErrorBanner from './ErrorBanner.jsx';
@@ -49,14 +52,14 @@ export class ResourceListBase extends React.Component {
         <MetricsTable
           resource={this.props.resource}
           metrics={processedMetrics}
-          title="HTTP metrics" />
+          title={<Message messages={messages} keyName="titleHTTPmetrics" />} />
 
         {this.props.resource !== "trafficsplit" &&
         <MetricsTable
           resource={this.props.resource}
           isTcpTable={true}
           metrics={processedMetrics}
-          title="TCP metrics" />
+          title={<Message messages={messages} keyName="titleTCPmetrics" />} />
         }
       </React.Fragment>
     );

@@ -1,8 +1,11 @@
+import React from 'react';
 import _has from 'lodash/has';
 import _isNil from 'lodash/isNil';
 import _lowerCase from 'lodash/lowerCase';
 import _startCase from 'lodash/startCase';
 import { format as d3Format } from 'd3-format';
+import Message from 'components/Intl/Message';
+import messages from '../../messages';
 
 /*
 * Display grid constants
@@ -131,22 +134,26 @@ export const regexFilterString = input => {
 export const friendlyTitle = singularOrPluralResource => {
   let resource = singularResource(singularOrPluralResource);
   let titleCase = _startCase(resource);
-  if (resource === "replicationcontroller") {
-    titleCase = _startCase("replication controller");
-  } else if (resource === "daemonset") {
-    titleCase = _startCase("daemon set");
-  } else if (resource === "statefulset") {
-    titleCase = _startCase("stateful set");
-  } else if (resource === "trafficsplit") {
-    titleCase = _startCase("traffic split");
-  }
+  // if (resource === "replicationcontroller") {
+  //   titleCase = _startCase("replication controller");
+  // } else if (resource === "daemonset") {
+  //   titleCase = _startCase("daemon set");
+  // } else if (resource === "statefulset") {
+  //   titleCase = _startCase("stateful set");
+  // } else if (resource === "trafficsplit") {
+  //   titleCase = _startCase("traffic split");
+  // }
+  const msg = <Message messages={messages} keyName={`title${titleCase}`} />;
 
-  let titles = { singular: titleCase };
-  if (resource === "authority") {
-    titles.plural = "Authorities";
-  } else {
-    titles.plural = titles.singular + "s";
-  }
+  let titles = {
+    singular: msg,
+    plural: msg,
+  };
+  // if (resource === "authority") {
+  //   titles.plural = "Authorities";
+  // } else {
+  //   titles.plural = titles.singular + "s";
+  // }
   return titles;
 };
 

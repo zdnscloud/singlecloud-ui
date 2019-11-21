@@ -12,24 +12,26 @@ import _get from 'lodash/get';
 import _isEmpty from 'lodash/isEmpty';
 import { processedMetricsPropType } from './util/MetricUtils.jsx';
 import { withContext } from './util/AppContext.jsx';
+import Message from 'components/Intl/Message';
+import messages from '../messages';
 
 const tcpStatColumns = [
   {
-    title: "Connections",
+    title: <Message messages={messages} keyName="colConnections" />, //"Connections",
     dataIndex: "tcp.openConnections",
     isNumeric: true,
     render: d => metricToFormatter["NO_UNIT"](d.tcp.openConnections),
     sorter: d => d.tcp.openConnections
   },
   {
-    title: "Read Bytes / sec",
+    title: <Message messages={messages} keyName="colReadBytessec" />, //"Read Bytes / sec",
     dataIndex: "tcp.readRate",
     isNumeric: true,
     render: d => metricToFormatter["BYTES"](d.tcp.readRate),
     sorter: d => d.tcp.readRate
   },
   {
-    title: "Write Bytes / sec",
+    title: <Message messages={messages} keyName="colWriteBytessec" />, //"Write Bytes / sec",
     dataIndex: "tcp.writeRate",
     isNumeric: true,
     render: d => metricToFormatter["BYTES"](d.tcp.writeRate),
@@ -39,35 +41,35 @@ const tcpStatColumns = [
 
 const httpStatColumns = [
   {
-    title: "Success Rate",
+    title: <Message messages={messages} keyName="colSuccessRate" />, //"Success Rate",
     dataIndex: "successRate",
     isNumeric: true,
     render: d => <SuccessRateMiniChart sr={d.successRate} />,
     sorter: d => d.successRate
   },
   {
-    title: "RPS",
+    title:  <Message messages={messages} keyName="colRPS" />, //"RPS",
     dataIndex: "requestRate",
     isNumeric: true,
     render: d => metricToFormatter["NO_UNIT"](d.requestRate),
     sorter: d => d.requestRate
   },
   {
-    title: "P50 Latency",
+    title:  <Message messages={messages} keyName="colP50Latency" />, //"P50 Latency",
     dataIndex: "P50",
     isNumeric: true,
     render: d => metricToFormatter["LATENCY"](d.P50),
     sorter: d => d.P50
   },
   {
-    title: "P95 Latency",
+    title: <Message messages={messages} keyName="colP95Latency" />, //"P95 Latency",
     dataIndex: "P95",
     isNumeric: true,
     render: d => metricToFormatter["LATENCY"](d.P95),
     sorter: d => d.P95
   },
   {
-    title: "P99 Latency",
+    title: <Message messages={messages} keyName="colP99Latency" />, //"P99 Latency",
     dataIndex: "P99",
     isNumeric: true,
     render: d => metricToFormatter["LATENCY"](d.P99),
@@ -78,7 +80,7 @@ const httpStatColumns = [
 
 const trafficSplitDetailColumns = [
   {
-    title: "Apex Service",
+    title: <Message messages={messages} keyName="colApexService" />, //"Apex Service",
     dataIndex: "apex",
     isNumeric: false,
     filter: d => !d.tsStats ? null : d.tsStats.apex,
@@ -86,7 +88,7 @@ const trafficSplitDetailColumns = [
     sorter: d => !d.tsStats ? null : d.tsStats.apex
   },
   {
-    title: "Leaf Service",
+    title: <Message messages={messages} keyName="colLeafService" />, //"Leaf Service",
     dataIndex: "leaf",
     isNumeric: false,
     filter: d => !d.tsStats ? null : d.tsStats.leaf,
@@ -94,7 +96,7 @@ const trafficSplitDetailColumns = [
     sorter: d => !d.tsStats ? null : d.tsStats.leaf
   },
   {
-    title: "Weight",
+    title: <Message messages={messages} keyName="colWeight" />, //"Weight",
     dataIndex: "weight",
     isNumeric: true,
     filter: d => !d.tsStats ? null : d.tsStats.weight,
@@ -118,7 +120,7 @@ const columnDefinitions = (resource, showNamespaceColumn, showNameColumn, Prefix
 
   let nsColumn = [
     {
-      title: "Namespace",
+      title: <Message messages={messages} keyName="colNamespace" />, //"Namespace",
       dataIndex: "namespace",
       filter: d => d.namespace,
       isNumeric: false,
@@ -128,7 +130,7 @@ const columnDefinitions = (resource, showNamespaceColumn, showNameColumn, Prefix
   ];
 
   let meshedColumn = {
-    title: "Meshed",
+    title: <Message messages={messages} keyName="colMeshed" />, //"Meshed",
     dataIndex: "pods.totalPods",
     isNumeric: true,
     render: d => !d.pods ? null : d.pods.meshedPods + "/" + d.pods.totalPods,
@@ -136,7 +138,7 @@ const columnDefinitions = (resource, showNamespaceColumn, showNameColumn, Prefix
   };
 
   let grafanaColumn = {
-    title: "Grafana",
+    title: <Message messages={messages} keyName="colGrafana" />, //"Grafana",
     key: "grafanaDashboard",
     isNumeric: true,
     render: row => {
@@ -155,7 +157,7 @@ const columnDefinitions = (resource, showNamespaceColumn, showNameColumn, Prefix
   };
 
   let nameColumn = {
-    title: isMultiResourceTable ? "Resource" : friendlyTitle(resource).singular,
+    title: isMultiResourceTable ? <Message messages={messages} keyName="colResource" /> : friendlyTitle(resource).singular,
     dataIndex: "name",
     isNumeric: false,
     filter: d => d.name,

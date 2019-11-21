@@ -19,6 +19,8 @@ import _merge from 'lodash/merge';
 import _size from 'lodash/size';
 import _take from 'lodash/take';
 import { faLongArrowAltRight } from '@fortawesome/free-solid-svg-icons/faLongArrowAltRight';
+import Message from 'components/Intl/Message';
+import messages from '../messages';
 
 export const httpMethods = ["GET", "HEAD", "POST", "PUT", "DELETE", "CONNECT", "OPTIONS", "TRACE", "PATCH"];
 
@@ -216,9 +218,19 @@ const resourceShortLink = (resourceType, labels, ResourceLink) => (
 
 const displayLimit = 3; // how many upstreams/downstreams to display in the popover table
 const popoverSrcDstColumns = [
-  { title: "Source", dataIndex: "source" },
-  { title: "", key: "arrow", render: () => <FontAwesomeIcon icon={faLongArrowAltRight} /> },
-  { title: "Destination", dataIndex: "destination" }
+  {
+    title: <Message messages={messages} keyName="colSource" />, //"Source",
+    dataIndex: "source"
+  },
+  {
+    title: "",
+    key: "arrow",
+    render: () => <FontAwesomeIcon icon={faLongArrowAltRight} />
+  },
+  {
+    title: <Message messages={messages} keyName="colDestination" />, //"Destination",
+    dataIndex: "destination"
+  }
 ];
 
 const getPodOwner = (labels, ResourceLink) => {

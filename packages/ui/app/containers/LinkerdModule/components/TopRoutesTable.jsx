@@ -3,51 +3,53 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import SuccessRateMiniChart from './util/SuccessRateMiniChart.jsx';
 import { metricToFormatter } from './util/Utils.js';
+import Message from 'components/Intl/Message';
+import messages from '../messages';
 
 const routesColumns = [
   {
-    title: "Route",
+    title: <Message messages={messages} keyName="colRoute" />, //"Route",
     dataIndex: "route",
     filter: d => d.route,
     sorter: d => d.route
   },
   {
-    title: "Service",
+    title: <Message messages={messages} keyName="colService" />, //"Service",
     tooltip: "hostname:port used when communicating with this target",
     dataIndex: "authority",
     filter: d => d.authority,
     sorter: d => d.authority
   },
   {
-    title: "Success Rate",
+    title: <Message messages={messages} keyName="colSuccessRate" />, //"Success Rate",
     dataIndex: "successRate",
     isNumeric: true,
     render: d => <SuccessRateMiniChart sr={d.successRate} />,
     sorter: d => d.successRate
   },
   {
-    title: "RPS",
+    title: <Message messages={messages} keyName="colRPS" />, //"RPS",
     dataIndex: "requestRate",
     isNumeric: true,
     render: d => metricToFormatter["NO_UNIT"](d.requestRate),
     sorter: d => d.requestRate
   },
   {
-    title: "P50 Latency",
+    title: <Message messages={messages} keyName="colP50Latency" />, //"P50 Latency",
     dataIndex: "latency.P50",
     isNumeric: true,
     render: d => metricToFormatter["LATENCY"](d.latency.P50),
     sorter: d => d.latency.P50
   },
   {
-    title: "P95 Latency",
+    title: <Message messages={messages} keyName="colP95Latency" />, //"P95 Latency",
     dataIndex: "latency.P95",
     isNumeric: true,
     render: d => metricToFormatter["LATENCY"](d.latency.P95),
     sorter: d => d.latency.P95
   },
   {
-    title: "P99 Latency",
+    title: <Message messages={messages} keyName="colP99Latency" />, //"P99 Latency",
     dataIndex: "latency.P99",
     isNumeric: true,
     render: d => metricToFormatter["LATENCY"](d.latency.P99),

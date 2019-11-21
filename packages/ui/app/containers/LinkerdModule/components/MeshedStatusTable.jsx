@@ -7,6 +7,8 @@ import { StyledProgress } from './util/Progress.jsx';
 import Tooltip from '@material-ui/core/Tooltip';
 import _isEmpty from 'lodash/isEmpty';
 import { withContext } from './util/AppContext.jsx';
+import Message from 'components/Intl/Message';
+import messages from '../messages';
 
 const getClassification = (meshedPodCount, failedPodCount) => {
   if (failedPodCount > 0) {
@@ -20,7 +22,7 @@ const getClassification = (meshedPodCount, failedPodCount) => {
 
 const namespacesColumns = PrefixedLink => [
   {
-    title: "Namespace",
+    title: <Message messages={messages} keyName="colNamespace" />, //"Namespace",
     dataIndex: "namespace",
     sorter: d => d.namespace,
     render: d => {
@@ -37,12 +39,12 @@ const namespacesColumns = PrefixedLink => [
     }
   },
   {
-    title: "Meshed pods",
+    title: <Message messages={messages} keyName="colMeshedPods" />, //"Meshed pods",
     dataIndex: "meshedPodsStr",
     isNumeric: true
   },
   {
-    title: "Meshed Status",
+    title: <Message messages={messages} keyName="colMeshedStatus" />, //"Meshed Status",
     key: "meshification",
     render: row => {
       let percent = row.meshedPercent.get();

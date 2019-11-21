@@ -24,6 +24,8 @@ import _merge from 'lodash/merge';
 import _reduce from 'lodash/reduce';
 import { processEdges } from './util/EdgesUtils.jsx';
 import { withContext } from './util/AppContext.jsx';
+import Message from 'components/Intl/Message';
+import messages from '../messages';
 
 // if there has been no traffic for some time, show a warning
 const showNoTrafficMsgDelayMs = 6000;
@@ -355,14 +357,14 @@ export class ResourceDetailBase extends React.Component {
         {_isEmpty(upstreams) ? null :
         <MetricsTable
           resource="multi_resource"
-          title="Inbound"
+          title={<Message messages={messages} keyName="titleInbound" />}
           metrics={upstreamMetrics} />
         }
 
         {_isEmpty(this.state.downstreamMetrics) ? null :
         <MetricsTable
           resource="multi_resource"
-          title="Outbound"
+          title={<Message messages={messages} keyName="titleOutbound" />}
           metrics={downstreamMetrics} />
         }
 
@@ -370,13 +372,13 @@ export class ResourceDetailBase extends React.Component {
           this.state.resource.type === "pod" || isTcpOnly ? null :
           <MetricsTable
             resource="pod"
-            title="Pods"
+            title={<Message messages={messages} keyName="titlePods" />}
             metrics={this.state.podMetrics} />
         }
 
         <MetricsTable
           resource="pod"
-          title="TCP"
+          title={<Message messages={messages} keyName="titleTCP" />}
           isTcpTable={true}
           metrics={this.state.podMetrics} />
 

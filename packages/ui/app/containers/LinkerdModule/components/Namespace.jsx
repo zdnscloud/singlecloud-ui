@@ -1,5 +1,7 @@
 import 'whatwg-fetch';
 
+import Message from 'components/Intl/Message';
+import messages from '../messages';
 import ErrorBanner from './ErrorBanner.jsx';
 import MetricsTable from './MetricsTable.jsx';
 import NetworkGraph from './NetworkGraph.jsx';
@@ -161,7 +163,7 @@ class Namespaces extends React.Component {
               noMetrics ? null :
               <div className="page-section">
                 <MetricsTable
-                  title="TCP"
+                  title={<Message messages={messages} keyName="titleTCP" />}
                   resource="pod"
                   metrics={metrics.pod}
                   isTcpTable={true} />
