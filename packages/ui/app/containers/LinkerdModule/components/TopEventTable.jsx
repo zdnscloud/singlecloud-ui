@@ -18,7 +18,7 @@ const topColumns = (resourceType, ResourceLink, PrefixedLink) => [
     render: d => directionColumn(d.direction)
   },
   {
-    title: <Message messages={messages} keyName="colNamespace" />, //"Name",
+    title: <Message messages={messages} keyName="colName" />, //"Name",
     filter: d => {
       let [labels, display] = extractDisplayName(d);
       return _isEmpty(labels[resourceType]) ?
@@ -29,26 +29,26 @@ const topColumns = (resourceType, ResourceLink, PrefixedLink) => [
     render: d => srcDstColumn(d, resourceType, ResourceLink)
   },
   {
-    title: <Message messages={messages} keyName="colNamespace" />, //"Method",
+    title: <Message messages={messages} keyName="colMethod" />, //"Method",
     dataIndex: "httpMethod",
     filter: d => d.httpMethod,
     sorter: d => d.httpMethod
   },
   {
-    title: <Message messages={messages} keyName="colNamespace" />, //"Path",
+    title: <Message messages={messages} keyName="colPath" />, //"Path",
     dataIndex: "path",
     filter: d => d.path,
     sorter: d => d.path
   },
   {
-    title: <Message messages={messages} keyName="colNamespace" />, //"Count",
+    title: <Message messages={messages} keyName="colCount" />, //"Count",
     dataIndex: "count",
     isNumeric: true,
     defaultSortOrder: "desc",
     sorter: d => d.count
   },
   {
-    title: <Message messages={messages} keyName="colNamespace" />, //"Best",
+    title: <Message messages={messages} keyName="colBest" />, //"Best",
     dataIndex: "best",
     isNumeric: true,
     render: d => formatLatencySec(d.best),
