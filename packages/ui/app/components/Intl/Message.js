@@ -2,7 +2,7 @@ import React from 'react';
 import _get from 'lodash/get';
 import { useIntl, FormattedMessage } from 'react-intl';
 
-const Message = ({ messages = {}, keyName, ...rest }) => {
+const Message = ({ messages = {}, keyName, values }) => {
   const msg = messages[keyName];
   const id = _get(msg, 'id', `id-miss-${keyName}`);
   const defaultMessage = _get(msg, 'defaultMessage', `${keyName}`);
@@ -12,9 +12,9 @@ const Message = ({ messages = {}, keyName, ...rest }) => {
 
   return (
     <FormattedMessage
-      {...rest}
       id={id}
       defaultMessage={defaultMessage}
+      values={values}
     />
   );
 };
