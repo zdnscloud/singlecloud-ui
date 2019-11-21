@@ -438,6 +438,7 @@
   "app.containers.JobsPage.tableTitleActions": "操作",
   "app.containers.JobsPage.tableTitleCreationTimestamp": "创建时间",
   "app.containers.JobsPage.tableTitleName": "名称",
+  "app.containers.Linkerd.cardNodatatodisplay": "cardNodatatodisplay",
   "app.containers.Linkerd.cardUnmeshed": "cardUnmeshed",
   "app.containers.Linkerd.cellConn": "cellConn",
   "app.containers.Linkerd.cellP99": "cellP99",
