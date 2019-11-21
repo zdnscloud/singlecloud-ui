@@ -69,6 +69,7 @@ const Hosts = ({
               className={`${classes.tableCell} ${classes.tableHeadCell}`}
             ></TableCell>
             <TableCell
+              style={{ minWidth: 80 }}
               className={`${classes.tableCell} ${classes.tableHeadCell}`}
             >
               <FormattedMessage {...messages.formNodeName} />
