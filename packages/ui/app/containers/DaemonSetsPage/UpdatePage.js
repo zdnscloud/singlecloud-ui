@@ -185,6 +185,7 @@ export const UpdateDaemonSetPage = ({
                   data.containers = containers;
                   return data;
                 })}
+                formValues={values}
                 role="update"
               />
             )}
@@ -230,9 +231,6 @@ const mapDispatchToProps = (dispatch) =>
     dispatch
   );
 
-const withConnect = connect(
-  mapStateToProps,
-  mapDispatchToProps
-);
+const withConnect = connect(mapStateToProps, mapDispatchToProps);
 
 export default compose(withConnect)(UpdateDaemonSetPage);
