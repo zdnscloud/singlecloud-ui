@@ -139,21 +139,21 @@ class Octopus extends React.Component {
       <TableBody>
         {resource.isLeafService &&
         <TableRow>
-          <TableCell><Typography>Weight</Typography></TableCell>
+          <TableCell><Typography><Message messages={messages} keyName="cellWeight" /></Typography></TableCell>
           <TableCell numeric={true}><Typography>{resource.tsStats.weight}</Typography></TableCell>
         </TableRow>
         }
         <TableRow>
-          <TableCell><Typography>SR</Typography></TableCell>
+          <TableCell><Typography><Message messages={messages} keyName="cellSR" /></Typography></TableCell>
           <TableCell numeric={true}><Typography>{metricToFormatter["SUCCESS_RATE"](resource.successRate)}</Typography></TableCell>
         </TableRow>
         <TableRow>
-          <TableCell><Typography>RPS</Typography></TableCell>
+          <TableCell><Typography><Message messages={messages} keyName="cellRPS" /></Typography></TableCell>
           <TableCell numeric={true}><Typography>{metricToFormatter["NO_UNIT"](resource.requestRate)}</Typography></TableCell>
         </TableRow>
         {!resource.isApexService &&
         <TableRow>
-          <TableCell><Typography>P99</Typography></TableCell>
+          <TableCell><Typography><Message messages={messages} keyName="cellP99" /></Typography></TableCell>
           <TableCell numeric={true}><Typography>{metricToFormatter["LATENCY"](_get(resource, "latency.P99"))}</Typography></TableCell>
         </TableRow>
         }
@@ -166,15 +166,15 @@ class Octopus extends React.Component {
     return (
       <TableBody>
         <TableRow>
-          <TableCell><Typography>Conn</Typography></TableCell>
+          <TableCell><Typography><Message messages={messages} keyName="cellConn" /></Typography></TableCell>
           <TableCell numeric={true}><Typography>{metricToFormatter["NO_UNIT"](tcp.openConnections)}</Typography></TableCell>
         </TableRow>
         <TableRow>
-          <TableCell><Typography>Read</Typography></TableCell>
+          <TableCell><Typography><Message messages={messages} keyName="cellRead" /></Typography></TableCell>
           <TableCell numeric={true}><Typography>{metricToFormatter["BYTES"](tcp.readRate)}</Typography></TableCell>
         </TableRow>
         <TableRow>
-          <TableCell><Typography>Write</Typography></TableCell>
+          <TableCell><Typography><Message messages={messages} keyName="cellWrite" /></Typography></TableCell>
           <TableCell numeric={true}><Typography>{metricToFormatter["BYTES"](tcp.writeRate)}</Typography></TableCell>
         </TableRow>
       </TableBody>
@@ -187,7 +187,7 @@ class Octopus extends React.Component {
       <Grid item>
         <Card key="unmeshed-resources" className={classes.neighborNode}>
           <CardContent>
-            <Typography variant="subtitle1">Unmeshed</Typography>
+            <Typography variant="subtitle1"><Message messages={messages} keyName="cardUnmeshed" /></Typography>
             {
               unmeshedResources.map(r => {
                 let display = displayName(r);

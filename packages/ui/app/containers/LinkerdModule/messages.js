@@ -237,4 +237,36 @@ export default defineMessages({
     id: `${scope}.labelUnmeshed`,
     defaultMessage: 'labelUnmeshed',
   },
+  cellWeight: {
+    id: `${scope}.cellWeight`,
+    defaultMessage: 'cellWeight',
+  },
+  cellSR: {
+    id: `${scope}.cellSR`,
+    defaultMessage: 'cellSR',
+  },
+  cellRPS: {
+    id: `${scope}.cellRPS`,
+    defaultMessage: 'cellRPS',
+  },
+  cellP99: {
+    id: `${scope}.cellP99`,
+    defaultMessage: 'cellP99',
+  },
+  cellConn: {
+    id: `${scope}.cellConn`,
+    defaultMessage: 'cellConn',
+  },
+  cellRead: {
+    id: `${scope}.cellRead`,
+    defaultMessage: 'cellRead',
+  },
+  cellWrite: {
+    id: `${scope}.cellWrite`,
+    defaultMessage: 'cellWrite',
+  },
+  cardUnmeshed: {
+    id: `${scope}.cardUnmeshed`,
+    defaultMessage: 'cardUnmeshed',
+  },
 });
