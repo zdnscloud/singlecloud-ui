@@ -1,5 +1,6 @@
 import 'whatwg-fetch';
 
+import Button from 'components/CustomButtons/Button';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import React from 'react';
@@ -187,11 +188,13 @@ const ApiHelpers = (pathPrefix, defaultMetricsWindow = '1m') => {
       let url = prefixLink(this.props.to);
 
       return (
-        <Link
+        <Button
+          link
           to={url}
+          component={Link}
           {...(this.props.targetBlank ? { target: '_blank' } : {})}>
           {this.props.children}
-        </Link>
+        </Button>
       );
     }
   }

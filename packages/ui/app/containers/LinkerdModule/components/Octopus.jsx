@@ -24,6 +24,8 @@ import _take from 'lodash/take';
 import _times from 'lodash/times';
 import { getSuccessRateClassification } from './util/MetricUtils.jsx';
 import { withStyles } from "@material-ui/core/styles";
+import Message from 'components/Intl/Message';
+import messages from '../messages';
 
 const maxNumNeighbors = 6; // max number of neighbor nodes to show in the octopus graph
 
