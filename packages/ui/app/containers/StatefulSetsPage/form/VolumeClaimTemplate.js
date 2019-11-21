@@ -70,7 +70,7 @@ const VolumeClaimTemplate = ({
               inputProps={{
                 type: 'text',
                 autoComplete: 'off',
-                endAdornment: 'Gi',
+                endAdornment: role === 'update' ? null : 'Gi',
               }}
               disabled={role === 'update'}
             />
