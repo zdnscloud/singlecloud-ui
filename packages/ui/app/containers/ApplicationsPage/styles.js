@@ -107,6 +107,12 @@ export const styles = (theme) => ({
   cancleBtn: {
     marginLeft: '10px',
   },
+  status: {
+    width: 55,
+    height: 18,
+    borderRadius: 3,
+    textAlign: 'center',
+  },
 });
 
 export default makeStyles(styles);
