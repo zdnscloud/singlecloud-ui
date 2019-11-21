@@ -23,8 +23,11 @@ const tableSchema = schema
         return workload.includes(data.get('type')) ? (
           <Fragment>
             <IconButton
-              aria-label="Update"
-              onClick={() => window.open('https://www.baidu.com/')}
+              link
+              to={`/clusters/${clusterID}/linkerd/namespaces/${namespaceID}/${inflection.pluralize(
+                data.get('type')
+              )}/${data.get('name')}`}
+              component={Link}
             >
               <MonitorIcon />
             </IconButton>
