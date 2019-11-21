@@ -269,4 +269,8 @@ export default defineMessages({
     id: `${scope}.cardUnmeshed`,
     defaultMessage: 'cardUnmeshed',
   },
+  cardNodatatodisplay: {
+    id: `${scope}.cardNodatatodisplay`,
+    defaultMessage: 'cardNodatatodisplay',
+  },
 });
