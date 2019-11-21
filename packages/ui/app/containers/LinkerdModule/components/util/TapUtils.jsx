@@ -20,7 +20,7 @@ import _size from 'lodash/size';
 import _take from 'lodash/take';
 import { faLongArrowAltRight } from '@fortawesome/free-solid-svg-icons/faLongArrowAltRight';
 import Message from 'components/Intl/Message';
-import messages from '../messages';
+import messages from '../../messages';
 
 export const httpMethods = ["GET", "HEAD", "POST", "PUT", "DELETE", "CONNECT", "OPTIONS", "TRACE", "PATCH"];
 
