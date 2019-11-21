@@ -201,6 +201,14 @@ export default defineMessages({
     id: `${scope}.leftMenuServiceMeshDeployments`,
     defaultMessage: 'ServiceMeshDeployments',
   },
+  leftMenuServiceMeshDaemonSets: {
+    id: `${scope}.leftMenuServiceMeshDaemonSets`,
+    defaultMessage: 'ServiceMeshDaemonSets',
+  },
+  leftMenuServiceMeshStatefulSets: {
+    id: `${scope}.leftMenuServiceMeshStatefulSets`,
+    defaultMessage: 'ServiceMeshStatefulSets',
+  },
   leftMenuServiceMeshPods: {
     id: `${scope}.leftMenuServiceMeshPods`,
     defaultMessage: 'ServiceMeshPods',

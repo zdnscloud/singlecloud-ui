@@ -9,6 +9,7 @@ import OverviewIcon from 'components/Icons/Overview';
 import ManagementIcon from 'components/Icons/Management';
 import BasicResourcesIcon from 'components/Icons/BasicResources';
 import SystemIcon from 'components/Icons/System';
+import ServiceMeshIcon from 'components/Icons/ServiceMesh';
 import UserQuotasIcon from 'components/Icons/UserQuotas';
 import ApplicationStoreIcon from 'components/Icons/ApplicationStore';
 import { makeSelectRole, makeSelectIsAdmin } from 'ducks/role/selectors';
@@ -137,11 +138,19 @@ export const makeSelectLeftMenus = () =>
                 path: `/clusters/${cluster}/linkerd/namespaces/${namespace}/deployments`,
               },
               {
+                name: 'ServiceMeshDaemonSets',
+                path: `/clusters/${cluster}/linkerd/namespaces/${namespace}/daemonsets`,
+              },
+              {
+                name: 'ServiceMeshDaemonSets',
+                path: `/clusters/${cluster}/linkerd/namespaces/${namespace}/statefulsets`,
+              },
+              {
                 name: 'ServiceMeshPods',
                 path: `/clusters/${cluster}/linkerd/namespaces/${namespace}/pods`,
               },
             ],
-            icon: SystemIcon,
+            icon: ServiceMeshIcon,
           },
           {
             name: 'AppStore',
