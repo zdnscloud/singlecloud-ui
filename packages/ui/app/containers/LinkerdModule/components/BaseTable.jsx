@@ -113,7 +113,7 @@ class BaseTable extends React.Component {
       tableCell = (
         <TableCell
           key={col.key || col.dataIndex}
-          align={col.isNumeric ? 'right' : null}
+          align={col.isNumeric ? 'right' : 'inherit'}
           sortDirection={orderBy === col.dataIndex ? order : false}
           className={classNames({[classes.denseTable]: padding === 'dense'})}>
           <TableSortLabel
@@ -129,7 +129,7 @@ class BaseTable extends React.Component {
       tableCell = (
         <TableCell
           key={col.key || col.dataIndex}
-          align={col.isNumeric ? 'right' : null}
+          align={col.isNumeric ? 'right' : 'inherit'}
           className={classNames({[classes.denseTable]: padding === 'dense'})}>
           {col.title}
         </TableCell>
@@ -197,7 +197,7 @@ class BaseTable extends React.Component {
                         <TableCell
                           className={classNames({[classes.denseTable]: padding === 'dense'})}
                           key={`table-${key}-${c.key || c.dataIndex}`}
-                          align={c.isNumeric ? 'right' : null}>
+                          align={c.isNumeric ? 'right' : 'inherit'}>
                           {c.render ? c.render(d) : _get(d, c.dataIndex)}
                         </TableCell>
                         )

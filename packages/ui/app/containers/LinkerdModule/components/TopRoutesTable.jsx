@@ -76,7 +76,7 @@ export default class TopRoutesTable extends React.Component {
         tableClassName="metric-table"
         defaultOrderBy="route"
         rowKey={r => r.route + r.authority}
-        padding="dense" />
+        size="small" />
     );
   }
 }

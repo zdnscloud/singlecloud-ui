@@ -65,14 +65,14 @@ class ExpandableTable extends React.Component {
       <Paper className={classes.root}>
         <Table
           className={`${classes.table} ${tableClassName}`}
-          padding="dense">
+          size="small">
           <TableHead>
             <TableRow>
               {
                 columns.map(c => (
                   <TableCell
                     key={c.key}
-                    align={c.isNumeric ? 'right' : null}
+                    align={c.isNumeric ? 'right' : 'inherit'}
                   >
                     {c.title}
                   </TableCell>
@@ -97,7 +97,7 @@ class ExpandableTable extends React.Component {
                             columns.map(c => (
                               <TableCell
                                 key={`table-${d.key}-${c.key}`}
-                                align={c.isNumeric ? 'right' : null}
+                                align={c.isNumeric ? 'right' : 'inherit'}
                                >
                                 {c.render(d)}
                               </TableCell>

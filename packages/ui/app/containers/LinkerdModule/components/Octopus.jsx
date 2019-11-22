@@ -127,7 +127,7 @@ class Octopus extends React.Component {
 
             <Progress variant="determinate" value={resource.successRate * 100} />
 
-            <Table padding="dense">
+            <Table size="small">
               {showTcp ? this.renderTCPStats(resource) : this.renderHttpStats(resource)}
             </Table>
           </CardContent>

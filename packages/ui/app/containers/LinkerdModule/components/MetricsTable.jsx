@@ -265,7 +265,7 @@ class MetricsTable extends React.Component {
         tableClassName="metric-table"
         title={title}
         defaultOrderBy={orderBy}
-        padding="dense" />
+        size="small" />
     );
   }
 }

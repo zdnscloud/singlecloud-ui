@@ -125,7 +125,7 @@ class EdgesTable extends React.Component {
         tableColumns={edgesColumns}
         tableClassName="metric-table"
         title={edgesTableTitle}
-        padding="dense" />
+        size="small" />
     );
   }
 }
