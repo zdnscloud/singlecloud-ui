@@ -51,12 +51,12 @@ const HPAPage = ({
       });
     }
     const t = setInterval(() => {
-      // if (url) {
-      //   loadHorizontalpodautoscalers(url, {
-      //     clusterID,
-      //     namespaceID,
-      //   });
-      // }
+      if (url) {
+        loadHorizontalpodautoscalers(url, {
+          clusterID,
+          namespaceID,
+        });
+      }
     }, 3000);
 
     return () => {
@@ -118,12 +118,6 @@ const mapDispatchToProps = (dispatch) =>
     dispatch
   );
 
-const withConnect = connect(
-  mapStateToProps,
-  mapDispatchToProps
-);
+const withConnect = connect(mapStateToProps, mapDispatchToProps);
 
-export default compose(
-  withConnect,
-  memo
-)(HPAPage);
+export default compose(withConnect, memo)(HPAPage);
