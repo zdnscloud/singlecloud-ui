@@ -68,13 +68,11 @@ const tableSchema = schema
           ];
           return workload.includes(data.get('type')) ? (
             <>
-              {data.getIn(['status', 'readyReplicas']) || 0}/
-              {data.getIn(['replicas'])}
+              {data.get('readyReplicas') || 0}/{data.get('replicas')}
               <LinearProgress
                 variant="determinate"
                 value={
-                  ((data.getIn(['status', 'readyReplicas']) || 0) /
-                    data.getIn(['replicas'])) *
+                  ((data.get('readyReplicas') || 0) / data.get('replicas')) *
                   100
                 }
               />
