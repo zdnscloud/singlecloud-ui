@@ -91,7 +91,10 @@ const SelectMenu = ({
     }
   }, [anchorEl]);
   useEffect(() => {
-    if (!lastNamespace && namespaceID) {
+    if (
+      (!lastNamespace && namespaceID) ||
+      (namespaceID && lastNamespace !== namespaceID)
+    ) {
       setLastNamespace(namespaceID);
     }
   }, [lastNamespace, namespaceID, setLastNamespace]);
@@ -230,9 +233,6 @@ const mapDispatchToProps = (dispatch) =>
     dispatch
   );
 
-const withConnect = connect(
-  mapStateToProps,
-  mapDispatchToProps
-);
+const withConnect = connect(mapStateToProps, mapDispatchToProps);
 
 export default compose(withConnect)(SelectMenu);
