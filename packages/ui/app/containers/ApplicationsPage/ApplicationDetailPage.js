@@ -53,9 +53,16 @@ export const ApplicationDetailPage = ({
         namespaceID,
       });
     }
-    return () => {
-      // try cancel something when unmount
-    };
+    const t = setInterval(
+      () =>
+        readApplication(applicationID, {
+          url: `${url}/${applicationID}`,
+          clusterID,
+          namespaceID,
+        }),
+      3000
+    );
+    return () => clearInterval(t);
   }, [applicationID, clusterID, namespaceID, readApplication, url]);
 
   return (
@@ -126,9 +133,6 @@ const mapDispatchToProps = (dispatch) =>
     dispatch
   );
 
-const withConnect = connect(
-  mapStateToProps,
-  mapDispatchToProps
-);
+const withConnect = connect(mapStateToProps, mapDispatchToProps);
 
 export default compose(withConnect)(ApplicationDetailPage);
