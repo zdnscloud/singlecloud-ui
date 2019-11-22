@@ -131,7 +131,7 @@ export const makeSelectLeftMenus = () =>
             children: [
               {
                 name: 'ServiceMeshOverview',
-                path: `/clusters/${cluster}/linkerd/namespaces/${namespace}`,
+                path: `/clusters/${cluster}/linkerd/namespaces/${namespace}/`,
               },
               {
                 name: 'ServiceMeshDeployments',
