@@ -77,7 +77,7 @@ export const ClusterDetail = ({ cluster }) => {
 
   return (
     <div className={classes.wrapper}>
-      <GridContainer className={classes.grid}>
+      <GridContainer className={classes.contentGrid}>
         <Card className={classes.card}>
           <CardHeader className={classes.infoCardHeader}>
             {infoList.map((info) => (
@@ -152,9 +152,6 @@ const mapStateToProps = createStructuredSelector({
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({}, dispatch);
 
-const withConnect = connect(
-  mapStateToProps,
-  mapDispatchToProps
-);
+const withConnect = connect(mapStateToProps, mapDispatchToProps);
 
 export default compose(withConnect)(ClusterDetail);

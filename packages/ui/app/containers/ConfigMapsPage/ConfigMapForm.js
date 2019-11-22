@@ -89,7 +89,10 @@ const renderConfigs = ({ fields, meta: { error, submitFailed }, classes }) => (
   <List component="ul" className={classes.filesList}>
     <ListItem>
       <ListItemText primary={<FormattedMessage {...messages.formFiles} />} />
-      <IconButton onClick={(evt) => fields.push(fromJS({}))}>
+      <IconButton
+        onClick={(evt) => fields.push(fromJS({}))}
+        className={classes.createBtnLink}
+      >
         <AddIcon />
       </IconButton>
     </ListItem>

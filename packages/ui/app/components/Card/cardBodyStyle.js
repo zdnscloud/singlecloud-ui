@@ -4,6 +4,9 @@ const cardBodyStyle = {
     flex: '1 1 auto',
     WebkitBoxFlex: '1',
     position: 'relative',
+    '& .MuiPaper-elevation1': {
+      boxShadow: 'none',
+    },
   },
   cardBodyPlain: {
     paddingLeft: '5px',

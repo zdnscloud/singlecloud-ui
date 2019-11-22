@@ -71,7 +71,11 @@ export const ClustersPage = ({ loadClusters, url }) => {
                 <h4>
                   <FormattedMessage {...messages.clusters} />
                 </h4>
-                <IconButton component={Link} to="/clusters/create">
+                <IconButton
+                  component={Link}
+                  to="/clusters/create"
+                  className={classes.createBtnLink}
+                >
                   <AddIcon />
                 </IconButton>
               </CardHeader>
@@ -98,9 +102,6 @@ const mapDispatchToProps = (dispatch) =>
     dispatch
   );
 
-const withConnect = connect(
-  mapStateToProps,
-  mapDispatchToProps
-);
+const withConnect = connect(mapStateToProps, mapDispatchToProps);
 
 export default compose(withConnect)(ClustersPage);

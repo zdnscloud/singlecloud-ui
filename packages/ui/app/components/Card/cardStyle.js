@@ -4,7 +4,7 @@ const cardStyle = (theme) => ({
   card: {
     border: '0',
     marginBottom: '20px',
-    marginTop: '20px',
+    marginTop: '0',
     borderRadius: '6px',
     color: `rgba(${hexToRgb(theme.palette.text.a)}, 0.87)`,
     background: theme.palette.light.main,

@@ -85,8 +85,8 @@ export const ServiceLinkPage = ({
         <GridContainer className={classes.grid}>
           <GridItem xs={12} sm={12} md={12}>
             <Card>
-              <CardHeader style={{ padding: 0 }}>
-                <h4>
+              <CardHeader>
+                <h4 className={classes.customCardHeaderH4}>
                   <Tabs
                     value={tab}
                     onChange={(evt, idx) => setTab(idx)}
@@ -143,9 +143,6 @@ const mapDispatchToProps = (dispatch) =>
     dispatch
   );
 
-const withConnect = connect(
-  mapStateToProps,
-  mapDispatchToProps
-);
+const withConnect = connect(mapStateToProps, mapDispatchToProps);
 
 export default compose(withConnect)(ServiceLinkPage);
