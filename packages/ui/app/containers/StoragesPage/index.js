@@ -80,6 +80,7 @@ export const StoragesPage = ({ clusterID, loadStorageClusters, url }) => {
                 <IconButton
                   component={Link}
                   to={`/clusters/${clusterID}/storageClusters/create`}
+                  className={classes.createBtnLink}
                 >
                   <AddIcon />
                 </IconButton>
@@ -108,9 +109,6 @@ const mapDispatchToProps = (dispatch) =>
     dispatch
   );
 
-const withConnect = connect(
-  mapStateToProps,
-  mapDispatchToProps
-);
+const withConnect = connect(mapStateToProps, mapDispatchToProps);
 
 export default compose(withConnect)(StoragesPage);

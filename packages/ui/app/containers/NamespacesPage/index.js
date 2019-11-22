@@ -75,6 +75,7 @@ export const NamespacesPage = ({ url, clusterID, loadNamespaces }) => {
                     aria-label={<FormattedMessage {...messages.namespaces} />}
                     component={Link}
                     to={`/clusters/${clusterID}/namespaces/create`}
+                    className={classes.createBtnLink}
                   >
                     <AddIcon />
                   </IconButton>
@@ -104,9 +105,6 @@ const mapDispatchToProps = (dispatch) =>
     dispatch
   );
 
-const withConnect = connect(
-  mapStateToProps,
-  mapDispatchToProps
-);
+const withConnect = connect(mapStateToProps, mapDispatchToProps);
 
 export default compose(withConnect)(NamespacesPage);

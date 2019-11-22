@@ -69,7 +69,10 @@ export const ConfigMapsPage = ({
                 <h4>
                   <FormattedMessage {...messages.configMaps} />
                 </h4>
-                <Link to={`${location.pathname}/create`}>
+                <Link
+                  to={`${location.pathname}/create`}
+                  className={classes.createBtnLink}
+                >
                   <IconButton>
                     <AddIcon />
                   </IconButton>
@@ -100,9 +103,6 @@ const mapDispatchToProps = (dispatch) =>
     dispatch
   );
 
-const withConnect = connect(
-  mapStateToProps,
-  mapDispatchToProps
-);
+const withConnect = connect(mapStateToProps, mapDispatchToProps);
 
 export default compose(withConnect)(ConfigMapsPage);

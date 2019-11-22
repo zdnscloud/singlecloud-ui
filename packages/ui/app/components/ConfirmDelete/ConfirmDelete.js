@@ -8,6 +8,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { FormattedMessage, injectIntl } from 'react-intl';
+import removeICon from 'images/icons/remove.svg';
 import warningIcon from 'images/warning.png';
 import messages from './messages';
 
@@ -35,7 +36,7 @@ const ConfirmDelete = ({
           setOpen(true);
         }}
       >
-        <DeleteIcon />
+        <img src={removeICon} alt="removeICon" style={{ width: 20 }} />
       </IconButton>
       <Dialog
         open={open}
@@ -46,7 +47,7 @@ const ConfirmDelete = ({
         aria-describedby="alert-dialog-description"
       >
         <DialogTitle id="alert-dialog-title">
-          {<FormattedMessage {...messages.dialogTitle} />}
+          <FormattedMessage {...messages.dialogTitle} />
         </DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
