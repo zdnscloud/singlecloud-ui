@@ -111,7 +111,7 @@ module.exports = (options) => ({
     }),
     new FaviconsWebpackPlugin({
       logo: path.resolve(__dirname, '..', '..', 'app', 'images', 'logo.svg'),
-      outputPath: './'
+      outputPath: ''
     }),
   ]),
   resolve: {
