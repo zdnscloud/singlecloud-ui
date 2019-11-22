@@ -145,7 +145,7 @@ class BaseTable extends React.Component {
       <Toolbar className={classes.toolbar}>
         <Typography
           className={classes.title}
-          variant="h5">
+          variant="h4">
           {title}
         </Typography>
         {this.state.showFilter &&

@@ -318,7 +318,7 @@ export class ResourceDetailBase extends React.Component {
     return (
       <div>
         <Grid container justify="space-between" alignItems="center">
-          <Grid item><Typography variant="h5">{resourceType}/{resourceName}</Typography></Grid>
+          <Grid item><Typography variant="h4">{resourceType}/{resourceName}</Typography></Grid>
           <Grid item>
             <Grid container spacing={8}>
               {showNoTrafficMsg ? <Grid item><SimpleChip label={<Message messages={messages} keyName="labelNoTraffic" />/*"no traffic"*/} type="warning" /></Grid> : null}

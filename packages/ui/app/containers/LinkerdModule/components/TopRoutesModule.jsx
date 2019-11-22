@@ -62,7 +62,7 @@ class TopRoutesBase extends React.Component {
           metricsByResource.map(metric => {
             return (
               <CardContent key={metric.resource}>
-                <Typography variant="h5">{metric.resource}</Typography>
+                <Typography variant="h4">{metric.resource}</Typography>
                 <TopRoutesTable rows={metric.rows} />
               </CardContent>
             );

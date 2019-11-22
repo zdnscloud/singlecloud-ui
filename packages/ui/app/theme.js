@@ -118,6 +118,12 @@ const theme = createMuiTheme({
         color: 'inherit',
       },
     },
+    MuiTypography: {
+      h4: {
+        fontSize: '.875rem',
+        fontWeight: "bold",
+      },
+    },
   },
   status,
 });
