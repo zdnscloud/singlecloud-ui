@@ -40,10 +40,7 @@ const proxier = proxy({
 });
 app.use('/apis', proxier);
 app.use('/web', proxier);
-app.use(
-  '/assets/helm/icons',
-  express.static(resolve(__dirname, '..', '..', 'helm-icons'))
-);
+app.use('/assets/helm/icons', proxier);
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));

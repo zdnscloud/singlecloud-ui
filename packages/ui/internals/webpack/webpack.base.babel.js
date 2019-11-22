@@ -4,7 +4,7 @@
 
 const path = require('path');
 const webpack = require('webpack');
-const WebappWebpackPlugin = require('webapp-webpack-plugin');
+const FaviconsWebpackPlugin = require('favicons-webpack-plugin');
 
 // Remove this line once the following warning goes away (it was meant for webpack loader authors not users):
 // 'DeprecationWarning: loaderUtils.parseQuery() received a non-string value which can be problematic,
@@ -109,7 +109,9 @@ module.exports = (options) => ({
         NODE_ENV: JSON.stringify(process.env.NODE_ENV),
       },
     }),
-    new WebappWebpackPlugin(path.resolve(__dirname, '..', '..', 'app', 'images', 'logo.svg')),
+    new FaviconsWebpackPlugin({
+      logo: path.resolve(__dirname, '..', '..', 'app', 'images', 'logo.svg'),
+    }),
   ]),
   resolve: {
     modules: ['node_modules', 'app'],
