@@ -184,6 +184,10 @@ export const makeSelectLeftMenus = () =>
             name: 'BasicResources',
             children: [
               {
+                name: 'HPA',
+                path: `/clusters/${cluster}/namespaces/${namespace}/hpa`,
+              },
+              {
                 name: 'Deployments',
                 path: `/clusters/${cluster}/namespaces/${namespace}/deployments`,
               },
