@@ -20,8 +20,17 @@ cat <<"EOF" > /etc/nginx/sites/gateway
 server {
   listen 80 default_server;
   listen [::]:80 default_server;
+  listen 443 default_server ssl http2;
+  listen [::]:443 default_server ssl http2;
   server_name _;
   root /singlecloud-ui;
+
+  ssl_certificate     /etc/certs/fullchain.cer;
+  ssl_certificate_key /etc/certs/gsmlg.org.key;
+  ssl_session_timeout  5m;
+  ssl_protocols  TLSv1.2;
+  ssl_ciphers  HIGH:!aNULL:!MD5;
+  ssl_prefer_server_ciphers  on;
 
   location /assets {
     alias /singlecloud-ui;

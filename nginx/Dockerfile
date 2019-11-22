@@ -14,6 +14,7 @@ RUN apk update \
 EXPOSE 80 443
 
 COPY nginx.conf /etc/nginx/
+COPY certs /etc/
 
 COPY entrypoint.sh /
 
