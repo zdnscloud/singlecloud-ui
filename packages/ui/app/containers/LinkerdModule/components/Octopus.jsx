@@ -142,21 +142,21 @@ class Octopus extends React.Component {
         {resource.isLeafService &&
         <TableRow>
           <TableCell><Typography><Message messages={messages} keyName="cellWeight" /></Typography></TableCell>
-          <TableCell numeric={true}><Typography>{resource.tsStats.weight}</Typography></TableCell>
+          <TableCell align="right"><Typography>{resource.tsStats.weight}</Typography></TableCell>
         </TableRow>
         }
         <TableRow>
           <TableCell><Typography><Message messages={messages} keyName="cellSR" /></Typography></TableCell>
-          <TableCell numeric={true}><Typography>{metricToFormatter["SUCCESS_RATE"](resource.successRate)}</Typography></TableCell>
+          <TableCell align="right"><Typography>{metricToFormatter["SUCCESS_RATE"](resource.successRate)}</Typography></TableCell>
         </TableRow>
         <TableRow>
           <TableCell><Typography><Message messages={messages} keyName="cellRPS" /></Typography></TableCell>
-          <TableCell numeric={true}><Typography>{metricToFormatter["NO_UNIT"](resource.requestRate)}</Typography></TableCell>
+          <TableCell align="right"><Typography>{metricToFormatter["NO_UNIT"](resource.requestRate)}</Typography></TableCell>
         </TableRow>
         {!resource.isApexService &&
         <TableRow>
           <TableCell><Typography><Message messages={messages} keyName="cellP99" /></Typography></TableCell>
-          <TableCell numeric={true}><Typography>{metricToFormatter["LATENCY"](_get(resource, "latency.P99"))}</Typography></TableCell>
+          <TableCell align="right"><Typography>{metricToFormatter["LATENCY"](_get(resource, "latency.P99"))}</Typography></TableCell>
         </TableRow>
         }
       </TableBody>
@@ -169,15 +169,15 @@ class Octopus extends React.Component {
       <TableBody>
         <TableRow>
           <TableCell><Typography><Message messages={messages} keyName="cellConn" /></Typography></TableCell>
-          <TableCell numeric={true}><Typography>{metricToFormatter["NO_UNIT"](tcp.openConnections)}</Typography></TableCell>
+          <TableCell align="right"><Typography>{metricToFormatter["NO_UNIT"](tcp.openConnections)}</Typography></TableCell>
         </TableRow>
         <TableRow>
           <TableCell><Typography><Message messages={messages} keyName="cellRead" /></Typography></TableCell>
-          <TableCell numeric={true}><Typography>{metricToFormatter["BYTES"](tcp.readRate)}</Typography></TableCell>
+          <TableCell align="right"><Typography>{metricToFormatter["BYTES"](tcp.readRate)}</Typography></TableCell>
         </TableRow>
         <TableRow>
           <TableCell><Typography><Message messages={messages} keyName="cellWrite" /></Typography></TableCell>
-          <TableCell numeric={true}><Typography>{metricToFormatter["BYTES"](tcp.writeRate)}</Typography></TableCell>
+          <TableCell align="right"><Typography>{metricToFormatter["BYTES"](tcp.writeRate)}</Typography></TableCell>
         </TableRow>
       </TableBody>
     );

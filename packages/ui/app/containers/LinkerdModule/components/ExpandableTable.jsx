@@ -72,7 +72,9 @@ class ExpandableTable extends React.Component {
                 columns.map(c => (
                   <TableCell
                     key={c.key}
-                    numeric={c.isNumeric}>{c.title}
+                    align={c.isNumeric ? 'right' : null}
+                  >
+                    {c.title}
                   </TableCell>
                   )
                 )
@@ -95,7 +97,8 @@ class ExpandableTable extends React.Component {
                             columns.map(c => (
                               <TableCell
                                 key={`table-${d.key}-${c.key}`}
-                                numeric={c.isNumeric}>
+                                align={c.isNumeric ? 'right' : null}
+                               >
                                 {c.render(d)}
                               </TableCell>
                             ))
