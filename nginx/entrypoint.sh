@@ -32,10 +32,6 @@ server {
   ssl_ciphers  HIGH:!aNULL:!MD5;
   ssl_prefer_server_ciphers  on;
 
-  location /assets {
-    alias /singlecloud-ui;
-  }
-
   location ~* (^/apis/zcloud.cn/v1/clusters/([^\/]+)/linkerd)|(^/clusters/([^\/]+)/linkerd/grafana)|(^/grafana) {
     # Allow websocket connections
     proxy_set_header Upgrade $http_upgrade;
@@ -53,7 +49,7 @@ server {
     proxy_pass http://@linkerd;
   }
 
-  location ~ ^/(apis|web) {
+  location ~ ^/(apis|web|assets/helm/icons) {
     proxy_connect_timeout 3600s;
     proxy_read_timeout 3600s;
     proxy_send_timeout 3600s;
@@ -69,6 +65,10 @@ server {
     proxy_cache_revalidate on;
     proxy_redirect off;
     proxy_pass http://@singlecloud;
+  }
+
+  location /assets {
+    alias /singlecloud-ui;
   }
 
   location / {
