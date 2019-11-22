@@ -5,7 +5,7 @@ import { Field, FieldArray, reduxForm } from 'redux-form/immutable';
 import { FormattedMessage } from 'react-intl';
 import getByKey from '@gsmlg/utils/getByKey';
 import AceEditor from 'react-ace';
-import 'brace/theme/tomorrow_night';
+import 'ace-builds/src-noconflict/theme-tomorrow_night';
 
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -29,7 +29,7 @@ import ReadOnlyInput from 'components/CustomInput/ReadOnlyInput';
 
 import messages from './messages';
 
-const renderData = ({ meta, input, classes }) => {
+const DataComponent = ({ meta, input, classes }) => {
   const [open, setOpen] = useState(false);
   const { touched, invalid, error } = meta;
 
@@ -106,7 +106,11 @@ const renderConfigs = ({ fields, meta: { error, submitFailed }, classes }) => (
             label={<FormattedMessage {...messages.formFileName} />}
           />
           &nbsp;&nbsp;&nbsp;&nbsp;
-          <Field name={`${f}.data`} component={renderData} classes={classes} />
+          <Field
+            name={`${f}.data`}
+            component={DataComponent}
+            classes={classes}
+          />
         </ListItemText>
         <IconButton
           variant="contained"

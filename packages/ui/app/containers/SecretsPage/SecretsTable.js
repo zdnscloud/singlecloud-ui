@@ -14,10 +14,6 @@ import { bindActionCreators, compose } from 'redux';
 import { withStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import { SimpleTable } from '@gsmlg/com';
-import Dialog from '@material-ui/core/Dialog';
-import AceEditor from 'react-ace';
-import 'brace/mode/yaml';
-import 'brace/theme/github';
 
 import { makeSelectCurrentID as makeSelectCurrentClusterID } from 'ducks/clusters/selectors';
 import { makeSelectCurrentID as makeSelectCurrentNamespaceID } from 'ducks/namespaces/selectors';
@@ -41,8 +37,6 @@ export const SecretsTable = ({
   removeSecret,
 }) => {
   const classes = useStyles();
-  const [openID, setOpenID] = useState(null);
-  const [openIndex, setOpenIndex] = useState(null);
   const mergedSchema = schema
     .map((s) => ({
       ...s,
@@ -66,22 +60,6 @@ export const SecretsTable = ({
 
   return (
     <Paper className={classes.tableWrapper}>
-      <Dialog
-        open={openID != null}
-        onClose={() => {
-          setOpenID(null);
-          setOpenIndex(null);
-        }}
-        aria-labelledby="form-dialog-title"
-      >
-        <AceEditor
-          focus
-          mode="yaml"
-          theme="github"
-          value={secrets.getIn([openID, 'configs', openIndex, 'data'])}
-          readOnly
-        />
-      </Dialog>
       <SimpleTable
         className={classes.table}
         schema={mergedSchema}

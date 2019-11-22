@@ -30,6 +30,15 @@ export const ApplicationsTable = ({ application, clusterID, namespaceID }) => {
   const data = application.get('appResources') || List([]);
   const mergedSchema = schema
     .map((sch) => {
+      if (sch.id === 'actions') {
+        return {
+          ...sch,
+          props: {
+            clusterID,
+            namespaceID,
+          },
+        };
+      }
       if (sch.id === 'name') {
         return {
           ...sch,
@@ -68,9 +77,6 @@ const mapDispatchToProps = (dispatch) =>
     dispatch
   );
 
-const withConnect = connect(
-  mapStateToProps,
-  mapDispatchToProps
-);
+const withConnect = connect(mapStateToProps, mapDispatchToProps);
 
 export default compose(withConnect)(ApplicationsTable);

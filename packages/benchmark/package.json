@@ -1,0 +1,36 @@
+{
+  "name": "@gsmlg/benchmark",
+  "version": "1.0.0",
+  "description": "benchmark for ui",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/zdnscloud/singlecloud-ui.git"
+  },
+  "engines": {
+    "npm": ">=5",
+    "node": ">=8.10.0"
+  },
+  "author": "GSMLG",
+  "license": "MIT",
+  "scripts": {
+    "start": "karma start"
+  },
+  "dependencies": {
+    "exports-loader": "^0.7.0",
+    "imports-loader": "^0.8.0",
+    "karma": "4.4.1",
+    "karma-benchmark": "^1.0.4",
+    "karma-benchmark-f-reporter": "^0.0.2",
+    "karma-benchmark-reporter": "^0.1.1",
+    "karma-webpack": "^4.0.2",
+    "benchmark": "^2.1.4",
+    "webpack": "^4.41.2"
+  },
+  "devDependencies": {
+    "karma-chrome-launcher": "^3.1.0",
+    "karma-firefox-launcher": "^1.2.0",
+    "karma-ie-launcher": "^1.0.0",
+    "karma-jasmine": "^2.0.1",
+    "karma-safari-launcher": "^1.0.0"
+  }
+}

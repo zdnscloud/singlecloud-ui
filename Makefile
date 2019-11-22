@@ -41,3 +41,10 @@ deploy-docs: docs
 		git commit -m "deployed on $(shell date) by $(shell git config user.name)" && \
 		git push -f origin gh-pages
 
+check-update:
+	ncu --removeRange -u
+	cd packages/ui; ncu --removeRange -u
+	cd packages/com; ncu --removeRange -u
+	cd packages/utils; ncu --removeRange -u
+	cd packages/benchmark; ncu --removeRange -u
+
