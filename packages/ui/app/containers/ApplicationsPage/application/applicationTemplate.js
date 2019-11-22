@@ -56,22 +56,25 @@ const ApplicationTemplate = ({
                     item.get('status') === 'delete' ||
                     item.get('status') === 'failed'
                       ? {
-                          color: '#E02020',
-                          background: 'rgba(224,32,32,0.1)',
-                          border: '1px solid rgba(224,32,32,1)',
-                        }
+                        color: '#E02020',
+                        background: 'rgba(224,32,32,0.1)',
+                        border: '1px solid rgba(224,32,32,1)',
+                      }
                       : {
-                          color: '#6DD400',
-                          background: 'rgba(109,212,0,0.1)',
-                          border: '1px solid rgba((109,212,0,1))',
-                        }
+                        color: '#6DD400',
+                        background: 'rgba(109,212,0,0.1)',
+                        border: '1px solid rgba((109,212,0,1))',
+                      }
                   }
                 >
                   {item.get('status')}
                 </span>
               </div>
               <div className={classes.count}>
-                {item.get('readyWorkloadCount')} / {item.get('workloadCount')}
+                {item.get('readyWorkloadCount')
+                  ? item.get('readyWorkloadCount')
+                  : '--'}{' '}
+                / {item.get('workloadCount') ? item.get('workloadCount') : '--'}
                 <Confirm
                   handleConfirm={handleConfirm}
                   dialogContentText={messages.removeAppText}
