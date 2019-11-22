@@ -165,4 +165,8 @@ export default defineMessages({
     id: `${scope}.showHPA`,
     defaultMessage: 'Show HPA',
   },
+  formCPUSuffix: {
+    id: `${scope}.formCPUSuffix`,
+    defaultMessage: 'He',
+  },
 });

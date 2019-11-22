@@ -7,6 +7,8 @@ import Button from 'components/CustomButtons/Button';
 import Chip from '@material-ui/core/Chip';
 import IconButton from 'components/CustomIconButtons/IconButton';
 import EditIcon from 'components/Icons/Edit';
+import { FormattedMessage, useIntl } from 'react-intl';
+import messages from './messages';
 
 const inflection = require('inflection');
 
@@ -94,6 +96,7 @@ tableSchema.splice(2, 0, {
   label: 'Metrics',
   component: ({ data }) => {
     const val = data.toJS() || {};
+    const intl = useIntl();
     const {
       resourceMetrics,
       customMetrics,
@@ -117,6 +120,37 @@ tableSchema.splice(2, 0, {
                 ? `${crm[i].averageUtilization}%`
                 : '--';
             item.thresholdVal = `${r.averageUtilization}%`;
+          } else if (
+            r.targetType === 'AverageValue' &&
+            type === 'resourceMetrics'
+          ) {
+            if (r.resourceName === 'cpu') {
+              r.averageValue = (r.averageValue / 1000).toFixed(2);
+              if (crm[i] && crm[i].averageValue) {
+                crm[i].averageValue = (crm[i].averageValue / 1000).toFixed(2);
+              }
+              item.systemVal =
+                crm.length > 0 && crm[i].averageValue
+                  ? `${crm[i].averageValue}${intl.formatMessage(
+                      messages.formCPUSuffix
+                    )}`
+                  : '--';
+              item.thresholdVal = `${r.averageValue}${intl.formatMessage(
+                messages.formCPUSuffix
+              )}`;
+            } else if (r.resourceName === 'memory') {
+              if (crm[i] && crm[i].averageValue) {
+                crm[i].averageValue = (crm[i].averageValue / 1024 ** 3).toFixed(
+                  2
+                );
+              }
+              r.averageValue = (r.averageValue / 1024 ** 3).toFixed(2);
+              item.systemVal =
+                crm.length > 0 && crm[i].averageValue
+                  ? `${crm[i].averageValue}Gi`
+                  : '--';
+              item.thresholdVal = `${r.averageValue}Gi`;
+            }
           } else {
             item.systemVal =
               crm.length > 0 && crm[i].averageValue
@@ -142,11 +176,11 @@ tableSchema.splice(2, 0, {
 
     return arr.length > 0
       ? arr.map((val, key) => (
-          <Chip
-            key={key}
-            label={`${val.name} : ${val.systemVal} / ${val.thresholdVal} `}
-        />
-        ))
+        <Chip
+          key={key}
+          label={`${val.name} : ${val.systemVal} / ${val.thresholdVal} `}
+          />
+      ))
       : '--';
   },
 });

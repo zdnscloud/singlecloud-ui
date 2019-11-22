@@ -7,7 +7,7 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 import { createStructuredSelector, createSelector } from 'reselect';
 import { bindActionCreators, compose } from 'redux';
 import { fromJS, List as list } from 'immutable';
@@ -56,6 +56,7 @@ export const HPADetailPage = ({
   readHorizontalpodautoscaler,
 }) => {
   const classes = useStyles();
+  const intl = useIntl();
   let metrics = list([]);
   useEffect(() => {
     readHorizontalpodautoscaler(id, {
@@ -74,6 +75,17 @@ export const HPADetailPage = ({
       resourceMetrics &&
       resourceMetrics.map((item) => {
         item.metricsType = 'resourceMetrics';
+        if (item.targetType === 'AverageValue' && item.averageValue) {
+          if (item.resourceName === 'cpu') {
+            item.averageValue = `${(item.averageValue / 1000).toFixed(
+              2
+            )} ${intl.formatMessage(messages.formCPUSuffix)}`;
+          } else if (item.resourceName === 'memory') {
+            item.averageValue = `${(item.averageValue / 1024 ** 3).toFixed(
+              2
+            )}Gi`;
+          }
+        }
         return item;
       });
     data.customMetrics =
@@ -195,12 +207,15 @@ export const HPADetailPage = ({
                       const metricsType =
                         metrics && metrics.getIn([i, 'metricsType']);
                       let metricsName;
+                      let metricsTypeValue;
                       switch (metricsType) {
                         case 'resourceMetrics':
                           metricsName = 'resourceName';
+                          metricsTypeValue = messages.formResourceMetrics;
                           break;
                         case 'customMetrics':
                           metricsName = 'metricName';
+                          metricsTypeValue = messages.formCustomMetrics;
                           break;
                         default:
                           metricsName = 'resourceName';
@@ -220,7 +235,10 @@ export const HPADetailPage = ({
                                         />
                                       }
                                       fullWidth
-                                      value={c.get('metricsType')}
+                                      value={
+                                        metricsTypeValue &&
+                                        intl.formatMessage(metricsTypeValue)
+                                      }
                                     />
                                   </GridItem>
                                   <GridItem xs={3} sm={3} md={3}>

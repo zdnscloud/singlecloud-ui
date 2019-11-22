@@ -113,6 +113,13 @@ export const UpdateHPAPage = ({
         metrics.filter((r) => r.metricsType === 'resourceMetrics') || [];
       const customMetrics =
         metrics.filter((r) => r.metricsType === 'customMetrics') || [];
+      if (resourceMetrics.length > 0) {
+        resourceMetrics.forEach((item) => {
+          if (item.resourceName === 'memory' && item.averageValue) {
+            item.averageValue = `${item.averageValue}Gi`;
+          }
+        });
+      }
       const data = {
         resourceMetrics,
         customMetrics,
@@ -143,6 +150,13 @@ export const UpdateHPAPage = ({
       resourceMetrics &&
       resourceMetrics.map((item) => {
         item.metricsType = 'resourceMetrics';
+        if (item.targetType === 'AverageValue' && item.averageValue) {
+          if (item.resourceName === 'cpu') {
+            item.averageValue = (item.averageValue / 1000).toFixed(2);
+          } else if (item.resourceName === 'memory') {
+            item.averageValue = (item.averageValue / 1024 ** 3).toFixed(2);
+          }
+        }
         return item;
       });
     data.customMetrics =
