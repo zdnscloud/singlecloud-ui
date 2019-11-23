@@ -1,6 +1,6 @@
 import React, { PureComponent, Fragment, useState } from 'react';
 import { fromJS, is } from 'immutable';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 import { FieldArray } from 'redux-form/immutable';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -18,16 +18,36 @@ import SelectField from 'components/Field/SelectField';
 import InputField from 'components/Field/InputField';
 import PlusIcon from 'components/Icons/Plus';
 import MinusIcon from 'components/Icons/Minus';
+import ReadOnlyInput from 'components/CustomInput/ReadOnlyInput';
 
 import messages from '../messages';
 import useStyles from '../styles';
 
 const Metrics = ({ fields, meta: { error, submitFailed }, formValues }) => {
   const classes = useStyles();
+  const intl = useIntl();
 
   const renderNumerical = (f, i) => {
     const targetType =
       formValues && formValues.getIn(['metrics', i, 'targetType']);
+    let endAdornment;
+    const metricsType =
+      formValues && formValues.getIn(['metrics', i, 'metricsType']);
+    if (metricsType === 'resourceMetrics' && targetType === 'AverageValue') {
+      const resourceName = formValues.getIn(['metrics', i, 'resourceName']);
+      switch (resourceName) {
+        case 'cpu':
+          endAdornment = messages.formCPUSuffix;
+          break;
+        case 'memory':
+          endAdornment = 'Gi';
+          break;
+        default:
+          break;
+      }
+    } else {
+      endAdornment = undefined;
+    }
     switch (targetType) {
       case 'Utilization':
         return (
@@ -54,6 +74,12 @@ const Metrics = ({ fields, meta: { error, submitFailed }, formValues }) => {
             inputProps={{
               type: 'text',
               autoComplete: 'off',
+              endAdornment:
+                endAdornment && typeof endAdornment === 'object' ? (
+                  <FormattedMessage {...endAdornment} />
+                ) : (
+                  endAdornment
+                ),
             }}
           />
         );
@@ -164,22 +190,21 @@ const Metrics = ({ fields, meta: { error, submitFailed }, formValues }) => {
             value: 'AverageValue',
           },
         ];
-        let metricsName;
+        let metricsTypeValue;
         switch (metricsType) {
           case 'resourceMetrics':
-            metricsName = 'resourceName';
+            metricsTypeValue = messages.formResourceMetrics;
             break;
           case 'customMetrics':
-            metricsName = 'metricName';
+            metricsTypeValue = messages.formCustomMetrics;
             targetTypeOptions = targetTypeOptions.filter(
               (p) => p.value === 'AverageValue'
             );
-
             break;
           default:
-            metricsName = 'resourceName';
             break;
         }
+
         return (
           <ListItem key={i}>
             <Card key={i} border>
@@ -187,17 +212,15 @@ const Metrics = ({ fields, meta: { error, submitFailed }, formValues }) => {
                 <ListItemText>
                   <GridContainer>
                     <GridItem xs={3} sm={3} md={3}>
-                      <InputField
-                        label={
+                      <ReadOnlyInput
+                        labelText={
                           <FormattedMessage {...messages.formMetricsType} />
                         }
-                        name={`${f}.metricsType`}
                         fullWidth
-                        inputProps={{
-                          type: 'text',
-                          autoComplete: 'off',
-                        }}
-                        disabled
+                        value={
+                          metricsTypeValue &&
+                          intl.formatMessage(metricsTypeValue)
+                        }
                       />
                     </GridItem>
                     <GridItem xs={3} sm={3} md={3}>

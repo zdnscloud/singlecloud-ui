@@ -91,6 +91,13 @@ export const CreateHPAPage = ({
         metrics.filter((r) => r.metricsType === 'resourceMetrics') || [];
       const customMetrics =
         metrics.filter((r) => r.metricsType === 'customMetrics') || [];
+      if (resourceMetrics.length > 0) {
+        resourceMetrics.forEach((item) => {
+          if (item.resourceName === 'memory' && item.averageValue) {
+            item.averageValue = `${item.averageValue}Gi`;
+          }
+        });
+      }
       const data = {
         resourceMetrics,
         customMetrics,
