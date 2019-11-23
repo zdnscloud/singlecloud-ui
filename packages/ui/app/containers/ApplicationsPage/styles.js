@@ -39,6 +39,11 @@ export const styles = (theme) => ({
     height: 80,
     marginRight: 20,
   },
+  listAppLogo: {
+    width: 60,
+    height: 60,
+    marginRight: 20,
+  },
   appContent: {
     flex: 1,
     position: 'relative',
