@@ -145,7 +145,7 @@ class App extends React.Component {
           <Route
             path={`${pathPrefix}/namespaces`}
             render={props => <Navigation {...props} ChildComponent={ResourceList} resource="namespace" />} />
-          <Route component={NoMatch} />
+          <Redirect to={`/clusters/${clusterID}/show`} />
         </Switch>
       </AppContext.Provider>
     );
