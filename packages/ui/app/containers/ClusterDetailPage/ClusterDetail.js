@@ -47,6 +47,7 @@ export const ClusterDetail = ({ cluster }) => {
     1024 ** 3
   ).toFixed(2)}GiB`;
   const pod = `${cluster.get('podUsed')} / ${cluster.get('pod')}`;
+  const version = cluster.get('zcloudVersion') || '';
 
   const infoList = [
     {
@@ -59,7 +60,7 @@ export const ClusterDetail = ({ cluster }) => {
       key: 'version',
       Icon: VersionIcon,
       message: 'clusterVersion',
-      value: cluster.get('version'),
+      value: version.slice(0, version.indexOf('-')),
     },
     {
       key: 'nodeCount',

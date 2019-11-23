@@ -385,6 +385,7 @@
   "app.containers.HPAPage.createPageDesc": "",
   "app.containers.HPAPage.createPageTitle": "",
   "app.containers.HPAPage.formAverageValue": "",
+  "app.containers.HPAPage.formCPUSuffix": "",
   "app.containers.HPAPage.formCpu": "",
   "app.containers.HPAPage.formCustomMetrics": "",
   "app.containers.HPAPage.formDeployment": "",
