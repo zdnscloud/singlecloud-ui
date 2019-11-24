@@ -248,7 +248,7 @@ class CheckModal extends React.Component {
           direction="row"
           justify="center"
           alignItems="center"
-          spacing={24}>
+          spacing={3}>
           <Grid item>
             <div className={classes.wrapper}>
               <Button

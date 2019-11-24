@@ -275,7 +275,7 @@ class ServiceMesh extends React.Component {
                 numResources={this.state.nsStatuses.length}
                 resource="namespace" /> : null}
 
-            <Grid container spacing={24}>
+            <Grid container spacing={3}>
               <Grid item xs={8} container direction="column" >
                 <Grid item>{this.renderControlPlaneDetails()}</Grid>
                 <Grid item>
@@ -283,7 +283,7 @@ class ServiceMesh extends React.Component {
                 </Grid>
               </Grid>
 
-              <Grid item xs={4} container direction="column" spacing={24}>
+              <Grid item xs={4} container direction="column" spacing={3}>
                 <Grid item>{this.renderServiceMeshDetails()}</Grid>
                 <Grid item><CheckModal api={this.api} /></Grid>
                 <Grid item>{this.renderAddResourcesMessage()}</Grid>

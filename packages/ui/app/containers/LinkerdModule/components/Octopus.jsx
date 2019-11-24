@@ -281,7 +281,7 @@ class Octopus extends React.Component {
 
             <Grid
               container
-              spacing={24}
+              spacing={3}
               direction="column"
               justify="center"
               alignItems="center"
@@ -307,7 +307,7 @@ class Octopus extends React.Component {
 
             <Grid
               container
-              spacing={24}
+              spacing={3}
               direction="column"
               justify="center"
               alignItems="center"
