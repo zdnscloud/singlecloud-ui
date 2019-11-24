@@ -36,8 +36,20 @@ const ApplicationTemplate = ({
             />
             <div className={classes.appContent}>
               <div>
+                <div
+                  className={classes.status}
+                  title={item.get('status')}
+                  style={
+                    item.get('status') === 'delete' ||
+                    item.get('status') === 'failed'
+                      ? { background: '#E02020' }
+                      : { background: '#6DD400' }
+                  }
+                ></div>
                 {item.get('status') === 'failed' ? (
-                  <p className={classes.aapName}>{item.get('name')}</p>
+                  <p className={classes.aapName} title={item.get('name')}>
+                    {item.get('name')}
+                  </p>
                 ) : (
                   <Button
                     link
@@ -46,29 +58,11 @@ const ApplicationTemplate = ({
                     )}/show`}
                     component={Link}
                     className={classes.appDetailBtn}
+                    title={item.get('name')}
                   >
-                    <p className={classes.aapName}>{item.get('name')}</p>
+                    {item.get('name')}
                   </Button>
                 )}
-                <span
-                  className={classes.status}
-                  style={
-                    item.get('status') === 'delete' ||
-                    item.get('status') === 'failed'
-                      ? {
-                          color: '#E02020',
-                          background: 'rgba(224,32,32,0.1)',
-                          border: '1px solid rgba(224,32,32,1)',
-                        }
-                      : {
-                          color: '#6DD400',
-                          background: 'rgba(109,212,0,0.1)',
-                          border: '1px solid rgba((109,212,0,1))',
-                        }
-                  }
-                >
-                  {item.get('status')}
-                </span>
               </div>
               <div className={classes.count}>
                 {item.get('readyWorkloadCount')
