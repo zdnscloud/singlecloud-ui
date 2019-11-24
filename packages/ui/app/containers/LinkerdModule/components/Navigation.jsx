@@ -93,7 +93,6 @@ const styles = theme => {
     content: {
       flexGrow: 1,
       width: `calc(100% - ${drawerWidth}px)`,
-      backgroundColor: theme.palette.background.default,
       padding: contentPadding,
       transition: entering,
     },
