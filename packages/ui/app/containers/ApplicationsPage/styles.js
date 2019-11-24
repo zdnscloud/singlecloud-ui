@@ -33,15 +33,27 @@ export const styles = (theme) => ({
   aapName: {
     margin: 0,
     fontSize: 14,
+    width: 'calc(100% - 20px)',
+    textOverflow: 'ellipsis',
+    overflow: 'hidden',
+    verticalAlign: 'middle',
+    display: 'inline-block',
+    whiteSpace: 'nowrap',
   },
   appLogo: {
     width: 80,
     height: 80,
     marginRight: 20,
   },
+  listAppLogo: {
+    width: 60,
+    height: 60,
+    marginRight: 20,
+  },
   appContent: {
     flex: 1,
     position: 'relative',
+    width: 'calc(100% - 100px)',
   },
   count: {
     position: 'relative',
@@ -56,6 +68,15 @@ export const styles = (theme) => ({
   appDetailBtn: {
     padding: 0,
     minWidth: 0,
+    width: 'calc(100% - 20px)',
+    textAlign: 'left',
+    display: 'inline-block',
+    whiteSpace: 'nowrap',
+    '& .MuiButton-label': {
+      textOverflow: 'ellipsis',
+      overflow: 'hidden',
+      verticalAlign: 'middle',
+    },
   },
   tag: {
     width: '100%',
@@ -100,15 +121,11 @@ export const styles = (theme) => ({
     marginLeft: '10px',
   },
   status: {
-    width: 55,
-    height: 18,
+    width: 6,
+    height: 6,
     borderRadius: 3,
-    textAlign: 'center',
-    fontSize: 10,
     display: 'inline-block',
-    position: 'absolute',
-    right: 0,
-    top: 6,
+    marginRight: 8,
   },
 });
 
