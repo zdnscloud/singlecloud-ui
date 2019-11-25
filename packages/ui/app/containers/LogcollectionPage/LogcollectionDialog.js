@@ -51,34 +51,20 @@ export const LogcollectionDialog = ({
   updateFluentbitconfig,
   cluster,
   url,
-  surl,
-  kind,
   name,
-  fluentbitconfig,
+  id,
+  kind,
 }) => {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
-  console.log('url', url, 'surl', surl);
-
-  useEffect(() => {
-    if (url) {
-      loadFluentbitconfigs(url, {
-        clusterID,
-        namespaceID,
-      });
-    }
-    return () => {
-      // try cancel something when unmount
-    };
-  }, [clusterID, loadFluentbitconfigs, namespaceID, url]);
+  const [current, setCurrent] = useState({});
 
   async function doSubmit(formValues) {
     try {
-      const submitAction = fluentbitconfig
+      const submitAction = current.regexp
         ? updateFluentbitconfig
         : createFluentbitconfig;
       const data = formValues.toJS();
-      data.workload = { kind, name };
       console.log('data', data);
       await new Promise((resolve, reject) => {
         submitAction(data, {
@@ -93,15 +79,22 @@ export const LogcollectionDialog = ({
       throw new SubmissionError({ _error: error });
     }
   }
-
   return (
     <Fragment>
       <CButton
+        className={classes.logBtn}
         link
         onClick={() => {
-          loadFluentbitconfigs(surl, {
-            clusterID,
-          });
+          if (url) {
+            loadFluentbitconfigs(url, {
+              clusterID,
+              namespaceID,
+              resolve({ response: { data } }) {
+                setCurrent(data.filter((l) => l.id === id)[0]);
+              },
+              reject() {},
+            });
+          }
           setOpen(true);
         }}
       >
@@ -130,7 +123,7 @@ export const LogcollectionDialog = ({
             <CreateFluentbitconfigForm
               onSubmit={doSubmit}
               formValues={values}
-              initialValues={fromJS({})}
+              initialValues={fromJS(current)}
               setOpen={setOpen}
             />
           </CardBody>
@@ -155,9 +148,7 @@ export const LogcollectionDialog = ({
 const mapStateToProps = createStructuredSelector({
   clusterID: makeSelectClusterID(),
   namespaceID: makeSelectNamespaceID(),
-  url: makeSelectURL(),
   values: getFormValues(formName),
-  fluentbitconfig: makeSelectCurrent(),
 });
 
 const mapDispatchToProps = (dispatch) =>

@@ -10,9 +10,11 @@ import {
   getLocation,
 } from 'connected-react-router/immutable';
 import {
-  makeSelectCurrent as makeSelectCurrentCluster,
-  makeSelectCurrentID as makeSelectCurrentClusterID,
-} from 'ducks/clusters/selectors';
+  makeSelectCurrent as makeSelectCurrentDeployment,
+  makeSelectCurrentID as makeSelectCurrentDeploymentID,
+} from 'ducks/deployments/selectors';
+import { makeSelectCurrentID as makeSelectCurrentClusterID } from 'ducks/clusters/selectors';
+import { makeSelectCurrentID as makeSelectCurrentNamespaceID } from 'ducks/namespaces/selectors';
 
 import * as c from './constants';
 import { initialState } from './index';
@@ -27,7 +29,7 @@ export const selectDomain = (state) => state.get(c.prefix) || initialState;
  */
 export const makeSelectURL = () =>
   createSelector(
-    makeSelectCurrentCluster(),
+    makeSelectCurrentDeployment(),
     (pt) => pt.getIn(['links', 'fluentbitconfigs'])
   );
 
@@ -41,8 +43,11 @@ export const makeSelectFluentbitconfigs = () =>
   createSelector(
     selectDomain,
     makeSelectCurrentClusterID(),
-    (substate, clusterID) =>
-      substate.getIn(['data', clusterID]) || substate.clear()
+    makeSelectCurrentNamespaceID(),
+    makeSelectCurrentDeploymentID(),
+    (substate, clusterID, namespaceID, deploymentID) =>
+      substate.getIn(['data', clusterID, namespaceID, deploymentID]) ||
+      substate.clear()
   );
 
 export const makeSelectFluentbitconfigsList = () =>
@@ -50,10 +55,13 @@ export const makeSelectFluentbitconfigsList = () =>
     selectDomain,
     makeSelectFluentbitconfigs(),
     makeSelectCurrentClusterID(),
-    (substate, data, clusterID) =>
-      (substate.getIn(['list', clusterID]) || fromJS([])).map((id) =>
-        data.get(id)
-      ) || fromJS([])
+    makeSelectCurrentNamespaceID(),
+    makeSelectCurrentDeploymentID(),
+    (substate, data, clusterID, namespaceID, deploymentID) =>
+      (
+        substate.getIn(['list', clusterID, namespaceID, deploymentID]) ||
+        fromJS([])
+      ).map((id) => data.get(id)) || fromJS([])
   );
 
 export const makeSelectCurrentID = () =>
@@ -71,9 +79,12 @@ export const makeSelectCurrent = () =>
   createSelector(
     selectDomain,
     makeSelectCurrentClusterID(),
+    makeSelectCurrentNamespaceID(),
+    makeSelectCurrentDeploymentID(),
     makeSelectCurrentID(),
-    (substate, clusterID, id) =>
-      substate.getIn(['data', clusterID, id]) || substate.clear()
+    (substate, clusterID, namespaceID, deploymentID, id) =>
+      substate.getIn(['data', clusterID, namespaceID, deploymentID, id]) ||
+      substate.clear()
   );
 
 export const makeSelectErrorsList = () =>

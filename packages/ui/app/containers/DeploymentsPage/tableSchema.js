@@ -38,6 +38,11 @@ const tableSchema = schema
         removeDeployment,
       }) => (
         <Fragment>
+          <LogcollectionDialog
+            url={data.getIn(['links', 'fluentbitconfigs'])}
+            id={`zcloud_deployment_${data.get('id')}`}
+          />
+
           <IconButton
             aria-label="Update"
             component={Link}
@@ -50,12 +55,6 @@ const tableSchema = schema
           <IconButton onClick={() => setRollback(data.get('id'))}>
             <RollbackIcon />
           </IconButton>
-
-          <LogcollectionDialog
-            surl={data.getIn(['links', 'self'])}
-            kind="deployments"
-            name={data.get('id')}
-          />
 
           <ConfirmDelete
             actionName={removeDeployment}

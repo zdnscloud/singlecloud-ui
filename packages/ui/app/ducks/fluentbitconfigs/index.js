@@ -32,13 +32,13 @@ export const reducer = (
       return state;
     case c.LOAD_FLUENTBITCONFIGS_SUCCESS: {
       const { data, list } = procCollectionData(payload);
-      const { clusterID } = meta;
+      const { clusterID, namespaceID, deploymentID } = meta;
       return state
         .update('errorsList', (errors) =>
           errors.filterNot((e) => e.type === c.LOAD_FLUENTBITCONFIGS_FAILURE)
         )
-        .setIn(['data', clusterID], fromJS(data))
-        .setIn(['list', clusterID], fromJS(list));
+        .setIn(['data', clusterID, namespaceID, deploymentID], fromJS(data))
+        .setIn(['list', clusterID, namespaceID, deploymentID], fromJS(list));
     }
     case c.LOAD_FLUENTBITCONFIGS_FAILURE:
       return state.update('errorsList', (errors) =>
@@ -49,9 +49,12 @@ export const reducer = (
       return state;
     case c.CREATE_FLUENTBITCONFIG_SUCCESS: {
       const data = payload.response;
-      const { clusterID } = meta;
+      const { clusterID, namespaceID, deploymentID } = meta;
       return state
-        .setIn(['data', clusterID, data.id], fromJS(data))
+        .setIn(
+          ['data', clusterID, namespaceID, deploymentID, data.id],
+          fromJS(data)
+        )
         .update('errorsList', (errors) =>
           errors.filterNot((e) => e.type === c.CREATE_FLUENTBITCONFIG_FAILURE)
         );
@@ -66,10 +69,13 @@ export const reducer = (
     case c.UPDATE_FLUENTBITCONFIG_SUCCESS: {
       const id = getByKey(payload, ['response', 'id']);
       const data = getByKey(payload, ['response']);
-      const { clusterID } = meta;
+      const { clusterID, namespaceID, deploymentID } = meta;
       if (id) {
         return state
-          .setIn(['data', clusterID, id], fromJS(data))
+          .setIn(
+            ['data', clusterID, namespaceID, deploymentID, id],
+            fromJS(data)
+          )
           .update('errorsList', (errors) =>
             errors.filterNot((e) => e.type === c.UPDATE_FLUENTBITCONFIG_FAILURE)
           );
@@ -86,10 +92,13 @@ export const reducer = (
     case c.READ_FLUENTBITCONFIG_SUCCESS: {
       const id = getByKey(payload, ['response', 'id']);
       const data = getByKey(payload, ['response']);
-      const { clusterID } = meta;
+      const { clusterID, namespaceID, deploymentID } = meta;
       if (id) {
         return state
-          .setIn(['data', clusterID, id], fromJS(data))
+          .setIn(
+            ['data', clusterID, namespaceID, deploymentID, id],
+            fromJS(data)
+          )
           .update('errorsList', (errors) =>
             errors.filterNot((e) => e.type === c.READ_FLUENTBITCONFIG_FAILURE)
           );
@@ -105,10 +114,12 @@ export const reducer = (
       return state;
     case c.REMOVE_FLUENTBITCONFIG_SUCCESS: {
       const { id } = meta;
-      const { clusterID } = meta;
+      const { clusterID, namespaceID, deploymentID } = meta;
       return state
-        .removeIn(['data', clusterID, id])
-        .updateIn(['list', clusterID], (l) => l.filterNot((i) => i === id))
+        .removeIn(['data', clusterID, namespaceID, deploymentID, id])
+        .updateIn(['list', clusterID, namespaceID, deploymentID], (l) =>
+          l.filterNot((i) => i === id)
+        )
         .update('errorsList', (errors) =>
           errors.filterNot((e) => e.type === c.REMOVE_FLUENTBITCONFIG_FAILURE)
         );
