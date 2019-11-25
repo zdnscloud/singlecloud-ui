@@ -59,6 +59,7 @@ import registriesReducer, {
   prefix as registriesPrefix,
 } from 'ducks/registries';
 import monitorsReducer, { prefix as monitorsPrefix } from 'ducks/monitors';
+import efksReducer, { prefix as efksPrefix } from 'ducks/efks';
 import chartsReducer, { prefix as chartsPrefix } from 'ducks/charts';
 import configMapsReducer, {
   prefix as configMapsPrefix,
@@ -118,6 +119,7 @@ export default function createReducer(injectedReducers = {}) {
     [applicationsPrefix]: applicationsReducer,
     [registriesPrefix]: registriesReducer,
     [monitorsPrefix]: monitorsReducer,
+    [efksPrefix]: efksReducer,
     [chartsPrefix]: chartsReducer,
     [storageClustersPrefix]: storageClustersReducer,
     [storageClassesPrefix]: storageClassesReducer,

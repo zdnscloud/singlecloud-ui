@@ -27,8 +27,8 @@ const ConfirmDialog = ({
 }) => (
   <Dialog open={open} onClose={onClose}>
     <DialogTitle>{title}</DialogTitle>
-    <DialogContent>
-      <DialogContentText>{content || children}</DialogContentText>
+    <DialogContent style={{ minWidth: 300 }}>
+      {content || children}
     </DialogContent>
     <DialogActions>
       <Button onClick={onCancel || onClose} variant="contained">

@@ -212,6 +212,21 @@ export const makeSelectLeftMenus = () =>
           ],
           icon: UserQuotasIcon,
         },
+        {
+          name: 'SystemTools',
+          children: [
+            {
+              name: 'ImageRegistry',
+            },
+            {
+              name: 'ClusterWatch',
+            },
+            {
+              name: 'LogAnalysis',
+            },
+          ],
+          icon: UserQuotasIcon,
+        },
       ]);
       if (!isAdmin) {
         menus = menus.filter((m) => {

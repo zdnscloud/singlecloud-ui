@@ -145,6 +145,14 @@ export default defineMessages({
     id: `${scope}.leftMenuClusterWatch`,
     defaultMessage: 'ClusterWatch',
   },
+  leftMenuLogAnalysis: {
+    id: `${scope}.leftMenuLogAnalysis`,
+    defaultMessage: 'LogAnalysis',
+  },
+  leftMenuSystemTools: {
+    id: `${scope}.leftMenuSystemTools`,
+    defaultMessage: 'SystemTools',
+  },
   leftMenuBasicResources: {
     id: `${scope}.leftMenuBasicResources`,
     defaultMessage: 'BasicResources',
