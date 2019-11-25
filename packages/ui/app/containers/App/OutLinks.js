@@ -64,6 +64,7 @@ const OutLinks = ({
       name: 'ClusterWatch',
       icon: ClusterWatchIcon,
       role: 'monitors',
+      adminOnly: true,
     },
   ];
   if (!isAdmin) {
