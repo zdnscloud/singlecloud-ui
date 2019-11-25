@@ -49,27 +49,30 @@ export const LogcollectionDialog = ({
   values,
   loadFluentbitconfigs,
   updateFluentbitconfig,
-  cluster,
   url,
   name,
   id,
-  kind,
 }) => {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
   const [current, setCurrent] = useState({});
 
+  console.log('current', current);
+
   async function doSubmit(formValues) {
     try {
-      const submitAction = current.regexp
-        ? updateFluentbitconfig
-        : createFluentbitconfig;
+      const submitAction =
+        current && current.regexp
+          ? updateFluentbitconfig
+          : createFluentbitconfig;
       const data = formValues.toJS();
-      console.log('data', data);
-      await new Promise((resolve, reject) => {
+      await new Promise(() => {
         submitAction(data, {
-          resolve,
-          reject,
+          resolve() {
+            setCurrent({});
+            setOpen(false);
+          },
+          reject() {},
           url,
           clusterID,
           namespaceID,
@@ -85,6 +88,7 @@ export const LogcollectionDialog = ({
         className={classes.logBtn}
         link
         onClick={() => {
+          setCurrent({});
           if (url) {
             loadFluentbitconfigs(url, {
               clusterID,
@@ -105,6 +109,7 @@ export const LogcollectionDialog = ({
         disableEscapeKeyDown
         open={open}
         onClose={() => {
+          setCurrent({});
           setOpen(false);
         }}
         fullWidth
@@ -122,17 +127,21 @@ export const LogcollectionDialog = ({
           <CardBody className={classes.dialogCardBody}>
             <CreateFluentbitconfigForm
               onSubmit={doSubmit}
-              formValues={values}
               initialValues={fromJS(current)}
               setOpen={setOpen}
+              current={current}
             />
+            )
           </CardBody>
           <CardFooter className={classes.dialogCardFooter}>
             <Button variant="contained" color="primary" onClick={submitForm}>
               <FormattedMessage {...messages.save} />
             </Button>
             <Button
-              onClick={() => setOpen(false)}
+              onClick={() => {
+                setCurrent({});
+                setOpen(false);
+              }}
               color="default"
               variant="contained"
             >

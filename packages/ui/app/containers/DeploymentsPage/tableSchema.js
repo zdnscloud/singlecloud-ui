@@ -40,7 +40,7 @@ const tableSchema = schema
         <Fragment>
           <LogcollectionDialog
             url={data.getIn(['links', 'fluentbitconfigs'])}
-            id={`zcloud_deployment_${data.get('id')}`}
+            id={`${namespaceID}_deployment_${data.get('id')}`}
           />
 
           <IconButton
