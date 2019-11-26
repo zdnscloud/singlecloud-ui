@@ -39,7 +39,7 @@ import * as actions from 'ducks/fluentbitconfigs/actions';
 
 import messages from './messages';
 import useStyles from './styles';
-import CreateFluentbitconfigForm, { formName } from './CreateForm';
+import FluentbitconfigForm, { formName } from './CreateForm';
 
 export const LogcollectionDialog = ({
   createFluentbitconfig,
@@ -50,14 +50,11 @@ export const LogcollectionDialog = ({
   loadFluentbitconfigs,
   updateFluentbitconfig,
   url,
-  name,
   id,
 }) => {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
-  const [current, setCurrent] = useState({});
-
-  console.log('current', current);
+  const [current, setCurrent] = useState(null);
 
   async function doSubmit(formValues) {
     try {
@@ -69,11 +66,11 @@ export const LogcollectionDialog = ({
       await new Promise(() => {
         submitAction(data, {
           resolve() {
-            setCurrent({});
+            setCurrent(null);
             setOpen(false);
           },
           reject() {},
-          url,
+          url: current.regexp ? `${url}/${id}` : url,
           clusterID,
           namespaceID,
         });
@@ -88,13 +85,13 @@ export const LogcollectionDialog = ({
         className={classes.logBtn}
         link
         onClick={() => {
-          setCurrent({});
-          if (url) {
-            loadFluentbitconfigs(url, {
+          setCurrent(null);
+          if (url && id) {
+            loadFluentbitconfigs(`${url}/${id}`, {
               clusterID,
               namespaceID,
-              resolve({ response: { data } }) {
-                setCurrent(data.filter((l) => l.id === id)[0]);
+              resolve({ response }) {
+                setCurrent(response);
               },
               reject() {},
             });
@@ -109,7 +106,7 @@ export const LogcollectionDialog = ({
         disableEscapeKeyDown
         open={open}
         onClose={() => {
-          setCurrent({});
+          setCurrent(null);
           setOpen(false);
         }}
         fullWidth
@@ -125,13 +122,13 @@ export const LogcollectionDialog = ({
             </IconButton>
           </CardHeader>
           <CardBody className={classes.dialogCardBody}>
-            <CreateFluentbitconfigForm
-              onSubmit={doSubmit}
-              initialValues={fromJS(current)}
-              setOpen={setOpen}
-              current={current}
-            />
-            )
+            {current ? (
+              <FluentbitconfigForm
+                onSubmit={doSubmit}
+                initialValues={fromJS(current)}
+                id={id}
+              />
+            ) : null}
           </CardBody>
           <CardFooter className={classes.dialogCardFooter}>
             <Button variant="contained" color="primary" onClick={submitForm}>
@@ -139,7 +136,7 @@ export const LogcollectionDialog = ({
             </Button>
             <Button
               onClick={() => {
-                setCurrent({});
+                setCurrent(null);
                 setOpen(false);
               }}
               color="default"

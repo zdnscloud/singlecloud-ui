@@ -24,7 +24,7 @@ export const formName = 'createFluentbitconfigForm';
 
 const validate = (values) => {
   const errors = {};
-  const requiredFields = ['name'];
+  const requiredFields = [];
   requiredFields.forEach((field) => {
     if (!values.get(field)) {
       errors[field] = 'Required';
@@ -34,7 +34,7 @@ const validate = (values) => {
   return errors;
 };
 
-const Form = ({ formValues, handleSubmit, error }) => {
+export const Form = ({ formValues, handleSubmit, error, id }) => {
   const classes = useStyles();
 
   return (
@@ -42,6 +42,7 @@ const Form = ({ formValues, handleSubmit, error }) => {
       onSubmit={handleSubmit}
       className={getByKey(classes, 'form')}
       style={{ width: '100%' }}
+      key={id}
     >
       <GridContainer>
         {error ? (
@@ -95,9 +96,9 @@ const Form = ({ formValues, handleSubmit, error }) => {
   );
 };
 
-const CreateFluentbitconfigForm = reduxForm({
+const FluentbitconfigForm = reduxForm({
   form: formName,
   validate,
 })(Form);
 
-export default CreateFluentbitconfigForm;
+export default FluentbitconfigForm;
