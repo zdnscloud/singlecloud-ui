@@ -79,6 +79,9 @@ import innerServicesReducer, {
 import outerServicesReducer, {
   prefix as outerServicesPrefix,
 } from 'ducks/outerServices';
+import fluentbitconfigsReducer, {
+  prefix as fluentbitconfigsPrefix,
+} from 'ducks/fluentbitconfigs';
 // import reducers end
 
 /**
@@ -123,6 +126,8 @@ export default function createReducer(injectedReducers = {}) {
     [blockDevicesPrefix]: blockDevicesReducer,
     [innerServicesPrefix]: innerServicesReducer,
     [outerServicesPrefix]: outerServicesReducer,
+    [fluentbitconfigsPrefix]: fluentbitconfigsReducer,
+
     // combine reducers end
     ...injectedReducers,
   });
