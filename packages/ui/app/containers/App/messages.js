@@ -81,6 +81,10 @@ export default defineMessages({
     id: `${scope}.leftMenuAppManagement`,
     defaultMessage: 'AppManagement',
   },
+  leftMenuHPA: {
+    id: `${scope}.leftMenuHPA`,
+    defaultMessage: 'HPA',
+  },
   leftMenuDeployments: {
     id: `${scope}.leftMenuDeployments`,
     defaultMessage: 'Deployments',

@@ -21,6 +21,11 @@ import NamespacesPage, {
   NamespaceOverviewPage,
 } from 'containers/NamespacesPage/Loadable';
 import EventsPage from 'containers/EventsPage/Loadable';
+import HPAPage, {
+  CreateHPAPage,
+  ShowHPAPage,
+  UpdateHPAPage,
+} from 'containers/HPAPage/Loadable';
 import DeploymentsPage, {
   CreateDeploymentPage,
   DeploymentDetailPage,
@@ -216,6 +221,33 @@ const appRoutes = [
     component: ShowSecretPage,
   },
   // secret end
+  // hpa
+  {
+    path: '/clusters/:cluster_id/namespaces/:namespace_id/hpa',
+    name: 'HPA',
+    icon: Dashboard,
+    component: HPAPage,
+  },
+  {
+    path: '/clusters/:cluster_id/namespaces/:hpa_id/hpa/create',
+    name: 'Create HPA',
+    icon: Dashboard,
+    component: CreateHPAPage,
+  },
+  {
+    path: '/clusters/:cluster_id/namespaces/:namespace_id/hpa/:hpa_id/update',
+    name: ' Update HPA',
+    icon: Dashboard,
+    component: UpdateHPAPage,
+  },
+  {
+    path: '/clusters/:cluster_id/namespaces/:namespace_id/hpa/:hpa_id/show',
+    name: 'HPA Detail',
+    icon: Dashboard,
+    component: ShowHPAPage,
+  },
+
+  // hpa end
   // deployment
   {
     path: '/clusters/:cluster_id/namespaces/:namespace_id/deployments',
