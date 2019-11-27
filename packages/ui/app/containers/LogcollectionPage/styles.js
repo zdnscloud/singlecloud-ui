@@ -1,19 +1,11 @@
 import { makeStyles } from '@material-ui/styles';
 import pageStyles from 'jss/page';
+import dialogStyles from 'jss/dialog';
 
 export const styles = (theme) => ({
   ...pageStyles(theme),
-  cancleBtn: {
-    marginLeft: '10px',
-  },
-  username: {
-    fontSize: '14px',
-    display: 'block',
-    marginTop: '20px',
-  },
-  detailsBtn: {
-    marginRight: 10,
-  },
+  ...dialogStyles(theme),
+  logBtn: { marginRight: 10 },
 });
 
 export default makeStyles(styles);

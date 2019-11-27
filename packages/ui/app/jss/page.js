@@ -192,6 +192,9 @@ const styles = (theme) => ({
     paddingBottom: '0 !important',
     paddingTop: '0 !important',
   },
+  textareaControl: {
+    width: '100%',
+  },
 });
 
 export default styles;

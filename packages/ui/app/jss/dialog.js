@@ -27,6 +27,7 @@ const styles = (theme) => ({
   },
   dialogCardFooter: {
     justifyContent: 'flex-start',
+    display: 'initial',
     '& button': {
       marginRight: '1rem',
     },

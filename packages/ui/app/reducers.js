@@ -59,6 +59,7 @@ import registriesReducer, {
   prefix as registriesPrefix,
 } from 'ducks/registries';
 import monitorsReducer, { prefix as monitorsPrefix } from 'ducks/monitors';
+import efksReducer, { prefix as efksPrefix } from 'ducks/efks';
 import chartsReducer, { prefix as chartsPrefix } from 'ducks/charts';
 import configMapsReducer, {
   prefix as configMapsPrefix,
@@ -78,6 +79,9 @@ import innerServicesReducer, {
 import outerServicesReducer, {
   prefix as outerServicesPrefix,
 } from 'ducks/outerServices';
+import fluentbitconfigsReducer, {
+  prefix as fluentbitconfigsPrefix,
+} from 'ducks/fluentbitconfigs';
 // import reducers end
 
 /**
@@ -115,12 +119,15 @@ export default function createReducer(injectedReducers = {}) {
     [applicationsPrefix]: applicationsReducer,
     [registriesPrefix]: registriesReducer,
     [monitorsPrefix]: monitorsReducer,
+    [efksPrefix]: efksReducer,
     [chartsPrefix]: chartsReducer,
     [storageClustersPrefix]: storageClustersReducer,
     [storageClassesPrefix]: storageClassesReducer,
     [blockDevicesPrefix]: blockDevicesReducer,
     [innerServicesPrefix]: innerServicesReducer,
     [outerServicesPrefix]: outerServicesReducer,
+    [fluentbitconfigsPrefix]: fluentbitconfigsReducer,
+
     // combine reducers end
     ...injectedReducers,
   });
