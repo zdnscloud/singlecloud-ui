@@ -69,6 +69,7 @@ const UserQuotasPage = ({ url, loadUserQuotas }) => {
                   aria-label={<FormattedMessage {...messages.userQuotas} />}
                   component={Link}
                   to="/userQuotas/create"
+                  className={classes.createBtnLink}
                 >
                   <AddIcon />
                 </IconButton>
@@ -96,9 +97,6 @@ const mapDispatchToProps = (dispatch) =>
     dispatch
   );
 
-const withConnect = connect(
-  mapStateToProps,
-  mapDispatchToProps
-);
+const withConnect = connect(mapStateToProps, mapDispatchToProps);
 
 export default compose(withConnect)(UserQuotasPage);
