@@ -20,18 +20,12 @@ import { prefix } from './constants';
 const selectRouter = (state) => state.get('router');
 
 export const makeSelectLocation = () =>
-  createSelector(
-    selectRouter,
-    (routerState) => routerState.get('location')
-  );
+  createSelector(selectRouter, (routerState) => routerState.get('location'));
 
 const selectDomain = (state) => state.get('app');
 
 export const makeSelectShowMenuText = () =>
-  createSelector(
-    selectDomain,
-    (appState) => appState.get('showMenuText')
-  );
+  createSelector(selectDomain, (appState) => appState.get('showMenuText'));
 
 export const makeSelectShowEvents = () =>
   createSelector(
@@ -47,16 +41,10 @@ export const makeSelectShowEvents = () =>
   );
 
 export const makeSelectLastNamespace = () =>
-  createSelector(
-    selectDomain,
-    (appState) => appState.get('lastNamespace')
-  );
+  createSelector(selectDomain, (appState) => appState.get('lastNamespace'));
 
 export const makeSelectTermUrl = () =>
-  createSelector(
-    selectDomain,
-    (appState) => appState.get('termUrl')
-  );
+  createSelector(selectDomain, (appState) => appState.get('termUrl'));
 
 export const makeSelectUserMenus = () =>
   createSelector(
@@ -216,22 +204,26 @@ export const makeSelectLeftMenus = () =>
           ],
           icon: UserQuotasIcon,
         },
-        {
-          name: 'SystemTools',
-          children: [
-            {
-              name: 'ImageRegistry',
-            },
-            {
-              name: 'ClusterWatch',
-            },
-            {
-              name: 'LogAnalysis',
-            },
-          ],
-          icon: UserQuotasIcon,
-        },
       ]);
+      if (cluster !== '' && !isManage) {
+        menus = menus.concat([
+          {
+            name: 'SystemTools',
+            children: [
+              {
+                name: 'ImageRegistry',
+              },
+              {
+                name: 'ClusterWatch',
+              },
+              {
+                name: 'LogAnalysis',
+              },
+            ],
+            icon: UserQuotasIcon,
+          },
+        ]);
+      }
       if (!isAdmin) {
         menus = menus.filter((m) => {
           m.children = m.children.filter((c) => c.adminOnly === undefined);
