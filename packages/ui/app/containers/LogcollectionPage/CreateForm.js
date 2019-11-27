@@ -34,7 +34,7 @@ const validate = (values) => {
   return errors;
 };
 
-export const Form = ({ formValues, handleSubmit, error, id }) => {
+export const Form = ({ formValues, handleSubmit, error }) => {
   const classes = useStyles();
 
   return (
@@ -42,7 +42,6 @@ export const Form = ({ formValues, handleSubmit, error, id }) => {
       onSubmit={handleSubmit}
       className={getByKey(classes, 'form')}
       style={{ width: '100%' }}
-      key={id}
     >
       <GridContainer>
         {error ? (

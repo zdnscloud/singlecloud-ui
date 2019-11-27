@@ -126,7 +126,6 @@ export const LogcollectionDialog = ({
               <FluentbitconfigForm
                 onSubmit={doSubmit}
                 initialValues={fromJS(current)}
-                id={id}
               />
             ) : null}
           </CardBody>
