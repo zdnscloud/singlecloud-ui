@@ -27,37 +27,57 @@ const ApplicationTemplate = ({
   return (
     <Fragment>
       <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
-        <div className={classes.appWrap}>
-          <img
-            alt="icon"
-            src={item && item.get('chartIcon')}
-            className={classes.appLogo}
-          />
-          <div className={classes.appContent}>
-            {item && item.get('status') === 'failed' ? (
-              <p className={classes.aapName}>{item && item.get('name')}</p>
-            ) : (
-              <Button
-                link
-                to={`/clusters/${clusterID}/namespaces/${namespaceID}/applications/${item &&
-                  item.get('id')}/show`}
-                component={Link}
-                className={classes.appDetailBtn}
-              >
-                <p className={classes.aapName}>{item && item.get('name')}</p>
-              </Button>
-            )}
-            <Confirm
-              handleConfirm={handleConfirm}
-              dialogContentText={messages.removeAppText}
-              component={
-                <IconButton className={classes.appDeleteBtn}>
-                  <DeleteIcon className={classes.deleteIcon} />
-                </IconButton>
-              }
+        {item.size > 0 ? (
+          <div className={classes.appWrap}>
+            <img
+              alt="icon"
+              src={item.get('chartIcon')}
+              className={classes.listAppLogo}
             />
+            <div className={classes.appContent}>
+              <div>
+                <div
+                  className={classes.status}
+                  title={item.get('status')}
+                  style={
+                    item.get('status') === 'delete' ||
+                    item.get('status') === 'failed'
+                      ? { background: '#E02020' }
+                      : { background: '#6DD400' }
+                  }
+                ></div>
+                {item.get('status') === 'failed' ? (
+                  <p className={classes.aapName} title={item.get('name')}>
+                    {item.get('name')}
+                  </p>
+                ) : (
+                  <Button
+                    link
+                    to={`/clusters/${clusterID}/namespaces/${namespaceID}/applications/${item.get(
+                      'id'
+                    )}/show`}
+                    component={Link}
+                    className={classes.appDetailBtn}
+                    title={item.get('name')}
+                  >
+                    {item.get('name')}
+                  </Button>
+                )}
+              </div>
+              <div className={classes.count}>
+                {item.get('readyWorkloadCount')
+                  ? item.get('readyWorkloadCount')
+                  : '--'}{' '}
+                / {item.get('workloadCount') ? item.get('workloadCount') : '--'}
+                <Confirm
+                  handleConfirm={handleConfirm}
+                  dialogContentText={messages.removeAppText}
+                  component={<DeleteIcon className={classes.deleteIcon} />}
+                />
+              </div>
+            </div>
           </div>
-        </div>
+        ) : null}
       </GridItem>
     </Fragment>
   );
