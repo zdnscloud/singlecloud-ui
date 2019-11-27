@@ -14,33 +14,30 @@ const tableSchema = schema
     id,
     label: ucfirst(id),
   }))
-  .concat([
-    {
-      id: 'actions',
-      label: 'Actions',
-      component: ({ data, clusterID, namespaceID }) => {
-        const workload = ['deployment', 'daemonset', 'statefulset'];
-        return workload.includes(data.get('type')) ? (
-          <Fragment>
-            {/* <IconButton
-              link
-              to={`/clusters/${clusterID}/linkerd/namespaces/${namespaceID}/${inflection.pluralize(
-                data.get('type')
-              )}/${data.get('name')}`}
-              component={Link}
-            >
-              <MonitorIcon />
-            </IconButton> */}
-            <IconButton>
-              <MonitorIcon />
-            </IconButton>
-          </Fragment>
-        ) : (
-          '--'
-        );
-      },
-    },
-  ])
+  // .concat([
+  //   {
+  //     id: 'actions',
+  //     label: 'Actions',
+  //     component: ({ data, clusterID, namespaceID }) => {
+  //       const workload = ['deployment', 'daemonset', 'statefulset'];
+  //       return workload.includes(data.get('type')) ? (
+  //         <Fragment>
+  //           <IconButton
+  //             link
+  //             to={`/clusters/${clusterID}/linkerd/namespaces/${namespaceID}/${inflection.pluralize(
+  //               data.get('type')
+  //             )}/${data.get('name')}`}
+  //             component={Link}
+  //           >
+  //             <MonitorIcon />
+  //           </IconButton>
+  //         </Fragment>
+  //       ) : (
+  //         '--'
+  //       );
+  //     },
+  //   },
+  // ])
   .map((sch) => {
     if (sch.id === 'name') {
       return {
