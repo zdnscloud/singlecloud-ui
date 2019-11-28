@@ -149,14 +149,14 @@ const OutLinks = ({
   };
 
   const outLinks = (
-    <List className={classes.outLinkList}>
+    <List component="div" disablePadding>
       {menus.map((prop, key) => {
         const msgName = messages[`leftMenu${prop.name}`];
         return (
           <Fragment key={key}>
             <ListItem
               button
-              className={classes.itemLink}
+              className={classNames(classes.itemLink, classes.nested)}
               onClick={() => handleMemuClick(prop.role)}
             >
               <ListItemText
@@ -226,9 +226,6 @@ const mapDispatchToProps = (dispatch) =>
     dispatch
   );
 
-const withConnect = connect(
-  mapStateToProps,
-  mapDispatchToProps
-);
+const withConnect = connect(mapStateToProps, mapDispatchToProps);
 
 export default compose(withConnect)(OutLinks);
