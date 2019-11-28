@@ -71,7 +71,7 @@ const Form = ({
   }
 
   if (resources.size > 0) {
-    scaleTargetNameOptions = resources.map((st) => ({
+    scaleTargetNameOptions = resources.toList().map((st) => ({
       label: st.get('name'),
       value: st.get('name'),
     }));
