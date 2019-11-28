@@ -63,18 +63,17 @@ export const LogcollectionDialog = ({
           ? updateFluentbitconfig
           : createFluentbitconfig;
       const data = formValues.toJS();
-      await new Promise(() => {
+      await new Promise((resolve, reject) => {
         submitAction(data, {
-          resolve() {
-            setCurrent(null);
-            setOpen(false);
-          },
-          reject() {},
+          resolve,
+          reject,
           url: current.regexp ? `${url}/${id}` : url,
           clusterID,
           namespaceID,
         });
       });
+      setCurrent(null);
+      setOpen(false);
     } catch (error) {
       throw new SubmissionError({ _error: error });
     }
@@ -165,9 +164,6 @@ const mapDispatchToProps = (dispatch) =>
     dispatch
   );
 
-const withConnect = connect(
-  mapStateToProps,
-  mapDispatchToProps
-);
+const withConnect = connect(mapStateToProps, mapDispatchToProps);
 
 export default compose(withConnect)(LogcollectionDialog);

@@ -10,6 +10,7 @@ import ManagementIcon from 'components/Icons/Management';
 import BasicResourcesIcon from 'components/Icons/BasicResources';
 import SystemIcon from 'components/Icons/System';
 import UserQuotasIcon from 'components/Icons/UserQuotas';
+import SystenToolsIcon from 'components/Icons/SystenTools';
 import ApplicationStoreIcon from 'components/Icons/ApplicationStore';
 import { makeSelectRole, makeSelectIsAdmin } from 'ducks/role/selectors';
 import { makeSelectCurrentID as makeSelectCurrentClusterID } from 'ducks/clusters/selectors';
@@ -220,7 +221,7 @@ export const makeSelectLeftMenus = () =>
                 name: 'LogAnalysis',
               },
             ],
-            icon: UserQuotasIcon,
+            icon: SystenToolsIcon,
           },
         ]);
       }
