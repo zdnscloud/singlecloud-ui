@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>开发管理 - Zcloud UI Documents</title>
+        <title>开发设计 - Zcloud UI Documents</title>
         
 
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
@@ -80,7 +80,7 @@
               <b class="sidebar-book-title">Zcloud UI Documents</b>
             </div>
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li><a href="intro.html"><strong aria-hidden="true">1.</strong> 简介</a></li><li><ol class="section"><li><a href="view.html"><strong aria-hidden="true">1.1.</strong> 视图</a></li><li><a href="state.html"><strong aria-hidden="true">1.2.</strong> 状态</a></li><li><a href="intl.html"><strong aria-hidden="true">1.3.</strong> 页面语言</a></li></ol></li><li><a href="dev.html" class="active"><strong aria-hidden="true">2.</strong> 开发管理</a></li><li><ol class="section"><li><a href="dev/scaffold.html"><strong aria-hidden="true">2.1.</strong> 脚手架使用</a></li><li><a href="dev/scaffold_dev.html"><strong aria-hidden="true">2.2.</strong> 脚手架开发</a></li><li><a href="dev/react.html"><strong aria-hidden="true">2.3.</strong> React开发</a></li><li><a href="dev/redux.html"><strong aria-hidden="true">2.4.</strong> Redux开发</a></li></ol></li><li><a href="design.html"><strong aria-hidden="true">3.</strong> 开发设计</a></li><li><ol class="section"><li><a href="design/realtime.html"><strong aria-hidden="true">3.1.</strong> 实时通讯</a></li></ol></li></ol>
+                <ol class="chapter"><li><a href="intro.html"><strong aria-hidden="true">1.</strong> 简介</a></li><li><ol class="section"><li><a href="view.html"><strong aria-hidden="true">1.1.</strong> 视图</a></li><li><a href="state.html"><strong aria-hidden="true">1.2.</strong> 状态</a></li><li><a href="intl.html"><strong aria-hidden="true">1.3.</strong> 页面语言</a></li></ol></li><li><a href="dev.html"><strong aria-hidden="true">2.</strong> 开发管理</a></li><li><ol class="section"><li><a href="dev/scaffold.html"><strong aria-hidden="true">2.1.</strong> 脚手架使用</a></li><li><a href="dev/scaffold_dev.html"><strong aria-hidden="true">2.2.</strong> 脚手架开发</a></li><li><a href="dev/react.html"><strong aria-hidden="true">2.3.</strong> React开发</a></li><li><a href="dev/redux.html"><strong aria-hidden="true">2.4.</strong> Redux开发</a></li></ol></li><li><a href="design.html" class="active"><strong aria-hidden="true">3.</strong> 开发设计</a></li><li><ol class="section"><li><a href="design/realtime.html"><strong aria-hidden="true">3.1.</strong> 实时通讯</a></li></ol></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -130,37 +130,23 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#开发管理" id="开发管理">开发管理</a></h1>
-<h2><a class="header" href="#javascript-项目" id="javascript-项目">Javascript 项目</a></h2>
-<p>开发使用 <code>lerna</code> 管理多个项目来协同开发，项目在目录 <code>/packages</code> 下</p>
-<ul>
-<li><code>ui</code> UI项目</li>
-<li><code>com</code> 自定UI组件</li>
-<li><code>utils</code> 自定utils</li>
-<li><code>helm-icons</code> 项目的helm图标</li>
-</ul>
-<h2><a class="header" href="#启动开发" id="启动开发">启动开发</a></h2>
-<p>在 <code>packages/ui</code> 目录下 执行</p>
-<pre><code class="language-shell">npm start
-</code></pre>
-<h2><a class="header" href="#开发文档" id="开发文档">开发文档</a></h2>
-<p>开发文档位于分支 <code>docs</code> 下</p>
-<p>编辑修改完成后发布到 <code>github pages</code> ， 执行：</p>
-<pre><code class="language-shell">make deploy
-</code></pre>
+                        <h1><a class="header" href="#开发设计" id="开发设计">开发设计</a></h1>
+<h3><a class="header" href="#数据获取方式" id="数据获取方式">数据获取方式：</a></h3>
+<p>一般数据通过<code>ajax</code>/<code>fetch</code>从<code>singlecloud</code>读取数据，读取API通过<code>singlecloud/docs/resources</code>自动生成</p>
+<p>当前考虑设计，使用websoket进行实时通讯，目前在设计阶段，设计文档 -&gt; <a href="./design/realtime.html">链接</a></p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
                         
-                            <a rel="prev" href="intl.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="dev/redux.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
                         
 
                         
-                            <a rel="next" href="dev/scaffold.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next" href="design/realtime.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
                         
@@ -172,13 +158,13 @@
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
                 
-                    <a href="intl.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a href="dev/redux.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
                 
 
                 
-                    <a href="dev/scaffold.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a href="design/realtime.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
                 
