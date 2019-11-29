@@ -182,7 +182,7 @@ export const Deployment = ({
                                   <FormattedMessage {...messages.formCommand} />
                                 }
                                 fullWidth
-                                value={list2str(c.get('command'), ' ')}
+                                value={c.get('command')}
                               />
                             </GridItem>
                             <GridItem xs={3} sm={3} md={3}>
@@ -191,7 +191,7 @@ export const Deployment = ({
                                   <FormattedMessage {...messages.formArgs} />
                                 }
                                 fullWidth
-                                value={list2str(c.get('args'), ' ')}
+                                value={c.get('args')}
                               />
                             </GridItem>
                           </GridContainer>
@@ -520,9 +520,6 @@ const mapDispatchToProps = (dispatch) =>
     dispatch
   );
 
-const withConnect = connect(
-  mapStateToProps,
-  mapDispatchToProps
-);
+const withConnect = connect(mapStateToProps, mapDispatchToProps);
 
 export default compose(withConnect)(Deployment);

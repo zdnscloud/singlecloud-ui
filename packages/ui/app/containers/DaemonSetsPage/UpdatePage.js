@@ -118,10 +118,14 @@ export const UpdateDaemonSetPage = ({
       const { containers } = data;
       data.containers = containers.map((item) => {
         if (item && item.args) {
-          item.args = item.args.split(' ');
+          item.args = (item.args.match(/("[^"]*")|[^\s]+/g) || []).map((n) =>
+            n.replace(/^"|"$/g, '')
+          );
         }
         if (item && item.command) {
-          item.command = item.command.split(' ');
+          item.command = (
+            item.command.match(/("[^"]*")|[^\s]+/g) || []
+          ).map((n) => n.replace(/^"|"$/g, ''));
         }
         return item;
       });
@@ -174,10 +178,24 @@ export const UpdateDaemonSetPage = ({
                   if (containers) {
                     containers.forEach((item) => {
                       if (item && item.args) {
-                        item.args = item.args.join(' ');
+                        item.args = item.args
+                          .map((n) => {
+                            if (n.indexOf(' ') !== -1) {
+                              n = ` "${n}" `;
+                            }
+                            return n;
+                          })
+                          .join(' ');
                       }
                       if (item && item.command) {
-                        item.command = item.command.join(' ');
+                        item.command = item.command
+                          .map((c) => {
+                            if (c.indexOf(' ') !== -1) {
+                              c = ` "${c}" `;
+                            }
+                            return c;
+                          })
+                          .join(' ');
                       }
                       return item;
                     });

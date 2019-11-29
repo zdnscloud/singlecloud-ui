@@ -123,7 +123,7 @@ export const DaemonSet = ({
                                   <FormattedMessage {...messages.formCommand} />
                                 }
                                 fullWidth
-                                value={list2str(c.get('command'), ' ')}
+                                 value={c.get('command')}
                               />
                             </GridItem>
                             <GridItem xs={3} sm={3} md={3}>

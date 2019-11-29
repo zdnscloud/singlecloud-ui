@@ -103,10 +103,14 @@ export const CreateStatefulSet = ({
       const { containers, persistentVolumes } = data;
       data.containers = containers.map((item) => {
         if (item && item.args) {
-          item.args = item.args.split(' ');
+          item.args = (item.args.match(/("[^"]*")|[^\s]+/g) || []).map((n) =>
+            n.replace(/^"|"$/g, '')
+          );
         }
         if (item && item.command) {
-          item.command = item.command.split(' ');
+          item.command = (
+            item.command.match(/("[^"]*")|[^\s]+/g) || []
+          ).map((n) => n.replace(/^"|"$/g, ''));
         }
         return item;
       });
@@ -221,9 +225,6 @@ const mapDispatchToProps = (dispatch) =>
     dispatch
   );
 
-const withConnect = connect(
-  mapStateToProps,
-  mapDispatchToProps
-);
+const withConnect = connect(mapStateToProps, mapDispatchToProps);
 
 export default compose(withConnect)(CreateStatefulSet);

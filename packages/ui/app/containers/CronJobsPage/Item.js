@@ -128,7 +128,7 @@ export const CronJob = ({ updateJob, cronJob, clusterID, namespaceID }) => {
                                   <FormattedMessage {...messages.formCommand} />
                                 }
                                 fullWidth
-                                value={list2str(c.get('command'), ' ')}
+                                 value={c.get('command')}
                               />
                             </GridItem>
                             <GridItem xs={3} sm={3} md={3}>
@@ -137,7 +137,7 @@ export const CronJob = ({ updateJob, cronJob, clusterID, namespaceID }) => {
                                   <FormattedMessage {...messages.formArgs} />
                                 }
                                 fullWidth
-                                value={list2str(c.get('args'), ' ')}
+                                 value={c.get('args')}
                               />
                             </GridItem>
                           </GridContainer>

@@ -9,6 +9,7 @@ import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import { bindActionCreators, compose } from 'redux';
+import { fromJS } from 'immutable';
 
 import Helmet from 'components/Helmet/Helmet';
 import { withStyles } from '@material-ui/core/styles';
@@ -79,7 +80,39 @@ export const CronJobDetailPage = ({
             },
           ]}
         />
-        <CronJob cronJob={cronJob} />
+        <CronJob
+          cronJob={cronJob.update((c) => {
+            const data = c.toJS();
+            const { containers } = data;
+            if (containers) {
+              containers.forEach((item) => {
+                if (item && item.args) {
+                  item.args = item.args
+                    .map((n) => {
+                      if (n.indexOf(' ') !== -1) {
+                        n = ` "${n}" `;
+                      }
+                      return n;
+                    })
+                    .join(' ');
+                }
+                if (item && item.command) {
+                  item.command = item.command
+                    .map((c) => {
+                      if (c.indexOf(' ') !== -1) {
+                        c = ` "${c}" `;
+                      }
+                      return c;
+                    })
+                    .join(' ');
+                }
+                return item;
+              });
+            }
+            data.containers = containers;
+            return fromJS(data);
+          })}
+        />
         <GridContainer className={classes.grid}>
           <GridItem xs={12} sm={12} md={12}>
             <Card>
@@ -116,9 +149,6 @@ const mapDispatchToProps = (dispatch) =>
     dispatch
   );
 
-const withConnect = connect(
-  mapStateToProps,
-  mapDispatchToProps
-);
+const withConnect = connect(mapStateToProps, mapDispatchToProps);
 
 export default compose(withConnect)(CronJobDetailPage);
