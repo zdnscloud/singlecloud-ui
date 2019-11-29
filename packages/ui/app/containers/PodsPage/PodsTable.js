@@ -67,56 +67,12 @@ const PodsTable = ({
       if (item.id === 'containers') {
         return {
           ...item,
-          component(props) {
-            return props.data.get('containers').map((ctn, i) => (
-              <Chip
-                key={i}
-                variant="outlined"
-                label={
-                  <Fragment>
-                    {`${ctn.get('image')}    `}
-                    <IconButton
-                      aria-label="View Log"
-                      className={classes.button}
-                      size="small"
-                      edge="end"
-                      style={{ transform: 'scale(0.7)' }}
-                      onClick={(evt) => {
-                        openPodLog(
-                          {
-                            podID: props.data.get('id'),
-                            containerName: ctn.get('name'),
-                          },
-                          {
-                            clusterID,
-                            namespaceID,
-                          }
-                        );
-                      }}
-                    >
-                      <LogIcon />
-                    </IconButton>
-                    <IconButton
-                      aria-label="Terminal"
-                      className={classes.button}
-                      size="small"
-                      edge="end"
-                      style={{ transform: 'scale(0.7)' }}
-                      onClick={(evt) => {
-                        openTerminal('pod', {
-                          clusterID,
-                          namespaceID,
-                          podID: props.data.get('id'),
-                          containerName: ctn.get('name'),
-                        });
-                      }}
-                    >
-                      <ShellIcon />
-                    </IconButton>
-                  </Fragment>
-                }
-              />
-            ));
+          props: {
+            clusterID,
+            namespaceID,
+            openTerminal,
+            classes,
+            openPodLog,
           },
         };
       }
@@ -174,9 +130,6 @@ const mapDispatchToProps = (dispatch) =>
     dispatch
   );
 
-const withConnect = connect(
-  mapStateToProps,
-  mapDispatchToProps
-);
+const withConnect = connect(mapStateToProps, mapDispatchToProps);
 
 export default compose(withConnect)(PodsTable);
