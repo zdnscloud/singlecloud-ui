@@ -123,6 +123,11 @@ const styles = (theme) => ({
   tableWrapper: {
     overflow: 'auto',
   },
+  table: {
+    '& thead tr': {
+      whiteSpace: 'nowrap',
+    },
+  },
   infoCardHeader: {
     height: 106,
     '& :last-child': {
