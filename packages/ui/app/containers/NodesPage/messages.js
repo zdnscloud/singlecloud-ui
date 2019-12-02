@@ -41,9 +41,17 @@ export default defineMessages({
     id: `${scope}.tableTitleRoles`,
     defaultMessage: 'Role',
   },
+  tableTitleStatus: {
+    id: `${scope}.tableTitleStatus`,
+    defaultMessage: 'Status',
+  },
   tableTitleLabels: {
     id: `${scope}.tableTitleLabels`,
     defaultMessage: 'Labels',
+  },
+  tableTitleStatus: {
+    id: `${scope}.tableTitleStatus`,
+    defaultMessage: 'Status',
   },
   tableTitleCreationTimestamp: {
     id: `${scope}.tableTitleCreationTimestamp`,
@@ -112,5 +120,29 @@ export default defineMessages({
   value: {
     id: `${scope}.value`,
     defaultMessage: 'Value',
+  },
+  tableCordonBtn: {
+    id: `${scope}.tableCordonBtn`,
+    defaultMessage: 'Cordon',
+  },
+  tableDrainBtn: {
+    id: `${scope}.tableDrainBtn`,
+    defaultMessage: 'Drain',
+  },
+  tableUncordonBtn: {
+    id: `${scope}.tableUncordonBtn`,
+    defaultMessage: 'Uncordon',
+  },
+  cordonPromptText: {
+    id: `${scope}.cordonPromptText`,
+    defaultMessage: 'Are you sure you want to do operation cordon ?',
+  },
+  drainPromptText: {
+    id: `${scope}.drainPromptText`,
+    defaultMessage: 'Are you sure you want to do operation drain',
+  },
+  uncordonPromptText: {
+    id: `${scope}.uncordonPromptText`,
+    defaultMessage: 'Are you sure you want to do operation uncordon',
   },
 });

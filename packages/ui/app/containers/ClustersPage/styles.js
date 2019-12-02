@@ -100,6 +100,11 @@ export const styles = (theme) => ({
     display: 'flex',
     height: '100%',
   },
+  zcloudVersion: {
+    position: 'absolute',
+    top: '22px',
+    right: '18px',
+  },
 });
 
 export default makeStyles(styles);

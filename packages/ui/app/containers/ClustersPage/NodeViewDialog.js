@@ -19,10 +19,6 @@ import Paper from '@material-ui/core/Paper';
 import GridItem from 'components/Grid/GridItem';
 import GridContainer from 'components/Grid/GridContainer';
 
-import { withStyles } from '@material-ui/core/styles';
-import { Observable } from 'rxjs';
-import { map, scan, throttleTime, debounceTime } from 'rxjs/operators';
-
 import * as actions from 'ducks/clusters/actions';
 
 import useStyles from './styles';

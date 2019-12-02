@@ -10,6 +10,7 @@ import ManagementIcon from 'components/Icons/Management';
 import BasicResourcesIcon from 'components/Icons/BasicResources';
 import SystemIcon from 'components/Icons/System';
 import UserQuotasIcon from 'components/Icons/UserQuotas';
+import SystenToolsIcon from 'components/Icons/SystenTools';
 import ApplicationStoreIcon from 'components/Icons/ApplicationStore';
 import { makeSelectRole, makeSelectIsAdmin } from 'ducks/role/selectors';
 import { makeSelectCurrentID as makeSelectCurrentClusterID } from 'ducks/clusters/selectors';
@@ -20,18 +21,12 @@ import { prefix } from './constants';
 const selectRouter = (state) => state.get('router');
 
 export const makeSelectLocation = () =>
-  createSelector(
-    selectRouter,
-    (routerState) => routerState.get('location')
-  );
+  createSelector(selectRouter, (routerState) => routerState.get('location'));
 
 const selectDomain = (state) => state.get('app');
 
 export const makeSelectShowMenuText = () =>
-  createSelector(
-    selectDomain,
-    (appState) => appState.get('showMenuText')
-  );
+  createSelector(selectDomain, (appState) => appState.get('showMenuText'));
 
 export const makeSelectShowEvents = () =>
   createSelector(
@@ -47,16 +42,10 @@ export const makeSelectShowEvents = () =>
   );
 
 export const makeSelectLastNamespace = () =>
-  createSelector(
-    selectDomain,
-    (appState) => appState.get('lastNamespace')
-  );
+  createSelector(selectDomain, (appState) => appState.get('lastNamespace'));
 
 export const makeSelectTermUrl = () =>
-  createSelector(
-    selectDomain,
-    (appState) => appState.get('termUrl')
-  );
+  createSelector(selectDomain, (appState) => appState.get('termUrl'));
 
 export const makeSelectUserMenus = () =>
   createSelector(
@@ -157,6 +146,10 @@ export const makeSelectLeftMenus = () =>
             name: 'BasicResources',
             children: [
               {
+                name: 'HPA',
+                path: `/clusters/${cluster}/namespaces/${namespace}/hpa`,
+              },
+              {
                 name: 'Deployments',
                 path: `/clusters/${cluster}/namespaces/${namespace}/deployments`,
               },
@@ -213,12 +206,30 @@ export const makeSelectLeftMenus = () =>
           icon: UserQuotasIcon,
         },
       ]);
+      if (cluster !== '' && !isManage) {
+        menus = menus.concat([
+          {
+            name: 'SystemTools',
+            children: [
+              {
+                name: 'ImageRegistry',
+              },
+              {
+                name: 'ClusterWatch',
+              },
+              {
+                name: 'LogAnalysis',
+              },
+            ],
+            icon: SystenToolsIcon,
+          },
+        ]);
+      }
       if (!isAdmin) {
         menus = menus.filter((m) => {
           m.children = m.children.filter((c) => c.adminOnly === undefined);
           return m.adminOnly === undefined;
         });
-        console.log('menus', menus);
       }
       return menus;
     }

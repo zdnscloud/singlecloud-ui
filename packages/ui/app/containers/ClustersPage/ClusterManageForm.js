@@ -49,7 +49,7 @@ const ClusterManageForm = ({
             <h4>
               <FormattedMessage {...messages.formCreate} />
             </h4>
-            <span>
+            <span className={classes.zcloudVersion}>
               <FormattedMessage {...messages.zcloudVersion} />
               {': '}
               {cluster.get('zcloudVersion')}
@@ -169,6 +169,7 @@ const ClusterManageForm = ({
               onClick={(evt) => {
                 setIsOpen(true);
               }}
+              className={classes.createBtnLink}
             >
               <AddIcon />
             </IconButton>
@@ -201,9 +202,6 @@ const mapDispatchToProps = (dispatch) =>
     dispatch
   );
 
-const withConnect = connect(
-  mapStateToProps,
-  mapDispatchToProps
-);
+const withConnect = connect(mapStateToProps, mapDispatchToProps);
 
 export default compose(withConnect)(ClusterManageForm);

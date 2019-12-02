@@ -27,9 +27,9 @@ import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import AttachmentIcon from '@material-ui/icons/Attachment';
 import AceEditor from 'react-ace';
-import 'brace/mode/yaml';
-import 'brace/theme/github';
-import 'brace/theme/tomorrow_night';
+import 'ace-builds/src-noconflict/mode-yaml';
+import 'ace-builds/src-noconflict/theme-github';
+import 'ace-builds/src-noconflict/theme-tomorrow_night';
 
 import GridItem from 'components/Grid/GridItem';
 import GridContainer from 'components/Grid/GridContainer';

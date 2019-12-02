@@ -5,9 +5,13 @@ import { Link } from 'react-router-dom';
 import Button from 'components/CustomButtons/Button';
 import Chip from '@material-ui/core/Chip';
 import TimeCell from 'components/Cells/TimeCell';
+import { FormattedMessage } from 'react-intl';
+import Confirm from 'components/Confirm/Confirm';
+import messages from './messages';
 
 const schema = [
   'name',
+  'status',
   'address',
   'roles',
   // 'cpu',
@@ -71,6 +75,68 @@ const tableSchema = schema
       };
     }
     return item;
-  });
+  })
+  .concat([
+    {
+      id: 'actions',
+      label: 'Actions',
+      component: ({ data, classes, executeNodeAction, setError }) => (
+        <Fragment>
+          <Confirm
+            handleConfirm={() =>
+              executeNodeAction('cordon', null, {
+                url: data.getIn(['links', 'self']),
+                resolve() {},
+                reject(e) {
+                  setError(e);
+                },
+              })
+            }
+            dialogContentText={messages.cordonPromptText}
+            component={
+              <Button className={classes.tableBtn} link>
+                <FormattedMessage {...messages.tableCordonBtn} />
+              </Button>
+            }
+          />
+
+          <Confirm
+            handleConfirm={() =>
+              executeNodeAction('drain', null, {
+                url: data.getIn(['links', 'self']),
+                resolve() {},
+                reject(e) {
+                  setError(e);
+                },
+              })
+            }
+            dialogContentText={messages.drainPromptText}
+            component={
+              <Button className={classes.tableBtn} link>
+                <FormattedMessage {...messages.tableDrainBtn} />
+              </Button>
+            }
+          />
+          <Confirm
+            handleConfirm={() =>
+              executeNodeAction('uncordon', null, {
+                url: data.getIn(['links', 'self']),
+                resolve() {},
+                reject(e) {
+                  setError(e);
+                },
+              })
+            }
+            dialogContentText={messages.uncordonPromptText}
+            component={
+              <Button className={classes.tableBtn} link>
+                <FormattedMessage {...messages.tableUncordonBtn} />
+              </Button>
+            }
+          />
+        </Fragment>
+      ),
+    },
+  ]);
 
 export default tableSchema;

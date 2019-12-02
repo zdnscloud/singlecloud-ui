@@ -7,6 +7,14 @@ const styles = (theme) => ({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
+    '& h4': {
+      marginTop: 0,
+      marginBottom: 3,
+      width: 'auto',
+      borderBottom: 'none',
+      paddingBottom: 0,
+      paddingTop: 0,
+    },
   },
   dialogCardBody: {
     display: 'flex',
@@ -19,6 +27,7 @@ const styles = (theme) => ({
   },
   dialogCardFooter: {
     justifyContent: 'flex-start',
+    display: 'initial',
     '& button': {
       marginRight: '1rem',
     },

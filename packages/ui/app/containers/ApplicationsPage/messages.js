@@ -49,6 +49,14 @@ export default defineMessages({
     id: `${scope}.tableTitleKind`,
     defaultMessage: 'Kind',
   },
+  tableTitleReplicas: {
+    id: `${scope}.tableTitleReplicas`,
+    defaultMessage: 'Replicas',
+  },
+  tableTitleActions: {
+    id: `${scope}.tableTitleActions`,
+    defaultMessage: 'Actions',
+  },
   removeAppText: {
     id: `${scope}.removeAppText`,
     defaultMessage:
@@ -77,10 +85,6 @@ export default defineMessages({
   cancleApplicationButton: {
     id: `${scope}.cancleApplicationButton`,
     defaultMessage: 'Cancle',
-  },
-  detailedDesc: {
-    id: `${scope}.detailedDesc`,
-    defaultMessage: 'Detailed Descriptions',
   },
   dynamicOptions: {
     id: `${scope}.dynamicOptions`,

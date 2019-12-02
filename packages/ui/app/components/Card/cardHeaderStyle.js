@@ -56,6 +56,14 @@ const cardHeaderStyle = (theme) => ({
       marginTop: 0,
       marginBottom: 3,
     },
+    '& h4': {
+      marginTop: 0,
+      marginBottom: 0,
+      width: '100%',
+      borderBottom: '1px solid #DFE0DF',
+      paddingBottom: 20,
+      paddingTop: 8,
+    },
   },
   cardHeaderPlain: {
     marginLeft: '0px !important',

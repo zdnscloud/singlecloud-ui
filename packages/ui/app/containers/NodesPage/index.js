@@ -4,13 +4,14 @@
  *
  */
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import { bindActionCreators, compose } from 'redux';
 import { Link } from 'react-router-dom';
+import getByKey from '@gsmlg/utils/getByKey';
 
 import { withStyles } from '@material-ui/core/styles';
 import Menubar from 'components/Menubar';
@@ -25,6 +26,7 @@ import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
 import AddIcon from 'components/Icons/Add';
 import Helmet from 'components/Helmet/Helmet';
 import IconButton from '@material-ui/core/IconButton';
+import ErrorInfo from 'components/ErrorInfo/ErrorInfo';
 
 import {
   makeSelectCurrentID as makeSelectClusterID,
@@ -40,15 +42,21 @@ import NodesTable from './Table';
 
 const NodesPage = ({ clusterID, url, loadNodes }) => {
   const classes = useStyles();
+  const [error, setError] = useState(null);
   useEffect(() => {
     if (url) {
       loadNodes(url, {
         clusterID,
       });
     }
-    return () => {
-      // try cancel something when unmount
-    };
+    const t = setInterval(() => {
+      if (url) {
+        loadNodes(url, {
+          clusterID,
+        });
+      }
+    }, 3000);
+    return () => clearInterval(t);
   }, [clusterID, loadNodes, url]);
 
   return (
@@ -66,6 +74,12 @@ const NodesPage = ({ clusterID, url, loadNodes }) => {
           ]}
         />
         <GridContainer className={classes.grid}>
+          {error ? (
+            <ErrorInfo
+              errorText={getByKey(error, ['response', 'message'])}
+              close={() => setError(null)}
+            />
+          ) : null}
           <GridItem xs={12} sm={12} md={12}>
             <Card>
               <CardHeader>
@@ -74,7 +88,7 @@ const NodesPage = ({ clusterID, url, loadNodes }) => {
                 </h4>
               </CardHeader>
               <CardBody>
-                <NodesTable />
+                <NodesTable setError={setError} />
               </CardBody>
             </Card>
           </GridItem>

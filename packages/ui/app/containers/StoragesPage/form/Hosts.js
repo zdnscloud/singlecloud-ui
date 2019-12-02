@@ -69,6 +69,7 @@ const Hosts = ({
               className={`${classes.tableCell} ${classes.tableHeadCell}`}
             ></TableCell>
             <TableCell
+              style={{ minWidth: 80 }}
               className={`${classes.tableCell} ${classes.tableHeadCell}`}
             >
               <FormattedMessage {...messages.formNodeName} />
@@ -94,7 +95,10 @@ const Hosts = ({
               <TableCell className={`${classes.tableCell}`}>
                 {b && b.get('nodeName')}
               </TableCell>
-              <TableCell className={`${classes.tableCell}`}>
+              <TableCell
+                className={`${classes.tableCell}`}
+                style={{ wordBreak: 'break-all' }}
+              >
                 {b &&
                   b.get('blockDevices') &&
                   b.get('blockDevices').map((bd, j) => (

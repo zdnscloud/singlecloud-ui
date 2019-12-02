@@ -18,11 +18,11 @@ const styles = (theme) => ({
     overflowX: 'hidden',
   },
   grid: {
-    padding: theme.spacing(2),
+    padding: theme.spacing(2.5),
   },
   contentGrid: {
-    padding: theme.spacing(2),
-    paddingTop: 0,
+    paddingLeft: theme.spacing(2),
+    paddingRight: theme.spacing(2),
   },
   appContainer: {},
   advanceContainer: {},
@@ -99,7 +99,7 @@ const styles = (theme) => ({
   },
   createBtnLink: {
     position: 'absolute',
-    top: '3px',
+    top: '8px',
     right: '10px',
   },
   radioControl: {
@@ -122,6 +122,11 @@ const styles = (theme) => ({
   },
   tableWrapper: {
     overflow: 'auto',
+  },
+  table: {
+    '& thead tr': {
+      whiteSpace: 'nowrap',
+    },
   },
   infoCardHeader: {
     height: 106,
@@ -187,6 +192,13 @@ const styles = (theme) => ({
   },
   cancleBtn: {
     marginLeft: '10px',
+  },
+  customCardHeaderH4: {
+    paddingBottom: '0 !important',
+    paddingTop: '0 !important',
+  },
+  textareaControl: {
+    width: '100%',
   },
 });
 

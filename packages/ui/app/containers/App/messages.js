@@ -81,6 +81,10 @@ export default defineMessages({
     id: `${scope}.leftMenuAppManagement`,
     defaultMessage: 'AppManagement',
   },
+  leftMenuHPA: {
+    id: `${scope}.leftMenuHPA`,
+    defaultMessage: 'HPA',
+  },
   leftMenuDeployments: {
     id: `${scope}.leftMenuDeployments`,
     defaultMessage: 'Deployments',
@@ -144,6 +148,14 @@ export default defineMessages({
   leftMenuClusterWatch: {
     id: `${scope}.leftMenuClusterWatch`,
     defaultMessage: 'ClusterWatch',
+  },
+  leftMenuLogAnalysis: {
+    id: `${scope}.leftMenuLogAnalysis`,
+    defaultMessage: 'LogAnalysis',
+  },
+  leftMenuSystemTools: {
+    id: `${scope}.leftMenuSystemTools`,
+    defaultMessage: 'SystemTools',
   },
   leftMenuBasicResources: {
     id: `${scope}.leftMenuBasicResources`,
