@@ -15,6 +15,7 @@ import {
   SubmissionError,
   submit,
 } from 'redux-form/immutable';
+import parseCmd from '@gsmlg/utils/parseCmd';
 
 import { usePush } from 'hooks/router';
 
@@ -102,14 +103,10 @@ export const CreateDeployment = ({
       const { containers, persistentVolumes } = data;
       data.containers = containers.map((item) => {
         if (item && item.args) {
-          item.args = (item.args.match(/("[^"]*")|[^\s]+/g) || []).map((n) =>
-            n.replace(/^"|"$/g, '')
-          );
+          item.args = parseCmd(item.args);
         }
         if (item && item.command) {
-          item.command = (
-            item.command.match(/("[^"]*")|[^\s]+/g) || []
-          ).map((n) => n.replace(/^"|"$/g, ''));
+          item.command = parseCmd(item.command);
         }
         return item;
       });

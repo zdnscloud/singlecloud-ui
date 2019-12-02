@@ -72,20 +72,23 @@ const arr2str = (arr = []) => {
   return text;
 };
 
-const parseCmd = (cmd ) => {
+const parseCmd = (cmd) => {
   if (typeof cmd === 'string') {
     return str2arr(cmd);
   }
 
   if (Array.isArray(cmd)) {
     return arr2str(cmd);
+  } else if (cmd && cmd.toJS && Array.isArray(cmd.toJS())) {
+    return arr2str(cmd.toJS());
   }
 
-  throw new TypeError(`Unsupport type : ${typeof cmd}`);
+  return '';
+  // throw new TypeError(`Unsupport type : ${typeof cmd}`);
 };
 
 parseCmd.str2arr = str2arr;
 parseCmd.arr2str = arr2str;
 
-module.exports = parseCmd;
-// export default parseCmd;
+// module.exports = parseCmd;
+export default parseCmd;
