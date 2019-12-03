@@ -1,6 +1,6 @@
 import { formatTranslationMessages } from '../i18n';
 
-jest.mock('../translations/en.json', () => ({
+jest.mock('../translations/zh.json', () => ({
   message1: 'default message',
   message2: 'default message 2',
 }));
@@ -12,7 +12,7 @@ const esTranslationMessages = {
 
 describe('formatTranslationMessages', () => {
   it('should build only defaults when DEFAULT_LOCALE', () => {
-    const result = formatTranslationMessages('en', { a: 'a' });
+    const result = formatTranslationMessages('zh', { a: 'a' });
 
     expect(result).toEqual({ a: 'a' });
   });
