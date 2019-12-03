@@ -1,4 +1,3 @@
-/* eslint-disable no-param-reassign */
 /**
  *
  * Create Deployment Page
@@ -16,6 +15,7 @@ import {
   SubmissionError,
   submit,
 } from 'redux-form/immutable';
+import parseCmd from '@gsmlg/utils/parseCmd';
 
 import { usePush } from 'hooks/router';
 
@@ -103,10 +103,10 @@ export const CreateDeployment = ({
       const { containers, persistentVolumes } = data;
       data.containers = containers.map((item) => {
         if (item && item.args) {
-          item.args = item.args.split(' ');
+          item.args = parseCmd(item.args);
         }
         if (item && item.command) {
-          item.command = item.command.split(' ');
+          item.command = parseCmd(item.command);
         }
         return item;
       });
@@ -221,9 +221,6 @@ const mapDispatchToProps = (dispatch) =>
     dispatch
   );
 
-const withConnect = connect(
-  mapStateToProps,
-  mapDispatchToProps
-);
+const withConnect = connect(mapStateToProps, mapDispatchToProps);
 
 export default compose(withConnect)(CreateDeployment);

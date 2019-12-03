@@ -4,14 +4,14 @@
  * Version v4
  */
 
-const createUUID = (function (uuidRegEx, uuidReplacer) {
-  return function () {
-    return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(uuidRegEx, uuidReplacer).toUpperCase();
+const createUUID = (function maker(uuidRegEx, uuidReplacer) {
+  return function uuid() {
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(uuidRegEx, uuidReplacer).toUpperCase();
   };
-})(/[xy]/g, function (c) {
-  var r = Math.random() * 16 | 0,
-  v = c == "x" ? r : (r & 3 | 8);
+}(/[xy]/g, (c) => {
+  const r = Math.random() * 16 | 0;
+  const v = c === 'x' ? r : (r & 3 | 8);
   return v.toString(16);
-});
+}));
 
 export default createUUID;

@@ -22,3 +22,5 @@ export const procCollectionData = (payload, options = {}) => {
   const list = originData.map((item) => item.id);
   return { data, list };
 };
+
+export default procCollectionData;

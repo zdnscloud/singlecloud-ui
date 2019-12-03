@@ -15,6 +15,7 @@ import {
   SubmissionError,
   submit,
 } from 'redux-form/immutable';
+import parseCmd from '@gsmlg/utils/parseCmd';
 
 import { usePush } from 'hooks/router';
 
@@ -83,13 +84,12 @@ export const CreateCronjobPage = ({
       const { containers } = data;
       containers.forEach((item) => {
         if (item && item.args) {
-          // eslint-disable-next-line no-param-reassign
-          item.args = item.args.split(' ');
+          item.args = parseCmd(item.args);
         }
         if (item && item.command) {
-          // eslint-disable-next-line no-param-reassign
-          item.command = item.command.split(' ');
+          item.command = parseCmd(item.command);
         }
+        return item;
       });
       await new Promise((resolve, reject) => {
         createCronJob(data, {
@@ -180,9 +180,6 @@ const mapDispatchToProps = (dispatch) =>
     dispatch
   );
 
-const withConnect = connect(
-  mapStateToProps,
-  mapDispatchToProps
-);
+const withConnect = connect(mapStateToProps, mapDispatchToProps);
 
 export default compose(withConnect)(CreateCronjobPage);

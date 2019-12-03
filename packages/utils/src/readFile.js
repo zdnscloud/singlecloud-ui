@@ -1,4 +1,4 @@
-const readAsBinaryString = (file)  => {
+const readAsBinaryString = (file) => {
   const fr = new FileReader();
   return new Promise((resolve, reject) => {
     if (!(file instanceof File)) {
@@ -36,3 +36,5 @@ export {
   readAsBinaryString,
   readAsText,
 };
+
+export default readAsText;

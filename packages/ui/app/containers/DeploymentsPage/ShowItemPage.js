@@ -8,6 +8,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { bindActionCreators, compose } from 'redux';
+import { fromJS } from 'immutable';
 
 import Helmet from 'components/Helmet/Helmet';
 import { FormattedMessage } from 'react-intl';
@@ -36,7 +37,7 @@ import * as podsActions from 'ducks/pods/actions';
 import * as actions from 'ducks/deployments/actions';
 import PodsTable from 'containers/PodsPage/PodsTable';
 
-import Deployment from './Item';
+import Item from './Item';
 import messages from './messages';
 import useStyles from './styles';
 
@@ -92,7 +93,7 @@ export const DeploymentDetailPage = ({
             },
           ]}
         />
-        <Deployment deployment={deployment} />
+        <Item deployment={deployment} />
         <GridContainer className={classes.grid}>
           <GridItem xs={12} sm={12} md={12}>
             <Card>
@@ -129,9 +130,6 @@ const mapDispatchToProps = (dispatch) =>
     dispatch
   );
 
-const withConnect = connect(
-  mapStateToProps,
-  mapDispatchToProps
-);
+const withConnect = connect(mapStateToProps, mapDispatchToProps);
 
 export default compose(withConnect)(DeploymentDetailPage);

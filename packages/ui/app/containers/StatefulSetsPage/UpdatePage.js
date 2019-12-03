@@ -15,6 +15,7 @@ import {
   SubmissionError,
   submit,
 } from 'redux-form/immutable';
+import parseCmd from '@gsmlg/utils/parseCmd';
 
 import { usePush } from 'hooks/router';
 
@@ -118,10 +119,10 @@ export const UpdateStatefulSetPage = ({
       const { containers } = data;
       data.containers = containers.map((item) => {
         if (item && item.args) {
-          item.args = item.args.split(' ');
+          item.args = parseCmd(item.args);
         }
         if (item && item.command) {
-          item.command = item.command.split(' ');
+          item.command = parseCmd(item.command);
         }
         return item;
       });
@@ -167,21 +168,18 @@ export const UpdateStatefulSetPage = ({
                 onSubmit={doSubmit}
                 formValues={values}
                 initialValues={current.update((c) => {
-                  const data = c.toJS();
-                  const { containers } = data;
-                  if (containers) {
-                    containers.forEach((item) => {
-                      if (item && item.args) {
-                        item.args = item.args.join(' ');
-                      }
-                      if (item && item.command) {
-                        item.command = item.command.join(' ');
-                      }
-                      return item;
-                    });
-                  }
-                  data.containers = containers;
-                  return data;
+                  const val = c.toJS();
+                  const { containers } = val;
+                  val.containers = containers.map((item) => {
+                    if (item && item.args) {
+                      item.args = parseCmd(item.args);
+                    }
+                    if (item && item.command) {
+                      item.command = parseCmd(item.command);
+                    }
+                    return item;
+                  });
+                  return val;
                 })}
                 configMaps={configMaps}
                 secrets={secrets}
@@ -231,9 +229,6 @@ const mapDispatchToProps = (dispatch) =>
     dispatch
   );
 
-const withConnect = connect(
-  mapStateToProps,
-  mapDispatchToProps
-);
+const withConnect = connect(mapStateToProps, mapDispatchToProps);
 
 export default compose(withConnect)(UpdateStatefulSetPage);
