@@ -7,8 +7,8 @@ const str2arr = (str = '') => {
   let t = '';
   for (
     let i = 0,
-        len = str.length,
-        inBracket = false;
+      len = str.length,
+      inBracket = false;
     i < len; i += 1) {
     const char = str[i];
     if (char === '\\') {
@@ -79,7 +79,7 @@ const parseCmd = (cmd) => {
 
   if (Array.isArray(cmd)) {
     return arr2str(cmd);
-  } else if (cmd && cmd.toJS && Array.isArray(cmd.toJS())) {
+  } if (cmd && cmd.toJS && Array.isArray(cmd.toJS())) {
     return arr2str(cmd.toJS());
   }
 

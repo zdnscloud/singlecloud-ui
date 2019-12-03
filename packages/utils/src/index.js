@@ -25,4 +25,3 @@ export { default as ucfirst } from './ucfirst';
 export { default as utf } from './utf';
 
 export { default as uuid } from './uuid';
-

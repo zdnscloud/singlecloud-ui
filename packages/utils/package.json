@@ -18,7 +18,7 @@
     "release": "yarn build && npm publish build --tag next",
     "lint": "npm run lint:js",
     "lint:eslint": "eslint",
-    "lint:eslint:fix": "eslint --fix",
+    "lint:eslint:fix": "eslint --fix -- src",
     "lint:js": "npm run lint:eslint -- src ",
     "lint:staged": "lint-staged",
     "pretest": "npm run test:clean && npm run lint",
