@@ -170,35 +170,18 @@ export const UpdateDeploymentPage = ({
                 secrets={secrets}
                 storageClasses={storageClasses}
                 initialValues={current.update((c) => {
-                  const data = c.toJS();
-                  const { containers } = data;
-                  if (containers) {
-                    containers.forEach((item) => {
-                      if (item && item.args) {
-                        item.args = item.args
-                          .map((n) => {
-                            if (n.indexOf(' ') !== -1) {
-                              n = ` "${n}" `;
-                            }
-                            return n;
-                          })
-                          .join(' ');
-                      }
-                      if (item && item.command) {
-                        item.command = item.command
-                          .map((c) => {
-                            if (c.indexOf(' ') !== -1) {
-                              c = ` "${c}" `;
-                            }
-                            return c;
-                          })
-                          .join(' ');
-                      }
-                      return item;
-                    });
-                  }
-                  data.containers = containers;
-                  return data;
+                  const val = c.toJS();
+                  const { containers } = val;
+                  val.containers = containers.map((item) => {
+                    if (item && item.args) {
+                      item.args = parseCmd(item.args);
+                    }
+                    if (item && item.command) {
+                      item.command = parseCmd(item.command);
+                    }
+                    return item;
+                  });
+                  return val;
                 })}
                 formValues={values}
                 role="update"

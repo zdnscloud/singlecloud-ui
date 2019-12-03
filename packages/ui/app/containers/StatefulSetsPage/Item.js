@@ -9,7 +9,7 @@ import { connect } from 'react-redux';
 import { useIntl, FormattedMessage } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import { bindActionCreators, compose } from 'redux';
-import list2str from '@gsmlg/utils/list2str';
+import parseCmd from '@gsmlg/utils/parseCmd';
 
 import InputAdornment from '@material-ui/core/InputAdornment';
 import ButtonBase from '@material-ui/core/ButtonBase';
@@ -182,7 +182,7 @@ export const StatefulSet = ({
                                   <FormattedMessage {...messages.formCommand} />
                                 }
                                 fullWidth
-                                value={c.get('command')}
+                                value={parseCmd(c.get('command'))}
                               />
                             </GridItem>
                             <GridItem xs={3} sm={3} md={3}>
@@ -191,7 +191,7 @@ export const StatefulSet = ({
                                   <FormattedMessage {...messages.formArgs} />
                                 }
                                 fullWidth
-                                value={c.get('args')}
+                                value={parseCmd(c.get('args'))}
                               />
                             </GridItem>
                           </GridContainer>
