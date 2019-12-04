@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
-import SockJS from 'sockjs-client';
-import { Observable } from 'rxjs';
+import { webSocket } from "rxjs/webSocket";
 import { map, scan, throttleTime, debounceTime } from 'rxjs/operators';
 import dayjs from 'dayjs';
 
@@ -9,36 +8,16 @@ export const useLogs = () => {
   const [logs, setLogs] = useState([]);
 
   useEffect(() => {
-    let ob = null;
+    const subject = webSocket(url);
     if (url) {
-      ob = Observable.create((observer) => {
-        const socket = new SockJS(url, null, { transports: 'websocket' });
-        socket.onmessage = (e) => {
-          observer.next(e.data);
-        };
-        socket.onerror = (e) => {
-          const time = dayjs().toISOString();
-          observer.next(`${time} [Error] ${e && e.message}`);
-        };
-        socket.onclose = ({ code, reason }) => {
-          const time = dayjs().toISOString();
-          observer.next(`${time} [Close ${code}] ${reason}`);
-          observer.complete();
-        };
-        return () => socket.close();
-      })
-        .pipe(
-          scan((acc, val) => {
-            acc.push(val);
-            return acc;
-          }, [])
-        )
-        .pipe(debounceTime(100))
-        .subscribe((l) => {
-          setLogs(l.slice(-2000));
-        });
+      subject.subscribe((data) => {
+        setLogs(logs.conncat([data]));
+      });
     }
-    return () => ob && ob.complete();
+    return () => {
+      subject.complete();
+      subject.error({ code: 4000, reason: 'User close this logs output!' });
+    };
   }, [url]);
   const open = (l) => {
     setUrl(l);

@@ -193,7 +193,7 @@ export const makeSelectLogURL = () =>
     makeSelectClusterID(),
     makeSelectNamespaceID(),
     (substate, clusterID, namespaceID) =>
-      `${window.location.protocol}//${window.location.hostname}:${
+      `${window.location.protocol === 'https:' ? 'wss:' : 'ws:'}//${window.location.hostname}:${
         window.location.port
       }/apis/ws.zcloud.cn/v1/clusters/${clusterID}/namespaces/${namespaceID}/pods/${substate.getIn(
         ['openingPodLog', 'podID']

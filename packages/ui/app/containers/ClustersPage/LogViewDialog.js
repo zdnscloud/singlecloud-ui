@@ -29,7 +29,7 @@ import messages from './messages';
 
 const LogViewDialog = ({ isOpen, id, closeDialog }) => {
   const classes = useStyles();
-  const url = `${window.location.protocol}//${window.location.hostname}:${window.location.port}/apis/ws.zcloud.cn/v1/clusters/${id}/zkelog`;
+  const url = `${window.location.protocol === 'https:' ? 'wss:' : 'ws:'}:${window.location.port}/apis/ws.zcloud.cn/v1/clusters/${id}/zkelog`;
   const { open, close, logs } = useLogs();
 
   return (
