@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { webSocket } from "rxjs/webSocket";
+import { webSocket } from 'rxjs/webSocket';
 import { map, scan, throttleTime, debounceTime } from 'rxjs/operators';
 import dayjs from 'dayjs';
 
