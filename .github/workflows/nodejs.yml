@@ -17,8 +17,10 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
-    - name: npm install, build, and test
+    - name: yarn install, build, and test
       run: |
-        npm test
+        curl -o- -L https://yarnpkg.com/install.sh | bash
+        yarn
+        yarn run test
       env:
         CI: true
