@@ -23,11 +23,11 @@ export const eventEpic = (action$) =>
       const { protocol, hostname, port } = window.location;
       const subject = webSocket(`${protocol}//${hostname}:${port}/apis/ws.zcloud.cn/v1/clusters/${clusterID}/event`);
 
-      subject
+      return subject
         .pipe(takeUntil(action$.pipe(ofType(c.CLOSE_CLUSTER))))
         .pipe(scan((acc, event) => acc.concat([event]).slice(-1000), []))
         .pipe(debounceTime(1000 / 20))
-        .pipe(map((events) => a.setEvents(events, clusterID)))
+        .pipe(map((events) => a.setEvents(events, clusterID)));
     })
   );
 
