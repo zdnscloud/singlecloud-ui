@@ -8,11 +8,22 @@ export const useLogs = () => {
   const [logs, setLogs] = useState([]);
 
   useEffect(() => {
-    const subject = webSocket(url);
+    const subject = webSocket({
+      url,
+      deserializer: (e) => e.data,
+    });
     if (url) {
-      subject.subscribe((data) => {
-        setLogs(logs.conncat([data]));
-      });
+      subject
+        .pipe(
+          scan((acc, val) => {
+            acc.push(val);
+            return acc;
+          }, [])
+        )
+        .pipe(debounceTime(100))
+        .subscribe((l) => {
+          setLogs(l.slice(-2000));
+        });
     }
     return () => {
       subject.complete();
