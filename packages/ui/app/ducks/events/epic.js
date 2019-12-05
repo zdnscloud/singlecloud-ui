@@ -21,7 +21,7 @@ export const eventEpic = (action$) =>
     ofType(c.OPEN_CLUSTER),
     mergeMap(({ payload: { clusterID } }) => {
       const { protocol, hostname, port } = window.location;
-      const subject = webSocket(`${protocol}//${hostname}:${port}/apis/ws.zcloud.cn/v1/clusters/${clusterID}/event`);
+      const subject = webSocket(`${protocol === 'https:' ? 'wss:' : 'ws:'}//${hostname}:${port}/apis/ws.zcloud.cn/v1/clusters/${clusterID}/event`);
 
       return subject
         .pipe(takeUntil(action$.pipe(ofType(c.CLOSE_CLUSTER))))
