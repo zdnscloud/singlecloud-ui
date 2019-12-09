@@ -3,7 +3,7 @@ const path = require('path');
 const rimraf = require('rimraf');
 const nodePlop = require('node-plop');
 const inflection = require('inflection');
-const changeCase = require('change-case')
+const changeCase = require('change-case');
 
 const plop = nodePlop(`${__dirname}/../generators/index.js`);
 
@@ -14,9 +14,8 @@ const skips = [
   'innerServices',
   'outerServices',
   'pods',
+  'fluentBitConfigs',
 ];
-
-
 
 const mapName = (name = '') => {
   if (name === name.toUpperCase()) {
