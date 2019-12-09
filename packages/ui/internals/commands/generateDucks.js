@@ -16,7 +16,12 @@ const skips = [
   'pods',
 ];
 
+
+
 const mapName = (name = '') => {
+  if (name === name.toUpperCase()) {
+    return inflection.pluralize(name.toLowerCase());
+  }
   return changeCase.camelCase(inflection.pluralize(name));
 };
 
