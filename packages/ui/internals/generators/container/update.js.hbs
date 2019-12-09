@@ -116,10 +116,17 @@ export const Update{{properCase singular}}Page = ({
             <Button
               variant="contained"
               color="primary"
-              size="large"
               onClick={submitForm}
             >
               <FormattedMessage {...messages.update} />
+            </Button>
+            <Button
+                variant="contained"
+                className={classes.cancleBtn}
+                component={Link}
+                to={`/clusters`}
+              >
+              <FormattedMessage {...messages.cancle} />
             </Button>
           </GridItem>
         </GridContainer>
