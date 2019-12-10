@@ -2,7 +2,7 @@ import { useEffect, useState, useRef } from 'react';
 import { Terminal } from 'xterm';
 import { FitAddon } from 'xterm-addon-fit';
 import 'xterm/css/xterm.css';
-import SockJS from 'sockjs-client';
+import { webSocket } from 'rxjs/webSocket';
 import _ from 'lodash';
 
 export const useTerm = () => {
@@ -15,38 +15,34 @@ export const useTerm = () => {
       const fitAddon = new FitAddon();
       term.loadAddon(fitAddon);
 
-      const socket = new SockJS(url, null, { transports: 'websocket' });
+      const subject = webSocket({
+        url,
+        deserializer: ({ data }) => data,
+        serializer: (data) =>
+          typeof data === 'string' ? data : JSON.stringify(data),
+      });
 
       term.onData((data) => {
-        if (socket.readyState === 1) socket.send(data);
+        subject.next(data);
       });
 
       term.open(ref.current);
       term.focus();
       fitAddon.fit();
 
-      socket.onopen = () => {
-        socket.send(JSON.stringify({ cols: term.cols, rows: term.rows }));
-      };
-
-      socket.onmessage = (e) => {
-        term.write(e.data);
-      };
-
-      socket.onclose = () => {
-        term.write('session is close');
-      };
+      subject.next({ cols: term.cols, rows: term.rows });
+      subject.subscribe((data) => term.write(data));
 
       const resizeListener = _.debounce(() => {
         fitAddon.fit();
-        socket.send(JSON.stringify({ cols: term.cols, rows: term.rows }));
+        subject.next({ cols: term.cols, rows: term.rows });
       }, 200);
       window.addEventListener('resize', resizeListener);
       const t = setTimeout(resizeListener, 300);
       return () => {
         clearTimeout(t);
         window.removeEventListener('resize', resizeListener);
-        socket.close();
+        subject.complete();
       };
     }
     return () => null;

@@ -11,7 +11,7 @@ import {
   takeUntil,
 } from 'rxjs/operators';
 import { ofType, combineEpics } from 'redux-observable';
-import SockJS from 'sockjs-client';
+import { webSocket } from 'rxjs/webSocket';
 
 import * as c from './constants';
 import * as a from './actions';
@@ -19,33 +19,16 @@ import * as a from './actions';
 export const eventEpic = (action$) =>
   action$.pipe(
     ofType(c.OPEN_CLUSTER),
-    mergeMap(({ payload: { clusterID } }) =>
-      Observable.create((observer) => {
-        const { protocol, hostname, port } = window.location;
-        const socket = new SockJS(
-          `${protocol}//${hostname}:${port}/apis/ws.zcloud.cn/v1/clusters/${clusterID}/event`,
-          null,
-          { transports: 'websocket' }
-        );
+    mergeMap(({ payload: { clusterID } }) => {
+      const { protocol, hostname, port } = window.location;
+      const subject = webSocket(`${protocol === 'https:' ? 'wss:' : 'ws:'}//${hostname}:${port}/apis/ws.zcloud.cn/v1/clusters/${clusterID}/event`);
 
-        socket.onopen = () => {};
-
-        socket.onmessage = (e) => {
-          const evt = JSON.parse(e.data);
-          observer.next(evt);
-        };
-
-        socket.onclose = () => {
-          observer.complete();
-        };
-
-        return () => socket.close();
-      })
+      return subject
         .pipe(takeUntil(action$.pipe(ofType(c.CLOSE_CLUSTER))))
         .pipe(scan((acc, event) => acc.concat([event]).slice(-1000), []))
         .pipe(debounceTime(1000 / 20))
-        .pipe(map((events) => a.setEvents(events, clusterID)))
-    )
+        .pipe(map((events) => a.setEvents(events, clusterID)));
+    })
   );
 
 export default combineEpics(eventEpic);

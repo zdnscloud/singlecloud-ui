@@ -2,42 +2,26 @@ const fs = require('fs');
 const path = require('path');
 const rimraf = require('rimraf');
 const nodePlop = require('node-plop');
+const inflection = require('inflection');
+const changeCase = require('change-case');
 
 const plop = nodePlop(`${__dirname}/../generators/index.js`);
 
 const duckDir = path.join(__dirname, '../../app/ducks');
 
 const skips = [
+  'errorCodes',
   'innerServices',
   'outerServices',
   'pods',
+  'fluentBitConfigs',
 ];
 
-const mapName = (name) => {
-  const map = {
-    blockdevices: 'blockDevices',
-    configmaps: 'configMaps',
-    cronjobs: 'cronJobs',
-    daemonsets: 'daemonSets',
-    innerservices: 'innerServices',
-    limitranges: 'limitRanges',
-    nodenetworks: 'nodeNetworks',
-    outerservices: 'outerServices',
-    persistentvolumes: 'persistentVolumes',
-    persistentvolumeclaims: 'persistentVolumeClaims',
-    podnetworks: 'podNetworks',
-    resourcequotas: 'resourceQuotas',
-    servicenetworks: 'serviceNetworks',
-    statefulsets: 'statefulSets',
-    storageclasses: 'storageClasses',
-    storageclusters: 'storageClusters',
-    udpingresses: 'udpIngresses',
-    userquotas: 'userQuotas',
-  };
-  if (Object.keys(map).includes(name)) {
-    return map[name];
+const mapName = (name = '') => {
+  if (name === name.toUpperCase()) {
+    return inflection.pluralize(name.toLowerCase());
   }
-  return name;
+  return changeCase.camelCase(inflection.pluralize(name));
 };
 
 const runCreateDuck = async (action) => {
@@ -58,14 +42,21 @@ const sleep = (t) => new Promise((resolve, reject) => setTimeout(resolve, t));
     if (!res.parentResources || res.parentResources.length === 0) return [];
     const p = res.parentResources[0];
     const parent = data.find((r) => r.resourceType === p);
-    const pc = mapName(parent.collectionName);
+    const pc = mapName(parent.goStructName);
     const pp = findParents(parent);
     return [...pp, pc];
   };
 
   const actions = data.map((res) => {
+    if (Array.isArray(res.errorCode)) {
+      return {
+        ...res,
+        name: 'errorCodes',
+      };
+    }
+
     const act = {
-      name: mapName(res.collectionName),
+      name: mapName(res.goStructName || res.collectionName), // # 等海姣修复 hpa 的docs
       wannaCreateAction: !!(res.collectionMethods && res.collectionMethods.includes('POST')),
       wannaUpdateAction: !!(res.resourceMethods && res.resourceMethods.includes('PUT')),
       wannaReadOneAction: !!(res.resourceMethods && res.resourceMethods.includes('GET')),
@@ -73,6 +64,9 @@ const sleep = (t) => new Promise((resolve, reject) => setTimeout(resolve, t));
       wannaResourceActions: !!(res.resourceActions && res.resourceActions.length > 0),
       hasParents: !!(res.parentResources && res.parentResources.length > 0),
       parents: findParents(res),
+      collectionName: res.collectionName,
+      resourceFields: res.resourceFields,
+      subResources: res.subResources,
     };
 
     return act;

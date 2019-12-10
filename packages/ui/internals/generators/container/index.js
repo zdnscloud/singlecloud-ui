@@ -126,12 +126,12 @@ module.exports = {
         templateFile: componentTemplate,
         abortOnFail: true,
       },
-      {
-        type: 'add',
-        path: '../../app/containers/{{properCase name}}/tests/index.test.js',
-        templateFile: './container/test.js.hbs',
-        abortOnFail: true,
-      },
+      // {
+      //   type: 'add',
+      //   path: '../../app/containers/{{properCase name}}/tests/index.test.js',
+      //   templateFile: './container/test.js.hbs',
+      //   abortOnFail: true,
+      // },
       {
         type: 'add',
         path: '../../app/containers/{{properCase name}}/styles.js',

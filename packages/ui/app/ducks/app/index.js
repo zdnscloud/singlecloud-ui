@@ -28,7 +28,9 @@ function appReducer(state = initialState, { type, payload }) {
     case c.OPEN_TERMINAL: {
       const { kind, data } = payload;
       const { protocol, hostname, port } = window.location;
-      const base = `${protocol}//${hostname}:${port}`;
+      const base = `${
+        protocol === 'https:' ? 'wss:' : 'ws:'
+      }//${hostname}:${port}`;
       let url = null;
       if (kind === 'cluster') {
         const { clusterID } = data;
