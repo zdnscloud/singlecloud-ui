@@ -21,3 +21,10 @@ export const setEvents = (events, clusterID) => ({
   payload: { events },
   meta: { clusterID },
 });
+
+export const eventConnectionError = (error, clusterID) => ({
+  type: c.EVNET_CONNECTION_ERROR,
+  payload: error,
+  error: true,
+  meta: { clusterID },
+});

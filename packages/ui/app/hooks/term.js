@@ -31,7 +31,11 @@ export const useTerm = () => {
       fitAddon.fit();
 
       subject.next({ cols: term.cols, rows: term.rows });
-      subject.subscribe((data) => term.write(data));
+      subject.subscribe(
+        (data) => term.write(data),
+        ({ type, code, reason, message }) =>
+          term.write(`[${type} ${code}] ${reason || message || ''}`)
+      );
 
       const resizeListener = _.debounce(() => {
         fitAddon.fit();
