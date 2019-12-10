@@ -63,6 +63,10 @@ import ServicesPage, {
   CreateServicePage,
   ShowServicePage,
 } from 'containers/ServicesPage/Loadable';
+import ServiceMeshPage, {
+  WorkloadDetailPage,
+  PodDetailPage,
+} from 'containers/ServiceMeshPage/Loadable';
 import IngressesPage, {
   CreateIngressPage,
   ShowIngressPage,
@@ -374,6 +378,28 @@ const appRoutes = [
     component: JobDetailPage,
   },
   // job end
+  // serviceMesh start
+  {
+    path: '/clusters/:cluster_id/namespaces/:namespace_id/workloadGroup',
+    name: 'ServiceMesh',
+    icon: Dashboard,
+    component: ServiceMeshPage,
+  },
+  {
+    path:
+      '/clusters/:cluster_id/namespaces/:namespace_id/workloadGroup/:workload_id',
+    name: 'ServiceMesh Workload Detail ',
+    icon: Dashboard,
+    component: WorkloadDetailPage,
+  },
+  {
+    path:
+      '/clusters/:cluster_id/namespaces/:namespace_id/workloadGroup/:workload_id/:pod_id',
+    name: 'ServiceMesh Pod Detail',
+    icon: Dashboard,
+    component: PodDetailPage,
+  },
+  // serviceMesh end
   // services start
   {
     path: '/clusters/:cluster_id/namespaces/:namespace_id/services',

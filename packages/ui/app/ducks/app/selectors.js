@@ -124,6 +124,10 @@ export const makeSelectLeftMenus = () =>
                 path: `/clusters/${cluster}/namespaces/${namespace}/overview`,
               },
               {
+                name: 'ServiceMesh',
+                path: `/clusters/${cluster}/namespaces/${namespace}/workloadGroup`,
+              },
+              {
                 name: 'ServiceLink',
                 path: `/clusters/${cluster}/namespaces/${namespace}/serviceLink`,
               },

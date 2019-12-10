@@ -129,6 +129,10 @@ export default defineMessages({
     id: `${scope}.leftMenuServiceLink`,
     defaultMessage: 'ServiceLink',
   },
+  leftMenuServiceMesh: {
+    id: `${scope}.leftMenuServiceMesh`,
+    defaultMessage: 'ServiceMesh',
+  },
   leftMenuStorages: {
     id: `${scope}.leftMenuStorages`,
     defaultMessage: 'Storages',
