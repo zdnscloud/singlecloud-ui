@@ -2,10 +2,10 @@ import React, { Fragment } from 'react';
 import { ucfirst } from '@gsmlg/utils';
 import TimeCell from 'components/Cells/TimeCell';
 import { Link } from 'react-router-dom';
-import Button from '@material-ui/core/Button';
-import ConfirmDelete from 'components/ConfirmDelete/ConfirmDelete';
+import Button from 'components/CustomButtons/Button';
+import IconButton from 'components/CustomIconButtons/IconButton';
 
-const schema = ['name', 'type', 'Meshed', 'SuccessRate', 'RPS','latencyMsP50','latencyMsP95','latencyMsP99'];
+const schema = ['name','pods','resource','type', 'meshed', 'successRate', 'RPS','latencyMsP50','latencyMsP95','latencyMsP99','connections','readBytes','writeBytes'];
 
 const tableSchema = schema
   .map((id) => ({
@@ -25,15 +25,15 @@ const tableSchema = schema
     {
       id: 'actions',
       label: 'Actions',
-      component: (props) => (
+      component: ({clusterID,namespaceID,data}) => (
         <Fragment>
-          <ConfirmDelete
-            actionName={props.removeNamespace}
-            id={props.data.get('id')}
-            url={props.data.getIn(['links', 'remove'])}
-            // clusterID={props.clusterID}
-            // namespaceID={props.namespaceID}
-          />
+          <IconButton
+            component={Link}
+            to={`/clusters/${clusterID}/namespaces/${namespaceID}/workloadGroup/${data.get(
+              'id'
+            )}`}
+          >
+          </IconButton>
         </Fragment>
       ),
     },
@@ -42,13 +42,47 @@ const tableSchema = schema
     if (sch.id === 'name') {
       return {
         ...sch,
-        component: (props) => (
+        component: ({pathname,data}) => (
           <Button
-            color="primary"
+            link
             component={Link}
-            to={`${props.pathname}/${props.data.get('id')}/show`}
+            to={`${pathname}/${data.get('id')}`}
           >
-            {props.data.get('name')}
+            {data.get('name')}
+          </Button>
+        ),
+      };
+    }
+    return sch;
+  })
+  .map((sch) => {
+    if (sch.id === 'pods' ) {
+      return {
+        ...sch,
+        component: ({pathname,data}) => (
+          <Button
+            link
+            component={Link}
+            to={`${pathname}/${data.get('id')}`}
+          >
+            {data.get('pods')}
+          </Button>
+        ),
+      };
+    }
+    return sch;
+  })
+  .map((sch) => {
+    if (sch.id === 'resource' ) {
+      return {
+        ...sch,
+        component: ({pathname,data}) => (
+          <Button
+            link
+            component={Link}
+            to={`${pathname}/${data.get('id')}`}
+          >
+            {data.get('resource')}
           </Button>
         ),
       };

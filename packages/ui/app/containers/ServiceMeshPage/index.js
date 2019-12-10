@@ -34,7 +34,7 @@ import * as actions from 'ducks/namespaces/actions';
 
 import useStyles from './styles';
 import messages from './messages';
-import NamespacesTable from './Table';
+import WorkloadGroupTable from './Table';
 
 const ServiceMeshPage = ({
   clusterID,
@@ -70,15 +70,17 @@ const ServiceMeshPage = ({
           ]}
         />
         <GridContainer className={classes.grid}>
+        <GridItem xs={12} sm={12} md={12}>
+            <Card>
+              <CardBody>
+                  {/* charts */}
+              </CardBody>
+            </Card>
+          </GridItem>
           <GridItem xs={12} sm={12} md={12}>
             <Card>
-              <CardHeader>
-                <h4>
-                  <FormattedMessage {...messages.serviceMesh} />
-                </h4>
-              </CardHeader>
               <CardBody>
-                <NamespacesTable />
+                <WorkloadGroupTable />
               </CardBody>
             </Card>
           </GridItem>

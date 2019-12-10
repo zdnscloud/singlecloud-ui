@@ -13,6 +13,14 @@ export default defineMessages({
     id: `${scope}.pageTitle`,
     defaultMessage: 'ServiceMeshPage',
   },
+  workloadDetailPageTitle: {
+    id: `${scope}.workloadDetailPageTitle`,
+    defaultMessage: 'WorkloadDetail',
+  },
+  podDetailPageTitle: {
+    id: `${scope}.podDetailPageTitle`,
+    defaultMessage: 'PodDetail',
+  },
   pageDesc: {
     id: `${scope}.pageDesc`,
     defaultMessage: 'Description of ServiceMeshPage',
@@ -43,17 +51,36 @@ export default defineMessages({
   },
   tableTitleLatencyMsP50: {
     id: `${scope}.tableTitleLatencyMsP50`,
-    defaultMessage: 'latencyMsP50',
+    defaultMessage: 'LatencyMsP50',
   },
   tableTitleLatencyMsP95: {
     id: `${scope}.tableTitleLatencyMsP95`,
-    defaultMessage: 'latencyMsP95',
+    defaultMessage: 'LatencyMsP95',
   },
   tableTitleLatencyMsP99: {
     id: `${scope}.tableTitleLatencyMsP99`,
-    defaultMessage: 'latencyMsP99',
+    defaultMessage: 'LatencyMsP99',
   },
-
+  tableTitleResource: {
+    id: `${scope}.tableTitleResource`,
+    defaultMessage: 'Resource',
+  },
+  tableTitlePods: {
+    id: `${scope}.tableTitlePods`,
+    defaultMessage: 'Pods',
+  },
+  tableTitleConnections: {
+    id: `${scope}.tableTitleConnections`,
+    defaultMessage: 'Connections',
+  },
+  tableTitleReadBytes: {
+    id: `${scope}.tableTitleReadBytes`,
+    defaultMessage: 'Read Bytes/ sec',
+  },
+  tableTitleWriteBytes: {
+    id: `${scope}.tableTitleWriteBytes`,
+    defaultMessage: 'Write Bytes / sec',
+  },
   tableTitleCreationTimestamp: {
     id: `${scope}.tableTitleCreationTimestamp`,
     defaultMessage: 'CreationTimestamp',
@@ -61,5 +88,37 @@ export default defineMessages({
   tableTitleActions: {
     id: `${scope}.tableTitleActions`,
     defaultMessage: 'Actions',
+  },
+  tableTitleSR: {
+    id: `${scope}.tableTitleSR`,
+    defaultMessage: 'SR',
+  },
+  tableTitlePercentage: {
+    id: `${scope}.tableTitlePercentage`,
+    defaultMessage: '100.00%',
+  },
+  tableTitleActions: {
+    id: `${scope}.tableTitleActions`,
+    defaultMessage: 'Actions',
+  },
+  WorkloadCardTitle: {
+    id: `${scope}.WorkloadCardTitle`,
+    defaultMessage: 'Workload',
+  },
+  InboundCardTitle: {
+    id: `${scope}.InboundCardTitle`,
+    defaultMessage: 'Inbound',
+  },
+  OutboundCardTitle: {
+    id: `${scope}.OutboundCardTitle`,
+    defaultMessage: 'Outbound',
+  },
+  PodsCardTitle: {
+    id: `${scope}.PodsCardTitle`,
+    defaultMessage: 'Pods',
+  },
+  TCPCardTitle: {
+    id: `${scope}.TCPCardTitle`,
+    defaultMessage: 'TCP',
   },
 });
