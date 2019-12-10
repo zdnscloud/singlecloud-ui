@@ -30,7 +30,10 @@ import * as nsActions from 'ducks/namespaces/actions';
 import * as roleActions from 'ducks/role/actions';
 import * as eventsActions from 'ducks/events/actions';
 import * as appActions from 'ducks/app/actions';
-import { makeSelectShowEvents } from 'ducks/app/selectors';
+import {
+  makeSelectShowEvents,
+  makeSelectLocation,
+} from 'ducks/app/selectors';
 import {
   makeSelectCurrentID as makeSelectCurrentClusterID,
   makeSelectCurrent as makeSelectCurrentCluster,
@@ -57,6 +60,7 @@ export const Dashboard = ({
   closeCluster,
   isAdmin,
   setLastNamespace,
+  location,
 }) => {
   useEffect(() => {
     (async () => {
@@ -74,12 +78,14 @@ export const Dashboard = ({
       }
     })();
   }, [loadClusters, loadNamespaces, url]);
+  const path = location.get('pathname');
+  const isManage = /^\/clusters\/[^/]+\/manage/.test(path);
   useEffect(() => {
-    if (clusterID) {
+    if (clusterID && !isManage) {
       openCluster(clusterID);
     }
     return () => closeCluster();
-  }, [closeCluster, clusterID, openCluster]);
+  }, [closeCluster, clusterID, openCluster, isManage]);
   const nsUrl = cluster.getIn(['links', 'namespaces']);
   useEffect(() => {
     if (nsUrl) {
@@ -159,6 +165,7 @@ const mapStateToProps = createStructuredSelector({
   showEvents: makeSelectShowEvents(),
   isLogin: makeSelectIsLogin(),
   isAdmin: makeSelectIsAdmin(),
+  location: makeSelectLocation(),
 });
 
 const mapDispatchToProps = (dispatch) =>
