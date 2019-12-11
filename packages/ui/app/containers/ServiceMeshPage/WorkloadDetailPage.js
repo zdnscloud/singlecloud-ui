@@ -34,7 +34,7 @@ import * as actions from 'ducks/namespaces/actions';
 
 import useStyles from './styles';
 import messages from './messages';
-import Table from './Table';
+import Table from './WorkloadTable';
 import TableChart from './charts/TableChart';
 
 const WorkloadDetailPage = ({

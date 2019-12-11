@@ -37,29 +37,7 @@ const WorkloadGroupTable = ({
   const pathname = location.get('pathname');
   let mergedSchema = schema
     .map((sch) => {
-        if (sch.id === 'actions') {
-          return {
-            ...sch,
-            props: {
-              removeNamespace,
-              clusterID,
-              namespaceID,
-            },
-          };
-        }
       if (sch.id === 'name' ) {
-        return {
-          ...sch,
-          props: { pathname },
-        };
-      }
-      if (sch.id === 'pods') {
-        return {
-          ...sch,
-          props: { pathname },
-        };
-      }
-      if (sch.id === 'resource' ) {
         return {
           ...sch,
           props: { pathname },
@@ -72,51 +50,6 @@ const WorkloadGroupTable = ({
       label: <FormattedMessage {...messages[`tableTitle${s.label}`]} />,
     }));
     let data = [];
-    // console.log('mergedSchema',mergedSchema)
-    switch (parentType) {
-      case 'workload':
-        data = [];
-        mergedSchema =_.dropRight(_.drop(mergedSchema,2),4);
-        break;
-      case 'inbound':
-        data = [];
-        mergedSchema = _.drop(mergedSchema,2).filter(
-          (s) => s.id != 'connections' && s.id != 'readBytes' &&  s.id != 'writeBytes'
-        );
-        break;
-      case 'outbound':
-        data = [];
-        mergedSchema =  _.drop(mergedSchema,2).filter(
-          (s) => s.id != 'connections' && s.id != 'readBytes' &&  s.id != 'writeBytes'
-        );
-        break;
-      case 'pods':
-        data = [];
-        mergedSchema =  _.dropRight(mergedSchema,4).filter(
-          (s) => s.id != 'name'  && s.id != 'resource'
-        );
-        break;
-      case 'tcp':
-          data = [];
-          mergedSchema = mergedSchema.filter(
-            (s) => s.id === 'pods' || s.id === 'meshed' || s.id === 'connections' || s.id === 'readBytes' || s.id === 'writeBytes'
-          );
-          break;
-      case 'PodInbound':
-        data = [];
-        mergedSchema =_.dropRight(_.drop(mergedSchema,2),4);
-        break;
-      case 'PodOutbound':
-        data = [];
-        mergedSchema =_.dropRight(_.drop(mergedSchema,2),4);
-        break;    
-      default:
-        data = [];
-        mergedSchema = _.dropRight(mergedSchema,4).filter(
-          (s) => s.id != 'pods' &&  s.id != 'resource'
-        );
-    }
-
   return (
     <Paper className={classes.tableWrapper}>
       <SimpleTable

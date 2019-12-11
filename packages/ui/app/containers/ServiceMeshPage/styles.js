@@ -21,9 +21,11 @@ export const styles = (theme) => ({
     backgroundColor: '#FF9D4D',
   },
   point: {
-    width: 8,
-    height: 8,
-    borderRaduis: 4,
+    width: 7,
+    height: 7,
+    borderRadius: '50%',
+    display: 'inline-block',
+    marginRight: 10,
   },
   gray: {
     backgroundColor: '#F5F5F5',
