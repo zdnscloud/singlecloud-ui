@@ -1,3 +1,4 @@
+import uuid from '@gsmlg/utils/uuid';
 import React from 'react';
 import NetworkGraph from '../src/NetworkGraph';
 
@@ -5,14 +6,7 @@ export default {
   title: 'NetworkGraph',
 };
 
-function getRandomID() {
-  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, char => {
-    const randomNumber = (Math.random() * 16) | 0;
-    const value = char === 'x' ? randomNumber : (randomNumber & 0x3) | 0x8;
-
-    return value.toString(16);
-  });
-}
+const  getRandomID = () => uuid();
 
 const defaultNodes = [
   {

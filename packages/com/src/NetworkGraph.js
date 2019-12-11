@@ -5,7 +5,7 @@ import {
   nodeShape, linkShape,
   Node, Nodes,
   Link, Links,
-  Atlasforcedirectedlayout,
+  AtlasForceDirectedLayout,
   WithTooltip, withTooltipPropTypes,
 } from '@data-ui/network';
 
@@ -17,7 +17,7 @@ export {
   nodeShape, linkShape,
   Node, Nodes,
   Link, Links,
-  Atlasforcedirectedlayout,
+  AtlasForceDirectedLayout,
   WithTooltip, withTooltipPropTypes,
 }
 

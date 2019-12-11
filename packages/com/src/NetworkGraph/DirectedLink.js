@@ -9,16 +9,17 @@ const proptypes = {
 
 const defaultProps = {
   linkStyles: {
-    stroke: '#15aabf',
+    stroke: '#F117A0',
     strokeWidth: 1,
     strokeOpacity: 0.5,
     radius: 4,
   },
 };
 
-export default function Link(props) {
-  const { linkStyles, link } = props;
-  const { stroke, strokeWidth, strokeOpacity, radius } = linkStyles;
+export default function Link({
+  linkStyles: { stroke, strokeWidth = 1, strokeOpacity = 1, radius = 4 },
+  link,
+}) {
   const id = `arrow-id${link.id}`;
 
   return (
