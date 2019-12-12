@@ -177,17 +177,17 @@ export default defineMessages({
     id: `${scope}.updatingStatus`,
     defaultMessage: 'Updating',
   },
-  connectingStatus: {
-    id: `${scope}.connectingStatus`,
-    defaultMessage: 'Connecting',
+  CreateFailedStatus: {
+    id: `${scope}.CreateFailedStatus`,
+    defaultMessage: 'CreateFailed',
   },
   creatingStatus: {
     id: `${scope}.creatingStatus`,
     defaultMessage: 'Creating',
   },
-  unavailableStatus: {
-    id: `${scope}.unavailableStatus`,
-    defaultMessage: 'Unavailable',
+  deletingStatus: {
+    id: `${scope}.deletingStatus`,
+    defaultMessage: 'Deleting',
   },
   unreachableStatus: {
     id: `${scope}.unreachableStatus`,
