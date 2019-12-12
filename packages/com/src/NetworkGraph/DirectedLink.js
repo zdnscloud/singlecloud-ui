@@ -41,11 +41,19 @@ export default function Link({
           id={id}
           markerWidth={radius * 3 + 1}
           markerHeight={radius * 3 + 1}
-          refX={radius * 3 + 1}
+          refX={radius * 3 + 30}
           refY={radius}
           orient="auto"
           markerUnits="strokeWidth"
         >
+          <animate
+            xlinkHref={`#${id}`}
+            attributeName="refX"
+            from={radius * 3 + 100}
+            to={radius * 3}
+            dur="5s"
+            repeatCount="indefinite"
+          />
           {radius > 0 && (
             <path
               d={`M0,0 L0,${radius * 2} L${radius * 3},${radius} z`}
