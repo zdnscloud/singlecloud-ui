@@ -10,6 +10,7 @@ import {
 } from '@data-ui/network';
 
 import DirectedLink from './NetworkGraph/DirectedLink';
+import WorkloadNode from './NetworkGraph/WorkloadNode';
 
 export {
   Network, networkPropTypes,
@@ -17,38 +18,46 @@ export {
   nodeShape, linkShape,
   Node, Nodes,
   Link, Links,
+  DirectedLink,
   AtlasForceDirectedLayout,
   WithTooltip, withTooltipPropTypes,
-}
+};
 
 const NetworkGraph = ({
-  animated,
-  ariaLabel,
-  width,
-  height,
-  renderTooltip,
-  margin,
   graph,
-  onClick,
-  renderNode,
   ...rest
 }) => {
 
   return (
     <Network
       {...rest}
-      renderTooltip={renderTooltip}
-      width={width}
-      height={height}
-      margin={margin}
-      animated={animated}
-      ariaLabel={ariaLabel}
       graph={graph}
-      onClick={onClick}
-      renderNode={renderNode}
-      renderLink={DirectedLink}
     />
   );
+};
+
+NetworkGraph.defaultProps = {
+  renderNode: WorkloadNode,
+  renderLink: DirectedLink,
+  renderTooltip({ data }) {
+    const { x, y, label } = data;
+
+    return (
+      <div>
+        {label && (
+          <div>
+            <strong>{label}</strong>
+          </div>
+        )}
+        <div>
+          <strong> data </strong>
+          <pre>
+            {JSON.stringify(data, null, 2)}
+          </pre>
+        </div>
+      </div>
+    );
+  },
 };
 
 export default NetworkGraph;

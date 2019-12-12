@@ -5,20 +5,32 @@ import { linkShape } from '@data-ui/network';
 const proptypes = {
   linkStyles: PropTypes.object,
   link: linkShape.isRequired,
+  onMouseMove: PropTypes.func,
+  onClick: PropTypes.func,
+  onMouseLeave: PropTypes.func,
+  onMouseEnter: PropTypes.func,
 };
 
 const defaultProps = {
   linkStyles: {
-    stroke: '#F117A0',
-    strokeWidth: 1,
-    strokeOpacity: 0.5,
+    stroke: '#00FF00',
+    strokeWidth: 2,
+    strokeOpacity: 0.7,
     radius: 4,
   },
+  onMouseMove: null,
+  onClick: null,
+  onMouseLeave: null,
+  onMouseEnter: null,
 };
 
 export default function Link({
   linkStyles: { stroke, strokeWidth = 1, strokeOpacity = 1, radius = 4 },
   link,
+  onMouseMove,
+  onClick,
+  onMouseLeave,
+  onMouseEnter,
 }) {
   const id = `arrow-id${link.id}`;
 
@@ -52,6 +64,50 @@ export default function Link({
         strokeWidth={strokeWidth}
         strokeOpacity={link.opacity || strokeOpacity}
         markerEnd={`url(#${id})`}
+        onMouseMove={
+          onMouseMove &&
+            (event => {
+              onMouseMove({
+                event,
+                index: link.index,
+                id: link.id,
+                data: link,
+              });
+            })
+        }
+        onMouseLeave={
+          onMouseLeave &&
+            (event => {
+              onMouseLeave({
+                event,
+                index: link.index,
+                id: link.id,
+                data: link,
+              });
+            })
+        }
+        onMouseEnter={
+          onMouseEnter &&
+            (event => {
+              onMouseEnter({
+                event,
+                index: link.index,
+                id: link.id,
+                data: link,
+              });
+            })
+        }
+        onClick={
+          onClick &&
+            (event => {
+              onClick({
+                event,
+                index: link.index,
+                id: link.id,
+                data: link,
+              });
+            })
+        }
       />
     </g>
   );
