@@ -33,6 +33,8 @@ export default function Link({
   onMouseEnter,
 }) {
   const id = `arrow-id${link.id}`;
+  const lineLen = Math.sqrt((link.sourceX - link.targetX) ** 2 + (link.sourceY - link.targetY) ** 2) / 2;
+  const speed = 2000;
 
   return (
     <g>
@@ -49,9 +51,9 @@ export default function Link({
           <animate
             xlinkHref={`#${id}`}
             attributeName="refX"
-            from={radius * 3 + 100}
+            from={radius * 3 + lineLen}
             to={radius * 3}
-            dur="5s"
+            dur={`${speed}ms`}
             repeatCount="indefinite"
           />
           {radius > 0 && (
