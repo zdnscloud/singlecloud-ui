@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
+import { of } from 'rxjs';
 import { webSocket } from 'rxjs/webSocket';
-import { map, scan, throttleTime, debounceTime } from 'rxjs/operators';
+import { map, scan, catchError, debounceTime } from 'rxjs/operators';
 import dayjs from 'dayjs';
 
 export const useLogs = () => {
@@ -15,6 +16,14 @@ export const useLogs = () => {
     if (url) {
       subject
         .pipe(
+          map((l) => l),
+          catchError((err) => {
+            const { type, code, reason, message } = err;
+            const time = dayjs().toISOString();
+            return of(`${time} [${type} ${code}] ${reason || message || ''}`);
+          })
+        )
+        .pipe(
           scan((acc, val) => {
             acc.push(val);
             return acc;
@@ -27,7 +36,6 @@ export const useLogs = () => {
     }
     return () => {
       subject.complete();
-      subject.error({ code: 4000, reason: 'User close this logs output!' });
     };
   }, [url]);
   const open = (l) => {

@@ -3,11 +3,11 @@ const buttonStyle = (theme) => ({
     minHeight: 'auto',
     minWidth: 'auto',
     backgroundColor: theme.palette.text.gray,
-    color: '#FFFFFF',
+    color: theme.palette.text.c,
     boxShadow:
       '0 2px 2px 0 rgba(153, 153, 153, 0.14), 0 3px 1px -2px rgba(153, 153, 153, 0.2), 0 1px 5px 0 rgba(153, 153, 153, 0.12)',
     border: 'none',
-    borderRadius: '3px',
+    borderRadius: '0px',
     position: 'relative',
     padding: '12px 30px',
     margin: '.3125rem 1px',
@@ -74,17 +74,21 @@ const buttonStyle = (theme) => ({
     },
   },
   info: {
+    backgroundColor: theme.palette.text.info,
     boxShadow:
       '0 2px 2px 0 rgba(0, 188, 212, 0.14), 0 3px 1px -2px rgba(0, 188, 212, 0.2), 0 1px 5px 0 rgba(0, 188, 212, 0.12)',
     '&:hover,&:focus': {
+      backgroundColor: theme.palette.text.info,
       boxShadow:
         '0 14px 26px -12px rgba(0, 188, 212, 0.42), 0 4px 23px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 188, 212, 0.2)',
     },
   },
   success: {
+    backgroundColor: theme.palette.text.success,
     boxShadow:
       '0 2px 2px 0 rgba(76, 175, 80, 0.14), 0 3px 1px -2px rgba(76, 175, 80, 0.2), 0 1px 5px 0 rgba(76, 175, 80, 0.12)',
     '&:hover,&:focus': {
+      backgroundColor: theme.palette.text.success,
       boxShadow:
         '0 14px 26px -12px rgba(76, 175, 80, 0.42), 0 4px 23px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(76, 175, 80, 0.2)',
     },

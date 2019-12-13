@@ -17,6 +17,4 @@ LABEL ui.zcloud/version=$version ui.zcloud/buildtime=$buildtime ui.zcloud/branch
 
 COPY --from=uibuild /singlecloud-ui/packages/ui/build /www
 
-COPY  --from=uibuild /singlecloud-ui/packages/helm-icons  /www/helm/icons/
-
 WORKDIR /www

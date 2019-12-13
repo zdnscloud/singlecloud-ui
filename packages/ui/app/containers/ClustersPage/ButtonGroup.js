@@ -73,15 +73,15 @@ export const ButtonGroup = ({
         </Button>
       );
       break;
-    case 'Connecting':
+    case 'CreateFailed':
       clusterStatus = (
-        <Button className={classes.loadingBtn}>
+        <Button className={classes.failBtn}>
           <img
-            src={loadingIcon}
-            alt="loadingIcon"
+            src={failIcon}
+            alt="checkIcon"
             className={classes.buttonIcon}
           />
-          <FormattedMessage {...messages.connectingStatus} />
+          <FormattedMessage {...messages.CreateFailedStatus} />
         </Button>
       );
       break;
@@ -97,11 +97,11 @@ export const ButtonGroup = ({
         </Button>
       );
       break;
-    case 'Unavailable':
+    case 'Deleting':
       clusterStatus = (
         <Button className={classes.failBtn}>
           <img src={failIcon} alt="checkIcon" className={classes.buttonIcon} />
-          <FormattedMessage {...messages.unavailableStatus} />
+          <FormattedMessage {...messages.deletingStatus} />
         </Button>
       );
       break;
@@ -142,7 +142,7 @@ export const ButtonGroup = ({
 
           {status === 'Updating' ||
           status === 'Creating' ||
-          status === 'Unavailable' ? (
+          status === 'CreateFailed' ? (
               <Button
                 className={classes.handleBtn}
                 onClick={(evt) => {
@@ -160,7 +160,6 @@ export const ButtonGroup = ({
             )}
 
           {status === 'Updating' ||
-          status === 'Connecting' ||
           status === 'Creating' ? (
               <Confirm
                 handleConfirm={handleConfirm}

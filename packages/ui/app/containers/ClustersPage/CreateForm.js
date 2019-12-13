@@ -83,8 +83,8 @@ export const CreateForm = ({ handleSubmit, error, classes, formValues }) => (
                   label={<FormattedMessage {...messages.formSSHKey} />}
                   name="sshKey"
                   buttonProps={{
-                    color: 'default',
-                    variant: 'text',
+                    color: 'info',
+                    simple: true,
                   }}
                 />
               </GridItem>
