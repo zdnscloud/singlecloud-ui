@@ -103,27 +103,6 @@ export const removeUserFailure = (error, meta = {}) => ({
   error: true,
 });
 
-export const executeUserAction = (action, data, meta = {}) => ({
-  type: c.EXECUTE_USER_ACTION,
-  payload: {
-    action,
-    data,
-  },
-  meta,
-});
-
-export const executeUserActionSuccess = (resp, meta = {}) => ({
-  type: c.EXECUTE_USER_ACTION_SUCCESS,
-  payload: resp,
-  meta,
-});
-
-export const executeUserActionFailure = (error, meta = {}) => ({
-  type: c.EXECUTE_USER_ACTION_FAILURE,
-  payload: error,
-  meta,
-  error: true,
-});
 
 export const clearErrorsList = (payload, meta) => ({
   type: c.CLEAR_ERRORS_LIST,

@@ -67,7 +67,7 @@ export const updateClusterEpic = (action$, state$, { ajax }) =>
       ajax({
         url: `${meta.url}`,
         method: 'PUT',
-        body: payload,
+        body: payload
       }).pipe(
         map((resp) => {
           meta.resolve && meta.resolve(resp);
@@ -121,26 +121,6 @@ export const removeClusterEpic = (action$, state$, { ajax }) =>
     )
   );
 
-export const executeClusterActionEpic = (action$, state$, { ajax }) =>
-  action$.pipe(
-    ofType(c.EXECUTE_CLUSTER_ACTION),
-    mergeMap(({ payload: { action, data }, meta }) =>
-      ajax({
-        url: `${meta.url}?action=${action}`,
-        method: 'POST',
-        body: data,
-      }).pipe(
-        map((resp) => {
-          meta.resolve && meta.resolve(resp);
-          return a.executeClusterActionSuccess(resp, { ...meta, action });
-        }),
-        catchError((error) => {
-          meta.reject && meta.reject(error);
-          return of(a.executeClusterActionFailure(error, { ...meta, action }));
-        })
-      )
-    )
-  );
 
 export default combineEpics(
   loadClustersEpic,
@@ -148,5 +128,4 @@ export default combineEpics(
   updateClusterEpic,
   readClusterEpic,
   removeClusterEpic,
-  executeClusterActionEpic
 );

@@ -60,6 +60,7 @@ export const createNamespaceEpic = (action$, state$, { ajax }) =>
     )
   );
 
+
 export const readNamespaceEpic = (action$, state$, { ajax }) =>
   action$.pipe(
     ofType(c.READ_NAMESPACE),
@@ -100,33 +101,10 @@ export const removeNamespaceEpic = (action$, state$, { ajax }) =>
     )
   );
 
-export const executeNamespaceActionEpic = (action$, state$, { ajax }) =>
-  action$.pipe(
-    ofType(c.EXECUTE_NAMESPACE_ACTION),
-    mergeMap(({ payload: { action, data }, meta }) =>
-      ajax({
-        url: `${meta.url}?action=${action}`,
-        method: 'POST',
-        body: data,
-      }).pipe(
-        map((resp) => {
-          meta.resolve && meta.resolve(resp);
-          return a.executeNamespaceActionSuccess(resp, { ...meta, action });
-        }),
-        catchError((error) => {
-          meta.reject && meta.reject(error);
-          return of(
-            a.executeNamespaceActionFailure(error, { ...meta, action })
-          );
-        })
-      )
-    )
-  );
 
 export default combineEpics(
   loadNamespacesEpic,
   createNamespaceEpic,
   readNamespaceEpic,
   removeNamespaceEpic,
-  executeNamespaceActionEpic
 );

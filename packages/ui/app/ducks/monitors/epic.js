@@ -60,6 +60,7 @@ export const createMonitorEpic = (action$, state$, { ajax }) =>
     )
   );
 
+
 export const readMonitorEpic = (action$, state$, { ajax }) =>
   action$.pipe(
     ofType(c.READ_MONITOR),
@@ -80,8 +81,30 @@ export const readMonitorEpic = (action$, state$, { ajax }) =>
     )
   );
 
+export const removeMonitorEpic = (action$, state$, { ajax }) =>
+  action$.pipe(
+    ofType(c.REMOVE_MONITOR),
+    mergeMap(({ payload, meta }) =>
+      ajax({
+        url: `${meta.url}`,
+        method: 'DELETE',
+      }).pipe(
+        map((resp) => {
+          meta.resolve && meta.resolve(resp);
+          return a.removeMonitorSuccess(resp, { ...meta, id: payload });
+        }),
+        catchError((error) => {
+          meta.reject && meta.reject(error);
+          return of(a.removeMonitorFailure(error, { ...meta, id: payload }));
+        })
+      )
+    )
+  );
+
+
 export default combineEpics(
   loadMonitorsEpic,
   createMonitorEpic,
-  readMonitorEpic
+  readMonitorEpic,
+  removeMonitorEpic,
 );

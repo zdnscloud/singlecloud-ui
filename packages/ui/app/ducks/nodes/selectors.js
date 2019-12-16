@@ -11,9 +11,8 @@ import {
 } from 'connected-react-router/immutable';
 import {
   makeSelectCurrent as makeSelectCurrentCluster,
-  makeSelectCurrentID as makeSelectCurrentClusterID,
 } from 'ducks/clusters/selectors';
-
+import { makeSelectCurrentID as makeSelectCurrentClusterID } from 'ducks/clusters/selectors';
 import * as c from './constants';
 import { initialState } from './index';
 
@@ -41,8 +40,14 @@ export const makeSelectNodes = () =>
   createSelector(
     selectDomain,
     makeSelectCurrentClusterID(),
-    (substate, clusterID) =>
-      substate.getIn(['data', clusterID]) || substate.clear()
+  (
+    substate,
+      clusterID,
+  ) =>
+    substate.getIn([
+      'data',
+      clusterID,
+      ]) || substate.clear()
   );
 
 export const makeSelectNodesList = () =>
@@ -50,30 +55,43 @@ export const makeSelectNodesList = () =>
     selectDomain,
     makeSelectNodes(),
     makeSelectCurrentClusterID(),
-    (substate, data, clusterID) =>
-      (substate.getIn(['list', clusterID]) || fromJS([])).map((id) =>
-        data.get(id)
-      ) || fromJS([])
+  (
+    substate,
+    data,
+      clusterID,
+  ) =>
+    (substate.getIn([
+      'list',
+      clusterID,
+    ]) || fromJS([])).map((id) => data.get(id)) || fromJS([])
   );
 
 export const makeSelectCurrentID = () =>
-  createSelector(
-    createMatchSelector('*/nodes/:id/*'),
-    (match) => {
-      if (match && match.params) {
-        return match.params.id;
-      }
-      return '';
-    }
-  );
+   createSelector(
+     createMatchSelector('*/nodes/:id/*'),
+     (match) => {
+       if (match && match.params) {
+         return match.params.id;
+       }
+       return '';
+     }
+   );
 
 export const makeSelectCurrent = () =>
   createSelector(
     selectDomain,
     makeSelectCurrentClusterID(),
     makeSelectCurrentID(),
-    (substate, clusterID, id) =>
-      substate.getIn(['data', clusterID, id]) || substate.clear()
+    (
+      substate,
+      clusterID,
+      id
+    ) =>
+      substate.getIn([
+        'data',
+        clusterID,
+        id,
+      ]) || substate.clear()
   );
 
 export const makeSelectErrorsList = () =>
@@ -86,25 +104,18 @@ export const makeSelectLoadErrorsList = () =>
   createSelector(
     selectDomain,
     (substate) =>
-      substate
-        .get('errorsList')
-        .filter(({ type }) => type === c.LOAD_NODES_FAILURE)
+      substate.get('errorsList')
+      .filter(({ type }) => type === c.LOAD_NODES_FAILURE)
   );
+
+
 
 export const makeSelectReadErrorsList = () =>
   createSelector(
     selectDomain,
     (substate) =>
-      substate
-        .get('errorsList')
-        .filter(({ type }) => type === c.READ_NODE_FAILURE)
+      substate.get('errorsList')
+      .filter(({ type }) => type === c.READ_NODE_FAILURE)
   );
 
-export const makeSelectActionErrorsList = () =>
-  createSelector(
-    selectDomain,
-    (substate) =>
-      substate
-        .get('errorsList')
-        .filter(({ type }) => type === c.EXECUTE_NODE_ACTION_FAILURE)
-  );
+

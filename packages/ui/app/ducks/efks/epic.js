@@ -60,6 +60,7 @@ export const createEfkEpic = (action$, state$, { ajax }) =>
     )
   );
 
+
 export const readEfkEpic = (action$, state$, { ajax }) =>
   action$.pipe(
     ofType(c.READ_EFK),
@@ -80,4 +81,30 @@ export const readEfkEpic = (action$, state$, { ajax }) =>
     )
   );
 
-export default combineEpics(loadEfksEpic, createEfkEpic, readEfkEpic);
+export const removeEfkEpic = (action$, state$, { ajax }) =>
+  action$.pipe(
+    ofType(c.REMOVE_EFK),
+    mergeMap(({ payload, meta }) =>
+      ajax({
+        url: `${meta.url}`,
+        method: 'DELETE',
+      }).pipe(
+        map((resp) => {
+          meta.resolve && meta.resolve(resp);
+          return a.removeEfkSuccess(resp, { ...meta, id: payload });
+        }),
+        catchError((error) => {
+          meta.reject && meta.reject(error);
+          return of(a.removeEfkFailure(error, { ...meta, id: payload }));
+        })
+      )
+    )
+  );
+
+
+export default combineEpics(
+  loadEfksEpic,
+  createEfkEpic,
+  readEfkEpic,
+  removeEfkEpic,
+);

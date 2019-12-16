@@ -70,11 +70,9 @@ const ServiceMeshPage = ({
           ]}
         />
         <GridContainer className={classes.grid}>
-        <GridItem xs={12} sm={12} md={12}>
+          <GridItem xs={12} sm={12} md={12}>
             <Card>
-              <CardBody>
-                  {/* charts */}
-              </CardBody>
+              <CardBody>{/* charts */}</CardBody>
             </Card>
           </GridItem>
           <GridItem xs={12} sm={12} md={12}>

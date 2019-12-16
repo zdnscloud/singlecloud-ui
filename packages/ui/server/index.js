@@ -26,7 +26,7 @@ if (!/:\d{1,5}$/.test(backend)) {
 const proxier = proxy({
   target: `http://${backend}`,
   changeOrigin: false,
-  ws: true,
+  // ws: true,
 });
 app.use('/apis', proxier);
 app.use('/web', proxier);

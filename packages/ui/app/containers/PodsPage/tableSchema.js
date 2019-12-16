@@ -40,53 +40,51 @@ const tableSchema = schema
         }) {
           return value != null
             ? value.map((ctn, i) => (
-                <Chip
-                  key={i}
-                  label={
-                    <Fragment>
-                      {ctn.get('image')}
-                      <IconButton
-                        aria-label="View Log"
-                        className={classes.button}
-                        size="small"
-                        edge="end"
-                        style={{ transform: 'scale(0.7)' }}
-                        onClick={(evt) => {
-                          openPodLog(
-                            {
-                              podID: data.get('id'),
-                              containerName: ctn.get('name'),
-                            },
-                            {
-                              clusterID,
-                              namespaceID,
-                            }
-                          );
-                        }}
-                      >
-                        <LogIcon />
-                      </IconButton>
-                      <IconButton
-                        aria-label="Terminal"
-                        className={classes.button}
-                        size="small"
-                        edge="end"
-                        style={{ transform: 'scale(0.7)' }}
-                        onClick={(evt) => {
-                          openTerminal('pod', {
-                            clusterID,
-                            namespaceID,
+              <Chip
+                key={i}
+                label={
+                  <Fragment>
+                    {ctn.get('image')}
+                    <IconButton
+                      aria-label="View Log"
+                      size="small"
+                      edge="end"
+                      style={{ transform: 'scale(0.7)' }}
+                      onClick={(evt) => {
+                        openPodLog(
+                          {
                             podID: data.get('id'),
                             containerName: ctn.get('name'),
-                          });
-                        }}
-                      >
-                        <ShellIcon />
-                      </IconButton>
-                    </Fragment>
-                  }
-                />
-              ))
+                          },
+                          {
+                            clusterID,
+                            namespaceID,
+                          }
+                        );
+                      }}
+                    >
+                      <LogIcon />
+                    </IconButton>
+                    <IconButton
+                      aria-label="Terminal"
+                      size="small"
+                      edge="end"
+                      style={{ transform: 'scale(0.7)' }}
+                      onClick={(evt) => {
+                        openTerminal('pod', {
+                          clusterID,
+                          namespaceID,
+                          podID: data.get('id'),
+                          containerName: ctn.get('name'),
+                        });
+                      }}
+                    >
+                      <ShellIcon />
+                    </IconButton>
+                  </Fragment>
+                }
+              />
+            ))
             : null;
         },
       };

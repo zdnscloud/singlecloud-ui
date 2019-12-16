@@ -1,6 +1,6 @@
 /**
- * Duck: Horizontalpodautoscalers
- * actions: horizontalpodautoscalers
+ * Duck: HorizontalPodAutoscalers
+ * actions: horizontalPodAutoscalers
  *
  */
 import * as c from './constants';
@@ -8,100 +8,101 @@ import * as c from './constants';
 /**
  * actions
  */
-export const loadHorizontalpodautoscalers = (url, meta = {}) => ({
-  type: c.LOAD_HORIZONTALPODAUTOSCALERS,
+export const loadHorizontalPodAutoscalers = (url, meta = {}) => ({
+  type: c.LOAD_HORIZONTAL_POD_AUTOSCALERS,
   payload: url,
   meta,
 });
 
-export const loadHorizontalpodautoscalersSuccess = (resp, meta = {}) => ({
-  type: c.LOAD_HORIZONTALPODAUTOSCALERS_SUCCESS,
+export const loadHorizontalPodAutoscalersSuccess = (resp, meta = {}) => ({
+  type: c.LOAD_HORIZONTAL_POD_AUTOSCALERS_SUCCESS,
   payload: resp,
   meta,
 });
 
-export const loadHorizontalpodautoscalersFailure = (error, meta = {}) => ({
-  type: c.LOAD_HORIZONTALPODAUTOSCALERS_FAILURE,
+export const loadHorizontalPodAutoscalersFailure = (error, meta = {}) => ({
+  type: c.LOAD_HORIZONTAL_POD_AUTOSCALERS_FAILURE,
   payload: error,
   meta,
   error: true,
 });
 
-export const createHorizontalpodautoscaler = (data, meta = {}) => ({
-  type: c.CREATE_HORIZONTALPODAUTOSCALER,
+export const createHorizontalPodAutoscaler = (data, meta = {}) => ({
+  type: c.CREATE_HORIZONTAL_POD_AUTOSCALER,
   payload: data,
   meta,
 });
 
-export const createHorizontalpodautoscalerSuccess = (resp, meta = {}) => ({
-  type: c.CREATE_HORIZONTALPODAUTOSCALER_SUCCESS,
+export const createHorizontalPodAutoscalerSuccess = (resp, meta = {}) => ({
+  type: c.CREATE_HORIZONTAL_POD_AUTOSCALER_SUCCESS,
   payload: resp,
   meta,
 });
 
-export const createHorizontalpodautoscalerFailure = (error, meta = {}) => ({
-  type: c.CREATE_HORIZONTALPODAUTOSCALER_FAILURE,
+export const createHorizontalPodAutoscalerFailure = (error, meta = {}) => ({
+  type: c.CREATE_HORIZONTAL_POD_AUTOSCALER_FAILURE,
   payload: error,
   meta,
   error: true,
 });
 
-export const updateHorizontalpodautoscaler = (data, meta = {}) => ({
-  type: c.UPDATE_HORIZONTALPODAUTOSCALER,
+export const updateHorizontalPodAutoscaler = (data, meta = {}) => ({
+  type: c.UPDATE_HORIZONTAL_POD_AUTOSCALER,
   payload: data,
   meta,
 });
 
-export const updateHorizontalpodautoscalerSuccess = (resp, meta = {}) => ({
-  type: c.UPDATE_HORIZONTALPODAUTOSCALER_SUCCESS,
+export const updateHorizontalPodAutoscalerSuccess = (resp, meta = {}) => ({
+  type: c.UPDATE_HORIZONTAL_POD_AUTOSCALER_SUCCESS,
   payload: resp,
   meta,
 });
 
-export const updateHorizontalpodautoscalerFailure = (error, meta = {}) => ({
-  type: c.UPDATE_HORIZONTALPODAUTOSCALER_FAILURE,
+export const updateHorizontalPodAutoscalerFailure = (error, meta = {}) => ({
+  type: c.UPDATE_HORIZONTAL_POD_AUTOSCALER_FAILURE,
   payload: error,
   meta,
   error: true,
 });
 
-export const readHorizontalpodautoscaler = (id, meta = {}) => ({
-  type: c.READ_HORIZONTALPODAUTOSCALER,
+export const readHorizontalPodAutoscaler = (id, meta = {}) => ({
+  type: c.READ_HORIZONTAL_POD_AUTOSCALER,
   payload: id,
   meta,
 });
 
-export const readHorizontalpodautoscalerSuccess = (resp, meta = {}) => ({
-  type: c.READ_HORIZONTALPODAUTOSCALER_SUCCESS,
+export const readHorizontalPodAutoscalerSuccess = (resp, meta = {}) => ({
+  type: c.READ_HORIZONTAL_POD_AUTOSCALER_SUCCESS,
   payload: resp,
   meta,
 });
 
-export const readHorizontalpodautoscalerFailure = (error, meta = {}) => ({
-  type: c.READ_HORIZONTALPODAUTOSCALER_FAILURE,
+export const readHorizontalPodAutoscalerFailure = (error, meta = {}) => ({
+  type: c.READ_HORIZONTAL_POD_AUTOSCALER_FAILURE,
   payload: error,
   meta,
   error: true,
 });
 
-export const removeHorizontalpodautoscaler = (id, meta = {}) => ({
-  type: c.REMOVE_HORIZONTALPODAUTOSCALER,
+export const removeHorizontalPodAutoscaler = (id, meta = {}) => ({
+  type: c.REMOVE_HORIZONTAL_POD_AUTOSCALER,
   payload: id,
   meta,
 });
 
-export const removeHorizontalpodautoscalerSuccess = (resp, meta = {}) => ({
-  type: c.REMOVE_HORIZONTALPODAUTOSCALER_SUCCESS,
+export const removeHorizontalPodAutoscalerSuccess = (resp, meta = {}) => ({
+  type: c.REMOVE_HORIZONTAL_POD_AUTOSCALER_SUCCESS,
   payload: resp,
   meta,
 });
 
-export const removeHorizontalpodautoscalerFailure = (error, meta = {}) => ({
-  type: c.REMOVE_HORIZONTALPODAUTOSCALER_FAILURE,
+export const removeHorizontalPodAutoscalerFailure = (error, meta = {}) => ({
+  type: c.REMOVE_HORIZONTAL_POD_AUTOSCALER_FAILURE,
   payload: error,
   meta,
   error: true,
 });
+
 
 export const clearErrorsList = (payload, meta) => ({
   type: c.CLEAR_ERRORS_LIST,

@@ -1,6 +1,6 @@
 /**
- * Duck: Horizontalpodautoscalers
- * epic: horizontalpodautoscalers
+ * Duck: HorizontalPodAutoscalers
+ * epic: horizontalPodAutoscalers
  *
  */
 import { push } from 'connected-react-router';
@@ -22,26 +22,26 @@ import { ofType, combineEpics } from 'redux-observable';
 import * as c from './constants';
 import * as a from './actions';
 
-export const loadHorizontalpodautoscalersEpic = (action$, state$, { ajax }) =>
+export const loadHorizontalPodAutoscalersEpic = (action$, state$, { ajax }) =>
   action$.pipe(
-    ofType(c.LOAD_HORIZONTALPODAUTOSCALERS),
+    ofType(c.LOAD_HORIZONTAL_POD_AUTOSCALERS),
     mergeMap(({ payload, meta }) =>
       ajax(payload).pipe(
         map((resp) => {
           meta.resolve && meta.resolve(resp);
-          return a.loadHorizontalpodautoscalersSuccess(resp, meta);
+          return a.loadHorizontalPodAutoscalersSuccess(resp, meta);
         }),
         catchError((error) => {
           meta.reject && meta.reject(error);
-          return of(a.loadHorizontalpodautoscalersFailure(error, meta));
+          return of(a.loadHorizontalPodAutoscalersFailure(error, meta));
         })
       )
     )
   );
 
-export const createHorizontalpodautoscalerEpic = (action$, state$, { ajax }) =>
+export const createHorizontalPodAutoscalerEpic = (action$, state$, { ajax }) =>
   action$.pipe(
-    ofType(c.CREATE_HORIZONTALPODAUTOSCALER),
+    ofType(c.CREATE_HORIZONTAL_POD_AUTOSCALER),
     mergeMap(({ payload, meta }) =>
       ajax({
         url: `${meta.url}`,
@@ -50,40 +50,40 @@ export const createHorizontalpodautoscalerEpic = (action$, state$, { ajax }) =>
       }).pipe(
         map((resp) => {
           meta.resolve && meta.resolve(resp);
-          return a.createHorizontalpodautoscalerSuccess(resp, meta);
+          return a.createHorizontalPodAutoscalerSuccess(resp, meta);
         }),
         catchError((error) => {
           meta.reject && meta.reject(error);
-          return of(a.createHorizontalpodautoscalerFailure(error, meta));
+          return of(a.createHorizontalPodAutoscalerFailure(error, meta));
         })
       )
     )
   );
 
-export const updateHorizontalpodautoscalerEpic = (action$, state$, { ajax }) =>
+export const updateHorizontalPodAutoscalerEpic = (action$, state$, { ajax }) =>
   action$.pipe(
-    ofType(c.UPDATE_HORIZONTALPODAUTOSCALER),
+    ofType(c.UPDATE_HORIZONTAL_POD_AUTOSCALER),
     mergeMap(({ payload, meta }) =>
       ajax({
         url: `${meta.url}`,
         method: 'PUT',
-        body: payload,
+        body: payload
       }).pipe(
         map((resp) => {
           meta.resolve && meta.resolve(resp);
-          return a.updateHorizontalpodautoscalerSuccess(resp, meta);
+          return a.updateHorizontalPodAutoscalerSuccess(resp, meta);
         }),
         catchError((error) => {
           meta.reject && meta.reject(error);
-          return of(a.updateHorizontalpodautoscalerFailure(error, meta));
+          return of(a.updateHorizontalPodAutoscalerFailure(error, meta));
         })
       )
     )
   );
 
-export const readHorizontalpodautoscalerEpic = (action$, state$, { ajax }) =>
+export const readHorizontalPodAutoscalerEpic = (action$, state$, { ajax }) =>
   action$.pipe(
-    ofType(c.READ_HORIZONTALPODAUTOSCALER),
+    ofType(c.READ_HORIZONTAL_POD_AUTOSCALER),
     mergeMap(({ payload, meta }) =>
       ajax({
         url: `${meta.url}`,
@@ -91,27 +91,19 @@ export const readHorizontalpodautoscalerEpic = (action$, state$, { ajax }) =>
       }).pipe(
         map((resp) => {
           meta.resolve && meta.resolve(resp);
-          return a.readHorizontalpodautoscalerSuccess(resp, {
-            ...meta,
-            id: payload,
-          });
+          return a.readHorizontalPodAutoscalerSuccess(resp, { ...meta, id: payload });
         }),
         catchError((error) => {
           meta.reject && meta.reject(error);
-          return of(
-            a.readHorizontalpodautoscalerFailure(error, {
-              ...meta,
-              id: payload,
-            })
-          );
+          return of(a.readHorizontalPodAutoscalerFailure(error, { ...meta, id: payload }));
         })
       )
     )
   );
 
-export const removeHorizontalpodautoscalerEpic = (action$, state$, { ajax }) =>
+export const removeHorizontalPodAutoscalerEpic = (action$, state$, { ajax }) =>
   action$.pipe(
-    ofType(c.REMOVE_HORIZONTALPODAUTOSCALER),
+    ofType(c.REMOVE_HORIZONTAL_POD_AUTOSCALER),
     mergeMap(({ payload, meta }) =>
       ajax({
         url: `${meta.url}`,
@@ -119,28 +111,21 @@ export const removeHorizontalpodautoscalerEpic = (action$, state$, { ajax }) =>
       }).pipe(
         map((resp) => {
           meta.resolve && meta.resolve(resp);
-          return a.removeHorizontalpodautoscalerSuccess(resp, {
-            ...meta,
-            id: payload,
-          });
+          return a.removeHorizontalPodAutoscalerSuccess(resp, { ...meta, id: payload });
         }),
         catchError((error) => {
           meta.reject && meta.reject(error);
-          return of(
-            a.removeHorizontalpodautoscalerFailure(error, {
-              ...meta,
-              id: payload,
-            })
-          );
+          return of(a.removeHorizontalPodAutoscalerFailure(error, { ...meta, id: payload }));
         })
       )
     )
   );
 
+
 export default combineEpics(
-  loadHorizontalpodautoscalersEpic,
-  createHorizontalpodautoscalerEpic,
-  updateHorizontalpodautoscalerEpic,
-  readHorizontalpodautoscalerEpic,
-  removeHorizontalpodautoscalerEpic
+  loadHorizontalPodAutoscalersEpic,
+  createHorizontalPodAutoscalerEpic,
+  updateHorizontalPodAutoscalerEpic,
+  readHorizontalPodAutoscalerEpic,
+  removeHorizontalPodAutoscalerEpic,
 );

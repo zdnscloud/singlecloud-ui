@@ -11,9 +11,8 @@ import {
 } from 'connected-react-router/immutable';
 import {
   makeSelectCurrent as makeSelectCurrentCluster,
-  makeSelectCurrentID as makeSelectCurrentClusterID,
 } from 'ducks/clusters/selectors';
-
+import { makeSelectCurrentID as makeSelectCurrentClusterID } from 'ducks/clusters/selectors';
 import * as c from './constants';
 import { initialState } from './index';
 
@@ -41,8 +40,14 @@ export const makeSelectBlockDevices = () =>
   createSelector(
     selectDomain,
     makeSelectCurrentClusterID(),
-    (substate, clusterID) =>
-      substate.getIn(['data', clusterID]) || substate.clear()
+  (
+    substate,
+      clusterID,
+  ) =>
+    substate.getIn([
+      'data',
+      clusterID,
+      ]) || substate.clear()
   );
 
 export const makeSelectBlockDevicesList = () =>
@@ -50,30 +55,43 @@ export const makeSelectBlockDevicesList = () =>
     selectDomain,
     makeSelectBlockDevices(),
     makeSelectCurrentClusterID(),
-    (substate, data, clusterID) =>
-      (substate.getIn(['list', clusterID]) || fromJS([])).map((id) =>
-        data.get(id)
-      ) || fromJS([])
+  (
+    substate,
+    data,
+      clusterID,
+  ) =>
+    (substate.getIn([
+      'list',
+      clusterID,
+    ]) || fromJS([])).map((id) => data.get(id)) || fromJS([])
   );
 
 export const makeSelectCurrentID = () =>
-  createSelector(
-    createMatchSelector('*/blockDevices/:id/*'),
-    (match) => {
-      if (match && match.params) {
-        return match.params.id;
-      }
-      return '';
-    }
-  );
+   createSelector(
+     createMatchSelector('*/blockDevices/:id/*'),
+     (match) => {
+       if (match && match.params) {
+         return match.params.id;
+       }
+       return '';
+     }
+   );
 
 export const makeSelectCurrent = () =>
   createSelector(
     selectDomain,
     makeSelectCurrentClusterID(),
     makeSelectCurrentID(),
-    (substate, clusterID, id) =>
-      substate.getIn(['data', clusterID, id]) || substate.clear()
+    (
+      substate,
+      clusterID,
+      id
+    ) =>
+      substate.getIn([
+        'data',
+        clusterID,
+        id,
+      ]) || substate.clear()
   );
 
 export const makeSelectErrorsList = () =>
@@ -86,7 +104,11 @@ export const makeSelectLoadErrorsList = () =>
   createSelector(
     selectDomain,
     (substate) =>
-      substate
-        .get('errorsList')
-        .filter(({ type }) => type === c.LOAD_BLOCK_DEVICES_FAILURE)
+      substate.get('errorsList')
+      .filter(({ type }) => type === c.LOAD_BLOCK_DEVICES_FAILURE)
   );
+
+
+
+
+

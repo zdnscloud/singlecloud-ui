@@ -46,6 +46,7 @@ export const createNamespaceFailure = (error, meta = {}) => ({
   error: true,
 });
 
+
 export const readNamespace = (id, meta = {}) => ({
   type: c.READ_NAMESPACE,
   payload: id,
@@ -84,27 +85,6 @@ export const removeNamespaceFailure = (error, meta = {}) => ({
   error: true,
 });
 
-export const executeNamespaceAction = (action, data, meta = {}) => ({
-  type: c.EXECUTE_NAMESPACE_ACTION,
-  payload: {
-    action,
-    data,
-  },
-  meta,
-});
-
-export const executeNamespaceActionSuccess = (resp, meta = {}) => ({
-  type: c.EXECUTE_NAMESPACE_ACTION_SUCCESS,
-  payload: resp,
-  meta,
-});
-
-export const executeNamespaceActionFailure = (error, meta = {}) => ({
-  type: c.EXECUTE_NAMESPACE_ACTION_FAILURE,
-  payload: error,
-  meta,
-  error: true,
-});
 
 export const clearErrorsList = (payload, meta) => ({
   type: c.CLEAR_ERRORS_LIST,

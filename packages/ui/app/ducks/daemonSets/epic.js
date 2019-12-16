@@ -67,7 +67,7 @@ export const updateDaemonSetEpic = (action$, state$, { ajax }) =>
       ajax({
         url: `${meta.url}`,
         method: 'PUT',
-        body: payload,
+        body: payload
       }).pipe(
         map((resp) => {
           meta.resolve && meta.resolve(resp);
@@ -121,28 +121,6 @@ export const removeDaemonSetEpic = (action$, state$, { ajax }) =>
     )
   );
 
-export const executeDaemonSetActionEpic = (action$, state$, { ajax }) =>
-  action$.pipe(
-    ofType(c.EXECUTE_DAEMON_SET_ACTION),
-    mergeMap(({ payload: { action, data }, meta }) =>
-      ajax({
-        url: `${meta.url}?action=${action}`,
-        method: 'POST',
-        body: data,
-      }).pipe(
-        map((resp) => {
-          meta.resolve && meta.resolve(resp);
-          return a.executeDaemonSetActionSuccess(resp, { ...meta, action });
-        }),
-        catchError((error) => {
-          meta.reject && meta.reject(error);
-          return of(
-            a.executeDaemonSetActionFailure(error, { ...meta, action })
-          );
-        })
-      )
-    )
-  );
 
 export default combineEpics(
   loadDaemonSetsEpic,
@@ -150,5 +128,4 @@ export default combineEpics(
   updateDaemonSetEpic,
   readDaemonSetEpic,
   removeDaemonSetEpic,
-  executeDaemonSetActionEpic
 );

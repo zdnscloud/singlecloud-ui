@@ -35,34 +35,50 @@ export const makeSelectData = () =>
 export const makeSelectUsers = () =>
   createSelector(
     selectDomain,
-    (substate) => substate.getIn(['data']) || substate.clear()
+  (
+    substate,
+  ) =>
+    substate.getIn([
+      'data',
+      ]) || substate.clear()
   );
 
 export const makeSelectUsersList = () =>
   createSelector(
     selectDomain,
     makeSelectUsers(),
-    (substate, data) =>
-      (substate.getIn(['list']) || fromJS([])).map((id) => data.get(id)) ||
-      fromJS([])
+  (
+    substate,
+    data,
+  ) =>
+    (substate.getIn([
+      'list',
+    ]) || fromJS([])).map((id) => data.get(id)) || fromJS([])
   );
 
 export const makeSelectCurrentID = () =>
-  createSelector(
-    createMatchSelector('*/users/:id/*'),
-    (match) => {
-      if (match && match.params) {
-        return match.params.id;
-      }
-      return '';
-    }
-  );
+   createSelector(
+     createMatchSelector('*/users/:id/*'),
+     (match) => {
+       if (match && match.params) {
+         return match.params.id;
+       }
+       return '';
+     }
+   );
 
 export const makeSelectCurrent = () =>
   createSelector(
     selectDomain,
     makeSelectCurrentID(),
-    (substate, id) => substate.getIn(['data', id]) || substate.clear()
+    (
+      substate,
+      id
+    ) =>
+      substate.getIn([
+        'data',
+        id,
+      ]) || substate.clear()
   );
 
 export const makeSelectErrorsList = () =>
@@ -75,52 +91,39 @@ export const makeSelectLoadErrorsList = () =>
   createSelector(
     selectDomain,
     (substate) =>
-      substate
-        .get('errorsList')
-        .filter(({ type }) => type === c.LOAD_USERS_FAILURE)
+      substate.get('errorsList')
+      .filter(({ type }) => type === c.LOAD_USERS_FAILURE)
   );
 
 export const makeSelectCreateErrorsList = () =>
   createSelector(
     selectDomain,
     (substate) =>
-      substate
-        .get('errorsList')
-        .filter(({ type }) => type === c.CREATE_USER_FAILURE)
+      substate.get('errorsList')
+      .filter(({ type }) => type === c.CREATE_USER_FAILURE)
   );
 
 export const makeSelectUpdateErrorsList = () =>
   createSelector(
     selectDomain,
     (substate) =>
-      substate
-        .get('errorsList')
-        .filter(({ type }) => type === c.UPDATE_USER_FAILURE)
+      substate.get('errorsList')
+      .filter(({ type }) => type === c.UPDATE_USER_FAILURE)
   );
 
 export const makeSelectReadErrorsList = () =>
   createSelector(
     selectDomain,
     (substate) =>
-      substate
-        .get('errorsList')
-        .filter(({ type }) => type === c.READ_USER_FAILURE)
+      substate.get('errorsList')
+      .filter(({ type }) => type === c.READ_USER_FAILURE)
   );
 
 export const makeSelectRemoveErrorsList = () =>
   createSelector(
     selectDomain,
     (substate) =>
-      substate
-        .get('errorsList')
-        .filter(({ type }) => type === c.REMOVE_USER_FAILURE)
+      substate.get('errorsList')
+      .filter(({ type }) => type === c.REMOVE_USER_FAILURE)
   );
 
-export const makeSelectActionErrorsList = () =>
-  createSelector(
-    selectDomain,
-    (substate) =>
-      substate
-        .get('errorsList')
-        .filter(({ type }) => type === c.EXECUTE_USER_ACTION_FAILURE)
-  );

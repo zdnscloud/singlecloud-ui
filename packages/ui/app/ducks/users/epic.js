@@ -67,7 +67,7 @@ export const updateUserEpic = (action$, state$, { ajax }) =>
       ajax({
         url: `${meta.url}`,
         method: 'PUT',
-        body: payload,
+        body: payload
       }).pipe(
         map((resp) => {
           meta.resolve && meta.resolve(resp);
@@ -121,26 +121,6 @@ export const removeUserEpic = (action$, state$, { ajax }) =>
     )
   );
 
-export const executeUserActionEpic = (action$, state$, { ajax }) =>
-  action$.pipe(
-    ofType(c.EXECUTE_USER_ACTION),
-    mergeMap(({ payload: { action, data }, meta }) =>
-      ajax({
-        url: `${meta.url}?action=${action}`,
-        method: 'POST',
-        body: data,
-      }).pipe(
-        map((resp) => {
-          meta.resolve && meta.resolve(resp);
-          return a.executeUserActionSuccess(resp, { ...meta, action });
-        }),
-        catchError((error) => {
-          meta.reject && meta.reject(error);
-          return of(a.executeUserActionFailure(error, { ...meta, action }));
-        })
-      )
-    )
-  );
 
 export default combineEpics(
   loadUsersEpic,
@@ -148,5 +128,4 @@ export default combineEpics(
   updateUserEpic,
   readUserEpic,
   removeUserEpic,
-  executeUserActionEpic
 );

@@ -46,6 +46,7 @@ export const createRegistryFailure = (error, meta = {}) => ({
   error: true,
 });
 
+
 export const readRegistry = (id, meta = {}) => ({
   type: c.READ_REGISTRY,
   payload: id,
@@ -64,6 +65,26 @@ export const readRegistryFailure = (error, meta = {}) => ({
   meta,
   error: true,
 });
+
+export const removeRegistry = (id, meta = {}) => ({
+  type: c.REMOVE_REGISTRY,
+  payload: id,
+  meta,
+});
+
+export const removeRegistrySuccess = (resp, meta = {}) => ({
+  type: c.REMOVE_REGISTRY_SUCCESS,
+  payload: resp,
+  meta,
+});
+
+export const removeRegistryFailure = (error, meta = {}) => ({
+  type: c.REMOVE_REGISTRY_FAILURE,
+  payload: error,
+  meta,
+  error: true,
+});
+
 
 export const clearErrorsList = (payload, meta) => ({
   type: c.CLEAR_ERRORS_LIST,

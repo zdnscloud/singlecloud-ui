@@ -41,6 +41,10 @@ import innerServicesEpic from 'ducks/innerServices/epic';
 import outerServicesEpic from 'ducks/outerServices/epic';
 import fluentbitconfigsEpic from 'ducks/fluentbitconfigs/epic';
 
+import svcMeshWorkloadGroupsEpic from 'ducks/svcMeshWorkloadGroups/epic';
+import svcMeshWorkloadsEpic from 'ducks/svcMeshWorkloads/epic';
+import svcMeshPodsEpic from 'ducks/svcMeshPods/epic';
+
 // import epics end
 
 /**
@@ -83,7 +87,10 @@ export default function createEpic(injectedEpics = {}) {
     blockDevicesEpic,
     innerServicesEpic,
     outerServicesEpic,
-    fluentbitconfigsEpic
+    fluentbitconfigsEpic,
+    svcMeshWorkloadGroupsEpic,
+    svcMeshWorkloadsEpic,
+    svcMeshPodsEpic
     // combine epics end
   );
 
