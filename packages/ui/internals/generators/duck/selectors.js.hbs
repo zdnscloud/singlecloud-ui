@@ -75,19 +75,19 @@ export const makeSelect{{pProperCase name}}List = () =>
 {{#each parents}}
     makeSelectCurrent{{sProperCase this}}ID(),
 {{/each}}
-  (
-    substate,
-    data,
-    {{#each parents}}
-      {{singularize this}}ID,
-    {{/each}}
-  ) =>
-    (substate.getIn([
-      'list',
+    (
+      substate,
+      data,
       {{#each parents}}
       {{singularize this}}ID,
       {{/each}}
-    ]) || fromJS([])).map((id) => data.get(id)) || fromJS([])
+    ) =>
+      (substate.getIn([
+        'list',
+        {{#each parents}}
+        {{singularize this}}ID,
+        {{/each}}
+      ]) || fromJS([])).map((id) => data.get(id)) || fromJS([])
   );
 
 export const makeSelectCurrentID = () =>

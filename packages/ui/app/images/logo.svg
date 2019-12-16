@@ -1,17 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 167.11 156.57">
-  <defs>
-    <style>
-      .cls-1{fill:#209cce;}
-      .cls-2{fill:none;stroke:#209cce;stroke-miterlimit:10;stroke-width:1.42px;}
-      .cls-3{fill:#6fc493;}
-    </style>
-  </defs>
-  <g>
-    <g>
-      <polygon class="cls-1" points="115.95 156.57 0 156.57 51.16 108.87 165.9 108.87 115.95 156.57" />
-      <polygon class="cls-2" points="52.29 107.56 1.41 154.97 117.85 44.91 166.62 0.53 52.29 107.56" />
-      <polygon class="cls-3" points="115.95 47.38 115.95 156.57 165.9 108.87 165.9 0.34 115.95 47.38" />
-      <polygon class="cls-1" points="115.95 47.38 0 47.38 51.16 0.34 165.9 0.34 115.95 47.38" />
-    </g>
-  </g>
+  <defs/>
+  <path d="M115.95 156.57H0l51.16-47.7H165.9l-49.95 47.7z"/>
+  <path fill="none" stroke="#209cce" stroke-miterlimit="10" stroke-width="1.42" d="M52.29 107.56L1.41 154.97 117.85 44.91 166.62.53 52.29 107.56z"/>
+  <path fill="#6fc493" d="M115.95 47.38v109.19l49.95-47.7V.34l-49.95 47.04z"/>
+  <path d="M115.95 47.38H0L51.16.34H165.9l-49.95 47.04z"/>
 </svg>
