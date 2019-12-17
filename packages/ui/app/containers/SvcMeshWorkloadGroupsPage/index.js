@@ -8,7 +8,9 @@ import PropTypes from 'prop-types';
 import { createStructuredSelector } from 'reselect';
 import { bindActionCreators, compose } from 'redux';
 import { connect } from 'react-redux';
+import uuid from '@gsmlg/utils/uuid';
 
+import NetworkGraph from '@gsmlg/com/NetworkGraph';
 import Helmet from 'components/Helmet/Helmet';
 import { FormattedMessage } from 'react-intl';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -41,7 +43,7 @@ const SvcMeshWorkloadGroupsPage = ({
   location,
   url,
   loadSvcMeshWorkloadGroups,
-  workloads,
+  workloadGroups,
 }) => {
   const classes = useStyles();
   useEffect(() => {
@@ -78,32 +80,71 @@ const SvcMeshWorkloadGroupsPage = ({
             },
           ]}
         />
-        {workloads.size > 0
-          ? workloads.map((workload, i) => (
-            <GridContainer className={classes.grid} key={i}>
-              <GridItem xs={12} sm={12} md={12}>
-                <Card>
-                    <CardBody>{/* charts */}</CardBody>
+        {workloadGroups.size > 0
+          ? workloadGroups.map((workloadGroup, i) => {
+            const workloads = workloadGroup.get('workloads');
+            const nodesData = workloads.map((wl, idx) => ({
+              /* x: idx * 10, */
+              /* y: idx * 10, */
+              id: wl.get('id'),
+              label: wl.getIn(['stat', 'resource', 'name']),
+              kind: wl.getIn(['stat', 'resource', 'type']),
+            }));
+            const nodes = nodesData.toJS();
+
+            const linkData = workloads.map((wl) => (
+              wl.get('destinations') ? wl.get('destinations').map((tid) => ({
+                source: wl.get('id'),
+                target: tid,
+                id: `${wl.get('id')}=>${tid}`,
+              })) : null
+            )).filter((wl) => wl).flatten(1).toJS();
+            const links = linkData.map((l) => ({
+              ...l,
+              source: nodes[nodesData.findIndex((n) => n.id === l.source)],
+              target: nodes[nodesData.findIndex((n) => n.id === l.target)],
+            }));
+
+            const data = {
+              nodes,
+              links,
+            };
+
+            return (
+              <GridContainer className={classes.grid} key={i}>
+                <GridItem xs={12} sm={12} md={12}>
+                  <Card>
+                    <CardBody>
+                      <NetworkGraph
+                        animated
+                        width={800}
+                        height={400}
+                        graph={data}
+                      />
+                    </CardBody>
                   </Card>
-              </GridItem>
-              <GridItem xs={12} sm={12} md={12}>
-                <Card>
+                </GridItem>
+                <GridItem xs={12} sm={12} md={12}>
+                  <Card>
                     <CardHeader>
-                    <h4>
-                        <FormattedMessage {...messages.svcMeshWorkloadGroups} />
-                    </h4>
+                      <h4>
+                        <FormattedMessage
+                          {...messages.svcMeshWorkloadGroups}
+                        />
+                      </h4>
                     </CardHeader>
                     <CardBody>
-                    <SvcMeshWorkloadGroupsTable
-                        data={workload.get('workloads')}
-                        workloadID={workload.get('id')}
+                      <SvcMeshWorkloadGroupsTable
+                        data={workloads}
+                        workloadID={workloadGroup.get('id')}
                       />
-                  </CardBody>
+                    </CardBody>
                   </Card>
-              </GridItem>
-            </GridContainer>
-           ))
-          : null}
+                </GridItem>
+              </GridContainer>
+            );
+          })
+         : null}
       </div>
     </div>
   );
@@ -113,7 +154,7 @@ const mapStateToProps = createStructuredSelector({
   clusterID: makeSelectClusterID(),
   namespaceID: makeSelectNamespaceID(),
   url: makeSelectURL(),
-  workloads: makeSelectSvcMeshWorkloadGroupsList(),
+  workloadGroups: makeSelectSvcMeshWorkloadGroupsList(),
 });
 
 const mapDispatchToProps = (dispatch) =>
