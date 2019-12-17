@@ -29,9 +29,8 @@ const SvcMeshWorkloadGroupsTable = ({
   data,
   clusterID,
   namespaceID,
-  removeSvcMeshWorkloadGroup,
+  workloadID,
 }) => {
-  console.log('data', data.toJS());
   const classes = useStyles();
   const pathname = location.get('pathname');
   const mergedSchema = schema
@@ -39,7 +38,13 @@ const SvcMeshWorkloadGroupsTable = ({
       if (sch.id === 'name') {
         return {
           ...sch,
-          props: { pathname },
+          props: { pathname, workloadID },
+        };
+      }
+      if (sch.id === 'successRate') {
+        return {
+          ...sch,
+          props: { classes },
         };
       }
       return sch;
@@ -64,7 +69,6 @@ const mapStateToProps = createStructuredSelector({
   location: makeSelectLocation(),
   clusterID: makeSelectClusterID(),
   namespaceID: makeSelectNamespaceID(),
-  // data: makeSelectSvcMeshWorkloadGroupsList(),
 });
 
 const mapDispatchToProps = (dispatch) =>

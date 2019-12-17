@@ -25,7 +25,14 @@ import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
 
 import { makeSelectCurrentID as makeSelectClusterID } from 'ducks/clusters/selectors';
 import { makeSelectCurrentID as makeSelectNamespaceID } from 'ducks/namespaces/selectors';
-import { makeSelectURL } from 'ducks/svcMeshWorkloads/selectors';
+import {
+  makeSelectCurrentID as makeSelectSvcMeshWorkloadGroupID,
+  makeSelectURL,
+} from 'ducks/svcMeshWorkloadGroups/selectors';
+import {
+  // makeSelectURL,
+  makeSelectCurrentID,
+} from 'ducks/svcMeshWorkloads/selectors';
 import * as actions from 'ducks/svcMeshWorkloads/actions';
 
 import useStyles from './styles';
@@ -37,21 +44,29 @@ const SvcMeshWorkloadsPage = ({
   namespaceID,
   location,
   url,
-  loadSvcMeshWorkloads,
+  id,
+  readSvcMeshWorkload,
+  svcMeshWorkloadGroupID,
 }) => {
   const classes = useStyles();
   useEffect(() => {
-    if (url) {
-      loadSvcMeshWorkloads(url, {
+    if (url && id && svcMeshWorkloadGroupID) {
+      const wlUrl = `${url}/${svcMeshWorkloadGroupID}/svcmeshworkloads/${id}`;
+      readSvcMeshWorkload(id, {
         clusterID,
         namespaceID,
+        svcMeshWorkloadGroupID,
+        url: wlUrl,
       });
     }
     const t = setInterval(() => {
-      if (url) {
-        loadSvcMeshWorkloads(url, {
+      if (url && id && svcMeshWorkloadGroupID) {
+        const wlUrl = `${url}/${svcMeshWorkloadGroupID}/svcmeshworkloads/${id}`;
+        readSvcMeshWorkload(id, {
           clusterID,
           namespaceID,
+          svcMeshWorkloadGroupID,
+          url: wlUrl,
         });
       }
     }, 3000);
@@ -59,7 +74,14 @@ const SvcMeshWorkloadsPage = ({
     return () => {
       clearInterval(t);
     };
-  }, [clusterID, loadSvcMeshWorkloads, namespaceID, url]);
+  }, [
+    clusterID,
+    readSvcMeshWorkload,
+    namespaceID,
+    url,
+    svcMeshWorkloadGroupID,
+    id,
+  ]);
 
   return (
     <div className={classes.root}>
@@ -69,7 +91,14 @@ const SvcMeshWorkloadsPage = ({
         <Breadcrumbs
           data={[
             {
-              path: `/clusters`,
+              path: `/clusters/${clusterID}/namespaces/${namespaceID}/svcMeshWorkloadGroups`,
+              name: (
+                <FormattedMessage
+                  {...messages.svcMeshWorkloadGroupspageTitle}
+                />
+              ),
+            },
+            {
               name: <FormattedMessage {...messages.pageTitle} />,
             },
           ]}
@@ -79,11 +108,47 @@ const SvcMeshWorkloadsPage = ({
             <Card>
               <CardHeader>
                 <h4>
-                  <FormattedMessage {...messages.svcMeshWorkloads} />
+                  <FormattedMessage {...messages.inboundCardTitle} />
                 </h4>
               </CardHeader>
               <CardBody>
-                <Table />
+                <Table parentType="inbound" />
+              </CardBody>
+            </Card>
+          </GridItem>
+          <GridItem xs={12} sm={12} md={12}>
+            <Card>
+              <CardHeader>
+                <h4>
+                  <FormattedMessage {...messages.outboundCardTitle} />
+                </h4>
+              </CardHeader>
+              <CardBody>
+                <Table parentType="outbound" />
+              </CardBody>
+            </Card>
+          </GridItem>
+          <GridItem xs={12} sm={12} md={12}>
+            <Card>
+              <CardHeader>
+                <h4>
+                  <FormattedMessage {...messages.podsCardTitle} />
+                </h4>
+              </CardHeader>
+              <CardBody>
+                <Table parentType="pods" />
+              </CardBody>
+            </Card>
+          </GridItem>
+          <GridItem xs={12} sm={12} md={12}>
+            <Card>
+              <CardHeader>
+                <h4>
+                  <FormattedMessage {...messages.TCPCardTitle} />
+                </h4>
+              </CardHeader>
+              <CardBody>
+                <Table parentType="tcp" />
               </CardBody>
             </Card>
           </GridItem>
@@ -97,6 +162,8 @@ const mapStateToProps = createStructuredSelector({
   clusterID: makeSelectClusterID(),
   namespaceID: makeSelectNamespaceID(),
   url: makeSelectURL(),
+  id: makeSelectCurrentID(),
+  svcMeshWorkloadGroupID: makeSelectSvcMeshWorkloadGroupID(),
 });
 
 const mapDispatchToProps = (dispatch) =>

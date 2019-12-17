@@ -25,11 +25,12 @@ import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
 
 import { makeSelectCurrentID as makeSelectClusterID } from 'ducks/clusters/selectors';
 import { makeSelectCurrentID as makeSelectNamespaceID } from 'ducks/namespaces/selectors';
-import { makeSelectCurrentID as makeSelectWorkloadID } from 'ducks/svcMeshWorkloads/selectors';
+import { makeSelectCurrentID as makeSelectSvcMeshWorkloadID } from 'ducks/svcMeshWorkloads/selectors';
 import {
+  makeSelectCurrentID as makeSelectSvcMeshWorkloadGroupID,
   makeSelectURL,
-  makeSelectCurrentID,
-} from 'ducks/svcMeshPods/selectors';
+} from 'ducks/svcMeshWorkloadGroups/selectors';
+import { makeSelectCurrentID } from 'ducks/svcMeshPods/selectors';
 import * as actions from 'ducks/svcMeshPods/actions';
 
 import useStyles from './styles';
@@ -41,22 +42,32 @@ const SvcMeshPodsPage = ({
   namespaceID,
   location,
   url,
-  loadSvcMeshPods,
-  workloadID,
+  readSvcMeshPod,
+  svcMeshWorkloadGroupID,
+  svcMeshWorkloadID,
+  id,
 }) => {
   const classes = useStyles();
   useEffect(() => {
-    if (url) {
-      loadSvcMeshPods(url, {
+    if (url && id && svcMeshWorkloadID && svcMeshWorkloadGroupID) {
+      const podUrl = `${url}/${svcMeshWorkloadGroupID}/svcmeshworkloads/${svcMeshWorkloadID}/svcmeshpods/${id}`;
+      readSvcMeshPod(id, {
         clusterID,
         namespaceID,
+        svcMeshWorkloadGroupID,
+        svcMeshWorkloadID,
+        url: podUrl,
       });
     }
     const t = setInterval(() => {
-      if (url) {
-        loadSvcMeshPods(url, {
+      if (url && id && svcMeshWorkloadID && svcMeshWorkloadGroupID) {
+        const podUrl = `${url}/${svcMeshWorkloadGroupID}/svcmeshworkloads/${svcMeshWorkloadID}/svcmeshpods/${id}`;
+        readSvcMeshPod(id, {
           clusterID,
           namespaceID,
+          svcMeshWorkloadGroupID,
+          svcMeshWorkloadID,
+          url: podUrl,
         });
       }
     }, 3000);
@@ -64,7 +75,15 @@ const SvcMeshPodsPage = ({
     return () => {
       clearInterval(t);
     };
-  }, [clusterID, loadSvcMeshPods, namespaceID, url]);
+  }, [
+    clusterID,
+    readSvcMeshPod,
+    namespaceID,
+    url,
+    svcMeshWorkloadGroupID,
+    svcMeshWorkloadID,
+    id,
+  ]);
 
   return (
     <div className={classes.root}>
@@ -82,7 +101,7 @@ const SvcMeshPodsPage = ({
               ),
             },
             {
-              path: `/clusters/${clusterID}/namespaces/${namespaceID}/svcMeshWorkloadGroups/${workloadID}`,
+              path: `/clusters/${clusterID}/namespaces/${namespaceID}/svcMeshWorkloadGroups/${svcMeshWorkloadGroupID}/show`,
               name: (
                 <FormattedMessage {...messages.svcMeshWorkloadsPageTitle} />
               ),
@@ -138,7 +157,9 @@ const SvcMeshPodsPage = ({
 const mapStateToProps = createStructuredSelector({
   clusterID: makeSelectClusterID(),
   namespaceID: makeSelectNamespaceID(),
-  WorkloadID: makeSelectWorkloadID(),
+  svcMeshWorkloadGroupID: makeSelectSvcMeshWorkloadGroupID(),
+  svcMeshWorkloadID: makeSelectSvcMeshWorkloadID(),
+  id: makeSelectCurrentID(),
   url: makeSelectURL(),
 });
 

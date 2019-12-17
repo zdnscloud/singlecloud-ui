@@ -80,27 +80,28 @@ const SvcMeshWorkloadGroupsPage = ({
         />
         {workloads.size > 0
           ? workloads.map((workload, i) => (
-              <GridContainer className={classes.grid} key={i}>
-                <GridItem xs={12} sm={12} md={12}>
-                  <Card>
-                  <CardBody>{/* charts */}</CardBody>
-                </Card>
-                </GridItem>
-                <GridItem xs={12} sm={12} md={12}>
-                  <Card>
-                  <CardHeader>
-                      <h4>
-                      <FormattedMessage {...messages.svcMeshWorkloadGroups} />
-                      </h4>
-                  </CardHeader>
-                  <CardBody>
-                      <SvcMeshWorkloadGroupsTable
-                      data={workload.get('workloads')}
-                    />
-                    </CardBody>
-                </Card>
-                </GridItem>
-              </GridContainer>
+            <GridContainer className={classes.grid} key={i}>
+              <GridItem xs={12} sm={12} md={12}>
+                <Card>
+                    <CardBody>{/* charts */}</CardBody>
+                  </Card>
+              </GridItem>
+              <GridItem xs={12} sm={12} md={12}>
+                <Card>
+                    <CardHeader>
+                    <h4>
+                        <FormattedMessage {...messages.svcMeshWorkloadGroups} />
+                    </h4>
+                    </CardHeader>
+                    <CardBody>
+                    <SvcMeshWorkloadGroupsTable
+                        data={workload.get('workloads')}
+                        workloadID={workload.get('id')}
+                      />
+                  </CardBody>
+                  </Card>
+              </GridItem>
+            </GridContainer>
            ))
           : null}
       </div>

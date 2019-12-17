@@ -389,7 +389,7 @@ const appRoutes = [
   // svcMeshWorkloads start
   {
     path:
-      '/clusters/:cluster_id/namespaces/:namespace_id/svcMeshWorkloadGroups/:workload_id',
+      '/clusters/:cluster_id/namespaces/:namespace_id/svcMeshWorkloadGroups/:svcMeshWorkloadGroup_id/svcmeshworkloads/:svcMeshWorkload_id/show',
     name: 'SvcMeshWorkloads',
     icon: Dashboard,
     component: SvcMeshWorkloadsPage,
@@ -398,7 +398,7 @@ const appRoutes = [
   // svcMeshPods start
   {
     path:
-      '/clusters/:cluster_id/namespaces/:namespace_id/svcMeshWorkloadGroups/:workload_id/:pod_id',
+      '/clusters/:cluster_id/namespaces/:namespace_id/svcMeshWorkloadGroups/:svcMeshWorkloadGroup_id/svcmeshworkloads/:svcMeshWorkload_id/svcmeshpods/:svcMeshPod_id/show',
     name: 'SvcMeshPods',
     icon: Dashboard,
     component: SvcMeshPodsPage,

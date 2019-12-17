@@ -17,8 +17,12 @@ import { SimpleTable } from '@gsmlg/com';
 import { makeSelectLocation } from 'ducks/app/selectors';
 import { makeSelectCurrentID as makeSelectClusterID } from 'ducks/clusters/selectors';
 import { makeSelectCurrentID as makeSelectNamespaceID } from 'ducks/namespaces/selectors';
-import { makeSelectSvcMeshWorkloadsList } from 'ducks/svcMeshWorkloads/selectors';
+import {
+  makeSelectCurrent,
+  makeSelectCurrentID,
+} from 'ducks/svcMeshWorkloads/selectors';
 import * as actions from 'ducks/svcMeshWorkloads/actions';
+import { makeSelectCurrentID as makeSelectSvcMeshWorkloadGroupID } from 'ducks/svcMeshWorkloadGroups/selectors';
 
 import messages from './messages';
 import useStyles from './styles';
@@ -30,9 +34,14 @@ const SvcMeshWorkloadsTable = ({
   clusterID,
   namespaceID,
   parentType,
+  current,
+  svcMeshWorkloadGroupID,
+  svcMeshWorkloadID,
 }) => {
   const classes = useStyles();
-  const pathname = location.get('pathname');
+  const pods = current.get('pods') || [];
+  const inbound = current.get('inbound') || [];
+  const outbound = current.get('outbound') || [];
   let mergedSchema = schema
     .map((sch) => {
       if (sch.id === 'actions') {
@@ -41,25 +50,68 @@ const SvcMeshWorkloadsTable = ({
           props: {
             clusterID,
             namespaceID,
+            svcMeshWorkloadGroupID,
+            svcMeshWorkloadID,
           },
         };
       }
       if (sch.id === 'pods') {
         return {
           ...sch,
-          props: { pathname },
+          props: {
+            clusterID,
+            namespaceID,
+            svcMeshWorkloadGroupID,
+            svcMeshWorkloadID,
+          },
         };
       }
       if (sch.id === 'resource') {
         return {
           ...sch,
-          props: { pathname },
+          props: {
+            clusterID,
+            namespaceID,
+            svcMeshWorkloadGroupID,
+            svcMeshWorkloadID,
+            pods,
+          },
+        };
+      }
+      if (sch.id === 'meshed') {
+        return {
+          ...sch,
+          props: { parentType },
         };
       }
       if (sch.id === 'successRate') {
         return {
           ...sch,
-          props: { classes },
+          props: { classes, parentType },
+        };
+      }
+      if (sch.id === 'RPS') {
+        return {
+          ...sch,
+          props: { parentType },
+        };
+      }
+      if (sch.id === 'latencyMsP50') {
+        return {
+          ...sch,
+          props: { parentType },
+        };
+      }
+      if (sch.id === 'latencyMsP95') {
+        return {
+          ...sch,
+          props: { parentType },
+        };
+      }
+      if (sch.id === 'latencyMsP99') {
+        return {
+          ...sch,
+          props: { parentType },
         };
       }
       return sch;
@@ -71,12 +123,8 @@ const SvcMeshWorkloadsTable = ({
   let data = [];
   // console.log('mergedSchema',mergedSchema)
   switch (parentType) {
-    case 'workload':
-      data = [];
-      mergedSchema = _.dropRight(_.drop(mergedSchema, 1), 4);
-      break;
     case 'inbound':
-      data = [];
+      data = inbound;
       mergedSchema = _.drop(mergedSchema, 1).filter(
         (s) =>
           s.id !== 'connections' &&
@@ -85,7 +133,7 @@ const SvcMeshWorkloadsTable = ({
       );
       break;
     case 'outbound':
-      data = [];
+      data = outbound;
       mergedSchema = _.drop(mergedSchema, 1).filter(
         (s) =>
           s.id !== 'connections' &&
@@ -94,13 +142,13 @@ const SvcMeshWorkloadsTable = ({
       );
       break;
     case 'pods':
-      data = [];
+      data = pods;
       mergedSchema = _.dropRight(mergedSchema, 4).filter(
         (s) => s.id !== 'resource'
       );
       break;
     case 'tcp':
-      data = [];
+      data = pods;
       mergedSchema = mergedSchema.filter(
         (s) =>
           s.id === 'pods' ||
@@ -128,7 +176,9 @@ const mapStateToProps = createStructuredSelector({
   location: makeSelectLocation(),
   clusterID: makeSelectClusterID(),
   namespaceID: makeSelectNamespaceID(),
-  data: makeSelectSvcMeshWorkloadsList(),
+  current: makeSelectCurrent(),
+  svcMeshWorkloadID: makeSelectCurrentID(),
+  svcMeshWorkloadGroupID: makeSelectSvcMeshWorkloadGroupID(),
 });
 
 const mapDispatchToProps = (dispatch) =>

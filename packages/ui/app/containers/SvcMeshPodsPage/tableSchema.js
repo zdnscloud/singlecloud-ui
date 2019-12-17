@@ -9,6 +9,7 @@ const schema = [
   'pods',
   'resource',
   'meshed',
+  'successRate',
   'RPS',
   'latencyMsP50',
   'latencyMsP95',
@@ -49,31 +50,4 @@ const tableSchema = schema
     }
     return sch;
   });
-tableSchema.splice(3, 0, {
-  id: 'successRate',
-  label: 'SuccessRate',
-  component: ({ data, clusterID, namespaceID, classes }) => {
-    const rate = 92;
-    let activeClasses = '';
-    switch (true) {
-      case rate > 95:
-        activeClasses = classes.green;
-        break;
-      case rate > 90 < 95:
-        activeClasses = classes.orange;
-        break;
-      case rate > 90:
-        activeClasses = classes.red;
-        break;
-      default:
-        break;
-    }
-    return (
-      <Fragment>
-        <span className={classNames(classes.point, activeClasses)}></span>
-        <span> {rate} % </span>
-      </Fragment>
-    );
-  },
-});
 export default tableSchema;
