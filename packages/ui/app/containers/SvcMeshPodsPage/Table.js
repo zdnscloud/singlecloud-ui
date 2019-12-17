@@ -10,6 +10,7 @@ import _ from 'lodash';
 import { FormattedMessage } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import { bindActionCreators, compose } from 'redux';
+import { fromJS } from 'immutable';
 
 import Paper from '@material-ui/core/Paper';
 import { SimpleTable } from '@gsmlg/com';
@@ -24,6 +25,14 @@ import messages from './messages';
 import useStyles from './styles';
 import schema from './tableSchema';
 
+const refactorPods = (data) => {
+  const pods = data.map((item) => {
+    const { id, stat } = item.toJS();
+    return fromJS({ id, ...stat });
+  });
+  return pods;
+};
+
 /* eslint-disable react/prefer-stateless-function */
 const SvcMeshPodsTable = ({
   location,
@@ -31,53 +40,43 @@ const SvcMeshPodsTable = ({
   namespaceID,
   parentType,
   current,
+  svcMeshWorkloadGroupID,
+  svcMeshWorkloadID,
 }) => {
   const classes = useStyles();
-  const pods = current.get('pods') || [];
+  const pods = fromJS([{ id: current.get('id'), stat: current.get('stat') }]);
   const inbound = current.get('inbound') || [];
   const outbound = current.get('outbound') || [];
+  console.log('pods',pods.toJS());
   let mergedSchema = schema
     .map((sch) => {
+      if (sch.id === 'pods') {
+        return {
+          ...sch,
+          props: {
+            clusterID,
+            namespaceID,
+            svcMeshWorkloadGroupID,
+            svcMeshWorkloadID,
+          },
+        };
+      }
+      if (sch.id === 'resource') {
+        return {
+          ...sch,
+          props: {
+            clusterID,
+            namespaceID,
+            svcMeshWorkloadGroupID,
+            svcMeshWorkloadID,
+            pods,
+          },
+        };
+      }
       if (sch.id === 'successRate') {
         return {
           ...sch,
           props: { classes },
-        };
-      }
-      if (sch.id === 'meshed') {
-        return {
-          ...sch,
-          props: { parentType },
-        };
-      }
-      if (sch.id === 'successRate') {
-        return {
-          ...sch,
-          props: { classes, parentType },
-        };
-      }
-      if (sch.id === 'RPS') {
-        return {
-          ...sch,
-          props: { parentType },
-        };
-      }
-      if (sch.id === 'latencyMsP50') {
-        return {
-          ...sch,
-          props: { parentType },
-        };
-      }
-      if (sch.id === 'latencyMsP95') {
-        return {
-          ...sch,
-          props: { parentType },
-        };
-      }
-      if (sch.id === 'latencyMsP99') {
-        return {
-          ...sch,
-          props: { parentType },
         };
       }
       return sch;
@@ -101,11 +100,11 @@ const SvcMeshPodsTable = ({
       );
       break;
     case 'inbound':
-      data = [];
+      data = inbound;
       mergedSchema = _.dropRight(_.drop(mergedSchema, 1), 3);
       break;
     case 'outbound':
-      data = [];
+      data = outbound;
       mergedSchema = _.dropRight(_.drop(mergedSchema, 1), 3);
       break;
     default:

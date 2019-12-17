@@ -57,8 +57,8 @@ const tableSchema = schema
         ...sch,
         component: ({ data }) => (
           <span>
-            {data.getIn(['stat', 'meshedPodCount'])} /
-            {data.getIn(['stat', 'runningPodCount'])}
+            {data.getIn(['stat', 'meshedPodCount']) || '--'} /
+            {data.getIn(['stat', 'runningPodCount']) || '--'}
           </span>
         ),
       };

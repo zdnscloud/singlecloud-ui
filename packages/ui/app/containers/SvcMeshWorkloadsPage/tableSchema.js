@@ -62,7 +62,7 @@ const tableSchema = schema
               'id'
             )}/show`}
           >
-            {data.getIn(['stat', 'resource', 'name'])}
+            {data.getIn(['resource', 'name'])}
           </Button>
         ),
       };
@@ -98,27 +98,12 @@ const tableSchema = schema
     if (sch.id === 'meshed') {
       return {
         ...sch,
-        component: ({ data, parentType }) => {
-          let meshedPodCount = 0;
-          let runningPodCount = 0;
-          switch (true) {
-            case parentType === 'inbound' || parentType === 'outbound':
-              meshedPodCount = data.get('meshedPodCount');
-              runningPodCount = data.get('runningPodCount') || 0;
-              break;
-            case parentType === 'pods' || parentType === 'tcp':
-              meshedPodCount = data.getIn(['stat', 'meshedPodCount']);
-              runningPodCount = data.getIn(['stat', 'runningPodCount']) || 0;
-              break;
-            default:
-              break;
-          }
-          return (
-            <span>
-              {meshedPodCount} / {runningPodCount}
-            </span>
-          );
-        },
+        component: ({ data }) => (
+          <span>
+            {data.get('meshedPodCount') || '--'} /
+            {data.get('runningPodCount') || '--'}
+          </span>
+        ),
       };
     }
     return sch;
@@ -127,22 +112,9 @@ const tableSchema = schema
     if (sch.id === 'successRate') {
       return {
         ...sch,
-        component: ({ data, classes, parentType }) => {
-          let successCount = 0;
-          let failureCount = 0;
-          switch (true) {
-            case parentType === 'inbound' || parentType === 'outbound':
-              successCount = data.getIn(['basicStat', 'successCount']);
-              failureCount = data.getIn(['basicStat', 'failureCount)']) || 0;
-              break;
-            case parentType === 'pods' || parentType === 'tcp':
-              successCount = data.getIn(['stat', 'basicStat', 'successCount']);
-              failureCount =
-                data.getIn(['stat', 'basicStat', 'failureCount)']) || 0;
-              break;
-            default:
-              break;
-          }
+        component: ({ data, classes }) => {
+          const successCount = data.getIn(['basicStat', 'successCount']);
+          const failureCount = data.getIn(['basicStat', 'failureCount)']) || 0;
           let successRate =
             (successCount / (successCount + failureCount)) * 100;
           let activeClasses = '';
@@ -182,28 +154,12 @@ const tableSchema = schema
     if (sch.id === 'RPS') {
       return {
         ...sch,
-        component: ({ data, parentType }) => {
-          let successCount = 0;
-          let failureCount = 0;
-          let timeWindow = '0m';
-          switch (true) {
-            case parentType === 'inbound' || parentType === 'outbound':
-              successCount = data.getIn(['basicStat', 'successCount']);
-              failureCount = data.getIn(['basicStat', 'failureCount)']) || 0;
-              timeWindow =
-                Number(data.get('timeWindow').replace('m', '')) * 60 || 0;
-              break;
-            case parentType === 'pods' || parentType === 'tcp':
-              successCount = data.getIn(['stat', 'basicStat', 'successCount']);
-              failureCount =
-                data.getIn(['stat', 'basicStat', 'failureCount)']) || 0;
-              timeWindow =
-                Number(data.getIn(['stat', 'timeWindow']).replace('m', '')) *
-                  60 || 0;
-              break;
-            default:
-              break;
-          }
+        component: ({ data }) => {
+          const successCount = data.getIn(['basicStat', 'successCount']);
+          const failureCount = data.getIn(['basicStat', 'failureCount)']) || 0;
+          const timeWindow = data.get('timeWindow')
+            ? Number(data.get('timeWindow').replace('m', '')) * 60
+            : 0;
           const rps = (successCount + failureCount) / timeWindow;
 
           return (
@@ -220,20 +176,9 @@ const tableSchema = schema
     if (sch.id === 'latencyMsP50') {
       return {
         ...sch,
-        component: ({ data, parentType }) => {
-          let latencyMsP50 = 0;
-          switch (true) {
-            case parentType === 'inbound' || parentType === 'outbound':
-              latencyMsP50 = data.getIn(['basicStat', 'latencyMsP50']);
-              break;
-            case parentType === 'pods' || parentType === 'tcp':
-              latencyMsP50 = data.getIn(['stat', 'basicStat', 'latencyMsP50']);
-              break;
-            default:
-              break;
-          }
-          return <span>{latencyMsP50 || '--'}</span>;
-        },
+        component: ({ data }) => (
+          <span>{data.getIn(['basicStat', 'latencyMsP50']) || '--'}</span>
+        ),
       };
     }
     return sch;
@@ -242,20 +187,9 @@ const tableSchema = schema
     if (sch.id === 'latencyMsP95') {
       return {
         ...sch,
-        component: ({ data, parentType }) => {
-          let latencyMsP50 = 0;
-          switch (true) {
-            case parentType === 'inbound' || parentType === 'outbound':
-              latencyMsP50 = data.getIn(['basicStat', 'latencyMsP95']);
-              break;
-            case parentType === 'pods' || parentType === 'tcp':
-              latencyMsP50 = data.getIn(['stat', 'basicStat', 'latencyMsP95']);
-              break;
-            default:
-              break;
-          }
-          return <span>{latencyMsP50 || '--'}</span>;
-        },
+        component: ({ data }) => (
+          <span>{data.getIn(['basicStat', 'latencyMsP95']) || '--'}</span>
+        ),
       };
     }
     return sch;
@@ -264,20 +198,9 @@ const tableSchema = schema
     if (sch.id === 'latencyMsP99') {
       return {
         ...sch,
-        component: ({ data, parentType }) => {
-          let latencyMsP50 = 0;
-          switch (true) {
-            case parentType === 'inbound' || parentType === 'outbound':
-              latencyMsP50 = data.getIn(['basicStat', 'latencyMsP99']);
-              break;
-            case parentType === 'pods' || parentType === 'tcp':
-              latencyMsP50 = data.getIn(['stat', 'basicStat', 'latencyMsP99']);
-              break;
-            default:
-              break;
-          }
-          return <span>{latencyMsP50 || '--'}</span>;
-        },
+        component: ({ data }) => (
+          <span>{data.getIn(['basicStat', 'latencyMsP99']) || '--'}</span>
+        ),
       };
     }
     return sch;
@@ -299,12 +222,12 @@ const tableSchema = schema
         ...sch,
         component: ({ data }) => {
           const readBytesTotal = data.getIn(['tcpStat', 'readBytesTotal']) || 0;
-          const timeWindow =
-            Number(data.getIn(['stat', 'timeWindow']).replace('m', '')) * 60 ||
-            0;
-          const readBytes = readBytesTotal / timeWindow;
+          const timeWindow = data.get('timeWindow')
+            ? Number(data.get('timeWindow').replace('m', '')) * 60
+            : 0;
+          const readBytes = readBytesTotal / (timeWindow * 1000);
           return (
-            <span>{readBytes ? `${readBytes.toFixed(3)} B/s` : '--'}</span>
+            <span>{readBytes ? `${readBytes.toFixed(3)} kB/s` : '--'}</span>
           );
         },
       };
@@ -318,12 +241,12 @@ const tableSchema = schema
         component: ({ data }) => {
           const writeBytesTotal =
             data.getIn(['tcpStat', 'writeBytesTotal']) || 0;
-          const timeWindow =
-            Number(data.getIn(['stat', 'timeWindow']).replace('m', '')) * 60 ||
-            0;
-          const writeBytes = writeBytesTotal / timeWindow;
+          const timeWindow = data.get('timeWindow')
+            ? Number(data.get('timeWindow').replace('m', '')) * 60
+            : 0;
+          const writeBytes = writeBytesTotal / (timeWindow * 1000);
           return (
-            <span>{writeBytes ? `${writeBytes.toFixed(3)} B/s` : '--'}</span>
+            <span>{writeBytes ? `${writeBytes.toFixed(3)} kB/s` : '--'}</span>
           );
         },
       };

@@ -84,7 +84,6 @@ const SvcMeshPodsPage = ({
     svcMeshWorkloadID,
     id,
   ]);
-
   return (
     <div className={classes.root}>
       <Helmet title={messages.pageTitle} description={messages.pageDesc} />
@@ -101,7 +100,7 @@ const SvcMeshPodsPage = ({
               ),
             },
             {
-              path: `/clusters/${clusterID}/namespaces/${namespaceID}/svcMeshWorkloadGroups/${svcMeshWorkloadGroupID}/show`,
+              path: `/clusters/${clusterID}/namespaces/${namespaceID}/svcMeshWorkloadGroups/${svcMeshWorkloadGroupID}/svcmeshworkloads/${svcMeshWorkloadID}/show`,
               name: (
                 <FormattedMessage {...messages.svcMeshWorkloadsPageTitle} />
               ),

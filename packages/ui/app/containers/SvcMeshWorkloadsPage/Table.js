@@ -10,7 +10,7 @@ import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import { bindActionCreators, compose } from 'redux';
-
+import { fromJS } from 'immutable';
 import Paper from '@material-ui/core/Paper';
 import { SimpleTable } from '@gsmlg/com';
 
@@ -28,8 +28,16 @@ import messages from './messages';
 import useStyles from './styles';
 import schema from './tableSchema';
 
+const refactorPods = (data) => {
+  const pods = data.map((item) => {
+    const { id, stat } = item.toJS();
+    return fromJS({ id, ...stat });
+  });
+  return pods;
+};
+
 /* eslint-disable react/prefer-stateless-function */
-const SvcMeshWorkloadsTable = ({
+export const SvcMeshWorkloadsTable = ({
   location,
   clusterID,
   namespaceID,
@@ -39,7 +47,10 @@ const SvcMeshWorkloadsTable = ({
   svcMeshWorkloadID,
 }) => {
   const classes = useStyles();
-  const pods = current.get('pods') || [];
+  const pods =
+    current.get('pods') && current.get('pods').size > 0
+      ? refactorPods(current.get('pods'))
+      : [];
   const inbound = current.get('inbound') || [];
   const outbound = current.get('outbound') || [];
   let mergedSchema = schema
@@ -78,40 +89,10 @@ const SvcMeshWorkloadsTable = ({
           },
         };
       }
-      if (sch.id === 'meshed') {
-        return {
-          ...sch,
-          props: { parentType },
-        };
-      }
       if (sch.id === 'successRate') {
         return {
           ...sch,
-          props: { classes, parentType },
-        };
-      }
-      if (sch.id === 'RPS') {
-        return {
-          ...sch,
-          props: { parentType },
-        };
-      }
-      if (sch.id === 'latencyMsP50') {
-        return {
-          ...sch,
-          props: { parentType },
-        };
-      }
-      if (sch.id === 'latencyMsP95') {
-        return {
-          ...sch,
-          props: { parentType },
-        };
-      }
-      if (sch.id === 'latencyMsP99') {
-        return {
-          ...sch,
-          props: { parentType },
+          props: { classes },
         };
       }
       return sch;
