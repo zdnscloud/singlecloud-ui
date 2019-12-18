@@ -30,14 +30,7 @@ import * as actions from 'ducks/svcMeshPods/actions';
 import messages from './messages';
 import useStyles from './styles';
 import schema from './tableSchema';
-
-const refactorPods = (data) => {
-  const pods = data.map((item) => {
-    const { id, stat } = item.toJS();
-    return fromJS({ id, ...stat });
-  });
-  return pods;
-};
+import { refactorMetric } from '../../utils/svcMesh';
 
 /* eslint-disable react/prefer-stateless-function */
 const SvcMeshPodsTable = ({

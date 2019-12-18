@@ -30,6 +30,9 @@ export const styles = (theme) => ({
   gray: {
     backgroundColor: '#F5F5F5',
   },
+  h4: {
+    margin: 0,
+  },
 });
 
 export default makeStyles(styles);

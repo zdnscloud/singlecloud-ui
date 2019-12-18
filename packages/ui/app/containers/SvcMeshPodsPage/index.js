@@ -30,7 +30,10 @@ import {
   makeSelectCurrentID as makeSelectSvcMeshWorkloadGroupID,
   makeSelectURL,
 } from 'ducks/svcMeshWorkloadGroups/selectors';
-import { makeSelectCurrentID } from 'ducks/svcMeshPods/selectors';
+import {
+  makeSelectCurrentID,
+  makeSelectCurrent,
+} from 'ducks/svcMeshPods/selectors';
 import * as actions from 'ducks/svcMeshPods/actions';
 
 import useStyles from './styles';
@@ -46,6 +49,7 @@ const SvcMeshPodsPage = ({
   svcMeshWorkloadGroupID,
   svcMeshWorkloadID,
   id,
+  current,
 }) => {
   const classes = useStyles();
   useEffect(() => {
@@ -112,6 +116,15 @@ const SvcMeshPodsPage = ({
         />
         <GridContainer className={classes.grid}>
           <GridItem xs={12} sm={12} md={12}>
+            {current.size > 0 ? (
+              <h4 className={classes.h4}>
+                {current.get('type')} / {current.get('id')}
+              </h4>
+            ) : null}
+          </GridItem>
+        </GridContainer>
+        <GridContainer className={classes.grid}>
+          <GridItem xs={12} sm={12} md={12}>
             <Card>
               <CardHeader>
                 <h4>
@@ -160,6 +173,7 @@ const mapStateToProps = createStructuredSelector({
   svcMeshWorkloadID: makeSelectSvcMeshWorkloadID(),
   id: makeSelectCurrentID(),
   url: makeSelectURL(),
+  current: makeSelectCurrent(),
 });
 
 const mapDispatchToProps = (dispatch) =>

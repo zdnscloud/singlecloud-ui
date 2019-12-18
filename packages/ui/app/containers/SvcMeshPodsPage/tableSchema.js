@@ -1,10 +1,14 @@
 import React, { Fragment } from 'react';
 import { ucfirst } from '@gsmlg/utils';
-import TimeCell from 'components/Cells/TimeCell';
 import { Link } from 'react-router-dom';
 import Button from 'components/CustomButtons/Button';
-import classNames from 'classnames';
-import timeWindowSeconds from './utils/timeWindowSeconds';
+import {
+  getMeshed,
+  getSuccessRate,
+  getRPS,
+  getLatency,
+  getBytes,
+} from '../../utils/svcMesh';
 
 const schema = [
   'pods',
@@ -79,12 +83,7 @@ const tableSchema = schema
     if (sch.id === 'meshed') {
       return {
         ...sch,
-        component: ({ data }) => (
-          <span>
-            {data.get('meshedPodCount') || '--'} /
-            {data.get('runningPodCount') || '--'}
-          </span>
-        ),
+        component: ({ data }) => getMeshed(data),
       };
     }
     return sch;
@@ -93,40 +92,7 @@ const tableSchema = schema
     if (sch.id === 'successRate') {
       return {
         ...sch,
-        component: ({ data, classes }) => {
-          const successCount = data.getIn(['basicStat', 'successCount']);
-          const failureCount = data.getIn(['basicStat', 'failureCount)']) || 0;
-          let successRate =
-            (successCount / (successCount + failureCount)) * 100;
-          let activeClasses = '';
-          switch (true) {
-            case successRate > 95:
-              activeClasses = classes.green;
-              break;
-            case successRate > 90 && successRate < 95:
-              activeClasses = classes.orange;
-              break;
-            case successRate > 90:
-              successRate = classes.red;
-              break;
-            default:
-              break;
-          }
-          return (
-            <Fragment>
-              {!isNaN(successRate) ? (
-                <Fragment>
-                  <span
-                    className={classNames(classes.point, activeClasses)}
-                  ></span>
-                  <span> {successRate} % </span>
-                </Fragment>
-              ) : (
-                '--'
-              )}
-            </Fragment>
-          );
-        },
+        component: ({ data, classes }) => getSuccessRate(data, classes),
       };
     }
     return sch;
@@ -135,18 +101,7 @@ const tableSchema = schema
     if (sch.id === 'RPS') {
       return {
         ...sch,
-        component: ({ data }) => {
-          const successCount = data.getIn(['basicStat', 'successCount']);
-          const failureCount = data.getIn(['basicStat', 'failureCount)']) || 0;
-          const timeWindow = timeWindowSeconds(data.get('timeWindow'));
-          const rps = (successCount + failureCount) / timeWindow;
-
-          return (
-            <Fragment>
-              <span> {!isNaN(rps) ? rps.toFixed(2) : '--'}</span>
-            </Fragment>
-          );
-        },
+        component: ({ data }) => getRPS(data),
       };
     }
     return sch;
@@ -155,9 +110,7 @@ const tableSchema = schema
     if (sch.id === 'latencyMsP50') {
       return {
         ...sch,
-        component: ({ data }) => (
-          <span>{data.getIn(['basicStat', 'latencyMsP50']) || '--'}</span>
-        ),
+        component: ({ data }) => getLatency(data, 'latencyMsP50'),
       };
     }
     return sch;
@@ -166,9 +119,7 @@ const tableSchema = schema
     if (sch.id === 'latencyMsP95') {
       return {
         ...sch,
-        component: ({ data }) => (
-          <span>{data.getIn(['basicStat', 'latencyMsP95']) || '--'}</span>
-        ),
+        component: ({ data }) => getLatency(data, 'latencyMsP95'),
       };
     }
     return sch;
@@ -177,9 +128,7 @@ const tableSchema = schema
     if (sch.id === 'latencyMsP99') {
       return {
         ...sch,
-        component: ({ data }) => (
-          <span>{data.getIn(['basicStat', 'latencyMsP99']) || '--'}</span>
-        ),
+        component: ({ data }) => getLatency(data, 'latencyMsP99'),
       };
     }
     return sch;
@@ -199,14 +148,7 @@ const tableSchema = schema
     if (sch.id === 'readBytes') {
       return {
         ...sch,
-        component: ({ data }) => {
-          const readBytesTotal = data.getIn(['tcpStat', 'readBytesTotal']) || 0;
-          const timeWindow = timeWindowSeconds(data.get('timeWindow'));
-          const readBytes = readBytesTotal / (timeWindow * 1000);
-          return (
-            <span>{readBytes ? `${readBytes.toFixed(3)} kB/s` : '--'}</span>
-          );
-        },
+        component: ({ data }) => getBytes(data, 'readBytes'),
       };
     }
     return sch;
@@ -215,15 +157,7 @@ const tableSchema = schema
     if (sch.id === 'writeBytes') {
       return {
         ...sch,
-        component: ({ data }) => {
-          const writeBytesTotal =
-            data.getIn(['tcpStat', 'writeBytesTotal']) || 0;
-          const timeWindow = timeWindowSeconds(data.get('timeWindow'));
-          const writeBytes = writeBytesTotal / (timeWindow * 1000);
-          return (
-            <span>{writeBytes ? `${writeBytes.toFixed(3)} kB/s` : '--'}</span>
-          );
-        },
+        component: ({ data }) => getBytes(data, 'writeBytes'),
       };
     }
     return sch;
