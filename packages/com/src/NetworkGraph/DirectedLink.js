@@ -13,9 +13,9 @@ const proptypes = {
 
 const defaultProps = {
   linkStyles: {
-    stroke: '#00FF00',
-    strokeWidth: 2,
-    strokeOpacity: 0.7,
+    stroke: '#e3e3e3',
+    strokeWidth: 1,
+    strokeOpacity: 1,
     radius: 4,
   },
   onMouseMove: null,

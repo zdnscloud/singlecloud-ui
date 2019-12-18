@@ -116,10 +116,10 @@ const SvcMeshWorkloadGroupsPage = ({
                   <Card>
                     <CardBody>
                       <NetworkGraph
-                        animated
                         width={800}
-                        height={400}
+                        height={300}
                         graph={data}
+                        waitingForLayoutLabel={false}
                       />
                     </CardBody>
                   </Card>
