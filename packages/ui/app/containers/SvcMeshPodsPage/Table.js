@@ -18,7 +18,13 @@ import { SimpleTable } from '@gsmlg/com';
 import { makeSelectLocation } from 'ducks/app/selectors';
 import { makeSelectCurrentID as makeSelectClusterID } from 'ducks/clusters/selectors';
 import { makeSelectCurrentID as makeSelectNamespaceID } from 'ducks/namespaces/selectors';
-import { makeSelectCurrent } from 'ducks/svcMeshPods/selectors';
+import { makeSelectCurrentID as makeSelectSvcMeshWorkloadID } from 'ducks/svcMeshWorkloads/selectors';
+import { makeSelectCurrentID as makeSelectSvcMeshWorkloadGroupID } from 'ducks/svcMeshWorkloadGroups/selectors';
+import {
+  makeSelectCurrentID,
+  makeSelectCurrent,
+} from 'ducks/svcMeshPods/selectors';
+
 import * as actions from 'ducks/svcMeshPods/actions';
 
 import messages from './messages';
@@ -42,12 +48,12 @@ const SvcMeshPodsTable = ({
   current,
   svcMeshWorkloadGroupID,
   svcMeshWorkloadID,
+  id,
 }) => {
   const classes = useStyles();
   const pods = fromJS([{ id: current.get('id'), stat: current.get('stat') }]);
   const inbound = current.get('inbound') || [];
   const outbound = current.get('outbound') || [];
-  console.log('pods',pods.toJS());
   let mergedSchema = schema
     .map((sch) => {
       if (sch.id === 'pods') {
@@ -126,6 +132,9 @@ const mapStateToProps = createStructuredSelector({
   clusterID: makeSelectClusterID(),
   namespaceID: makeSelectNamespaceID(),
   current: makeSelectCurrent(),
+  svcMeshWorkloadGroupID: makeSelectSvcMeshWorkloadGroupID(),
+  svcMeshWorkloadID: makeSelectSvcMeshWorkloadID(),
+  id: makeSelectCurrentID(),
 });
 
 const mapDispatchToProps = (dispatch) =>

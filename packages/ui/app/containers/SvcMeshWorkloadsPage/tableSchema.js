@@ -6,6 +6,7 @@ import Button from 'components/CustomButtons/Button';
 import IconButton from 'components/CustomIconButtons/IconButton';
 import DebugIcon from 'components/Icons/Debug';
 import classNames from 'classnames';
+import timeWindowSeconds from './utils/timeWindowSeconds';
 
 const schema = [
   'pods',
@@ -157,9 +158,7 @@ const tableSchema = schema
         component: ({ data }) => {
           const successCount = data.getIn(['basicStat', 'successCount']);
           const failureCount = data.getIn(['basicStat', 'failureCount)']) || 0;
-          const timeWindow = data.get('timeWindow')
-            ? Number(data.get('timeWindow').replace('m', '')) * 60
-            : 0;
+          const timeWindow = timeWindowSeconds(data.get('timeWindow'));
           const rps = (successCount + failureCount) / timeWindow;
 
           return (
@@ -222,9 +221,7 @@ const tableSchema = schema
         ...sch,
         component: ({ data }) => {
           const readBytesTotal = data.getIn(['tcpStat', 'readBytesTotal']) || 0;
-          const timeWindow = data.get('timeWindow')
-            ? Number(data.get('timeWindow').replace('m', '')) * 60
-            : 0;
+          const timeWindow = timeWindowSeconds(data.get('timeWindow'));
           const readBytes = readBytesTotal / (timeWindow * 1000);
           return (
             <span>{readBytes ? `${readBytes.toFixed(3)} kB/s` : '--'}</span>
@@ -241,9 +238,7 @@ const tableSchema = schema
         component: ({ data }) => {
           const writeBytesTotal =
             data.getIn(['tcpStat', 'writeBytesTotal']) || 0;
-          const timeWindow = data.get('timeWindow')
-            ? Number(data.get('timeWindow').replace('m', '')) * 60
-            : 0;
+          const timeWindow = timeWindowSeconds(data.get('timeWindow'));
           const writeBytes = writeBytesTotal / (timeWindow * 1000);
           return (
             <span>{writeBytes ? `${writeBytes.toFixed(3)} kB/s` : '--'}</span>

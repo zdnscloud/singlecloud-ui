@@ -4,7 +4,7 @@ import TimeCell from 'components/Cells/TimeCell';
 import { Link } from 'react-router-dom';
 import Button from 'components/CustomButtons/Button';
 import classNames from 'classnames';
-
+import timeWindowSeconds from './utils/timeWindowSeconds';
 const schema = [
   'name',
   'type',
@@ -124,9 +124,9 @@ const tableSchema = schema
           ]);
           const failureCount =
             data.getIn(['stat', 'basicStat', 'failureCount)']) || 0;
-          const timeWindow =
-            Number(data.getIn(['stat', 'timeWindow']).replace('m', '')) * 60 ||
-            0;
+          const timeWindow = timeWindowSeconds(
+            data.getIn(['stat', 'timeWindow'])
+          );
           const rps = (successCount + failureCount) / timeWindow;
 
           return (
