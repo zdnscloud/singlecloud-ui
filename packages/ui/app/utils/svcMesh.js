@@ -1,8 +1,12 @@
 import React, { Fragment } from 'react';
 import classNames from 'classnames';
 import { fromJS } from 'immutable';
+import _ from 'lodash';
 
 export const refactorMetric = (data) => {
+  if (_.isEmpty(data)) {
+    return [];
+  }
   const metric = data.map((item) => {
     const { creationTimestamp, id, stat } = item.toJS();
     return fromJS({ creationTimestamp, id, ...stat });
@@ -29,35 +33,61 @@ export const timeWindowSeconds = (timeWindow) => {
   return seconds;
 };
 
-export const getMeshed = (data) => (
-  <span>
-    {data.get('meshedPodCount') || '--'} /{data.get('runningPodCount') || '--'}
-  </span>
-);
+export const getMeshed = (data) => {
+  if (_.isEmpty(data)) {
+    return <span>--</span>;
+  }
+  return (
+    <span>
+      {data.get('meshedPodCount') || '--'} /
+      {data.get('runningPodCount') || '--'}
+    </span>
+  );
+};
 
-export const getSuccessRate = (data, classes) => {
-  const successCount = data.getIn(['basicStat', 'successCount']);
-  const failureCount = data.getIn(['basicStat', 'failureCount)']) || 0;
-  let successRate = (successCount / (successCount + failureCount)) * 100;
+export const getSRClassName = (sr, classes) => {
   let activeClasses = '';
   switch (true) {
-    case successRate > 95:
+    case sr > 95:
       activeClasses = classes.green;
       break;
-    case successRate > 90 && successRate < 95:
+    case sr > 90 && sr < 95:
       activeClasses = classes.orange;
       break;
-    case successRate > 90:
-      successRate = classes.red;
+    case sr > 90:
+      activeClasses = classes.red;
       break;
     default:
       break;
   }
+  return activeClasses;
+};
+
+export const getSR = (data) => {
+  if (_.isEmpty(data)) {
+    return <span>--</span>;
+  }
+  const successCount = data.getIn(['basicStat', 'successCount']) || 0;
+  const failureCount = data.getIn(['basicStat', 'failureCount)']) || 0;
+  const successRate = (successCount / (successCount + failureCount)) * 100;
+  return successRate;
+};
+
+export const getSuccessRate = (data, classes) => {
+  if (_.isEmpty(data)) {
+    return <span>--</span>;
+  }
+  const successRate = getSR(data);
   return (
     <Fragment>
       {!isNaN(successRate) ? (
         <Fragment>
-          <span className={classNames(classes.point, activeClasses)}></span>
+          <span
+            className={classNames(
+              classes.point,
+              getSRClassName(successRate, classes)
+            )}
+          ></span>
           <span> {successRate} % </span>
         </Fragment>
       ) : (
@@ -68,7 +98,10 @@ export const getSuccessRate = (data, classes) => {
 };
 
 export const getRPS = (data) => {
-  const successCount = data.getIn(['basicStat', 'successCount']);
+  if (_.isEmpty(data)) {
+    return <span>--</span>;
+  }
+  const successCount = data.getIn(['basicStat', 'successCount']) || 0;
   const failureCount = data.getIn(['basicStat', 'failureCount)']) || 0;
   const timeWindow = timeWindowSeconds(data.get('timeWindow'));
   const rps = (successCount + failureCount) / timeWindow;
@@ -80,11 +113,18 @@ export const getRPS = (data) => {
   );
 };
 
-export const getLatency = (data, type) => (
-  <span>{data.getIn(['basicStat', type]) || '--'}</span>
-);
+export const getLatency = (data, type) => {
+  if (_.isEmpty(data)) {
+    return <span>--</span>;
+  }
+
+  return <span>{data.getIn(['basicStat', type]) || '--'}</span>;
+};
 
 export const getBytes = (data, type) => {
+  if (_.isEmpty(data)) {
+    return <span>--</span>;
+  }
   const typeBytesTotal = data.getIn(['tcpStat', `${type}Total`]) || 0;
   const timeWindow = timeWindowSeconds(data.get('timeWindow'));
   const typeBytes = typeBytesTotal / (timeWindow * 1000);

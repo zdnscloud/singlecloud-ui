@@ -39,6 +39,7 @@ import * as actions from 'ducks/svcMeshPods/actions';
 import useStyles from './styles';
 import messages from './messages';
 import Table from './Table';
+import Charts from './charts/index';
 
 const SvcMeshPodsPage = ({
   clusterID,
@@ -114,6 +115,7 @@ const SvcMeshPodsPage = ({
             },
           ]}
         />
+
         <GridContainer className={classes.grid}>
           <GridItem xs={12} sm={12} md={12}>
             {current.size > 0 ? (
@@ -121,9 +123,8 @@ const SvcMeshPodsPage = ({
                 {current.get('type')} / {current.get('id')}
               </h4>
             ) : null}
+            <Charts />
           </GridItem>
-        </GridContainer>
-        <GridContainer className={classes.grid}>
           <GridItem xs={12} sm={12} md={12}>
             <Card>
               <CardHeader>

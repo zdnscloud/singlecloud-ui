@@ -200,6 +200,61 @@ const styles = (theme) => ({
   textareaControl: {
     width: '100%',
   },
+  // svcMeshx
+  graphContainer: {
+    overflowX: 'auto',
+    padding: '16px 0',
+  },
+  graph: {
+    maxWidth: '974px',
+    minWidth: '974px',
+    marginLeft: 'auto',
+    marginRight: 'auto',
+  },
+  centerNode: {
+    width: 244,
+  },
+  neighborNode: {
+    width: 220,
+  },
+  linearProgressWrap: {
+    marginBottom: '-20px',
+    position: 'relative',
+    '& > div': {
+      width: '80%',
+    },
+    '& > span': {
+      position: 'absolute',
+      top: -8,
+      right: -10,
+    },
+  },
+  tableCardHeader: {
+    display: 'block !important',
+  },
+  gray: {
+    backgroundColor: '#F5F5F5 !important',
+  },
+  red: {
+    backgroundColor: '#F94141 !important',
+  },
+  green: {
+    backgroundColor: '#5AD8A6 !important',
+  },
+  orange: {
+    backgroundColor: '#FF9D4D !important',
+  },
+  point: {
+    width: 7,
+    height: 7,
+    borderRadius: '50%',
+    display: 'inline-block',
+    marginRight: 10,
+  },
+  h4: {
+    margin: '0 !important',
+    borderBottom: 'none !important',
+  },
 });
 
 export default styles;

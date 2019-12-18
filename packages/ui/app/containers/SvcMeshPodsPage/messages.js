@@ -85,4 +85,16 @@ export default defineMessages({
     id: `${scope}.TCPCardTitle`,
     defaultMessage: 'TCP',
   },
+  chartTableTitleSR: {
+    id: `${scope}.chartTableTitleSR`,
+    defaultMessage: 'SR',
+  },
+  chartTableTitleRPS: {
+    id: `${scope}.chartTableTitleRPS`,
+    defaultMessage: 'RPS',
+  },
+  chartTableTitleP99: {
+    id: `${scope}.chartTableTitleP99`,
+    defaultMessage: 'P99',
+  },
 });

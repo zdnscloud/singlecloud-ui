@@ -44,7 +44,7 @@ const SvcMeshPodsTable = ({
   id,
 }) => {
   const classes = useStyles();
-  const pods = fromJS([{ id: current.get('id'), stat: current.get('stat') }]);
+  const pods = [current.get('stat')] || [];
   const inbound = current.get('inbound') || [];
   const outbound = current.get('outbound') || [];
   let mergedSchema = schema
@@ -57,6 +57,7 @@ const SvcMeshPodsTable = ({
             namespaceID,
             svcMeshWorkloadGroupID,
             svcMeshWorkloadID,
+            podId: id,
           },
         };
       }
@@ -69,6 +70,7 @@ const SvcMeshPodsTable = ({
             svcMeshWorkloadGroupID,
             svcMeshWorkloadID,
             pods,
+            id,
           },
         };
       }

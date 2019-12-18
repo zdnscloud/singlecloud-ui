@@ -39,15 +39,14 @@ const tableSchema = schema
           data,
           svcMeshWorkloadGroupID,
           svcMeshWorkloadID,
+          podId,
         }) => (
           <Button
             link
             component={Link}
-            to={`/clusters/${clusterID}/namespaces/${namespaceID}/svcMeshWorkloadGroups/${svcMeshWorkloadGroupID}/svcmeshworkloads/${svcMeshWorkloadID}/svcmeshpods/${data.get(
-              'id'
-            )}/show`}
+            to={`/clusters/${clusterID}/namespaces/${namespaceID}/svcMeshWorkloadGroups/${svcMeshWorkloadGroupID}/svcmeshworkloads/${svcMeshWorkloadID}/svcmeshpods/${podId}/show`}
           >
-            {data.get('id')}
+            {podId}
           </Button>
         ),
       };
@@ -138,7 +137,9 @@ const tableSchema = schema
       return {
         ...sch,
         component: ({ data }) => (
-          <span>{data.getIn(['tcpStat', 'openConnections']) || '--'}</span>
+          <span>
+            {(data && data.getIn(['tcpStat', 'openConnections'])) || '--'}
+          </span>
         ),
       };
     }

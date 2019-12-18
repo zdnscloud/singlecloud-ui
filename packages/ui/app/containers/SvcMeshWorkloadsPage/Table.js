@@ -27,14 +27,7 @@ import { makeSelectCurrentID as makeSelectSvcMeshWorkloadGroupID } from 'ducks/s
 import messages from './messages';
 import useStyles from './styles';
 import schema from './tableSchema';
-
-const refactorPods = (data) => {
-  const pods = data.map((item) => {
-    const { id, stat } = item.toJS();
-    return fromJS({ id, ...stat });
-  });
-  return pods;
-};
+import { refactorMetric } from '../../utils/svcMesh';
 
 /* eslint-disable react/prefer-stateless-function */
 export const SvcMeshWorkloadsTable = ({
@@ -49,7 +42,7 @@ export const SvcMeshWorkloadsTable = ({
   const classes = useStyles();
   const pods =
     current.get('pods') && current.get('pods').size > 0
-      ? refactorPods(current.get('pods'))
+      ? refactorMetric(current.get('pods'))
       : [];
   const inbound = current.get('inbound') || [];
   const outbound = current.get('outbound') || [];
