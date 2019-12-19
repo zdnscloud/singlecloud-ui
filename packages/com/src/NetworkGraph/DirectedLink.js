@@ -32,8 +32,8 @@ export default function Link({
   onMouseLeave,
   onMouseEnter,
 }) {
-  const id = `arrow-id${link.id}`;
-  const lineLen = Math.sqrt((link.sourceX - link.targetX) ** 2 + (link.sourceY - link.targetY) ** 2) / 2;
+  const id = `arrow-id-${link.id}`;
+  const lineLen = Math.sqrt((link.sourceX - link.targetX) ** 2 + (link.sourceY - link.targetY) ** 2);
   const speed = 2000;
 
   return (
