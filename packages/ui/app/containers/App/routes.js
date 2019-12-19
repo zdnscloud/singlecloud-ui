@@ -66,6 +66,7 @@ import ServicesPage, {
 import SvcMeshWorkloadGroupsPage from 'containers/SvcMeshWorkloadGroupsPage/Loadable';
 import SvcMeshWorkloadsPage from 'containers/SvcMeshWorkloadsPage/Loadable';
 import SvcMeshPodsPage from 'containers/SvcMeshPodsPage/Loadable';
+import SvcMeshTapPage from 'containers/SvcMeshTapPage/Loadable';
 import IngressesPage, {
   CreateIngressPage,
   ShowIngressPage,
@@ -404,6 +405,14 @@ const appRoutes = [
     component: SvcMeshPodsPage,
   },
   // svcMeshPods end
+  // svcMeshTap start
+  {
+    path: '/clusters/:cluster_id/namespaces/:namespace_id/svcMeshTap',
+    name: 'SvcMeshTap',
+    icon: Dashboard,
+    component: SvcMeshTapPage,
+  },
+  // svcMeshTap end
   // services start
   {
     path: '/clusters/:cluster_id/namespaces/:namespace_id/services',

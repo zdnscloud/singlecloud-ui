@@ -9,6 +9,7 @@ import { createStructuredSelector } from 'reselect';
 import { bindActionCreators, compose } from 'redux';
 import { connect } from 'react-redux';
 import uuid from '@gsmlg/utils/uuid';
+import _ from 'lodash';
 
 import NetworkGraph from '@gsmlg/com/NetworkGraph';
 import Helmet from 'components/Helmet/Helmet';
@@ -80,71 +81,68 @@ const SvcMeshWorkloadGroupsPage = ({
             },
           ]}
         />
-        {workloadGroups.size > 0
-          ? workloadGroups.map((workloadGroup, i) => {
-            const workloads = workloadGroup.get('workloads');
-            const nodesData = workloads.map((wl, idx) => ({
-              /* x: idx * 10, */
-              /* y: idx * 10, */
-              id: wl.get('id'),
-              label: wl.getIn(['stat', 'resource', 'name']),
-              kind: wl.getIn(['stat', 'resource', 'type']),
-            }));
-            const nodes = nodesData.toJS();
+        {workloadGroups.size > 0 ? workloadGroups.map((workloadGroup, i) => {
+          const workloads = workloadGroup.get('workloads');
+          const nodesData = workloads.map((wl, idx) => ({
+            id: wl.get('id'),
+            label: wl.getIn(['stat', 'resource', 'name']),
+            kind: wl.getIn(['stat', 'resource', 'type']),
+          }));
+          const nodes = nodesData.toJS();
 
-            const linkData = workloads.map((wl) => (
-              wl.get('destinations') ? wl.get('destinations').map((tid) => ({
-                source: wl.get('id'),
-                target: tid,
-                id: `${wl.get('id')}=>${tid}`,
-              })) : null
-            )).filter((wl) => wl).flatten(1).toJS();
-            const links = linkData.map((l) => ({
-              ...l,
-              source: nodes[nodesData.findIndex((n) => n.id === l.source)],
-              target: nodes[nodesData.findIndex((n) => n.id === l.target)],
-            }));
+          const linkData = workloads.map((wl) => (
+            wl.get('destinations') ? wl.get('destinations').map((tid) => ({
+              source: wl.get('id'),
+              target: tid,
+              id: `${wl.get('id')}_${tid}`,
+            })) : null
+          )).filter((wl) => wl).flatten(1).toJS();
+          const links = linkData.map((l) => ({
+            ...l,
+            source: nodes[nodesData.findIndex((n) => n.id === l.source)],
+            target: nodes[nodesData.findIndex((n) => n.id === l.target)],
+          }));
 
-            const data = {
-              nodes,
-              links,
-            };
+          const data = {
+            nodes,
+            links,
+          };
 
-            return (
-              <GridContainer className={classes.grid} key={i}>
-                <GridItem xs={12} sm={12} md={12}>
-                  <Card>
-                    <CardBody>
-                      <NetworkGraph
-                        width={800}
-                        height={300}
-                        graph={data}
-                        waitingForLayoutLabel={false}
+          return (
+            <GridContainer className={classes.grid} key={i}>
+              <GridItem xs={12} sm={12} md={12}>
+                <Card>
+                  <CardBody>
+                    <NetworkGraph
+                      ariaLabel={'network-graph'}
+                      width={800}
+                      height={280}
+                      graph={data}
+                      /* waitingForLayoutLabel={null} */
+                    />
+                  </CardBody>
+                </Card>
+              </GridItem>
+              <GridItem xs={12} sm={12} md={12}>
+                <Card>
+                  <CardHeader>
+                    <h4>
+                      <FormattedMessage
+                        {...messages.svcMeshWorkloadGroups}
                       />
-                    </CardBody>
-                  </Card>
-                </GridItem>
-                <GridItem xs={12} sm={12} md={12}>
-                  <Card>
-                    <CardHeader>
-                      <h4>
-                        <FormattedMessage
-                          {...messages.svcMeshWorkloadGroups}
-                        />
-                      </h4>
-                    </CardHeader>
-                    <CardBody>
-                      <SvcMeshWorkloadGroupsTable
-                        data={workloads}
-                        workloadID={workloadGroup.get('id')}
-                      />
-                    </CardBody>
-                  </Card>
-                </GridItem>
-              </GridContainer>
-            );
-          })
-         : null}
+                    </h4>
+                  </CardHeader>
+                  <CardBody>
+                    <SvcMeshWorkloadGroupsTable
+                      data={workloads}
+                      workloadID={workloadGroup.get('id')}
+                    />
+                  </CardBody>
+                </Card>
+              </GridItem>
+            </GridContainer>
+          );
+        }) : null}
       </div>
     </div>
   );
