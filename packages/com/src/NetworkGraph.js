@@ -112,7 +112,7 @@ render() {
     return (
       <svg aria-label={ariaLabel} className={className} role="img" width={width} height={height}>
         {graph && (
-          <Group>
+          <Group transform="scale(0.9)">
             <Links
               links={graph.links}
               linkComponent={renderLink || Link}
