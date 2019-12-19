@@ -11,6 +11,7 @@ import {
 } from 'redux-form/immutable';
 import getByKey from '@gsmlg/utils/getByKey';
 
+import Button from '@material-ui/core/Button';
 import Card from 'components/Card/Card';
 import CardBody from 'components/Card/CardBody';
 import CardHeader from 'components/Card/CardHeader';
@@ -20,8 +21,6 @@ import GridContainer from 'components/Grid/GridContainer';
 import InputField from 'components/Field/InputField';
 import SelectField from 'components/Field/SelectField';
 
-import Containers from './form/Containers';
-import VolumeClaimTemplate from './form/VolumeClaimTemplate';
 import messages from './messages';
 import useStyles from './styles';
 
@@ -36,33 +35,72 @@ export const Form = ({
   handleSubmit,
   error,
   formValues,
+  workloads,
 }) => {
   const classes = useStyles();
+  /**
+     resource_type=
+     resource_name=
+     to_resource_type=
+     to_resource_name=
+     method=
+     path=
+   */
+  const options = workloads.map((wl) => `${wl.get('type')}/${wl.get('name')}`).toJS();
 
   return (
-    <form className={getByKey(classes, 'form')} onSubmit={handleSubmit}>
-      <GridContainer>
+    <form className={classes.form} onSubmit={handleSubmit}>
+      <GridContainer className={classes.grid}>
         {error ? (
           <GridItem xs={12} sm={12} md={12}>
             <Danger>{getByKey(error, ['response', 'message'])}</Danger>
           </GridItem>
         ) : null}
-        <GridItem xs={12} sm={12} md={12}>
-          <GridContainer className={classes.grid}>
-            <GridItem xs={4} sm={4} md={4}>
-            </GridItem>
-            <GridItem xs={4} sm={4} md={4}>
-            </GridItem>
-          </GridContainer>
-          <GridContainer className={classes.grid}>
-            <GridItem xs={4} sm={4} md={4}>
-            </GridItem>
-            <GridItem xs={4} sm={4} md={4}>
-            </GridItem>
-            <GridItem xs={4} sm={4} md={4}>
-              submit / cancel
-            </GridItem>
-          </GridContainer>
+
+        <GridItem xs={4} sm={4} md={4}>
+          <SelectField
+            label={<FormattedMessage {...messages.formFrom} />}
+            name="from"
+            options={options}
+            fullWidth
+          />
+        </GridItem>
+        <GridItem xs={4} sm={4} md={4}>
+          <SelectField
+            label={<FormattedMessage {...messages.formTo} />}
+            name="to"
+            options={options}
+            fullWidth
+          />
+        </GridItem>
+        <GridItem xs={4} sm={4} md={4}>
+        </GridItem>
+
+        <GridItem xs={4} sm={4} md={4}>
+          <SelectField
+            label={<FormattedMessage {...messages.formMethod} />}
+            fullWidth
+            name="method"
+            options={['GET', 'POST', 'PUT', 'DELETE']}
+          />
+        </GridItem>
+        <GridItem xs={4} sm={4} md={4}>
+          <InputField
+            label={<FormattedMessage {...messages.formPath} />}
+            name="path"
+            fullWidth
+          />
+        </GridItem>
+        <GridItem xs={4} sm={4} md={4}>
+          <Button variant="contained" color="primary" type="submit">
+            <FormattedMessage {...messages.tapStart} />
+          </Button>
+          <Button
+            variant="contained"
+            className={classes.cancleBtn}
+          >
+            <FormattedMessage {...messages.tapReset} />
+          </Button>
         </GridItem>
       </GridContainer>
     </form>

@@ -17,8 +17,28 @@ export default defineMessages({
     id: `${scope}.pageDesc`,
     defaultMessage: 'Description of SvcMeshTapPage',
   },
-  svcMeshWorkloads: {
-    id: `${scope}.svcMeshWorkloads`,
-    defaultMessage: 'svcMeshWorkloads',
+  formFrom: {
+    id: `${scope}.formFrom`,
+    defaultMessage: 'formFrom',
+  },
+  formTo: {
+    id: `${scope}.formTo`,
+    defaultMessage: 'formTo',
+  },
+  formMethod: {
+    id: `${scope}.formMethod`,
+    defaultMessage: 'formMethod',
+  },
+  formPath: {
+    id: `${scope}.formPath`,
+    defaultMessage: 'formPath',
+  },
+  tapStart: {
+    id: `${scope}.tapStart`,
+    defaultMessage: 'tapStart',
+  },
+  tapReset: {
+    id: `${scope}.tapReset`,
+    defaultMessage: 'tapReset',
   },
 });
