@@ -14,7 +14,7 @@ const proptypes = {
 const defaultProps = {
   linkStyles: {
     stroke: '#e3e3e3',
-    strokeWidth: 1,
+    strokeWidth: 1.5,
     strokeOpacity: 1,
     radius: 4,
   },
@@ -32,8 +32,8 @@ export default function Link({
   onMouseLeave,
   onMouseEnter,
 }) {
-  const id = `arrow-id-${link.id}`;
-  const lineLen = Math.sqrt((link.sourceX - link.targetX) ** 2 + (link.sourceY - link.targetY) ** 2);
+  const id = `arrow-${link.id}`;
+  const lineLen = Math.sqrt((link.sourceX - link.targetX) ** 2 + (link.sourceY - link.targetY) ** 2) / strokeWidth;
   const speed = 2000;
 
   return (
@@ -48,14 +48,6 @@ export default function Link({
           orient="auto"
           markerUnits="strokeWidth"
         >
-          <animate
-            xlinkHref={`#${id}`}
-            attributeName="refX"
-            from={radius * 3 + lineLen}
-            to={radius * 3}
-            dur={`${speed}ms`}
-            repeatCount="indefinite"
-          />
           {radius > 0 && (
             <path
               d={`M0,0 L0,${radius * 2} L${radius * 3},${radius} z`}
@@ -64,6 +56,14 @@ export default function Link({
             />
           )}
         </marker>
+        <animate
+          xlinkHref={`#${id}`}
+          attributeName="refX"
+          from={radius * 3 + lineLen}
+          to={radius * 3}
+          dur={`${speed}ms`}
+          repeatCount="indefinite"
+        />
       </defs>
       <line
         x1={link.sourceX}

@@ -48,8 +48,8 @@ class NetworkGraph extends Network {
     const { computingLayout } = this.state;
     if (
       !renderTooltip &&
-      (!_.isEqual(graph.links, currGraph.links) ||
-       !_.isEqual(graph.nodes, currGraph.nodes) ||
+      (graph.links !== currGraph.links ||
+       graph.nodes !== currGraph.nodes ||
         computingLayout ||
         (this.layout.setBoundingBox &&
           (width !== currWidth || height !== currHeight || margin !== currMargin)))

@@ -21,7 +21,7 @@ const defaultProps = {
     stroke: 'none',
     strokeWidth: 0,
     opacity: 1,
-    defaultSize: 10,
+    defaultSize: 20,
   },
   onMouseMove: null,
   onClick: null,
