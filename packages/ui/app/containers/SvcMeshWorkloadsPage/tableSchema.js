@@ -89,7 +89,7 @@ const tableSchema = schema
           <Button
             link
             component={Link}
-            to={`/clusters/${clusterID}/namespaces/${namespaceID}/svcMeshWorkloadGroups/${svcMeshWorkloadGroupID}/svcmeshworkloads/${svcMeshWorkloadID}/svcmeshPods/${data.get(
+            to={`/clusters/${clusterID}/namespaces/${namespaceID}/svcMeshWorkloadGroups/${svcMeshWorkloadGroupID}/svcmeshworkloads/${data.get(
               'id'
             )}/show`}
           >
