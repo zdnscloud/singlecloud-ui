@@ -45,6 +45,12 @@ export const ApplicationsTable = ({ application, clusterID, namespaceID }) => {
           props: { clusterID, namespaceID },
         };
       }
+      if (sch.id === 'exists') {
+        return {
+          ...sch,
+          props: { data, classes },
+        };
+      }
       return sch;
     })
     .map((s) => ({

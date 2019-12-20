@@ -7,7 +7,7 @@ import IconButton from 'components/CustomIconButtons/IconButton';
 import MonitorIcon from 'components/Icons/Monitor';
 
 const inflection = require('inflection');
-const schema = ['name', 'replicas', 'type'];
+const schema = ['name', 'replicas', 'type', 'exists'];
 
 const tableSchema = schema
   .map((id) => ({
@@ -81,6 +81,17 @@ const tableSchema = schema
             '--'
           );
         },
+      };
+    }
+    if (sch.id === 'exists') {
+      return {
+        ...sch,
+        component: ({ data, classes }) =>
+          data.get('exists') ? (
+            <span className={classes.green}>NO</span>
+          ) : (
+            <span className={classes.red}>YES</span>
+          ),
       };
     }
     return sch;
