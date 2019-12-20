@@ -114,6 +114,7 @@ const SvcMeshTapPage = ({
                   workloads={workloads}
                   initialValues={fromJS({})}
                   formValues={values}
+                  resetAction={svcMeshTapReset}
                 />
               </CardHeader>
               <CardBody></CardBody>

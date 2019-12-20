@@ -14,6 +14,12 @@ export const svcMeshTapStart = (params, meta = {}) => ({
   meta,
 });
 
+export const svcMeshTapStop = (params, meta = {}) => ({
+  type: c.SVC_MESH_TAP_STOP,
+  payload: params,
+  meta,
+});
+
 export const svcMeshTapReset = (params, meta = {}) => ({
   type: c.SVC_MESH_TAP_RESET,
   payload: params,

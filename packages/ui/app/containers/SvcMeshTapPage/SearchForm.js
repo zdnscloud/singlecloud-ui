@@ -36,6 +36,7 @@ export const Form = ({
   error,
   formValues,
   workloads,
+  resetAction,
 }) => {
   const classes = useStyles();
   /**
@@ -98,6 +99,7 @@ export const Form = ({
           <Button
             variant="contained"
             className={classes.cancleBtn}
+            onClick={resetAction}
           >
             <FormattedMessage {...messages.tapReset} />
           </Button>

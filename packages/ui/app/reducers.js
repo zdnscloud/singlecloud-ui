@@ -94,6 +94,9 @@ import svcMeshWorkloadsReducer, {
 import svcMeshPodsReducer, {
   prefix as svcMeshPodsPrefix,
 } from 'ducks/svcMeshPods';
+import svcMeshTapReducer, {
+  prefix as svcMeshTapPrefix,
+} from 'ducks/svcMeshTap';
 // import reducers end
 
 /**
@@ -143,6 +146,7 @@ export default function createReducer(injectedReducers = {}) {
     [svcMeshWorkloadGroupsPrefix]: svcMeshWorkloadGroupsReducer,
     [svcMeshWorkloadsPrefix]: svcMeshWorkloadsReducer,
     [svcMeshPodsPrefix]: svcMeshPodsReducer,
+    [svcMeshTapPrefix]: svcMeshTapReducer,
     // combine reducers end
     ...injectedReducers,
   });

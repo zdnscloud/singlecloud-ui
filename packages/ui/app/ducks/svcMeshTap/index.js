@@ -17,8 +17,7 @@ export { constants, actions, prefix };
 
 export const initialState = fromJS({
   data: {},
-  list: [],
-  errorsList: [],
+  isTapping: false,
 });
 
 const c = constants;
@@ -28,24 +27,34 @@ export const reducer = (
   { type, payload, error, meta }
 ) => {
   switch (type) {
-    case c.LOAD_SVC_MESH_TAPS:
-      return state;
-    case c.LOAD_SVC_MESH_TAPS_SUCCESS: {
-      const { data, list } = procCollectionData(payload);
-      return state
-        .update('errorsList', (errors) =>
-          errors.filterNot((e) => e.type === c.LOAD_SVC_MESH_TAPS_FAILURE)
-        )
-        .setIn(['data'], fromJS(data))
-        .setIn(['list'], fromJS(list));
+    case c.SVC_MESH_TAP_START: {
+      return state.set('isTapping', true);
     }
-    case c.LOAD_SVC_MESH_TAPS_FAILURE:
-      return state.update('errorsList', (errors) =>
-        errors.filterNot((e) => e.type === type).push({ type, payload, meta })
-      );
 
-    case c.CLEAR_ERRORS_LIST:
-      return state.update('errorsList', (errors) => errors.clear());
+    case c.SVC_MESH_TAP_STOP: {
+      return state.set('isTapping', false);
+    }
+
+    case c.SVC_MESH_TAP_RESET: {
+      const {
+        clusterID,
+        namespaceID,
+      } = meta;
+      return state.setIn(['data', clusterID, namespaceID], fromJS([]));
+    }
+
+    case c.SVC_MESH_TAP_ADD: {
+      const {
+        clusterID,
+        namespaceID,
+      } = meta;
+      return state.updateIn(['data', clusterID, namespaceID], (list) => {
+        if (!list) {
+          return fromJS([payload]);
+        }
+        return list.push(fromJS(payload));
+      });
+    }
 
     default:
       return state;
