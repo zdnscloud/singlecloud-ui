@@ -33,6 +33,7 @@ import {
   makeSelectSvcMeshWorkloadGroupsList,
 } from 'ducks/svcMeshWorkloadGroups/selectors';
 import * as actions from 'ducks/svcMeshWorkloadGroups/actions';
+import * as tapActions from 'ducks/svcMeshTap/actions';
 
 import SearchForm, { formName } from './SearchForm';
 
@@ -47,6 +48,8 @@ const SvcMeshTapPage = ({
   loadSvcMeshWorkloadGroups,
   workloadGroups,
   values,
+  svcMeshTapStart,
+  svcMeshTapReset,
 }) => {
   const classes = useStyles();
   useEffect(() => {
@@ -59,7 +62,8 @@ const SvcMeshTapPage = ({
     return () => {
       // try cancel something when unmount
     };
-  }, [ url ]);
+  }, [clusterID, loadSvcMeshWorkloadGroups, namespaceID, url]);
+  useEffect(() => {}, []);
   const workloads = workloadGroups
     .map((wg) => wg.get('workloads'))
     .flatten(1)
@@ -67,8 +71,21 @@ const SvcMeshTapPage = ({
 
   async function doSubmit(formValues) {
     try {
-      const data = formValues.toJS();
-      console.log(data);
+      const fvalues = formValues.toJS();
+      const { from, to, method, path } = fvalues;
+
+      const [type, name] = from.split('/');
+      const [toType, toName] = to.split('/');
+      const data = {
+        resource_type: type,
+        resource_name: name,
+        to_resource_type: toType,
+        to_resource_name: toName,
+        method,
+        path,
+      };
+      svcMeshTapReset();
+      svcMeshTapStart(data, { clusterID, namespaceID });
     } catch (error) {
       throw new SubmissionError({ _error: error });
     }
@@ -95,13 +112,11 @@ const SvcMeshTapPage = ({
                   classes={classes}
                   onSubmit={doSubmit}
                   workloads={workloads}
-                  initialValues={fromJS({
-                  })}
+                  initialValues={fromJS({})}
                   formValues={values}
                 />
               </CardHeader>
-              <CardBody>
-              </CardBody>
+              <CardBody></CardBody>
             </Card>
           </GridItem>
         </GridContainer>
@@ -122,6 +137,7 @@ const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
       ...actions,
+      ...tapActions,
     },
     dispatch
   );

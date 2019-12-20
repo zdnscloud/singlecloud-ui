@@ -44,6 +44,7 @@ import fluentbitconfigsEpic from 'ducks/fluentbitconfigs/epic';
 import svcMeshWorkloadGroupsEpic from 'ducks/svcMeshWorkloadGroups/epic';
 import svcMeshWorkloadsEpic from 'ducks/svcMeshWorkloads/epic';
 import svcMeshPodsEpic from 'ducks/svcMeshPods/epic';
+import svcMeshTapEpic from 'ducks/svcMeshTap/epic';
 
 // import epics end
 
@@ -90,7 +91,8 @@ export default function createEpic(injectedEpics = {}) {
     fluentbitconfigsEpic,
     svcMeshWorkloadGroupsEpic,
     svcMeshWorkloadsEpic,
-    svcMeshPodsEpic
+    svcMeshPodsEpic,
+    svcMeshTapEpic
     // combine epics end
   );
 
