@@ -53,6 +53,10 @@ export default defineMessages({
     id: `${scope}.tableTitleReplicas`,
     defaultMessage: 'Replicas',
   },
+  tableTitleExists: {
+    id: `${scope}.tableTitleExists`,
+    defaultMessage: 'Exists',
+  },
   tableTitleActions: {
     id: `${scope}.tableTitleActions`,
     defaultMessage: 'Actions',
