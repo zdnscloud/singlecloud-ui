@@ -41,10 +41,8 @@ const tableSchema = schema
         const name = data.getIn(['resource', 'name']);
         const toType = stat.getIn(['resource', 'type']);
         const toName = stat.getIn(['resource', 'name']);
-        const path = '/';
-        const method = 'get';
-        const inboundUrl = `/clusters/${clusterID}/namespaces/${namespaceID}/svcMeshTap?resource_type=${type}&resource_name${name}=&to_resource_type=${toType}&to_resource_name=${toName}&method=${method}&path=${path}`;
-        const outboundUrl = `/clusters/${clusterID}/namespaces/${namespaceID}/svcMeshTap?resource_type=${toType}&resource_name${toName}=&to_resource_type=${type}&to_resource_name=${name}&method=${method}&path=${path}`;
+        const inboundUrl = `/clusters/${clusterID}/namespaces/${namespaceID}/svcMeshTap?resource_type=${type}&resource_name${name}=&to_resource_type=${toType}&to_resource_name=${toName}`;
+        const outboundUrl = `/clusters/${clusterID}/namespaces/${namespaceID}/svcMeshTap?resource_type=${toType}&resource_name${toName}=&to_resource_type=${type}&to_resource_name=${name}`;
         return (
           <Fragment>
             <IconButton
