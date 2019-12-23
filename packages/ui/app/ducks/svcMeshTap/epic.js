@@ -31,7 +31,7 @@ export const svcMeshTap = (action$, state$, { ajax }) =>
 
       return subject
         .pipe(
-          takeUntil(action$.pipe(ofType(c.SVC_MEST_TAP_STOP))),
+          takeUntil(action$.pipe(ofType(c.SVC_MESH_TAP_STOP))),
           catchError((error) => of({ type: 'error', payload: error }))
         )
         .pipe(map((data) => a.svcMeshTapAdd(data, { clusterID, namespaceID })));

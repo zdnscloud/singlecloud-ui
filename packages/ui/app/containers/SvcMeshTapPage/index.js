@@ -36,6 +36,7 @@ import * as actions from 'ducks/svcMeshWorkloadGroups/actions';
 import * as tapActions from 'ducks/svcMeshTap/actions';
 
 import SearchForm, { formName } from './SearchForm';
+import Table from './Table';
 
 import useStyles from './styles';
 import messages from './messages';
@@ -112,12 +113,19 @@ const SvcMeshTapPage = ({
                   classes={classes}
                   onSubmit={doSubmit}
                   workloads={workloads}
-                  initialValues={fromJS({})}
+                  initialValues={fromJS({
+                    from: '',
+                    to: '',
+                    method: '',
+                    path: '',
+                  })}
                   formValues={values}
                   resetAction={svcMeshTapReset}
                 />
               </CardHeader>
-              <CardBody></CardBody>
+              <CardBody>
+                <Table />
+              </CardBody>
             </Card>
           </GridItem>
         </GridContainer>
