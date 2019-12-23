@@ -5,6 +5,8 @@ import Button from 'components/CustomButtons/Button';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import IconButton from 'components/CustomIconButtons/IconButton';
 import MonitorIcon from 'components/Icons/Monitor';
+import TrueIcon from 'components/Icons/True';
+import FalseIcon from 'components/Icons/False';
 
 const inflection = require('inflection');
 const schema = ['name', 'replicas', 'type', 'exists'];
@@ -88,9 +90,13 @@ const tableSchema = schema
         ...sch,
         component: ({ data, classes }) =>
           data.get('exists') ? (
-            <span className={classes.green}>NO</span>
+            <div className={classes.icon}>
+              <TrueIcon />
+            </div>
           ) : (
-            <span className={classes.red}>YES</span>
+            <div className={classes.icon}>
+              <FalseIcon />
+            </div>
           ),
       };
     }

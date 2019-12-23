@@ -127,6 +127,9 @@ export const styles = (theme) => ({
     display: 'inline-block',
     marginRight: 8,
   },
+  icon: {
+    paddingTop: 6,
+  },
 });
 
 export default makeStyles(styles);
