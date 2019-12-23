@@ -36,18 +36,26 @@ const tableSchema = schema
     {
       id: 'actions',
       label: 'Actions',
-      component: ({ clusterID, namespaceID, data }) => (
-        <Fragment>
-          <IconButton
-            component={Link}
-            to={`/clusters/${clusterID}/namespaces/${namespaceID}/workloadGroup/${data.get(
-              'id'
-            )}/show`}
-          >
-            <DebugIcon />
-          </IconButton>
-        </Fragment>
-      ),
+      component: ({ clusterID, namespaceID, data, parentType, stat }) => {
+        const type = data.getIn(['resource', 'type']);
+        const name = data.getIn(['resource', 'name']);
+        const toType = stat.getIn(['resource', 'type']);
+        const toName = stat.getIn(['resource', 'name']);
+        const path = '/';
+        const method = 'get';
+        const inboundUrl = `/clusters/${clusterID}/namespaces/${namespaceID}/svcMeshTap?resource_type=${type}&resource_name${name}=&to_resource_type=${toType}&to_resource_name=${toName}&method=${method}&path=${path}`;
+        const outboundUrl = `/clusters/${clusterID}/namespaces/${namespaceID}/svcMeshTap?resource_type=${toType}&resource_name${toName}=&to_resource_type=${type}&to_resource_name=${name}&method=${method}&path=${path}`;
+        return (
+          <Fragment>
+            <IconButton
+              component={Link}
+              to={parentType === 'inbound' ? inboundUrl : outboundUrl}
+            >
+              <DebugIcon />
+            </IconButton>
+          </Fragment>
+        );
+      },
     },
   ])
   .map((sch) => {

@@ -46,12 +46,15 @@ export const SvcMeshWorkloadsTable = ({
       : [];
   const inbound = current.get('inbound') || [];
   const outbound = current.get('outbound') || [];
+  const stat = current.get('stat') || {};
   let mergedSchema = schema
     .map((sch) => {
       if (sch.id === 'actions') {
         return {
           ...sch,
           props: {
+            stat,
+            parentType,
             clusterID,
             namespaceID,
             svcMeshWorkloadGroupID,
