@@ -37,12 +37,12 @@ import Helmet from 'components/Helmet/Helmet';
 
 import { makeSelectCurrentID as makeSelectClusterID } from 'ducks/clusters/selectors';
 import { makeSelectCurrentID as makeSelectNamespaceID } from 'ducks/namespaces/selectors';
-import * as actions from 'ducks/horizontalpodautoscalers/actions';
+import * as actions from 'ducks/horizontalPodAutoscalers/actions';
 import {
   makeSelectCurrentID,
   makeSelectCurrent,
   makeSelectURL,
-} from 'ducks/horizontalpodautoscalers/selectors';
+} from 'ducks/horizontalPodAutoscalers/selectors';
 
 import messages from './messages';
 import useStyles from './styles';
@@ -53,19 +53,19 @@ export const HPADetailPage = ({
   id,
   url,
   hpa,
-  readHorizontalpodautoscaler,
+  readHorizontalPodAutoscaler,
 }) => {
   const classes = useStyles();
   const intl = useIntl();
   let metrics = list([]);
   useEffect(() => {
-    readHorizontalpodautoscaler(id, {
+    readHorizontalPodAutoscaler(id, {
       url: `${url}/${id}`,
       clusterID,
       namespaceID,
     });
     return () => {};
-  }, [clusterID, namespaceID, id, readHorizontalpodautoscaler, url]);
+  }, [clusterID, namespaceID, id, readHorizontalPodAutoscaler, url]);
 
   if (hpa.size !== 0) {
     const data = hpa.toJS();
@@ -301,9 +301,6 @@ const mapDispatchToProps = (dispatch) =>
     dispatch
   );
 
-const withConnect = connect(
-  mapStateToProps,
-  mapDispatchToProps
-);
+const withConnect = connect(mapStateToProps, mapDispatchToProps);
 
 export default compose(withConnect)(HPADetailPage);

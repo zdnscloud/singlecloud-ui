@@ -27,16 +27,12 @@ export const selectDomain = (state) => state.get(c.prefix) || initialState;
  * Other specific selectors
  */
 export const makeSelectURL = () =>
-  createSelector(
-    makeSelectCurrentNamespace(),
-    (pt) => pt.getIn(['links', 'persistentvolumeclaims'])
+  createSelector(makeSelectCurrentNamespace(), (pt) =>
+    pt.getIn(['links', 'persistentvolumeclaims'])
   );
 
 export const makeSelectData = () =>
-  createSelector(
-    selectDomain,
-    (substate) => substate.get('data')
-  );
+  createSelector(selectDomain, (substate) => substate.get('data'));
 
 export const makeSelectPersistentVolumeClaims = () =>
   createSelector(
@@ -54,9 +50,9 @@ export const makeSelectPersistentVolumeClaimsList = () =>
     makeSelectCurrentClusterID(),
     makeSelectCurrentNamespaceID(),
     (substate, data, clusterID, namespaceID) =>
-      (substate.getIn(['list', clusterID, namespaceID]) || fromJS([])).map(
-        (id) => data.get(id)
-      ) || fromJS([])
+      (
+        substate.getIn(['list', clusterID, namespaceID]) || fromJS([])
+      ).map((id) => data.get(id)) || fromJS([])
   );
 
 export const makeSelectCurrentID = () =>
@@ -81,34 +77,25 @@ export const makeSelectCurrent = () =>
   );
 
 export const makeSelectErrorsList = () =>
-  createSelector(
-    selectDomain,
-    (substate) => substate.get('errorsList')
-  );
+  createSelector(selectDomain, (substate) => substate.get('errorsList'));
 
 export const makeSelectLoadErrorsList = () =>
-  createSelector(
-    selectDomain,
-    (substate) =>
-      substate
-        .get('errorsList')
-        .filter(({ type }) => type === c.LOAD_PERSISTENT_VOLUME_CLAIMS_FAILURE)
+  createSelector(selectDomain, (substate) =>
+    substate
+      .get('errorsList')
+      .filter(({ type }) => type === c.LOAD_PERSISTENT_VOLUME_CLAIMS_FAILURE)
   );
 
 export const makeSelectReadErrorsList = () =>
-  createSelector(
-    selectDomain,
-    (substate) =>
-      substate
-        .get('errorsList')
-        .filter(({ type }) => type === c.READ_PERSISTENT_VOLUME_CLAIM_FAILURE)
+  createSelector(selectDomain, (substate) =>
+    substate
+      .get('errorsList')
+      .filter(({ type }) => type === c.READ_PERSISTENT_VOLUME_CLAIM_FAILURE)
   );
 
 export const makeSelectRemoveErrorsList = () =>
-  createSelector(
-    selectDomain,
-    (substate) =>
-      substate
-        .get('errorsList')
-        .filter(({ type }) => type === c.REMOVE_PERSISTENT_VOLUME_CLAIM_FAILURE)
+  createSelector(selectDomain, (substate) =>
+    substate
+      .get('errorsList')
+      .filter(({ type }) => type === c.REMOVE_PERSISTENT_VOLUME_CLAIM_FAILURE)
   );

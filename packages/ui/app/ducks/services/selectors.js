@@ -27,16 +27,12 @@ export const selectDomain = (state) => state.get(c.prefix) || initialState;
  * Other specific selectors
  */
 export const makeSelectURL = () =>
-  createSelector(
-    makeSelectCurrentNamespace(),
-    (pt) => pt.getIn(['links', 'services'])
+  createSelector(makeSelectCurrentNamespace(), (pt) =>
+    pt.getIn(['links', 'services'])
   );
 
 export const makeSelectData = () =>
-  createSelector(
-    selectDomain,
-    (substate) => substate.get('data')
-  );
+  createSelector(selectDomain, (substate) => substate.get('data'));
 
 export const makeSelectServices = () =>
   createSelector(
@@ -54,21 +50,18 @@ export const makeSelectServicesList = () =>
     makeSelectCurrentClusterID(),
     makeSelectCurrentNamespaceID(),
     (substate, data, clusterID, namespaceID) =>
-      (substate.getIn(['list', clusterID, namespaceID]) || fromJS([])).map(
-        (id) => data.get(id)
-      ) || fromJS([])
+      (
+        substate.getIn(['list', clusterID, namespaceID]) || fromJS([])
+      ).map((id) => data.get(id)) || fromJS([])
   );
 
 export const makeSelectCurrentID = () =>
-  createSelector(
-    createMatchSelector('*/services/:id/*'),
-    (match) => {
-      if (match && match.params) {
-        return match.params.id;
-      }
-      return '';
+  createSelector(createMatchSelector('*/services/:id/*'), (match) => {
+    if (match && match.params) {
+      return match.params.id;
     }
-  );
+    return '';
+  });
 
 export const makeSelectCurrent = () =>
   createSelector(
@@ -81,43 +74,32 @@ export const makeSelectCurrent = () =>
   );
 
 export const makeSelectErrorsList = () =>
-  createSelector(
-    selectDomain,
-    (substate) => substate.get('errorsList')
-  );
+  createSelector(selectDomain, (substate) => substate.get('errorsList'));
 
 export const makeSelectLoadErrorsList = () =>
-  createSelector(
-    selectDomain,
-    (substate) =>
-      substate
-        .get('errorsList')
-        .filter(({ type }) => type === c.LOAD_SERVICES_FAILURE)
+  createSelector(selectDomain, (substate) =>
+    substate
+      .get('errorsList')
+      .filter(({ type }) => type === c.LOAD_SERVICES_FAILURE)
   );
 
 export const makeSelectCreateErrorsList = () =>
-  createSelector(
-    selectDomain,
-    (substate) =>
-      substate
-        .get('errorsList')
-        .filter(({ type }) => type === c.CREATE_SERVICE_FAILURE)
+  createSelector(selectDomain, (substate) =>
+    substate
+      .get('errorsList')
+      .filter(({ type }) => type === c.CREATE_SERVICE_FAILURE)
   );
 
 export const makeSelectReadErrorsList = () =>
-  createSelector(
-    selectDomain,
-    (substate) =>
-      substate
-        .get('errorsList')
-        .filter(({ type }) => type === c.READ_SERVICE_FAILURE)
+  createSelector(selectDomain, (substate) =>
+    substate
+      .get('errorsList')
+      .filter(({ type }) => type === c.READ_SERVICE_FAILURE)
   );
 
 export const makeSelectRemoveErrorsList = () =>
-  createSelector(
-    selectDomain,
-    (substate) =>
-      substate
-        .get('errorsList')
-        .filter(({ type }) => type === c.REMOVE_SERVICE_FAILURE)
+  createSelector(selectDomain, (substate) =>
+    substate
+      .get('errorsList')
+      .filter(({ type }) => type === c.REMOVE_SERVICE_FAILURE)
   );

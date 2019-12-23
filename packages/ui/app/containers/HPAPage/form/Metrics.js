@@ -23,9 +23,18 @@ import ReadOnlyInput from 'components/CustomInput/ReadOnlyInput';
 import messages from '../messages';
 import useStyles from '../styles';
 
-const Metrics = ({ fields, meta: { error, submitFailed }, formValues }) => {
+const Metrics = ({
+  fields,
+  meta: { error, submitFailed },
+  formValues,
+  worklodMetrics,
+}) => {
   const classes = useStyles();
   const intl = useIntl();
+  const metricNameOptions = worklodMetrics.toList().map((st) => ({
+    label: st.get('name'),
+    value: st.get('name'),
+  }));
 
   const renderNumerical = (f, i) => {
     const targetType =
@@ -117,14 +126,15 @@ const Metrics = ({ fields, meta: { error, submitFailed }, formValues }) => {
         );
       case 'customMetrics':
         return (
-          <InputField
+          <SelectField
             label={<FormattedMessage {...messages.formMetricName} />}
             name={`${f}.metricName`}
-            fullWidth
-            inputProps={{
-              type: 'text',
-              autoComplete: 'off',
+            formControlProps={{
+              style: {
+                width: '100%',
+              },
             }}
+            options={metricNameOptions}
           />
         );
       default:

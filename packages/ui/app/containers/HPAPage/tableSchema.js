@@ -33,7 +33,7 @@ const tableSchema = schema
       id: 'actions',
       label: 'Actions',
       component: ({
-        removeHorizontalpodautoscaler,
+        removeHorizontalPodAutoscaler,
         data,
         clusterID,
         namespaceID,
@@ -49,7 +49,7 @@ const tableSchema = schema
             <EditIcon />
           </IconButton>
           <ConfirmDelete
-            actionName={removeHorizontalpodautoscaler}
+            actionName={removeHorizontalPodAutoscaler}
             id={data.get('id')}
             url={data.getIn(['links', 'remove'])}
             clusterID={clusterID}

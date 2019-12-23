@@ -8,7 +8,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { bindActionCreators, compose } from 'redux';
-import { fromJS } from 'immutable';
+import { fromJS, Map } from 'immutable';
 import {
   reduxForm,
   getFormValues,
@@ -31,7 +31,7 @@ import {
   makeSelectCurrent as makeSelectCurrentCluster,
 } from 'ducks/clusters/selectors';
 import { makeSelectCurrentID as makeSelectNamespaceID } from 'ducks/namespaces/selectors';
-import { makeSelectURL } from 'ducks/horizontalpodautoscalers/selectors';
+import { makeSelectURL } from 'ducks/horizontalPodAutoscalers/selectors';
 import {
   makeSelectDeployments,
   makeSelectURL as makeDeploymentsURL,
@@ -40,16 +40,17 @@ import {
   makeSelectStatefulSets,
   makeSelectURL as makeSelectStatefulSetsURL,
 } from 'ducks/statefulSets/selectors';
-import * as actions from 'ducks/horizontalpodautoscalers/actions';
+import * as actions from 'ducks/horizontalPodAutoscalers/actions';
 import * as stActions from 'ducks/statefulSets/actions';
 import * as dActions from 'ducks/deployments/actions';
+import * as mActions from 'ducks/metrics/actions';
 
 import messages from './messages';
 import useStyles from './styles';
 import CreateHPAForm, { formName } from './CreateForm';
 
 export const CreateHPAPage = ({
-  createHorizontalpodautoscaler,
+  createHorizontalPodAutoscaler,
   submitForm,
   url,
   clusterID,
@@ -57,6 +58,7 @@ export const CreateHPAPage = ({
   values,
   loadDeployments,
   loadStatefulSets,
+  loadMetrics,
   stUrl,
   deployUrl,
   deployments,
@@ -64,6 +66,11 @@ export const CreateHPAPage = ({
 }) => {
   const classes = useStyles();
   const push = usePush();
+  const scaleTargetKind = values && values.get('scaleTargetKind');
+  const scaleTargetName = values && values.get('scaleTargetName');
+  const [metrics, setMetrics] = useState(Map({}));
+  // console.log('deployments', deployments.toJS());
+
   useEffect(() => {
     if (deployUrl) {
       loadDeployments(deployUrl, {
@@ -84,9 +91,50 @@ export const CreateHPAPage = ({
     return () => {};
   }, [clusterID, loadStatefulSets, namespaceID, stUrl]);
 
+  useEffect(() => {
+    if (scaleTargetKind && scaleTargetName) {
+      let metricsUrl = '';
+      switch (scaleTargetKind) {
+        case 'deployment':
+          metricsUrl = deployments.getIn([scaleTargetName, 'links', 'metrics']);
+          break;
+        case 'statefulset':
+          metricsUrl = statefulsets.getIn([
+            scaleTargetName,
+            'links',
+            'metrics',
+          ]);
+          break;
+        default:
+          break;
+      }
+      loadMetrics(metricsUrl, {
+        clusterID,
+        namespaceID,
+        scaleTargetName,
+        resolve({ response }) {
+          console.log(response);
+          setMetrics(fromJS(response.data));
+        },
+        reject() {},
+      });
+    }
+    return () => {};
+  }, [
+    clusterID,
+    namespaceID,
+    loadMetrics,
+    scaleTargetKind,
+    scaleTargetName,
+    deployments,
+    statefulsets,
+  ]);
+
   async function doSubmit(formValues) {
     try {
       const { metrics, ...formData } = formValues.toJS();
+      console.log('formValues.toJS()', formValues.toJS());
+
       const resourceMetrics =
         metrics.filter((r) => r.metricsType === 'resourceMetrics') || [];
       const customMetrics =
@@ -107,16 +155,16 @@ export const CreateHPAPage = ({
       delete data.metricsType;
       console.log('data', data);
 
-      await new Promise((resolve, reject) => {
-        createHorizontalpodautoscaler(data, {
-          resolve,
-          reject,
-          url,
-          clusterID,
-          namespaceID,
-        });
-      });
-      push(`/clusters/${clusterID}/namespaces/${namespaceID}/hpa`);
+      // await new Promise((resolve, reject) => {
+      //   createHorizontalPodAutoscaler(data, {
+      //     resolve,
+      //     reject,
+      //     url,
+      //     clusterID,
+      //     namespaceID,
+      //   });
+      // });
+      // push(`/clusters/${clusterID}/namespaces/${namespaceID}/hpa`);
     } catch (error) {
       throw new SubmissionError({ _error: error });
     }
@@ -146,9 +194,13 @@ export const CreateHPAPage = ({
             <CreateHPAForm
               onSubmit={doSubmit}
               formValues={values}
-              initialValues={fromJS({ metricsType: 'resourceMetrics' })}
+              initialValues={fromJS({
+                metricsType: 'resourceMetrics',
+                metrics: [],
+              })}
               deployments={deployments}
               statefulsets={statefulsets}
+              metrics={metrics}
             />
 
             <Button variant="contained" color="primary" onClick={submitForm}>
@@ -187,14 +239,12 @@ const mapDispatchToProps = (dispatch) =>
       ...actions,
       loadDeployments: dActions.loadDeployments,
       loadStatefulSets: stActions.loadStatefulSets,
+      loadMetrics: mActions.loadMetrics,
       submitForm: () => submit(formName),
     },
     dispatch
   );
 
-const withConnect = connect(
-  mapStateToProps,
-  mapDispatchToProps
-);
+const withConnect = connect(mapStateToProps, mapDispatchToProps);
 
 export default compose(withConnect)(CreateHPAPage);

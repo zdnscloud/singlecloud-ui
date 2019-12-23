@@ -26,8 +26,8 @@ import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
 
 import { makeSelectCurrentID as makeSelectClusterID } from 'ducks/clusters/selectors';
 import { makeSelectCurrentID as makeSelectNamespaceID } from 'ducks/namespaces/selectors';
-import { makeSelectURL } from 'ducks/horizontalpodautoscalers/selectors';
-import * as actions from 'ducks/horizontalpodautoscalers/actions';
+import { makeSelectURL } from 'ducks/horizontalPodAutoscalers/selectors';
+import * as actions from 'ducks/horizontalPodAutoscalers/actions';
 
 import useStyles from './styles';
 import messages from './messages';
@@ -38,21 +38,20 @@ const HPAPage = ({
   namespaceID,
   location,
   url,
-
-  loadHorizontalpodautoscalers,
+  loadHorizontalPodAutoscalers,
 }) => {
   const classes = useStyles();
 
   useEffect(() => {
     if (url) {
-      loadHorizontalpodautoscalers(url, {
+      loadHorizontalPodAutoscalers(url, {
         clusterID,
         namespaceID,
       });
     }
     const t = setInterval(() => {
       if (url) {
-        loadHorizontalpodautoscalers(url, {
+        loadHorizontalPodAutoscalers(url, {
           clusterID,
           namespaceID,
         });
@@ -62,7 +61,7 @@ const HPAPage = ({
     return () => {
       clearInterval(t);
     };
-  }, [clusterID, loadHorizontalpodautoscalers, namespaceID, url]);
+  }, [clusterID, loadHorizontalPodAutoscalers, namespaceID, url]);
 
   return (
     <div className={classes.root}>

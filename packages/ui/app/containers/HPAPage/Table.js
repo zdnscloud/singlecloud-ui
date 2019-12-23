@@ -1,6 +1,6 @@
 /**
  *
- * Horizontalpodautoscalers Table
+ * HorizontalPodAutoscalers Table
  *
  */
 import React, { Fragment } from 'react';
@@ -21,15 +21,15 @@ import ConfirmDelete from 'components/ConfirmDelete/ConfirmDelete';
 import { makeSelectLocation } from 'ducks/app/selectors';
 import { makeSelectCurrentID as makeSelectClusterID } from 'ducks/clusters/selectors';
 import { makeSelectCurrentID as makeSelectNamespaceID } from 'ducks/namespaces/selectors';
-import { makeSelectHorizontalpodautoscalersList } from 'ducks/horizontalpodautoscalers/selectors';
-import * as actions from 'ducks/horizontalpodautoscalers/actions';
+import { makeSelectHorizontalPodAutoscalersList } from 'ducks/horizontalPodAutoscalers/selectors';
+import * as actions from 'ducks/horizontalPodAutoscalers/actions';
 
 import messages from './messages';
 import useStyles from './styles';
 import schema from './tableSchema';
 
 /* eslint-disable react/prefer-stateless-function */
-const HorizontalpodautoscalersTable = ({
+const HorizontalPodAutoscalersTable = ({
   location,
   data,
   clusterID,
@@ -84,7 +84,7 @@ const mapStateToProps = createStructuredSelector({
   location: makeSelectLocation(),
   clusterID: makeSelectClusterID(),
   namespaceID: makeSelectNamespaceID(),
-  data: makeSelectHorizontalpodautoscalersList(),
+  data: makeSelectHorizontalPodAutoscalersList(),
 });
 
 const mapDispatchToProps = (dispatch) =>
@@ -95,9 +95,6 @@ const mapDispatchToProps = (dispatch) =>
     dispatch
   );
 
-const withConnect = connect(
-  mapStateToProps,
-  mapDispatchToProps
-);
+const withConnect = connect(mapStateToProps, mapDispatchToProps);
 
-export default compose(withConnect)(HorizontalpodautoscalersTable);
+export default compose(withConnect)(HorizontalPodAutoscalersTable);

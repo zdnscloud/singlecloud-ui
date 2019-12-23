@@ -32,7 +32,7 @@ import {
   makeSelectURL,
   makeSelectCurrent,
   makeSelectCurrentID,
-} from 'ducks/horizontalpodautoscalers/selectors';
+} from 'ducks/horizontalPodAutoscalers/selectors';
 import {
   makeSelectDeployments,
   makeSelectURL as makeDeploymentsURL,
@@ -41,7 +41,7 @@ import {
   makeSelectStatefulSets,
   makeSelectURL as makeSelectStatefulSetsURL,
 } from 'ducks/statefulSets/selectors';
-import * as actions from 'ducks/horizontalpodautoscalers/actions';
+import * as actions from 'ducks/horizontalPodAutoscalers/actions';
 import * as stActions from 'ducks/statefulSets/actions';
 import * as dActions from 'ducks/deployments/actions';
 
@@ -50,8 +50,8 @@ import useStyles from './styles';
 import UpdateHPAForm, { formName } from './CreateForm';
 
 export const UpdateHPAPage = ({
-  updateHorizontalpodautoscaler,
-  readHorizontalpodautoscaler,
+  updateHorizontalPodAutoscaler,
+  readHorizontalPodAutoscaler,
   submitForm,
   url,
   clusterID,
@@ -90,7 +90,7 @@ export const UpdateHPAPage = ({
   }, [clusterID, loadStatefulSets, namespaceID, stUrl]);
   useEffect(() => {
     if (current.size === 0) {
-      readHorizontalpodautoscaler(id, {
+      readHorizontalPodAutoscaler(id, {
         url: `${url}/${id}`,
         clusterID,
         namespaceID,
@@ -102,7 +102,7 @@ export const UpdateHPAPage = ({
     namespaceID,
     id,
     current.size,
-    readHorizontalpodautoscaler,
+    readHorizontalPodAutoscaler,
     url,
   ]);
 
@@ -128,7 +128,7 @@ export const UpdateHPAPage = ({
       delete data.metricsType;
 
       await new Promise((resolve, reject) => {
-        updateHorizontalpodautoscaler(data, {
+        updateHorizontalPodAutoscaler(data, {
           resolve,
           reject,
           url: `${url}/${id}`,

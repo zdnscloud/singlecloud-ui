@@ -53,6 +53,7 @@ const Form = ({
   deployments,
   statefulsets,
   type,
+  metrics,
 }) => {
   const classes = useStyles();
   const scaleTargetKind =
@@ -214,6 +215,7 @@ const Form = ({
                     classes={classes}
                     component={Metrics}
                     formValues={formValues}
+                    worklodMetrics={metrics}
                   />
                 </GridItem>
               </GridContainer>
