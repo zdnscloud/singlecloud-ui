@@ -72,6 +72,9 @@ export const reducer = (
       if (readyState === 0) {
         mState = state.updateIn(['list', clusterID, namespaceID], (list) => {
           if (list) {
+            if (list.size > 40) {
+              return list.slice(0, 39).unshift(id);
+            }
             return list.unshift(id);
           }
           return fromJS([id]);
