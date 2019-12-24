@@ -37,6 +37,10 @@ export default defineMessages({
     id: `${scope}.tapStart`,
     defaultMessage: 'tapStart',
   },
+  tapStop: {
+    id: `${scope}.tapStop`,
+    defaultMessage: 'tapStop',
+  },
   tapReset: {
     id: `${scope}.tapReset`,
     defaultMessage: 'tapReset',

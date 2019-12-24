@@ -106,8 +106,8 @@ const tableSchema = schema
           const d = data.getIn(['event', 'responseEnd']);
           if (!d || d.size === 0) return <Spinner />;
           const eos = d.get('eos');
-          if (!eos || eos.size === 0) return '---';
-          return grpcStatusCodes[eos.get('grpcStatusCode')];
+          if (eos == null) return '---';
+          return grpcStatusCodes[eos];
         },
       };
     }

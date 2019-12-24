@@ -36,7 +36,9 @@ export const Form = ({
   error,
   formValues,
   workloads,
+  stopAction,
   resetAction,
+  isTapping,
 }) => {
   const classes = useStyles();
   /**
@@ -47,7 +49,9 @@ export const Form = ({
      method=
      path=
    */
-  const options = workloads.map((wl) => `${wl.get('type')}/${wl.get('name')}`).toJS();
+  const options = workloads
+    .map((wl) => `${wl.get('type')}/${wl.get('name')}`)
+    .toJS();
 
   return (
     <form className={classes.form} onSubmit={handleSubmit}>
@@ -74,8 +78,7 @@ export const Form = ({
             fullWidth
           />
         </GridItem>
-        <GridItem xs={4} sm={4} md={4}>
-        </GridItem>
+        <GridItem xs={4} sm={4} md={4}></GridItem>
 
         <GridItem xs={4} sm={4} md={4}>
           <SelectField
@@ -93,12 +96,19 @@ export const Form = ({
           />
         </GridItem>
         <GridItem xs={4} sm={4} md={4}>
-          <Button variant="contained" color="primary" type="submit">
-            <FormattedMessage {...messages.tapStart} />
-          </Button>
+          {isTapping ? (
+            <Button variant="contained" color="primary" onClick={stopAction}>
+              <FormattedMessage {...messages.tapStop} />
+            </Button>
+          ) : (
+            <Button variant="contained" color="primary" type="submit">
+              <FormattedMessage {...messages.tapStart} />
+            </Button>
+          )}
           <Button
             variant="contained"
             className={classes.cancleBtn}
+            type="reset"
             onClick={resetAction}
           >
             <FormattedMessage {...messages.tapReset} />

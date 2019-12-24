@@ -32,6 +32,7 @@ import {
   makeSelectURL,
   makeSelectSvcMeshWorkloadGroupsList,
 } from 'ducks/svcMeshWorkloadGroups/selectors';
+import { makeSelectIsTapping } from 'ducks/svcMeshTap/selectors';
 import * as actions from 'ducks/svcMeshWorkloadGroups/actions';
 import * as tapActions from 'ducks/svcMeshTap/actions';
 
@@ -44,12 +45,14 @@ import messages from './messages';
 const SvcMeshTapPage = ({
   clusterID,
   namespaceID,
+  isTapping,
   location,
   url,
   loadSvcMeshWorkloadGroups,
   workloadGroups,
   values,
   svcMeshTapStart,
+  svcMeshTapStop,
   svcMeshTapReset,
 }) => {
   const classes = useStyles();
@@ -85,7 +88,7 @@ const SvcMeshTapPage = ({
         method,
         path,
       };
-      svcMeshTapReset();
+      svcMeshTapStop();
       svcMeshTapStart(data, { clusterID, namespaceID });
     } catch (error) {
       throw new SubmissionError({ _error: error });
@@ -119,7 +122,9 @@ const SvcMeshTapPage = ({
                     method: '',
                     path: '',
                   })}
+                  isTapping={isTapping}
                   formValues={values}
+                  stopAction={svcMeshTapStop}
                   resetAction={svcMeshTapReset}
                 />
               </CardHeader>
@@ -140,6 +145,7 @@ const mapStateToProps = createStructuredSelector({
   url: makeSelectURL(),
   workloadGroups: makeSelectSvcMeshWorkloadGroupsList(),
   values: getFormValues(formName),
+  isTapping: makeSelectIsTapping(),
 });
 
 const mapDispatchToProps = (dispatch) =>
