@@ -97,7 +97,15 @@ export const Form = ({
         </GridItem>
         <GridItem xs={4} sm={4} md={4}>
           {isTapping ? (
-            <Button variant="contained" color="primary" onClick={stopAction}>
+            <Button
+              variant="contained"
+              color="primary"
+              type="button"
+              onClick={(e) => {
+                stopAction();
+                e.preventDefault();
+              }}
+            >
               <FormattedMessage {...messages.tapStop} />
             </Button>
           ) : (
