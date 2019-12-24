@@ -26,6 +26,7 @@ import GridItem from 'components/Grid/GridItem';
 import GridContainer from 'components/Grid/GridContainer';
 import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
 
+import { makeSelectLocation } from 'ducks/app/selectors';
 import {
   makeSelectCurrentID as makeSelectClusterID,
   makeSelectCurrent as makeSelectCurrentCluster,
@@ -48,6 +49,7 @@ import * as mActions from 'ducks/metrics/actions';
 import messages from './messages';
 import useStyles from './styles';
 import CreateHPAForm, { formName } from './CreateForm';
+import { renderSubmitData } from './utils/utils';
 
 export const CreateHPAPage = ({
   createHorizontalPodAutoscaler,
@@ -63,33 +65,44 @@ export const CreateHPAPage = ({
   deployUrl,
   deployments,
   statefulsets,
+  location,
 }) => {
   const classes = useStyles();
   const push = usePush();
+  const search = location.get('search');
+  let checked = false;
+  let targetScaleKind = '';
+  let targetScaleName = '';
+  if (search && search.includes('checked=true')) {
+    const [trt, type] = /targetScaleKind=([a-zA-Z]+)/i.exec(search);
+    const [tn, name] = /targetScaleName=([a-zA-Z0-9-]+)/i.exec(search);
+    checked = true;
+    targetScaleKind = type;
+    targetScaleName = name;
+  }
+
   const scaleTargetKind = values && values.get('scaleTargetKind');
   const scaleTargetName = values && values.get('scaleTargetName');
   const [metrics, setMetrics] = useState(Map({}));
-  // console.log('deployments', deployments.toJS());
 
   useEffect(() => {
-    if (deployUrl) {
-      loadDeployments(deployUrl, {
-        clusterID,
-        namespaceID,
-      });
-    }
-    return () => {};
-  }, [clusterID, loadDeployments, namespaceID, deployUrl]);
+    loadDeployments(deployUrl, { clusterID, namespaceID });
+    loadStatefulSets(stUrl, { clusterID, namespaceID });
+  }, [
+    clusterID,
+    namespaceID,
+    loadDeployments,
+    deployUrl,
+    loadStatefulSets,
+    stUrl,
+  ]);
 
-  useEffect(() => {
-    if (stUrl) {
-      loadStatefulSets(stUrl, {
-        clusterID,
-        namespaceID,
-      });
-    }
-    return () => {};
-  }, [clusterID, loadStatefulSets, namespaceID, stUrl]);
+  const initialValues = fromJS({
+    scaleTargetKind: checked ? targetScaleKind : '',
+    scaleTargetName: checked ? targetScaleName : '',
+    metricsType: checked ? 'customMetrics' : 'resourceMetrics',
+    metrics: [],
+  });
 
   useEffect(() => {
     if (scaleTargetKind && scaleTargetName) {
@@ -132,39 +145,20 @@ export const CreateHPAPage = ({
 
   async function doSubmit(formValues) {
     try {
-      const { metrics, ...formData } = formValues.toJS();
-      console.log('formValues.toJS()', formValues.toJS());
-
-      const resourceMetrics =
-        metrics.filter((r) => r.metricsType === 'resourceMetrics') || [];
-      const customMetrics =
-        metrics.filter((r) => r.metricsType === 'customMetrics') || [];
-      if (resourceMetrics.length > 0) {
-        resourceMetrics.forEach((item) => {
-          if (item.resourceName === 'memory' && item.averageValue) {
-            item.averageValue = `${item.averageValue}Gi`;
-          }
-        });
-      }
-      const data = {
-        resourceMetrics,
-        customMetrics,
-        ...formData,
-      };
+      const data = renderSubmitData(formValues);
       delete data.metrics;
       delete data.metricsType;
       console.log('data', data);
-
-      // await new Promise((resolve, reject) => {
-      //   createHorizontalPodAutoscaler(data, {
-      //     resolve,
-      //     reject,
-      //     url,
-      //     clusterID,
-      //     namespaceID,
-      //   });
-      // });
-      // push(`/clusters/${clusterID}/namespaces/${namespaceID}/hpa`);
+      await new Promise((resolve, reject) => {
+        createHorizontalPodAutoscaler(data, {
+          resolve,
+          reject,
+          url,
+          clusterID,
+          namespaceID,
+        });
+      });
+      push(`/clusters/${clusterID}/namespaces/${namespaceID}/hpa`);
     } catch (error) {
       throw new SubmissionError({ _error: error });
     }
@@ -181,7 +175,7 @@ export const CreateHPAPage = ({
         <Breadcrumbs
           data={[
             {
-              path: `/clusters/${clusterID}/namespaces/${namespaceID}/hpa`,
+              path: `/clusters/${clusterID}/namespaces/${namespaceID}/horizontalPodAutoscalers`,
               name: <FormattedMessage {...messages.pageTitle} />,
             },
             {
@@ -194,10 +188,7 @@ export const CreateHPAPage = ({
             <CreateHPAForm
               onSubmit={doSubmit}
               formValues={values}
-              initialValues={fromJS({
-                metricsType: 'resourceMetrics',
-                metrics: [],
-              })}
+              initialValues={initialValues}
               deployments={deployments}
               statefulsets={statefulsets}
               metrics={metrics}
@@ -231,6 +222,7 @@ const mapStateToProps = createStructuredSelector({
   deployUrl: makeDeploymentsURL(),
   deployments: makeSelectDeployments(),
   statefulsets: makeSelectStatefulSets(),
+  location: makeSelectLocation(),
 });
 
 const mapDispatchToProps = (dispatch) =>

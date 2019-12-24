@@ -8,13 +8,12 @@ import PropTypes from 'prop-types';
 import { createStructuredSelector } from 'reselect';
 import { bindActionCreators, compose } from 'redux';
 import { connect } from 'react-redux';
+import { fromJS } from 'immutable';
 
-import Helmet from 'components/Helmet/Helmet';
+import { usePush } from 'hooks/router';
+
 import { FormattedMessage } from 'react-intl';
-import CssBaseline from '@material-ui/core/CssBaseline';
 import { Link } from 'react-router-dom';
-import Typography from '@material-ui/core/Typography';
-import Fab from '@material-ui/core/Fab';
 import CButton from 'components/CustomButtons/Button';
 import Button from '@material-ui/core/Button';
 import GridItem from 'components/Grid/GridItem';
@@ -24,6 +23,8 @@ import CardHeader from 'components/Card/CardHeader';
 import CardBody from 'components/Card/CardBody';
 import Dialog from '@material-ui/core/Dialog';
 import CloseIcon from 'components/Icons/Close';
+import CardFooter from 'components/Card/CardFooter';
+import IconButton from '@material-ui/core/IconButton';
 
 import { makeSelectCurrentID as makeSelectClusterID } from 'ducks/clusters/selectors';
 import { makeSelectCurrentID as makeSelectNamespaceID } from 'ducks/namespaces/selectors';
@@ -40,22 +41,13 @@ const MetricsDialog = ({
   loadMetrics,
   url,
   id,
+  type,
 }) => {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
   const [current, setCurrent] = useState(null);
-  useEffect(() => {
-    if (url) {
-      loadMetrics(url, {
-        clusterID,
-        namespaceID,
-        id,
-      });
-    }
-    return () => {
-      // try cancel something when unmount
-    };
-  }, [clusterID, id, loadMetrics, namespaceID, url]);
+  const push = usePush();
+  const [selectMetrics, setSelectMetrics] = useState([]);
 
   return (
     <Fragment>
@@ -70,7 +62,7 @@ const MetricsDialog = ({
               namespaceID,
               id,
               resolve({ response }) {
-                setCurrent(response);
+                setCurrent(response.data);
               },
               reject() {},
             });
@@ -91,24 +83,34 @@ const MetricsDialog = ({
         fullWidth
         maxWidth="md"
       >
-        <div className={classes.root}>
-          <div className={classes.content}>
-            <GridContainer className={classes.grid}>
-              <GridItem xs={12} sm={12} md={12}>
-                <Card>
-                  <CardHeader>
-                    <h4>
-                      <FormattedMessage {...messages.metrics} />
-                    </h4>
-                  </CardHeader>
-                  <CardBody>
-                    <MetricsTable data={current} />
-                  </CardBody>
-                </Card>
-              </GridItem>
-            </GridContainer>
-          </div>
-        </div>
+        <Card className={classes.dialogCard}>
+          <CardHeader color="secondary" className={classes.dialogHeader}>
+            <h4 className={classes.cardTitleWhite}>
+              <FormattedMessage {...messages.metrics} />
+            </h4>
+            <IconButton onClick={() => setOpen(false)} style={{ padding: 0 }}>
+              <CloseIcon style={{ color: '#fff' }} />
+            </IconButton>
+          </CardHeader>
+          <CardBody className={classes.dialogCardBody}>
+            {current ? <MetricsTable data={fromJS(current)} /> : null}
+          </CardBody>
+          <CardFooter className={classes.dialogCardFooter}>
+            <Button
+              onClick={() => {
+                push(
+                  `/clusters/${clusterID}/namespaces/${namespaceID}/hpa/create?checked=true&targetScaleKind=${type}&targetScaleName=${id}&selectMetrics=${selectMetrics}`
+                );
+                setCurrent(null);
+                setOpen(false);
+              }}
+              color="primary"
+              variant="contained"
+            >
+              <FormattedMessage {...messages.setHPABtn} />
+            </Button>
+          </CardFooter>
+        </Card>
       </Dialog>
     </Fragment>
   );

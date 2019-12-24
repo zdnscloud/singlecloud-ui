@@ -25,12 +25,16 @@ export default defineMessages({
     id: `${scope}.tableTitleName`,
     defaultMessage: 'Name',
   },
-  tableTitleCreationTimestamp: {
-    id: `${scope}.tableTitleCreationTimestamp`,
-    defaultMessage: 'CreationTimestamp',
+  tableTitleLabels: {
+    id: `${scope}.tableTitleLabels`,
+    defaultMessage: 'Labels',
   },
-  tableTitleActions: {
-    id: `${scope}.tableTitleActions`,
-    defaultMessage: 'Actions',
+  tableTitleGauge: {
+    id: `${scope}.tableTitleGauge`,
+    defaultMessage: 'Gauge',
+  },
+  setHPABtn: {
+    id: `${scope}.setHPABtn`,
+    defaultMessage: 'Set HPA',
   },
 });

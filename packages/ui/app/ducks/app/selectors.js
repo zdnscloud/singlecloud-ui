@@ -147,7 +147,7 @@ export const makeSelectLeftMenus = () =>
             children: [
               {
                 name: 'HPA',
-                path: `/clusters/${cluster}/namespaces/${namespace}/hpa`,
+                path: `/clusters/${cluster}/namespaces/${namespace}/horizontalPodAutoscalers`,
               },
               {
                 name: 'Deployments',

@@ -10,8 +10,13 @@ import { FormattedMessage } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import { bindActionCreators, compose } from 'redux';
 
-import Paper from '@material-ui/core/Paper';
-import { SimpleTable } from '@gsmlg/com';
+import Chip from '@material-ui/core/Chip';
+import Table from '@material-ui/core/Table';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import Checkbox from '@material-ui/core/Checkbox';
 
 import { makeSelectLocation } from 'ducks/app/selectors';
 import { makeSelectCurrentID as makeSelectClusterID } from 'ducks/clusters/selectors';
@@ -20,59 +25,63 @@ import * as actions from 'ducks/metrics/actions';
 
 import messages from './messages';
 import useStyles from './styles';
-import schema from './tableSchema';
 
 /* eslint-disable react/prefer-stateless-function */
-const MetricsTable = ({
-  location,
-  data,
-  clusterID,
-  namespaceID,
-  removeMetric,
-}) => {
+const MetricsTable = ({ data, input }) => {
   const classes = useStyles();
-  const pathname = location.get('pathname');
-  const mergedSchema = schema
-    .map((sch) => {
-      if (sch.id === 'actions') {
-        return {
-          ...sch,
-          props: {
-            removeMetric,
-            clusterID,
-            namespaceID,
-          },
-        };
-      }
-      if (sch.id === 'name') {
-        return {
-          ...sch,
-          props: { pathname },
-        };
-      }
-      return sch;
-    })
-    .map((s) => ({
-      ...s,
-      label: <FormattedMessage {...messages[`tableTitle${s.label}`]} />,
-    }));
+
+  const onChange = (event) => {
+    let val = input.value;
+    const { checked, value } = event.target;
+
+    if (checked) {
+      val = val.push(value);
+    } else {
+      val = val.filter((v) => v !== value);
+    }
+    input.onChange(val);
+  };
 
   return (
-    <Paper className={classes.tableWrapper}>
-      <SimpleTable
-        className={classes.table}
-        schema={mergedSchema}
-        data={data}
-      />
-    </Paper>
+    <Fragment>
+      <Table className={classes.table}>
+        <TableHead>
+          <TableRow>
+            <TableCell
+              style={{ width: 100 }}
+              className={`${classes.tableCell} ${classes.tableHeadCell}`}
+            >
+              <Checkbox
+                checked="false"
+                onChange={onChange}
+                value=""
+                color="primary"
+              />
+            </TableCell>
+            <TableCell
+              className={`${classes.tableCell} ${classes.tableHeadCell}`}
+            >
+              <FormattedMessage {...messages.tableTitleName} />
+            </TableCell>
+            <TableCell
+              className={`${classes.tableCell} ${classes.tableHeadCell}`}
+            >
+              <FormattedMessage {...messages.tableTitleLabels} />
+            </TableCell>
+            <TableCell
+              className={`${classes.tableCell} ${classes.tableHeadCell}`}
+            >
+              <FormattedMessage {...messages.tableTitleGauge} />
+            </TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody></TableBody>
+      </Table>
+    </Fragment>
   );
 };
 
-const mapStateToProps = createStructuredSelector({
-  location: makeSelectLocation(),
-  clusterID: makeSelectClusterID(),
-  namespaceID: makeSelectNamespaceID(),
-});
+const mapStateToProps = createStructuredSelector({});
 
 const mapDispatchToProps = (dispatch) =>
   bindActionCreators(

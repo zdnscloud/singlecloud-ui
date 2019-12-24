@@ -71,7 +71,7 @@ const HPAPage = ({
         <Breadcrumbs
           data={[
             {
-              path: `/clusters/${clusterID}/namespaces/${namespaceID}/hpa`,
+              path: `/clusters/${clusterID}/namespaces/${namespaceID}/horizontalPodAutoscalers`,
               name: <FormattedMessage {...messages.pageTitle} />,
             },
           ]}
