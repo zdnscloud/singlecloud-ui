@@ -66,17 +66,23 @@ const tableSchema = schema
           data,
           svcMeshWorkloadGroupID,
           svcMeshWorkloadID,
-        }) => (
-          <Button
-            link
-            component={Link}
-            to={`/clusters/${clusterID}/namespaces/${namespaceID}/svcMeshWorkloadGroups/${svcMeshWorkloadGroupID}/svcmeshworkloads/${svcMeshWorkloadID}/svcmeshpods/${data.get(
-              'id'
-            )}/show`}
-          >
-            {data.getIn(['resource', 'name'])}
-          </Button>
-        ),
+        }) => {
+          const name = data.getIn(['resource', 'name']);
+
+          return name ? (
+            <Button
+              link
+              component={Link}
+              to={`/clusters/${clusterID}/namespaces/${namespaceID}/svcMeshWorkloadGroups/${svcMeshWorkloadGroupID}/svcmeshworkloads/${svcMeshWorkloadID}/svcmeshpods/${data.get(
+                'id'
+              )}/show`}
+            >
+              {name}
+            </Button>
+          ) : (
+            <span>--</span>
+          );
+        },
       };
     }
     return sch;

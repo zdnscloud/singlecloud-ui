@@ -221,12 +221,12 @@ const styles = (theme) => ({
     marginBottom: '-20px',
     position: 'relative',
     '& > div': {
-      width: '80%',
+      width: '75%',
     },
     '& > span': {
       position: 'absolute',
       top: -8,
-      right: -10,
+      right: -12,
     },
   },
   tableCardHeader: {

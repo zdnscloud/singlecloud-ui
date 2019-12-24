@@ -54,7 +54,7 @@ export const getSRClassName = (sr, classes) => {
     case sr > 90 && sr < 95:
       activeClasses = classes.orange;
       break;
-    case sr > 90:
+    case sr < 90:
       activeClasses = classes.red;
       break;
     default:
@@ -68,9 +68,9 @@ export const getSR = (data) => {
     return <span>--</span>;
   }
   const successCount = data.getIn(['basicStat', 'successCount']) || 0;
-  const failureCount = data.getIn(['basicStat', 'failureCount)']) || 0;
+  const failureCount = data.getIn(['basicStat', 'failureCount']) || 0;
   const successRate = (successCount / (successCount + failureCount)) * 100;
-  return successRate;
+  return successRate.toFixed(2);
 };
 
 export const getSuccessRate = (data, classes) => {
@@ -102,7 +102,7 @@ export const getRPS = (data) => {
     return <span>--</span>;
   }
   const successCount = data.getIn(['basicStat', 'successCount']) || 0;
-  const failureCount = data.getIn(['basicStat', 'failureCount)']) || 0;
+  const failureCount = data.getIn(['basicStat', 'failureCount']) || 0;
   const timeWindow = timeWindowSeconds(data.get('timeWindow'));
   const rps = (successCount + failureCount) / timeWindow;
 
@@ -117,8 +117,8 @@ export const getLatency = (data, type) => {
   if (_.isEmpty(data)) {
     return <span>--</span>;
   }
-
-  return <span>{data.getIn(['basicStat', type]) || '--'}</span>;
+  const LatencyType = data.getIn(['basicStat', type]);
+  return <span>{LatencyType ? `${LatencyType} ms` : '--'}</span>;
 };
 
 export const getBytes = (data, type) => {
