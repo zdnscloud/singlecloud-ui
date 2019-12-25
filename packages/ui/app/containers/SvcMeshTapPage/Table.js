@@ -3,7 +3,7 @@
  * Svc Mesh Tap Table
  *
  */
-import React, { Fragment } from 'react';
+import React, { Fragment, useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
@@ -17,6 +17,10 @@ import { SimpleTable } from '@gsmlg/com';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
 import ConfirmDelete from 'components/ConfirmDelete/ConfirmDelete';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogTitle from '@material-ui/core/DialogTitle';
 
 import { makeSelectLocation } from 'ducks/app/selectors';
 import { makeSelectCurrentID as makeSelectClusterID } from 'ducks/clusters/selectors';
@@ -27,15 +31,17 @@ import * as actions from 'ducks/svcMeshTap/actions';
 import messages from './messages';
 import useStyles from './styles';
 import schema from './tableSchema';
+import RequestDetail from './RequestDetail';
 
 const TapTable = ({ data, clusterID, namespaceID }) => {
   const classes = useStyles();
+  const [open, setOpen] = useState(false);
   const mergedSchema = schema
     .map((sch) => {
-      if (sch.id === 'name') {
+      if (sch.id === 'self') {
         return {
           ...sch,
-          props: {},
+          props: { setOpen },
         };
       }
       return sch;
@@ -52,6 +58,23 @@ const TapTable = ({ data, clusterID, namespaceID }) => {
         schema={mergedSchema}
         data={data}
       />
+      <Dialog
+        maxWidth="md"
+        fullWidth
+        open={open}
+        onClose={() => setOpen(false)}
+        aria-labelledby="form-dialog-title"
+      >
+        <DialogTitle id="form-dialog-title">Request Details</DialogTitle>
+        <DialogContent>
+          <RequestDetail data={open} />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setOpen(false)} color="primary">
+            Close
+          </Button>
+        </DialogActions>
+      </Dialog>
     </Paper>
   );
 };

@@ -41,14 +41,6 @@ export const Form = ({
   isTapping,
 }) => {
   const classes = useStyles();
-  /**
-     resource_type=
-     resource_name=
-     to_resource_type=
-     to_resource_name=
-     method=
-     path=
-   */
   const options = workloads
     .map((wl) => `${wl.get('type')}/${wl.get('name')}`)
     .toJS();

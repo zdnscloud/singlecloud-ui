@@ -80,6 +80,15 @@ const SvcMeshTapPage = ({
 
       const [type, name] = from.split('/');
       const [toType, toName] = to.split('/');
+      /**
+         query params
+         resource_type=
+         resource_name=
+         to_resource_type=
+         to_resource_name=
+         method=
+         path=
+      */
       const data = {
         resource_type: type,
         resource_name: name,

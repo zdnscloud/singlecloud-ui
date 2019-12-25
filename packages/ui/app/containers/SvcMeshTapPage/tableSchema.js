@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useState } from 'react';
 import { ucfirst } from '@gsmlg/utils';
 import TimeCell from 'components/Cells/TimeCell';
 import { Link } from 'react-router-dom';
@@ -6,6 +6,20 @@ import Button from 'components/CustomButtons/Button';
 import ConfirmDelete from 'components/ConfirmDelete/ConfirmDelete';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { withStyles } from '@material-ui/core/styles';
+import Tooltip from '@material-ui/core/Tooltip';
+import OpenInNewIcon from '@material-ui/icons/OpenInNew';
+import Grid from '@material-ui/core/Grid';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faLongArrowAltRight } from '@fortawesome/free-solid-svg-icons/faLongArrowAltRight';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import IconButton from '@material-ui/core/IconButton';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+
+import Popover from './Popover';
 
 // https://godoc.org/google.golang.org/grpc/codes#Code
 const grpcStatusCodes = {
@@ -41,6 +55,63 @@ const formatTapLatency = (d) => {
   return `${(nanos / 10e6).toFixed(2)}ms`;
 };
 
+const getResType = (d) => {
+  const tapResourceTypes = ['deployment', 'daemonset', 'statefulset'];
+  for (let i = 0; i < tapResourceTypes.length; i += 1) {
+    const t = tapResourceTypes[i];
+    if (d[t]) return t;
+  }
+  return '---';
+};
+
+const renderResourceDirection = (data) => {
+  const s = data
+    .getIn(['sourceMeta', 'labels'])
+    .merge(data.get('source'))
+    .toJS();
+  const d = data
+    .getIn(['destinationMeta', 'labels'])
+    .merge(data.get('destination'))
+    .toJS();
+  const st = getResType(s);
+  const dt = getResType(d);
+
+  return (
+    <Table>
+      <TableHead>
+        <TableRow>
+          <TableCell component="th">来源</TableCell>
+          <TableCell component="th"></TableCell>
+          <TableCell component="th">目的</TableCell>
+        </TableRow>
+      </TableHead>
+      <TableBody>
+        <TableRow>
+          <TableCell>{`${st}/${s[st]}`}</TableCell>
+          <TableCell>
+            <FontAwesomeIcon icon={faLongArrowAltRight} />
+          </TableCell>
+          <TableCell>{`${dt}/${d[dt]}`}</TableCell>
+        </TableRow>
+        <TableRow>
+          <TableCell>{`pod/${s.pod}`}</TableCell>
+          <TableCell>
+            <FontAwesomeIcon icon={faLongArrowAltRight} />
+          </TableCell>
+          <TableCell>{`pod/${d.pod}`}</TableCell>
+        </TableRow>
+        <TableRow>
+          <TableCell>{`${s.ip}:${s.port}`}</TableCell>
+          <TableCell>
+            <FontAwesomeIcon icon={faLongArrowAltRight} />
+          </TableCell>
+          <TableCell>{`${d.ip}:${d.port}`}</TableCell>
+        </TableRow>
+      </TableBody>
+    </Table>
+  );
+};
+
 const schema = [
   'self',
   'proxyDirection',
@@ -58,13 +129,63 @@ const tableSchema = schema
     label: ucfirst(id),
   }))
   .map((sch) => {
+    if (sch.id === 'self') {
+      return {
+        ...sch,
+        component: ({ data, setOpen }) => (
+          <IconButton onClick={() => setOpen(data)}>
+            <ExpandMoreIcon />
+          </IconButton>
+        ),
+      };
+    }
+    if (sch.id === 'proxyDirection') {
+      return {
+        ...sch,
+        component: ({ data }) => (
+          <Tooltip title={data.get('proxyDirection')} placement="right">
+            <span>
+              {data.get('proxyDirection') === 'INBOUND' ? 'FROM' : 'TO'}
+            </span>
+          </Tooltip>
+        ),
+      };
+    }
     if (sch.id === 'name') {
       return {
         ...sch,
-        component: ({ data }) =>
-          data.get('proxyDirection') === 'INBOUND'
-            ? data.getIn(['sourceMeta', 'labels', 'deployment'])
-            : data.getIn(['destinationMeta', 'labels', 'deployment']),
+        component: ({ data }) => {
+          const cur =
+            data.get('proxyDirection') === 'INBOUND'
+              ? data.getIn(['sourceMeta', 'labels'])
+              : data.getIn(['destinationMeta', 'labels']);
+
+          const linkFn = (e) => {
+            e.preventDefault();
+          };
+
+          const baseContent = (
+            <IconButton onClick={linkFn}>
+              <OpenInNewIcon fontSize="small" />
+            </IconButton>
+          );
+
+          return (
+            <Grid container direction="row" alignItems="center" spacing={1}>
+              <Grid item>
+                <Button link component={Link} to={`${data.get('id')}/show`}>
+                  {cur.get('deployment')}
+                </Button>
+              </Grid>
+              <Grid item>
+                <Popover
+                  popoverContent={renderResourceDirection(data)}
+                  baseContent={baseContent}
+                />
+              </Grid>
+            </Grid>
+          );
+        },
       };
     }
     if (sch.id === 'method') {
