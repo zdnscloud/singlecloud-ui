@@ -73,8 +73,8 @@ export const renderNumerical = (f, i, formValues) => {
 
 export const renderMetricsName = (f, i, formValues, worklodMetrics) => {
   const metricNameOptions = worklodMetrics.toList().map((st) => ({
-    label: st.get('name'),
-    value: st.get('name'),
+    label: `${st.get('name')} ${JSON.stringify(st.get('labels'))}`,
+    value: `${st.get('name')} ${JSON.stringify(st.get('labels'))}`,
   }));
   const metricsType =
     formValues && formValues.getIn(['metrics', i, 'metricsType']);
@@ -219,7 +219,7 @@ export const renderSubmitData = (formValues) => {
   return data;
 };
 
-export const refactorMetrics = (data) => {
+export const refactorMetrics = (data, intl) => {
   const { resourceMetrics, customMetrics, ...formData } = data;
   let arr = [];
   data.resourceMetrics =
@@ -247,6 +247,20 @@ export const refactorMetrics = (data) => {
   arr = arr.concat(data.resourceMetrics).concat(data.customMetrics);
   return arr;
 };
+
+export const refactorTargetSelectMetrics = (targetSelectMetrics) => {
+  const arr = [];
+  targetSelectMetrics && 
+  targetSelectMetrics.forEach((item) => {
+    arr.push({
+      metricsType: 'customMetrics',
+      targetType: 'AverageValue',
+      averageValue: item.value,
+      metricName: item.name,
+    });
+  });
+  return arr;
+}
 
 export const renderReadOnlyNumerical = (c, i, metrics) => {
   const targetType = metrics && metrics.getIn([i, 'targetType']);
@@ -276,9 +290,8 @@ export const renderReadOnlyNumerical = (c, i, metrics) => {
   }
 };
 
-export const renderTableMetrics = (data) => {
+export const renderTableMetrics = (data, intl) => {
   const val = data.toJS() || {};
-  const intl = useIntl();
   const {
     resourceMetrics,
     customMetrics,
@@ -314,7 +327,7 @@ export const renderTableMetrics = (data) => {
             item.systemVal =
               crm.length > 0 && crm[i].averageValue
                 ? `${crm[i].averageValue}${intl.formatMessage(
-                  messages.formCPUSuffix
+                    messages.formCPUSuffix
                 )}`
                 : '--';
             item.thresholdVal = `${r.averageValue}${intl.formatMessage(

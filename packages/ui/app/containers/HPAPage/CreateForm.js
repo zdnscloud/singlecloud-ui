@@ -42,6 +42,20 @@ const validate = (values) => {
       errors[field] = 'Required';
     }
   });
+  // const customMetrics = values && values.getIn('metrics', 'customMetrics');
+  // if (customMetrics && customMetrics.size > 0) {
+  //   errors.customMetrics = [];
+  //   customMetrics.forEach((c) => {
+  //     if (c) {
+  //       const metricName = c.get('metricName');
+  //       const err = {};
+  //       if (!metricName) err.metricName = 'Required';
+  //       errors.configs.push(err);
+  //     } else {
+  //       errors.configs.push({ metricName: 'Required' });
+  //     }
+  //   });
+  // }
 
   return errors;
 };

@@ -6,7 +6,7 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import { bindActionCreators, compose } from 'redux';
 
@@ -34,9 +34,10 @@ const HorizontalPodAutoscalersTable = ({
   data,
   clusterID,
   namespaceID,
-  removeHorizontalpodautoscaler,
+  removeHorizontalPodAutoscaler,
 }) => {
   const classes = useStyles();
+  const intl = useIntl();
   const pathname = location.get('pathname');
   const mergedSchema = schema
     .map((sch) => {
@@ -44,7 +45,7 @@ const HorizontalPodAutoscalersTable = ({
         return {
           ...sch,
           props: {
-            removeHorizontalpodautoscaler,
+            removeHorizontalPodAutoscaler,
             clusterID,
             namespaceID,
           },
@@ -60,6 +61,12 @@ const HorizontalPodAutoscalersTable = ({
         return {
           ...sch,
           props: { clusterID, namespaceID },
+        };
+      }
+      if (sch.id === 'metrics') {
+        return {
+          ...sch,
+          props: { intl },
         };
       }
       return sch;

@@ -19,7 +19,7 @@ import {
 import { usePush } from 'hooks/router';
 
 import Helmet from 'components/Helmet/Helmet';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Button from '@material-ui/core/Button';
 import GridItem from 'components/Grid/GridItem';
@@ -72,6 +72,7 @@ export const UpdateHPAPage = ({
 }) => {
   const classes = useStyles();
   const push = usePush();
+  const intl = useIntl();
   const [metrics, setMetrics] = useState(Map({}));
   const scaleTargetKind = values && values.get('scaleTargetKind');
   const scaleTargetName = values && values.get('scaleTargetName');
@@ -171,7 +172,7 @@ export const UpdateHPAPage = ({
   if (current.size !== 0) {
     const data = current.toJS();
     const { resourceMetrics, customMetrics, ...formData } = data;
-    const arr = refactorMetrics(data);
+    const arr = refactorMetrics(data, intl);
     data.metrics = arr.filter((l) => l !== undefined);
     data.metricsType = 'resourceMetrics';
     delete data.resourceMetrics;
@@ -218,7 +219,9 @@ export const UpdateHPAPage = ({
               variant="contained"
               className={classes.cancleBtn}
               onClick={() => {
-                push(`/clusters/${clusterID}/namespaces/${namespaceID}/hpa`);
+                push(
+                  `/clusters/${clusterID}/namespaces/${namespaceID}/horizontalPodAutoscalers`
+                );
               }}
             >
               <FormattedMessage {...messages.cancle} />

@@ -75,7 +75,7 @@ const tableSchema = schema
     if (item.id === 'metrics') {
       return {
         ...item,
-        component: ({ data }) => renderTableMetrics(data),
+        component: ({ data, intl }) => renderTableMetrics(data, intl),
       };
     }
     return item;

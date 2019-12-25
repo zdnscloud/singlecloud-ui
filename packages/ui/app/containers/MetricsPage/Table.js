@@ -3,7 +3,7 @@
  * Metrics Table
  *
  */
-import React, { Fragment } from 'react';
+import React, { Fragment, Children } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
@@ -18,28 +18,43 @@ import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import Checkbox from '@material-ui/core/Checkbox';
 
-import { makeSelectLocation } from 'ducks/app/selectors';
-import { makeSelectCurrentID as makeSelectClusterID } from 'ducks/clusters/selectors';
-import { makeSelectCurrentID as makeSelectNamespaceID } from 'ducks/namespaces/selectors';
 import * as actions from 'ducks/metrics/actions';
 
 import messages from './messages';
 import useStyles from './styles';
 
 /* eslint-disable react/prefer-stateless-function */
-const MetricsTable = ({ data, input }) => {
+const MetricsTable = ({ data, setSelected, selected }) => {
   const classes = useStyles();
 
-  const onChange = (event) => {
-    let val = input.value;
-    const { checked, value } = event.target;
+  const isSelected = (name) => selected.indexOf(name) !== -1;
 
-    if (checked) {
-      val = val.push(value);
-    } else {
-      val = val.filter((v) => v !== value);
+  const handleSelectAllClick = (event) => {
+    if (event.target.checked) {
+      const newSelecteds = data.map((n) => n.get('name'));
+      setSelected(newSelecteds.toJS());
+      return;
     }
-    input.onChange(val);
+    setSelected([]);
+  };
+
+  const handleClick = (event, name) => {
+    const selectedIndex = selected.indexOf(name);
+    let newSelected = [];
+
+    if (selectedIndex === -1) {
+      newSelected = newSelected.concat(selected, name);
+    } else if (selectedIndex === 0) {
+      newSelected = newSelected.concat(selected.slice(1));
+    } else if (selectedIndex === selected.length - 1) {
+      newSelected = newSelected.concat(selected.slice(0, -1));
+    } else if (selectedIndex > 0) {
+      newSelected = newSelected.concat(
+        selected.slice(0, selectedIndex),
+        selected.slice(selectedIndex + 1)
+      );
+    }
+    setSelected(newSelected);
   };
 
   return (
@@ -52,9 +67,8 @@ const MetricsTable = ({ data, input }) => {
               className={`${classes.tableCell} ${classes.tableHeadCell}`}
             >
               <Checkbox
-                checked="false"
-                onChange={onChange}
-                value=""
+                onChange={(event) => handleSelectAllClick(event)}
+                checked={selected.length === data.size}
                 color="primary"
               />
             </TableCell>
@@ -71,11 +85,42 @@ const MetricsTable = ({ data, input }) => {
             <TableCell
               className={`${classes.tableCell} ${classes.tableHeadCell}`}
             >
-              <FormattedMessage {...messages.tableTitleGauge} />
+              <FormattedMessage {...messages.tableTitleValue} />
             </TableCell>
           </TableRow>
         </TableHead>
-        <TableBody></TableBody>
+        <TableBody>
+          {data.map((row, i) => {
+            const isItemSelected = isSelected(row.get('name'));
+            return (
+              <TableRow
+                key={i}
+                onClick={(event) => handleClick(event, row.get('name'))}
+              >
+                <TableCell className={classes.tableCell}>
+                  <Checkbox checked={isItemSelected} color="primary" />
+                </TableCell>
+                <TableCell className={`${classes.tableCell}`}>
+                  {row && row.get('name')}
+                </TableCell>
+                <TableCell
+                  className={`${classes.tableCell}`}
+                  style={{ wordBreak: 'break-all' }}
+                >
+                  <span>
+                    {row
+                      .get('labels')
+                      .map((val, key) => (
+                        <Chip key={key} label={`${key}=${val}`} />
+                      ))
+                      .toList()}
+                  </span>
+                </TableCell>
+                <TableCell>{(row && row.get('value')) || '--'}</TableCell>
+              </TableRow>
+            );
+          })}
+        </TableBody>
       </Table>
     </Fragment>
   );

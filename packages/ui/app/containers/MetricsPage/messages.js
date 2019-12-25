@@ -29,9 +29,9 @@ export default defineMessages({
     id: `${scope}.tableTitleLabels`,
     defaultMessage: 'Labels',
   },
-  tableTitleGauge: {
-    id: `${scope}.tableTitleGauge`,
-    defaultMessage: 'Gauge',
+  tableTitleValue: {
+    id: `${scope}.tableTitleValue`,
+    defaultMessage: 'Value',
   },
   setHPABtn: {
     id: `${scope}.setHPABtn`,

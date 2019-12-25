@@ -8,16 +8,14 @@ import PropTypes from 'prop-types';
 import { createStructuredSelector } from 'reselect';
 import { bindActionCreators, compose } from 'redux';
 import { connect } from 'react-redux';
-import { fromJS } from 'immutable';
 
+import { fromJS } from 'immutable';
 import { usePush } from 'hooks/router';
 
 import { FormattedMessage } from 'react-intl';
 import { Link } from 'react-router-dom';
 import CButton from 'components/CustomButtons/Button';
 import Button from '@material-ui/core/Button';
-import GridItem from 'components/Grid/GridItem';
-import GridContainer from 'components/Grid/GridContainer';
 import Card from 'components/Card/Card';
 import CardHeader from 'components/Card/CardHeader';
 import CardBody from 'components/Card/CardBody';
@@ -34,10 +32,11 @@ import useStyles from './styles';
 import messages from './messages';
 import MetricsTable from './Table';
 
+import { refactorWorklodaMetrics } from '../../utils/hpa';
+
 const MetricsDialog = ({
   clusterID,
   namespaceID,
-  location,
   loadMetrics,
   url,
   id,
@@ -47,7 +46,32 @@ const MetricsDialog = ({
   const [open, setOpen] = useState(false);
   const [current, setCurrent] = useState(null);
   const push = usePush();
-  const [selectMetrics, setSelectMetrics] = useState([]);
+  const [selected, setSelected] = useState([]);
+
+  const metrics = refactorWorklodaMetrics(current);
+
+  const handleSetHpa = () => {
+    const selectMetrics = [];
+    if (selected.length > 0) {
+      selected.forEach((name) => {
+        metrics.forEach((item) => {
+          if (item.get('name') === name) {
+            selectMetrics.push({
+              name: `${item.get('name')} ${JSON.stringify(item.get('labels'))}`,
+              value: item.get('value'),
+            });
+          }
+        });
+      });
+    }
+    push(
+      `/clusters/${clusterID}/namespaces/${namespaceID}/horizontalPodAutoscalers/create?checked=true&targetScaleKind=${type}&targetScaleName=${id}&selectMetrics=${encodeURIComponent(
+        JSON.stringify(selectMetrics)
+      )}`
+    );
+    setCurrent(null);
+    setOpen(false);
+  };
 
   return (
     <Fragment>
@@ -93,17 +117,17 @@ const MetricsDialog = ({
             </IconButton>
           </CardHeader>
           <CardBody className={classes.dialogCardBody}>
-            {current ? <MetricsTable data={fromJS(current)} /> : null}
+            {current ? (
+              <MetricsTable
+                data={metrics}
+                setSelected={setSelected}
+                selected={selected}
+              />
+            ) : null}
           </CardBody>
           <CardFooter className={classes.dialogCardFooter}>
             <Button
-              onClick={() => {
-                push(
-                  `/clusters/${clusterID}/namespaces/${namespaceID}/hpa/create?checked=true&targetScaleKind=${type}&targetScaleName=${id}&selectMetrics=${selectMetrics}`
-                );
-                setCurrent(null);
-                setOpen(false);
-              }}
+              onClick={() => handleSetHpa()}
               color="primary"
               variant="contained"
             >

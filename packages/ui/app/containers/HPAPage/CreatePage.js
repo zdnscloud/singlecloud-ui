@@ -49,7 +49,8 @@ import * as mActions from 'ducks/metrics/actions';
 import messages from './messages';
 import useStyles from './styles';
 import CreateHPAForm, { formName } from './CreateForm';
-import { renderSubmitData } from './utils/utils';
+import { renderSubmitData, refactorTargetSelectMetrics } from './utils/utils';
+import { refactorWorklodaMetrics } from '../../utils/hpa';
 
 export const CreateHPAPage = ({
   createHorizontalPodAutoscaler,
@@ -73,12 +74,25 @@ export const CreateHPAPage = ({
   let checked = false;
   let targetScaleKind = '';
   let targetScaleName = '';
-  if (search && search.includes('checked=true')) {
-    const [trt, type] = /targetScaleKind=([a-zA-Z]+)/i.exec(search);
-    const [tn, name] = /targetScaleName=([a-zA-Z0-9-]+)/i.exec(search);
+  let targetSelectMetrics = [];
+  const searchData = search
+    .slice(1)
+    .split('&')
+    .map((p) => p.split('='));
+  const params = searchData.reduce((memo, item) => {
+    memo[item[0]] = item[1];
+    return memo;
+  }, {});
+  if (params && params.checked === 'true') {
+    targetScaleKind = params.targetScaleKind;
+    targetScaleName = params.targetScaleName;
     checked = true;
-    targetScaleKind = type;
-    targetScaleName = name;
+    const t = decodeURIComponent(params.selectMetrics);
+    try {
+      targetSelectMetrics = JSON.parse(t);
+    } catch (e) {
+      targetSelectMetrics = [];
+    }
   }
 
   const scaleTargetKind = values && values.get('scaleTargetKind');
@@ -101,7 +115,7 @@ export const CreateHPAPage = ({
     scaleTargetKind: checked ? targetScaleKind : '',
     scaleTargetName: checked ? targetScaleName : '',
     metricsType: checked ? 'customMetrics' : 'resourceMetrics',
-    metrics: [],
+    metrics: checked ? refactorTargetSelectMetrics(targetSelectMetrics) : [],
   });
 
   useEffect(() => {
@@ -126,8 +140,7 @@ export const CreateHPAPage = ({
         namespaceID,
         scaleTargetName,
         resolve({ response }) {
-          console.log(response);
-          setMetrics(fromJS(response.data));
+          setMetrics(fromJS(refactorWorklodaMetrics(response.data)));
         },
         reject() {},
       });
@@ -148,7 +161,6 @@ export const CreateHPAPage = ({
       const data = renderSubmitData(formValues);
       delete data.metrics;
       delete data.metricsType;
-      console.log('data', data);
       await new Promise((resolve, reject) => {
         createHorizontalPodAutoscaler(data, {
           resolve,
@@ -158,7 +170,9 @@ export const CreateHPAPage = ({
           namespaceID,
         });
       });
-      push(`/clusters/${clusterID}/namespaces/${namespaceID}/hpa`);
+      push(
+        `/clusters/${clusterID}/namespaces/${namespaceID}/horizontalPodAutoscalers`
+      );
     } catch (error) {
       throw new SubmissionError({ _error: error });
     }
@@ -201,7 +215,9 @@ export const CreateHPAPage = ({
               variant="contained"
               className={classes.cancleBtn}
               onClick={() => {
-                push(`/clusters/${clusterID}/namespaces/${namespaceID}/hpa`);
+                push(
+                  `/clusters/${clusterID}/namespaces/${namespaceID}/horizontalPodAutoscalers`
+                );
               }}
             >
               <FormattedMessage {...messages.cancle} />
