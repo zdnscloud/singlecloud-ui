@@ -172,7 +172,7 @@ export const UpdateHPAPage = ({
   if (current.size !== 0) {
     const data = current.toJS();
     const { resourceMetrics, customMetrics, ...formData } = data;
-    const arr = refactorMetrics(data, intl);
+    const arr = refactorMetrics(data, intl, 'update');
     data.metrics = arr.filter((l) => l !== undefined);
     data.metricsType = 'resourceMetrics';
     delete data.resourceMetrics;

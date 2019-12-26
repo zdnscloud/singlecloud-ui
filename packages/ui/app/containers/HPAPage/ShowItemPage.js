@@ -69,7 +69,7 @@ export const HPADetailPage = ({
 
   if (hpa.size !== 0) {
     const data = hpa.toJS();
-    const arr = refactorMetrics(data, intl);
+    const arr = refactorMetrics(data, intl, 'show');
     metrics = fromJS(arr.filter((l) => l !== undefined));
   }
 

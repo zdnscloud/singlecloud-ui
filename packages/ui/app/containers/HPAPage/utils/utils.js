@@ -9,6 +9,9 @@ import Chip from '@material-ui/core/Chip';
 
 import messages from '../messages';
 
+const refactorAverageValue = (data) => (data / 1024 ** 3).toFixed(2);
+const refactorCPUAverageValue = (data) => (data / 1000).toFixed(2);
+
 export const renderNumerical = (f, i, formValues) => {
   const targetType =
     formValues && formValues.getIn(['metrics', i, 'targetType']);
@@ -207,7 +210,21 @@ export const renderSubmitData = (formValues) => {
   if (resourceMetrics.length > 0) {
     resourceMetrics.forEach((item) => {
       if (item.resourceName === 'memory' && item.averageValue) {
-        item.averageValue = `${item.averageValue}Gi`;
+        item.averageValue = item.averageValue.toString().includes('Gi')
+          ? item.averageValue
+          : `${item.averageValue}Gi`;
+      }
+    });
+  }
+  if (customMetrics.length > 0) {
+    customMetrics.forEach((item) => {
+      if (item.metricName) {
+        const arr = item.metricName.split(' ');
+        item.metricName = arr[0];
+        item.labels = arr[1] ? JSON.parse(arr[1]) : undefined;
+      }
+      if (item.averageValue) {
+        item.averageValue = item.averageValue.toString();
       }
     });
   }
@@ -219,7 +236,7 @@ export const renderSubmitData = (formValues) => {
   return data;
 };
 
-export const refactorMetrics = (data, intl) => {
+export const refactorMetrics = (data, intl, type) => {
   const { resourceMetrics, customMetrics, ...formData } = data;
   let arr = [];
   data.resourceMetrics =
@@ -228,11 +245,17 @@ export const refactorMetrics = (data, intl) => {
       item.metricsType = 'resourceMetrics';
       if (item.targetType === 'AverageValue' && item.averageValue) {
         if (item.resourceName === 'cpu') {
-          item.averageValue = `${(item.averageValue / 1000).toFixed(
-            2
-          )} ${intl.formatMessage(messages.formCPUSuffix)}`;
+          const cpuAverageValue = refactorCPUAverageValue(item.averageValue);
+          item.averageValue =
+            type === 'update'
+              ? cpuAverageValue
+              : `${cpuAverageValue} ${intl.formatMessage(
+                messages.formCPUSuffix
+              )}`;
         } else if (item.resourceName === 'memory') {
-          item.averageValue = `${(item.averageValue / 1024 ** 3).toFixed(2)}Gi`;
+          const averageValue = refactorAverageValue(item.averageValue);
+          item.averageValue =
+            type === 'update' ? averageValue : `${averageValue}Gi`;
         }
       }
       return item;
@@ -250,17 +273,17 @@ export const refactorMetrics = (data, intl) => {
 
 export const refactorTargetSelectMetrics = (targetSelectMetrics) => {
   const arr = [];
-  targetSelectMetrics && 
-  targetSelectMetrics.forEach((item) => {
-    arr.push({
-      metricsType: 'customMetrics',
-      targetType: 'AverageValue',
-      averageValue: item.value,
-      metricName: item.name,
+  targetSelectMetrics &&
+    targetSelectMetrics.forEach((item) => {
+      arr.push({
+        metricsType: 'customMetrics',
+        targetType: 'AverageValue',
+        averageValue: item.value,
+        metricName: item.name,
+      });
     });
-  });
   return arr;
-}
+};
 
 export const renderReadOnlyNumerical = (c, i, metrics) => {
   const targetType = metrics && metrics.getIn([i, 'targetType']);
@@ -320,14 +343,16 @@ export const renderTableMetrics = (data, intl) => {
           type === 'resourceMetrics'
         ) {
           if (r.resourceName === 'cpu') {
-            r.averageValue = (r.averageValue / 1000).toFixed(2);
+            r.averageValue = refactorCPUAverageValue(r.averageValue);
             if (crm[i] && crm[i].averageValue) {
-              crm[i].averageValue = (crm[i].averageValue / 1000).toFixed(2);
+              crm[i].averageValue = refactorCPUAverageValue(
+                crm[i].averageValue
+              );
             }
             item.systemVal =
               crm.length > 0 && crm[i].averageValue
                 ? `${crm[i].averageValue}${intl.formatMessage(
-                    messages.formCPUSuffix
+                  messages.formCPUSuffix
                 )}`
                 : '--';
             item.thresholdVal = `${r.averageValue}${intl.formatMessage(
@@ -335,11 +360,9 @@ export const renderTableMetrics = (data, intl) => {
             )}`;
           } else if (r.resourceName === 'memory') {
             if (crm[i] && crm[i].averageValue) {
-              crm[i].averageValue = (crm[i].averageValue / 1024 ** 3).toFixed(
-                2
-              );
+              crm[i].averageValue = refactorAverageValue(crm[i].averageValue);
             }
-            r.averageValue = (r.averageValue / 1024 ** 3).toFixed(2);
+            r.averageValue = refactorAverageValue(r.averageValue);
             item.systemVal =
               crm.length > 0 && crm[i].averageValue
                 ? `${crm[i].averageValue}Gi`
@@ -369,10 +392,10 @@ export const renderTableMetrics = (data, intl) => {
 
   return arr.length > 0
     ? arr.map((val, key) => (
-        <Chip
-          key={key}
-          label={`${val.name} : ${val.systemVal} / ${val.thresholdVal} `}
-        />
-      ))
+      <Chip
+        key={key}
+        label={`${val.name} : ${val.systemVal} / ${val.thresholdVal} `}
+      />
+    ))
     : '--';
 };
