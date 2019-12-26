@@ -76,7 +76,7 @@ export const CreateIngressPage = ({
 
   async function doSubmit(formValues) {
     try {
-      const { name, rules } = formValues.toJS();
+      const { name, rules, maxBodySize } = formValues.toJS();
       const rulesArr = [];
       rules.forEach((item) => {
         const { host, path, servicePort, serviceName } = item;
@@ -85,6 +85,8 @@ export const CreateIngressPage = ({
       });
       const data = {
         name,
+        maxBodySize,
+        maxBodySizeUnit: 'm',
         rules: rulesArr,
       };
       await new Promise((resolve, reject) => {
@@ -127,7 +129,10 @@ export const CreateIngressPage = ({
               onSubmit={doSubmit}
               formValues={values}
               services={services}
-              initialValues={fromJS({ serviceName: targetName })}
+              initialValues={fromJS({
+                maxBodySize: 1,
+                serviceName: targetName,
+              })}
             />
             <Button variant="contained" color="primary" onClick={submitForm}>
               <FormattedMessage {...messages.save} />
@@ -170,9 +175,6 @@ const mapDispatchToProps = (dispatch) =>
     dispatch
   );
 
-const withConnect = connect(
-  mapStateToProps,
-  mapDispatchToProps
-);
+const withConnect = connect(mapStateToProps, mapDispatchToProps);
 
 export default compose(withConnect)(CreateIngressPage);

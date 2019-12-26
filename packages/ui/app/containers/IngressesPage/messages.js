@@ -25,9 +25,17 @@ export default defineMessages({
     id: `${scope}.tableTitleName`,
     defaultMessage: 'Name',
   },
+  tableTitleHost: {
+    id: `${scope}.tableTitleHost`,
+    defaultMessage: 'Host',
+  },
   tableTitlePort: {
     id: `${scope}.tableTitlePort`,
     defaultMessage: 'Port',
+  },
+  tableTitleMaxBodySize: {
+    id: `${scope}.tableTitleMaxBodySize`,
+    defaultMessage: 'MaxBodySize',
   },
   tableTitleCreationTimestamp: {
     id: `${scope}.tableTitleCreationTimestamp`,
@@ -68,6 +76,10 @@ export default defineMessages({
   formServiceName: {
     id: `${scope}.formServiceName`,
     defaultMessage: 'ServiceName',
+  },
+  formMaxBodySize: {
+    id: `${scope}.formMaxBodySize`,
+    defaultMessage: 'MaxBodySize',
   },
   formHost: {
     id: `${scope}.formHost`,

@@ -71,13 +71,13 @@ const tableSchema = schema
     if (sch.id === 'name') {
       return {
         ...sch,
-        component: (props) => (
+        component: ({ data, pathname }) => (
           <Button
             link
             component={Link}
-            to={`${props.pathname}/${props.data.get('id')}/show`}
+            to={`${pathname}/${data.get('id')}/show`}
           >
-            {props.data.get('name')}
+            {data.get('name')}
           </Button>
         ),
       };
