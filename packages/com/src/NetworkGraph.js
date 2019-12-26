@@ -86,7 +86,7 @@ class NetworkGraph extends Network {
     }
   }
 
-render() {
+  render() {
     const {
       ariaLabel,
       children,

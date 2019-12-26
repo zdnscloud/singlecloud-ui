@@ -81,68 +81,80 @@ const SvcMeshWorkloadGroupsPage = ({
             },
           ]}
         />
-        {workloadGroups.size > 0 ? workloadGroups.map((workloadGroup, i) => {
-          const workloads = workloadGroup.get('workloads');
-          const nodesData = workloads.map((wl, idx) => ({
-            id: wl.get('id'),
-            label: wl.getIn(['stat', 'resource', 'name']),
-            kind: wl.getIn(['stat', 'resource', 'type']),
-          }));
-          const nodes = nodesData.toJS();
+        {workloadGroups.size > 0
+          ? workloadGroups.map((workloadGroup, i) => {
+            const workloads = workloadGroup.get('workloads');
+            const nodesData = workloads.map((wl, idx) => ({
+              id: wl.get('id'),
+              label: wl.getIn(['stat', 'resource', 'name']),
+                kind: wl.getIn(['stat', 'resource', 'type']),
+              }));
+            const nodes = nodesData.toJS();
 
-          const linkData = workloads.map((wl) => (
-            wl.get('destinations') ? wl.get('destinations').map((tid) => ({
-              source: wl.get('id'),
-              target: tid,
-              id: `${wl.get('id')}_${tid}`,
-            })) : null
-          )).filter((wl) => wl).flatten(1).toJS();
-          const links = linkData.map((l) => ({
-            ...l,
-            source: nodes[nodesData.findIndex((n) => n.id === l.source)],
-            target: nodes[nodesData.findIndex((n) => n.id === l.target)],
-          }));
+              const linkData = workloads
+              .map((wl) =>
+                  wl.get('destinations')
+                  ? wl.get('destinations').map((tid) => ({
+                        source: wl.get('id'),
+                    target: tid,
+                    id: `${wl.get('id')}_${tid}`,
+                  }))
+                  : null
+              )
+                .filter((wl) => wl)
+                .flatten(1)
+              .toJS();
+            const links = linkData.map((l) => ({
+              ...l,
+                source: nodes[nodesData.findIndex((n) => n.id === l.source)],
+              target: nodes[nodesData.findIndex((n) => n.id === l.target)],
+            }));
 
-          const data = {
-            nodes,
-            links,
-          };
+            const data = {
+              nodes,
+                links,
+            };
+              const hasLink = links.length > 0;
 
-          return (
-            <GridContainer className={classes.grid} key={i}>
-              <GridItem xs={12} sm={12} md={12}>
-                <Card>
-                  <CardBody>
-                    <NetworkGraph
-                      ariaLabel={'network-graph'}
-                      width={800}
-                      height={280}
-                      graph={data}
-                      /* waitingForLayoutLabel={null} */
-                    />
-                  </CardBody>
-                </Card>
-              </GridItem>
-              <GridItem xs={12} sm={12} md={12}>
-                <Card>
-                  <CardHeader>
-                    <h4>
-                      <FormattedMessage
-                        {...messages.svcMeshWorkloadGroups}
-                      />
-                    </h4>
-                  </CardHeader>
-                  <CardBody>
-                    <SvcMeshWorkloadGroupsTable
-                      data={workloads}
-                      workloadID={workloadGroup.get('id')}
-                    />
-                  </CardBody>
-                </Card>
-              </GridItem>
-            </GridContainer>
-          );
-        }) : null}
+              return (
+              <GridContainer className={classes.grid} key={i}>
+                  {hasLink ? (
+                  <GridItem xs={12} sm={12} md={12}>
+                      <Card>
+                      <CardBody>
+                        <NetworkGraph
+                          ariaLabel="network-graph"
+                          width={600}
+                            height={360}
+                          graph={data}
+                          renderTooltip={null}
+                          /* waitingForLayoutLabel={null} */
+                        />
+                      </CardBody>
+                      </Card>
+                  </GridItem>
+                  ) : null}
+                <GridItem xs={12} sm={12} md={12}>
+                  <Card>
+                    <CardHeader>
+                        <h4>
+                        <FormattedMessage
+                          {...messages.svcMeshWorkloadGroups}
+                        />
+                      </h4>
+                    </CardHeader>
+                      <CardBody>
+                      <SvcMeshWorkloadGroupsTable
+                          data={workloads}
+                        workloadID={workloadGroup.get('id')}
+                        />
+                    </CardBody>
+                  </Card>
+                </GridItem>
+              </GridContainer>
+              );
+          })
+          : null}
       </div>
     </div>
   );
