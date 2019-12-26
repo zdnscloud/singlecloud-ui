@@ -104,7 +104,7 @@ const requestInitSection = (d) => (
 );
 
 const responseInitSection = (d) =>
-  d.size === 0 ? null : (
+  !d || d.size === 0 || !d.get('id') || d.get('id').size === 0 ? null : (
     <React.Fragment>
       <Typography variant="subtitle2">Response Init</Typography>
       <br />
@@ -117,7 +117,7 @@ const responseInitSection = (d) =>
   );
 
 const responseEndSection = (d) =>
-  d.size === 0 ? null : (
+  !d || d.size === 0 || !d.get('id') || d.get('id').size === 0 ? null : (
     <React.Fragment>
       <Typography variant="subtitle2">Response End</Typography>
       <br />

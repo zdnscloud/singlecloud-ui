@@ -56,6 +56,7 @@ const SvcMeshTapPage = ({
   svcMeshTapReset,
 }) => {
   const classes = useStyles();
+  const [initialValues, setInitialValues] = useState();
   useEffect(() => {
     if (url) {
       loadSvcMeshWorkloadGroups(url, {
@@ -67,7 +68,50 @@ const SvcMeshTapPage = ({
       // try cancel something when unmount
     };
   }, [clusterID, loadSvcMeshWorkloadGroups, namespaceID, url]);
-  useEffect(() => {}, []);
+  useEffect(() => {
+    /**
+       query params
+       resource_type=
+       resource_name=
+       to_resource_type=
+       to_resource_name=
+       method=
+       path=
+    */
+    const { search } = location;
+    const searchData = search
+      .slice(1)
+      .split('&')
+      .map((p) => p.split('='));
+    const params = searchData.reduce(
+      (meno, item) => ({
+        ...meno,
+        [item[0]]: item[1],
+      }),
+      {}
+    );
+    let from = '';
+    let to = '';
+    if (params.resource_type && params.resource_name) {
+      from = `${params.resource_type}/${params.resource_name}`;
+    }
+    if (params.to_resource_type && params.to_resource_name) {
+      to = `${params.to_resource_type}/${params.to_resource_name}`;
+    }
+    setInitialValues(
+      fromJS({
+        from,
+        to,
+        method: '',
+        path: '',
+      })
+    );
+
+    return () => {
+      svcMeshTapStop();
+      svcMeshTapReset();
+    };
+  }, [location, svcMeshTapReset, svcMeshTapStop]);
   const workloads = workloadGroups
     .map((wg) => wg.get('workloads'))
     .flatten(1)
@@ -80,15 +124,6 @@ const SvcMeshTapPage = ({
 
       const [type, name] = from.split('/');
       const [toType, toName] = to.split('/');
-      /**
-         query params
-         resource_type=
-         resource_name=
-         to_resource_type=
-         to_resource_name=
-         method=
-         path=
-      */
       const data = {
         resource_type: type,
         resource_name: name,
@@ -125,12 +160,7 @@ const SvcMeshTapPage = ({
                   classes={classes}
                   onSubmit={doSubmit}
                   workloads={workloads}
-                  initialValues={fromJS({
-                    from: '',
-                    to: '',
-                    method: '',
-                    path: '',
-                  })}
+                  initialValues={initialValues}
                   isTapping={isTapping}
                   formValues={values}
                   stopAction={svcMeshTapStop}

@@ -1,17 +1,17 @@
 import React, { Fragment, useState } from 'react';
 import { ucfirst } from '@gsmlg/utils';
-import TimeCell from 'components/Cells/TimeCell';
+import { FormattedMessage } from 'react-intl';
 import { Link } from 'react-router-dom';
+import TimeCell from 'components/Cells/TimeCell';
 import Button from 'components/CustomButtons/Button';
+import OpenInNewIcon from 'components/Icons/OpenInNew';
+import ExpandMoreIcon from 'components/Icons/ExpandMore';
+import ArrowAltRightIcon from 'components/Icons/ArrowAltRight';
 import ConfirmDelete from 'components/ConfirmDelete/ConfirmDelete';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { withStyles } from '@material-ui/core/styles';
 import Tooltip from '@material-ui/core/Tooltip';
-import OpenInNewIcon from '@material-ui/icons/OpenInNew';
 import Grid from '@material-ui/core/Grid';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faLongArrowAltRight } from '@fortawesome/free-solid-svg-icons/faLongArrowAltRight';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import IconButton from '@material-ui/core/IconButton';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -19,6 +19,7 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 
+import messages from './messages';
 import Popover from './Popover';
 
 // https://godoc.org/google.golang.org/grpc/codes#Code
@@ -80,30 +81,34 @@ const renderResourceDirection = (data) => {
     <Table>
       <TableHead>
         <TableRow>
-          <TableCell component="th">来源</TableCell>
+          <TableCell component="th">
+            <FormattedMessage {...messages.tableDirectionSource} />
+          </TableCell>
           <TableCell component="th"></TableCell>
-          <TableCell component="th">目的</TableCell>
+          <TableCell component="th">
+            <FormattedMessage {...messages.tableDirectionTarget} />
+          </TableCell>
         </TableRow>
       </TableHead>
       <TableBody>
         <TableRow>
           <TableCell>{`${st}/${s[st]}`}</TableCell>
           <TableCell>
-            <FontAwesomeIcon icon={faLongArrowAltRight} />
+            <ArrowAltRightIcon />
           </TableCell>
           <TableCell>{`${dt}/${d[dt]}`}</TableCell>
         </TableRow>
         <TableRow>
           <TableCell>{`pod/${s.pod}`}</TableCell>
           <TableCell>
-            <FontAwesomeIcon icon={faLongArrowAltRight} />
+            <ArrowAltRightIcon />
           </TableCell>
           <TableCell>{`pod/${d.pod}`}</TableCell>
         </TableRow>
         <TableRow>
           <TableCell>{`${s.ip}:${s.port}`}</TableCell>
           <TableCell>
-            <FontAwesomeIcon icon={faLongArrowAltRight} />
+            <ArrowAltRightIcon />
           </TableCell>
           <TableCell>{`${d.ip}:${d.port}`}</TableCell>
         </TableRow>

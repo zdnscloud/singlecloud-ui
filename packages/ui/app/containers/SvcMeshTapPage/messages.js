@@ -77,4 +77,12 @@ export default defineMessages({
     id: `${scope}.tableTitleGrpcStatus`,
     defaultMessage: 'GrpcStatus',
   },
+  tableDirectionSource: {
+    id: `${scope}.tableDirectionSource`,
+    defaultMessage: 'Source',
+  },
+  tableDirectionTarget: {
+    id: `${scope}.tableDirectionTarget`,
+    defaultMessage: 'Target',
+  },
 });

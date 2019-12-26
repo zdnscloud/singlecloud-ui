@@ -61,7 +61,7 @@ const TapTable = ({ data, clusterID, namespaceID }) => {
       <Dialog
         maxWidth="md"
         fullWidth
-        open={open}
+        open={Boolean(open)}
         onClose={() => setOpen(false)}
         aria-labelledby="form-dialog-title"
       >

@@ -28,6 +28,9 @@ export const formName = 'TapSearchForm';
 
 const validate = (values) => {
   const errors = {};
+  if (!values.get('from')) {
+    errors.from = 'Required';
+  }
   return errors;
 };
 
@@ -39,6 +42,7 @@ export const Form = ({
   stopAction,
   resetAction,
   isTapping,
+  reset,
 }) => {
   const classes = useStyles();
   const options = workloads
@@ -109,7 +113,11 @@ export const Form = ({
             variant="contained"
             className={classes.cancleBtn}
             type="reset"
-            onClick={resetAction}
+            onClick={(e) => {
+              reset();
+              stopAction();
+              resetAction();
+            }}
           >
             <FormattedMessage {...messages.tapReset} />
           </Button>
