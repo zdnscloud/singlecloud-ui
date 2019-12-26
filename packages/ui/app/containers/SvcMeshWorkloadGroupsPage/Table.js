@@ -22,6 +22,7 @@ import * as actions from 'ducks/svcMeshWorkloadGroups/actions';
 import messages from './messages';
 import useStyles from './styles';
 import schema from './tableSchema';
+import { refactorMetric } from '../../utils/svcMesh';
 
 /* eslint-disable react/prefer-stateless-function */
 const SvcMeshWorkloadGroupsTable = ({
@@ -59,7 +60,7 @@ const SvcMeshWorkloadGroupsTable = ({
       <SimpleTable
         className={classes.table}
         schema={mergedSchema}
-        data={data}
+        data={refactorMetric(data)}
       />
     </Paper>
   );

@@ -10,7 +10,7 @@ import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import { bindActionCreators, compose } from 'redux';
-
+import { fromJS } from 'immutable';
 import Paper from '@material-ui/core/Paper';
 import { SimpleTable } from '@gsmlg/com';
 
@@ -27,9 +27,10 @@ import { makeSelectCurrentID as makeSelectSvcMeshWorkloadGroupID } from 'ducks/s
 import messages from './messages';
 import useStyles from './styles';
 import schema from './tableSchema';
+import { refactorMetric } from '../../utils/svcMesh';
 
 /* eslint-disable react/prefer-stateless-function */
-const SvcMeshWorkloadsTable = ({
+export const SvcMeshWorkloadsTable = ({
   location,
   clusterID,
   namespaceID,
@@ -39,15 +40,21 @@ const SvcMeshWorkloadsTable = ({
   svcMeshWorkloadID,
 }) => {
   const classes = useStyles();
-  const pods = current.get('pods') || [];
+  const pods =
+    current.get('pods') && current.get('pods').size > 0
+      ? refactorMetric(current.get('pods'))
+      : [];
   const inbound = current.get('inbound') || [];
   const outbound = current.get('outbound') || [];
+  const stat = current.get('stat') || {};
   let mergedSchema = schema
     .map((sch) => {
       if (sch.id === 'actions') {
         return {
           ...sch,
           props: {
+            stat,
+            parentType,
             clusterID,
             namespaceID,
             svcMeshWorkloadGroupID,
@@ -78,40 +85,10 @@ const SvcMeshWorkloadsTable = ({
           },
         };
       }
-      if (sch.id === 'meshed') {
-        return {
-          ...sch,
-          props: { parentType },
-        };
-      }
       if (sch.id === 'successRate') {
         return {
           ...sch,
-          props: { classes, parentType },
-        };
-      }
-      if (sch.id === 'RPS') {
-        return {
-          ...sch,
-          props: { parentType },
-        };
-      }
-      if (sch.id === 'latencyMsP50') {
-        return {
-          ...sch,
-          props: { parentType },
-        };
-      }
-      if (sch.id === 'latencyMsP95') {
-        return {
-          ...sch,
-          props: { parentType },
-        };
-      }
-      if (sch.id === 'latencyMsP99') {
-        return {
-          ...sch,
-          props: { parentType },
+          props: { classes },
         };
       }
       return sch;

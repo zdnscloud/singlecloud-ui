@@ -11,6 +11,9 @@ export const styles = (theme) => ({
   formTable: {
     marginTop: 30,
   },
+  h4: {
+    margin: 0,
+  },
 });
 
 export default makeStyles(styles);
