@@ -49,6 +49,7 @@ import JobsPage, {
   CreateJobPage,
   JobDetailPage,
 } from 'containers/JobsPage/Loadable';
+import PersistentVolumeClaimsPage from 'containers/PersistentVolumeClaimsPage/Loadable';
 import ConfigMapsPage, {
   CreateConfigMapPage,
   ShowConfigMapPage,
@@ -374,6 +375,15 @@ const appRoutes = [
     component: JobDetailPage,
   },
   // job end
+  // pvc
+  {
+    path:
+      '/clusters/:cluster_id/namespaces/:namespace_id/persistentVolumeClaims',
+    name: 'PersistentVolumeClaims',
+    icon: Dashboard,
+    component: PersistentVolumeClaimsPage,
+  },
+  // pvc end
   // services start
   {
     path: '/clusters/:cluster_id/namespaces/:namespace_id/services',

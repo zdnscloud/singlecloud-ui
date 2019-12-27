@@ -65,6 +65,25 @@ export const readEfkFailure = (error, meta = {}) => ({
   error: true,
 });
 
+export const removeEfk = (id, meta = {}) => ({
+  type: c.REMOVE_EFK,
+  payload: id,
+  meta,
+});
+
+export const removeEfkSuccess = (resp, meta = {}) => ({
+  type: c.REMOVE_EFK_SUCCESS,
+  payload: resp,
+  meta,
+});
+
+export const removeEfkFailure = (error, meta = {}) => ({
+  type: c.REMOVE_EFK_FAILURE,
+  payload: error,
+  meta,
+  error: true,
+});
+
 export const clearErrorsList = (payload, meta) => ({
   type: c.CLEAR_ERRORS_LIST,
   payload,
