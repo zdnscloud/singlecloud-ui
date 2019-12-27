@@ -14,7 +14,7 @@ export const styles = (theme) => ({
     lineHeight: 3.5,
   },
   radioGroup: {
-    flexDirection: 'row',
+    flexDirection: 'inherit !important',
     marginLeft: '1.5rem',
   },
   chexboxesControl: {
