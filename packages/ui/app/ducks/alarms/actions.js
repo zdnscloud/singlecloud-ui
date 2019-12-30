@@ -83,3 +83,21 @@ export const alarmConnectionError = (payload, meta = {}) => ({
   meta,
   error: true,
 });
+
+export const setUntrackNumber = (number, meta = {}) => ({
+  type: c.SET_UNTRACK_NUMBER,
+  payload: number,
+  meta,
+});
+
+export const newAlarm = (payload, meta = {}) => ({
+  type: c.NEW_ALARM,
+  payload,
+  meta,
+});
+
+export const unknownEvent = (payload, meta = {}) => ({
+  type: c.UNKNOWN_EVENT,
+  payload,
+  meta,
+});

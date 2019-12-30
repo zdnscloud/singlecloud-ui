@@ -23,3 +23,7 @@ export const REMOVE_ALARM_FAILURE = `${prefix}/REMOVE_ALARM_FAILURE`;
 export const OPEN_ALARM_CHANNEL = `${prefix}/OPEN_ALARM_CHANNEL`;
 export const CLOSE_ALARM_CHANNEL = `${prefix}/CLOSE_ALARM_CHANNEL`;
 export const ALARM_CONNECTION_ERROR = `${prefix}/ALARM_CONNECTION_ERROR`;
+
+export const SET_UNTRACK_NUMBER = `${prefix}/SET_UNTRACK_NUMBER`;
+export const NEW_ALARM = `${prefix}/NEW_ALARM`;
+export const UNKNOWN_EVENT = `${prefix}/UNKNOWN_EVENT`;

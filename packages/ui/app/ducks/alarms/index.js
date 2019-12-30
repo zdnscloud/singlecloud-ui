@@ -19,6 +19,7 @@ export const initialState = fromJS({
   data: {},
   list: [],
   unreadCount: 0,
+  newAlarm: [],
 });
 
 const c = constants;
@@ -78,6 +79,36 @@ export const reducer = (
       return state.update('errorsList', (errors) =>
         errors.filterNot((e) => e.type === type).push({ type, payload, meta })
       );
+
+    case c.SET_UNTRACK_NUMBER:
+      return state.set('unreadCount', payload);
+
+    /*
+        payload:
+        {
+          "type":"UnackAlarm",
+          "payload": {
+            "id":"1",
+            "creationTimestamp":null,
+            "deletionTimestamp":null,
+            "time":"2019-12-30T09:40:41Z",
+            "cluster":"local",
+            "type":"Event",
+            "kind":"Pod",
+            "name":"cluster-agent-7699c76df-gf6k8",
+            "reason":"Failed",
+            "message":"Error: ImagePullBackOff",
+            "acknowledged":false
+          }
+        }
+      */
+    case c.NEW_ALARM: {
+      const { id } = payload;
+      return state
+        .setIn(['data', id], fromJS(payload))
+        .updateIn(['list'], (l) => l.unshift(id))
+        .updateIn(['newAlarm'], (nl) => nl.push(id));
+    }
 
     default:
       return state;

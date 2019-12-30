@@ -101,12 +101,12 @@ export const openAlarmChannelEpic = (action$, state$) =>
         .pipe(
           map(({ type, payload }) => {
             switch (type) {
-              case 'count':
-                return a.count();
-              case 'add':
-                return a.add();
+              case 'UnackNumber':
+                return a.count(payload);
+              case 'UnackAlarm':
+                return a.newAlarm(payload);
               default:
-                return {};
+                return a.unknownEvent(payload);
             }
           })
         );
