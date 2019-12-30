@@ -1,6 +1,6 @@
 /**
  *
- * Clusters Table
+ * Alarms Table
  *
  */
 import React, { Fragment } from 'react';
@@ -14,41 +14,25 @@ import Paper from '@material-ui/core/Paper';
 import { SimpleTable } from '@gsmlg/com';
 
 import { makeSelectLocation } from 'ducks/app/selectors';
-// import { makeSelectCurrentID as makeSelectClusterID } from 'ducks/clusters/selectors';
-// import { makeSelectCurrentID as makeSelectNamespaceID } from 'ducks/namespaces/selectors';
-import { makeSelectClustersList } from 'ducks/clusters/selectors';
-import * as actions from 'ducks/clusters/actions';
+import { makeSelectAlarmsList } from 'ducks/alarms/selectors';
+import * as actions from 'ducks/alarms/actions';
 
 import messages from './messages';
 import useStyles from './styles';
 import schema from './tableSchema';
 
 /* eslint-disable react/prefer-stateless-function */
-const ClustersTable = ({
-  location,
-  data,
-  // clusterID,
-  // namespaceID,
-  removeCluster,
-}) => {
+const AlarmsTable = ({ location, data, setRead }) => {
   const classes = useStyles();
   const pathname = location.get('pathname');
   const mergedSchema = schema
     .map((sch) => {
-      if (sch.id === 'actions') {
+      if (sch.id === 'status') {
         return {
           ...sch,
           props: {
-            removeCluster,
-            // clusterID,
-            // namespaceID,
+            setRead,
           },
-        };
-      }
-      if (sch.id === 'name') {
-        return {
-          ...sch,
-          props: { pathname },
         };
       }
       return sch;
@@ -71,9 +55,7 @@ const ClustersTable = ({
 
 const mapStateToProps = createStructuredSelector({
   location: makeSelectLocation(),
-  // clusterID: makeSelectClusterID(),
-  // namespaceID: makeSelectNamespaceID(),
-  data: makeSelectClustersList(),
+  data: makeSelectAlarmsList(),
 });
 
 const mapDispatchToProps = (dispatch) =>
@@ -86,4 +68,4 @@ const mapDispatchToProps = (dispatch) =>
 
 const withConnect = connect(mapStateToProps, mapDispatchToProps);
 
-export default compose(withConnect)(ClustersTable);
+export default compose(withConnect)(AlarmsTable);
