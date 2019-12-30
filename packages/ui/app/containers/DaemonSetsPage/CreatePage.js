@@ -172,6 +172,7 @@ export const CreateDaemonSet = ({
                 containers: [{ name: '', exposedPorts: [] }],
                 persistentVolumes: [],
                 advancedOptions: {},
+                injectServiceMesh: false,
               })}
               formValues={values}
             />

@@ -20,6 +20,7 @@ import GridContainer from 'components/Grid/GridContainer';
 import InputField from 'components/Field/InputField';
 import SwitchField from 'components/Field/SwitchField';
 import RadioField from 'components/Field/RadioField';
+import CheckboxField from 'components/Field/CheckboxField';
 
 import Containers from './form/Containers';
 import VolumeClaimTemplate from './form/VolumeClaimTemplate';
@@ -93,6 +94,14 @@ export const Form = ({
                       max: 255,
                     }}
                     disabled={role === 'update'}
+                  />
+                </GridItem>
+                <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
+                  <CheckboxField
+                    name="injectServiceMesh"
+                    label={
+                      <FormattedMessage {...messages.formInjectServiceMesh} />
+                    }
                   />
                 </GridItem>
               </GridContainer>
