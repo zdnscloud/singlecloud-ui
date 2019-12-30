@@ -21,16 +21,37 @@ export default defineMessages({
     id: `${scope}.alarms`,
     defaultMessage: 'alarms',
   },
-  tableTitleName: {
-    id: `${scope}.tableTitleName`,
-    defaultMessage: 'Name',
+  // 'status' 'cluster', 'namespace', 'object', 'type', 'detail'
+  tableTitleStatus: {
+    id: `${scope}.tableTitleStatus`,
+    defaultMessage: 'Status',
   },
   tableTitleCreationTimestamp: {
     id: `${scope}.tableTitleCreationTimestamp`,
     defaultMessage: 'CreationTimestamp',
   },
+  tableTitleCluster: {
+    id: `${scope}.tableTitleCluster`,
+    defaultMessage: 'Cluster',
+  },
   tableTitleActions: {
     id: `${scope}.tableTitleActions`,
     defaultMessage: 'Actions',
+  },
+  tableTitleNamespace: {
+    id: `${scope}.tableTitleNamespace`,
+    defaultMessage: 'Namespace',
+  },
+  tableTitleObject: {
+    id: `${scope}.tableTitleObject`,
+    defaultMessage: 'Object',
+  },
+  tableTitleType: {
+    id: `${scope}.tableTitleType`,
+    defaultMessage: 'Type',
+  },
+  tableTitleDetail: {
+    id: `${scope}.tableTitleDetail`,
+    defaultMessage: 'Detail',
   },
 });

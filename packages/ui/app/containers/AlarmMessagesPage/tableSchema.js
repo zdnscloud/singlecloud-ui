@@ -5,7 +5,15 @@ import { Link } from 'react-router-dom';
 import Button from 'components/CustomButtons/Button';
 import ConfirmDelete from 'components/ConfirmDelete/ConfirmDelete';
 
-const schema = ['name', 'creationTimestamp'];
+const schema = [
+  'status',
+  'creationTimestamp',
+  'cluster',
+  'namespace',
+  'object',
+  'type',
+  'detail',
+];
 
 const tableSchema = schema
   .map((id) => ({
