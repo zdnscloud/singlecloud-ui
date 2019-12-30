@@ -122,17 +122,20 @@ const MetricsDialog = ({
                 data={metrics}
                 setSelected={setSelected}
                 selected={selected}
+                type={type}
               />
             ) : null}
           </CardBody>
           <CardFooter className={classes.dialogCardFooter}>
-            <Button
-              onClick={() => handleSetHpa()}
-              color="primary"
-              variant="contained"
-            >
-              <FormattedMessage {...messages.setHPABtn} />
-            </Button>
+            {type !== 'daemonset' ? (
+              <Button
+                onClick={() => handleSetHpa()}
+                color="primary"
+                variant="contained"
+              >
+                <FormattedMessage {...messages.setHPABtn} />
+              </Button>
+            ) : null}
           </CardFooter>
         </Card>
       </Dialog>

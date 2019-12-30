@@ -24,7 +24,7 @@ import messages from './messages';
 import useStyles from './styles';
 
 /* eslint-disable react/prefer-stateless-function */
-const MetricsTable = ({ data, setSelected, selected }) => {
+const MetricsTable = ({ data, setSelected, selected, type }) => {
   const classes = useStyles();
 
   const isSelected = (name) => selected.indexOf(name) !== -1;
@@ -62,16 +62,19 @@ const MetricsTable = ({ data, setSelected, selected }) => {
       <Table className={classes.table}>
         <TableHead>
           <TableRow>
-            <TableCell
-              style={{ width: 100 }}
-              className={`${classes.tableCell} ${classes.tableHeadCell}`}
-            >
-              <Checkbox
-                onChange={(event) => handleSelectAllClick(event)}
-                checked={selected.length === data.size}
-                color="primary"
-              />
-            </TableCell>
+            {type !== 'daemonset' ? (
+              <TableCell
+                style={{ width: 100 }}
+                className={`${classes.tableCell} ${classes.tableHeadCell}`}
+              >
+                <Checkbox
+                  onChange={(event) => handleSelectAllClick(event)}
+                  checked={selected.length === data.size}
+                  color="primary"
+                />
+              </TableCell>
+            ) : null}
+
             <TableCell
               className={`${classes.tableCell} ${classes.tableHeadCell}`}
             >
@@ -97,9 +100,11 @@ const MetricsTable = ({ data, setSelected, selected }) => {
                 key={i}
                 onClick={(event) => handleClick(event, row.get('name'))}
               >
-                <TableCell className={classes.tableCell}>
-                  <Checkbox checked={isItemSelected} color="primary" />
-                </TableCell>
+                {type !== 'daemonset' ? (
+                  <TableCell className={classes.tableCell}>
+                    <Checkbox checked={isItemSelected} color="primary" />
+                  </TableCell>
+                ) : null}
                 <TableCell className={`${classes.tableCell}`}>
                   {row && row.get('name')}
                 </TableCell>
