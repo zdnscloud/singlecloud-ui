@@ -80,14 +80,6 @@ export const Form = ({
                     inputProps={{ type: 'text', autoComplete: 'off' }}
                   />
                 </GridItem>
-                <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
-                  <CheckboxField
-                    name="injectServiceMesh"
-                    label={
-                      <FormattedMessage {...messages.formInjectServiceMesh} />
-                    }
-                  />
-                </GridItem>
               </GridContainer>
             </CardBody>
           </Card>
@@ -156,6 +148,15 @@ export const Form = ({
                         max: 65535,
                       }}
                       name="exposedMetric.port"
+                      disabled={role === 'update'}
+                    />
+                  </GridItem>
+                  <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
+                    <CheckboxField
+                      name="injectServiceMesh"
+                      label={
+                        <FormattedMessage {...messages.formInjectServiceMesh} />
+                      }
                       disabled={role === 'update'}
                     />
                   </GridItem>

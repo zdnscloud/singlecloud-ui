@@ -21,6 +21,7 @@ import Card from 'components/Card/Card';
 import CardHeader from 'components/Card/CardHeader';
 import CardBody from 'components/Card/CardBody';
 import ReadOnlyInput from 'components/CustomInput/ReadOnlyInput';
+import ReadOnlyCheckbox from 'components/CustomCheckbox/ReadOnlyCheckbox';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
@@ -390,6 +391,17 @@ export const DaemonSet = ({
                       ])}
                     />
                   </GridItem>
+                  <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
+                    <ReadOnlyCheckbox
+                      labelText={
+                        <FormattedMessage {...messages.formInjectServiceMesh} />
+                      }
+                      value={daemonSet.getIn([
+                        'advancedOptions',
+                        'injectServiceMesh',
+                      ])}
+                    />
+                  </GridItem>
                 </GridContainer>
               </Fragment>
             ) : null}
@@ -461,9 +473,6 @@ const mapDispatchToProps = (dispatch) =>
     dispatch
   );
 
-const withConnect = connect(
-  mapStateToProps,
-  mapDispatchToProps
-);
+const withConnect = connect(mapStateToProps, mapDispatchToProps);
 
 export default compose(withConnect)(DaemonSet);

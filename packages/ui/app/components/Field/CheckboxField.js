@@ -1,7 +1,6 @@
-import React, { Fragment, useState } from 'react';
+import React from 'react';
 import { Field } from 'redux-form/immutable';
-import Checkbox from '@material-ui/core/Checkbox';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Checkbox from 'components/CustomCheckbox/CustomCheckbox';
 
 const CheckboxComponent = ({
   label,
@@ -10,24 +9,18 @@ const CheckboxComponent = ({
   meta,
   inputProps,
   ...custom
-}) => {
-  const [checked, setChecked] = useState(input.value);
-  const onChange = (event, ...args) => {
-    setChecked(!checked);
-    input.onChange(checked);
-  };
-
-  return (
-    <FormControlLabel
-      control={<Checkbox onChange={onChange} />}
-      value={checked}
-      label={label}
-      checked={checked}
-      {...input}
-      {...custom}
-    />
-  );
-};
+}) => (
+  <Checkbox
+    label={label}
+    input={input}
+    inputProps={{
+      ...input,
+      ...inputProps,
+    }}
+    {...custom}
+    meta={meta}
+  />
+);
 
 const CheckboxField = (props) => {
   const { component, ...rest } = props;

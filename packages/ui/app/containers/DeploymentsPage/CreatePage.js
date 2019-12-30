@@ -169,10 +169,9 @@ export const CreateDeployment = ({
               storageClasses={storageClasses}
               initialValues={fromJS({
                 replicas: 1,
-                injectServiceMesh: false,
                 containers: [{ name: '', exposedPorts: [] }],
                 persistentVolumes: [],
-                advancedOptions: {},
+                advancedOptions: { injectServiceMesh: true },
               })}
               formValues={values}
             />
