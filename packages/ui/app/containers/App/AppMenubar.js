@@ -74,11 +74,13 @@ const AppMenubar = ({
               <ShellIcon />
             </IconButton>
           )}
-          <IconButton onClick={(evt) => setUserEl(evt.currentTarget)}>
-            <Badge badgeContent={unreadCount}>
-              <AlarmIcon />
-            </Badge>
-          </IconButton>
+          <Link to="/alarms">
+            <IconButton>
+              <Badge badgeContent={unreadCount}>
+                <AlarmIcon />
+              </Badge>
+            </IconButton>
+          </Link>
           <IconButton onClick={(evt) => setUserEl(evt.currentTarget)}>
             <AccountIcon />
             <small style={{ fontSize: '14px' }}>{role.get('user')}</small>
