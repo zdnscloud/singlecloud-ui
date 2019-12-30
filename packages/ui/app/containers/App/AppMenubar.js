@@ -22,15 +22,17 @@ import IconButton from '@material-ui/core/IconButton';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 import Divider from '@material-ui/core/Divider';
+import Badge from '@material-ui/core/Badge';
 // core components
 import Menubar from 'components/Menubar';
 import DownIcon from 'components/Icons/Down';
 import ShellIcon from 'components/Icons/Shell';
 import AccountIcon from 'components/Icons/Account';
+import AlarmIcon from 'components/Icons/Alarm';
 
-import { makeSelectRole } from 'ducks/role/selectors';
 import * as roleActions from 'ducks/role/actions';
 import * as actions from 'ducks/app/actions';
+import { makeSelectRole } from 'ducks/role/selectors';
 import { makeSelectCurrentID as makeSelectCurrentClusterID } from 'ducks/clusters/selectors';
 import {
   makeSelectShowEvents,
@@ -38,11 +40,13 @@ import {
   makeSelectUserMenus,
   makeSelectShowMenuText,
 } from 'ducks/app/selectors';
+import { makeSelectUnreadCount } from 'ducks/alarms/selectors';
 
 import SelectMenu from './SelectMenu';
 import messages from './messages';
 
 const AppMenubar = ({
+  unreadCount,
   clusterID,
   showEvents,
   toggleEventsView,
@@ -70,6 +74,11 @@ const AppMenubar = ({
               <ShellIcon />
             </IconButton>
           )}
+          <IconButton onClick={(evt) => setUserEl(evt.currentTarget)}>
+            <Badge badgeContent={unreadCount}>
+              <AlarmIcon />
+            </Badge>
+          </IconButton>
           <IconButton onClick={(evt) => setUserEl(evt.currentTarget)}>
             <AccountIcon />
             <small style={{ fontSize: '14px' }}>{role.get('user')}</small>
@@ -124,6 +133,7 @@ const mapStateToProps = createStructuredSelector({
   role: makeSelectRole(),
   userMenus: makeSelectUserMenus(),
   showMenuText: makeSelectShowMenuText(),
+  unreadCount: makeSelectUnreadCount(),
 });
 
 const mapDispatchToProps = (dispatch) =>
@@ -135,9 +145,6 @@ const mapDispatchToProps = (dispatch) =>
     dispatch
   );
 
-const withConnect = connect(
-  mapStateToProps,
-  mapDispatchToProps
-);
+const withConnect = connect(mapStateToProps, mapDispatchToProps);
 
 export default compose(withConnect)(AppMenubar);

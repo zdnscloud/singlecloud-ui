@@ -90,13 +90,13 @@ import ApplicationsPage, {
   ApplicationDetailPage,
   CreateApplicationPage,
 } from 'containers/ApplicationsPage/Loadable';
-
 import UsersPage, {
   CreateUserPage,
   EditUserPage,
   UserProfilePage,
   PasswordSetupPage,
 } from 'containers/UsersPage/Loadable';
+import AlarmMessagesPage from 'containers/AlarmMessagesPage';
 
 const appRoutes = [
   {
@@ -570,6 +570,12 @@ const appRoutes = [
     name: 'Application Detail',
     icon: Dashboard,
     component: ApplicationDetailPage,
+  },
+  {
+    path: '/alarms',
+    name: 'Alarm Messages',
+    icon: Dashboard,
+    component: AlarmMessagesPage,
   },
   // applications end
 ];

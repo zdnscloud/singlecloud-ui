@@ -85,6 +85,7 @@ import outerServicesReducer, {
 import fluentbitconfigsReducer, {
   prefix as fluentbitconfigsPrefix,
 } from 'ducks/fluentbitconfigs';
+import alarmsReducer, { prefix as alarmsPrefix } from 'ducks/alarms';
 // import reducers end
 
 /**
@@ -131,6 +132,7 @@ export default function createReducer(injectedReducers = {}) {
     [innerServicesPrefix]: innerServicesReducer,
     [outerServicesPrefix]: outerServicesReducer,
     [fluentbitconfigsPrefix]: fluentbitconfigsReducer,
+    [alarmsPrefix]: alarmsReducer,
 
     // combine reducers end
     ...injectedReducers,

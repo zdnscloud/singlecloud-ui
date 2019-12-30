@@ -40,6 +40,7 @@ import blockDevicesEpic from 'ducks/blockDevices/epic';
 import innerServicesEpic from 'ducks/innerServices/epic';
 import outerServicesEpic from 'ducks/outerServices/epic';
 import fluentbitconfigsEpic from 'ducks/fluentbitconfigs/epic';
+import alarmsEpic from 'ducks/alarms/epic';
 
 // import epics end
 
@@ -83,7 +84,8 @@ export default function createEpic(injectedEpics = {}) {
     blockDevicesEpic,
     innerServicesEpic,
     outerServicesEpic,
-    fluentbitconfigsEpic
+    fluentbitconfigsEpic,
+    alarmsEpic
     // combine epics end
   );
 
