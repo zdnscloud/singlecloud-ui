@@ -39,9 +39,9 @@ const theme = createMuiTheme({
       f: '#FF7A22',
     },
     text: {
-      a: '#000000',
-      b: '#4A4A4A',
-      c: '#ffffff',
+      a: '#000000', // black
+      b: '#4A4A4A', // gray
+      c: '#ffffff', // white
       d: '#838383',
       e: '#EE827C',
       warning: '#ff9800',
