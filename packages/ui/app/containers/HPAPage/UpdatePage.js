@@ -51,6 +51,7 @@ import useStyles from './styles';
 import UpdateHPAForm, { formName } from './CreateForm';
 
 import { renderSubmitData, refactorMetrics } from './utils/utils';
+import { refactorWorklodaMetrics } from '../../utils/hpa';
 
 export const UpdateHPAPage = ({
   updateHorizontalPodAutoscaler,
@@ -130,8 +131,7 @@ export const UpdateHPAPage = ({
         namespaceID,
         scaleTargetName,
         resolve({ response }) {
-          console.log(response);
-          setMetrics(fromJS(response.data));
+          setMetrics(fromJS(refactorWorklodaMetrics(response.data)));
         },
         reject() {},
       });
