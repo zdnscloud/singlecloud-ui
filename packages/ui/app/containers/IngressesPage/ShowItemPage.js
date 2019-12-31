@@ -95,6 +95,20 @@ export const IngressDetailPage = ({
                       fullWidth
                     />
                   </GridItem>
+                  <GridItem xs={3} sm={3} md={3}>
+                    <ReadOnlyInput
+                      labelText={
+                        <FormattedMessage {...messages.formMaxBodySize} />
+                      }
+                      value={ingress.get('maxBodySize')}
+                      fullWidth
+                      inputProps={{
+                        type: 'number',
+                        autoComplete: 'off',
+                        endAdornment: 'M',
+                      }}
+                    />
+                  </GridItem>
                 </GridContainer>
               </CardBody>
             </Card>
@@ -136,9 +150,6 @@ const mapDispatchToProps = (dispatch) =>
     dispatch
   );
 
-const withConnect = connect(
-  mapStateToProps,
-  mapDispatchToProps
-);
+const withConnect = connect(mapStateToProps, mapDispatchToProps);
 
 export default compose(withConnect)(IngressDetailPage);
