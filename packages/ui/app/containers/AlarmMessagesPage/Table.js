@@ -22,7 +22,7 @@ import useStyles from './styles';
 import schema from './tableSchema';
 
 /* eslint-disable react/prefer-stateless-function */
-const AlarmsTable = ({ location, data, setRead }) => {
+const AlarmsTable = ({ location, data, updateAlarm }) => {
   const classes = useStyles();
   const pathname = location.get('pathname');
   const mergedSchema = schema
@@ -31,7 +31,7 @@ const AlarmsTable = ({ location, data, setRead }) => {
         return {
           ...sch,
           props: {
-            setRead,
+            updateAlarm,
           },
         };
       }

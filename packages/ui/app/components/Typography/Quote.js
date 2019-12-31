@@ -1,15 +1,15 @@
 import React from 'react';
-// nodejs library to set properties for components
 import PropTypes from 'prop-types';
-// @material-ui/core components
 import withStyles from '@material-ui/core/styles/withStyles';
-// core components
 import typographyStyle from './typographyStyle';
 
 function Quote({ ...props }) {
-  const { classes, text, author } = props;
+  const { classes, text, author, ...rest } = props;
   return (
-    <blockquote className={`${classes.defaultFontStyle} ${classes.quote}`}>
+    <blockquote
+      {...rest}
+      className={`${classes.defaultFontStyle} ${classes.quote}`}
+    >
       <p className={classes.quoteText}>{text}</p>
       <small className={classes.quoteAuthor}>{author}</small>
     </blockquote>

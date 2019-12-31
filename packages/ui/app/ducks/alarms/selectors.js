@@ -43,3 +43,12 @@ export const makeSelectAlarmsList = () =>
 
 export const makeSelectUnreadCount = () =>
   createSelector(selectDomain, (substate) => substate.get('unreadCount'));
+
+export const makeSelectNewAlarms = () =>
+  createSelector(
+    selectDomain,
+    makeSelectAlarms(),
+    (substate, data) =>
+      (substate.getIn(['newAlarm']) || fromJS([])).map((id) => data.get(id)) ||
+      fromJS([])
+  );

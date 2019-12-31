@@ -1,12 +1,11 @@
 import React from 'react';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
-// @material-ui/core components
+
 import Snack from '@material-ui/core/Snackbar';
 import IconButton from '@material-ui/core/IconButton';
-// @material-ui/icons
 import CloseIcon from 'components/Icons/Close';
-// core components
+
 import useStyles from './styles';
 
 export default function Snackbar(props) {

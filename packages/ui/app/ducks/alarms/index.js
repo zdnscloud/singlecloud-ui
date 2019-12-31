@@ -18,6 +18,7 @@ export { constants, actions, prefix };
 export const initialState = fromJS({
   data: {},
   list: [],
+  errorsList: [],
   unreadCount: 0,
   newAlarm: [],
 });
@@ -84,8 +85,7 @@ export const reducer = (
       return state.set('unreadCount', payload);
 
     /*
-        payload:
-        {
+        payload: {
           "type":"UnackAlarm",
           "payload": {
             "id":"1",
@@ -108,6 +108,12 @@ export const reducer = (
         .setIn(['data', id], fromJS(payload))
         .updateIn(['list'], (l) => l.unshift(id))
         .updateIn(['newAlarm'], (nl) => nl.push(id));
+    }
+
+    case c.REMOVE_NEW_ALARM: {
+      return state.updateIn(['newAlarm'], (l) =>
+        l.filterNot((i) => i === payload)
+      );
     }
 
     default:

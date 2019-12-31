@@ -26,9 +26,9 @@ export default defineMessages({
     id: `${scope}.tableTitleStatus`,
     defaultMessage: 'Status',
   },
-  tableTitleCreationTimestamp: {
-    id: `${scope}.tableTitleCreationTimestamp`,
-    defaultMessage: 'CreationTimestamp',
+  tableTitleTime: {
+    id: `${scope}.tableTitleTime`,
+    defaultMessage: 'Time',
   },
   tableTitleCluster: {
     id: `${scope}.tableTitleCluster`,
@@ -53,5 +53,13 @@ export default defineMessages({
   tableTitleDetail: {
     id: `${scope}.tableTitleDetail`,
     defaultMessage: 'Detail',
+  },
+  read: {
+    id: `${scope}.read`,
+    defaultMessage: 'read',
+  },
+  unread: {
+    id: `${scope}.unread`,
+    defaultMessage: 'unread',
   },
 });

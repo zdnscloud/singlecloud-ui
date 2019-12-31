@@ -102,7 +102,7 @@ export const openAlarmChannelEpic = (action$, state$) =>
           map(({ type, payload }) => {
             switch (type) {
               case 'UnackNumber':
-                return a.count(payload);
+                return a.setUntrackNumber(payload);
               case 'UnackAlarm':
                 return a.newAlarm(payload);
               default:

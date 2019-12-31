@@ -24,6 +24,7 @@ import Menu from '@material-ui/core/Menu';
 import Divider from '@material-ui/core/Divider';
 import Badge from '@material-ui/core/Badge';
 // core components
+import Snackbar from 'components/Snackbar/Snackbar';
 import Menubar from 'components/Menubar';
 import DownIcon from 'components/Icons/Down';
 import ShellIcon from 'components/Icons/Shell';
@@ -32,6 +33,7 @@ import AlarmIcon from 'components/Icons/Alarm';
 
 import * as roleActions from 'ducks/role/actions';
 import * as actions from 'ducks/app/actions';
+import * as alarmsActions from 'ducks/alarms/actions';
 import { makeSelectRole } from 'ducks/role/selectors';
 import { makeSelectCurrentID as makeSelectCurrentClusterID } from 'ducks/clusters/selectors';
 import {
@@ -40,13 +42,18 @@ import {
   makeSelectUserMenus,
   makeSelectShowMenuText,
 } from 'ducks/app/selectors';
-import { makeSelectUnreadCount } from 'ducks/alarms/selectors';
+import {
+  makeSelectUnreadCount,
+  makeSelectNewAlarms,
+} from 'ducks/alarms/selectors';
 
 import SelectMenu from './SelectMenu';
 import messages from './messages';
 
 const AppMenubar = ({
   unreadCount,
+  newAlarms,
+  removeNewAlarm,
   clusterID,
   showEvents,
   toggleEventsView,
@@ -81,6 +88,19 @@ const AppMenubar = ({
               </Badge>
             </IconButton>
           </Link>
+          {newAlarms.map((alarm) => (
+            <Snackbar
+              key={alarm.get('id')}
+              color="danger"
+              place="tr"
+              message={alarm.get('message')}
+              open
+              close
+              closeNotification={() => {
+                removeNewAlarm(alarm.get('id'));
+              }}
+            />
+          ))}
           <IconButton onClick={(evt) => setUserEl(evt.currentTarget)}>
             <AccountIcon />
             <small style={{ fontSize: '14px' }}>{role.get('user')}</small>
@@ -136,11 +156,13 @@ const mapStateToProps = createStructuredSelector({
   userMenus: makeSelectUserMenus(),
   showMenuText: makeSelectShowMenuText(),
   unreadCount: makeSelectUnreadCount(),
+  newAlarms: makeSelectNewAlarms(),
 });
 
 const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
+      ...alarmsActions,
       ...roleActions,
       ...actions,
     },

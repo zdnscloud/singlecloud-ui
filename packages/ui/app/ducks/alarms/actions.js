@@ -96,6 +96,12 @@ export const newAlarm = (payload, meta = {}) => ({
   meta,
 });
 
+export const removeNewAlarm = (payload, meta = {}) => ({
+  type: c.REMOVE_NEW_ALARM,
+  payload,
+  meta,
+});
+
 export const unknownEvent = (payload, meta = {}) => ({
   type: c.UNKNOWN_EVENT,
   payload,

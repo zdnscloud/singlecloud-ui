@@ -24,18 +24,21 @@ import CardHeader from 'components/Card/CardHeader';
 import CardBody from 'components/Card/CardBody';
 import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
 
+import { makeSelectURL } from 'ducks/alarms/selectors';
+import * as actions from 'ducks/alarms/actions';
+
 import useStyles from './styles';
 import messages from './messages';
 import AlarmsTable from './Table';
 
-const AlarmMessagesPage = ({ location }) => {
+const AlarmMessagesPage = ({ url, loadAlarms }) => {
   const classes = useStyles();
-  useEffect(
-    () => () => {
+  useEffect(() => {
+    loadAlarms(url);
+    return () => {
       // try cancel something when unmount
-    },
-    []
-  );
+    };
+  }, [loadAlarms, url]);
 
   return (
     <div className={classes.root}>
@@ -69,9 +72,12 @@ const AlarmMessagesPage = ({ location }) => {
   );
 };
 
-const mapStateToProps = createStructuredSelector({});
+const mapStateToProps = createStructuredSelector({
+  url: makeSelectURL(),
+});
 
-const mapDispatchToProps = (dispatch) => bindActionCreators({}, dispatch);
+const mapDispatchToProps = (dispatch) =>
+  bindActionCreators({ ...actions }, dispatch);
 
 const withConnect = connect(mapStateToProps, mapDispatchToProps);
 

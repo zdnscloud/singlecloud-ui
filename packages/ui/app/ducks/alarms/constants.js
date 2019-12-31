@@ -26,4 +26,5 @@ export const ALARM_CONNECTION_ERROR = `${prefix}/ALARM_CONNECTION_ERROR`;
 
 export const SET_UNTRACK_NUMBER = `${prefix}/SET_UNTRACK_NUMBER`;
 export const NEW_ALARM = `${prefix}/NEW_ALARM`;
+export const REMOVE_NEW_ALARM = `${prefix}/REMOVE_NEW_ALARM`;
 export const UNKNOWN_EVENT = `${prefix}/UNKNOWN_EVENT`;
