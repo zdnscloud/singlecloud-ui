@@ -201,6 +201,21 @@ export const renderMetricsTypeValue = (metricsType) => {
   return metricsTypeValue;
 };
 
+export const renderTargetTypeValue = (metricsType) => {
+  let targetTypeValue;
+  switch (metricsType) {
+    case 'Utilization':
+      targetTypeValue = messages.formUtilization;
+      break;
+    case 'AverageValue':
+      targetTypeValue = messages.formAverageValue;
+      break;
+    default:
+      break;
+  }
+  return targetTypeValue;
+};
+
 export const renderSubmitData = (formValues) => {
   const { metrics, ...formData } = formValues.toJS();
   const resourceMetrics =

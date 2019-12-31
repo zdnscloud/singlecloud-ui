@@ -11,6 +11,7 @@ export const refactorWorklodaMetrics = (worklodMetrics) => {
             fromJS({
               name: item.name,
               labels: child.labels,
+              name_labels: `${item.name} ${JSON.stringify(child.labels)}`,
               value:
                 type === 'COUNTER' ? child.counter.value : child.gauge.value,
             })

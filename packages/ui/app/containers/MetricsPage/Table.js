@@ -31,7 +31,7 @@ const MetricsTable = ({ data, setSelected, selected, type }) => {
 
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
-      const newSelecteds = data.map((n) => n.get('name'));
+      const newSelecteds = data.map((n) => n.get('name_labels'));
       setSelected(newSelecteds.toJS());
       return;
     }
@@ -94,11 +94,11 @@ const MetricsTable = ({ data, setSelected, selected, type }) => {
         </TableHead>
         <TableBody>
           {data.map((row, i) => {
-            const isItemSelected = isSelected(row.get('name'));
+            const isItemSelected = isSelected(row.get('name_labels'));
             return (
               <TableRow
                 key={i}
-                onClick={(event) => handleClick(event, row.get('name'))}
+                onClick={(event) => handleClick(event, row.get('name_labels'))}
               >
                 {type !== 'daemonset' ? (
                   <TableCell className={classes.tableCell}>

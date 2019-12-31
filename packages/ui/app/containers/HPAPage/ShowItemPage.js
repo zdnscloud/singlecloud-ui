@@ -45,6 +45,7 @@ import {
   renderMetricsTypeValue,
   renderInputMetricsName,
   renderReadOnlyNumerical,
+  renderTargetTypeValue,
 } from './utils/utils';
 
 export const HPADetailPage = ({
@@ -155,6 +156,9 @@ export const HPADetailPage = ({
                       const metricsTypeValue = renderMetricsTypeValue(
                         metricsType
                       );
+                      const targetType =
+                        metrics && metrics.getIn([i, 'targetType']);
+                      const targetTypeValue = renderTargetTypeValue(targetType);
                       const metricsName = renderInputMetricsName(metricsType);
                       return (
                         <Card key={i} border>
@@ -197,7 +201,10 @@ export const HPADetailPage = ({
                                         />
                                       }
                                       fullWidth
-                                      value={c.get('targetType')}
+                                      value={
+                                        targetTypeValue &&
+                                        intl.formatMessage(targetTypeValue)
+                                      }
                                     />
                                   </GridItem>
                                   <GridItem xs={3} sm={3} md={3}>

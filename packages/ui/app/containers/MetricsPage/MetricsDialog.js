@@ -51,13 +51,15 @@ const MetricsDialog = ({
   const metrics = refactorWorklodaMetrics(current);
 
   const handleSetHpa = () => {
+    console.log('selected', selected);
     const selectMetrics = [];
     if (selected.length > 0) {
-      selected.forEach((name) => {
+      selected.forEach((nameLabels) => {
+        const name = nameLabels.split(' ')[0];
         metrics.forEach((item) => {
           if (item.get('name') === name) {
             selectMetrics.push({
-              name: `${item.get('name')} ${JSON.stringify(item.get('labels'))}`,
+              name: nameLabels,
               value: item.get('value'),
             });
           }
