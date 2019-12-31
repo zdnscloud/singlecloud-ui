@@ -57,6 +57,10 @@ const customInputStyle = (theme) => ({
   },
   input: {
     color: '#495057',
+    maxWidth: '100%',
+    textOverflow: 'ellipsis',
+    overflow: 'hidden',
+    display: 'inline-block',
     '&,&::placeholder': {
       fontSize: '14px',
       fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',

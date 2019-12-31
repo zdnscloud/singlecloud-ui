@@ -65,6 +65,25 @@ export const readMonitorFailure = (error, meta = {}) => ({
   error: true,
 });
 
+export const removeMonitor = (id, meta = {}) => ({
+  type: c.REMOVE_MONITOR,
+  payload: id,
+  meta,
+});
+
+export const removeMonitorSuccess = (resp, meta = {}) => ({
+  type: c.REMOVE_MONITOR_SUCCESS,
+  payload: resp,
+  meta,
+});
+
+export const removeMonitorFailure = (error, meta = {}) => ({
+  type: c.REMOVE_MONITOR_FAILURE,
+  payload: error,
+  meta,
+  error: true,
+});
+
 export const clearErrorsList = (payload, meta) => ({
   type: c.CLEAR_ERRORS_LIST,
   payload,

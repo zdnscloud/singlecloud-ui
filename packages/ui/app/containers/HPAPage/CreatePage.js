@@ -8,7 +8,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { bindActionCreators, compose } from 'redux';
-import { fromJS } from 'immutable';
+import { fromJS, Map } from 'immutable';
 import {
   reduxForm,
   getFormValues,
@@ -26,12 +26,13 @@ import GridItem from 'components/Grid/GridItem';
 import GridContainer from 'components/Grid/GridContainer';
 import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
 
+import { makeSelectLocation } from 'ducks/app/selectors';
 import {
   makeSelectCurrentID as makeSelectClusterID,
   makeSelectCurrent as makeSelectCurrentCluster,
 } from 'ducks/clusters/selectors';
 import { makeSelectCurrentID as makeSelectNamespaceID } from 'ducks/namespaces/selectors';
-import { makeSelectURL } from 'ducks/horizontalpodautoscalers/selectors';
+import { makeSelectURL } from 'ducks/horizontalPodAutoscalers/selectors';
 import {
   makeSelectDeployments,
   makeSelectURL as makeDeploymentsURL,
@@ -40,16 +41,19 @@ import {
   makeSelectStatefulSets,
   makeSelectURL as makeSelectStatefulSetsURL,
 } from 'ducks/statefulSets/selectors';
-import * as actions from 'ducks/horizontalpodautoscalers/actions';
+import * as actions from 'ducks/horizontalPodAutoscalers/actions';
 import * as stActions from 'ducks/statefulSets/actions';
 import * as dActions from 'ducks/deployments/actions';
+import * as mActions from 'ducks/metrics/actions';
 
 import messages from './messages';
 import useStyles from './styles';
 import CreateHPAForm, { formName } from './CreateForm';
+import { renderSubmitData, refactorTargetSelectMetrics } from './utils/utils';
+import { refactorWorklodaMetrics } from '../../utils/hpa';
 
 export const CreateHPAPage = ({
-  createHorizontalpodautoscaler,
+  createHorizontalPodAutoscaler,
   submitForm,
   url,
   clusterID,
@@ -57,58 +61,108 @@ export const CreateHPAPage = ({
   values,
   loadDeployments,
   loadStatefulSets,
+  loadMetrics,
   stUrl,
   deployUrl,
   deployments,
   statefulsets,
+  location,
 }) => {
   const classes = useStyles();
   const push = usePush();
-  useEffect(() => {
-    if (deployUrl) {
-      loadDeployments(deployUrl, {
-        clusterID,
-        namespaceID,
-      });
+  const search = location.get('search');
+  let checked = false;
+  let targetScaleKind = '';
+  let targetScaleName = '';
+  let targetSelectMetrics = [];
+  const searchData = search
+    .slice(1)
+    .split('&')
+    .map((p) => p.split('='));
+  const params = searchData.reduce((memo, item) => {
+    memo[item[0]] = item[1];
+    return memo;
+  }, {});
+  if (params && params.checked === 'true') {
+    targetScaleKind = params.targetScaleKind;
+    targetScaleName = params.targetScaleName;
+    checked = true;
+    const t = decodeURIComponent(params.selectMetrics);
+    try {
+      targetSelectMetrics = JSON.parse(t);
+    } catch (e) {
+      targetSelectMetrics = [];
     }
-    return () => {};
-  }, [clusterID, loadDeployments, namespaceID, deployUrl]);
+  }
+
+  const scaleTargetKind = values && values.get('scaleTargetKind');
+  const scaleTargetName = values && values.get('scaleTargetName');
+  const [metrics, setMetrics] = useState(Map({}));
 
   useEffect(() => {
-    if (stUrl) {
-      loadStatefulSets(stUrl, {
+    loadDeployments(deployUrl, { clusterID, namespaceID });
+    loadStatefulSets(stUrl, { clusterID, namespaceID });
+  }, [
+    clusterID,
+    namespaceID,
+    loadDeployments,
+    deployUrl,
+    loadStatefulSets,
+    stUrl,
+  ]);
+
+  const initialValues = fromJS({
+    scaleTargetKind: checked ? targetScaleKind : '',
+    scaleTargetName: checked ? targetScaleName : '',
+    metricsType: checked ? 'customMetrics' : 'resourceMetrics',
+    metrics: checked ? refactorTargetSelectMetrics(targetSelectMetrics) : [],
+  });
+
+  useEffect(() => {
+    if (scaleTargetKind && scaleTargetName) {
+      let metricsUrl = '';
+      switch (scaleTargetKind) {
+        case 'deployment':
+          metricsUrl = deployments.getIn([scaleTargetName, 'links', 'metrics']);
+          break;
+        case 'statefulset':
+          metricsUrl = statefulsets.getIn([
+            scaleTargetName,
+            'links',
+            'metrics',
+          ]);
+          break;
+        default:
+          break;
+      }
+      loadMetrics(metricsUrl, {
         clusterID,
         namespaceID,
+        scaleTargetName,
+        resolve({ response }) {
+          setMetrics(fromJS(refactorWorklodaMetrics(response.data)));
+        },
+        reject() {},
       });
     }
     return () => {};
-  }, [clusterID, loadStatefulSets, namespaceID, stUrl]);
+  }, [
+    clusterID,
+    namespaceID,
+    loadMetrics,
+    scaleTargetKind,
+    scaleTargetName,
+    deployments,
+    statefulsets,
+  ]);
 
   async function doSubmit(formValues) {
     try {
-      const { metrics, ...formData } = formValues.toJS();
-      const resourceMetrics =
-        metrics.filter((r) => r.metricsType === 'resourceMetrics') || [];
-      const customMetrics =
-        metrics.filter((r) => r.metricsType === 'customMetrics') || [];
-      if (resourceMetrics.length > 0) {
-        resourceMetrics.forEach((item) => {
-          if (item.resourceName === 'memory' && item.averageValue) {
-            item.averageValue = `${item.averageValue}Gi`;
-          }
-        });
-      }
-      const data = {
-        resourceMetrics,
-        customMetrics,
-        ...formData,
-      };
+      const data = renderSubmitData(formValues);
       delete data.metrics;
       delete data.metricsType;
-      console.log('data', data);
-
       await new Promise((resolve, reject) => {
-        createHorizontalpodautoscaler(data, {
+        createHorizontalPodAutoscaler(data, {
           resolve,
           reject,
           url,
@@ -116,7 +170,9 @@ export const CreateHPAPage = ({
           namespaceID,
         });
       });
-      push(`/clusters/${clusterID}/namespaces/${namespaceID}/hpa`);
+      push(
+        `/clusters/${clusterID}/namespaces/${namespaceID}/horizontalPodAutoscalers`
+      );
     } catch (error) {
       throw new SubmissionError({ _error: error });
     }
@@ -133,7 +189,7 @@ export const CreateHPAPage = ({
         <Breadcrumbs
           data={[
             {
-              path: `/clusters/${clusterID}/namespaces/${namespaceID}/hpa`,
+              path: `/clusters/${clusterID}/namespaces/${namespaceID}/horizontalPodAutoscalers`,
               name: <FormattedMessage {...messages.pageTitle} />,
             },
             {
@@ -146,9 +202,10 @@ export const CreateHPAPage = ({
             <CreateHPAForm
               onSubmit={doSubmit}
               formValues={values}
-              initialValues={fromJS({ metricsType: 'resourceMetrics' })}
+              initialValues={initialValues}
               deployments={deployments}
               statefulsets={statefulsets}
+              metrics={metrics}
             />
 
             <Button variant="contained" color="primary" onClick={submitForm}>
@@ -158,7 +215,9 @@ export const CreateHPAPage = ({
               variant="contained"
               className={classes.cancleBtn}
               onClick={() => {
-                push(`/clusters/${clusterID}/namespaces/${namespaceID}/hpa`);
+                push(
+                  `/clusters/${clusterID}/namespaces/${namespaceID}/horizontalPodAutoscalers`
+                );
               }}
             >
               <FormattedMessage {...messages.cancle} />
@@ -179,6 +238,7 @@ const mapStateToProps = createStructuredSelector({
   deployUrl: makeDeploymentsURL(),
   deployments: makeSelectDeployments(),
   statefulsets: makeSelectStatefulSets(),
+  location: makeSelectLocation(),
 });
 
 const mapDispatchToProps = (dispatch) =>
@@ -187,14 +247,12 @@ const mapDispatchToProps = (dispatch) =>
       ...actions,
       loadDeployments: dActions.loadDeployments,
       loadStatefulSets: stActions.loadStatefulSets,
+      loadMetrics: mActions.loadMetrics,
       submitForm: () => submit(formName),
     },
     dispatch
   );
 
-const withConnect = connect(
-  mapStateToProps,
-  mapDispatchToProps
-);
+const withConnect = connect(mapStateToProps, mapDispatchToProps);
 
 export default compose(withConnect)(CreateHPAPage);

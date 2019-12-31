@@ -223,25 +223,29 @@ const appRoutes = [
   // secret end
   // hpa
   {
-    path: '/clusters/:cluster_id/namespaces/:namespace_id/hpa',
+    path:
+      '/clusters/:cluster_id/namespaces/:namespace_id/horizontalPodAutoscalers',
     name: 'HPA',
     icon: Dashboard,
     component: HPAPage,
   },
   {
-    path: '/clusters/:cluster_id/namespaces/:hpa_id/hpa/create',
+    path:
+      '/clusters/:cluster_id/namespaces/:namespace_id/horizontalPodAutoscalers/create',
     name: 'Create HPA',
     icon: Dashboard,
     component: CreateHPAPage,
   },
   {
-    path: '/clusters/:cluster_id/namespaces/:namespace_id/hpa/:hpa_id/update',
+    path:
+      '/clusters/:cluster_id/namespaces/:namespace_id/horizontalPodAutoscalers/:hpa_id/update',
     name: ' Update HPA',
     icon: Dashboard,
     component: UpdateHPAPage,
   },
   {
-    path: '/clusters/:cluster_id/namespaces/:namespace_id/hpa/:hpa_id/show',
+    path:
+      '/clusters/:cluster_id/namespaces/:namespace_id/horizontalPodAutoscalers/:hpa_id/show',
     name: 'HPA Detail',
     icon: Dashboard,
     component: ShowHPAPage,

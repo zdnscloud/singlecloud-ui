@@ -42,9 +42,10 @@ import servicesReducer, { prefix as servicesPrefix } from 'ducks/services';
 import deploymentsReducer, {
   prefix as deploymentsPrefix,
 } from 'ducks/deployments';
-import horizontalpodautoscalersReducer, {
-  prefix as horizontalpodautoscalersPrefix,
-} from 'ducks/horizontalpodautoscalers';
+import horizontalPodAutoscalersReducer, {
+  prefix as horizontalPodAutoscalersPrefix,
+} from 'ducks/horizontalPodAutoscalers';
+import metricsReducer, { prefix as metricsPrefix } from 'ducks/metrics';
 import statefulSetsReducer, {
   prefix as statefulSetsPrefix,
 } from 'ducks/statefulSets';
@@ -101,7 +102,8 @@ export default function createReducer(injectedReducers = {}) {
     [usersPrefix]: usersReducer,
     [configMapsPrefix]: configMapsReducer,
     [secretsPrefix]: secretsReducer,
-    [horizontalpodautoscalersPrefix]: horizontalpodautoscalersReducer,
+    [horizontalPodAutoscalersPrefix]: horizontalPodAutoscalersReducer,
+    [metricsPrefix]: metricsReducer,
     [deploymentsPrefix]: deploymentsReducer,
     [statefulSetsPrefix]: statefulSetsReducer,
     [daemonSetsPrefix]: daemonSetsReducer,

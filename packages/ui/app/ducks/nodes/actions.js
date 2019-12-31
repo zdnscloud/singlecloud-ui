@@ -51,25 +51,3 @@ export const clearErrorsList = (payload, meta) => ({
   payload,
   meta,
 });
-
-export const executeNodeAction = (action, data, meta = {}) => ({
-  type: c.EXECUTE_NODE_ACTION,
-  payload: {
-    action,
-    data,
-  },
-  meta,
-});
-
-export const executeNodeActionSuccess = (resp, meta = {}) => ({
-  type: c.EXECUTE_NODE_ACTION_SUCCESS,
-  payload: resp,
-  meta,
-});
-
-export const executeNodeActionFailure = (error, meta = {}) => ({
-  type: c.EXECUTE_NODE_ACTION_FAILURE,
-  payload: error,
-  meta,
-  error: true,
-});

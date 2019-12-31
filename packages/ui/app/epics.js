@@ -13,7 +13,8 @@ import namespacesEpic from 'ducks/namespaces/epic';
 import nodesEpic from 'ducks/nodes/epic';
 import configMapsEpic from 'ducks/configMaps/epic';
 import secretsEpic from 'ducks/secrets/epic';
-import horizontalpodautoscalersEpic from 'ducks/horizontalpodautoscalers/epic';
+import horizontalPodAutoscalersEpic from 'ducks/horizontalPodAutoscalers/epic';
+import metricsEpic from 'ducks/metrics/epic';
 import deploymentsEpic from 'ducks/deployments/epic';
 import statefulSetsEpic from 'ducks/statefulSets/epic';
 import daemonSetsEpic from 'ducks/daemonSets/epic';
@@ -59,7 +60,8 @@ export default function createEpic(injectedEpics = {}) {
     nodesEpic,
     configMapsEpic,
     secretsEpic,
-    horizontalpodautoscalersEpic,
+    horizontalPodAutoscalersEpic,
+    metricsEpic,
     deploymentsEpic,
     statefulSetsEpic,
     daemonSetsEpic,
