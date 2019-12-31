@@ -188,6 +188,7 @@ export const HPADetailPage = ({
                                         />
                                       }
                                       fullWidth
+                                      title={c.get(`${metricsName}`)}
                                       value={c.get(`${metricsName}`)}
                                     />
                                   </GridItem>

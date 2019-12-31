@@ -92,7 +92,7 @@ export const UpdateHPAPage = ({
   ]);
 
   useEffect(() => {
-    if (current.size === 0) {
+    if (id) {
       readHorizontalPodAutoscaler(id, {
         url: `${url}/${id}`,
         clusterID,
@@ -100,14 +100,7 @@ export const UpdateHPAPage = ({
       });
     }
     return () => {};
-  }, [
-    clusterID,
-    namespaceID,
-    id,
-    current.size,
-    readHorizontalPodAutoscaler,
-    url,
-  ]);
+  }, [clusterID, namespaceID, id, readHorizontalPodAutoscaler, url]);
 
   useEffect(() => {
     if (scaleTargetKind && scaleTargetName) {

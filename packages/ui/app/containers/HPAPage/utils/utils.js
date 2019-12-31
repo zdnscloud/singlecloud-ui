@@ -265,8 +265,8 @@ export const refactorMetrics = (data, intl, type) => {
             type === 'update'
               ? cpuAverageValue
               : `${cpuAverageValue} ${intl.formatMessage(
-                messages.formCPUSuffix
-              )}`;
+                  messages.formCPUSuffix
+                )}`;
         } else if (item.resourceName === 'memory') {
           const averageValue = refactorAverageValue(item.averageValue);
           item.averageValue =
@@ -278,6 +278,7 @@ export const refactorMetrics = (data, intl, type) => {
   data.customMetrics =
     customMetrics &&
     customMetrics.map((item) => {
+      item.metricName = `${item.metricName} ${JSON.stringify(item.labels)}`;
       item.metricsType = 'customMetrics';
       item.targetType = 'AverageValue';
       return item;
@@ -344,7 +345,11 @@ export const renderTableMetrics = (data, intl) => {
     if (rm && rm.length > 0) {
       rm.forEach((r, i) => {
         const item = {
-          name: type === 'resourceMetrics' ? r.resourceName : r.metricName,
+          name: type === 'resourceMetrics' ? r.resourceName : `${r.metricName.substring(0,5)}...`,
+          name_labels:
+            type === 'resourceMetrics'
+              ? ''
+              : `${r.metricName} ${JSON.stringify(r.labels)}`,
         };
 
         if (r.targetType === 'Utilization' && type === 'resourceMetrics') {
@@ -367,8 +372,8 @@ export const renderTableMetrics = (data, intl) => {
             item.systemVal =
               crm.length > 0 && crm[i].averageValue
                 ? `${crm[i].averageValue}${intl.formatMessage(
-                  messages.formCPUSuffix
-                )}`
+                    messages.formCPUSuffix
+                  )}`
                 : '--';
             item.thresholdVal = `${r.averageValue}${intl.formatMessage(
               messages.formCPUSuffix
@@ -404,13 +409,14 @@ export const renderTableMetrics = (data, intl) => {
   );
   mefactorMetrics(customMetrics, currentCustomMetrics, carr, 'customMetrics');
   arr = arr.concat(rarr, carr);
-
+  console.log('arr',arr);
   return arr.length > 0
     ? arr.map((val, key) => (
-      <Chip
-        key={key}
-        label={`${val.name} : ${val.systemVal} / ${val.thresholdVal} `}
-      />
-    ))
+        <Chip
+          key={key}
+          title={val.name_labels}
+          label={`${val.name} : ${val.systemVal} / ${val.thresholdVal} `}
+        />
+      ))
     : '--';
 };

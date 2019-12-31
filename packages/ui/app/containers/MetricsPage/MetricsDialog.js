@@ -51,7 +51,6 @@ const MetricsDialog = ({
   const metrics = refactorWorklodaMetrics(current);
 
   const handleSetHpa = () => {
-    console.log('selected', selected);
     const selectMetrics = [];
     if (selected.length > 0) {
       selected.forEach((nameLabels) => {

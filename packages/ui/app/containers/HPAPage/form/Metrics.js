@@ -64,7 +64,7 @@ const Metrics = ({
           formValues && formValues.getIn(['metrics', i, 'metricsType']);
         const metricsTypeValue = renderMetricsTypeValue(metricsType);
         return (
-          <ListItem key={i}>
+          <ListItem key={i} className={classes.listItem}>
             <Card key={i} border>
               <CardBody>
                 <ListItemText>
