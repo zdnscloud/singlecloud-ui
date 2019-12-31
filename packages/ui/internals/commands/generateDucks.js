@@ -10,6 +10,7 @@ const plop = nodePlop(`${__dirname}/../generators/index.js`);
 const duckDir = path.join(__dirname, '../../app/ducks');
 
 const skips = [
+  'alarms',
   'errorCodes',
   'innerServices',
   'outerServices',
@@ -57,11 +58,21 @@ const sleep = (t) => new Promise((resolve, reject) => setTimeout(resolve, t));
 
     const act = {
       name: mapName(res.goStructName || res.collectionName), // # 等海姣修复 hpa 的docs
-      wannaCreateAction: !!(res.collectionMethods && res.collectionMethods.includes('POST')),
-      wannaUpdateAction: !!(res.resourceMethods && res.resourceMethods.includes('PUT')),
-      wannaReadOneAction: !!(res.resourceMethods && res.resourceMethods.includes('GET')),
-      wannaRemoveAction: !!(res.resourceMethods && res.resourceMethods.includes('DELETE')),
-      wannaResourceActions: !!(res.resourceActions && res.resourceActions.length > 0),
+      wannaCreateAction: !!(
+        res.collectionMethods && res.collectionMethods.includes('POST')
+      ),
+      wannaUpdateAction: !!(
+        res.resourceMethods && res.resourceMethods.includes('PUT')
+      ),
+      wannaReadOneAction: !!(
+        res.resourceMethods && res.resourceMethods.includes('GET')
+      ),
+      wannaRemoveAction: !!(
+        res.resourceMethods && res.resourceMethods.includes('DELETE')
+      ),
+      wannaResourceActions: !!(
+        res.resourceActions && res.resourceActions.length > 0
+      ),
       hasParents: !!(res.parentResources && res.parentResources.length > 0),
       parents: findParents(res),
       collectionName: res.collectionName,
@@ -83,5 +94,4 @@ const sleep = (t) => new Promise((resolve, reject) => setTimeout(resolve, t));
 
     await runCreateDuck(act);
   }
-
 })();
