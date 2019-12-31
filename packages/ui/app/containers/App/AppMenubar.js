@@ -49,6 +49,7 @@ import {
 
 import SelectMenu from './SelectMenu';
 import messages from './messages';
+import useStyles from './dashboardStyles';
 
 const AppMenubar = ({
   unreadCount,
@@ -66,6 +67,7 @@ const AppMenubar = ({
   location,
 }) => {
   const [userEl, setUserEl] = useState(null);
+  const classes = useStyles();
   const path = location.get('pathname');
   const isManage = /^\/clusters\/[^/]+\/manage/.test(path);
 
@@ -83,7 +85,11 @@ const AppMenubar = ({
           )}
           <Link to="/alarms">
             <IconButton>
-              <Badge badgeContent={unreadCount}>
+              <Badge
+                color="primary"
+                badgeContent={unreadCount}
+                classes={{ colorPrimary: classes.badgeColor }}
+              >
                 <AlarmIcon />
               </Badge>
             </IconButton>
