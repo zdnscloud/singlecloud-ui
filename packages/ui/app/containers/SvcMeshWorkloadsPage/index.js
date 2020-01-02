@@ -45,14 +45,19 @@ const SvcMeshWorkloadsPage = ({
   location,
   url,
   loadSvcMeshWorkloads,
-  workloads,
+  // workloads,
 }) => {
   const classes = useStyles();
+  const [workloads, setWorkloads] = useState(fromJS([]));
   useEffect(() => {
     if (url) {
       loadSvcMeshWorkloads(url, {
         clusterID,
         namespaceID,
+        resolve(res) {
+          setWorkloads(fromJS(res.response.data));
+        },
+        reject() {},
       });
     }
     const t = setInterval(() => {
@@ -60,6 +65,10 @@ const SvcMeshWorkloadsPage = ({
         loadSvcMeshWorkloads(url, {
           clusterID,
           namespaceID,
+          resolve(res) {
+            setWorkloads(fromJS(res.response.data));
+          },
+          reject() {},
         });
       }
     }, 3000);
@@ -68,9 +77,7 @@ const SvcMeshWorkloadsPage = ({
       clearInterval(t);
     };
   }, [clusterID, loadSvcMeshWorkloads, namespaceID, url]);
-
   const workloadGroups = workloads.groupBy((g) => g.get('groupId')).toList();
-  
   return (
     <div className={classes.root}>
       <Helmet title={messages.pageTitle} description={messages.pageDesc} />
