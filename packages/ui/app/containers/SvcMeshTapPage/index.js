@@ -30,10 +30,10 @@ import { makeSelectCurrentID as makeSelectClusterID } from 'ducks/clusters/selec
 import { makeSelectCurrentID as makeSelectNamespaceID } from 'ducks/namespaces/selectors';
 import {
   makeSelectURL,
-  makeSelectSvcMeshWorkloadGroupsList,
-} from 'ducks/svcMeshWorkloadGroups/selectors';
+  makeSelectSvcMeshWorkloadsList,
+} from 'ducks/svcMeshWorkloads/selectors';
 import { makeSelectIsTapping } from 'ducks/svcMeshTap/selectors';
-import * as actions from 'ducks/svcMeshWorkloadGroups/actions';
+import * as actions from 'ducks/svcMeshWorkloads/actions';
 import * as tapActions from 'ducks/svcMeshTap/actions';
 
 import SearchForm, { formName } from './SearchForm';
@@ -48,7 +48,7 @@ const SvcMeshTapPage = ({
   isTapping,
   location,
   url,
-  loadSvcMeshWorkloadGroups,
+  loadSvcMeshWorkloads,
   workloadGroups,
   values,
   svcMeshTapStart,
@@ -59,7 +59,7 @@ const SvcMeshTapPage = ({
   const [initialValues, setInitialValues] = useState();
   useEffect(() => {
     if (url) {
-      loadSvcMeshWorkloadGroups(url, {
+      loadSvcMeshWorkloads(url, {
         clusterID,
         namespaceID,
       });
@@ -67,7 +67,7 @@ const SvcMeshTapPage = ({
     return () => {
       // try cancel something when unmount
     };
-  }, [clusterID, loadSvcMeshWorkloadGroups, namespaceID, url]);
+  }, [clusterID, loadSvcMeshWorkloads, namespaceID, url]);
   useEffect(() => {
     /**
        query params
@@ -112,11 +112,7 @@ const SvcMeshTapPage = ({
       svcMeshTapReset();
     };
   }, [location, svcMeshTapReset, svcMeshTapStop]);
-  const workloads = workloadGroups
-    .map((wg) => wg.get('workloads'))
-    .flatten(1)
-    .map((wl) => wl.getIn(['stat', 'resource']));
-
+  const workloads = workloadGroups.map((wl) => wl.getIn(['stat', 'resource']));
   async function doSubmit(formValues) {
     try {
       const fvalues = formValues.toJS();
@@ -182,7 +178,7 @@ const mapStateToProps = createStructuredSelector({
   clusterID: makeSelectClusterID(),
   namespaceID: makeSelectNamespaceID(),
   url: makeSelectURL(),
-  workloadGroups: makeSelectSvcMeshWorkloadGroupsList(),
+  workloadGroups: makeSelectSvcMeshWorkloadsList(),
   values: getFormValues(formName),
   isTapping: makeSelectIsTapping(),
 });

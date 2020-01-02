@@ -21,7 +21,6 @@ import {
   makeSelectCurrentID,
 } from 'ducks/svcMeshPods/selectors';
 import * as actions from 'ducks/svcMeshWorkloads/actions';
-import { makeSelectCurrentID as makeSelectSvcMeshWorkloadGroupID } from 'ducks/svcMeshWorkloadGroups/selectors';
 import { makeSelectCurrentID as makeSelectSvcMeshWorkloadID } from 'ducks/svcMeshWorkloads/selectors';
 
 import messages from '../messages';
@@ -36,7 +35,6 @@ export const SvcMeshWorkloadsCharts = ({
   namespaceID,
   parentType,
   current,
-  svcMeshWorkloadGroupID,
   svcMeshWorkloadID,
   id,
 }) => {
@@ -108,7 +106,6 @@ const mapStateToProps = createStructuredSelector({
   namespaceID: makeSelectNamespaceID(),
   current: makeSelectCurrent(),
   id: makeSelectCurrentID(),
-  svcMeshWorkloadGroupID: makeSelectSvcMeshWorkloadGroupID(),
   svcMeshWorkloadID: makeSelectSvcMeshWorkloadID(),
 });
 
