@@ -35,7 +35,6 @@ export const reducer = (
       const {
         clusterID,
         namespaceID,
-        svcMeshWorkloadGroupID,
         svcMeshWorkloadID,
       } = meta;
       return state
@@ -44,14 +43,12 @@ export const reducer = (
           'data',
           clusterID,
           namespaceID,
-          svcMeshWorkloadGroupID,
           svcMeshWorkloadID,
         ], fromJS(data))
         .setIn([
           'list',
           clusterID,
           namespaceID,
-          svcMeshWorkloadGroupID,
           svcMeshWorkloadID,
         ], fromJS(list));
     }
@@ -68,7 +65,6 @@ export const reducer = (
       const {
         clusterID,
         namespaceID,
-        svcMeshWorkloadGroupID,
         svcMeshWorkloadID,
       } = meta;
       if (id) {
@@ -76,7 +72,6 @@ export const reducer = (
           'data',
           clusterID,
           namespaceID,
-          svcMeshWorkloadGroupID,
           svcMeshWorkloadID,
           id,
         ], fromJS(data))

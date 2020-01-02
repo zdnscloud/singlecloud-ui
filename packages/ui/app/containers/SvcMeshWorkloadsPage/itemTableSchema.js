@@ -1,7 +1,10 @@
 import React, { Fragment } from 'react';
 import { ucfirst } from '@gsmlg/utils';
+import TimeCell from 'components/Cells/TimeCell';
 import { Link } from 'react-router-dom';
 import Button from 'components/CustomButtons/Button';
+import IconButton from 'components/CustomIconButtons/IconButton';
+import DebugIcon from 'components/Icons/Debug';
 import {
   getMeshed,
   getSuccessRate,
@@ -29,21 +32,50 @@ const tableSchema = schema
     id,
     label: ucfirst(id),
   }))
+  .concat([
+    {
+      id: 'actions',
+      label: 'Actions',
+      component: ({ clusterID, namespaceID, data, parentType, stat }) => {
+        const type = data.getIn(['resource', 'type']);
+        const name = data.getIn(['resource', 'name']);
+        const toType = stat.getIn(['resource', 'type']);
+        const toName = stat.getIn(['resource', 'name']);
+        const inboundUrl = `/clusters/${clusterID}/namespaces/${namespaceID}/svcMeshTap?resource_type=${type}&resource_name${name}=&to_resource_type=${toType}&to_resource_name=${toName}`;
+        const outboundUrl = `/clusters/${clusterID}/namespaces/${namespaceID}/svcMeshTap?resource_type=${toType}&resource_name${toName}=&to_resource_type=${type}&to_resource_name=${name}`;
+        return (
+          <Fragment>
+            <IconButton
+              component={Link}
+              to={parentType === 'inbound' ? inboundUrl : outboundUrl}
+            >
+              <DebugIcon />
+            </IconButton>
+          </Fragment>
+        );
+      },
+    },
+  ])
   .map((sch) => {
     if (sch.id === 'pods') {
       return {
         ...sch,
-        component: ({ clusterID, namespaceID, data, svcMeshWorkloadID }) => (
-          <Button
-            link
-            component={Link}
-            to={`/clusters/${clusterID}/namespaces/${namespaceID}/svcmeshworkloads/${svcMeshWorkloadID}/svcmeshpods/${data.get(
-              'id'
-            )}/show`}
-          >
-            {data.get('id')}
-          </Button>
-        ),
+        component: ({ clusterID, namespaceID, data, svcMeshWorkloadID }) => {
+          const name = data.getIn(['resource', 'name']);
+          return name ? (
+            <Button
+              link
+              component={Link}
+              to={`/clusters/${clusterID}/namespaces/${namespaceID}/svcmeshworkloads/${svcMeshWorkloadID}/svcmeshpods/${data.get(
+                'id'
+              )}/show`}
+            >
+              {name}
+            </Button>
+          ) : (
+            <span>--</span>
+          );
+        },
       };
     }
     return sch;
@@ -57,8 +89,8 @@ const tableSchema = schema
             link
             component={Link}
             to={`/clusters/${clusterID}/namespaces/${namespaceID}/svcmeshworkloads/${data.get(
-              'workloadId'
-            )}/svcmeshPods/${data.get('id')}/show`}
+              'id'
+            )}/show`}
           >
             {data.getIn(['resource', 'name'])}
           </Button>
@@ -126,9 +158,7 @@ const tableSchema = schema
       return {
         ...sch,
         component: ({ data }) => (
-          <span>
-            {(data && data.getIn(['tcpStat', 'openConnections'])) || '--'}
-          </span>
+          <span>{data.getIn(['tcpStat', 'openConnections']) || '--'}</span>
         ),
       };
     }

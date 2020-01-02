@@ -125,7 +125,7 @@ export const makeSelectLeftMenus = () =>
               },
               {
                 name: 'ServiceMesh',
-                path: `/clusters/${cluster}/namespaces/${namespace}/svcMeshWorkloadGroups`,
+                path: `/clusters/${cluster}/namespaces/${namespace}/svcMeshWorkloads`,
               },
               {
                 name: 'ServiceLink',

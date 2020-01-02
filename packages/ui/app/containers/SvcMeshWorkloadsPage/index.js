@@ -8,7 +8,11 @@ import PropTypes from 'prop-types';
 import { createStructuredSelector } from 'reselect';
 import { bindActionCreators, compose } from 'redux';
 import { connect } from 'react-redux';
+import { fromJS, groupBy } from 'immutable';
+import uuid from '@gsmlg/utils/uuid';
+import _ from 'lodash';
 
+import NetworkGraph from '@gsmlg/com/NetworkGraph';
 import Helmet from 'components/Helmet/Helmet';
 import { FormattedMessage } from 'react-intl';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -26,49 +30,36 @@ import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
 import { makeSelectCurrentID as makeSelectClusterID } from 'ducks/clusters/selectors';
 import { makeSelectCurrentID as makeSelectNamespaceID } from 'ducks/namespaces/selectors';
 import {
-  makeSelectCurrentID as makeSelectSvcMeshWorkloadGroupID,
   makeSelectURL,
-} from 'ducks/svcMeshWorkloadGroups/selectors';
-import {
-  makeSelectCurrent,
-  makeSelectCurrentID,
+  makeSelectSvcMeshWorkloadsList,
 } from 'ducks/svcMeshWorkloads/selectors';
 import * as actions from 'ducks/svcMeshWorkloads/actions';
 
 import useStyles from './styles';
 import messages from './messages';
-import Table from './Table';
-import Charts from './charts/index';
+import SvcMeshWorkloadsTable from './Table';
 
 const SvcMeshWorkloadsPage = ({
   clusterID,
   namespaceID,
   location,
   url,
-  id,
-  readSvcMeshWorkload,
-  svcMeshWorkloadGroupID,
-  current,
+  loadSvcMeshWorkloads,
+  workloads,
 }) => {
   const classes = useStyles();
   useEffect(() => {
-    if (url && id && svcMeshWorkloadGroupID) {
-      const wlUrl = `${url}/${svcMeshWorkloadGroupID}/svcmeshworkloads/${id}`;
-      readSvcMeshWorkload(id, {
+    if (url) {
+      loadSvcMeshWorkloads(url, {
         clusterID,
         namespaceID,
-        svcMeshWorkloadGroupID,
-        url: wlUrl,
       });
     }
     const t = setInterval(() => {
-      if (url && id && svcMeshWorkloadGroupID) {
-        const wlUrl = `${url}/${svcMeshWorkloadGroupID}/svcmeshworkloads/${id}`;
-        readSvcMeshWorkload(id, {
+      if (url) {
+        loadSvcMeshWorkloads(url, {
           clusterID,
           namespaceID,
-          svcMeshWorkloadGroupID,
-          url: wlUrl,
         });
       }
     }, 3000);
@@ -76,15 +67,10 @@ const SvcMeshWorkloadsPage = ({
     return () => {
       clearInterval(t);
     };
-  }, [
-    clusterID,
-    readSvcMeshWorkload,
-    namespaceID,
-    url,
-    svcMeshWorkloadGroupID,
-    id,
-  ]);
+  }, [clusterID, loadSvcMeshWorkloads, namespaceID, url]);
 
+  const workloadGroups = workloads.groupBy((g) => g.get('groupId')).toList();
+  
   return (
     <div className={classes.root}>
       <Helmet title={messages.pageTitle} description={messages.pageDesc} />
@@ -93,76 +79,79 @@ const SvcMeshWorkloadsPage = ({
         <Breadcrumbs
           data={[
             {
-              path: `/clusters/${clusterID}/namespaces/${namespaceID}/svcMeshWorkloadGroups`,
-              name: (
-                <FormattedMessage
-                  {...messages.svcMeshWorkloadGroupspageTitle}
-                />
-              ),
-            },
-            {
+              path: `/clusters/${clusterID}/namespaces/${namespaceID}/svcMeshWorkloads`,
               name: <FormattedMessage {...messages.pageTitle} />,
             },
           ]}
         />
-        <GridContainer className={classes.grid}>
-          <GridItem xs={12} sm={12} md={12}>
-            {current.size > 0 ? (
-              <h4 className={classes.h4}>
-                {current.get('type')} / {current.get('id')}
-              </h4>
-            ) : null}
-            <Charts />
-          </GridItem>
-          <GridItem xs={12} sm={12} md={12}>
-            <Card>
-              <CardHeader>
-                <h4>
-                  <FormattedMessage {...messages.inboundCardTitle} />
-                </h4>
-              </CardHeader>
-              <CardBody>
-                <Table parentType="inbound" />
-              </CardBody>
-            </Card>
-          </GridItem>
-          <GridItem xs={12} sm={12} md={12}>
-            <Card>
-              <CardHeader>
-                <h4>
-                  <FormattedMessage {...messages.outboundCardTitle} />
-                </h4>
-              </CardHeader>
-              <CardBody>
-                <Table parentType="outbound" />
-              </CardBody>
-            </Card>
-          </GridItem>
-          <GridItem xs={12} sm={12} md={12}>
-            <Card>
-              <CardHeader>
-                <h4>
-                  <FormattedMessage {...messages.podsCardTitle} />
-                </h4>
-              </CardHeader>
-              <CardBody>
-                <Table parentType="pods" />
-              </CardBody>
-            </Card>
-          </GridItem>
-          <GridItem xs={12} sm={12} md={12}>
-            <Card>
-              <CardHeader>
-                <h4>
-                  <FormattedMessage {...messages.TCPCardTitle} />
-                </h4>
-              </CardHeader>
-              <CardBody>
-                <Table parentType="tcp" />
-              </CardBody>
-            </Card>
-          </GridItem>
-        </GridContainer>
+        {workloadGroups.size > 0
+          ? workloadGroups.map((workload, i) => {
+            const nodesData = workload.map((wl, idx) => ({
+              id: wl.get('id'),
+              label: wl.getIn(['stat', 'resource', 'name']),
+              kind: wl.getIn(['stat', 'resource', 'type']),
+            }));
+            const nodes = nodesData.toJS();
+
+            const linkData = workload
+              .map((wl) =>
+                wl.get('destinations')
+                  ? wl.get('destinations').map((tid) => ({
+                    source: wl.get('id'),
+                    target: tid,
+                    id: `${wl.get('id')}_${tid}`,
+                  }))
+                  : null
+              )
+              .filter((wl) => wl)
+              .flatten(1)
+              .toJS();
+            const links = linkData.map((l) => ({
+              ...l,
+              source: nodes[nodesData.findIndex((n) => n.id === l.source)],
+              target: nodes[nodesData.findIndex((n) => n.id === l.target)],
+            }));
+
+            const data = {
+              nodes,
+              links,
+            };
+            const hasLink = links.length > 0;
+
+            return (
+              <GridContainer className={classes.grid} key={i}>
+                {hasLink ? (
+                  <GridItem xs={12} sm={12} md={12}>
+                    <Card>
+                      <CardBody>
+                        <NetworkGraph
+                          ariaLabel="network-graph"
+                          width={600}
+                          height={360}
+                          graph={data}
+                          renderTooltip={null}
+                          /* waitingForLayoutLabel={null} */
+                        />
+                      </CardBody>
+                    </Card>
+                  </GridItem>
+                ) : null}
+                <GridItem xs={12} sm={12} md={12}>
+                  <Card>
+                    <CardHeader>
+                      <h4>
+                          <FormattedMessage {...messages.svcMeshWorkloads} />
+                      </h4>
+                    </CardHeader>
+                    <CardBody>
+                      <SvcMeshWorkloadsTable data={workload} />
+                    </CardBody>
+                  </Card>
+                </GridItem>
+              </GridContainer>
+            );
+          })
+          : null}
       </div>
     </div>
   );
@@ -172,9 +161,7 @@ const mapStateToProps = createStructuredSelector({
   clusterID: makeSelectClusterID(),
   namespaceID: makeSelectNamespaceID(),
   url: makeSelectURL(),
-  id: makeSelectCurrentID(),
-  svcMeshWorkloadGroupID: makeSelectSvcMeshWorkloadGroupID(),
-  current: makeSelectCurrent(),
+  workloads: makeSelectSvcMeshWorkloadsList(),
 });
 
 const mapDispatchToProps = (dispatch) =>

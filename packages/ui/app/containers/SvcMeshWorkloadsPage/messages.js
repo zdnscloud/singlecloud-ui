@@ -13,13 +13,25 @@ export default defineMessages({
     id: `${scope}.pageTitle`,
     defaultMessage: 'SvcMeshWorkloadsPage',
   },
-  svcMeshWorkloadGroupspageTitle: {
-    id: `${scope}.svcMeshWorkloadGroupspageTitle`,
-    defaultMessage: 'svcMeshWorkloadGroupspage',
-  },
   pageDesc: {
     id: `${scope}.pageDesc`,
     defaultMessage: 'Description of SvcMeshWorkloadsPage',
+  },
+  svcMeshWorkloadDetail: {
+    id: `${scope}.svcMeshWorkloadDetail`,
+    defaultMessage: 'SvcMeshWorkloadDetail',
+  },
+  svcMeshWorkloads: {
+    id: `${scope}.svcMeshWorkloads`,
+    defaultMessage: 'svcMeshWorkloads',
+  },
+  tableTitleName: {
+    id: `${scope}.tableTitleName`,
+    defaultMessage: 'Name',
+  },
+  tableTitleType: {
+    id: `${scope}.tableTitleType`,
+    defaultMessage: 'Type',
   },
   tableTitleMeshed: {
     id: `${scope}.tableTitleMeshed`,

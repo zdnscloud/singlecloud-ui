@@ -63,8 +63,9 @@ import ServicesPage, {
   CreateServicePage,
   ShowServicePage,
 } from 'containers/ServicesPage/Loadable';
-import SvcMeshWorkloadGroupsPage from 'containers/SvcMeshWorkloadGroupsPage/Loadable';
-import SvcMeshWorkloadsPage from 'containers/SvcMeshWorkloadsPage/Loadable';
+import SvcMeshWorkloadsPage, {
+  ShowSvcMeshWorkloadPage,
+} from 'containers/SvcMeshWorkloadsPage/Loadable';
 import SvcMeshPodsPage from 'containers/SvcMeshPodsPage/Loadable';
 import SvcMeshTapPage from 'containers/SvcMeshTapPage/Loadable';
 import IngressesPage, {
@@ -378,28 +379,25 @@ const appRoutes = [
     component: JobDetailPage,
   },
   // job end
-  // svcMeshWorkloadGroups start
-  {
-    path:
-      '/clusters/:cluster_id/namespaces/:namespace_id/svcMeshWorkloadGroups',
-    name: 'SvcMeshWorkloadGroups',
-    icon: Dashboard,
-    component: SvcMeshWorkloadGroupsPage,
-  },
-  // svcMeshWorkloadGroups end
   // svcMeshWorkloads start
   {
-    path:
-      '/clusters/:cluster_id/namespaces/:namespace_id/svcMeshWorkloadGroups/:svcMeshWorkloadGroup_id/svcmeshworkloads/:svcMeshWorkload_id/show',
-    name: 'SvcMeshWorkloads',
+    path: '/clusters/:cluster_id/namespaces/:namespace_id/svcmeshworkloads',
+    name: 'Svcmeshworkloads',
     icon: Dashboard,
     component: SvcMeshWorkloadsPage,
+  },
+  {
+    path:
+      '/clusters/:cluster_id/namespaces/:namespace_id/svcmeshworkloads/:svcMeshWorkload_id/show',
+    name: 'SvcMeshWorkload Detail',
+    icon: Dashboard,
+    component: ShowSvcMeshWorkloadPage,
   },
   // svcMeshWorkloads end
   // svcMeshPods start
   {
     path:
-      '/clusters/:cluster_id/namespaces/:namespace_id/svcMeshWorkloadGroups/:svcMeshWorkloadGroup_id/svcmeshworkloads/:svcMeshWorkload_id/svcmeshpods/:svcMeshPod_id/show',
+      '/clusters/:cluster_id/namespaces/:namespace_id/svcmeshworkloads/:svcMeshWorkload_id/svcmeshpods/:svcMeshPod_id/show',
     name: 'SvcMeshPods',
     icon: Dashboard,
     component: SvcMeshPodsPage,

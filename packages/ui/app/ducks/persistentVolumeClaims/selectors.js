@@ -60,17 +60,17 @@ export const makeSelectPersistentVolumeClaimsList = () =>
     makeSelectPersistentVolumeClaims(),
     makeSelectCurrentClusterID(),
     makeSelectCurrentNamespaceID(),
-  (
-    substate,
-    data,
+    (
+      substate,
+      data,
       clusterID,
       namespaceID,
-  ) =>
-    (substate.getIn([
-      'list',
-      clusterID,
-      namespaceID,
-    ]) || fromJS([])).map((id) => data.get(id)) || fromJS([])
+    ) =>
+      (substate.getIn([
+        'list',
+        clusterID,
+        namespaceID,
+      ]) || fromJS([])).map((id) => data.get(id)) || fromJS([])
   );
 
 export const makeSelectCurrentID = () =>

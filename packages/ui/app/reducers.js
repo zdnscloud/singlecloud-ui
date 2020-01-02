@@ -85,9 +85,6 @@ import outerServicesReducer, {
 import fluentbitconfigsReducer, {
   prefix as fluentbitconfigsPrefix,
 } from 'ducks/fluentbitconfigs';
-import svcMeshWorkloadGroupsReducer, {
-  prefix as svcMeshWorkloadGroupsPrefix,
-} from 'ducks/svcMeshWorkloadGroups';
 import svcMeshWorkloadsReducer, {
   prefix as svcMeshWorkloadsPrefix,
 } from 'ducks/svcMeshWorkloads';
@@ -143,7 +140,6 @@ export default function createReducer(injectedReducers = {}) {
     [innerServicesPrefix]: innerServicesReducer,
     [outerServicesPrefix]: outerServicesReducer,
     [fluentbitconfigsPrefix]: fluentbitconfigsReducer,
-    [svcMeshWorkloadGroupsPrefix]: svcMeshWorkloadGroupsReducer,
     [svcMeshWorkloadsPrefix]: svcMeshWorkloadsReducer,
     [svcMeshPodsPrefix]: svcMeshPodsReducer,
     [svcMeshTapPrefix]: svcMeshTapReducer,

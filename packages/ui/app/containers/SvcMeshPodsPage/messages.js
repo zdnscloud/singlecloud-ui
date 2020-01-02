@@ -13,13 +13,13 @@ export default defineMessages({
     id: `${scope}.pageTitle`,
     defaultMessage: 'SvcMeshPodsPage',
   },
-  svcMeshWorkloadGroupspageTitle: {
-    id: `${scope}.svcMeshWorkloadGroupspageTitle`,
-    defaultMessage: 'svcMeshWorkloadGroupspage',
+  svcMeshWorkloadDetails: {
+    id: `${scope}.svcMeshWorkloadDetails`,
+    defaultMessage: 'svcMeshWorkloadDetails',
   },
-  svcMeshWorkloadsPageTitle: {
-    id: `${scope}.svcMeshWorkloadsPageTitle`,
-    defaultMessage: 'svcMeshWorkloadsPage',
+  svcMeshWorkloads: {
+    id: `${scope}.svcMeshWorkloads`,
+    defaultMessage: 'svcMeshWorkloads',
   },
   pageDesc: {
     id: `${scope}.pageDesc`,

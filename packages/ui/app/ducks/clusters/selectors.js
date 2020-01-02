@@ -47,13 +47,13 @@ export const makeSelectClustersList = () =>
   createSelector(
     selectDomain,
     makeSelectClusters(),
-  (
-    substate,
-    data,
-  ) =>
-    (substate.getIn([
-      'list',
-    ]) || fromJS([])).map((id) => data.get(id)) || fromJS([])
+    (
+      substate,
+      data,
+    ) =>
+      (substate.getIn([
+        'list',
+      ]) || fromJS([])).map((id) => data.get(id)) || fromJS([])
   );
 
 export const makeSelectCurrentID = () =>

@@ -47,13 +47,13 @@ export const makeSelectUserQuotaList = () =>
   createSelector(
     selectDomain,
     makeSelectUserQuota(),
-  (
-    substate,
-    data,
-  ) =>
-    (substate.getIn([
-      'list',
-    ]) || fromJS([])).map((id) => data.get(id)) || fromJS([])
+    (
+      substate,
+      data,
+    ) =>
+      (substate.getIn([
+        'list',
+      ]) || fromJS([])).map((id) => data.get(id)) || fromJS([])
   );
 
 export const makeSelectCurrentID = () =>

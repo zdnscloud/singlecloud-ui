@@ -1,52 +1,64 @@
 /**
  *
- * SvcMeshPods Table
+ * SvcMeshWorkloads Table
  *
  */
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
 import _ from 'lodash';
+import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import { bindActionCreators, compose } from 'redux';
 import { fromJS } from 'immutable';
-
 import Paper from '@material-ui/core/Paper';
 import { SimpleTable } from '@gsmlg/com';
 
 import { makeSelectLocation } from 'ducks/app/selectors';
 import { makeSelectCurrentID as makeSelectClusterID } from 'ducks/clusters/selectors';
 import { makeSelectCurrentID as makeSelectNamespaceID } from 'ducks/namespaces/selectors';
-import { makeSelectCurrentID as makeSelectSvcMeshWorkloadID } from 'ducks/svcMeshWorkloads/selectors';
 import {
-  makeSelectCurrentID,
   makeSelectCurrent,
-} from 'ducks/svcMeshPods/selectors';
-
-import * as actions from 'ducks/svcMeshPods/actions';
+  makeSelectCurrentID,
+} from 'ducks/svcMeshWorkloads/selectors';
+import * as actions from 'ducks/svcMeshWorkloads/actions';
 
 import messages from './messages';
 import useStyles from './styles';
-import schema from './tableSchema';
+import schema from './itemTableSchema';
 import { refactorMetric } from '../../utils/svcMesh';
 
 /* eslint-disable react/prefer-stateless-function */
-const SvcMeshPodsTable = ({
+export const ItemTable = ({
   location,
   clusterID,
   namespaceID,
   parentType,
   current,
   svcMeshWorkloadID,
-  id,
 }) => {
   const classes = useStyles();
-  const pods = [current.get('stat')] || [];
+  const pods =
+    current.get('pods') && current.get('pods').size > 0
+      ? refactorMetric(current.get('pods'))
+      : [];
   const inbound = current.get('inbound') || [];
   const outbound = current.get('outbound') || [];
+  const stat = current.get('stat') || {};
   let mergedSchema = schema
     .map((sch) => {
+      if (sch.id === 'actions') {
+        return {
+          ...sch,
+          props: {
+            stat,
+            parentType,
+            clusterID,
+            namespaceID,
+            svcMeshWorkloadID,
+          },
+        };
+      }
       if (sch.id === 'pods') {
         return {
           ...sch,
@@ -63,8 +75,8 @@ const SvcMeshPodsTable = ({
           props: {
             clusterID,
             namespaceID,
+            svcMeshWorkloadID,
             pods,
-            id,
           },
         };
       }
@@ -83,6 +95,30 @@ const SvcMeshPodsTable = ({
   let data = [];
   // console.log('mergedSchema',mergedSchema)
   switch (parentType) {
+    case 'inbound':
+      data = inbound;
+      mergedSchema = _.drop(mergedSchema, 1).filter(
+        (s) =>
+          s.id !== 'connections' &&
+          s.id !== 'readBytes' &&
+          s.id !== 'writeBytes'
+      );
+      break;
+    case 'outbound':
+      data = outbound;
+      mergedSchema = _.drop(mergedSchema, 1).filter(
+        (s) =>
+          s.id !== 'connections' &&
+          s.id !== 'readBytes' &&
+          s.id !== 'writeBytes'
+      );
+      break;
+    case 'pods':
+      data = pods;
+      mergedSchema = _.dropRight(mergedSchema, 4).filter(
+        (s) => s.id !== 'resource'
+      );
+      break;
     case 'tcp':
       data = pods;
       mergedSchema = mergedSchema.filter(
@@ -93,14 +129,6 @@ const SvcMeshPodsTable = ({
           s.id === 'readBytes' ||
           s.id === 'writeBytes'
       );
-      break;
-    case 'inbound':
-      data = inbound;
-      mergedSchema = _.dropRight(_.drop(mergedSchema, 1), 3);
-      break;
-    case 'outbound':
-      data = outbound;
-      mergedSchema = _.dropRight(_.drop(mergedSchema, 1), 3);
       break;
     default:
       data = [];
@@ -121,8 +149,7 @@ const mapStateToProps = createStructuredSelector({
   clusterID: makeSelectClusterID(),
   namespaceID: makeSelectNamespaceID(),
   current: makeSelectCurrent(),
-  svcMeshWorkloadID: makeSelectSvcMeshWorkloadID(),
-  id: makeSelectCurrentID(),
+  svcMeshWorkloadID: makeSelectCurrentID(),
 });
 
 const mapDispatchToProps = (dispatch) =>
@@ -135,4 +162,4 @@ const mapDispatchToProps = (dispatch) =>
 
 const withConnect = connect(mapStateToProps, mapDispatchToProps);
 
-export default compose(withConnect)(SvcMeshPodsTable);
+export default compose(withConnect)(ItemTable);

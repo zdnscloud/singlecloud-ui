@@ -35,7 +35,6 @@ export const reducer = (
       const {
         clusterID,
         namespaceID,
-        svcMeshWorkloadGroupID,
       } = meta;
       return state
         .update('errorsList', (errors) => errors.filterNot((e) => e.type === c.LOAD_SVC_MESH_WORKLOADS_FAILURE))
@@ -43,13 +42,11 @@ export const reducer = (
           'data',
           clusterID,
           namespaceID,
-          svcMeshWorkloadGroupID,
         ], fromJS(data))
         .setIn([
           'list',
           clusterID,
           namespaceID,
-          svcMeshWorkloadGroupID,
         ], fromJS(list));
     }
     case c.LOAD_SVC_MESH_WORKLOADS_FAILURE:
@@ -65,14 +62,12 @@ export const reducer = (
       const {
         clusterID,
         namespaceID,
-        svcMeshWorkloadGroupID,
       } = meta;
       if (id) {
         return state.setIn([
           'data',
           clusterID,
           namespaceID,
-          svcMeshWorkloadGroupID,
           id,
         ], fromJS(data))
         .update('errorsList', (errors) => errors.filterNot((e) => e.type === c.READ_SVC_MESH_WORKLOAD_FAILURE));

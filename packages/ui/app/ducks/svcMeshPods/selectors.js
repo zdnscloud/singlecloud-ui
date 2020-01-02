@@ -14,7 +14,6 @@ import {
 } from 'ducks/svcMeshWorkloads/selectors';
 import { makeSelectCurrentID as makeSelectCurrentClusterID } from 'ducks/clusters/selectors';
 import { makeSelectCurrentID as makeSelectCurrentNamespaceID } from 'ducks/namespaces/selectors';
-import { makeSelectCurrentID as makeSelectCurrentSvcMeshWorkloadGroupID } from 'ducks/svcMeshWorkloadGroups/selectors';
 import { makeSelectCurrentID as makeSelectCurrentSvcMeshWorkloadID } from 'ducks/svcMeshWorkloads/selectors';
 import * as c from './constants';
 import { initialState } from './index';
@@ -44,20 +43,17 @@ export const makeSelectSvcMeshPods = () =>
     selectDomain,
     makeSelectCurrentClusterID(),
     makeSelectCurrentNamespaceID(),
-    makeSelectCurrentSvcMeshWorkloadGroupID(),
     makeSelectCurrentSvcMeshWorkloadID(),
   (
     substate,
       clusterID,
       namespaceID,
-      svcMeshWorkloadGroupID,
       svcMeshWorkloadID,
   ) =>
     substate.getIn([
       'data',
       clusterID,
       namespaceID,
-      svcMeshWorkloadGroupID,
       svcMeshWorkloadID,
       ]) || substate.clear()
   );
@@ -68,23 +64,20 @@ export const makeSelectSvcMeshPodsList = () =>
     makeSelectSvcMeshPods(),
     makeSelectCurrentClusterID(),
     makeSelectCurrentNamespaceID(),
-    makeSelectCurrentSvcMeshWorkloadGroupID(),
     makeSelectCurrentSvcMeshWorkloadID(),
-  (
-    substate,
-    data,
+    (
+      substate,
+      data,
       clusterID,
       namespaceID,
-      svcMeshWorkloadGroupID,
       svcMeshWorkloadID,
-  ) =>
-    (substate.getIn([
-      'list',
-      clusterID,
-      namespaceID,
-      svcMeshWorkloadGroupID,
-      svcMeshWorkloadID,
-    ]) || fromJS([])).map((id) => data.get(id)) || fromJS([])
+    ) =>
+      (substate.getIn([
+        'list',
+        clusterID,
+        namespaceID,
+        svcMeshWorkloadID,
+      ]) || fromJS([])).map((id) => data.get(id)) || fromJS([])
   );
 
 export const makeSelectCurrentID = () =>
@@ -103,14 +96,12 @@ export const makeSelectCurrent = () =>
     selectDomain,
     makeSelectCurrentClusterID(),
     makeSelectCurrentNamespaceID(),
-    makeSelectCurrentSvcMeshWorkloadGroupID(),
     makeSelectCurrentSvcMeshWorkloadID(),
     makeSelectCurrentID(),
     (
       substate,
       clusterID,
       namespaceID,
-      svcMeshWorkloadGroupID,
       svcMeshWorkloadID,
       id
     ) =>
@@ -118,7 +109,6 @@ export const makeSelectCurrent = () =>
         'data',
         clusterID,
         namespaceID,
-        svcMeshWorkloadGroupID,
         svcMeshWorkloadID,
         id,
       ]) || substate.clear()

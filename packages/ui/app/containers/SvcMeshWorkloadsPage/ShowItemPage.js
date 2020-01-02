@@ -1,6 +1,6 @@
 /**
  *
- * SvcMeshPodsPage
+ * SvcMeshWorkloadDetailPage
  *
  */
 import React, { useEffect, useState, memo } from 'react';
@@ -25,45 +25,41 @@ import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
 
 import { makeSelectCurrentID as makeSelectClusterID } from 'ducks/clusters/selectors';
 import { makeSelectCurrentID as makeSelectNamespaceID } from 'ducks/namespaces/selectors';
-import { makeSelectCurrentID as makeSelectSvcMeshWorkloadID } from 'ducks/svcMeshWorkloads/selectors';
 import {
-  makeSelectCurrentID,
   makeSelectCurrent,
+  makeSelectCurrentID,
   makeSelectURL,
-} from 'ducks/svcMeshPods/selectors';
-import * as actions from 'ducks/svcMeshPods/actions';
+} from 'ducks/svcMeshWorkloads/selectors';
+import * as actions from 'ducks/svcMeshWorkloads/actions';
 
 import useStyles from './styles';
 import messages from './messages';
-import Table from './Table';
+import Table from './ItemTable';
 import Charts from './charts/index';
 
-const SvcMeshPodsPage = ({
+const SvcMeshWorkloadDetailPage = ({
   clusterID,
   namespaceID,
   location,
   url,
-  readSvcMeshPod,
-  svcMeshWorkloadID,
   id,
+  readSvcMeshWorkload,
   current,
 }) => {
   const classes = useStyles();
   useEffect(() => {
     if (url && id) {
-      readSvcMeshPod(id, {
+      readSvcMeshWorkload(id, {
         clusterID,
         namespaceID,
-        svcMeshWorkloadID,
         url: `${url}/${id}`,
       });
     }
     const t = setInterval(() => {
       if (url && id) {
-        readSvcMeshPod(id, {
+        readSvcMeshWorkload(id, {
           clusterID,
           namespaceID,
-          svcMeshWorkloadID,
           url: `${url}/${id}`,
         });
       }
@@ -74,12 +70,12 @@ const SvcMeshPodsPage = ({
     };
   }, [
     clusterID,
-    readSvcMeshPod,
+    readSvcMeshWorkload,
     namespaceID,
     url,
-    svcMeshWorkloadID,
     id,
   ]);
+
   return (
     <div className={classes.root}>
       <Helmet title={messages.pageTitle} description={messages.pageDesc} />
@@ -91,22 +87,15 @@ const SvcMeshPodsPage = ({
               path: `/clusters/${clusterID}/namespaces/${namespaceID}/svcMeshWorkloads`,
               name: (
                 <FormattedMessage
-                  {...messages.svcMeshWorkloads}
+                  {...messages.pageTitle}
                 />
               ),
             },
             {
-              path: `/clusters/${clusterID}/namespaces/${namespaceID}/svcmeshworkloads/${svcMeshWorkloadID}/show`,
-              name: (
-                <FormattedMessage {...messages.svcMeshWorkloadDetails} />
-              ),
-            },
-            {
-              name: <FormattedMessage {...messages.pageTitle} />,
+              name: <FormattedMessage {...messages.svcMeshWorkloadDetail} />,
             },
           ]}
         />
-
         <GridContainer className={classes.grid}>
           <GridItem xs={12} sm={12} md={12}>
             {current.size > 0 ? (
@@ -144,6 +133,18 @@ const SvcMeshPodsPage = ({
             <Card>
               <CardHeader>
                 <h4>
+                  <FormattedMessage {...messages.podsCardTitle} />
+                </h4>
+              </CardHeader>
+              <CardBody>
+                <Table parentType="pods" />
+              </CardBody>
+            </Card>
+          </GridItem>
+          <GridItem xs={12} sm={12} md={12}>
+            <Card>
+              <CardHeader>
+                <h4>
                   <FormattedMessage {...messages.TCPCardTitle} />
                 </h4>
               </CardHeader>
@@ -161,9 +162,8 @@ const SvcMeshPodsPage = ({
 const mapStateToProps = createStructuredSelector({
   clusterID: makeSelectClusterID(),
   namespaceID: makeSelectNamespaceID(),
-  svcMeshWorkloadID: makeSelectSvcMeshWorkloadID(),
-  id: makeSelectCurrentID(),
   url: makeSelectURL(),
+  id: makeSelectCurrentID(),
   current: makeSelectCurrent(),
 });
 
@@ -177,4 +177,4 @@ const mapDispatchToProps = (dispatch) =>
 
 const withConnect = connect(mapStateToProps, mapDispatchToProps);
 
-export default compose(withConnect, memo)(SvcMeshPodsPage);
+export default compose(withConnect, memo)(SvcMeshWorkloadDetailPage);

@@ -8,8 +8,8 @@ export const refactorMetric = (data) => {
     return [];
   }
   const metric = data.map((item) => {
-    const { creationTimestamp, id, stat } = item.toJS();
-    return fromJS({ creationTimestamp, id, ...stat });
+    const { stat, ...itemDatas } = item.toJS();
+    return fromJS({ ...itemDatas, ...stat });
   });
   return metric;
 };

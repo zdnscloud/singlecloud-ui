@@ -55,15 +55,15 @@ export const makeSelectPodNetworksList = () =>
     selectDomain,
     makeSelectPodNetworks(),
     makeSelectCurrentClusterID(),
-  (
-    substate,
-    data,
+    (
+      substate,
+      data,
       clusterID,
-  ) =>
-    (substate.getIn([
-      'list',
-      clusterID,
-    ]) || fromJS([])).map((id) => data.get(id)) || fromJS([])
+    ) =>
+      (substate.getIn([
+        'list',
+        clusterID,
+      ]) || fromJS([])).map((id) => data.get(id)) || fromJS([])
   );
 
 export const makeSelectCurrentID = () =>
