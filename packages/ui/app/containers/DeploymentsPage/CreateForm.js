@@ -47,7 +47,7 @@ export const Form = ({
   storageClasses,
   formValues,
   role,
-  pvc,
+  // pvc,
 }) => {
   const classes = useStyles();
 
@@ -187,7 +187,7 @@ export const Form = ({
                 formValues={formValues}
                 storageClasses={storageClasses}
                 role={role}
-                pvc={pvc}
+                // pvc={pvc}
               />
             </CardBody>
           </Card>

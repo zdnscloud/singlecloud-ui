@@ -22,19 +22,19 @@ const VolumeClaimTemplate = ({
   storageClasses,
   meta: { error, submitFailed },
   role,
-  pvc,
+  // pvc,
   formValues,
 }) => {
   const classes = useStyles();
-  let storageClassesOptions = storageClasses.toList().map((sc) => ({
+  const storageClassesOptions = storageClasses.toList().map((sc) => ({
     label: sc.get('name'),
     value: sc.get('name'),
   }));
-  const pvcList = pvc.filter((s) => s.get('used') === false);
-  const pvcOptions = pvcList.toList().map((sc) => ({
-    label: sc.get('name'),
-    value: sc.get('name'),
-  }));
+  // const pvcList = pvc.filter((s) => s.get('used') === false);
+  // const pvcOptions = pvcList.toList().map((sc) => ({
+  //   label: sc.get('name'),
+  //   value: sc.get('name'),
+  // }));
 
   const renderTemplateName = (f, i, pvcStatus) => {
     if (pvcStatus && pvcStatus === 'exist') {
@@ -48,7 +48,7 @@ const VolumeClaimTemplate = ({
             },
           }}
           classes={classes}
-          options={pvcOptions}
+          // options={pvcOptions}
         />
       );
     }
@@ -115,16 +115,17 @@ const VolumeClaimTemplate = ({
         </ListItem>
       )}
       {fields.map((f, i) => {
-        const pvcStatus =
-          formValues && formValues.getIn(['persistentVolumes', i, 'pvcStatus']);
-        if (pvcStatus && pvcStatus === 'exist') {
-          storageClassesOptions = storageClassesOptions.filter(
-            (s) => s.value === 'cephfs'
-          );
-        }
+        const pvcStatus = 'create';
+        // const pvcStatus =
+        //   formValues && formValues.getIn(['persistentVolumes', i, 'pvcStatus']);
+        // if (pvcStatus && pvcStatus === 'exist') {
+        //   storageClassesOptions = storageClassesOptions.filter(
+        //     (s) => s.value === 'cephfs'
+        //   );
+        // }
         return (
           <GridContainer key={i}>
-            {role === 'update' ? null : (
+            {/* {role === 'update' ? null : (
               <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
                 <RadioField
                   name={`${f}.pvcStatus`}
@@ -160,15 +161,18 @@ const VolumeClaimTemplate = ({
                   formLabelComponent="div"
                 />
               </GridItem>
-            )}
+            )} */}
 
             <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
               {renderTemplateName(f, i, pvcStatus)}
             </GridItem>
-            <GridItem xs={2} sm={2} md={2} className={classes.formLine}>
+            {/* <GridItem xs={2} sm={2} md={2} className={classes.formLine}> */}
+            <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
               {renderTemplateSize(f, i, pvcStatus)}
             </GridItem>
-            <GridItem xs={2} sm={2} md={2} className={classes.formLine}>
+            {/* <GridItem xs={2} sm={2} md={2} className={classes.formLine}>
+             */}
+            <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
               <SelectField
                 label={
                   <FormattedMessage
