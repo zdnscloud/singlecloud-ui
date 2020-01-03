@@ -86,6 +86,13 @@ import outerServicesReducer, {
 import fluentbitconfigsReducer, {
   prefix as fluentbitconfigsPrefix,
 } from 'ducks/fluentbitconfigs';
+import persistentVolumeClaimsReducer, {
+  prefix as persistentVolumeClaimsPrefix,
+} from 'ducks/persistentVolumeClaims';
+import persistentVolumesReducer, {
+  prefix as persistentVolumesPrefix,
+} from 'ducks/persistentVolumes';
+
 // import reducers end
 
 /**
@@ -133,6 +140,8 @@ export default function createReducer(injectedReducers = {}) {
     [innerServicesPrefix]: innerServicesReducer,
     [outerServicesPrefix]: outerServicesReducer,
     [fluentbitconfigsPrefix]: fluentbitconfigsReducer,
+    [persistentVolumeClaimsPrefix]: persistentVolumeClaimsReducer,
+    [persistentVolumesPrefix]: persistentVolumesReducer,
 
     // combine reducers end
     ...injectedReducers,
