@@ -102,6 +102,10 @@ export default defineMessages({
     id: `${scope}.formNamespaceName`,
     defaultMessage: 'Namespace',
   },
+  formInjectServiceMesh: {
+    id: `${scope}.formInjectServiceMesh`,
+    defaultMessage: 'InjectServiceMesh',
+  },
   formName: {
     id: `${scope}.formName`,
     defaultMessage: 'Name',

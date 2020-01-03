@@ -69,7 +69,7 @@ export const styles = (theme) => ({
     padding: 0,
     minWidth: 0,
     width: 'calc(100% - 20px)',
-    textAlign: 'left',
+    textAlign: 'left !important',
     display: 'inline-block',
     whiteSpace: 'nowrap',
     '& .MuiButton-label': {
