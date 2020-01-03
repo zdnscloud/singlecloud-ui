@@ -109,9 +109,9 @@ const SvcMeshTapPage = ({
 
     return () => {
       svcMeshTapStop();
-      svcMeshTapReset();
+      svcMeshTapReset({}, { clusterID, namespaceID });
     };
-  }, [location, svcMeshTapReset, svcMeshTapStop]);
+  }, [clusterID, location, namespaceID, svcMeshTapReset, svcMeshTapStop]);
   const workloads = workloadGroups.map((wl) => wl.getIn(['stat', 'resource']));
   async function doSubmit(formValues) {
     try {
@@ -161,6 +161,8 @@ const SvcMeshTapPage = ({
                   formValues={values}
                   stopAction={svcMeshTapStop}
                   resetAction={svcMeshTapReset}
+                  clusterID={clusterID}
+                  namespaceID={namespaceID}
                 />
               </CardHeader>
               <CardBody>

@@ -35,6 +35,8 @@ const validate = (values) => {
 };
 
 export const Form = ({
+  clusterID,
+  namespaceID,
   handleSubmit,
   error,
   formValues,
@@ -116,7 +118,7 @@ export const Form = ({
             onClick={(e) => {
               reset();
               stopAction();
-              resetAction();
+              resetAction({}, { clusterID, namespaceID });
             }}
           >
             <FormattedMessage {...messages.tapReset} />
