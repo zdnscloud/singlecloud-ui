@@ -39,6 +39,26 @@ export const Service = ({ service }) => {
           />
         </GridItem>
       </GridContainer>
+      {service.get('serviceType') === 'loadbalancer' ? (
+        <Fragment>
+          <GridContainer>
+            <GridItem xs={3} sm={3} md={3}>
+              <ReadOnlyInput
+                label={<FormattedMessage {...messages.formName} />}
+                value={service.get('loadBalanceVip')}
+                fullWidth
+              />
+            </GridItem>
+            <GridItem xs={3} sm={3} md={3}>
+              <ReadOnlyInput
+                label={<FormattedMessage {...messages.formServiceType} />}
+                value={service.get('loadBalanceMethod')}
+                fullWidth
+              />
+            </GridItem>
+          </GridContainer>
+        </Fragment>
+      ) : null}
       <GridContainer>
         <GridItem xs={12} sm={12} md={12} className={classes.formLine}>
           <FormattedMessage {...messages.formExposedPorts} />
