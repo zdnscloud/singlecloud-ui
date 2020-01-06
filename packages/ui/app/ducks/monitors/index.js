@@ -81,6 +81,23 @@ export const reducer = (
         errors.filterNot((e) => e.type === type).push({ type, payload, meta })
       );
 
+    case c.REMOVE_MONITOR:
+      return state;
+    case c.REMOVE_MONITOR_SUCCESS: {
+      const { id } = meta;
+      const { clusterID } = meta;
+      return state
+        .removeIn(['data', clusterID, id])
+        .updateIn(['list', clusterID], (l) => l.filterNot((i) => i === id))
+        .update('errorsList', (errors) =>
+          errors.filterNot((e) => e.type === c.REMOVE_MONITOR_FAILURE)
+        );
+    }
+    case c.REMOVE_MONITOR_FAILURE:
+      return state.update('errorsList', (errors) =>
+        errors.filterNot((e) => e.type === type).push({ type, payload, meta })
+      );
+
     case c.CLEAR_ERRORS_LIST:
       return state.update('errorsList', (errors) => errors.clear());
 

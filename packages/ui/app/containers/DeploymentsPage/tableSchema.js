@@ -9,6 +9,7 @@ import UpgradeIcon from 'components/Icons/Upgrade';
 import RollbackIcon from 'components/Icons/Rollback';
 import ConfirmDelete from 'components/ConfirmDelete/ConfirmDelete';
 import LogcollectionDialog from 'containers/LogcollectionPage/LogcollectionDialog';
+import MetricsDialog from 'containers/MetricsPage/MetricsDialog';
 
 const schema = ['name', 'replicas', 'creationTimestamp'];
 
@@ -43,6 +44,12 @@ const tableSchema = schema
             id={`${namespaceID}_deployment_${data.get('id')}`}
           />
 
+          <MetricsDialog
+            url={data.getIn(['links', 'metrics'])}
+            id={data.get('id')}
+            type="deployment"
+          />
+
           <IconButton
             aria-label="Update"
             component={Link}
@@ -71,13 +78,13 @@ const tableSchema = schema
     if (sch.id === 'name') {
       return {
         ...sch,
-        component: (props) => (
+        component: ({ data, pathname }) => (
           <Button
             link
             component={Link}
-            to={`${props.pathname}/${props.data.get('id')}/show`}
+            to={`${pathname}/${data.get('id')}/show`}
           >
-            {props.data.get('name')}
+            {data.get('name')}
           </Button>
         ),
       };

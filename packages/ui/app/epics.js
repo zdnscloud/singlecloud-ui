@@ -13,7 +13,8 @@ import namespacesEpic from 'ducks/namespaces/epic';
 import nodesEpic from 'ducks/nodes/epic';
 import configMapsEpic from 'ducks/configMaps/epic';
 import secretsEpic from 'ducks/secrets/epic';
-import horizontalpodautoscalersEpic from 'ducks/horizontalpodautoscalers/epic';
+import horizontalPodAutoscalersEpic from 'ducks/horizontalPodAutoscalers/epic';
+import metricsEpic from 'ducks/metrics/epic';
 import deploymentsEpic from 'ducks/deployments/epic';
 import statefulSetsEpic from 'ducks/statefulSets/epic';
 import daemonSetsEpic from 'ducks/daemonSets/epic';
@@ -40,6 +41,8 @@ import blockDevicesEpic from 'ducks/blockDevices/epic';
 import innerServicesEpic from 'ducks/innerServices/epic';
 import outerServicesEpic from 'ducks/outerServices/epic';
 import fluentbitconfigsEpic from 'ducks/fluentbitconfigs/epic';
+import persistentVolumeClaimsEpic from 'ducks/persistentVolumeClaims/epic';
+import persistentVolumesEpic from 'ducks/persistentVolumes/epic';
 
 // import epics end
 
@@ -59,7 +62,8 @@ export default function createEpic(injectedEpics = {}) {
     nodesEpic,
     configMapsEpic,
     secretsEpic,
-    horizontalpodautoscalersEpic,
+    horizontalPodAutoscalersEpic,
+    metricsEpic,
     deploymentsEpic,
     statefulSetsEpic,
     daemonSetsEpic,
@@ -83,7 +87,9 @@ export default function createEpic(injectedEpics = {}) {
     blockDevicesEpic,
     innerServicesEpic,
     outerServicesEpic,
-    fluentbitconfigsEpic
+    fluentbitconfigsEpic,
+    persistentVolumeClaimsEpic,
+    persistentVolumesEpic
     // combine epics end
   );
 

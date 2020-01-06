@@ -42,9 +42,10 @@ import servicesReducer, { prefix as servicesPrefix } from 'ducks/services';
 import deploymentsReducer, {
   prefix as deploymentsPrefix,
 } from 'ducks/deployments';
-import horizontalpodautoscalersReducer, {
-  prefix as horizontalpodautoscalersPrefix,
-} from 'ducks/horizontalpodautoscalers';
+import horizontalPodAutoscalersReducer, {
+  prefix as horizontalPodAutoscalersPrefix,
+} from 'ducks/horizontalPodAutoscalers';
+import metricsReducer, { prefix as metricsPrefix } from 'ducks/metrics';
 import statefulSetsReducer, {
   prefix as statefulSetsPrefix,
 } from 'ducks/statefulSets';
@@ -85,6 +86,13 @@ import outerServicesReducer, {
 import fluentbitconfigsReducer, {
   prefix as fluentbitconfigsPrefix,
 } from 'ducks/fluentbitconfigs';
+import persistentVolumeClaimsReducer, {
+  prefix as persistentVolumeClaimsPrefix,
+} from 'ducks/persistentVolumeClaims';
+import persistentVolumesReducer, {
+  prefix as persistentVolumesPrefix,
+} from 'ducks/persistentVolumes';
+
 // import reducers end
 
 /**
@@ -101,7 +109,8 @@ export default function createReducer(injectedReducers = {}) {
     [usersPrefix]: usersReducer,
     [configMapsPrefix]: configMapsReducer,
     [secretsPrefix]: secretsReducer,
-    [horizontalpodautoscalersPrefix]: horizontalpodautoscalersReducer,
+    [horizontalPodAutoscalersPrefix]: horizontalPodAutoscalersReducer,
+    [metricsPrefix]: metricsReducer,
     [deploymentsPrefix]: deploymentsReducer,
     [statefulSetsPrefix]: statefulSetsReducer,
     [daemonSetsPrefix]: daemonSetsReducer,
@@ -131,6 +140,8 @@ export default function createReducer(injectedReducers = {}) {
     [innerServicesPrefix]: innerServicesReducer,
     [outerServicesPrefix]: outerServicesReducer,
     [fluentbitconfigsPrefix]: fluentbitconfigsReducer,
+    [persistentVolumeClaimsPrefix]: persistentVolumeClaimsReducer,
+    [persistentVolumesPrefix]: persistentVolumesReducer,
 
     // combine reducers end
     ...injectedReducers,

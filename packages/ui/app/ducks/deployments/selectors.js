@@ -27,16 +27,12 @@ export const selectDomain = (state) => state.get(c.prefix) || initialState;
  * Other specific selectors
  */
 export const makeSelectURL = () =>
-  createSelector(
-    makeSelectCurrentNamespace(),
-    (pt) => pt.getIn(['links', 'deployments'])
+  createSelector(makeSelectCurrentNamespace(), (pt) =>
+    pt.getIn(['links', 'deployments'])
   );
 
 export const makeSelectData = () =>
-  createSelector(
-    selectDomain,
-    (substate) => substate.get('data')
-  );
+  createSelector(selectDomain, (substate) => substate.get('data'));
 
 export const makeSelectDeployments = () =>
   createSelector(
@@ -54,21 +50,18 @@ export const makeSelectDeploymentsList = () =>
     makeSelectCurrentClusterID(),
     makeSelectCurrentNamespaceID(),
     (substate, data, clusterID, namespaceID) =>
-      (substate.getIn(['list', clusterID, namespaceID]) || fromJS([])).map(
-        (id) => data.get(id)
-      ) || fromJS([])
+      (
+        substate.getIn(['list', clusterID, namespaceID]) || fromJS([])
+      ).map((id) => data.get(id)) || fromJS([])
   );
 
 export const makeSelectCurrentID = () =>
-  createSelector(
-    createMatchSelector('*/deployments/:id/*'),
-    (match) => {
-      if (match && match.params) {
-        return match.params.id;
-      }
-      return '';
+  createSelector(createMatchSelector('*/deployments/:id/*'), (match) => {
+    if (match && match.params) {
+      return match.params.id;
     }
-  );
+    return '';
+  });
 
 export const makeSelectCurrent = () =>
   createSelector(
@@ -81,61 +74,39 @@ export const makeSelectCurrent = () =>
   );
 
 export const makeSelectErrorsList = () =>
-  createSelector(
-    selectDomain,
-    (substate) => substate.get('errorsList')
-  );
+  createSelector(selectDomain, (substate) => substate.get('errorsList'));
 
 export const makeSelectLoadErrorsList = () =>
-  createSelector(
-    selectDomain,
-    (substate) =>
-      substate
-        .get('errorsList')
-        .filter(({ type }) => type === c.LOAD_DEPLOYMENTS_FAILURE)
+  createSelector(selectDomain, (substate) =>
+    substate
+      .get('errorsList')
+      .filter(({ type }) => type === c.LOAD_DEPLOYMENTS_FAILURE)
   );
 
 export const makeSelectCreateErrorsList = () =>
-  createSelector(
-    selectDomain,
-    (substate) =>
-      substate
-        .get('errorsList')
-        .filter(({ type }) => type === c.CREATE_DEPLOYMENT_FAILURE)
+  createSelector(selectDomain, (substate) =>
+    substate
+      .get('errorsList')
+      .filter(({ type }) => type === c.CREATE_DEPLOYMENT_FAILURE)
   );
 
 export const makeSelectUpdateErrorsList = () =>
-  createSelector(
-    selectDomain,
-    (substate) =>
-      substate
-        .get('errorsList')
-        .filter(({ type }) => type === c.UPDATE_DEPLOYMENT_FAILURE)
+  createSelector(selectDomain, (substate) =>
+    substate
+      .get('errorsList')
+      .filter(({ type }) => type === c.UPDATE_DEPLOYMENT_FAILURE)
   );
 
 export const makeSelectReadErrorsList = () =>
-  createSelector(
-    selectDomain,
-    (substate) =>
-      substate
-        .get('errorsList')
-        .filter(({ type }) => type === c.READ_DEPLOYMENT_FAILURE)
+  createSelector(selectDomain, (substate) =>
+    substate
+      .get('errorsList')
+      .filter(({ type }) => type === c.READ_DEPLOYMENT_FAILURE)
   );
 
 export const makeSelectRemoveErrorsList = () =>
-  createSelector(
-    selectDomain,
-    (substate) =>
-      substate
-        .get('errorsList')
-        .filter(({ type }) => type === c.REMOVE_DEPLOYMENT_FAILURE)
-  );
-
-export const makeSelectActionErrorsList = () =>
-  createSelector(
-    selectDomain,
-    (substate) =>
-      substate
-        .get('errorsList')
-        .filter(({ type }) => type === c.EXECUTE_DEPLOYMENT_ACTION_FAILURE)
+  createSelector(selectDomain, (substate) =>
+    substate
+      .get('errorsList')
+      .filter(({ type }) => type === c.REMOVE_DEPLOYMENT_FAILURE)
   );

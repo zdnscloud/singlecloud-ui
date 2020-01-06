@@ -217,6 +217,18 @@ export default defineMessages({
     id: `${scope}.formVolumeClaimTemplate`,
     defaultMessage: 'Volume Claim Template',
   },
+  formVolumeClaimTemplateStatus: {
+    id: `${scope}.formVolumeClaimTemplateStatus`,
+    defaultMessage: 'Status',
+  },
+  formVolumeClaimTemplateCreate: {
+    id: `${scope}.formVolumeClaimTemplateCreate`,
+    defaultMessage: 'Create',
+  },
+  formVolumeClaimTemplateExist: {
+    id: `${scope}.formVolumeClaimTemplateExist`,
+    defaultMessage: 'Exist',
+  },
   formVolumeClaimTemplateName: {
     id: `${scope}.formVolumeClaimTemplateName`,
     defaultMessage: 'Name',
