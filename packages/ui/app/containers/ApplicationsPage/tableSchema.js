@@ -5,9 +5,11 @@ import Button from 'components/CustomButtons/Button';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import IconButton from 'components/CustomIconButtons/IconButton';
 import MonitorIcon from 'components/Icons/Monitor';
+import TrueIcon from 'components/Icons/True';
+import FalseIcon from 'components/Icons/False';
 
 const inflection = require('inflection');
-const schema = ['name', 'replicas', 'type'];
+const schema = ['name', 'replicas', 'type', 'exists'];
 
 const tableSchema = schema
   .map((id) => ({
@@ -81,6 +83,21 @@ const tableSchema = schema
             '--'
           );
         },
+      };
+    }
+    if (sch.id === 'exists') {
+      return {
+        ...sch,
+        component: ({ data, classes }) =>
+          data.get('exists') ? (
+            <div className={classes.icon}>
+              <TrueIcon />
+            </div>
+          ) : (
+            <div className={classes.icon}>
+              <FalseIcon />
+            </div>
+          ),
       };
     }
     return sch;

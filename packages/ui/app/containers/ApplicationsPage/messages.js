@@ -53,6 +53,10 @@ export default defineMessages({
     id: `${scope}.tableTitleReplicas`,
     defaultMessage: 'Replicas',
   },
+  tableTitleExists: {
+    id: `${scope}.tableTitleExists`,
+    defaultMessage: 'Exists',
+  },
   tableTitleActions: {
     id: `${scope}.tableTitleActions`,
     defaultMessage: 'Actions',
@@ -97,6 +101,10 @@ export default defineMessages({
   formNamespaceName: {
     id: `${scope}.formNamespaceName`,
     defaultMessage: 'Namespace',
+  },
+  formInjectServiceMesh: {
+    id: `${scope}.formInjectServiceMesh`,
+    defaultMessage: 'InjectServiceMesh',
   },
   formName: {
     id: `${scope}.formName`,

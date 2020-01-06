@@ -11,7 +11,7 @@ import FormHelperText from '@material-ui/core/FormHelperText';
 import FormGroup from '@material-ui/core/FormGroup';
 import Checkbox from '@material-ui/core/Checkbox';
 
-const renderChexboxesGroup = ({
+const renderCheckboxesGroup = ({
   label,
   input,
   meta,
@@ -64,7 +64,7 @@ const renderChexboxesGroup = ({
   );
 };
 
-renderChexboxesGroup.defaultProps = {
+renderCheckboxesGroup.defaultProps = {
   classes: {},
   options: [],
   formControlProps: {},
@@ -73,7 +73,7 @@ renderChexboxesGroup.defaultProps = {
   formLabelComponent: 'legend',
 };
 
-const ChexboxesField = (props) => {
+const CheckboxesField = (props) => {
   const { component, ...rest } = props;
   let { options } = rest;
   if (options && Array.isArray(options)) {
@@ -83,7 +83,9 @@ const ChexboxesField = (props) => {
     }));
   }
 
-  return <Field {...rest} component={renderChexboxesGroup} options={options} />;
+  return (
+    <Field {...rest} component={renderCheckboxesGroup} options={options} />
+  );
 };
 
-export default ChexboxesField;
+export default CheckboxesField;

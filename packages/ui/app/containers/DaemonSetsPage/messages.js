@@ -77,6 +77,10 @@ export default defineMessages({
     id: `${scope}.formReplicas`,
     defaultMessage: 'Replicas',
   },
+  formInjectServiceMesh: {
+    id: `${scope}.formInjectServiceMesh`,
+    defaultMessage: 'InjectServiceMesh',
+  },
   formContainers: {
     id: `${scope}.formContainers`,
     defaultMessage: 'Containers',
