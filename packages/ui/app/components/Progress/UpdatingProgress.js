@@ -1,15 +1,10 @@
 import React, { Fragment } from 'react';
-import { ucfirst } from '@gsmlg/utils';
-import TimeCell from 'components/Cells/TimeCell';
-import { Link } from 'react-router-dom';
+import { makeStyles } from '@material-ui/styles';
 import LinearProgress from '@material-ui/core/LinearProgress';
-import Button from 'components/CustomButtons/Button';
-import IconButton from 'components/CustomIconButtons/IconButton';
-import UpgradeIcon from 'components/Icons/Upgrade';
-import RollbackIcon from 'components/Icons/Rollback';
-import ConfirmDelete from 'components/ConfirmDelete/ConfirmDelete';
-import LogcollectionDialog from 'containers/LogcollectionPage/LogcollectionDialog';
-import MetricsDialog from 'containers/MetricsPage/MetricsDialog';
+
+const style = (theme) => ({});
+
+const useStyles = makeStyles(style);
 
 /**
 
@@ -22,15 +17,11 @@ import MetricsDialog from 'containers/MetricsPage/MetricsDialog';
 
  */
 
-const UpdatingProgress = ({
+const UpdatingProgress = ({ isUpdating, total, current, buffer }) => {
+  const classes = useStyles();
+  const variant = isUpdating ? 'buffer' : 'determinate';
 
-}) => {
-
-  return (
-    <LinearProgress
-      variant="determinate"
-    />
-  );
+  return <LinearProgress variant={variant} />;
 };
 
 export default UpdatingProgress;
