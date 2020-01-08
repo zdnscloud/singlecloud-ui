@@ -39,31 +39,6 @@ export const loadPersistentVolumeClaimsEpic = (action$, state$, { ajax }) =>
     )
   );
 
-export const readPersistentVolumeClaimEpic = (action$, state$, { ajax }) =>
-  action$.pipe(
-    ofType(c.READ_PERSISTENT_VOLUME_CLAIM),
-    mergeMap(({ payload, meta }) =>
-      ajax({
-        url: `${meta.url}`,
-        method: 'GET',
-      }).pipe(
-        map((resp) => {
-          meta.resolve && meta.resolve(resp);
-          return a.readPersistentVolumeClaimSuccess(resp, {
-            ...meta,
-            id: payload,
-          });
-        }),
-        catchError((error) => {
-          meta.reject && meta.reject(error);
-          return of(
-            a.readPersistentVolumeClaimFailure(error, { ...meta, id: payload })
-          );
-        })
-      )
-    )
-  );
-
 export const removePersistentVolumeClaimEpic = (action$, state$, { ajax }) =>
   action$.pipe(
     ofType(c.REMOVE_PERSISTENT_VOLUME_CLAIM),
@@ -94,6 +69,5 @@ export const removePersistentVolumeClaimEpic = (action$, state$, { ajax }) =>
 
 export default combineEpics(
   loadPersistentVolumeClaimsEpic,
-  readPersistentVolumeClaimEpic,
   removePersistentVolumeClaimEpic
 );
