@@ -59,4 +59,25 @@ export const readNodeEpic = (action$, state$, { ajax }) =>
     )
   );
 
-export default combineEpics(loadNodesEpic, readNodeEpic);
+export const executeNodeActionEpic = (action$, state$, { ajax }) =>
+  action$.pipe(
+    ofType(c.EXECUTE_NODE_ACTION),
+    mergeMap(({ payload: { action, data }, meta }) =>
+      ajax({
+        url: `${meta.url}?action=${action}`,
+        method: 'POST',
+        body: data,
+      }).pipe(
+        map((resp) => {
+          meta.resolve && meta.resolve(resp);
+          return a.executeNodeActionSuccess(resp, { ...meta, action });
+        }),
+        catchError((error) => {
+          meta.reject && meta.reject(error);
+          return of(a.executeNodeActionFailure(error, { ...meta, action }));
+        })
+      )
+    )
+  );
+
+export default combineEpics(loadNodesEpic, readNodeEpic, executeNodeActionEpic);

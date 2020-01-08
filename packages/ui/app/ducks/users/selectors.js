@@ -93,3 +93,10 @@ export const makeSelectRemoveErrorsList = () =>
       .get('errorsList')
       .filter(({ type }) => type === c.REMOVE_USER_FAILURE)
   );
+
+export const makeSelectActionErrorsList = () =>
+  createSelector(selectDomain, (substate) =>
+    substate
+      .get('errorsList')
+      .filter(({ type }) => type === c.EXECUTE_USER_ACTION_FAILURE)
+  );
