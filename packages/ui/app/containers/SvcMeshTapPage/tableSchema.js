@@ -53,7 +53,7 @@ const Spinner = withStyles(spinnerStyles)(SpinnerBase);
 
 const formatTapLatency = (d) => {
   const nanos = d.get('nanos');
-  return `${(nanos / 10e6).toFixed(2)}ms`;
+  return `${(nanos / 1e6).toFixed(2)}ms`;
 };
 
 const getResType = (d) => {
