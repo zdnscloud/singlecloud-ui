@@ -130,6 +130,23 @@ export const styles = (theme) => ({
   icon: {
     paddingTop: 6,
   },
+  meshWrap: {
+    position: 'absolute',
+    right: '-11px',
+    top: '-10px',
+    width: 0,
+    height: 0,
+    borderTop: '38px solid #5B8FF9',
+    borderLeft: '48px solid transparent',
+  },
+  meshText: {
+    position: 'absolute',
+    right: '-12px',
+    top: '-4px',
+    color: '#fff',
+    transform: 'rotate(45deg)',
+    fontSize: 10,
+  },
 });
 
 export default makeStyles(styles);
