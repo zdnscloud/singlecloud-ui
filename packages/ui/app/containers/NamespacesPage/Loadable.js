@@ -23,3 +23,9 @@ export const NamespaceOverviewPage = loadable(() =>
     /* webpackChunkName: "NamespaceOverviewPage" */ './NamespaceOverviewPage'
   )
 );
+
+export const NamespaceThresholdsPage = loadable(() =>
+  import(
+    /* webpackChunkName: "NamespaceThresholdsPage" */ './NamespaceThresholdsPage'
+  )
+);

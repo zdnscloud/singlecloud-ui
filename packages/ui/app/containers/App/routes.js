@@ -13,12 +13,15 @@ import ClustersPage, {
   CreateClusterPage,
   ClusterManagePage,
 } from 'containers/ClustersPage/Loadable';
-import ClusterDetailPage from 'containers/ClusterDetailPage/Loadable';
+import ClusterDetailPage, {
+  ClusterThresholdsPage,
+} from 'containers/ClusterDetailPage/Loadable';
 import NodesPage, { NodeDetailPage } from 'containers/NodesPage/Loadable';
 import NamespacesPage, {
   CreateNamespacePage,
   NamespaceDetailPage,
   NamespaceOverviewPage,
+  NamespaceThresholdsPage,
 } from 'containers/NamespacesPage/Loadable';
 import EventsPage from 'containers/EventsPage/Loadable';
 import HPAPage, {
@@ -124,6 +127,12 @@ const appRoutes = [
     component: ClusterDetailPage,
   },
   {
+    path: '/clusters/:cluster_id/thresholds',
+    name: 'Cluster Thresholds',
+    icon: Dashboard,
+    component: ClusterThresholdsPage,
+  },
+  {
     path: '/clusters/:cluster_id/nodes',
     name: 'Nodes',
     icon: Dashboard,
@@ -164,6 +173,12 @@ const appRoutes = [
     name: 'namespaces',
     icon: Dashboard,
     component: NamespaceOverviewPage,
+  },
+  {
+    path: '/clusters/:cluster_id/namespaces/:namespace_id/thresholds',
+    name: 'namespaces thresholds',
+    icon: Dashboard,
+    component: NamespaceThresholdsPage,
   },
   // configmap
   {
