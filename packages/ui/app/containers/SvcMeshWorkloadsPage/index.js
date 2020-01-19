@@ -165,9 +165,7 @@ const SvcMeshWorkloadsPage = ({
               <Card>
                 <CardBody>
                   <div className={classes.blank}>
-                    <IconButton>
-                      <BlankIcon />
-                    </IconButton>
+                    <BlankIcon />
                     <p className={classes.blankText}>暂无内容</p>
                   </div>
                 </CardBody>
