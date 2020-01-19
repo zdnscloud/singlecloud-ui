@@ -26,6 +26,7 @@ import Card from 'components/Card/Card';
 import CardHeader from 'components/Card/CardHeader';
 import CardBody from 'components/Card/CardBody';
 import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
+import BlankIcon from 'components/Icons/Blank';
 
 import { makeSelectCurrentID as makeSelectClusterID } from 'ducks/clusters/selectors';
 import { makeSelectCurrentID as makeSelectNamespaceID } from 'ducks/namespaces/selectors';
@@ -91,8 +92,8 @@ const SvcMeshWorkloadsPage = ({
             },
           ]}
         />
-        {workloadGroups.size > 0
-          ? workloadGroups.map((workload, i) => {
+        {workloadGroups.size > 0 ? (
+          workloadGroups.map((workload, i) => {
             const nodesData = workload.map((wl, idx) => ({
               id: wl.get('id'),
               label: wl.getIn(['stat', 'resource', 'name']),
@@ -104,10 +105,10 @@ const SvcMeshWorkloadsPage = ({
               .map((wl) =>
                 wl.get('destinations')
                   ? wl.get('destinations').map((tid) => ({
-                    source: wl.get('id'),
-                    target: tid,
-                    id: `${wl.get('id')}_${tid}`,
-                  }))
+                      source: wl.get('id'),
+                      target: tid,
+                      id: `${wl.get('id')}_${tid}`,
+                    }))
                   : null
               )
               .filter((wl) => wl)
@@ -147,7 +148,7 @@ const SvcMeshWorkloadsPage = ({
                   <Card>
                     <CardHeader>
                       <h4>
-                          <FormattedMessage {...messages.svcMeshWorkloads} />
+                        <FormattedMessage {...messages.svcMeshWorkloads} />
                       </h4>
                     </CardHeader>
                     <CardBody>
@@ -158,7 +159,22 @@ const SvcMeshWorkloadsPage = ({
               </GridContainer>
             );
           })
-          : null}
+        ) : (
+          <GridContainer className={classes.grid}>
+            <GridItem xs={12} sm={12} md={12}>
+              <Card>
+                <CardBody>
+                  <div className={classes.blank}>
+                    <IconButton>
+                      <BlankIcon />
+                    </IconButton>
+                    <p className={classes.blankText}>暂无内容</p>
+                  </div>
+                </CardBody>
+              </Card>
+            </GridItem>
+          </GridContainer>
+        )}
       </div>
     </div>
   );
