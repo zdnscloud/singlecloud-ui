@@ -110,3 +110,10 @@ export const makeSelectRemoveErrorsList = () =>
       .get('errorsList')
       .filter(({ type }) => type === c.REMOVE_DEPLOYMENT_FAILURE)
   );
+
+export const makeSelectActionErrorsList = () =>
+  createSelector(selectDomain, (substate) =>
+    substate
+      .get('errorsList')
+      .filter(({ type }) => type === c.EXECUTE_DEPLOYMENT_ACTION_FAILURE)
+  );

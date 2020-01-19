@@ -95,13 +95,13 @@ const tableSchema = schema
         ...sch,
         component: ({ data }) => (
           <>
-            {data.getIn(['status', 'numberReady']) || 0}/
-            {data.getIn(['status', 'desiredNumberScheduled'])}
+            {data.getIn(['status', 'readyReplicas']) || 0}/
+            {data.getIn(['replicas'])}
             <LinearProgress
               variant="determinate"
               value={
-                ((data.getIn(['status', 'numberReady']) || 0) /
-                  data.getIn(['status', 'desiredNumberScheduled'])) *
+                ((data.getIn(['status', 'readyReplicas']) || 0) /
+                  data.getIn(['replicas'])) *
                 100
               }
             />
