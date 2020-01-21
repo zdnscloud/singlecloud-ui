@@ -26,16 +26,12 @@ export const selectDomain = (state) => state.get(c.prefix) || initialState;
  * Other specific selectors
  */
 export const makeSelectURL = () =>
-  createSelector(
-    makeSelectCurrentCluster(),
-    (pt) => pt.getIn(['links', 'blockdevices'])
+  createSelector(makeSelectCurrentCluster(), (pt) =>
+    pt.getIn(['links', 'blockdevices'])
   );
 
 export const makeSelectData = () =>
-  createSelector(
-    selectDomain,
-    (substate) => substate.get('data')
-  );
+  createSelector(selectDomain, (substate) => substate.get('data'));
 
 export const makeSelectBlockDevices = () =>
   createSelector(
@@ -57,15 +53,12 @@ export const makeSelectBlockDevicesList = () =>
   );
 
 export const makeSelectCurrentID = () =>
-  createSelector(
-    createMatchSelector('*/blockDevices/:id/*'),
-    (match) => {
-      if (match && match.params) {
-        return match.params.id;
-      }
-      return '';
+  createSelector(createMatchSelector('*/blockDevices/:id/*'), (match) => {
+    if (match && match.params) {
+      return match.params.id;
     }
-  );
+    return '';
+  });
 
 export const makeSelectCurrent = () =>
   createSelector(
@@ -77,16 +70,11 @@ export const makeSelectCurrent = () =>
   );
 
 export const makeSelectErrorsList = () =>
-  createSelector(
-    selectDomain,
-    (substate) => substate.get('errorsList')
-  );
+  createSelector(selectDomain, (substate) => substate.get('errorsList'));
 
 export const makeSelectLoadErrorsList = () =>
-  createSelector(
-    selectDomain,
-    (substate) =>
-      substate
-        .get('errorsList')
-        .filter(({ type }) => type === c.LOAD_BLOCK_DEVICES_FAILURE)
+  createSelector(selectDomain, (substate) =>
+    substate
+      .get('errorsList')
+      .filter(({ type }) => type === c.LOAD_BLOCK_DEVICES_FAILURE)
   );

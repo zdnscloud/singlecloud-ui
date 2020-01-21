@@ -100,6 +100,7 @@ import UsersPage, {
   PasswordSetupPage,
 } from 'containers/UsersPage/Loadable';
 import AlarmMessagesPage from 'containers/AlarmMessagesPage';
+import GlobalConfigurationPage from 'containers/GlobalConfigurationPage';
 
 const appRoutes = [
   {
@@ -107,6 +108,12 @@ const appRoutes = [
     name: 'Clusters',
     icon: Dashboard,
     component: ClustersPage,
+  },
+  {
+    path: '/globalConfiguration',
+    name: 'GlobalConfiguration',
+    icon: Dashboard,
+    component: GlobalConfigurationPage,
   },
   {
     path: '/clusters/create',
