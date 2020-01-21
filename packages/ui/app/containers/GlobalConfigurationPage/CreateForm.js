@@ -54,7 +54,7 @@ const Form = ({ formValues, handleSubmit, error }) => {
           <Card>
             <CardHeader>
               <h4>
-                <FormattedMessage {...messages.createAlarm} />
+                <FormattedMessage {...messages.clusterThreshold} />
               </h4>
             </CardHeader>
             <CardBody>

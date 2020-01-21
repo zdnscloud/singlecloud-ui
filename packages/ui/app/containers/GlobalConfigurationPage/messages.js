@@ -21,9 +21,9 @@ export default defineMessages({
     id: `${scope}.alarms`,
     defaultMessage: 'alarms',
   },
-  createAlarm: {
-    id: `${scope}.createAlarm`,
-    defaultMessage: 'Create Alarm',
+  clusterThreshold: {
+    id: `${scope}.clusterThreshold`,
+    defaultMessage: 'Cluster Threshold',
   },
   save: {
     id: `${scope}.save`,
