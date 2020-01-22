@@ -97,7 +97,18 @@ const GlobalConfigurationPage = ({
             <CreateThresholdForm
               onSubmit={doSubmit}
               formValues={values}
-              initialValues={current}
+              initialValues={
+                current &&
+                current.update((c) => {
+                  const data = c.toJS();
+                  let { mailTo } = data;
+                  if (mailTo) {
+                    mailTo = mailTo.join(';');
+                  }
+                  data.mailTo = mailTo;
+                  return data;
+                })
+              }
             />
             <Button variant="contained" color="primary" onClick={submitForm}>
               <FormattedMessage {...messages.save} />
