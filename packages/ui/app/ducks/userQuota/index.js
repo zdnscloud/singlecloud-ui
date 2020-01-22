@@ -134,7 +134,6 @@ export const reducer = (
       return state.update('errorsList', (errors) =>
         errors.filterNot((e) => e.type === type).push({ type, payload, meta })
       );
-
     case c.CLEAR_ERRORS_LIST:
       return state.update('errorsList', (errors) => errors.clear());
 

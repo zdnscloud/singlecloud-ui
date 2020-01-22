@@ -41,6 +41,8 @@ import blockDevicesEpic from 'ducks/blockDevices/epic';
 import innerServicesEpic from 'ducks/innerServices/epic';
 import outerServicesEpic from 'ducks/outerServices/epic';
 import fluentbitconfigsEpic from 'ducks/fluentbitconfigs/epic';
+import alarmsEpic from 'ducks/alarms/epic';
+import thresholdsEpic from 'ducks/thresholds/epic';
 import persistentVolumeClaimsEpic from 'ducks/persistentVolumeClaims/epic';
 import persistentVolumesEpic from 'ducks/persistentVolumes/epic';
 
@@ -88,6 +90,8 @@ export default function createEpic(injectedEpics = {}) {
     innerServicesEpic,
     outerServicesEpic,
     fluentbitconfigsEpic,
+    alarmsEpic,
+    thresholdsEpic
     persistentVolumeClaimsEpic,
     persistentVolumesEpic
     // combine epics end

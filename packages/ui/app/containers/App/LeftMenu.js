@@ -90,9 +90,13 @@ const LeftMenu = ({
   // verifies if routeName is the one active (in browser input)
   const activeRoute = (routeName) => {
     const rnIsClusters = routeName === '/clusters';
+    const rnIsGlobalConfig = routeName === '/globalConfiguration';
     const rnIsNS = routeName === `/clusters/${clusterID}/namespaces`;
     if (!rnIsClusters) {
       if (!clusterID) {
+        if (rnIsGlobalConfig) {
+          return path.includes(routeName);
+        }
         return path.includes('adminUserQuotas') || path.includes('userQuotas');
       }
       if (
@@ -299,9 +303,6 @@ const mapDispatchToProps = (dispatch) =>
     dispatch
   );
 
-const withConnect = connect(
-  mapStateToProps,
-  mapDispatchToProps
-);
+const withConnect = connect(mapStateToProps, mapDispatchToProps);
 
 export default compose(withConnect)(LeftMenu);

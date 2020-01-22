@@ -13,12 +13,15 @@ import ClustersPage, {
   CreateClusterPage,
   ClusterManagePage,
 } from 'containers/ClustersPage/Loadable';
-import ClusterDetailPage from 'containers/ClusterDetailPage/Loadable';
+import ClusterDetailPage, {
+  ClusterThresholdsPage,
+} from 'containers/ClusterDetailPage/Loadable';
 import NodesPage, { NodeDetailPage } from 'containers/NodesPage/Loadable';
 import NamespacesPage, {
   CreateNamespacePage,
   NamespaceDetailPage,
   NamespaceOverviewPage,
+  NamespaceThresholdsPage,
 } from 'containers/NamespacesPage/Loadable';
 import EventsPage from 'containers/EventsPage/Loadable';
 import HPAPage, {
@@ -91,13 +94,14 @@ import ApplicationsPage, {
   ApplicationDetailPage,
   CreateApplicationPage,
 } from 'containers/ApplicationsPage/Loadable';
-
 import UsersPage, {
   CreateUserPage,
   EditUserPage,
   UserProfilePage,
   PasswordSetupPage,
 } from 'containers/UsersPage/Loadable';
+import AlarmMessagesPage from 'containers/AlarmMessagesPage';
+import GlobalConfigurationPage from 'containers/GlobalConfigurationPage';
 
 const appRoutes = [
   {
@@ -105,6 +109,12 @@ const appRoutes = [
     name: 'Clusters',
     icon: Dashboard,
     component: ClustersPage,
+  },
+  {
+    path: '/globalConfiguration',
+    name: 'GlobalConfiguration',
+    icon: Dashboard,
+    component: GlobalConfigurationPage,
   },
   {
     path: '/clusters/create',
@@ -123,6 +133,12 @@ const appRoutes = [
     name: 'Cluster Detail',
     icon: Dashboard,
     component: ClusterDetailPage,
+  },
+  {
+    path: '/clusters/:cluster_id/thresholds',
+    name: 'Cluster Thresholds',
+    icon: Dashboard,
+    component: ClusterThresholdsPage,
   },
   {
     path: '/clusters/:cluster_id/nodes',
@@ -165,6 +181,12 @@ const appRoutes = [
     name: 'namespaces',
     icon: Dashboard,
     component: NamespaceOverviewPage,
+  },
+  {
+    path: '/clusters/:cluster_id/namespaces/:namespace_id/thresholds',
+    name: 'namespaces thresholds',
+    icon: Dashboard,
+    component: NamespaceThresholdsPage,
   },
   // configmap
   {
@@ -584,6 +606,12 @@ const appRoutes = [
     name: 'Application Detail',
     icon: Dashboard,
     component: ApplicationDetailPage,
+  },
+  {
+    path: '/alarms',
+    name: 'Alarm Messages',
+    icon: Dashboard,
+    component: AlarmMessagesPage,
   },
   // applications end
 ];
