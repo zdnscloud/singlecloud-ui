@@ -65,6 +65,25 @@ export const reducer = (
         errors.filterNot((e) => e.type === type).push({ type, payload, meta })
       );
 
+    case c.EXECUTE_NODE_ACTION:
+      return state;
+    case c.EXECUTE_NODE_ACTION_SUCCESS:
+      if (meta.patch === true) {
+        const { clusterID, id } = meta;
+        const data = getByKey(payload, ['response']);
+        return state
+          .mergeDeepIn(['data', clusterID, id], data)
+          .update('errorsList', (errors) =>
+            errors.filterNot((e) => e.type === c.EXECUTE_NODE_ACTION_FAILURE)
+          );
+      }
+      return state.update('errorsList', (errors) =>
+        errors.filterNot((e) => e.type === c.EXECUTE_NODE_ACTION_FAILURE)
+      );
+    case c.EXECUTE_NODE_ACTION_FAILURE:
+      return state.update('errorsList', (errors) =>
+        errors.filterNot((e) => e.type === type).push({ type, payload, meta })
+      );
     case c.CLEAR_ERRORS_LIST:
       return state.update('errorsList', (errors) => errors.clear());
 

@@ -113,6 +113,10 @@ export default defineMessages({
     id: `${scope}.leftMenuJob`,
     defaultMessage: 'Job',
   },
+  leftMenuPersistentVolumeClaims: {
+    id: `${scope}.leftMenuPersistentVolumeClaims`,
+    defaultMessage: 'PersistentVolumeClaims',
+  },
   leftMenuConfigMaps: {
     id: `${scope}.leftMenuConfigMaps`,
     defaultMessage: 'ConfigMaps',

@@ -103,6 +103,28 @@ export const removeUserQuotumFailure = (error, meta = {}) => ({
   error: true,
 });
 
+export const executeUserQuotumAction = (action, data, meta = {}) => ({
+  type: c.EXECUTE_USER_QUOTUM_ACTION,
+  payload: {
+    action,
+    data,
+  },
+  meta,
+});
+
+export const executeUserQuotumActionSuccess = (resp, meta = {}) => ({
+  type: c.EXECUTE_USER_QUOTUM_ACTION_SUCCESS,
+  payload: resp,
+  meta,
+});
+
+export const executeUserQuotumActionFailure = (error, meta = {}) => ({
+  type: c.EXECUTE_USER_QUOTUM_ACTION_FAILURE,
+  payload: error,
+  meta,
+  error: true,
+});
+
 export const clearErrorsList = (payload, meta) => ({
   type: c.CLEAR_ERRORS_LIST,
   payload,

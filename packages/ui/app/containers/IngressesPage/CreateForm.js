@@ -36,6 +36,33 @@ const validate = (values) => {
       errors[field] = 'Required';
     }
   });
+  const rules = values.get('rules');
+  if (!rules || rules.size === 0) {
+    errors.rules = [];
+    errors.rules._error = 'At least one rule must be add'; // eslint-disable-line
+  } else {
+    errors.rules = [];
+    if (rules.size > 1) {
+      const isSame = rules.every(
+        (item) => item.get('host') === rules.getIn([0, 'host'])
+      );
+      if (!isSame) {
+        errors.rules._error = 'Host must be the same'; // eslint-disable-line
+      }
+    }
+    rules.forEach((c, i) => {
+      if (c) {
+        const host = c.get('host');
+        const path = c.get('path');
+        const err = {};
+        if (!host) err.host = 'Required';
+        if (!path) err.path = 'Required';
+        errors.rules.push(err);
+      } else {
+        errors.rules.push({ host: 'Required', path: 'Required' });
+      }
+    });
+  }
 
   return errors;
 };
@@ -71,10 +98,23 @@ const Form = ({ formValues, handleSubmit, error, services }) => {
                   inputProps={{ type: 'text', autoComplete: 'off' }}
                 />
               </GridItem>
+              <GridItem xs={3} sm={3} md={3}>
+                <InputField
+                  label={<FormattedMessage {...messages.formMaxBodySize} />}
+                  name="maxBodySize"
+                  fullWidth
+                  normalize={(val) => (val ? Number(val) : val)}
+                  inputProps={{
+                    type: 'number',
+                    autoComplete: 'off',
+                    endAdornment: 'M',
+                  }}
+                />
+              </GridItem>
             </GridContainer>
           </CardBody>
         </Card>
-        <Card style={{ margin: 0, marginTop: 20 }}>
+        <Card>
           <CardHeader>
             <h4>
               <FormattedMessage {...messages.configurationDetails} />

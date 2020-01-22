@@ -110,3 +110,9 @@ export const makeSelectRemoveErrorsList = () =>
       .get('errorsList')
       .filter(({ type }) => type === c.REMOVE_STATEFUL_SET_FAILURE)
   );
+
+export const makeSelectActionErrorsList = () =>
+  createSelector(selectDomain, (substate) =>
+    substate
+      .get('errorsList')
+  );

@@ -9,6 +9,7 @@ import UpgradeIcon from 'components/Icons/Upgrade';
 import RollbackIcon from 'components/Icons/Rollback';
 import ConfirmDelete from 'components/ConfirmDelete/ConfirmDelete';
 import LogcollectionDialog from 'containers/LogcollectionPage/LogcollectionDialog';
+import MetricsDialog from 'containers/MetricsPage/MetricsDialog';
 
 const schema = ['name', 'replicas', 'creationTimestamp'];
 
@@ -42,6 +43,13 @@ const tableSchema = schema
             url={data.getIn(['links', 'fluentbitconfigs'])}
             id={`${namespaceID}_daemonset_${data.get('id')}`}
           />
+
+          <MetricsDialog
+            url={data.getIn(['links', 'metrics'])}
+            id={data.get('id')}
+            type="daemonset"
+          />
+
           <IconButton
             aria-label="Update"
             component={Link}
@@ -87,13 +95,13 @@ const tableSchema = schema
         ...sch,
         component: ({ data }) => (
           <>
-            {data.getIn(['status', 'numberReady']) || 0}/
-            {data.getIn(['status', 'desiredNumberScheduled'])}
+            {data.getIn(['status', 'readyReplicas']) || 0}/
+            {data.getIn(['replicas'])}
             <LinearProgress
               variant="determinate"
               value={
-                ((data.getIn(['status', 'numberReady']) || 0) /
-                  data.getIn(['status', 'desiredNumberScheduled'])) *
+                ((data.getIn(['status', 'readyReplicas']) || 0) /
+                  data.getIn(['replicas'])) *
                 100
               }
             />

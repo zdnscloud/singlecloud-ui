@@ -32,7 +32,17 @@ const SelectComponent = ({
     <Select {...input} {...inputProps} error={touched && error}>
       {options.map((opt, i) => (
         <MenuItem key={i} value={opt.value}>
-          {opt.label}
+          <span
+            title={opt.label}
+            style={{
+              maxWidth: 400,
+              textOverflow: 'ellipsis',
+              overflow: 'hidden',
+              display: 'inline-block',
+            }}
+          >
+            {opt.label}
+          </span>
         </MenuItem>
       ))}
     </Select>

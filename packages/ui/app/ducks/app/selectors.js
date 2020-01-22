@@ -150,7 +150,7 @@ export const makeSelectLeftMenus = () =>
             children: [
               {
                 name: 'HPA',
-                path: `/clusters/${cluster}/namespaces/${namespace}/hpa`,
+                path: `/clusters/${cluster}/namespaces/${namespace}/horizontalPodAutoscalers`,
               },
               {
                 name: 'Deployments',
@@ -173,6 +173,10 @@ export const makeSelectLeftMenus = () =>
                 path: `/clusters/${cluster}/namespaces/${namespace}/jobs`,
               },
               {
+                name: 'UdpIngresses',
+                path: `/clusters/${cluster}/namespaces/${namespace}/udpIngresses`,
+              },
+              {
                 name: 'ConfigMaps',
                 path: `/clusters/${cluster}/namespaces/${namespace}/configmaps`,
               },
@@ -189,8 +193,8 @@ export const makeSelectLeftMenus = () =>
                 path: `/clusters/${cluster}/namespaces/${namespace}/ingresses`,
               },
               {
-                name: 'UdpIngresses',
-                path: `/clusters/${cluster}/namespaces/${namespace}/udpIngresses`,
+                name: 'PersistentVolumeClaims',
+                path: `/clusters/${cluster}/namespaces/${namespace}/persistentVolumeClaims`,
               },
             ],
             icon: BasicResourcesIcon,

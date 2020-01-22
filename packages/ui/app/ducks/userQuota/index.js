@@ -113,6 +113,27 @@ export const reducer = (
         errors.filterNot((e) => e.type === type).push({ type, payload, meta })
       );
 
+    case c.EXECUTE_USER_QUOTUM_ACTION:
+      return state;
+    case c.EXECUTE_USER_QUOTUM_ACTION_SUCCESS:
+      if (meta.patch === true) {
+        const { id } = meta;
+        const data = getByKey(payload, ['response']);
+        return state
+          .mergeDeepIn(['data', id], data)
+          .update('errorsList', (errors) =>
+            errors.filterNot(
+              (e) => e.type === c.EXECUTE_USER_QUOTUM_ACTION_FAILURE
+            )
+          );
+      }
+      return state.update('errorsList', (errors) =>
+        errors.filterNot((e) => e.type === c.EXECUTE_USER_QUOTUM_ACTION_FAILURE)
+      );
+    case c.EXECUTE_USER_QUOTUM_ACTION_FAILURE:
+      return state.update('errorsList', (errors) =>
+        errors.filterNot((e) => e.type === type).push({ type, payload, meta })
+      );
     case c.CLEAR_ERRORS_LIST:
       return state.update('errorsList', (errors) => errors.clear());
 

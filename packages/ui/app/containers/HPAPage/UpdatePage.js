@@ -19,7 +19,7 @@ import {
 import { usePush } from 'hooks/router';
 
 import Helmet from 'components/Helmet/Helmet';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Button from '@material-ui/core/Button';
 import GridItem from 'components/Grid/GridItem';
@@ -32,7 +32,7 @@ import {
   makeSelectURL,
   makeSelectCurrent,
   makeSelectCurrentID,
-} from 'ducks/horizontalpodautoscalers/selectors';
+} from 'ducks/horizontalPodAutoscalers/selectors';
 import {
   makeSelectDeployments,
   makeSelectURL as makeDeploymentsURL,
@@ -41,17 +41,21 @@ import {
   makeSelectStatefulSets,
   makeSelectURL as makeSelectStatefulSetsURL,
 } from 'ducks/statefulSets/selectors';
-import * as actions from 'ducks/horizontalpodautoscalers/actions';
+import * as actions from 'ducks/horizontalPodAutoscalers/actions';
 import * as stActions from 'ducks/statefulSets/actions';
 import * as dActions from 'ducks/deployments/actions';
+import * as mActions from 'ducks/metrics/actions';
 
 import messages from './messages';
 import useStyles from './styles';
 import UpdateHPAForm, { formName } from './CreateForm';
 
+import { renderSubmitData, refactorMetrics } from './utils/utils';
+import { refactorWorklodaMetrics } from '../../utils/hpa';
+
 export const UpdateHPAPage = ({
-  updateHorizontalpodautoscaler,
-  readHorizontalpodautoscaler,
+  updateHorizontalPodAutoscaler,
+  readHorizontalPodAutoscaler,
   submitForm,
   url,
   clusterID,
@@ -65,70 +69,84 @@ export const UpdateHPAPage = ({
   deployUrl,
   deployments,
   statefulsets,
+  loadMetrics,
 }) => {
   const classes = useStyles();
   const push = usePush();
+  const intl = useIntl();
+  const [metrics, setMetrics] = useState(Map({}));
+  const scaleTargetKind = values && values.get('scaleTargetKind');
+  const scaleTargetName = values && values.get('scaleTargetName');
   let hpa = Map({});
-  useEffect(() => {
-    if (deployUrl) {
-      loadDeployments(deployUrl, {
-        clusterID,
-        namespaceID,
-      });
-    }
-    return () => {};
-  }, [clusterID, namespaceID, deployUrl, loadDeployments]);
 
   useEffect(() => {
-    if (stUrl) {
-      loadStatefulSets(stUrl, {
-        clusterID,
-        namespaceID,
-      });
-    }
-    return () => {};
-  }, [clusterID, loadStatefulSets, namespaceID, stUrl]);
+    loadDeployments(deployUrl, { clusterID, namespaceID });
+    loadStatefulSets(stUrl, { clusterID, namespaceID });
+  }, [
+    clusterID,
+    namespaceID,
+    loadDeployments,
+    deployUrl,
+    loadStatefulSets,
+    stUrl,
+  ]);
+
   useEffect(() => {
-    if (current.size === 0) {
-      readHorizontalpodautoscaler(id, {
+    if (id) {
+      readHorizontalPodAutoscaler(id, {
         url: `${url}/${id}`,
         clusterID,
         namespaceID,
       });
     }
     return () => {};
+  }, [clusterID, namespaceID, id, readHorizontalPodAutoscaler, url]);
+
+  useEffect(() => {
+    if (scaleTargetKind && scaleTargetName) {
+      let metricsUrl = '';
+      switch (scaleTargetKind) {
+        case 'deployment':
+          metricsUrl = deployments.getIn([scaleTargetName, 'links', 'metrics']);
+          break;
+        case 'statefulset':
+          metricsUrl = statefulsets.getIn([
+            scaleTargetName,
+            'links',
+            'metrics',
+          ]);
+          break;
+        default:
+          break;
+      }
+      loadMetrics(metricsUrl, {
+        clusterID,
+        namespaceID,
+        scaleTargetName,
+        resolve({ response }) {
+          setMetrics(fromJS(refactorWorklodaMetrics(response.data)));
+        },
+        reject() {},
+      });
+    }
+    return () => {};
   }, [
     clusterID,
     namespaceID,
-    id,
-    current.size,
-    readHorizontalpodautoscaler,
-    url,
+    loadMetrics,
+    scaleTargetKind,
+    scaleTargetName,
+    deployments,
+    statefulsets,
   ]);
 
   async function doSubmit(formValues) {
     try {
-      const { metrics, ...formData } = formValues.toJS();
-      const resourceMetrics =
-        metrics.filter((r) => r.metricsType === 'resourceMetrics') || [];
-      const customMetrics =
-        metrics.filter((r) => r.metricsType === 'customMetrics') || [];
-      if (resourceMetrics.length > 0) {
-        resourceMetrics.forEach((item) => {
-          if (item.resourceName === 'memory' && item.averageValue) {
-            item.averageValue = `${item.averageValue}Gi`;
-          }
-        });
-      }
-      const data = {
-        resourceMetrics,
-        customMetrics,
-        ...formData,
-      };
+      const data = renderSubmitData(formValues);
       delete data.metricsType;
 
       await new Promise((resolve, reject) => {
-        updateHorizontalpodautoscaler(data, {
+        updateHorizontalPodAutoscaler(data, {
           resolve,
           reject,
           url: `${url}/${id}`,
@@ -136,7 +154,9 @@ export const UpdateHPAPage = ({
           namespaceID,
         });
       });
-      push(`/clusters/${clusterID}/namespaces/${namespaceID}/hpa`);
+      push(
+        `/clusters/${clusterID}/namespaces/${namespaceID}/horizontalPodAutoscalers`
+      );
     } catch (error) {
       throw new SubmissionError({ _error: error });
     }
@@ -145,28 +165,7 @@ export const UpdateHPAPage = ({
   if (current.size !== 0) {
     const data = current.toJS();
     const { resourceMetrics, customMetrics, ...formData } = data;
-    let arr = [];
-    data.resourceMetrics =
-      resourceMetrics &&
-      resourceMetrics.map((item) => {
-        item.metricsType = 'resourceMetrics';
-        if (item.targetType === 'AverageValue' && item.averageValue) {
-          if (item.resourceName === 'cpu') {
-            item.averageValue = (item.averageValue / 1000).toFixed(2);
-          } else if (item.resourceName === 'memory') {
-            item.averageValue = (item.averageValue / 1024 ** 3).toFixed(2);
-          }
-        }
-        return item;
-      });
-    data.customMetrics =
-      customMetrics &&
-      customMetrics.map((item) => {
-        item.metricsType = 'customMetrics';
-        item.targetType = 'AverageValue';
-        return item;
-      });
-    arr = arr.concat(data.resourceMetrics).concat(data.customMetrics);
+    const arr = refactorMetrics(data, intl, 'update');
     data.metrics = arr.filter((l) => l !== undefined);
     data.metricsType = 'resourceMetrics';
     delete data.resourceMetrics;
@@ -185,7 +184,7 @@ export const UpdateHPAPage = ({
         <Breadcrumbs
           data={[
             {
-              path: `/clusters/${clusterID}/namespaces/${namespaceID}/hpa`,
+              path: `/clusters/${clusterID}/namespaces/${namespaceID}/horizontalPodAutoscalers`,
               name: <FormattedMessage {...messages.pageTitle} />,
             },
             {
@@ -203,6 +202,7 @@ export const UpdateHPAPage = ({
                 deployments={deployments}
                 statefulsets={statefulsets}
                 type="update"
+                metrics={metrics}
               />
             )}
             <Button variant="contained" color="primary" onClick={submitForm}>
@@ -212,7 +212,9 @@ export const UpdateHPAPage = ({
               variant="contained"
               className={classes.cancleBtn}
               onClick={() => {
-                push(`/clusters/${clusterID}/namespaces/${namespaceID}/hpa`);
+                push(
+                  `/clusters/${clusterID}/namespaces/${namespaceID}/horizontalPodAutoscalers`
+                );
               }}
             >
               <FormattedMessage {...messages.cancle} />
@@ -243,14 +245,12 @@ const mapDispatchToProps = (dispatch) =>
       ...actions,
       loadDeployments: dActions.loadDeployments,
       loadStatefulSets: stActions.loadStatefulSets,
+      loadMetrics: mActions.loadMetrics,
       submitForm: () => submit(formName),
     },
     dispatch
   );
 
-const withConnect = connect(
-  mapStateToProps,
-  mapDispatchToProps
-);
+const withConnect = connect(mapStateToProps, mapDispatchToProps);
 
 export default compose(withConnect)(UpdateHPAPage);
