@@ -39,7 +39,6 @@ export const loadThresholdsEpic = (action$, state$, { ajax }) =>
     )
   );
 
-
 export const updateThresholdEpic = (action$, state$, { ajax }) =>
   action$.pipe(
     ofType(c.UPDATE_THRESHOLD),
@@ -47,7 +46,7 @@ export const updateThresholdEpic = (action$, state$, { ajax }) =>
       ajax({
         url: `${meta.url}`,
         method: 'PUT',
-        body: payload
+        body: payload,
       }).pipe(
         map((resp) => {
           meta.resolve && meta.resolve(resp);
@@ -81,10 +80,8 @@ export const readThresholdEpic = (action$, state$, { ajax }) =>
     )
   );
 
-
-
 export default combineEpics(
   loadThresholdsEpic,
   updateThresholdEpic,
-  readThresholdEpic,
+  readThresholdEpic
 );

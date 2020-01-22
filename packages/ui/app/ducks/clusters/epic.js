@@ -67,7 +67,7 @@ export const updateClusterEpic = (action$, state$, { ajax }) =>
       ajax({
         url: `${meta.url}`,
         method: 'PUT',
-        body: payload
+        body: payload,
       }).pipe(
         map((resp) => {
           meta.resolve && meta.resolve(resp);
@@ -148,5 +148,5 @@ export default combineEpics(
   updateClusterEpic,
   readClusterEpic,
   removeClusterEpic,
-  executeClusterActionEpic,
+  executeClusterActionEpic
 );

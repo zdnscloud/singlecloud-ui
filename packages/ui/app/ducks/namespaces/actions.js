@@ -46,7 +46,6 @@ export const createNamespaceFailure = (error, meta = {}) => ({
   error: true,
 });
 
-
 export const readNamespace = (id, meta = {}) => ({
   type: c.READ_NAMESPACE,
   payload: id,

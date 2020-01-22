@@ -33,17 +33,16 @@ export const reducer = (
     case c.LOAD_THRESHOLDS_SUCCESS: {
       const { data, list } = procCollectionData(payload);
       return state
-        .update('errorsList', (errors) => errors.filterNot((e) => e.type === c.LOAD_THRESHOLDS_FAILURE))
-        .setIn([
-          'data',
-        ], fromJS(data))
-        .setIn([
-          'list',
-        ], fromJS(list));
+        .update('errorsList', (errors) =>
+          errors.filterNot((e) => e.type === c.LOAD_THRESHOLDS_FAILURE)
+        )
+        .setIn(['data'], fromJS(data))
+        .setIn(['list'], fromJS(list));
     }
     case c.LOAD_THRESHOLDS_FAILURE:
-      return state.update('errorsList', (errors) => errors.filterNot((e) => e.type === type).push({ type, payload, meta }));
-
+      return state.update('errorsList', (errors) =>
+        errors.filterNot((e) => e.type === type).push({ type, payload, meta })
+      );
 
     case c.UPDATE_THRESHOLD:
       return state;
@@ -51,16 +50,18 @@ export const reducer = (
       const id = getByKey(payload, ['response', 'id']);
       const data = getByKey(payload, ['response']);
       if (id) {
-        return state.setIn([
-          'data',
-          id,
-        ], fromJS(data))
-        .update('errorsList', (errors) => errors.filterNot((e) => e.type === c.UPDATE_THRESHOLD_FAILURE));
+        return state
+          .setIn(['data', id], fromJS(data))
+          .update('errorsList', (errors) =>
+            errors.filterNot((e) => e.type === c.UPDATE_THRESHOLD_FAILURE)
+          );
       }
       return state;
     }
     case c.UPDATE_THRESHOLD_FAILURE:
-      return state.update('errorsList', (errors) => errors.filterNot((e) => e.type === type).push({ type, payload, meta }));
+      return state.update('errorsList', (errors) =>
+        errors.filterNot((e) => e.type === type).push({ type, payload, meta })
+      );
 
     case c.READ_THRESHOLD:
       return state;
@@ -68,18 +69,18 @@ export const reducer = (
       const id = getByKey(payload, ['response', 'id']);
       const data = getByKey(payload, ['response']);
       if (id) {
-        return state.setIn([
-          'data',
-          id,
-        ], fromJS(data))
-        .update('errorsList', (errors) => errors.filterNot((e) => e.type === c.READ_THRESHOLD_FAILURE));
+        return state
+          .setIn(['data', id], fromJS(data))
+          .update('errorsList', (errors) =>
+            errors.filterNot((e) => e.type === c.READ_THRESHOLD_FAILURE)
+          );
       }
       return state;
     }
     case c.READ_THRESHOLD_FAILURE:
-      return state.update('errorsList', (errors) => errors.filterNot((e) => e.type === type).push({ type, payload, meta }));
-
-
+      return state.update('errorsList', (errors) =>
+        errors.filterNot((e) => e.type === type).push({ type, payload, meta })
+      );
 
     case c.CLEAR_ERRORS_LIST:
       return state.update('errorsList', (errors) => errors.clear());
