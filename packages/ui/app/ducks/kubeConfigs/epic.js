@@ -39,6 +39,8 @@ export const loadKubeConfigsEpic = (action$, state$, { ajax }) =>
     )
   );
 
+
+
 export const readKubeConfigEpic = (action$, state$, { ajax }) =>
   action$.pipe(
     ofType(c.READ_KUBE_CONFIG),
@@ -59,4 +61,9 @@ export const readKubeConfigEpic = (action$, state$, { ajax }) =>
     )
   );
 
-export default combineEpics(loadKubeConfigsEpic, readKubeConfigEpic);
+
+
+export default combineEpics(
+  loadKubeConfigsEpic,
+  readKubeConfigEpic,
+);

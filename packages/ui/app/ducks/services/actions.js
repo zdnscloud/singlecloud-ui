@@ -46,6 +46,7 @@ export const createServiceFailure = (error, meta = {}) => ({
   error: true,
 });
 
+
 export const readService = (id, meta = {}) => ({
   type: c.READ_SERVICE,
   payload: id,
@@ -83,6 +84,7 @@ export const removeServiceFailure = (error, meta = {}) => ({
   meta,
   error: true,
 });
+
 
 export const clearErrorsList = (payload, meta) => ({
   type: c.CLEAR_ERRORS_LIST,

@@ -86,6 +86,15 @@ import outerServicesReducer, {
 import fluentbitconfigsReducer, {
   prefix as fluentbitconfigsPrefix,
 } from 'ducks/fluentbitconfigs';
+import svcMeshWorkloadsReducer, {
+  prefix as svcMeshWorkloadsPrefix,
+} from 'ducks/svcMeshWorkloads';
+import svcMeshPodsReducer, {
+  prefix as svcMeshPodsPrefix,
+} from 'ducks/svcMeshPods';
+import svcMeshTapReducer, {
+  prefix as svcMeshTapPrefix,
+} from 'ducks/svcMeshTap';
 import alarmsReducer, { prefix as alarmsPrefix } from 'ducks/alarms';
 import thresholdsReducer, {
   prefix as thresholdsPrefix,
@@ -143,6 +152,9 @@ export default function createReducer(injectedReducers = {}) {
     [innerServicesPrefix]: innerServicesReducer,
     [outerServicesPrefix]: outerServicesReducer,
     [fluentbitconfigsPrefix]: fluentbitconfigsReducer,
+    [svcMeshWorkloadsPrefix]: svcMeshWorkloadsReducer,
+    [svcMeshPodsPrefix]: svcMeshPodsReducer,
+    [svcMeshTapPrefix]: svcMeshTapReducer,
     [alarmsPrefix]: alarmsReducer,
     [thresholdsPrefix]: thresholdsReducer,
     [persistentVolumeClaimsPrefix]: persistentVolumeClaimsReducer,

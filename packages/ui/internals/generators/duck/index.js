@@ -61,11 +61,17 @@ module.exports = {
     {
       type: 'input',
       name: 'parents',
-      message: 'Please enter resource\'s parents, type comma-separated keywords: ',
+      message:
+        "Please enter resource's parents, type comma-separated keywords: ",
       choices: ['clusters', 'namespaces'],
       when: ({ hasParents }) => hasParents,
-      transformer: (d = '') => (Array.isArray(d) ? d : d.trim().split(/\s?,\s?/)).join(', '),
-      filter: (d = '') => d.trim().split(/\s?,\s?/).filter((n) => !!n),
+      transformer: (d = '') =>
+        (Array.isArray(d) ? d : d.trim().split(/\s?,\s?/)).join(', '),
+      filter: (d = '') =>
+        d
+          .trim()
+          .split(/\s?,\s?/)
+          .filter((n) => !!n),
     },
   ],
   actions: (data) => {
@@ -102,10 +108,10 @@ module.exports = {
       },
     ];
 
-    actions.push({
-      type: 'cPrettify',
-      path: '/ducks/',
-    });
+    // actions.push({
+    //   type: 'cPrettify',
+    //   path: '/ducks/',
+    // });
 
     return actions;
   },

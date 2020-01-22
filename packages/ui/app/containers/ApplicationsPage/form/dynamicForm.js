@@ -5,7 +5,7 @@ import GridContainer from 'components/Grid/GridContainer';
 import InputField from 'components/Field/InputField';
 import SwitchField from 'components/Field/SwitchField';
 import RadioField from 'components/Field/RadioField';
-import ChexboxesField from 'components/Field/ChexboxesField';
+import CheckboxesField from 'components/Field/CheckboxesField';
 import useStyles from '../styles';
 
 const DynamicForm = ({ fields, config, formValues }) => {
@@ -96,7 +96,7 @@ const DynamicForm = ({ fields, config, formValues }) => {
       case 'array':
         return (
           <GridItem xs={12} sm={12} md={12} className={classes.formLine}>
-            <ChexboxesField
+            <CheckboxesField
               label={item.get('label')}
               name={item.get('jsonKey')}
               classes={{

@@ -35,6 +35,12 @@ const ApplicationTemplate = ({
               className={classes.listAppLogo}
             />
             <div className={classes.appContent}>
+              {item.get('injectServiceMesh') === true ? (
+                <Fragment>
+                  <div className={classes.meshWrap}></div>
+                  <div className={classes.meshText}>mesh</div>
+                </Fragment>
+              ) : null}
               <div>
                 <div
                   className={classes.status}

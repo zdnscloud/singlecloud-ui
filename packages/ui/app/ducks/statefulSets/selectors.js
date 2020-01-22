@@ -115,4 +115,5 @@ export const makeSelectActionErrorsList = () =>
   createSelector(selectDomain, (substate) =>
     substate
       .get('errorsList')
+      .filter(({ type }) => type === c.EXECUTE_STATEFUL_SET_ACTION_FAILURE)
   );

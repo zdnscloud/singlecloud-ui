@@ -46,6 +46,10 @@ import thresholdsEpic from 'ducks/thresholds/epic';
 import persistentVolumeClaimsEpic from 'ducks/persistentVolumeClaims/epic';
 import persistentVolumesEpic from 'ducks/persistentVolumes/epic';
 
+import svcMeshWorkloadsEpic from 'ducks/svcMeshWorkloads/epic';
+import svcMeshPodsEpic from 'ducks/svcMeshPods/epic';
+import svcMeshTapEpic from 'ducks/svcMeshTap/epic';
+
 // import epics end
 
 /**
@@ -90,6 +94,9 @@ export default function createEpic(injectedEpics = {}) {
     innerServicesEpic,
     outerServicesEpic,
     fluentbitconfigsEpic,
+    svcMeshWorkloadsEpic,
+    svcMeshPodsEpic,
+    svcMeshTapEpic,
     alarmsEpic,
     thresholdsEpic
     persistentVolumeClaimsEpic,

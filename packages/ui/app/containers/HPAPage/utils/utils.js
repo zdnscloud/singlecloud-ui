@@ -345,7 +345,10 @@ export const renderTableMetrics = (data, intl) => {
     if (rm && rm.length > 0) {
       rm.forEach((r, i) => {
         const item = {
-          name: type === 'resourceMetrics' ? r.resourceName : `${r.metricName.substring(0,5)}...`,
+          name:
+            type === 'resourceMetrics'
+              ? r.resourceName
+              : `${r.metricName.substring(0, 5)}...`,
           name_labels:
             type === 'resourceMetrics'
               ? ''
@@ -409,7 +412,7 @@ export const renderTableMetrics = (data, intl) => {
   );
   mefactorMetrics(customMetrics, currentCustomMetrics, carr, 'customMetrics');
   arr = arr.concat(rarr, carr);
-  console.log('arr',arr);
+  console.log('arr', arr);
   return arr.length > 0
     ? arr.map((val, key) => (
         <Chip

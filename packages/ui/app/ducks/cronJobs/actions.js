@@ -46,6 +46,7 @@ export const createCronJobFailure = (error, meta = {}) => ({
   error: true,
 });
 
+
 export const readCronJob = (id, meta = {}) => ({
   type: c.READ_CRON_JOB,
   payload: id,
@@ -83,6 +84,7 @@ export const removeCronJobFailure = (error, meta = {}) => ({
   meta,
   error: true,
 });
+
 
 export const clearErrorsList = (payload, meta) => ({
   type: c.CLEAR_ERRORS_LIST,

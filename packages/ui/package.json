@@ -19,7 +19,7 @@
     "analyze:clean": "rm -f stats.json",
     "preanalyze": "npm run analyze:clean",
     "analyze": "node ./internals/scripts/analyze.js",
-    "optimize-svg":"svgo --enable=removeStyleElement,removeAttrs --config='{\"plugins\": [{\"removeAttrs\": {\"attrs\": \"(id|class)\"} }] }' --indent=2 --pretty -r -f app/images",
+    "optimize-svg": "svgo --enable=removeStyleElement,removeAttrs --config='{\"plugins\": [{\"removeAttrs\": {\"attrs\": \"(id|class)\"} }] }' --indent=2 --pretty -r -f app/images",
     "extract-intl": "node ./internals/scripts/extract-intl.js",
     "prepublishOnly": "npm run build",
     "prebuild": "npm run build:clean",
@@ -58,6 +58,9 @@
     "babel-core": "7.0.0-bridge.0"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "1.2.26",
+    "@fortawesome/free-solid-svg-icons": "5.12.0",
+    "@fortawesome/react-fontawesome": "0.1.8",
     "@material-ui/core": "4.7.1",
     "@material-ui/icons": "^4.5.1",
     "@vx/gradient": "^0.0.192",
