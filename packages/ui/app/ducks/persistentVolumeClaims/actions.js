@@ -29,24 +29,6 @@ export const loadPersistentVolumeClaimsFailure = (error, meta = {}) => ({
 
 
 
-export const readPersistentVolumeClaim = (id, meta = {}) => ({
-  type: c.READ_PERSISTENT_VOLUME_CLAIM,
-  payload: id,
-  meta,
-});
-
-export const readPersistentVolumeClaimSuccess = (resp, meta = {}) => ({
-  type: c.READ_PERSISTENT_VOLUME_CLAIM_SUCCESS,
-  payload: resp,
-  meta,
-});
-
-export const readPersistentVolumeClaimFailure = (error, meta = {}) => ({
-  type: c.READ_PERSISTENT_VOLUME_CLAIM_FAILURE,
-  payload: error,
-  meta,
-  error: true,
-});
 
 export const removePersistentVolumeClaim = (id, meta = {}) => ({
   type: c.REMOVE_PERSISTENT_VOLUME_CLAIM,

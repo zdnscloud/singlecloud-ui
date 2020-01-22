@@ -19,5 +19,8 @@ export const READ_NODE_SUCCESS = `${prefix}/READ_NODE_SUCCESS`;
 export const READ_NODE_FAILURE = `${prefix}/READ_NODE_FAILURE`;
 
 
+export const EXECUTE_NODE_ACTION = `${prefix}/EXECUTE_NODE_ACTION`;
+export const EXECUTE_NODE_ACTION_SUCCESS = `${prefix}/EXECUTE_NODE_ACTION_SUCCESS`;
+export const EXECUTE_NODE_ACTION_FAILURE = `${prefix}/EXECUTE_NODE_ACTION_FAILURE`;
 
 export const CLEAR_ERRORS_LIST = `${prefix}/CLEAR_ERRORS_LIST`;

@@ -1,15 +1,17 @@
 import React from 'react';
-// nodejs library to set properties for components
 import PropTypes from 'prop-types';
-// @material-ui/core components
 import withStyles from '@material-ui/core/styles/withStyles';
-// core components
 import typographyStyle from './typographyStyle';
 
 function Success({ ...props }) {
-  const { classes, children } = props;
+  const { classes, children, inverse, ...rest } = props;
   return (
-    <div className={`${classes.defaultFontStyle} ${classes.successText}`}>
+    <div
+      {...rest}
+      className={`${classes.defaultFontStyle} ${classes.successText} ${
+        inverse ? 'inverse' : ''
+      }`}
+    >
       {children}
     </div>
   );
@@ -17,6 +19,7 @@ function Success({ ...props }) {
 
 Success.propTypes = {
   classes: PropTypes.object.isRequired,
+  inverse: PropTypes.bool,
 };
 
 export default withStyles(typographyStyle)(Success);

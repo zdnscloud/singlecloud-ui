@@ -103,6 +103,27 @@ export const removeDaemonSetFailure = (error, meta = {}) => ({
   error: true,
 });
 
+export const executeDaemonSetAction = (action, data, meta = {}) => ({
+  type: c.EXECUTE_DAEMON_SET_ACTION,
+  payload: {
+    action,
+    data,
+  },
+  meta,
+});
+
+export const executeDaemonSetActionSuccess = (resp, meta = {}) => ({
+  type: c.EXECUTE_DAEMON_SET_ACTION_SUCCESS,
+  payload: resp,
+  meta,
+});
+
+export const executeDaemonSetActionFailure = (error, meta = {}) => ({
+  type: c.EXECUTE_DAEMON_SET_ACTION_FAILURE,
+  payload: error,
+  meta,
+  error: true,
+});
 
 export const clearErrorsList = (payload, meta) => ({
   type: c.CLEAR_ERRORS_LIST,

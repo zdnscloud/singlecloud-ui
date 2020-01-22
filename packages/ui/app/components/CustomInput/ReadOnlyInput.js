@@ -25,6 +25,7 @@ function ReadOnlyInput({ ...props }) {
     inputRootCustomClasses,
     value,
     fullWidth,
+    title,
   } = props;
 
   const touchedError = false;
@@ -76,6 +77,7 @@ function ReadOnlyInput({ ...props }) {
         id={id}
         value={`${value == null ? '' : value}`}
         disabled
+        title={title}
         {...inputProps}
       />
     </FormControl>

@@ -42,9 +42,10 @@ import servicesReducer, { prefix as servicesPrefix } from 'ducks/services';
 import deploymentsReducer, {
   prefix as deploymentsPrefix,
 } from 'ducks/deployments';
-import horizontalpodautoscalersReducer, {
-  prefix as horizontalpodautoscalersPrefix,
-} from 'ducks/horizontalpodautoscalers';
+import horizontalPodAutoscalersReducer, {
+  prefix as horizontalPodAutoscalersPrefix,
+} from 'ducks/horizontalPodAutoscalers';
+import metricsReducer, { prefix as metricsPrefix } from 'ducks/metrics';
 import statefulSetsReducer, {
   prefix as statefulSetsPrefix,
 } from 'ducks/statefulSets';
@@ -94,6 +95,16 @@ import svcMeshPodsReducer, {
 import svcMeshTapReducer, {
   prefix as svcMeshTapPrefix,
 } from 'ducks/svcMeshTap';
+import alarmsReducer, { prefix as alarmsPrefix } from 'ducks/alarms';
+import thresholdsReducer, {
+  prefix as thresholdsPrefix,
+} from 'ducks/thresholds';
+import persistentVolumeClaimsReducer, {
+  prefix as persistentVolumeClaimsPrefix,
+} from 'ducks/persistentVolumeClaims';
+import persistentVolumesReducer, {
+  prefix as persistentVolumesPrefix,
+} from 'ducks/persistentVolumes';
 // import reducers end
 
 /**
@@ -110,7 +121,8 @@ export default function createReducer(injectedReducers = {}) {
     [usersPrefix]: usersReducer,
     [configMapsPrefix]: configMapsReducer,
     [secretsPrefix]: secretsReducer,
-    [horizontalpodautoscalersPrefix]: horizontalpodautoscalersReducer,
+    [horizontalPodAutoscalersPrefix]: horizontalPodAutoscalersReducer,
+    [metricsPrefix]: metricsReducer,
     [deploymentsPrefix]: deploymentsReducer,
     [statefulSetsPrefix]: statefulSetsReducer,
     [daemonSetsPrefix]: daemonSetsReducer,
@@ -143,6 +155,10 @@ export default function createReducer(injectedReducers = {}) {
     [svcMeshWorkloadsPrefix]: svcMeshWorkloadsReducer,
     [svcMeshPodsPrefix]: svcMeshPodsReducer,
     [svcMeshTapPrefix]: svcMeshTapReducer,
+    [alarmsPrefix]: alarmsReducer,
+    [thresholdsPrefix]: thresholdsReducer,
+    [persistentVolumeClaimsPrefix]: persistentVolumeClaimsReducer,
+    [persistentVolumesPrefix]: persistentVolumesReducer,
     // combine reducers end
     ...injectedReducers,
   });

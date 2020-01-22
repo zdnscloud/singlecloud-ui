@@ -57,6 +57,10 @@ export default defineMessages({
     id: `${scope}.leftMenuGlobal`,
     defaultMessage: 'Global',
   },
+  leftMenuGlobalConfiguration: {
+    id: `${scope}.leftMenuGlobalConfiguration`,
+    defaultMessage: 'GlobalConfiguration',
+  },
   leftMenuClusterManagement: {
     id: `${scope}.leftMenuClusterManagement`,
     defaultMessage: 'ClusterManagement',
@@ -112,6 +116,10 @@ export default defineMessages({
   leftMenuJob: {
     id: `${scope}.leftMenuJob`,
     defaultMessage: 'Job',
+  },
+  leftMenuPersistentVolumeClaims: {
+    id: `${scope}.leftMenuPersistentVolumeClaims`,
+    defaultMessage: 'PersistentVolumeClaims',
   },
   leftMenuConfigMaps: {
     id: `${scope}.leftMenuConfigMaps`,

@@ -127,3 +127,10 @@ export const makeSelectRemoveErrorsList = () =>
       .filter(({ type }) => type === c.REMOVE_USER_QUOTUM_FAILURE)
   );
 
+export const makeSelectActionErrorsList = () =>
+  createSelector(
+    selectDomain,
+    (substate) =>
+      substate.get('errorsList')
+      .filter(({ type }) => type === c.EXECUTE_USER_QUOTUM_ACTION_FAILURE)
+  );

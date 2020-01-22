@@ -133,3 +133,10 @@ export const makeSelectRemoveErrorsList = () =>
       .filter(({ type }) => type === c.REMOVE_NAMESPACE_FAILURE)
   );
 
+export const makeSelectActionErrorsList = () =>
+  createSelector(
+    selectDomain,
+    (substate) =>
+      substate.get('errorsList')
+      .filter(({ type }) => type === c.EXECUTE_NAMESPACE_ACTION_FAILURE)
+  );

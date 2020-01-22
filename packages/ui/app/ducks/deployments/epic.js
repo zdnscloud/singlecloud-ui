@@ -121,6 +121,26 @@ export const removeDeploymentEpic = (action$, state$, { ajax }) =>
     )
   );
 
+export const executeDeploymentActionEpic = (action$, state$, { ajax }) =>
+  action$.pipe(
+    ofType(c.EXECUTE_DEPLOYMENT_ACTION),
+    mergeMap(({ payload: { action, data }, meta }) =>
+      ajax({
+        url: `${meta.url}?action=${action}`,
+        method: 'POST',
+        body: data,
+      }).pipe(
+        map((resp) => {
+          meta.resolve && meta.resolve(resp);
+          return a.executeDeploymentActionSuccess(resp, { ...meta, action });
+        }),
+        catchError((error) => {
+          meta.reject && meta.reject(error);
+          return of(a.executeDeploymentActionFailure(error, { ...meta, action }));
+        })
+      )
+    )
+  );
 
 export default combineEpics(
   loadDeploymentsEpic,
@@ -128,4 +148,5 @@ export default combineEpics(
   updateDeploymentEpic,
   readDeploymentEpic,
   removeDeploymentEpic,
+  executeDeploymentActionEpic,
 );

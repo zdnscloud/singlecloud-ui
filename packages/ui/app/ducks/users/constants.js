@@ -28,5 +28,8 @@ export const REMOVE_USER = `${prefix}/REMOVE_USER`;
 export const REMOVE_USER_SUCCESS = `${prefix}/REMOVE_USER_SUCCESS`;
 export const REMOVE_USER_FAILURE = `${prefix}/REMOVE_USER_FAILURE`;
 
+export const EXECUTE_USER_ACTION = `${prefix}/EXECUTE_USER_ACTION`;
+export const EXECUTE_USER_ACTION_SUCCESS = `${prefix}/EXECUTE_USER_ACTION_SUCCESS`;
+export const EXECUTE_USER_ACTION_FAILURE = `${prefix}/EXECUTE_USER_ACTION_FAILURE`;
 
 export const CLEAR_ERRORS_LIST = `${prefix}/CLEAR_ERRORS_LIST`;

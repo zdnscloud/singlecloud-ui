@@ -37,6 +37,7 @@ import {
   makeSelectURL as makeSelectSecretURL,
 } from 'ducks/secrets/selectors';
 import * as cActions from 'ducks/configMaps/actions';
+import * as pActions from 'ducks/persistentVolumeClaims/actions';
 import {
   makeSelectConfigMaps,
   makeSelectURL as makeSelectConfigMapURL,
@@ -45,6 +46,10 @@ import {
   makeSelectStorageClasses,
   makeSelectURL as makeSelectStorageClassesURL,
 } from 'ducks/storageClasses/selectors';
+import {
+  makeSelectPersistentVolumeClaims,
+  makeSelectURL as makeSelectPvcURL,
+} from 'ducks/persistentVolumeClaims/selectors';
 import * as storagesAction from 'ducks/storageClasses/actions';
 import { makeSelectURL } from 'ducks/deployments/selectors';
 import * as actions from 'ducks/deployments/actions';
@@ -71,6 +76,9 @@ export const CreateDeployment = ({
   storageClassesURL,
   storageClasses,
   values,
+  // pvc,
+  // pvcURL,
+  // loadPersistentVolumeClaims,
 }) => {
   const classes = useStyles();
   const push = usePush();
@@ -87,6 +95,12 @@ export const CreateDeployment = ({
     if (secretURL) {
       loadSecrets(secretURL, { clusterID, namespaceID });
     }
+    // if (pvcURL) {
+    //   loadPersistentVolumeClaims(pvcURL, {
+    //     clusterID,
+    //     namespaceID,
+    //   });
+    // }
   }, [
     clusterID,
     configMapURL,
@@ -114,6 +128,13 @@ export const CreateDeployment = ({
         if (item && item.size) {
           item.size = `${item.size}Gi`;
         }
+        // if (item && item.name) {
+        //   if (pvc.get(item.name)) {
+        //     item.size = pvc.getIn([item.name, 'actualStorageSize']);
+        //   } else {
+        //     item.size = `${item.size}Gi`;
+        //   }
+        // }
       });
       const { response } = await new Promise((resolve, reject) => {
         createDeployment(data, {
@@ -167,6 +188,7 @@ export const CreateDeployment = ({
               configMaps={configMaps}
               secrets={secrets}
               storageClasses={storageClasses}
+              // pvc={pvc}
               initialValues={fromJS({
                 replicas: 1,
                 containers: [{ name: '', exposedPorts: [] }],
@@ -203,9 +225,11 @@ const mapStateToProps = createStructuredSelector({
   configMapURL: makeSelectConfigMapURL(),
   configMaps: makeSelectConfigMaps(),
   secretURL: makeSelectSecretURL(),
+  // pvcURL: makeSelectPvcURL(),
   secrets: makeSelectSecrets(),
   storageClasses: makeSelectStorageClasses(),
   storageClassesURL: makeSelectStorageClassesURL(),
+  // pvc: makeSelectPersistentVolumeClaims(),
   values: getFormValues(formName),
 });
 
@@ -216,6 +240,7 @@ const mapDispatchToProps = (dispatch) =>
       loadConfigMaps: cActions.loadConfigMaps,
       loadSecrets: sActions.loadSecrets,
       loadStorageClasses: storagesAction.loadStorageClasses,
+      // loadPersistentVolumeClaims: pActions.loadPersistentVolumeClaims,
       submitForm: () => submit(formName),
     },
     dispatch

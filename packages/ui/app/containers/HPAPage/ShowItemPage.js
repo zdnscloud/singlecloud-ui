@@ -11,15 +11,9 @@ import { FormattedMessage, useIntl } from 'react-intl';
 import { createStructuredSelector, createSelector } from 'reselect';
 import { bindActionCreators, compose } from 'redux';
 import { fromJS, List as list } from 'immutable';
-import { reduxForm, getFormValues } from 'redux-form/immutable';
-import { SubmissionError, submit } from 'redux-form';
 
-import classNames from 'classnames';
 import { withStyles } from '@material-ui/core/styles';
-import Menubar from 'components/Menubar';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import Typography from '@material-ui/core/Typography';
-import TextField from '@material-ui/core/TextField';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
@@ -31,21 +25,28 @@ import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
 import Card from 'components/Card/Card';
 import CardBody from 'components/Card/CardBody';
 import CardHeader from 'components/Card/CardHeader';
-import CardFooter from 'components/Card/CardFooter';
 import ReadOnlyInput from 'components/CustomInput/ReadOnlyInput';
 import Helmet from 'components/Helmet/Helmet';
 
 import { makeSelectCurrentID as makeSelectClusterID } from 'ducks/clusters/selectors';
 import { makeSelectCurrentID as makeSelectNamespaceID } from 'ducks/namespaces/selectors';
-import * as actions from 'ducks/horizontalpodautoscalers/actions';
+import * as actions from 'ducks/horizontalPodAutoscalers/actions';
 import {
   makeSelectCurrentID,
   makeSelectCurrent,
   makeSelectURL,
-} from 'ducks/horizontalpodautoscalers/selectors';
+} from 'ducks/horizontalPodAutoscalers/selectors';
 
 import messages from './messages';
 import useStyles from './styles';
+
+import {
+  refactorMetrics,
+  renderMetricsTypeValue,
+  renderInputMetricsName,
+  renderReadOnlyNumerical,
+  renderTargetTypeValue,
+} from './utils/utils';
 
 export const HPADetailPage = ({
   clusterID,
@@ -53,79 +54,25 @@ export const HPADetailPage = ({
   id,
   url,
   hpa,
-  readHorizontalpodautoscaler,
+  readHorizontalPodAutoscaler,
 }) => {
   const classes = useStyles();
   const intl = useIntl();
   let metrics = list([]);
   useEffect(() => {
-    readHorizontalpodautoscaler(id, {
+    readHorizontalPodAutoscaler(id, {
       url: `${url}/${id}`,
       clusterID,
       namespaceID,
     });
     return () => {};
-  }, [clusterID, namespaceID, id, readHorizontalpodautoscaler, url]);
+  }, [clusterID, namespaceID, id, readHorizontalPodAutoscaler, url]);
 
   if (hpa.size !== 0) {
     const data = hpa.toJS();
-    const { resourceMetrics, customMetrics, ...formData } = data;
-    let arr = [];
-    data.resourceMetrics =
-      resourceMetrics &&
-      resourceMetrics.map((item) => {
-        item.metricsType = 'resourceMetrics';
-        if (item.targetType === 'AverageValue' && item.averageValue) {
-          if (item.resourceName === 'cpu') {
-            item.averageValue = `${(item.averageValue / 1000).toFixed(
-              2
-            )} ${intl.formatMessage(messages.formCPUSuffix)}`;
-          } else if (item.resourceName === 'memory') {
-            item.averageValue = `${(item.averageValue / 1024 ** 3).toFixed(
-              2
-            )}Gi`;
-          }
-        }
-        return item;
-      });
-    data.customMetrics =
-      customMetrics &&
-      customMetrics.map((item) => {
-        item.metricsType = 'customMetrics';
-        item.targetType = 'AverageValue';
-        return item;
-      });
-    arr = arr.concat(data.resourceMetrics).concat(data.customMetrics);
+    const arr = refactorMetrics(data, intl, 'show');
     metrics = fromJS(arr.filter((l) => l !== undefined));
   }
-
-  const renderNumerical = (c, i) => {
-    const targetType = metrics && metrics.getIn([i, 'targetType']);
-    switch (targetType) {
-      case 'Utilization':
-        return (
-          <ReadOnlyInput
-            labelText={<FormattedMessage {...messages.formNumerical} />}
-            fullWidth
-            value={c.get('averageUtilization')}
-            inputProps={{
-              autoComplete: 'off',
-              endAdornment: '%',
-            }}
-          />
-        );
-      case 'AverageValue':
-        return (
-          <ReadOnlyInput
-            labelText={<FormattedMessage {...messages.formNumerical} />}
-            fullWidth
-            value={c.get('averageValue')}
-          />
-        );
-      default:
-        break;
-    }
-  };
 
   return (
     <div className={classes.root}>
@@ -135,7 +82,7 @@ export const HPADetailPage = ({
         <Breadcrumbs
           data={[
             {
-              path: `/clusters/${clusterID}/namespaces/${namespaceID}/hpa`,
+              path: `/clusters/${clusterID}/namespaces/${namespaceID}/horizontalPodAutoscalers`,
               name: <FormattedMessage {...messages.pageTitle} />,
             },
             {
@@ -206,21 +153,13 @@ export const HPADetailPage = ({
                     metrics.map((c, i) => {
                       const metricsType =
                         metrics && metrics.getIn([i, 'metricsType']);
-                      let metricsName;
-                      let metricsTypeValue;
-                      switch (metricsType) {
-                        case 'resourceMetrics':
-                          metricsName = 'resourceName';
-                          metricsTypeValue = messages.formResourceMetrics;
-                          break;
-                        case 'customMetrics':
-                          metricsName = 'metricName';
-                          metricsTypeValue = messages.formCustomMetrics;
-                          break;
-                        default:
-                          metricsName = 'resourceName';
-                          break;
-                      }
+                      const metricsTypeValue = renderMetricsTypeValue(
+                        metricsType
+                      );
+                      const targetType =
+                        metrics && metrics.getIn([i, 'targetType']);
+                      const targetTypeValue = renderTargetTypeValue(targetType);
+                      const metricsName = renderInputMetricsName(metricsType);
                       return (
                         <Card key={i} border>
                           <CardBody>
@@ -249,6 +188,7 @@ export const HPADetailPage = ({
                                         />
                                       }
                                       fullWidth
+                                      title={c.get(`${metricsName}`)}
                                       value={c.get(`${metricsName}`)}
                                     />
                                   </GridItem>
@@ -262,11 +202,14 @@ export const HPADetailPage = ({
                                         />
                                       }
                                       fullWidth
-                                      value={c.get('targetType')}
+                                      value={
+                                        targetTypeValue &&
+                                        intl.formatMessage(targetTypeValue)
+                                      }
                                     />
                                   </GridItem>
                                   <GridItem xs={3} sm={3} md={3}>
-                                    {renderNumerical(c, i)}
+                                    {renderReadOnlyNumerical(c, i, metrics)}
                                   </GridItem>
                                 </GridContainer>
                               </ListItemText>
@@ -301,9 +244,6 @@ const mapDispatchToProps = (dispatch) =>
     dispatch
   );
 
-const withConnect = connect(
-  mapStateToProps,
-  mapDispatchToProps
-);
+const withConnect = connect(mapStateToProps, mapDispatchToProps);
 
 export default compose(withConnect)(HPADetailPage);

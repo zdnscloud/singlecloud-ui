@@ -2,10 +2,11 @@ import React, { Fragment } from 'react';
 import { ucfirst } from '@gsmlg/utils';
 import TimeCell from 'components/Cells/TimeCell';
 import { Link } from 'react-router-dom';
+import Chip from '@material-ui/core/Chip';
 import Button from 'components/CustomButtons/Button';
 import ConfirmDelete from 'components/ConfirmDelete/ConfirmDelete';
 
-const schema = ['name', 'creationTimestamp'];
+const schema = ['name', 'host', 'port', 'maxBodySize', 'creationTimestamp'];
 
 const tableSchema = schema
   .map((id) => ({
@@ -17,6 +18,46 @@ const tableSchema = schema
       return {
         ...item,
         component: TimeCell,
+      };
+    }
+    if (item.id === 'maxBodySize') {
+      return {
+        ...item,
+        component: ({ data }) => (
+          <span>
+            {data.get('maxBodySize')} {data.get('maxBodySizeUnit')}
+          </span>
+        ),
+      };
+    }
+    if (item.id === 'host') {
+      return {
+        ...item,
+        component: ({ data }) => (
+          <Button
+            link
+            onClick={() =>
+              window.open(`http://${data.getIn(['rules', 0, 'host'])}`)
+            }
+          >
+            {data.getIn(['rules', 0, 'host'])}
+          </Button>
+        ),
+      };
+    }
+    if (item.id === 'port') {
+      return {
+        ...item,
+        component({ data }) {
+          const value = data.get('rules');
+          return value != null
+            ? value
+                .map((val, key) => (
+                  <Chip key={key} label={`${val.get('servicePort')}`} />
+                ))
+                .toList()
+            : null;
+        },
       };
     }
     return item;

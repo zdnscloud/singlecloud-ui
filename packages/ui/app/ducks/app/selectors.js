@@ -75,7 +75,10 @@ export const makeSelectLeftMenus = () =>
       let menus = [
         {
           name: 'Global',
-          children: [{ name: 'ClusterList', path: `/clusters` }],
+          children: [
+            { name: 'ClusterList', path: `/clusters` },
+            { name: 'GlobalConfiguration', path: `/globalConfiguration` },
+          ],
           icon: OverviewIcon,
           adminOnly: true,
         },
@@ -143,7 +146,7 @@ export const makeSelectLeftMenus = () =>
               },
               {
                 name: 'HPA',
-                path: `/clusters/${cluster}/namespaces/${namespace}/hpa`,
+                path: `/clusters/${cluster}/namespaces/${namespace}/horizontalPodAutoscalers`,
               },
               {
                 name: 'Deployments',
@@ -172,6 +175,10 @@ export const makeSelectLeftMenus = () =>
             name: 'AppConfiguration',
             children: [
               {
+                name: 'UdpIngresses',
+                path: `/clusters/${cluster}/namespaces/${namespace}/udpIngresses`,
+              },
+              {
                 name: 'ConfigMaps',
                 path: `/clusters/${cluster}/namespaces/${namespace}/configmaps`,
               },
@@ -194,8 +201,8 @@ export const makeSelectLeftMenus = () =>
                 path: `/clusters/${cluster}/namespaces/${namespace}/ingresses`,
               },
               {
-                name: 'UdpIngresses',
-                path: `/clusters/${cluster}/namespaces/${namespace}/udpIngresses`,
+                name: 'PersistentVolumeClaims',
+                path: `/clusters/${cluster}/namespaces/${namespace}/persistentVolumeClaims`,
               },
             ],
             icon: ServiceAndRoutingIcon,

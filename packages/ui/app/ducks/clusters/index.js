@@ -108,6 +108,23 @@ export const reducer = (
     case c.REMOVE_CLUSTER_FAILURE:
       return state.update('errorsList', (errors) => errors.filterNot((e) => e.type === type).push({ type, payload, meta }));
 
+    case c.EXECUTE_CLUSTER_ACTION:
+      return state;
+    case c.EXECUTE_CLUSTER_ACTION_SUCCESS:
+      if (meta.patch === true) {
+        const {
+          id,
+        } = meta;
+        const data = getByKey(payload, ['response']);
+        return state.mergeDeepIn([
+          'data',
+          id,
+        ], data)
+          .update('errorsList', (errors) => errors.filterNot((e) => e.type === c.EXECUTE_CLUSTER_ACTION_FAILURE));
+      }
+      return state.update('errorsList', (errors) => errors.filterNot((e) => e.type === c.EXECUTE_CLUSTER_ACTION_FAILURE));
+    case c.EXECUTE_CLUSTER_ACTION_FAILURE:
+      return state.update('errorsList', (errors) => errors.filterNot((e) => e.type === type).push({ type, payload, meta }));
 
     case c.CLEAR_ERRORS_LIST:
       return state.update('errorsList', (errors) => errors.clear());

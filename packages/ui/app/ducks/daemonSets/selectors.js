@@ -150,3 +150,10 @@ export const makeSelectRemoveErrorsList = () =>
       .filter(({ type }) => type === c.REMOVE_DAEMON_SET_FAILURE)
   );
 
+export const makeSelectActionErrorsList = () =>
+  createSelector(
+    selectDomain,
+    (substate) =>
+      substate.get('errorsList')
+      .filter(({ type }) => type === c.EXECUTE_DAEMON_SET_ACTION_FAILURE)
+  );

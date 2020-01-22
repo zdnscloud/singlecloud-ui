@@ -121,6 +121,26 @@ export const removeUserQuotumEpic = (action$, state$, { ajax }) =>
     )
   );
 
+export const executeUserQuotumActionEpic = (action$, state$, { ajax }) =>
+  action$.pipe(
+    ofType(c.EXECUTE_USER_QUOTUM_ACTION),
+    mergeMap(({ payload: { action, data }, meta }) =>
+      ajax({
+        url: `${meta.url}?action=${action}`,
+        method: 'POST',
+        body: data,
+      }).pipe(
+        map((resp) => {
+          meta.resolve && meta.resolve(resp);
+          return a.executeUserQuotumActionSuccess(resp, { ...meta, action });
+        }),
+        catchError((error) => {
+          meta.reject && meta.reject(error);
+          return of(a.executeUserQuotumActionFailure(error, { ...meta, action }));
+        })
+      )
+    )
+  );
 
 export default combineEpics(
   loadUserQuotaEpic,
@@ -128,4 +148,5 @@ export default combineEpics(
   updateUserQuotumEpic,
   readUserQuotumEpic,
   removeUserQuotumEpic,
+  executeUserQuotumActionEpic,
 );

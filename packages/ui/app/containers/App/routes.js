@@ -13,12 +13,15 @@ import ClustersPage, {
   CreateClusterPage,
   ClusterManagePage,
 } from 'containers/ClustersPage/Loadable';
-import ClusterDetailPage from 'containers/ClusterDetailPage/Loadable';
+import ClusterDetailPage, {
+  ClusterThresholdsPage,
+} from 'containers/ClusterDetailPage/Loadable';
 import NodesPage, { NodeDetailPage } from 'containers/NodesPage/Loadable';
 import NamespacesPage, {
   CreateNamespacePage,
   NamespaceDetailPage,
   NamespaceOverviewPage,
+  NamespaceThresholdsPage,
 } from 'containers/NamespacesPage/Loadable';
 import EventsPage from 'containers/EventsPage/Loadable';
 import HPAPage, {
@@ -49,6 +52,7 @@ import JobsPage, {
   CreateJobPage,
   JobDetailPage,
 } from 'containers/JobsPage/Loadable';
+import PersistentVolumeClaimsPage from 'containers/PersistentVolumeClaimsPage/Loadable';
 import ConfigMapsPage, {
   CreateConfigMapPage,
   ShowConfigMapPage,
@@ -95,13 +99,14 @@ import ApplicationsPage, {
   ApplicationDetailPage,
   CreateApplicationPage,
 } from 'containers/ApplicationsPage/Loadable';
-
 import UsersPage, {
   CreateUserPage,
   EditUserPage,
   UserProfilePage,
   PasswordSetupPage,
 } from 'containers/UsersPage/Loadable';
+import AlarmMessagesPage from 'containers/AlarmMessagesPage';
+import GlobalConfigurationPage from 'containers/GlobalConfigurationPage';
 
 const appRoutes = [
   {
@@ -109,6 +114,12 @@ const appRoutes = [
     name: 'Clusters',
     icon: Dashboard,
     component: ClustersPage,
+  },
+  {
+    path: '/globalConfiguration',
+    name: 'GlobalConfiguration',
+    icon: Dashboard,
+    component: GlobalConfigurationPage,
   },
   {
     path: '/clusters/create',
@@ -127,6 +138,12 @@ const appRoutes = [
     name: 'Cluster Detail',
     icon: Dashboard,
     component: ClusterDetailPage,
+  },
+  {
+    path: '/clusters/:cluster_id/thresholds',
+    name: 'Cluster Thresholds',
+    icon: Dashboard,
+    component: ClusterThresholdsPage,
   },
   {
     path: '/clusters/:cluster_id/nodes',
@@ -169,6 +186,12 @@ const appRoutes = [
     name: 'namespaces',
     icon: Dashboard,
     component: NamespaceOverviewPage,
+  },
+  {
+    path: '/clusters/:cluster_id/namespaces/:namespace_id/thresholds',
+    name: 'namespaces thresholds',
+    icon: Dashboard,
+    component: NamespaceThresholdsPage,
   },
   // configmap
   {
@@ -228,25 +251,29 @@ const appRoutes = [
   // secret end
   // hpa
   {
-    path: '/clusters/:cluster_id/namespaces/:namespace_id/hpa',
+    path:
+      '/clusters/:cluster_id/namespaces/:namespace_id/horizontalPodAutoscalers',
     name: 'HPA',
     icon: Dashboard,
     component: HPAPage,
   },
   {
-    path: '/clusters/:cluster_id/namespaces/:hpa_id/hpa/create',
+    path:
+      '/clusters/:cluster_id/namespaces/:namespace_id/horizontalPodAutoscalers/create',
     name: 'Create HPA',
     icon: Dashboard,
     component: CreateHPAPage,
   },
   {
-    path: '/clusters/:cluster_id/namespaces/:namespace_id/hpa/:hpa_id/update',
+    path:
+      '/clusters/:cluster_id/namespaces/:namespace_id/horizontalPodAutoscalers/:hpa_id/update',
     name: ' Update HPA',
     icon: Dashboard,
     component: UpdateHPAPage,
   },
   {
-    path: '/clusters/:cluster_id/namespaces/:namespace_id/hpa/:hpa_id/show',
+    path:
+      '/clusters/:cluster_id/namespaces/:namespace_id/horizontalPodAutoscalers/:hpa_id/show',
     name: 'HPA Detail',
     icon: Dashboard,
     component: ShowHPAPage,
@@ -411,6 +438,15 @@ const appRoutes = [
     component: SvcMeshTapPage,
   },
   // svcMeshTap end
+  // pvc
+  {
+    path:
+      '/clusters/:cluster_id/namespaces/:namespace_id/persistentVolumeClaims',
+    name: 'PersistentVolumeClaims',
+    icon: Dashboard,
+    component: PersistentVolumeClaimsPage,
+  },
+  // pvc end
   // services start
   {
     path: '/clusters/:cluster_id/namespaces/:namespace_id/services',
@@ -607,6 +643,12 @@ const appRoutes = [
     name: 'Application Detail',
     icon: Dashboard,
     component: ApplicationDetailPage,
+  },
+  {
+    path: '/alarms',
+    name: 'Alarm Messages',
+    icon: Dashboard,
+    component: AlarmMessagesPage,
   },
   // applications end
 ];

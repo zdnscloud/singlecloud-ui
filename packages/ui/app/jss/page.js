@@ -110,7 +110,7 @@ const styles = (theme) => ({
     lineHeight: 3,
   },
   radioGroup: {
-    flexDirection: 'row',
+    flexDirection: 'inherit !important',
     marginLeft: '2rem',
   },
   menuButton: {

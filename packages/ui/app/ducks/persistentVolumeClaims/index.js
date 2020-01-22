@@ -54,28 +54,6 @@ export const reducer = (
 
 
 
-    case c.READ_PERSISTENT_VOLUME_CLAIM:
-      return state;
-    case c.READ_PERSISTENT_VOLUME_CLAIM_SUCCESS: {
-      const id = getByKey(payload, ['response', 'id']);
-      const data = getByKey(payload, ['response']);
-      const {
-        clusterID,
-        namespaceID,
-      } = meta;
-      if (id) {
-        return state.setIn([
-          'data',
-          clusterID,
-          namespaceID,
-          id,
-        ], fromJS(data))
-        .update('errorsList', (errors) => errors.filterNot((e) => e.type === c.READ_PERSISTENT_VOLUME_CLAIM_FAILURE));
-      }
-      return state;
-    }
-    case c.READ_PERSISTENT_VOLUME_CLAIM_FAILURE:
-      return state.update('errorsList', (errors) => errors.filterNot((e) => e.type === type).push({ type, payload, meta }));
 
     case c.REMOVE_PERSISTENT_VOLUME_CLAIM:
       return state;

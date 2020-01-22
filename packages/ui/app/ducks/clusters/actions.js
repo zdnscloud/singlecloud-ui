@@ -103,6 +103,27 @@ export const removeClusterFailure = (error, meta = {}) => ({
   error: true,
 });
 
+export const executeClusterAction = (action, data, meta = {}) => ({
+  type: c.EXECUTE_CLUSTER_ACTION,
+  payload: {
+    action,
+    data,
+  },
+  meta,
+});
+
+export const executeClusterActionSuccess = (resp, meta = {}) => ({
+  type: c.EXECUTE_CLUSTER_ACTION_SUCCESS,
+  payload: resp,
+  meta,
+});
+
+export const executeClusterActionFailure = (error, meta = {}) => ({
+  type: c.EXECUTE_CLUSTER_ACTION_FAILURE,
+  payload: error,
+  meta,
+  error: true,
+});
 
 export const clearErrorsList = (payload, meta) => ({
   type: c.CLEAR_ERRORS_LIST,

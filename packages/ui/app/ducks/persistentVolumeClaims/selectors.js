@@ -120,13 +120,6 @@ export const makeSelectLoadErrorsList = () =>
 
 
 
-export const makeSelectReadErrorsList = () =>
-  createSelector(
-    selectDomain,
-    (substate) =>
-      substate.get('errorsList')
-      .filter(({ type }) => type === c.READ_PERSISTENT_VOLUME_CLAIM_FAILURE)
-  );
 
 export const makeSelectRemoveErrorsList = () =>
   createSelector(
