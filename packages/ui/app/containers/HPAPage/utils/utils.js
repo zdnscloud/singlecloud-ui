@@ -265,8 +265,8 @@ export const refactorMetrics = (data, intl, type) => {
             type === 'update'
               ? cpuAverageValue
               : `${cpuAverageValue} ${intl.formatMessage(
-                  messages.formCPUSuffix
-                )}`;
+                messages.formCPUSuffix
+              )}`;
         } else if (item.resourceName === 'memory') {
           const averageValue = refactorAverageValue(item.averageValue);
           item.averageValue =
@@ -375,8 +375,8 @@ export const renderTableMetrics = (data, intl) => {
             item.systemVal =
               crm.length > 0 && crm[i].averageValue
                 ? `${crm[i].averageValue}${intl.formatMessage(
-                    messages.formCPUSuffix
-                  )}`
+                  messages.formCPUSuffix
+                )}`
                 : '--';
             item.thresholdVal = `${r.averageValue}${intl.formatMessage(
               messages.formCPUSuffix
@@ -415,11 +415,11 @@ export const renderTableMetrics = (data, intl) => {
   console.log('arr', arr);
   return arr.length > 0
     ? arr.map((val, key) => (
-        <Chip
-          key={key}
-          title={val.name_labels}
-          label={`${val.name} : ${val.systemVal} / ${val.thresholdVal} `}
-        />
-      ))
+      <Chip
+        key={key}
+        title={val.name_labels}
+        label={`${val.name} : ${val.systemVal} / ${val.thresholdVal} `}
+      />
+    ))
     : '--';
 };

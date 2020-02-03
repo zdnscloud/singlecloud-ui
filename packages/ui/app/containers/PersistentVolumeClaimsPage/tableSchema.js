@@ -28,8 +28,8 @@ const tableSchema = schema
         component({ value }) {
           return value != null
             ? value
-                .map((val, key) => <Chip key={key} label={`${val}`} />)
-                .toList()
+              .map((val, key) => <Chip key={key} label={`${val}`} />)
+              .toList()
             : null;
         },
       };
