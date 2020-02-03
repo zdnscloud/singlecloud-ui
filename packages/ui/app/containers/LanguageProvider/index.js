@@ -20,12 +20,9 @@ const LanguageProvider = ({ locale, messages, children }) => (
   </IntlProvider>
 );
 
-const mapStateToProps = createSelector(
-  makeSelectLocale(),
-  (locale) => ({
-    locale,
-  })
-);
+const mapStateToProps = createSelector(makeSelectLocale(), (locale) => ({
+  locale,
+}));
 
 function mapDispatchToProps(dispatch) {
   return {
@@ -33,7 +30,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(LanguageProvider);
+export default connect(mapStateToProps, mapDispatchToProps)(LanguageProvider);

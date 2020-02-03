@@ -72,14 +72,7 @@ const SvcMeshPodsPage = ({
     return () => {
       clearInterval(t);
     };
-  }, [
-    clusterID,
-    readSvcMeshPod,
-    namespaceID,
-    url,
-    svcMeshWorkloadID,
-    id,
-  ]);
+  }, [clusterID, readSvcMeshPod, namespaceID, url, svcMeshWorkloadID, id]);
   return (
     <div className={classes.root}>
       <Helmet title={messages.pageTitle} description={messages.pageDesc} />
@@ -89,17 +82,11 @@ const SvcMeshPodsPage = ({
           data={[
             {
               path: `/clusters/${clusterID}/namespaces/${namespaceID}/svcMeshWorkloads`,
-              name: (
-                <FormattedMessage
-                  {...messages.svcMeshWorkloads}
-                />
-              ),
+              name: <FormattedMessage {...messages.svcMeshWorkloads} />,
             },
             {
               path: `/clusters/${clusterID}/namespaces/${namespaceID}/svcmeshworkloads/${svcMeshWorkloadID}/show`,
-              name: (
-                <FormattedMessage {...messages.svcMeshWorkloadDetails} />
-              ),
+              name: <FormattedMessage {...messages.svcMeshWorkloadDetails} />,
             },
             {
               name: <FormattedMessage {...messages.pageTitle} />,

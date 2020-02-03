@@ -60,7 +60,6 @@ export const createRegistryEpic = (action$, state$, { ajax }) =>
     )
   );
 
-
 export const readRegistryEpic = (action$, state$, { ajax }) =>
   action$.pipe(
     ofType(c.READ_REGISTRY),
@@ -101,10 +100,9 @@ export const removeRegistryEpic = (action$, state$, { ajax }) =>
     )
   );
 
-
 export default combineEpics(
   loadRegistriesEpic,
   createRegistryEpic,
   readRegistryEpic,
-  removeRegistryEpic,
+  removeRegistryEpic
 );
