@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import React, { Fragment } from 'react';
 import GridItem from 'components/Grid/GridItem';
 import GridContainer from 'components/Grid/GridContainer';
@@ -10,7 +9,6 @@ import useStyles from '../styles';
 
 const DynamicForm = ({ fields, config, formValues }) => {
   const classes = useStyles();
-  // eslint-disable-next-line consistent-return
   const renderItem = (item) => {
     const radioOptions = item.get('validValues')
       ? item

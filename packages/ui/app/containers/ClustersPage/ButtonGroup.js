@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import React, { PureComponent, Fragment, useEffect, useState } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux';

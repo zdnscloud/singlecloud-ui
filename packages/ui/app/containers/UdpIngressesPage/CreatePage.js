@@ -49,7 +49,6 @@ export const CreateUdpIngressPage = ({
   namespaceID,
   values,
   services,
-  // eslint-disable-next-line no-shadow
   loadServices,
   surl,
   location,
