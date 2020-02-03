@@ -1,3 +1,4 @@
+/* eslint-disable no-console, no-continue, no-await-in-loop */
 const fs = require('fs');
 const path = require('path');
 const rimraf = require('rimraf');

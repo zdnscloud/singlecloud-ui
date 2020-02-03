@@ -23,7 +23,7 @@ module.exports = {
     },
   },
   rules: {
-    'prettier/prettier': ['error', prettierOptions],
+    // 'prettier/prettier': ['error', prettierOptions],
     'arrow-parens': ['error', 'always'],
     'arrow-body-style': [2, 'as-needed'],
     'class-methods-use-this': 0,
