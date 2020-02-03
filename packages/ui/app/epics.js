@@ -98,7 +98,7 @@ export default function createEpic(injectedEpics = {}) {
     svcMeshPodsEpic,
     svcMeshTapEpic,
     alarmsEpic,
-    thresholdsEpic
+    thresholdsEpic,
     persistentVolumeClaimsEpic,
     persistentVolumesEpic
     // combine epics end
