@@ -60,7 +60,6 @@ export const createJobEpic = (action$, state$, { ajax }) =>
     )
   );
 
-
 export const readJobEpic = (action$, state$, { ajax }) =>
   action$.pipe(
     ofType(c.READ_JOB),
@@ -101,10 +100,9 @@ export const removeJobEpic = (action$, state$, { ajax }) =>
     )
   );
 
-
 export default combineEpics(
   loadJobsEpic,
   createJobEpic,
   readJobEpic,
-  removeJobEpic,
+  removeJobEpic
 );

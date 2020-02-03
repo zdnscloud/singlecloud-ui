@@ -39,8 +39,6 @@ export const loadPersistentVolumesEpic = (action$, state$, { ajax }) =>
     )
   );
 
-
-
 export const readPersistentVolumeEpic = (action$, state$, { ajax }) =>
   action$.pipe(
     ofType(c.READ_PERSISTENT_VOLUME),
@@ -55,7 +53,9 @@ export const readPersistentVolumeEpic = (action$, state$, { ajax }) =>
         }),
         catchError((error) => {
           meta.reject && meta.reject(error);
-          return of(a.readPersistentVolumeFailure(error, { ...meta, id: payload }));
+          return of(
+            a.readPersistentVolumeFailure(error, { ...meta, id: payload })
+          );
         })
       )
     )
@@ -71,19 +71,23 @@ export const removePersistentVolumeEpic = (action$, state$, { ajax }) =>
       }).pipe(
         map((resp) => {
           meta.resolve && meta.resolve(resp);
-          return a.removePersistentVolumeSuccess(resp, { ...meta, id: payload });
+          return a.removePersistentVolumeSuccess(resp, {
+            ...meta,
+            id: payload,
+          });
         }),
         catchError((error) => {
           meta.reject && meta.reject(error);
-          return of(a.removePersistentVolumeFailure(error, { ...meta, id: payload }));
+          return of(
+            a.removePersistentVolumeFailure(error, { ...meta, id: payload })
+          );
         })
       )
     )
   );
 
-
 export default combineEpics(
   loadPersistentVolumesEpic,
   readPersistentVolumeEpic,
-  removePersistentVolumeEpic,
+  removePersistentVolumeEpic
 );

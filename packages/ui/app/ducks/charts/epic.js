@@ -39,8 +39,6 @@ export const loadChartsEpic = (action$, state$, { ajax }) =>
     )
   );
 
-
-
 export const readChartEpic = (action$, state$, { ajax }) =>
   action$.pipe(
     ofType(c.READ_CHART),
@@ -61,9 +59,4 @@ export const readChartEpic = (action$, state$, { ajax }) =>
     )
   );
 
-
-
-export default combineEpics(
-  loadChartsEpic,
-  readChartEpic,
-);
+export default combineEpics(loadChartsEpic, readChartEpic);

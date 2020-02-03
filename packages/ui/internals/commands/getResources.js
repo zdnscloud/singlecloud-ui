@@ -1,8 +1,8 @@
+/* eslint-disable no-console, global-require */
 const fs = require('fs');
 const glob = require('glob');
 
 const run = async (dir = process.env.READ_DIR) => {
-
   if (!dir) {
     console.error('muse set {READ_DIR} env');
     process.exit(1);

@@ -49,7 +49,6 @@ export const CreateUdpIngressPage = ({
   namespaceID,
   values,
   services,
-  // eslint-disable-next-line no-shadow
   loadServices,
   surl,
   location,
@@ -167,9 +166,6 @@ const mapDispatchToProps = (dispatch) =>
     dispatch
   );
 
-const withConnect = connect(
-  mapStateToProps,
-  mapDispatchToProps
-);
+const withConnect = connect(mapStateToProps, mapDispatchToProps);
 
 export default compose(withConnect)(CreateUdpIngressPage);

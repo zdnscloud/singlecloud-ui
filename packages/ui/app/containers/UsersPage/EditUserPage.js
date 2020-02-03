@@ -140,10 +140,7 @@ const mapStateToProps = createStructuredSelector({
   id: makeSelectCurrentID(),
   user: makeSelectCurrent(),
   url: makeSelectURL(),
-  values: createSelector(
-    getFormValues(formName),
-    (v) => v
-  ),
+  values: createSelector(getFormValues(formName), (v) => v),
 });
 
 const mapDispatchToProps = (dispatch) =>
@@ -155,9 +152,6 @@ const mapDispatchToProps = (dispatch) =>
     dispatch
   );
 
-const withConnect = connect(
-  mapStateToProps,
-  mapDispatchToProps
-);
+const withConnect = connect(mapStateToProps, mapDispatchToProps);
 
 export default compose(withConnect)(EditUserPage);

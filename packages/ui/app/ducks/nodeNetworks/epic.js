@@ -39,11 +39,4 @@ export const loadNodeNetworksEpic = (action$, state$, { ajax }) =>
     )
   );
 
-
-
-
-
-
-export default combineEpics(
-  loadNodeNetworksEpic,
-);
+export default combineEpics(loadNodeNetworksEpic);

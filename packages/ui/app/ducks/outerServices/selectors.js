@@ -27,16 +27,12 @@ export const selectDomain = (state) => state.get(prefix) || initialState;
  * Other specific selectors
  */
 export const makeSelectURL = () =>
-  createSelector(
-    makeSelectCurrentNamespace(),
-    (pt) => pt.getIn(['links', 'outerservices'])
+  createSelector(makeSelectCurrentNamespace(), (pt) =>
+    pt.getIn(['links', 'outerservices'])
   );
 
 export const makeSelectData = () =>
-  createSelector(
-    selectDomain,
-    (substate) => substate.get('data')
-  );
+  createSelector(selectDomain, (substate) => substate.get('data'));
 
 export const makeSelectOuterServices = () =>
   createSelector(
@@ -54,21 +50,18 @@ export const makeSelectOuterServicesList = () =>
     makeSelectCurrentClusterID(),
     makeSelectCurrentNamespaceID(),
     (substate, data, clusterID, namespaceID) =>
-      (substate.getIn(['list', clusterID, namespaceID]) || fromJS([])).map(
-        (id) => data.get(id)
-      ) || fromJS([])
+      (
+        substate.getIn(['list', clusterID, namespaceID]) || fromJS([])
+      ).map((id) => data.get(id)) || fromJS([])
   );
 
 export const makeSelectCurrentID = () =>
-  createSelector(
-    createMatchSelector('*/outerServices/:id/*'),
-    (match) => {
-      if (match && match.params) {
-        return match.params.id;
-      }
-      return '';
+  createSelector(createMatchSelector('*/outerServices/:id/*'), (match) => {
+    if (match && match.params) {
+      return match.params.id;
     }
-  );
+    return '';
+  });
 
 export const makeSelectCurrent = () =>
   createSelector(

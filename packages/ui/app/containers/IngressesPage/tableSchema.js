@@ -52,10 +52,10 @@ const tableSchema = schema
           const value = data.get('rules');
           return value != null
             ? value
-                .map((val, key) => (
-                  <Chip key={key} label={`${val.get('servicePort')}`} />
-                ))
-                .toList()
+              .map((val, key) => (
+                <Chip key={key} label={`${val.get('servicePort')}`} />
+              ))
+              .toList()
             : null;
         },
       };

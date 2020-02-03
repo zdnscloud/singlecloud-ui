@@ -68,13 +68,7 @@ const SvcMeshWorkloadDetailPage = ({
     return () => {
       clearInterval(t);
     };
-  }, [
-    clusterID,
-    readSvcMeshWorkload,
-    namespaceID,
-    url,
-    id,
-  ]);
+  }, [clusterID, readSvcMeshWorkload, namespaceID, url, id]);
 
   return (
     <div className={classes.root}>
@@ -85,11 +79,7 @@ const SvcMeshWorkloadDetailPage = ({
           data={[
             {
               path: `/clusters/${clusterID}/namespaces/${namespaceID}/svcMeshWorkloads`,
-              name: (
-                <FormattedMessage
-                  {...messages.pageTitle}
-                />
-              ),
+              name: <FormattedMessage {...messages.pageTitle} />,
             },
             {
               name: <FormattedMessage {...messages.svcMeshWorkloadDetail} />,

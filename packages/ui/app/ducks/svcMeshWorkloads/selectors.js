@@ -11,9 +11,10 @@ import {
 } from 'connected-react-router/immutable';
 import {
   makeSelectCurrent as makeSelectCurrentNamespace,
+  makeSelectCurrentID as makeSelectCurrentNamespaceID,
 } from 'ducks/namespaces/selectors';
 import { makeSelectCurrentID as makeSelectCurrentClusterID } from 'ducks/clusters/selectors';
-import { makeSelectCurrentID as makeSelectCurrentNamespaceID } from 'ducks/namespaces/selectors';
+
 import * as c from './constants';
 import { initialState } from './index';
 
@@ -26,32 +27,20 @@ export const selectDomain = (state) => state.get(c.prefix) || initialState;
  * Other specific selectors
  */
 export const makeSelectURL = () =>
-  createSelector(
-    makeSelectCurrentNamespace(),
-    (pt) => pt.getIn(['links', 'svcmeshworkloads'])
+  createSelector(makeSelectCurrentNamespace(), (pt) =>
+    pt.getIn(['links', 'svcmeshworkloads'])
   );
 
 export const makeSelectData = () =>
-  createSelector(
-    selectDomain,
-    (substate) => substate.get('data')
-  );
+  createSelector(selectDomain, (substate) => substate.get('data'));
 
 export const makeSelectSvcMeshWorkloads = () =>
   createSelector(
     selectDomain,
     makeSelectCurrentClusterID(),
     makeSelectCurrentNamespaceID(),
-  (
-    substate,
-      clusterID,
-      namespaceID,
-  ) =>
-    substate.getIn([
-      'data',
-      clusterID,
-      namespaceID,
-      ]) || substate.clear()
+    (substate, clusterID, namespaceID) =>
+      substate.getIn(['data', clusterID, namespaceID]) || substate.clear()
   );
 
 export const makeSelectSvcMeshWorkloadsList = () =>
@@ -60,29 +49,19 @@ export const makeSelectSvcMeshWorkloadsList = () =>
     makeSelectSvcMeshWorkloads(),
     makeSelectCurrentClusterID(),
     makeSelectCurrentNamespaceID(),
-    (
-      substate,
-      data,
-      clusterID,
-      namespaceID,
-    ) =>
-      (substate.getIn([
-        'list',
-        clusterID,
-        namespaceID,
-      ]) || fromJS([])).map((id) => data.get(id)) || fromJS([])
+    (substate, data, clusterID, namespaceID) =>
+      (
+        substate.getIn(['list', clusterID, namespaceID]) || fromJS([])
+      ).map((id) => data.get(id)) || fromJS([])
   );
 
 export const makeSelectCurrentID = () =>
-   createSelector(
-     createMatchSelector('*/svcMeshWorkloads/:id/*'),
-     (match) => {
-       if (match && match.params) {
-         return match.params.id;
-       }
-       return '';
-     }
-   );
+  createSelector(createMatchSelector('*/svcMeshWorkloads/:id/*'), (match) => {
+    if (match && match.params) {
+      return match.params.id;
+    }
+    return '';
+  });
 
 export const makeSelectCurrent = () =>
   createSelector(
@@ -90,42 +69,23 @@ export const makeSelectCurrent = () =>
     makeSelectCurrentClusterID(),
     makeSelectCurrentNamespaceID(),
     makeSelectCurrentID(),
-    (
-      substate,
-      clusterID,
-      namespaceID,
-      id
-    ) =>
-      substate.getIn([
-        'data',
-        clusterID,
-        namespaceID,
-        id,
-      ]) || substate.clear()
+    (substate, clusterID, namespaceID, id) =>
+      substate.getIn(['data', clusterID, namespaceID, id]) || substate.clear()
   );
 
 export const makeSelectErrorsList = () =>
-  createSelector(
-    selectDomain,
-    (substate) => substate.get('errorsList')
-  );
+  createSelector(selectDomain, (substate) => substate.get('errorsList'));
 
 export const makeSelectLoadErrorsList = () =>
-  createSelector(
-    selectDomain,
-    (substate) =>
-      substate.get('errorsList')
+  createSelector(selectDomain, (substate) =>
+    substate
+      .get('errorsList')
       .filter(({ type }) => type === c.LOAD_SVC_MESH_WORKLOADS_FAILURE)
   );
 
-
-
 export const makeSelectReadErrorsList = () =>
-  createSelector(
-    selectDomain,
-    (substate) =>
-      substate.get('errorsList')
+  createSelector(selectDomain, (substate) =>
+    substate
+      .get('errorsList')
       .filter(({ type }) => type === c.READ_SVC_MESH_WORKLOAD_FAILURE)
   );
-
-

@@ -39,11 +39,4 @@ export const loadServiceNetworksEpic = (action$, state$, { ajax }) =>
     )
   );
 
-
-
-
-
-
-export default combineEpics(
-  loadServiceNetworksEpic,
-);
+export default combineEpics(loadServiceNetworksEpic);

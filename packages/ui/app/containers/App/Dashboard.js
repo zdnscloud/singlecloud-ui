@@ -1,4 +1,3 @@
-/* eslint-disable no-shadow */
 /**
  *
  * App.js

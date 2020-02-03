@@ -93,7 +93,7 @@ export const DaemonSetDetailPage = ({
             },
           ]}
         />
-        <Item daemonSet={daemonSet}/>
+        <Item daemonSet={daemonSet} />
         <GridContainer className={classes.grid}>
           <GridItem xs={12} sm={12} md={12}>
             <Card>

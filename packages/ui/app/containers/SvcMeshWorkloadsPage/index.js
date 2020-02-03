@@ -105,10 +105,10 @@ const SvcMeshWorkloadsPage = ({
               .map((wl) =>
                 wl.get('destinations')
                   ? wl.get('destinations').map((tid) => ({
-                      source: wl.get('id'),
-                      target: tid,
-                      id: `${wl.get('id')}_${tid}`,
-                    }))
+                    source: wl.get('id'),
+                    target: tid,
+                    id: `${wl.get('id')}_${tid}`,
+                  }))
                   : null
               )
               .filter((wl) => wl)

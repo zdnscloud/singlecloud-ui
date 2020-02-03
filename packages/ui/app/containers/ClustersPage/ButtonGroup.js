@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import React, { PureComponent, Fragment, useEffect, useState } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux';
@@ -76,11 +75,7 @@ export const ButtonGroup = ({
     case 'CreateFailed':
       clusterStatus = (
         <Button className={classes.failBtn}>
-          <img
-            src={failIcon}
-            alt="checkIcon"
-            className={classes.buttonIcon}
-          />
+          <img src={failIcon} alt="checkIcon" className={classes.buttonIcon} />
           <FormattedMessage {...messages.CreateFailedStatus} />
         </Button>
       );
@@ -159,32 +154,31 @@ export const ButtonGroup = ({
               </Button>
             )}
 
-          {status === 'Updating' ||
-          status === 'Creating' ? (
-              <Confirm
-                handleConfirm={handleConfirm}
-                dialogContentText={messages.stopPromptText}
-                component={
-                  <Button className={classes.handleBtn}>
-                    <img
-                      src={stopIcon}
-                      alt="stopIcon"
-                      className={classes.buttonIcon}
-                    />
-                    <FormattedMessage {...messages.stopButton} />
-                  </Button>
-                }
+          {status === 'Updating' || status === 'Creating' ? (
+            <Confirm
+              handleConfirm={handleConfirm}
+              dialogContentText={messages.stopPromptText}
+              component={
+                <Button className={classes.handleBtn}>
+                  <img
+                    src={stopIcon}
+                    alt="stopIcon"
+                    className={classes.buttonIcon}
+                  />
+                  <FormattedMessage {...messages.stopButton} />
+                </Button>
+              }
+            />
+          ) : (
+            <Button className={classes.unableBtn}>
+              <img
+                src={unableStopIcon}
+                alt="stopIcon"
+                className={classes.buttonIcon}
               />
-            ) : (
-              <Button className={classes.unableBtn}>
-                <img
-                  src={unableStopIcon}
-                  alt="stopIcon"
-                  className={classes.buttonIcon}
-                />
-                <FormattedMessage {...messages.stopButton} />
-              </Button>
-            )}
+              <FormattedMessage {...messages.stopButton} />
+            </Button>
+          )}
         </GridItem>
       </GridContainer>
     </Fragment>
@@ -206,9 +200,6 @@ const mapDispatchToProps = (dispatch) =>
     dispatch
   );
 
-const withConnect = connect(
-  mapStateToProps,
-  mapDispatchToProps
-);
+const withConnect = connect(mapStateToProps, mapDispatchToProps);
 
 export default compose(withConnect)(ButtonGroup);
