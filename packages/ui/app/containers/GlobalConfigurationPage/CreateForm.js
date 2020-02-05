@@ -138,7 +138,7 @@ const Form = ({ formValues, handleSubmit, error }) => {
                     label={<FormattedMessage {...messages.formPassword} />}
                     name="mailFrom.password"
                     fullWidth
-                    inputProps={{ type: 'text', autoComplete: 'off' }}
+                    inputProps={{ type: 'password', autoComplete: 'off' }}
                   />
                 </GridItem>
               </GridContainer>
