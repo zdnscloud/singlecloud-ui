@@ -71,7 +71,7 @@ const GlobalConfigurationPage = ({
               setOpen(true);
             }
           },
-          reject() {},
+          reject,
           url: updateUrl,
         });
       });

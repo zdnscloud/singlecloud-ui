@@ -134,6 +134,10 @@ export const makeSelectLeftMenus = () =>
                 name: 'ServiceLink',
                 path: `/clusters/${cluster}/namespaces/${namespace}/serviceLink`,
               },
+              {
+                name: 'ServiceMeshTap',
+                path: `/clusters/${cluster}/namespaces/${namespace}/svcMeshTap`,
+              },
             ],
             icon: ServiceGovernanceIcon,
           },
@@ -168,16 +172,16 @@ export const makeSelectLeftMenus = () =>
                 name: 'Job',
                 path: `/clusters/${cluster}/namespaces/${namespace}/jobs`,
               },
+              {
+                name: 'PersistentVolumeClaims',
+                path: `/clusters/${cluster}/namespaces/${namespace}/persistentVolumeClaims`,
+              },
             ],
             icon: SystemIcon,
           },
           {
             name: 'AppConfiguration',
             children: [
-              {
-                name: 'UdpIngresses',
-                path: `/clusters/${cluster}/namespaces/${namespace}/udpIngresses`,
-              },
               {
                 name: 'ConfigMaps',
                 path: `/clusters/${cluster}/namespaces/${namespace}/configmaps`,
@@ -201,8 +205,8 @@ export const makeSelectLeftMenus = () =>
                 path: `/clusters/${cluster}/namespaces/${namespace}/ingresses`,
               },
               {
-                name: 'PersistentVolumeClaims',
-                path: `/clusters/${cluster}/namespaces/${namespace}/persistentVolumeClaims`,
+                name: 'UdpIngresses',
+                path: `/clusters/${cluster}/namespaces/${namespace}/udpIngresses`,
               },
             ],
             icon: ServiceAndRoutingIcon,

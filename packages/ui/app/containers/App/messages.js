@@ -141,6 +141,10 @@ export default defineMessages({
     id: `${scope}.leftMenuServiceMesh`,
     defaultMessage: 'ServiceMesh',
   },
+  leftMenuServiceMeshTap: {
+    id: `${scope}.leftMenuServiceMeshTap`,
+    defaultMessage: 'ServiceMeshTap',
+  },
   leftMenuStorages: {
     id: `${scope}.leftMenuStorages`,
     defaultMessage: 'Storages',
