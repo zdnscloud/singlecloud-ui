@@ -25,8 +25,8 @@ function CustomInput({ ...props }) {
     success,
     meta: { touched, invalid, error },
     fullWidth,
+    lowercase, 
   } = props;
-
   const touchedError = !!(touched && error);
   const labelClasses = classNames({
     [` ${classes.labelRootError}`]: touchedError,
@@ -44,6 +44,7 @@ function CustomInput({ ...props }) {
   const inputClasses = classNames({
     [classes.input]: true,
     [classes.whiteInput]: white,
+    [classes.lowerCaseInput]: lowercase,
   });
   let formControlClasses;
   if (formControlProps !== undefined) {
