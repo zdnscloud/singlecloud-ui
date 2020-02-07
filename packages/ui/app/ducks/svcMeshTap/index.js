@@ -81,7 +81,7 @@ export const reducer = (
         });
       }
 
-      return mState.updateIn(['data', clusterID, namespaceID, id], (item) => {
+      return mState.updateIn(['data', clusterID, namespaceID, id], (item = fromJS({})) => {
         if (readyState === 0) {
           return fromJS(data);
         }
