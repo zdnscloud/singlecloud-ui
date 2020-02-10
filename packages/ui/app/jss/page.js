@@ -18,7 +18,7 @@ const styles = (theme) => ({
     overflowX: 'hidden',
   },
   grid: {
-    padding: theme.spacing(2.5),
+    padding: theme.spacing(1.25),
   },
   contentGrid: {
     paddingLeft: theme.spacing(2),

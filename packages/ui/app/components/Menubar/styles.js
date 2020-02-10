@@ -12,6 +12,7 @@ const styles = (theme) => ({
     width: '100%',
     backgroundColor: theme.palette.primary.contrastText,
     color: theme.palette.primary.main,
+    marginLeft: 2,
   },
   toolbarLeft: {
     display: 'flex',

@@ -30,6 +30,12 @@ const theme = createMuiTheme({
       main: '#FFFFFF',
       contrastText: '#000000',
     },
+    leftMemu:{
+      main: '#FFFFFF',
+      highlight: '#40A9FF',
+      highlightBg: '#F5F9FF',
+      contrastText: '#404040',
+    },
     icons: {
       a: '#7ED321',
       b: '#E23939',

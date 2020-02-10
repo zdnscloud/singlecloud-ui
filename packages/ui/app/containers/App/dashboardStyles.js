@@ -46,7 +46,7 @@ export const styles = (theme) => ({
     paddingRight: '40px !important',
     boxShadow: 'none !important',
     height: 40,
-    color: '#4A4A4A',
+    color: '#404040',
     marginLeft: 12,
   },
   menuItem: {
