@@ -54,6 +54,14 @@ export default defineMessages({
     id: `${scope}.tableTitleDetail`,
     defaultMessage: 'Detail',
   },
+  tableTypeEvent: {
+    id: `${scope}.tableTypeEvent`,
+    defaultMessage: 'resource',
+  },
+  tableTypeAlarm: {
+    id: `${scope}.tableTypeAlarm`,
+    defaultMessage: 'operation',
+  },
   read: {
     id: `${scope}.read`,
     defaultMessage: 'read',
