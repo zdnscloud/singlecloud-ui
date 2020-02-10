@@ -1,4 +1,3 @@
-/* eslint-disable no-shadow */
 /**
  *
  * Create Service Page
@@ -248,9 +247,6 @@ const mapDispatchToProps = (dispatch) =>
     dispatch
   );
 
-const withConnect = connect(
-  mapStateToProps,
-  mapDispatchToProps
-);
+const withConnect = connect(mapStateToProps, mapDispatchToProps);
 
 export default compose(withConnect)(CreateServicePage);

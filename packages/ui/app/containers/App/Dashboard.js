@@ -1,4 +1,3 @@
-/* eslint-disable no-shadow */
 /**
  *
  * App.js
@@ -30,10 +29,8 @@ import * as nsActions from 'ducks/namespaces/actions';
 import * as roleActions from 'ducks/role/actions';
 import * as eventsActions from 'ducks/events/actions';
 import * as appActions from 'ducks/app/actions';
-import {
-  makeSelectShowEvents,
-  makeSelectLocation,
-} from 'ducks/app/selectors';
+import * as alarmsActions from 'ducks/alarms/actions';
+import { makeSelectShowEvents, makeSelectLocation } from 'ducks/app/selectors';
 import {
   makeSelectCurrentID as makeSelectCurrentClusterID,
   makeSelectCurrent as makeSelectCurrentCluster,
@@ -61,6 +58,8 @@ export const Dashboard = ({
   isAdmin,
   setLastNamespace,
   location,
+  openAlarmChannel,
+  closeAlarmChannel,
 }) => {
   useEffect(() => {
     (async () => {
@@ -78,6 +77,7 @@ export const Dashboard = ({
       }
     })();
   }, [loadClusters, loadNamespaces, url]);
+
   const path = location.get('pathname');
   const isManage = /^\/clusters\/[^/]+\/manage/.test(path);
   useEffect(() => {
@@ -86,12 +86,19 @@ export const Dashboard = ({
     }
     return () => closeCluster();
   }, [closeCluster, clusterID, openCluster, isManage]);
+
   const nsUrl = cluster.getIn(['links', 'namespaces']);
   useEffect(() => {
     if (nsUrl) {
       loadNamespaces(nsUrl, { clusterID });
     }
   }, [clusterID, loadNamespaces, nsUrl]);
+
+  useEffect(() => {
+    openAlarmChannel();
+    return () => closeAlarmChannel();
+  }, [closeAlarmChannel, openAlarmChannel]);
+
   const hasEvents = clusterID && showEvents;
   const classes = useStyles({ hasEvents });
 
@@ -176,13 +183,11 @@ const mapDispatchToProps = (dispatch) =>
       ...roleActions,
       ...eventsActions,
       ...appActions,
+      ...alarmsActions,
     },
     dispatch
   );
 
-const withConnect = connect(
-  mapStateToProps,
-  mapDispatchToProps
-);
+const withConnect = connect(mapStateToProps, mapDispatchToProps);
 
 export default compose(withConnect)(Dashboard);

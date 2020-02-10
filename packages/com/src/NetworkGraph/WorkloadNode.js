@@ -20,7 +20,7 @@ const defaultProps = {
     fill: '#15aabf',
     stroke: 'none',
     strokeWidth: 0,
-    opacity: 0.8,
+    opacity: 1,
     defaultSize: 20,
   },
   onMouseMove: null,
@@ -43,13 +43,13 @@ export default function WorkloadNode({
     transform: `scale(${0.03 * nodeSize}) translate(-35,-35)`,
   };
   switch (node.kind) {
-    case 'Deployment':
+    case 'deployment':
       NodeComponent = DeploymentIcon;
       break;
-    case 'DaemonSet':
+    case 'daemonset':
       NodeComponent = DaemonSetIcon;
       break;
-    case 'StatefulSet':
+    case 'statefulset':
       NodeComponent = StatefulSetIcon;
       break;
     default:

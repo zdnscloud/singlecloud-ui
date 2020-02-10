@@ -1,5 +1,3 @@
-/* eslint-disable no-shadow */
-/* eslint-disable no-console */
 import React, { PureComponent, Fragment, useState } from 'react';
 import { fromJS } from 'immutable';
 import { compose } from 'redux';

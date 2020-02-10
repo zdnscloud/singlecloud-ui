@@ -1,11 +1,11 @@
 const typographyStyle = (theme) => ({
   defaultFontStyle: {
     ...theme.palette.defaultFont,
-    fontSize: '14px',
+    fontSize: 14,
   },
   defaultHeaderMargins: {
-    marginTop: '20px',
-    marginBottom: '10px',
+    marginTop: 20,
+    marginBottom: 10,
   },
   quote: {
     padding: '10px 20px',
@@ -28,18 +28,38 @@ const typographyStyle = (theme) => ({
   },
   primaryText: {
     color: theme.palette.primary.main,
+    '&.inverse': {
+      color: theme.palette.text.c,
+      backgroundColor: theme.palette.primary.main,
+    },
   },
   infoText: {
     color: theme.palette.text.info,
+    '&.inverse': {
+      color: theme.palette.text.c,
+      backgroundColor: theme.palette.text.info,
+    },
   },
   successText: {
     color: theme.palette.text.success,
+    '&.inverse': {
+      color: theme.palette.text.c,
+      backgroundColor: theme.palette.text.success,
+    },
   },
   warningText: {
     color: theme.palette.text.warning,
+    '&.inverse': {
+      color: theme.palette.text.c,
+      backgroundColor: theme.palette.text.warning,
+    },
   },
   dangerText: {
     color: theme.palette.text.danger,
+    '&.inverse': {
+      color: theme.palette.text.c,
+      backgroundColor: theme.palette.text.danger,
+    },
   },
   smallText: {
     fontSize: '65%',

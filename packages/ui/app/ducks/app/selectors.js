@@ -7,11 +7,13 @@ import {
 
 import OverviewIcon from 'components/Icons/Overview';
 import ManagementIcon from 'components/Icons/Management';
-import BasicResourcesIcon from 'components/Icons/BasicResources';
+import AppConfigurationIcon from 'components/Icons/AppConfiguration';
 import SystemIcon from 'components/Icons/System';
 import UserQuotasIcon from 'components/Icons/UserQuotas';
 import SystenToolsIcon from 'components/Icons/SystenTools';
 import ApplicationStoreIcon from 'components/Icons/ApplicationStore';
+import ServiceAndRoutingIcon from 'components/Icons/ServiceAndRouting';
+import ServiceGovernanceIcon from 'components/Icons/ServiceGovernance';
 import { makeSelectRole, makeSelectIsAdmin } from 'ducks/role/selectors';
 import { makeSelectCurrentID as makeSelectCurrentClusterID } from 'ducks/clusters/selectors';
 import { makeSelectCurrentID as makeSelectCurrentNamespaceID } from 'ducks/namespaces/selectors';
@@ -73,7 +75,10 @@ export const makeSelectLeftMenus = () =>
       let menus = [
         {
           name: 'Global',
-          children: [{ name: 'ClusterList', path: `/clusters` }],
+          children: [
+            { name: 'ClusterList', path: `/clusters` },
+            { name: 'GlobalConfiguration', path: `/globalConfiguration` },
+          ],
           icon: OverviewIcon,
           adminOnly: true,
         },
@@ -115,36 +120,34 @@ export const makeSelectLeftMenus = () =>
           //   icon: SystemIcon,
           // },
           {
-            name: 'AppStore',
-            children: [
-              {
-                name: 'LocalAppTemplates',
-                path: `/clusters/${cluster}/namespaces/${namespace}/charts`,
-              },
-            ],
-            icon: ApplicationStoreIcon,
-          },
-          {
-            name: 'AppManagement',
+            name: 'ServiceGovernance',
             children: [
               {
                 name: 'NamespaceOverview',
                 path: `/clusters/${cluster}/namespaces/${namespace}/overview`,
               },
               {
-                name: 'Applications',
-                path: `/clusters/${cluster}/namespaces/${namespace}/applications`,
+                name: 'ServiceMesh',
+                path: `/clusters/${cluster}/namespaces/${namespace}/svcMeshWorkloads`,
               },
               {
                 name: 'ServiceLink',
                 path: `/clusters/${cluster}/namespaces/${namespace}/serviceLink`,
               },
+              {
+                name: 'ServiceMeshTap',
+                path: `/clusters/${cluster}/namespaces/${namespace}/svcMeshTap`,
+              },
             ],
-            icon: SystemIcon,
+            icon: ServiceGovernanceIcon,
           },
           {
-            name: 'BasicResources',
+            name: 'AppManagement',
             children: [
+              {
+                name: 'Applications',
+                path: `/clusters/${cluster}/namespaces/${namespace}/applications`,
+              },
               {
                 name: 'HPA',
                 path: `/clusters/${cluster}/namespaces/${namespace}/horizontalPodAutoscalers`,
@@ -170,9 +173,15 @@ export const makeSelectLeftMenus = () =>
                 path: `/clusters/${cluster}/namespaces/${namespace}/jobs`,
               },
               {
-                name: 'UdpIngresses',
-                path: `/clusters/${cluster}/namespaces/${namespace}/udpIngresses`,
+                name: 'PersistentVolumeClaims',
+                path: `/clusters/${cluster}/namespaces/${namespace}/persistentVolumeClaims`,
               },
+            ],
+            icon: SystemIcon,
+          },
+          {
+            name: 'AppConfiguration',
+            children: [
               {
                 name: 'ConfigMaps',
                 path: `/clusters/${cluster}/namespaces/${namespace}/configmaps`,
@@ -181,6 +190,12 @@ export const makeSelectLeftMenus = () =>
                 name: 'Secrets',
                 path: `/clusters/${cluster}/namespaces/${namespace}/secrets`,
               },
+            ],
+            icon: AppConfigurationIcon,
+          },
+          {
+            name: 'ServiceAndRouting',
+            children: [
               {
                 name: 'Services',
                 path: `/clusters/${cluster}/namespaces/${namespace}/services`,
@@ -190,26 +205,24 @@ export const makeSelectLeftMenus = () =>
                 path: `/clusters/${cluster}/namespaces/${namespace}/ingresses`,
               },
               {
-                name: 'PersistentVolumeClaims',
-                path: `/clusters/${cluster}/namespaces/${namespace}/persistentVolumeClaims`,
+                name: 'UdpIngresses',
+                path: `/clusters/${cluster}/namespaces/${namespace}/udpIngresses`,
               },
             ],
-            icon: BasicResourcesIcon,
+            icon: ServiceAndRoutingIcon,
+          },
+          {
+            name: 'AppStore',
+            children: [
+              {
+                name: 'LocalAppTemplates',
+                path: `/clusters/${cluster}/namespaces/${namespace}/charts`,
+              },
+            ],
+            icon: ApplicationStoreIcon,
           },
         ]);
       }
-      menus = menus.concat([
-        {
-          name: 'UserQuotas',
-          children: [
-            {
-              name: 'UserQuotasList',
-              path: isAdmin ? '/adminUserQuotas' : '/userQuotas',
-            },
-          ],
-          icon: UserQuotasIcon,
-        },
-      ]);
       if (cluster !== '' && !isManage) {
         menus = menus.concat([
           {
@@ -229,6 +242,18 @@ export const makeSelectLeftMenus = () =>
           },
         ]);
       }
+      menus = menus.concat([
+        {
+          name: 'UserQuotas',
+          children: [
+            {
+              name: 'UserQuotasList',
+              path: isAdmin ? '/adminUserQuotas' : '/userQuotas',
+            },
+          ],
+          icon: UserQuotasIcon,
+        },
+      ]);
       if (!isAdmin) {
         menus = menus.filter((m) => {
           m.children = m.children.filter((c) => c.adminOnly === undefined);

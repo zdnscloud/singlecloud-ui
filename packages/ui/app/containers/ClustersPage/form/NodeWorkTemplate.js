@@ -12,7 +12,7 @@ import Danger from 'components/Typography/Danger';
 import GridItem from 'components/Grid/GridItem';
 import GridContainer from 'components/Grid/GridContainer';
 import InputField from 'components/Field/InputField';
-import ChexboxesField from 'components/Field/ChexboxesField';
+import CheckboxesField from 'components/Field/CheckboxesField';
 import PlusIcon from 'components/Icons/Plus';
 import MinusIcon from 'components/Icons/Minus';
 
@@ -76,7 +76,7 @@ const NodeWorkTemplate = ({
         </GridItem>
         <GridContainer key={i}>
           <GridItem xs={6} sm={6} md={6} className={classes.formLine}>
-            <ChexboxesField
+            <CheckboxesField
               name={`${f}.roles`}
               label=""
               classes={{

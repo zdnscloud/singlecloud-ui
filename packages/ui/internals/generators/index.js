@@ -43,7 +43,7 @@ module.exports = (plop) => {
       plop.getHelper('properCase')(answers.name),
       '**.js',
     )}`;
-    exec(`npm run prettify -- "${folderPath}"`);
+    exec(`npm run lint:eslint:fix -- "${folderPath}"`);
     return folderPath;
   });
 

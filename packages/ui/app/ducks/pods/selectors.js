@@ -50,23 +50,17 @@ export const makeSelectPods = () =>
   );
 
 export const makeSelectPodsList = () =>
-  createSelector(
-    selectPodsDomain,
-    makeSelectPods(),
-    (substate, pods) => substate.get('list').map((id) => pods.get(id))
+  createSelector(selectPodsDomain, makeSelectPods(), (substate, pods) =>
+    substate.get('list').map((id) => pods.get(id))
   );
 
 export const makeSelectURL = () =>
-  createSelector(
-    makeSelectCurrentDeployment(),
-    (deploy) => deploy.getIn(['links', 'pods'])
+  createSelector(makeSelectCurrentDeployment(), (deploy) =>
+    deploy.getIn(['links', 'pods'])
   );
 
 export const makeSelectErrorsList = () =>
-  createSelector(
-    selectPodsDomain,
-    (substate) => substate.get('errorsList')
-  );
+  createSelector(selectPodsDomain, (substate) => substate.get('errorsList'));
 
 // stateful set
 export const makeSelectSTSPods = () =>
@@ -81,16 +75,13 @@ export const makeSelectSTSPods = () =>
   );
 
 export const makeSelectSTSPodsList = () =>
-  createSelector(
-    selectPodsDomain,
-    makeSelectSTSPods(),
-    (substate, pods) => substate.get('stsList').map((id) => pods.get(id))
+  createSelector(selectPodsDomain, makeSelectSTSPods(), (substate, pods) =>
+    substate.get('stsList').map((id) => pods.get(id))
   );
 
 export const makeSelectSTSURL = () =>
-  createSelector(
-    makeSelectCurrentStatefulSet(),
-    (sts) => sts.getIn(['links', 'pods'])
+  createSelector(makeSelectCurrentStatefulSet(), (sts) =>
+    sts.getIn(['links', 'pods'])
   );
 
 // daemon set
@@ -106,16 +97,13 @@ export const makeSelectDSPods = () =>
   );
 
 export const makeSelectDSPodsList = () =>
-  createSelector(
-    selectPodsDomain,
-    makeSelectDSPods(),
-    (substate, pods) => substate.get('dsList').map((id) => pods.get(id))
+  createSelector(selectPodsDomain, makeSelectDSPods(), (substate, pods) =>
+    substate.get('dsList').map((id) => pods.get(id))
   );
 
 export const makeSelectDSURL = () =>
-  createSelector(
-    makeSelectCurrentDaemonSet(),
-    (ds) => ds.getIn(['links', 'pods'])
+  createSelector(makeSelectCurrentDaemonSet(), (ds) =>
+    ds.getIn(['links', 'pods'])
   );
 
 // cron job
@@ -131,16 +119,13 @@ export const makeSelectCJPods = () =>
   );
 
 export const makeSelectCJPodsList = () =>
-  createSelector(
-    selectPodsDomain,
-    makeSelectCJPods(),
-    (substate, pods) => substate.get('cjList').map((id) => pods.get(id))
+  createSelector(selectPodsDomain, makeSelectCJPods(), (substate, pods) =>
+    substate.get('cjList').map((id) => pods.get(id))
   );
 
 export const makeSelectCJURL = () =>
-  createSelector(
-    makeSelectCurrentCronJob(),
-    (cj) => cj.getIn(['links', 'pods'])
+  createSelector(makeSelectCurrentCronJob(), (cj) =>
+    cj.getIn(['links', 'pods'])
   );
 
 // job
@@ -156,24 +141,16 @@ export const makeSelectJOBPods = () =>
   );
 
 export const makeSelectJOBPodsList = () =>
-  createSelector(
-    selectPodsDomain,
-    makeSelectJOBPods(),
-    (substate, pods) => substate.get('jobList').map((id) => pods.get(id))
+  createSelector(selectPodsDomain, makeSelectJOBPods(), (substate, pods) =>
+    substate.get('jobList').map((id) => pods.get(id))
   );
 
 export const makeSelectJOBURL = () =>
-  createSelector(
-    makeSelectCurrentJob(),
-    (job) => job.getIn(['links', 'pods'])
-  );
+  createSelector(makeSelectCurrentJob(), (job) => job.getIn(['links', 'pods']));
 
 // log
 export const makeSelectPodLog = () =>
-  createSelector(
-    selectPodsDomain,
-    (substate) => substate.get('openingPodLog')
-  );
+  createSelector(selectPodsDomain, (substate) => substate.get('openingPodLog'));
 
 export const makeSelectPodLogIsOpening = () =>
   createSelector(
@@ -182,10 +159,7 @@ export const makeSelectPodLogIsOpening = () =>
   );
 
 export const makeSelectOpeningLogs = () =>
-  createSelector(
-    selectPodsDomain,
-    (substate) => substate.get('openingLogs')
-  );
+  createSelector(selectPodsDomain, (substate) => substate.get('openingLogs'));
 
 export const makeSelectLogURL = () =>
   createSelector(
@@ -193,7 +167,9 @@ export const makeSelectLogURL = () =>
     makeSelectClusterID(),
     makeSelectNamespaceID(),
     (substate, clusterID, namespaceID) =>
-      `${window.location.protocol === 'https:' ? 'wss:' : 'ws:'}//${window.location.hostname}:${
+      `${window.location.protocol === 'https:' ? 'wss:' : 'ws:'}//${
+        window.location.hostname
+      }:${
         window.location.port
       }/apis/ws.zcloud.cn/v1/clusters/${clusterID}/namespaces/${namespaceID}/pods/${substate.getIn(
         ['openingPodLog', 'podID']
@@ -205,9 +181,6 @@ export const makeSelectLogURL = () =>
  */
 
 const makeSelectPodsDomain = () =>
-  createSelector(
-    selectPodsDomain,
-    (substate) => substate
-  );
+  createSelector(selectPodsDomain, (substate) => substate);
 
 export default makeSelectPodsDomain;

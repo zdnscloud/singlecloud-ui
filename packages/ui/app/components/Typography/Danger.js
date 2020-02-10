@@ -1,15 +1,17 @@
 import React from 'react';
-// nodejs library to set properties for components
 import PropTypes from 'prop-types';
-// @material-ui/core components
 import withStyles from '@material-ui/core/styles/withStyles';
-// core components
 import typographyStyle from './typographyStyle';
 
 function Danger({ ...props }) {
-  const { classes, children } = props;
+  const { classes, inverse, children, ...rest } = props;
   return (
-    <div className={`${classes.defaultFontStyle} ${classes.dangerText}`}>
+    <div
+      {...rest}
+      className={`${classes.defaultFontStyle} ${classes.dangerText} ${
+        inverse ? 'inverse' : ''
+      }`}
+    >
       {children}
     </div>
   );
@@ -17,6 +19,7 @@ function Danger({ ...props }) {
 
 Danger.propTypes = {
   classes: PropTypes.object.isRequired,
+  inverse: PropTypes.bool,
 };
 
 export default withStyles(typographyStyle)(Danger);

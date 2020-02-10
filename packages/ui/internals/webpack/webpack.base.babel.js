@@ -23,14 +23,12 @@ const defaultAlias = {
 module.exports = (options) => ({
   mode: options.mode,
   entry: options.entry,
-  output: Object.assign(
-    {
-      // Compile into js/build.js
-      path: path.resolve(__dirname, '..', '..', 'build'),
-      publicPath: '/assets/',
-    },
-    options.output
-  ), // Merge with env dependent settings
+  output: {
+    // Compile into js/build.js
+    path: path.resolve(__dirname, '..', '..', 'build'),
+    publicPath: '/assets/',
+    ...options.output,
+  }, // Merge with env dependent settings
   optimization: options.optimization,
   module: {
     rules: [
@@ -109,7 +107,9 @@ module.exports = (options) => ({
         NODE_ENV: JSON.stringify(process.env.NODE_ENV),
       },
     }),
-    new WebappWebpackPlugin(path.resolve(__dirname, '..', '..', 'app', 'images', 'logo.svg')),
+    new WebappWebpackPlugin(
+      path.resolve(__dirname, '..', '..', 'app', 'images', 'logo.svg')
+    ),
   ]),
   resolve: {
     modules: ['node_modules', 'app'],

@@ -1,16 +1,14 @@
-/* eslint-disable prettier/prettier */
 import React, { Fragment } from 'react';
 import GridItem from 'components/Grid/GridItem';
 import GridContainer from 'components/Grid/GridContainer';
 import InputField from 'components/Field/InputField';
 import SwitchField from 'components/Field/SwitchField';
 import RadioField from 'components/Field/RadioField';
-import ChexboxesField from 'components/Field/ChexboxesField';
+import CheckboxesField from 'components/Field/CheckboxesField';
 import useStyles from '../styles';
 
 const DynamicForm = ({ fields, config, formValues }) => {
   const classes = useStyles();
-  // eslint-disable-next-line consistent-return
   const renderItem = (item) => {
     const radioOptions = item.get('validValues')
       ? item
@@ -96,7 +94,7 @@ const DynamicForm = ({ fields, config, formValues }) => {
       case 'array':
         return (
           <GridItem xs={12} sm={12} md={12} className={classes.formLine}>
-            <ChexboxesField
+            <CheckboxesField
               label={item.get('label')}
               name={item.get('jsonKey')}
               classes={{
@@ -113,6 +111,7 @@ const DynamicForm = ({ fields, config, formValues }) => {
       default:
         break;
     }
+    return null;
   };
 
   return (

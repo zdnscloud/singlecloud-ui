@@ -21,6 +21,7 @@ import Card from 'components/Card/Card';
 import CardHeader from 'components/Card/CardHeader';
 import CardBody from 'components/Card/CardBody';
 import ReadOnlyInput from 'components/CustomInput/ReadOnlyInput';
+import ReadOnlyCheckbox from 'components/CustomCheckbox/ReadOnlyCheckbox';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
@@ -53,7 +54,6 @@ export const Deployment = ({
       messages.formVolumeTypePersistentVolume
     ),
   };
-
   return (
     <GridContainer className={classes.grid}>
       <GridItem xs={12} sm={12} md={12}>
@@ -446,6 +446,17 @@ export const Deployment = ({
                         'advancedOptions',
                         'exposedMetric',
                         'port',
+                      ])}
+                    />
+                  </GridItem>
+                  <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
+                    <ReadOnlyCheckbox
+                      labelText={
+                        <FormattedMessage {...messages.formInjectServiceMesh} />
+                      }
+                      value={deployment.getIn([
+                        'advancedOptions',
+                        'injectServiceMesh',
                       ])}
                     />
                   </GridItem>

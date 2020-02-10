@@ -9,10 +9,13 @@ import {
   createMatchSelector,
   getLocation,
 } from 'connected-react-router/immutable';
-import { makeSelectCurrent as makeSelectCurrentDeployment } from 'ducks/deployments/selectors';
+import {
+  makeSelectCurrent as makeSelectCurrentDeployment,
+  makeSelectCurrentID as makeSelectCurrentDeploymentID,
+} from 'ducks/deployments/selectors';
 import { makeSelectCurrentID as makeSelectCurrentClusterID } from 'ducks/clusters/selectors';
 import { makeSelectCurrentID as makeSelectCurrentNamespaceID } from 'ducks/namespaces/selectors';
-import { makeSelectCurrentID as makeSelectCurrentDeploymentID } from 'ducks/deployments/selectors';
+
 import * as c from './constants';
 import { initialState } from './index';
 
@@ -38,17 +41,8 @@ export const makeSelectMetrics = () =>
     makeSelectCurrentClusterID(),
     makeSelectCurrentNamespaceID(),
     makeSelectCurrentDeploymentID(),
-    (
-      substate,
-      clusterID,
-      namespaceID,
-      deploymentID,
-    ) =>
-      substate.getIn([
-        'data',
-        clusterID,
-        namespaceID,
-        deploymentID,
+    (substate, clusterID, namespaceID, deploymentID) =>
+      substate.getIn(['data', clusterID, namespaceID, deploymentID]) ||
       substate.clear()
   );
 
@@ -67,15 +61,12 @@ export const makeSelectMetricsList = () =>
   );
 
 export const makeSelectCurrentID = () =>
-  createSelector(
-    createMatchSelector('*/metrics/:id/*'),
-    (match) => {
+  createSelector(createMatchSelector('*/metrics/:id/*'), (match) => {
     if (match && match.params) {
       return match.params.id;
-      }
-    return '';
     }
-  );
+    return '';
+  });
 
 export const makeSelectCurrent = () =>
   createSelector(
@@ -96,5 +87,5 @@ export const makeSelectLoadErrorsList = () =>
   createSelector(selectDomain, (substate) =>
     substate
       .get('errorsList')
-        .filter(({ type }) => type === c.LOAD_METRICS_FAILURE)
+      .filter(({ type }) => type === c.LOAD_METRICS_FAILURE)
   );

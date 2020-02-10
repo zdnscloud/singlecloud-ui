@@ -172,7 +172,7 @@ export const CreateStatefulSet = ({
                 replicas: 1,
                 containers: [{ name: '', exposedPorts: [] }],
                 persistentVolumes: [],
-                advancedOptions: {},
+                advancedOptions: { injectServiceMesh: true },
               })}
               formValues={values}
             />

@@ -13,12 +13,15 @@ import ClustersPage, {
   CreateClusterPage,
   ClusterManagePage,
 } from 'containers/ClustersPage/Loadable';
-import ClusterDetailPage from 'containers/ClusterDetailPage/Loadable';
+import ClusterDetailPage, {
+  ClusterThresholdsPage,
+} from 'containers/ClusterDetailPage/Loadable';
 import NodesPage, { NodeDetailPage } from 'containers/NodesPage/Loadable';
 import NamespacesPage, {
   CreateNamespacePage,
   NamespaceDetailPage,
   NamespaceOverviewPage,
+  NamespaceThresholdsPage,
 } from 'containers/NamespacesPage/Loadable';
 import EventsPage from 'containers/EventsPage/Loadable';
 import HPAPage, {
@@ -64,6 +67,11 @@ import ServicesPage, {
   CreateServicePage,
   ShowServicePage,
 } from 'containers/ServicesPage/Loadable';
+import SvcMeshWorkloadsPage, {
+  ShowSvcMeshWorkloadPage,
+} from 'containers/SvcMeshWorkloadsPage/Loadable';
+import SvcMeshPodsPage from 'containers/SvcMeshPodsPage/Loadable';
+import SvcMeshTapPage from 'containers/SvcMeshTapPage/Loadable';
 import IngressesPage, {
   CreateIngressPage,
   ShowIngressPage,
@@ -91,13 +99,14 @@ import ApplicationsPage, {
   ApplicationDetailPage,
   CreateApplicationPage,
 } from 'containers/ApplicationsPage/Loadable';
-
 import UsersPage, {
   CreateUserPage,
   EditUserPage,
   UserProfilePage,
   PasswordSetupPage,
 } from 'containers/UsersPage/Loadable';
+import AlarmMessagesPage from 'containers/AlarmMessagesPage';
+import GlobalConfigurationPage from 'containers/GlobalConfigurationPage';
 
 const appRoutes = [
   {
@@ -105,6 +114,12 @@ const appRoutes = [
     name: 'Clusters',
     icon: Dashboard,
     component: ClustersPage,
+  },
+  {
+    path: '/globalConfiguration',
+    name: 'GlobalConfiguration',
+    icon: Dashboard,
+    component: GlobalConfigurationPage,
   },
   {
     path: '/clusters/create',
@@ -123,6 +138,12 @@ const appRoutes = [
     name: 'Cluster Detail',
     icon: Dashboard,
     component: ClusterDetailPage,
+  },
+  {
+    path: '/clusters/:cluster_id/thresholds',
+    name: 'Cluster Thresholds',
+    icon: Dashboard,
+    component: ClusterThresholdsPage,
   },
   {
     path: '/clusters/:cluster_id/nodes',
@@ -165,6 +186,12 @@ const appRoutes = [
     name: 'namespaces',
     icon: Dashboard,
     component: NamespaceOverviewPage,
+  },
+  {
+    path: '/clusters/:cluster_id/namespaces/:namespace_id/thresholds',
+    name: 'namespaces thresholds',
+    icon: Dashboard,
+    component: NamespaceThresholdsPage,
   },
   // configmap
   {
@@ -379,6 +406,38 @@ const appRoutes = [
     component: JobDetailPage,
   },
   // job end
+  // svcMeshWorkloads start
+  {
+    path: '/clusters/:cluster_id/namespaces/:namespace_id/svcmeshworkloads',
+    name: 'Svcmeshworkloads',
+    icon: Dashboard,
+    component: SvcMeshWorkloadsPage,
+  },
+  {
+    path:
+      '/clusters/:cluster_id/namespaces/:namespace_id/svcmeshworkloads/:svcMeshWorkload_id/show',
+    name: 'SvcMeshWorkload Detail',
+    icon: Dashboard,
+    component: ShowSvcMeshWorkloadPage,
+  },
+  // svcMeshWorkloads end
+  // svcMeshPods start
+  {
+    path:
+      '/clusters/:cluster_id/namespaces/:namespace_id/svcmeshworkloads/:svcMeshWorkload_id/svcmeshpods/:svcMeshPod_id/show',
+    name: 'SvcMeshPods',
+    icon: Dashboard,
+    component: SvcMeshPodsPage,
+  },
+  // svcMeshPods end
+  // svcMeshTap start
+  {
+    path: '/clusters/:cluster_id/namespaces/:namespace_id/svcMeshTap',
+    name: 'SvcMeshTap',
+    icon: Dashboard,
+    component: SvcMeshTapPage,
+  },
+  // svcMeshTap end
   // pvc
   {
     path:
@@ -584,6 +643,12 @@ const appRoutes = [
     name: 'Application Detail',
     icon: Dashboard,
     component: ApplicationDetailPage,
+  },
+  {
+    path: '/alarms',
+    name: 'Alarm Messages',
+    icon: Dashboard,
+    component: AlarmMessagesPage,
   },
   // applications end
 ];

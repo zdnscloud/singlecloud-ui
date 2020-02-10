@@ -81,11 +81,17 @@ export const CreateApplicationPage = ({
 
   async function doSubmit(formValues) {
     try {
-      const { name, chartVersion, ...formData } = formValues.toJS();
+      const {
+        name,
+        injectServiceMesh,
+        chartVersion,
+        ...formData
+      } = formValues.toJS();
       const url = `/apis/zcloud.cn/v1/clusters/${clusterID}/namespaces/${namespaceID}/applications`;
       const data = {
         name,
         chartVersion,
+        injectServiceMesh,
         chartName: chartID,
         configs: formData,
       };
@@ -126,7 +132,10 @@ export const CreateApplicationPage = ({
               <CreateApplicationForm
                 classes={classes}
                 onSubmit={doSubmit}
-                initialValues={fromJS({ name: chartID })}
+                initialValues={fromJS({
+                  name: chartID,
+                  injectServiceMesh: true,
+                })}
                 chart={chart}
                 clusterID={clusterID}
                 namespaceID={namespaceID}
@@ -172,9 +181,6 @@ const mapDispatchToProps = (dispatch) =>
     dispatch
   );
 
-const withConnect = connect(
-  mapStateToProps,
-  mapDispatchToProps
-);
+const withConnect = connect(mapStateToProps, mapDispatchToProps);
 
 export default compose(withConnect)(CreateApplicationPage);

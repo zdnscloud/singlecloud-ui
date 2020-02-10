@@ -15,6 +15,7 @@ import CardHeader from 'components/Card/CardHeader';
 import CardBody from 'components/Card/CardBody';
 import SelectField from 'components/Field/SelectField';
 import ReadOnlyInput from 'components/CustomInput/ReadOnlyInput';
+import CheckboxField from 'components/Field/CheckboxField';
 import messages from './messages';
 import DynamicForm from './form/dynamicForm';
 
@@ -106,6 +107,14 @@ const ApplicationForm = ({
                   label={<FormattedMessage {...messages.formNamespaceName} />}
                   value={namespaceID}
                   fullWidth
+                />
+              </GridItem>
+              <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
+                <CheckboxField
+                  name="injectServiceMesh"
+                  label={
+                    <FormattedMessage {...messages.formInjectServiceMesh} />
+                  }
                 />
               </GridItem>
             </GridContainer>

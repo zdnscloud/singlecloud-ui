@@ -57,9 +57,17 @@ export default defineMessages({
     id: `${scope}.leftMenuGlobal`,
     defaultMessage: 'Global',
   },
+  leftMenuGlobalConfiguration: {
+    id: `${scope}.leftMenuGlobalConfiguration`,
+    defaultMessage: 'GlobalConfiguration',
+  },
   leftMenuClusterManagement: {
     id: `${scope}.leftMenuClusterManagement`,
     defaultMessage: 'ClusterManagement',
+  },
+  leftMenuServiceGovernance: {
+    id: `${scope}.leftMenuServiceGovernance`,
+    defaultMessage: 'ServiceGovernance',
   },
   leftMenuOverview: {
     id: `${scope}.leftMenuOverview`,
@@ -129,6 +137,14 @@ export default defineMessages({
     id: `${scope}.leftMenuServiceLink`,
     defaultMessage: 'ServiceLink',
   },
+  leftMenuServiceMesh: {
+    id: `${scope}.leftMenuServiceMesh`,
+    defaultMessage: 'ServiceMesh',
+  },
+  leftMenuServiceMeshTap: {
+    id: `${scope}.leftMenuServiceMeshTap`,
+    defaultMessage: 'ServiceMeshTap',
+  },
   leftMenuStorages: {
     id: `${scope}.leftMenuStorages`,
     defaultMessage: 'Storages',
@@ -161,9 +177,9 @@ export default defineMessages({
     id: `${scope}.leftMenuSystemTools`,
     defaultMessage: 'SystemTools',
   },
-  leftMenuBasicResources: {
-    id: `${scope}.leftMenuBasicResources`,
-    defaultMessage: 'BasicResources',
+  leftMenuAppConfiguration: {
+    id: `${scope}.leftMenuAppConfiguration`,
+    defaultMessage: 'AppConfiguration',
   },
   leftMenuApplicationStore: {
     id: `${scope}.leftMenuApplicationStore`,
@@ -172,6 +188,10 @@ export default defineMessages({
   leftMenuApplications: {
     id: `${scope}.leftMenuApplications`,
     defaultMessage: 'Applications',
+  },
+  leftMenuServiceAndRouting: {
+    id: `${scope}.leftMenuServiceAndRouting`,
+    defaultMessage: 'ServiceAndRouting',
   },
   leftMenuAppStore: {
     id: `${scope}.leftMenuAppStore`,

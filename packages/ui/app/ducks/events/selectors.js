@@ -13,10 +13,7 @@ export const selectEventsDomain = (state) => state.get(prefix, initialState);
  */
 
 export const makeSelectClusterID = () =>
-  createSelector(
-    selectEventsDomain,
-    (substate) => substate.get('clusterID')
-  );
+  createSelector(selectEventsDomain, (substate) => substate.get('clusterID'));
 
 export const makeSelectEvents = () =>
   createSelector(

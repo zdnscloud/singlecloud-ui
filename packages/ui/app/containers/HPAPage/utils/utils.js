@@ -72,6 +72,7 @@ export const renderNumerical = (f, i, formValues) => {
     default:
       break;
   }
+  return null;
 };
 
 export const renderMetricsName = (f, i, formValues, worklodMetrics) => {
@@ -120,6 +121,7 @@ export const renderMetricsName = (f, i, formValues, worklodMetrics) => {
     default:
       break;
   }
+  return null;
 };
 
 export const renderMetricsItem = (metricsType) => {
@@ -265,8 +267,8 @@ export const refactorMetrics = (data, intl, type) => {
             type === 'update'
               ? cpuAverageValue
               : `${cpuAverageValue} ${intl.formatMessage(
-                  messages.formCPUSuffix
-                )}`;
+                messages.formCPUSuffix
+              )}`;
         } else if (item.resourceName === 'memory') {
           const averageValue = refactorAverageValue(item.averageValue);
           item.averageValue =
@@ -327,6 +329,7 @@ export const renderReadOnlyNumerical = (c, i, metrics) => {
     default:
       break;
   }
+  return null;
 };
 
 export const renderTableMetrics = (data, intl) => {
@@ -345,7 +348,10 @@ export const renderTableMetrics = (data, intl) => {
     if (rm && rm.length > 0) {
       rm.forEach((r, i) => {
         const item = {
-          name: type === 'resourceMetrics' ? r.resourceName : `${r.metricName.substring(0,5)}...`,
+          name:
+            type === 'resourceMetrics'
+              ? r.resourceName
+              : `${r.metricName.substring(0, 5)}...`,
           name_labels:
             type === 'resourceMetrics'
               ? ''
@@ -372,8 +378,8 @@ export const renderTableMetrics = (data, intl) => {
             item.systemVal =
               crm.length > 0 && crm[i].averageValue
                 ? `${crm[i].averageValue}${intl.formatMessage(
-                    messages.formCPUSuffix
-                  )}`
+                  messages.formCPUSuffix
+                )}`
                 : '--';
             item.thresholdVal = `${r.averageValue}${intl.formatMessage(
               messages.formCPUSuffix
@@ -399,6 +405,7 @@ export const renderTableMetrics = (data, intl) => {
       });
       return marr;
     }
+    return null;
   };
 
   mefactorMetrics(
@@ -409,14 +416,13 @@ export const renderTableMetrics = (data, intl) => {
   );
   mefactorMetrics(customMetrics, currentCustomMetrics, carr, 'customMetrics');
   arr = arr.concat(rarr, carr);
-  console.log('arr',arr);
   return arr.length > 0
     ? arr.map((val, key) => (
-        <Chip
-          key={key}
-          title={val.name_labels}
-          label={`${val.name} : ${val.systemVal} / ${val.thresholdVal} `}
-        />
-      ))
+      <Chip
+        key={key}
+        title={val.name_labels}
+        label={`${val.name} : ${val.systemVal} / ${val.thresholdVal} `}
+      />
+    ))
     : '--';
 };
