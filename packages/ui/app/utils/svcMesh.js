@@ -80,7 +80,7 @@ export const getSuccessRate = (data, classes) => {
   const successRate = getSR(data);
   return (
     <Fragment>
-      {!Math.isNaN(successRate) ? (
+      {!Number.isNaN(successRate) ? (
         <Fragment>
           <span
             className={classNames(
@@ -108,7 +108,7 @@ export const getRPS = (data) => {
 
   return (
     <Fragment>
-      <span> {!Math.isNaN(rps) ? rps.toFixed(2) : '--'}</span>
+      <span> {!Number.isNaN(rps) ? rps.toFixed(2) : '--'}</span>
     </Fragment>
   );
 };
