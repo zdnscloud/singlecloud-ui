@@ -28,7 +28,7 @@ import messages from './messages';
     }
   }
 */
-const schema = ['status', 'time', 'cluster', 'namespace', 'object', 'detail'];
+const schema = ['status', 'time', 'cluster', 'namespace', 'object', 'type', 'detail'];
 
 const tableSchema = schema
   .map((id) => ({
@@ -69,6 +69,13 @@ const tableSchema = schema
       return {
         ...item,
         component: ({ data }) => `${data.get('kind')}/${data.get('name')}`,
+      };
+    }
+    if (item.id === 'type') {
+      return {
+        ...item,
+        component: ({ data }) => data.get('type') === 'event' ?
+          <FormattedMessage {...messages.tableTypeEvent} /> : <FormattedMessage {...messages.tableTypeAlarm} />,
       };
     }
     if (item.id === 'detail') {

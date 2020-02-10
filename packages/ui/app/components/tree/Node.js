@@ -73,6 +73,8 @@ function Node({ node, onClick }) {
       if (kind === 'DaemonSet') Icon = DaemonSetIcon;
       if (kind === 'StatefulSet') Icon = StatefulSetIcon;
       break;
+    default:
+      break;
   }
   const l = 14;
   const lname = name.length > l ? `${name.slice(0, l)}...` : name;

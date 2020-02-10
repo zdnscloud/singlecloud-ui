@@ -72,6 +72,7 @@ export const renderNumerical = (f, i, formValues) => {
     default:
       break;
   }
+  return null;
 };
 
 export const renderMetricsName = (f, i, formValues, worklodMetrics) => {
@@ -120,6 +121,7 @@ export const renderMetricsName = (f, i, formValues, worklodMetrics) => {
     default:
       break;
   }
+  return null;
 };
 
 export const renderMetricsItem = (metricsType) => {
@@ -327,6 +329,7 @@ export const renderReadOnlyNumerical = (c, i, metrics) => {
     default:
       break;
   }
+  return null;
 };
 
 export const renderTableMetrics = (data, intl) => {
@@ -402,6 +405,7 @@ export const renderTableMetrics = (data, intl) => {
       });
       return marr;
     }
+    return null;
   };
 
   mefactorMetrics(
@@ -412,7 +416,6 @@ export const renderTableMetrics = (data, intl) => {
   );
   mefactorMetrics(customMetrics, currentCustomMetrics, carr, 'customMetrics');
   arr = arr.concat(rarr, carr);
-  console.log('arr', arr);
   return arr.length > 0
     ? arr.map((val, key) => (
       <Chip

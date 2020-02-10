@@ -111,6 +111,7 @@ const DynamicForm = ({ fields, config, formValues }) => {
       default:
         break;
     }
+    return null;
   };
 
   return (

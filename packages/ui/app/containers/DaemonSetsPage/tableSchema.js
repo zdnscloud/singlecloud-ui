@@ -10,6 +10,7 @@ import RollbackIcon from 'components/Icons/Rollback';
 import ConfirmDelete from 'components/ConfirmDelete/ConfirmDelete';
 import LogcollectionDialog from 'containers/LogcollectionPage/LogcollectionDialog';
 import MetricsDialog from 'containers/MetricsPage/MetricsDialog';
+import UpdatingProgress from 'components/Progress/UpdatingProgress';
 
 const schema = ['name', 'replicas', 'creationTimestamp'];
 
@@ -95,15 +96,19 @@ const tableSchema = schema
         ...sch,
         component: ({ data }) => (
           <>
-            {data.getIn(['status', 'readyReplicas']) || 0}/
-            {data.getIn(['replicas'])}
-            <LinearProgress
-              variant="determinate"
-              value={
-                ((data.getIn(['status', 'readyReplicas']) || 0) /
-                  data.getIn(['replicas'])) *
-                100
+            {(data.getIn(['status', 'updating'])
+              ? data.getIn(['status', 'updatedReplicas'])
+              : data.getIn(['status', 'readyReplicas'])) || 0}
+            /{data.getIn(['replicas'])}
+            <UpdatingProgress
+              isUpdating={data.getIn(['status', 'updating'])}
+              current={
+                (data.getIn(['status', 'updating'])
+                  ? data.getIn(['status', 'updatedReplicas'])
+                  : data.getIn(['status', 'readyReplicas'])) || 0
               }
+              buffer={data.getIn(['status', 'updatingReplicas']) || 0}
+              total={data.get('replicas')}
             />
           </>
         ),
