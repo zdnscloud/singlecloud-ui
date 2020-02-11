@@ -179,7 +179,7 @@ const tableSchema = schema
             <Grid container direction="row" alignItems="center" spacing={1}>
               <Grid item>
                 <Button link component={Link} to={`${data.get('id')}/show`}>
-                  {cur.get('deployment')}
+                  {cur.get('deployment') || cur.get('statefulset') || cur.get('daemonset')}
                 </Button>
               </Grid>
               <Grid item>
