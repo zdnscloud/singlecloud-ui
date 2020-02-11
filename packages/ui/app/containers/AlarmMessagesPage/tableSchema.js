@@ -74,7 +74,7 @@ const tableSchema = schema
     if (item.id === 'type') {
       return {
         ...item,
-        component: ({ data }) => data.get('type') === 'event' ?
+        component: ({ data }) => data.get('type') === 'Event' ?
           <FormattedMessage {...messages.tableTypeEvent} /> : <FormattedMessage {...messages.tableTypeAlarm} />,
       };
     }
