@@ -41,8 +41,8 @@ const styles = (theme) => ({
     alignItems: 'center',
     justifyContent: 'center',
     width: theme.leftShrinkWidth,
-    marginLeft: 28,
-    marginRight: 32,
+    marginLeft: 14,
+    marginRight: 16,
   },
 });
 

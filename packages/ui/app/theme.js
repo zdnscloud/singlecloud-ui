@@ -3,7 +3,7 @@ import hexToRgb from '@gsmlg/utils/hexToRgb';
 
 const theme = createMuiTheme({
   appBarHeight: 65,
-  leftMenuWidth: 232,
+  leftMenuWidth: 200,
   leftShrinkWidth: 85,
   typography: {
     useNextVariants: true,
