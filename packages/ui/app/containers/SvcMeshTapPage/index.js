@@ -36,8 +36,6 @@ import { makeSelectIsTapping } from 'ducks/svcMeshTap/selectors';
 import * as actions from 'ducks/svcMeshWorkloads/actions';
 import * as tapActions from 'ducks/svcMeshTap/actions';
 
-import useTap from 'hooks/useTap';
-
 import SearchForm, { formName } from './SearchForm';
 import Table from './Table';
 
@@ -53,6 +51,9 @@ const SvcMeshTapPage = ({
   loadSvcMeshWorkloads,
   workloadGroups,
   values,
+  svcMeshTapStart,
+  svcMeshTapStop,
+  svcMeshTapReset,
 }) => {
   const classes = useStyles();
   const [initialValues, setInitialValues] = useState();
@@ -67,12 +68,6 @@ const SvcMeshTapPage = ({
       // try cancel something when unmount
     };
   }, [clusterID, loadSvcMeshWorkloads, namespaceID, url]);
-  const {
-    tapStart,
-    tapStop,
-    tapReset,
-    tap,
-  } = useTap;
   useEffect(() => {
     /**
        query params
@@ -113,10 +108,10 @@ const SvcMeshTapPage = ({
     );
 
     return () => {
-      tapStop();
+      svcMeshTapStop();
+      svcMeshTapReset({}, { clusterID, namespaceID });
     };
-  }, [location, tapStop]);
-
+  }, [clusterID, location, namespaceID, svcMeshTapReset, svcMeshTapStop]);
   const workloads = workloadGroups.map((wl) => wl.getIn(['stat', 'resource']));
   async function doSubmit(formValues) {
     try {
@@ -125,22 +120,16 @@ const SvcMeshTapPage = ({
 
       const [type, name] = from.split('/');
       const [toType, toName] = to.split('/');
-      tapStop();
-
-      const { protocol, hostname, port } = window.location;
-      const tapUrl = `${
-        protocol === 'https:' ? 'wss:' : 'ws:'
-      }//${hostname}:${port}/apis/ws.zcloud.cn/v1/clusters/${
-        clusterID
-      }/namespaces/${namespaceID}/tap?resource_type=${
-        type
-      }&resource_name=${name}&to_resource_type=${
-        toType
-      }&to_resource_name=${toName}&method=${
-        method
-      }&path=${path}`;
-      tapStart(tapUrl);
-
+      const data = {
+        resource_type: type,
+        resource_name: name,
+        to_resource_type: toType,
+        to_resource_name: toName,
+        method,
+        path,
+      };
+      svcMeshTapStop();
+      svcMeshTapStart(data, { clusterID, namespaceID });
     } catch (error) {
       throw new SubmissionError({ _error: error });
     }
@@ -170,8 +159,8 @@ const SvcMeshTapPage = ({
                   initialValues={initialValues}
                   isTapping={isTapping}
                   formValues={values}
-                  resetAction={tapReset}
-                  stopAction={tapStop}
+                  stopAction={svcMeshTapStop}
+                  resetAction={svcMeshTapReset}
                   clusterID={clusterID}
                   namespaceID={namespaceID}
                 />

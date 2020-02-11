@@ -118,7 +118,7 @@ export const Form = ({
             onClick={(e) => {
               reset();
               stopAction();
-              resetAction();
+              resetAction({}, { clusterID, namespaceID });
             }}
           >
             <FormattedMessage {...messages.tapReset} />

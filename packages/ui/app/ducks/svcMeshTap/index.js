@@ -23,6 +23,9 @@ export const initialState = fromJS({
 
 const c = constants;
 
+let countTime = 0;
+let count = 0;
+
 export const reducer = (
   state = initialState,
   { type, payload, error, meta }
@@ -44,6 +47,13 @@ export const reducer = (
     }
 
     case c.SVC_MESH_TAP_ADD: {
+      const now = new Date();
+      if ((now - countTime) > 1000) {
+        countTime = now;
+        count = 0;
+      }
+      count += 1;
+      if (count > 100) return state;
       const { clusterID, namespaceID } = meta;
       const data = payload;
       const { event } = data;
@@ -66,13 +76,14 @@ export const reducer = (
       data.id = id;
       data.originId = originId;
       data.readyState = readyState;
-      data.laseUpdateTime = new Date();
+      data.laseUpdateTime = now;
 
       let mState = state;
       if (readyState === 0) {
         mState = state.updateIn(['list', clusterID, namespaceID], (list) => {
           if (list) {
             if (list.size > 40) {
+
               return list.slice(0, 39).unshift(id);
             }
             return list.unshift(id);
