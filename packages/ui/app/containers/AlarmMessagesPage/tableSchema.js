@@ -68,7 +68,7 @@ const tableSchema = schema
     if (item.id === 'object') {
       return {
         ...item,
-        component: ({ data }) => `${data.get('kind')}/${data.get('name')}`,
+        component: ({ data }) => `${data.get('kind')}${data.get('name') ? '/' : ''}${data.get('name')}`,
       };
     }
     if (item.id === 'type') {
