@@ -93,27 +93,6 @@ export const styles = (theme) => ({
       fontWeight: 'bold',
     },
   },
-  logoWrap: {
-    display: 'flex',
-    alignItems: 'center',
-    width: ({ showText }) =>
-      showText ? theme.leftMenuWidth : theme.leftShrinkWidth,
-    height: theme.appBarHeight,
-    zIndex: 4,
-  },
-  logoIconWrapper: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: theme.leftShrinkWidth,
-    '& img': {
-      width: 30,
-    },
-  },
-  logoName: {
-    display: ({ showText }) => (showText ? 'flex' : 'none'),
-    fontSize: 18,
-  },
 });
 
 export default makeStyles(styles);
