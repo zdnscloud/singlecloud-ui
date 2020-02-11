@@ -190,7 +190,7 @@ export const CreateForm = ({ handleSubmit, error, classes, formValues }) => (
           </GridItem>
         </CardBody>
       </Card>
-      <Card style={{ margin: 0, marginTop: 20 }}>
+      <Card>
         <CardHeader>
           <h4>
             <FormattedMessage {...messages.formNode} />

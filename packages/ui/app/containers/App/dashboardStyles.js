@@ -4,14 +4,14 @@ import hexToRgb from '@gsmlg/utils/hexToRgb';
 export const styles = (theme) => ({
   wrapper: {
     display: 'flex',
-    height: '100vh',
+    height: `calc(100vh - ${theme.appBarHeight}px)`,
     overflow: 'hidden',
   },
   mainWrapper: {
     display: 'flex',
     flex: 1,
     flexDirection: 'column',
-    height: '100vh',
+    height: `calc(100vh - ${theme.appBarHeight}px)`,
     overflow: 'hidden',
   },
   mainPanel: {
