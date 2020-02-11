@@ -94,19 +94,24 @@ const AppMenubar = ({
               </Badge>
             </IconButton>
           </Link>
-          {newAlarms.map((alarm) => (
-            <Snackbar
-              key={alarm.get('id')}
-              color="danger"
-              place="tr"
-              message={alarm.get('message')}
-              open
-              close
-              closeNotification={() => {
-                removeNewAlarm(alarm.get('id'));
-              }}
-            />
-          ))}
+          {newAlarms.map((alarm) => {
+            setTimeout(() => {
+              removeNewAlarm(alarm.get('id'));
+            }, 5000);
+            return (
+              <Snackbar
+                key={alarm.get('id')}
+                color="danger"
+                place="tr"
+                message={alarm.get('message')}
+                open
+                close
+                closeNotification={() => {
+                  removeNewAlarm(alarm.get('id'));
+                }}
+              />
+            );
+          })}
           <IconButton onClick={(evt) => setUserEl(evt.currentTarget)}>
             <AccountIcon />
             <small style={{ fontSize: '14px' }}>{role.get('user')}</small>
