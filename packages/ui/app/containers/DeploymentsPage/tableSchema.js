@@ -3,13 +3,12 @@ import { ucfirst } from '@gsmlg/utils';
 import TimeCell from 'components/Cells/TimeCell';
 import { Link } from 'react-router-dom';
 import Button from 'components/CustomButtons/Button';
-import IconButton from 'components/CustomIconButtons/IconButton';
-import UpgradeIcon from 'components/Icons/Upgrade';
-import RollbackIcon from 'components/Icons/Rollback';
 import ConfirmDelete from 'components/ConfirmDelete/ConfirmDelete';
 import LogcollectionDialog from 'containers/LogcollectionPage/LogcollectionDialog';
 import MetricsDialog from 'containers/MetricsPage/MetricsDialog';
 import UpdatingProgress from 'components/Progress/UpdatingProgress';
+import { FormattedMessage } from 'react-intl';
+import messages from './messages';
 
 const schema = ['name', 'replicas', 'creationTimestamp'];
 
@@ -50,18 +49,18 @@ const tableSchema = schema
             type="deployment"
           />
 
-          <IconButton
-            aria-label="Update"
+          <Button
+            action
             component={Link}
             to={`/clusters/${clusterID}/namespaces/${namespaceID}/deployments/${data.get(
               'id'
             )}/update`}
           >
-            <UpgradeIcon />
-          </IconButton>
-          <IconButton onClick={() => setRollback(data.get('id'))}>
-            <RollbackIcon />
-          </IconButton>
+            <FormattedMessage {...messages.upgradeButton} />
+          </Button>
+          <Button onClick={() => setRollback(data.get('id'))} action>
+            <FormattedMessage {...messages.rollbackButton} />
+          </Button>
 
           <ConfirmDelete
             actionName={removeDeployment}

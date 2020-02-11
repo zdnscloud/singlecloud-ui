@@ -42,14 +42,14 @@ const tableSchema = schema
         <Fragment>
           <Button
             className={classes.detailsBtn}
-            link
+            action
             to={`/userQuotas/${data.get('id')}/show`}
             component={Link}
           >
             <FormattedMessage {...messages.quotaDetailsBtn} />
           </Button>
           <Button
-            link
+            action
             to={`/userQuotas/${data.get('id')}/edit`}
             component={Link}
             disabled={data.get('status') === 'processing'}

@@ -233,4 +233,8 @@ export default defineMessages({
     id: `${scope}.logClose`,
     defaultMessage: 'Close Log',
   },
+  manageButton:{
+    id: `${scope}.manageButton`,
+    defaultMessage: 'manage',
+  },
 });

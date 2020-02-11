@@ -2,8 +2,8 @@ import React, { Fragment } from 'react';
 import { ucfirst } from '@gsmlg/utils';
 import { Link } from 'react-router-dom';
 import Button from 'components/CustomButtons/Button';
-import IconButton from 'components/CustomIconButtons/IconButton';
-import LinkIcon from 'images/icons/link.svg';
+import { FormattedMessage } from 'react-intl';
+import messages from '../messages';
 
 const schema = ['name', 'memoryUsed'];
 const inflection = require('inflection');
@@ -35,7 +35,8 @@ const memoryTableSchema = schema
         namespace,
         namespaceID,
       }) => (
-        <IconButton
+        <Button
+          action
           onClick={() => {
             const podName = data.get('name');
             const url = namespace.getIn(['links', 'self']);
@@ -56,8 +57,8 @@ const memoryTableSchema = schema
             );
           }}
         >
-          <img src={LinkIcon} alt="link" className={classes.linkIcon} />
-        </IconButton>
+          <FormattedMessage {...messages.linkButton} />
+        </Button>
       ),
     },
   ]);

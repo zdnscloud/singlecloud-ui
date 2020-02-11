@@ -1,10 +1,10 @@
 import React, { Fragment } from 'react';
 import { ucfirst } from '@gsmlg/utils';
-import TimeCell from 'components/Cells/TimeCell';
 import { Link } from 'react-router-dom';
 import Button from 'components/CustomButtons/Button';
-import IconButton from 'components/CustomIconButtons/IconButton';
-import DebugIcon from 'components/Icons/Debug';
+import { FormattedMessage } from 'react-intl';
+import messages from './messages';
+
 import {
   getMeshed,
   getSuccessRate,
@@ -45,12 +45,13 @@ const tableSchema = schema
         const outboundUrl = `/clusters/${clusterID}/namespaces/${namespaceID}/svcMeshTap?resource_type=${toType}&resource_name=${toName}&to_resource_type=${type}&to_resource_name=${name}`;
         return (
           <Fragment>
-            <IconButton
+            <Button
+              ation
               component={Link}
               to={parentType === 'inbound' ? inboundUrl : outboundUrl}
             >
-              <DebugIcon />
-            </IconButton>
+              <FormattedMessage {...messages.debugButton} />
+            </Button>
           </Fragment>
         );
       },

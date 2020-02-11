@@ -24,6 +24,7 @@ function RegularButton({ ...props }) {
     size,
     block,
     link,
+    action,
     justIcon,
     className,
     ...rest
@@ -38,6 +39,7 @@ function RegularButton({ ...props }) {
     [classes.simple]: simple,
     [classes.block]: block,
     [classes.link]: link,
+    [classes.action]: action,
     [classes.justIcon]: justIcon,
     [className]: className,
   });
@@ -67,6 +69,7 @@ RegularButton.propTypes = {
   disabled: PropTypes.bool,
   block: PropTypes.bool,
   link: PropTypes.bool,
+  action: PropTypes.bool,
   justIcon: PropTypes.bool,
 };
 

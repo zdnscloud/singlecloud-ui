@@ -2,11 +2,7 @@ import React, { Fragment } from 'react';
 import { ucfirst } from '@gsmlg/utils';
 import { Link } from 'react-router-dom';
 import Button from 'components/CustomButtons/Button';
-import IconButton from 'components/CustomIconButtons/IconButton';
-import DeleteIcon from '@material-ui/icons/Delete';
 import TimeCell from 'components/Cells/TimeCell';
-import ShellIcon from 'components/Icons/Shell';
-import DetailsIcon from 'components/Icons/Details';
 import ConfirmDelete from 'components/ConfirmDelete/ConfirmDelete';
 import { FormattedMessage } from 'react-intl';
 import messages from './messages';
@@ -42,15 +38,14 @@ const adminTableSchema = schema
       label: 'Actions',
       component: ({ data, removeUserQuota, setError }) => (
         <Fragment>
-          <IconButton
-            variant="outlined"
-            size="small"
+          <Button
+            action
             to={`/userQuotas/${data.get('id')}/request`}
             component={Link}
             disabled={data.get('status') === 'Deleting'}
           >
-            <DetailsIcon />
-          </IconButton>
+            <FormattedMessage {...messages.detailsButton} />
+          </Button>
           <ConfirmDelete
             actionName={removeUserQuota}
             id={data.get('id')}

@@ -105,9 +105,9 @@ const tableSchema = schema
             }
             dialogContentText={messages.restartDialogContentText}
             component={
-              <IconButton>
-                <RestartIcon />
-              </IconButton>
+              <Button action>
+                <FormattedMessage {...messages.restarButton} />
+              </Button>
             }
           />
         </Fragment>

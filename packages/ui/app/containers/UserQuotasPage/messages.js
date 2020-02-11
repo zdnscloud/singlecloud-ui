@@ -197,4 +197,8 @@ export default defineMessages({
     id: `${scope}.quotaDetailsBtn`,
     defaultMessage: 'Details',
   },
+  detailsButton:{
+    id: `${scope}.detailsButton`,
+    defaultMessage: 'details',
+  },
 });

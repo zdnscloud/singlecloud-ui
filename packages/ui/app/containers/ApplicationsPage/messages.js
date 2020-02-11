@@ -114,4 +114,8 @@ export default defineMessages({
     id: `${scope}.formChartVersion`,
     defaultMessage: 'ChartVersion',
   },
+  monitorButton: {
+    id: `${scope}.monitorButton`,
+    defaultMessage: 'monitor',
+  },
 });

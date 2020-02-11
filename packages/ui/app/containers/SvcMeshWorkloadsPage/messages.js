@@ -109,4 +109,8 @@ export default defineMessages({
     id: `${scope}.chartTableTitleP99`,
     defaultMessage: 'P99',
   },
+  debugButton:{
+    id: `${scope}.debugButton`,
+    defaultMessage: 'debug',
+  },
 });

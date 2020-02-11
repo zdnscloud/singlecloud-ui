@@ -3,8 +3,8 @@ import { ucfirst } from '@gsmlg/utils';
 import { Link } from 'react-router-dom';
 import Button from 'components/CustomButtons/Button';
 import ConfirmDelete from 'components/ConfirmDelete/ConfirmDelete';
-import IconButton from 'components/CustomIconButtons/IconButton';
-import EditIcon from 'components/Icons/Edit';
+import { FormattedMessage } from 'react-intl';
+import messages from './messages';
 
 const schema = ['name'];
 
@@ -28,15 +28,15 @@ const tableSchema = schema
       label: 'Actions',
       component: (props) => (
         <Fragment>
-          <IconButton
-            aria-label="Edit"
+          <Button
+            action
             component={Link}
             to={`/clusters/${props.clusterID}/namespaces/${
               props.namespaceID
             }/secrets/${props.data.get('id')}/edit`}
           >
-            <EditIcon />
-          </IconButton>
+            <FormattedMessage {...messages.editButton} />
+          </Button>
           <ConfirmDelete
             actionName={props.removeSecret}
             id={props.data.get('id')}
