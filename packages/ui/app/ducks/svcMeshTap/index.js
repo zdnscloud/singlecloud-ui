@@ -58,7 +58,7 @@ export const reducer = (
       const data = payload;
       const { event } = data;
       const { requestInit, responseInit, responseEnd } = event;
-      let originId;
+      let originId = {};
       let readyState;
       if (requestInit.id.base) {
         readyState = 0;
