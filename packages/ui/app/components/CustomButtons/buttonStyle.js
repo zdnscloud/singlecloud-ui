@@ -192,7 +192,7 @@ const buttonStyle = (theme) => ({
   },
   action: {
     fontSize:14,
-    padding: '0 4px',
+    padding: '0 8px',
     color: theme.palette.highlight.normal,
     boxShadow: 'none',
     backgroundColor: 'transparent',

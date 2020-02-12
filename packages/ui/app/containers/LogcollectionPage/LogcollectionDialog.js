@@ -81,7 +81,6 @@ export const LogcollectionDialog = ({
   return (
     <Fragment>
       <CButton
-        className={classes.logBtn}
         action
         onClick={() => {
           setCurrent(null);

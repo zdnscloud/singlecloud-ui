@@ -7,6 +7,7 @@ import ConfirmDelete from 'components/ConfirmDelete/ConfirmDelete';
 import LogcollectionDialog from 'containers/LogcollectionPage/LogcollectionDialog';
 import MetricsDialog from 'containers/MetricsPage/MetricsDialog';
 import UpdatingProgress from 'components/Progress/UpdatingProgress';
+import TableActions from 'components/TableActions/TableActions';
 import { FormattedMessage } from 'react-intl';
 import messages from './messages';
 
@@ -49,25 +50,33 @@ const tableSchema = schema
             type="deployment"
           />
 
-          <Button
-            action
-            component={Link}
-            to={`/clusters/${clusterID}/namespaces/${namespaceID}/deployments/${data.get(
-              'id'
-            )}/update`}
-          >
-            <FormattedMessage {...messages.upgradeButton} />
-          </Button>
-          <Button onClick={() => setRollback(data.get('id'))} action>
-            <FormattedMessage {...messages.rollbackButton} />
-          </Button>
+          <TableActions 
+            actions={
+              [
+                <Button
+                  action
+                  component={Link}
+                  to={`/clusters/${clusterID}/namespaces/${namespaceID}/deployments/${data.get(
+                    'id'
+                  )}/update`}
+                >
+                  <FormattedMessage {...messages.upgradeButton} />
+                </Button>,
+              
+                <Button onClick={() => setRollback(data.get('id'))} action>
+                  <FormattedMessage {...messages.rollbackButton} />
+                </Button>,
 
-          <ConfirmDelete
-            actionName={removeDeployment}
-            id={data.get('id')}
-            url={data.getIn(['links', 'remove'])}
-            clusterID={clusterID}
-            namespaceID={namespaceID}
+                <ConfirmDelete
+                  actionName={removeDeployment}
+                  id={data.get('id')}
+                  url={data.getIn(['links', 'remove'])}
+                  clusterID={clusterID}
+                  namespaceID={namespaceID}
+                />,
+              ]
+            }
+          
           />
         </Fragment>
       ),

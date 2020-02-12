@@ -77,7 +77,6 @@ const MetricsDialog = ({
   return (
     <Fragment>
       <CButton
-        className={classes.logBtn}
         action
         onClick={() => {
           setCurrent(null);

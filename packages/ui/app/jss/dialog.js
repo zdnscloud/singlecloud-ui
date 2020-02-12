@@ -32,7 +32,6 @@ const styles = (theme) => ({
       marginRight: '1rem',
     },
   },
-  logBtn: { marginRight: 10 },
 });
 
 export default styles;
