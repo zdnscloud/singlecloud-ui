@@ -62,11 +62,11 @@ const ApplicationsPage = ({
     if (url) {
       loadApplications(url, { clusterID, namespaceID });
     }
-    const t = setInterval(
-      () => loadApplications(url, { clusterID, namespaceID }),
-      3000
-    );
-    return () => clearInterval(t);
+    // const t = setInterval(
+    //   () => loadApplications(url, { clusterID, namespaceID }),
+    //   3000
+    // );
+    return null; // () => clearInterval(t);
   }, [clusterID, loadApplications, namespaceID, url]);
 
   const doSubmit = (formValues) => {
