@@ -136,9 +136,7 @@ export const executeDeploymentActionEpic = (action$, state$, { ajax }) =>
         }),
         catchError((error) => {
           meta.reject && meta.reject(error);
-          return of(
-            a.executeDeploymentActionFailure(error, { ...meta, action })
-          );
+          return of(a.executeDeploymentActionFailure(error, { ...meta, action }));
         })
       )
     )
@@ -150,5 +148,5 @@ export default combineEpics(
   updateDeploymentEpic,
   readDeploymentEpic,
   removeDeploymentEpic,
-  executeDeploymentActionEpic
+  executeDeploymentActionEpic,
 );

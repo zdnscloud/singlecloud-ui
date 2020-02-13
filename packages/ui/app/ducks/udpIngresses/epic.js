@@ -104,5 +104,5 @@ export default combineEpics(
   loadUdpIngressesEpic,
   createUdpIngressEpic,
   readUdpIngressEpic,
-  removeUdpIngressEpic
+  removeUdpIngressEpic,
 );

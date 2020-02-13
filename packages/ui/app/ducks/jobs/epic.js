@@ -104,5 +104,5 @@ export default combineEpics(
   loadJobsEpic,
   createJobEpic,
   readJobEpic,
-  removeJobEpic
+  removeJobEpic,
 );

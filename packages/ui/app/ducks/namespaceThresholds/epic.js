@@ -91,16 +91,11 @@ export const readNamespaceThresholdEpic = (action$, state$, { ajax }) =>
       }).pipe(
         map((resp) => {
           meta.resolve && meta.resolve(resp);
-          return a.readNamespaceThresholdSuccess(resp, {
-            ...meta,
-            id: payload,
-          });
+          return a.readNamespaceThresholdSuccess(resp, { ...meta, id: payload });
         }),
         catchError((error) => {
           meta.reject && meta.reject(error);
-          return of(
-            a.readNamespaceThresholdFailure(error, { ...meta, id: payload })
-          );
+          return of(a.readNamespaceThresholdFailure(error, { ...meta, id: payload }));
         })
       )
     )
@@ -116,16 +111,11 @@ export const removeNamespaceThresholdEpic = (action$, state$, { ajax }) =>
       }).pipe(
         map((resp) => {
           meta.resolve && meta.resolve(resp);
-          return a.removeNamespaceThresholdSuccess(resp, {
-            ...meta,
-            id: payload,
-          });
+          return a.removeNamespaceThresholdSuccess(resp, { ...meta, id: payload });
         }),
         catchError((error) => {
           meta.reject && meta.reject(error);
-          return of(
-            a.removeNamespaceThresholdFailure(error, { ...meta, id: payload })
-          );
+          return of(a.removeNamespaceThresholdFailure(error, { ...meta, id: payload }));
         })
       )
     )
@@ -136,5 +126,5 @@ export default combineEpics(
   createNamespaceThresholdEpic,
   updateNamespaceThresholdEpic,
   readNamespaceThresholdEpic,
-  removeNamespaceThresholdEpic
+  removeNamespaceThresholdEpic,
 );

@@ -83,5 +83,5 @@ export const readThresholdEpic = (action$, state$, { ajax }) =>
 export default combineEpics(
   loadThresholdsEpic,
   updateThresholdEpic,
-  readThresholdEpic
+  readThresholdEpic,
 );

@@ -136,9 +136,7 @@ export const executeDaemonSetActionEpic = (action$, state$, { ajax }) =>
         }),
         catchError((error) => {
           meta.reject && meta.reject(error);
-          return of(
-            a.executeDaemonSetActionFailure(error, { ...meta, action })
-          );
+          return of(a.executeDaemonSetActionFailure(error, { ...meta, action }));
         })
       )
     )
@@ -150,5 +148,5 @@ export default combineEpics(
   updateDaemonSetEpic,
   readDaemonSetEpic,
   removeDaemonSetEpic,
-  executeDaemonSetActionEpic
+  executeDaemonSetActionEpic,
 );

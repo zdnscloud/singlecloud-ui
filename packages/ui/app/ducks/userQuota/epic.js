@@ -136,9 +136,7 @@ export const executeUserQuotumActionEpic = (action$, state$, { ajax }) =>
         }),
         catchError((error) => {
           meta.reject && meta.reject(error);
-          return of(
-            a.executeUserQuotumActionFailure(error, { ...meta, action })
-          );
+          return of(a.executeUserQuotumActionFailure(error, { ...meta, action }));
         })
       )
     )
@@ -150,5 +148,5 @@ export default combineEpics(
   updateUserQuotumEpic,
   readUserQuotumEpic,
   removeUserQuotumEpic,
-  executeUserQuotumActionEpic
+  executeUserQuotumActionEpic,
 );

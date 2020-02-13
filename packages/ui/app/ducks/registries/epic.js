@@ -104,5 +104,5 @@ export default combineEpics(
   loadRegistriesEpic,
   createRegistryEpic,
   readRegistryEpic,
-  removeRegistryEpic
+  removeRegistryEpic,
 );

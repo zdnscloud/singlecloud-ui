@@ -84,8 +84,8 @@ export const reducer = (
     }
     case c.CREATE_{{scCase name}}_FAILURE:
       return state.update('errorsList', (errors) => errors.filterNot((e) => e.type === type).push({ type, payload, meta }));
-{{/if}}
 
+{{/if}}
 {{#if wannaUpdateAction }}
     case c.UPDATE_{{scCase name}}:
       return state;
@@ -113,8 +113,8 @@ export const reducer = (
     }
     case c.UPDATE_{{scCase name}}_FAILURE:
       return state.update('errorsList', (errors) => errors.filterNot((e) => e.type === type).push({ type, payload, meta }));
-{{/if}}
 
+{{/if}}
 {{#if wannaReadOneAction }}
     case c.READ_{{scCase name}}:
       return state;
@@ -142,8 +142,8 @@ export const reducer = (
     }
     case c.READ_{{scCase name}}_FAILURE:
       return state.update('errorsList', (errors) => errors.filterNot((e) => e.type === type).push({ type, payload, meta }));
-{{/if}}
 
+{{/if}}
 {{#if wannaRemoveAction }}
     case c.REMOVE_{{scCase name}}:
       return state;
@@ -156,6 +156,10 @@ export const reducer = (
       {{/each}}
       } = meta;
       {{/if}}
+      const status = getByKey(payload, ['status']);
+      if (status === 202) {
+        return state.update('errorsList', (errors) => errors.filterNot((e) => e.type === c.REMOVE_{{scCase name}}_FAILURE));
+      }
       return state
         .removeIn([
           'data',
@@ -174,8 +178,8 @@ export const reducer = (
     }
     case c.REMOVE_{{scCase name}}_FAILURE:
       return state.update('errorsList', (errors) => errors.filterNot((e) => e.type === type).push({ type, payload, meta }));
-{{/if}}
 
+{{/if}}
 {{#if wannaResourceActions }}
     case c.EXECUTE_{{scCase name}}_ACTION:
       return state;
@@ -202,8 +206,8 @@ export const reducer = (
       return state.update('errorsList', (errors) => errors.filterNot((e) => e.type === c.EXECUTE_{{scCase name}}_ACTION_FAILURE));
     case c.EXECUTE_{{scCase name}}_ACTION_FAILURE:
       return state.update('errorsList', (errors) => errors.filterNot((e) => e.type === type).push({ type, payload, meta }));
-{{/if}}
 
+{{/if}}
     case c.CLEAR_ERRORS_LIST:
       return state.update('errorsList', (errors) => errors.clear());
 

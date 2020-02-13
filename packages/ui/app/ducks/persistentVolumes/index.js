@@ -32,55 +32,69 @@ export const reducer = (
       return state;
     case c.LOAD_PERSISTENT_VOLUMES_SUCCESS: {
       const { data, list } = procCollectionData(payload);
-      const { clusterID } = meta;
+      const {
+        clusterID,
+      } = meta;
       return state
-        .update('errorsList', (errors) =>
-          errors.filterNot((e) => e.type === c.LOAD_PERSISTENT_VOLUMES_FAILURE)
-        )
-        .setIn(['data', clusterID], fromJS(data))
-        .setIn(['list', clusterID], fromJS(list));
+        .update('errorsList', (errors) => errors.filterNot((e) => e.type === c.LOAD_PERSISTENT_VOLUMES_FAILURE))
+        .setIn([
+          'data',
+          clusterID,
+        ], fromJS(data))
+        .setIn([
+          'list',
+          clusterID,
+        ], fromJS(list));
     }
     case c.LOAD_PERSISTENT_VOLUMES_FAILURE:
-      return state.update('errorsList', (errors) =>
-        errors.filterNot((e) => e.type === type).push({ type, payload, meta })
-      );
+      return state.update('errorsList', (errors) => errors.filterNot((e) => e.type === type).push({ type, payload, meta }));
 
     case c.READ_PERSISTENT_VOLUME:
       return state;
     case c.READ_PERSISTENT_VOLUME_SUCCESS: {
       const id = getByKey(payload, ['response', 'id']);
       const data = getByKey(payload, ['response']);
-      const { clusterID } = meta;
+      const {
+        clusterID,
+      } = meta;
       if (id) {
-        return state
-          .setIn(['data', clusterID, id], fromJS(data))
-          .update('errorsList', (errors) =>
-            errors.filterNot((e) => e.type === c.READ_PERSISTENT_VOLUME_FAILURE)
-          );
+        return state.setIn([
+          'data',
+          clusterID,
+          id,
+        ], fromJS(data))
+          .update('errorsList', (errors) => errors.filterNot((e) => e.type === c.READ_PERSISTENT_VOLUME_FAILURE));
       }
       return state;
     }
     case c.READ_PERSISTENT_VOLUME_FAILURE:
-      return state.update('errorsList', (errors) =>
-        errors.filterNot((e) => e.type === type).push({ type, payload, meta })
-      );
+      return state.update('errorsList', (errors) => errors.filterNot((e) => e.type === type).push({ type, payload, meta }));
 
     case c.REMOVE_PERSISTENT_VOLUME:
       return state;
     case c.REMOVE_PERSISTENT_VOLUME_SUCCESS: {
       const { id } = meta;
-      const { clusterID } = meta;
+      const {
+        clusterID,
+      } = meta;
+      const status = getByKey(payload, ['status']);
+      if (status === 202) {
+        return state.update('errorsList', (errors) => errors.filterNot((e) => e.type === c.REMOVE_PERSISTENT_VOLUME_FAILURE));
+      }
       return state
-        .removeIn(['data', clusterID, id])
-        .updateIn(['list', clusterID], (l) => l.filterNot((i) => i === id))
-        .update('errorsList', (errors) =>
-          errors.filterNot((e) => e.type === c.REMOVE_PERSISTENT_VOLUME_FAILURE)
-        );
+        .removeIn([
+          'data',
+          clusterID,
+          id,
+        ])
+        .updateIn([
+          'list',
+          clusterID,
+        ], (l) => l.filterNot((i) => i === id))
+        .update('errorsList', (errors) => errors.filterNot((e) => e.type === c.REMOVE_PERSISTENT_VOLUME_FAILURE));
     }
     case c.REMOVE_PERSISTENT_VOLUME_FAILURE:
-      return state.update('errorsList', (errors) =>
-        errors.filterNot((e) => e.type === type).push({ type, payload, meta })
-      );
+      return state.update('errorsList', (errors) => errors.filterNot((e) => e.type === type).push({ type, payload, meta }));
 
     case c.CLEAR_ERRORS_LIST:
       return state.update('errorsList', (errors) => errors.clear());

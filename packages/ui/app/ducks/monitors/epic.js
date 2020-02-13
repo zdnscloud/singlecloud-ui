@@ -104,5 +104,5 @@ export default combineEpics(
   loadMonitorsEpic,
   createMonitorEpic,
   readMonitorEpic,
-  removeMonitorEpic
+  removeMonitorEpic,
 );

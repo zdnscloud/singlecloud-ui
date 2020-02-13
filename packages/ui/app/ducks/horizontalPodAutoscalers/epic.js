@@ -91,19 +91,11 @@ export const readHorizontalPodAutoscalerEpic = (action$, state$, { ajax }) =>
       }).pipe(
         map((resp) => {
           meta.resolve && meta.resolve(resp);
-          return a.readHorizontalPodAutoscalerSuccess(resp, {
-            ...meta,
-            id: payload,
-          });
+          return a.readHorizontalPodAutoscalerSuccess(resp, { ...meta, id: payload });
         }),
         catchError((error) => {
           meta.reject && meta.reject(error);
-          return of(
-            a.readHorizontalPodAutoscalerFailure(error, {
-              ...meta,
-              id: payload,
-            })
-          );
+          return of(a.readHorizontalPodAutoscalerFailure(error, { ...meta, id: payload }));
         })
       )
     )
@@ -119,19 +111,11 @@ export const removeHorizontalPodAutoscalerEpic = (action$, state$, { ajax }) =>
       }).pipe(
         map((resp) => {
           meta.resolve && meta.resolve(resp);
-          return a.removeHorizontalPodAutoscalerSuccess(resp, {
-            ...meta,
-            id: payload,
-          });
+          return a.removeHorizontalPodAutoscalerSuccess(resp, { ...meta, id: payload });
         }),
         catchError((error) => {
           meta.reject && meta.reject(error);
-          return of(
-            a.removeHorizontalPodAutoscalerFailure(error, {
-              ...meta,
-              id: payload,
-            })
-          );
+          return of(a.removeHorizontalPodAutoscalerFailure(error, { ...meta, id: payload }));
         })
       )
     )
@@ -142,5 +126,5 @@ export default combineEpics(
   createHorizontalPodAutoscalerEpic,
   updateHorizontalPodAutoscalerEpic,
   readHorizontalPodAutoscalerEpic,
-  removeHorizontalPodAutoscalerEpic
+  removeHorizontalPodAutoscalerEpic,
 );

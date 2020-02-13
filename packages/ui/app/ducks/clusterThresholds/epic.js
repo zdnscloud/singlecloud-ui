@@ -95,9 +95,7 @@ export const readClusterThresholdEpic = (action$, state$, { ajax }) =>
         }),
         catchError((error) => {
           meta.reject && meta.reject(error);
-          return of(
-            a.readClusterThresholdFailure(error, { ...meta, id: payload })
-          );
+          return of(a.readClusterThresholdFailure(error, { ...meta, id: payload }));
         })
       )
     )
@@ -113,16 +111,11 @@ export const removeClusterThresholdEpic = (action$, state$, { ajax }) =>
       }).pipe(
         map((resp) => {
           meta.resolve && meta.resolve(resp);
-          return a.removeClusterThresholdSuccess(resp, {
-            ...meta,
-            id: payload,
-          });
+          return a.removeClusterThresholdSuccess(resp, { ...meta, id: payload });
         }),
         catchError((error) => {
           meta.reject && meta.reject(error);
-          return of(
-            a.removeClusterThresholdFailure(error, { ...meta, id: payload })
-          );
+          return of(a.removeClusterThresholdFailure(error, { ...meta, id: payload }));
         })
       )
     )
@@ -133,5 +126,5 @@ export default combineEpics(
   createClusterThresholdEpic,
   updateClusterThresholdEpic,
   readClusterThresholdEpic,
-  removeClusterThresholdEpic
+  removeClusterThresholdEpic,
 );

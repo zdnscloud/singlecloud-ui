@@ -126,5 +126,5 @@ export default combineEpics(
   createConfigMapEpic,
   updateConfigMapEpic,
   readConfigMapEpic,
-  removeConfigMapEpic
+  removeConfigMapEpic,
 );

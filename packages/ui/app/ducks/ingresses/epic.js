@@ -126,5 +126,5 @@ export default combineEpics(
   createIngressEpic,
   updateIngressEpic,
   readIngressEpic,
-  removeIngressEpic
+  removeIngressEpic,
 );

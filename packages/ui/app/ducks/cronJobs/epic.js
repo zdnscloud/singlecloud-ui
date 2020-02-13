@@ -104,5 +104,5 @@ export default combineEpics(
   loadCronJobsEpic,
   createCronJobEpic,
   readCronJobEpic,
-  removeCronJobEpic
+  removeCronJobEpic,
 );

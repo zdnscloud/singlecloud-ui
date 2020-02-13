@@ -94,9 +94,7 @@ export const removeApplicationEpic = (action$, state$, { ajax }) =>
         }),
         catchError((error) => {
           meta.reject && meta.reject(error);
-          return of(
-            a.removeApplicationFailure(error, { ...meta, id: payload })
-          );
+          return of(a.removeApplicationFailure(error, { ...meta, id: payload }));
         })
       )
     )
@@ -106,5 +104,5 @@ export default combineEpics(
   loadApplicationsEpic,
   createApplicationEpic,
   readApplicationEpic,
-  removeApplicationEpic
+  removeApplicationEpic,
 );

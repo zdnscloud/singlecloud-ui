@@ -32,38 +32,48 @@ export const reducer = (
       return state;
     case c.LOAD_CHARTS_SUCCESS: {
       const { data, list } = procCollectionData(payload);
-      const { clusterID, namespaceID } = meta;
+      const {
+        clusterID,
+        namespaceID,
+      } = meta;
       return state
-        .update('errorsList', (errors) =>
-          errors.filterNot((e) => e.type === c.LOAD_CHARTS_FAILURE)
-        )
-        .setIn(['data', clusterID, namespaceID], fromJS(data))
-        .setIn(['list', clusterID, namespaceID], fromJS(list));
+        .update('errorsList', (errors) => errors.filterNot((e) => e.type === c.LOAD_CHARTS_FAILURE))
+        .setIn([
+          'data',
+          clusterID,
+          namespaceID,
+        ], fromJS(data))
+        .setIn([
+          'list',
+          clusterID,
+          namespaceID,
+        ], fromJS(list));
     }
     case c.LOAD_CHARTS_FAILURE:
-      return state.update('errorsList', (errors) =>
-        errors.filterNot((e) => e.type === type).push({ type, payload, meta })
-      );
+      return state.update('errorsList', (errors) => errors.filterNot((e) => e.type === type).push({ type, payload, meta }));
 
     case c.READ_CHART:
       return state;
     case c.READ_CHART_SUCCESS: {
       const id = getByKey(payload, ['response', 'id']);
       const data = getByKey(payload, ['response']);
-      const { clusterID, namespaceID } = meta;
+      const {
+        clusterID,
+        namespaceID,
+      } = meta;
       if (id) {
-        return state
-          .setIn(['data', clusterID, namespaceID, id], fromJS(data))
-          .update('errorsList', (errors) =>
-            errors.filterNot((e) => e.type === c.READ_CHART_FAILURE)
-          );
+        return state.setIn([
+          'data',
+          clusterID,
+          namespaceID,
+          id,
+        ], fromJS(data))
+          .update('errorsList', (errors) => errors.filterNot((e) => e.type === c.READ_CHART_FAILURE));
       }
       return state;
     }
     case c.READ_CHART_FAILURE:
-      return state.update('errorsList', (errors) =>
-        errors.filterNot((e) => e.type === type).push({ type, payload, meta })
-      );
+      return state.update('errorsList', (errors) => errors.filterNot((e) => e.type === type).push({ type, payload, meta }));
 
     case c.CLEAR_ERRORS_LIST:
       return state.update('errorsList', (errors) => errors.clear());

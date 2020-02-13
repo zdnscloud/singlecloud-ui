@@ -104,5 +104,5 @@ export default combineEpics(
   loadServicesEpic,
   createServiceEpic,
   readServiceEpic,
-  removeServiceEpic
+  removeServiceEpic,
 );

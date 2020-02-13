@@ -104,5 +104,5 @@ export default combineEpics(
   loadEfksEpic,
   createEfkEpic,
   readEfkEpic,
-  removeEfkEpic
+  removeEfkEpic,
 );

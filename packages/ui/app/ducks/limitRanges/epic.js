@@ -104,5 +104,5 @@ export default combineEpics(
   loadLimitRangesEpic,
   createLimitRangeEpic,
   readLimitRangeEpic,
-  removeLimitRangeEpic
+  removeLimitRangeEpic,
 );

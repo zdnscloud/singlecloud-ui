@@ -59,4 +59,7 @@ export const readKubeConfigEpic = (action$, state$, { ajax }) =>
     )
   );
 
-export default combineEpics(loadKubeConfigsEpic, readKubeConfigEpic);
+export default combineEpics(
+  loadKubeConfigsEpic,
+  readKubeConfigEpic,
+);

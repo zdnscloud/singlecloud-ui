@@ -148,5 +148,5 @@ export default combineEpics(
   updateUserEpic,
   readUserEpic,
   removeUserEpic,
-  executeUserActionEpic
+  executeUserActionEpic,
 );

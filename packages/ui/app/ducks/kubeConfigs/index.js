@@ -32,38 +32,43 @@ export const reducer = (
       return state;
     case c.LOAD_KUBE_CONFIGS_SUCCESS: {
       const { data, list } = procCollectionData(payload);
-      const { clusterID } = meta;
+      const {
+        clusterID,
+      } = meta;
       return state
-        .update('errorsList', (errors) =>
-          errors.filterNot((e) => e.type === c.LOAD_KUBE_CONFIGS_FAILURE)
-        )
-        .setIn(['data', clusterID], fromJS(data))
-        .setIn(['list', clusterID], fromJS(list));
+        .update('errorsList', (errors) => errors.filterNot((e) => e.type === c.LOAD_KUBE_CONFIGS_FAILURE))
+        .setIn([
+          'data',
+          clusterID,
+        ], fromJS(data))
+        .setIn([
+          'list',
+          clusterID,
+        ], fromJS(list));
     }
     case c.LOAD_KUBE_CONFIGS_FAILURE:
-      return state.update('errorsList', (errors) =>
-        errors.filterNot((e) => e.type === type).push({ type, payload, meta })
-      );
+      return state.update('errorsList', (errors) => errors.filterNot((e) => e.type === type).push({ type, payload, meta }));
 
     case c.READ_KUBE_CONFIG:
       return state;
     case c.READ_KUBE_CONFIG_SUCCESS: {
       const id = getByKey(payload, ['response', 'id']);
       const data = getByKey(payload, ['response']);
-      const { clusterID } = meta;
+      const {
+        clusterID,
+      } = meta;
       if (id) {
-        return state
-          .setIn(['data', clusterID, id], fromJS(data))
-          .update('errorsList', (errors) =>
-            errors.filterNot((e) => e.type === c.READ_KUBE_CONFIG_FAILURE)
-          );
+        return state.setIn([
+          'data',
+          clusterID,
+          id,
+        ], fromJS(data))
+          .update('errorsList', (errors) => errors.filterNot((e) => e.type === c.READ_KUBE_CONFIG_FAILURE));
       }
       return state;
     }
     case c.READ_KUBE_CONFIG_FAILURE:
-      return state.update('errorsList', (errors) =>
-        errors.filterNot((e) => e.type === type).push({ type, payload, meta })
-      );
+      return state.update('errorsList', (errors) => errors.filterNot((e) => e.type === type).push({ type, payload, meta }));
 
     case c.CLEAR_ERRORS_LIST:
       return state.update('errorsList', (errors) => errors.clear());

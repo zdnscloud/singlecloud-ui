@@ -59,4 +59,7 @@ export const readSvcMeshPodEpic = (action$, state$, { ajax }) =>
     )
   );
 
-export default combineEpics(loadSvcMeshPodsEpic, readSvcMeshPodEpic);
+export default combineEpics(
+  loadSvcMeshPodsEpic,
+  readSvcMeshPodEpic,
+);

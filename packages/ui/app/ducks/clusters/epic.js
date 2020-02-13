@@ -148,5 +148,5 @@ export default combineEpics(
   updateClusterEpic,
   readClusterEpic,
   removeClusterEpic,
-  executeClusterActionEpic
+  executeClusterActionEpic,
 );

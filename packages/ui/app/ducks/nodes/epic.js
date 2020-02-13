@@ -80,4 +80,8 @@ export const executeNodeActionEpic = (action$, state$, { ajax }) =>
     )
   );
 
-export default combineEpics(loadNodesEpic, readNodeEpic, executeNodeActionEpic);
+export default combineEpics(
+  loadNodesEpic,
+  readNodeEpic,
+  executeNodeActionEpic,
+);
