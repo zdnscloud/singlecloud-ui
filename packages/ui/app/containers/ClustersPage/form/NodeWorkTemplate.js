@@ -44,6 +44,25 @@ const NodeWorkTemplate = ({
     )}
     {fields.map((f, i) => (
       <GridContainer key={i + 1}>
+        <GridItem xs={2} sm={2} md={2} className={classes.checkboxes} >
+          <CheckboxesField
+            name={`${f}.roles`}
+            label=""
+            classes={{
+              formControl: classes.chexboxesControl,
+              formLabel: classes.chexboxesLabel,
+              group: classes.chexboxesGroup,
+            }}
+            options={[
+              {
+                label: <FormattedMessage {...messages.formBoundaryNode} />,
+                value: 'edge',
+              },
+            ]}
+            formControlComponent="div"
+            formLabelComponent="div"
+          />
+        </GridItem>
         <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
           <InputField
             label={<FormattedMessage {...messages.formHostName} />}
@@ -68,37 +87,12 @@ const NodeWorkTemplate = ({
           sm={3}
           md={3}
           className={classes.formLine}
-          style={{ paddingTop: 18 }}
+          style={{ paddingTop: 7 }}
         >
           <IconButton variant="contained" onClick={(evt) => fields.remove(i)}>
             <MinusIcon />
           </IconButton>
         </GridItem>
-        <GridContainer key={i}>
-          <GridItem xs={6} sm={6} md={6} className={classes.formLine}>
-            <CheckboxesField
-              name={`${f}.roles`}
-              label=""
-              classes={{
-                formControl: classes.chexboxesControl,
-                formLabel: classes.chexboxesLabel,
-                group: classes.chexboxesGroup,
-              }}
-              options={[
-                {
-                  label: <FormattedMessage {...messages.formETCDNode} />,
-                  value: 'etcd',
-                },
-                {
-                  label: <FormattedMessage {...messages.formBoundaryNode} />,
-                  value: 'edge',
-                },
-              ]}
-              formControlComponent="div"
-              formLabelComponent="div"
-            />
-          </GridItem>
-        </GridContainer>
       </GridContainer>
     ))}
   </Fragment>

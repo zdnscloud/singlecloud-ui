@@ -25,9 +25,12 @@ export const styles = (theme) => ({
     lineHeight: 3,
   },
   chexboxesGroup: {
-    width: 600,
     flexDirection: 'row!important',
-    marginLeft: '0.8rem',
+    marginLeft: '0.5rem',
+    marginTop: 10,
+  },
+  checkboxes:{
+    paddingRight:'0 !important',
   },
   formGrid: {
     padding: theme.spacing(2),

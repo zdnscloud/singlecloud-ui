@@ -67,33 +67,12 @@ const NodeMainTemplate = ({
           sm={3}
           md={3}
           className={classes.formLine}
-          style={{ paddingTop: 18 }}
+          style={{ paddingTop: 7 }}
         >
           <IconButton variant="contained" onClick={(evt) => fields.remove(i)}>
             <MinusIcon />
           </IconButton>
         </GridItem>
-        <GridContainer key={i + i}>
-          <GridItem xs={6} sm={6} md={6} className={classes.formLine}>
-            <CheckboxesField
-              name={`${f}.roles`}
-              label=""
-              classes={{
-                formControl: classes.chexboxesControl,
-                formLabel: classes.chexboxesLabel,
-                group: classes.chexboxesGroup,
-              }}
-              options={[
-                {
-                  label: <FormattedMessage {...messages.formETCDNode} />,
-                  value: 'etcd',
-                },
-              ]}
-              formControlComponent="div"
-              formLabelComponent="div"
-            />
-          </GridItem>
-        </GridContainer>
       </GridContainer>
     ))}
   </Fragment>
