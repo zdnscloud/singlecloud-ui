@@ -42,14 +42,21 @@ export const IngressesPage = ({
 }) => {
   const classes = useStyles();
   useEffect(() => {
+    let t = null;
     if (url) {
       loadIngresses(url, {
         clusterID,
         namespaceID,
       });
+      t = setInterval(() => {
+        loadIngresses(url, {
+          clusterID,
+          namespaceID,
+        });
+      }, 3000);
     }
     return () => {
-      // try cancel something when unmount
+      clearInterval(t);
     };
   }, [clusterID, loadIngresses, namespaceID, url]);
 
