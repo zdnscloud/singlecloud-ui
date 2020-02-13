@@ -28,15 +28,12 @@ import messages from './messages';
 
 export const formName = 'createServiceForm';
 
-const ExposedPortsComponent = ({ meta: { touched, error, invalid } }) => {
-  console.log('meta: ', { touched, error, invalid });
-  return (
-    <>
-      <FormattedMessage {...messages.formExposedPorts} />
-      {touched && typeof error === 'string' && <Danger>{error}</Danger>}
-    </>
-  );
-};
+const ExposedPortsComponent = ({ meta: { touched, error, invalid } }) => (
+  <>
+    <FormattedMessage {...messages.formExposedPorts} />
+    {touched && typeof error === 'string' && <Danger>{error}</Danger>}
+  </>
+);
 
 const ExposedPortsField = (props) => {
   const { component, ...rest } = props;
@@ -54,7 +51,7 @@ const validate = (values) => {
   });
   const exposedPorts = values.get('exposedPorts') || [];
   const enabled = exposedPorts.reduce(
-    (enabled, p) => enabled || p.get('enable'),
+    (enable, p) => enable || p.get('enable'),
     false
   );
   exposedPorts.forEach((port, i) => {
@@ -142,7 +139,7 @@ const Form = ({
                       const workload = targetNameOptions.find(
                         (t) => t.get('name') === name
                       );
-                      const exposedPorts = workload
+                      const ports = workload
                         .get('containers')
                         .reduce(
                           (meno, c) =>
@@ -152,7 +149,7 @@ const Form = ({
                         .map((exposedPort) =>
                           exposedPort.set('targetPort', exposedPort.get('port'))
                         );
-                      changeFormValue('exposedPorts', exposedPorts);
+                      changeFormValue('exposedPorts', ports);
                     }}
                     fullWidth
                   />

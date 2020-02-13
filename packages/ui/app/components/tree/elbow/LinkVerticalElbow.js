@@ -23,8 +23,8 @@ export default function LinkVerticalElbow({
     let a = Math.abs(Math.tan(Math.PI / 4) * b);
     const c = target.x - source.x;
 
-    const h = Math.sqrt(Math.pow(b, 2) + Math.pow(c, 2));
-    const ab = Math.sqrt(Math.pow(a, 2) + Math.pow(b, 2));
+    const h = Math.sqrt( b ** 2 + c ** 2 );
+    const ab = Math.sqrt( a ** 2 + b ** 2); 
 
     /* 
       Check if the line between the two points is less than 

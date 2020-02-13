@@ -78,7 +78,7 @@ const OutLinks = ({
     menus = menus.filter((m) => m.adminOnly === undefined);
   }
   const classes = useStyles({ showText });
-  const actions = {
+  const actionsGroup = {
     loadMonitors,
     loadRegistries,
     loadEfks,
@@ -90,11 +90,11 @@ const OutLinks = ({
   const [memuRole, setMemuRole] = useState(null);
   const [error, setError] = useState(null);
 
-  const handleMemuClick = (role) => {
-    setMemuRole(role);
-    const loadAction = `load${inflection.camelize(role)}`;
+  const handleMemuClick = (r) => {
+    setMemuRole(r);
+    const loadAction = `load${inflection.camelize(r)}`;
     const url = cluster.getIn(['links', role]);
-    actions[loadAction](url, {
+    actionsGroup[loadAction](url, {
       clusterID,
       resolve(res) {
         if (res.response.data.length > 0) {
@@ -116,7 +116,7 @@ const OutLinks = ({
         inflection.singularize(memuRole)
       )}`;
       await new Promise((resolve, reject) => {
-        actions[createAction](data, {
+        actionsGroup[createAction](data, {
           resolve() {
             setOpen(false);
             setHidden('inherit');
@@ -125,8 +125,8 @@ const OutLinks = ({
           url,
         });
       });
-    } catch (error) {
-      throw new SubmissionError({ _error: error });
+    } catch (err) {
+      throw new SubmissionError({ _error: err });
     }
   }
 

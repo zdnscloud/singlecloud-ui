@@ -22,7 +22,7 @@ const VolumeClaimTemplate = ({
   storageClasses,
   meta: { error, submitFailed },
   role,
-  // pvc,
+  pvc,
   formValues,
 }) => {
   const classes = useStyles();

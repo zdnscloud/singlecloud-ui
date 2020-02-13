@@ -40,7 +40,6 @@ const epicMiddleware = createEpicMiddleware({
         map((resp) => resp),
         catchError((error) => {
           if (getByKey(error, 'status') === 401) {
-            console.log('unauthorized', error.status);
             import('store').then((exports) => {
               const store = getByKey(exports, ['default', 'instance']);
               setTimeout(() => {

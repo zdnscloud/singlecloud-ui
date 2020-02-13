@@ -98,11 +98,11 @@ export const CronJobDetailPage = ({
                 }
                 if (item && item.command) {
                   item.command = item.command
-                    .map((c) => {
-                      if (c.indexOf(' ') !== -1) {
-                        c = ` "${c}" `;
+                    .map((cmd) => {
+                      if (cmd.indexOf(' ') !== -1) {
+                        cmd = ` "${cmd}" `;
                       }
-                      return c;
+                      return cmd;
                     })
                     .join(' ');
                 }

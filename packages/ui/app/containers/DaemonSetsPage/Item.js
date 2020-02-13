@@ -150,8 +150,8 @@ export const DaemonSet = ({
                                       }
                                     />
                                   </ListItem>
-                                  {c.get('env').map((p, i) => (
-                                    <ListItem key={i}>
+                                  {c.get('env').map((p, j) => (
+                                    <ListItem key={j}>
                                       <ListItemText>
                                         <GridContainer>
                                           <GridItem
@@ -205,8 +205,8 @@ export const DaemonSet = ({
                                       }
                                     />
                                   </ListItem>
-                                  {c.get('volumes').map((p, i) => (
-                                    <ListItem key={i}>
+                                  {c.get('volumes').map((p, k) => (
+                                    <ListItem key={k}>
                                       <ListItemText>
                                         <GridContainer>
                                           <GridItem
@@ -275,8 +275,8 @@ export const DaemonSet = ({
                                       }
                                     />
                                   </ListItem>
-                                  {c.get('exposedPorts').map((p, i) => (
-                                    <ListItem key={i}>
+                                  {c.get('exposedPorts').map((p, l) => (
+                                    <ListItem key={l}>
                                       <ListItemText>
                                         <GridContainer>
                                           <GridItem
