@@ -12,6 +12,8 @@ import Danger from 'components/Typography/Danger';
 import GridItem from 'components/Grid/GridItem';
 import GridContainer from 'components/Grid/GridContainer';
 import InputField from 'components/Field/InputField';
+import Card from 'components/Card/Card';
+import CardBody from 'components/Card/CardBody';
 import CheckboxesField from 'components/Field/CheckboxesField';
 import PlusIcon from 'components/Icons/Plus';
 import MinusIcon from 'components/Icons/Minus';
@@ -22,18 +24,19 @@ const NodeWorkTemplate = ({
   fields,
   classes,
   meta: { error, submitFailed },
-}) => (
+}) =>  (
   <Fragment>
     <GridContainer>
       <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
         <Button
-          color="secondary"
+          className={classes.addNodeBtn}
+          variant="contained" color="primary"
           onClick={(evt) =>
             fields.push(fromJS({ name: '', addrsss: '', roles: [] }))
           }
         >
+          <span className={classes.plusIcon}>+</span>
           <FormattedMessage {...messages.formAddWorkNode} />
-          <PlusIcon />
         </Button>
       </GridItem>
     </GridContainer>
@@ -42,59 +45,67 @@ const NodeWorkTemplate = ({
         <Danger>{error}</Danger>
       </ListItem>
     )}
-    {fields.map((f, i) => (
-      <GridContainer key={i + 1}>
-        <GridItem xs={2} sm={2} md={2} className={classes.checkboxes} >
-          <CheckboxesField
-            name={`${f}.roles`}
-            label=""
-            classes={{
-              formControl: classes.chexboxesControl,
-              formLabel: classes.chexboxesLabel,
-              group: classes.chexboxesGroup,
-            }}
-            options={[
-              {
-                label: <FormattedMessage {...messages.formBoundaryNode} />,
-                value: 'edge',
-              },
-            ]}
-            formControlComponent="div"
-            formLabelComponent="div"
-          />
-        </GridItem>
-        <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
-          <InputField
-            label={<FormattedMessage {...messages.formHostName} />}
-            name={`${f}.name`}
-            fullWidth
-            inputProps={{ type: 'text', autoComplete: 'off' }}
-          />
-        </GridItem>
-        <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
-          <InputField
-            label="IP"
-            name={`${f}.address`}
-            fullWidth
-            inputProps={{
-              type: 'text',
-              autoComplete: 'off',
-            }}
-          />
-        </GridItem>
-        <GridItem
-          xs={3}
-          sm={3}
-          md={3}
-          className={classes.formLine}
-          style={{ paddingTop: 7 }}
-        >
-          <IconButton variant="contained" onClick={(evt) => fields.remove(i)}>
-            <MinusIcon />
-          </IconButton>
-        </GridItem>
-      </GridContainer>
-    ))}
+    <Card border>
+      <CardBody>
+        {fields.map((f, i) => (
+          <GridContainer key={i+1}>
+            <GridItem xs={2} sm={2} md={2} className={classes.checkboxes} >
+              <CheckboxesField
+                name={`${f}.roles`}
+                label=""
+                id={i}
+                classes={{
+                  formControl: classes.chexboxesControl,
+                  formLabel: classes.chexboxesLabel,
+                  group: classes.chexboxesGroup,
+                }}
+                options={[
+                  {
+                    label: <FormattedMessage {...messages.formBoundaryNode} />,
+                    value: 'edge',
+                  },
+                ]}
+                formControlComponent="div"
+                formLabelComponent="div"
+              />
+            </GridItem>
+            <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
+              <InputField
+                label={<FormattedMessage {...messages.formHostName} />}
+                name={`${f}.name`}
+                fullWidth
+                inputProps={{ type: 'text', autoComplete: 'off' }}
+              />
+            </GridItem>
+            <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
+              <InputField
+                label="IP"
+                name={`${f}.address`}
+                fullWidth
+                inputProps={{
+                  type: 'text',
+                  autoComplete: 'off',
+                }}
+              />
+            </GridItem>
+            <GridItem
+              xs={3}
+              sm={3}
+              md={3}
+              className={classes.formLine}
+              style={{ paddingTop: 7 }}
+            >
+              <IconButton
+                variant="contained" onClick={(evt) => 
+                  fields.remove(i)
+                }>
+                <MinusIcon />
+              </IconButton>
+            </GridItem>
+          </GridContainer>
+        ))}
+      </CardBody>
+    </Card>
   </Fragment>
 );
 

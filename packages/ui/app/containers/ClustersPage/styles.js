@@ -31,6 +31,7 @@ export const styles = (theme) => ({
   },
   checkboxes:{
     paddingRight:'0 !important',
+    width: 153,
   },
   formGrid: {
     padding: theme.spacing(2),
@@ -107,6 +108,14 @@ export const styles = (theme) => ({
     position: 'absolute',
     top: '22px',
     right: '18px',
+  },
+  plusIcon:{
+    fontSize: 16,
+    marginRight:5,
+    lineHeight:1.5,
+  },
+  addNodeBtn:{
+    marginBottom:25,
   },
 });
 
