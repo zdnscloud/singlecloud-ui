@@ -5,8 +5,8 @@ export const styles = (theme) => ({
   root: {
     display: 'flex',
     flexDirection: 'column',
-    backgroundColor: theme.palette.secondary.main,
-    color: theme.palette.primary.contrastText,
+    backgroundColor: theme.palette.leftMemu.main,
+    color: theme.palette.leftMemu.contrastText,
     ...theme.palette.transition,
     border: 'none',
     zIndex: theme.zIndex.appBar,
@@ -15,8 +15,9 @@ export const styles = (theme) => ({
   },
   secondMenu: {
     width: theme.leftMenuWidth,
-    color: theme.palette.primary.contrastText,
-    backgroundColor: theme.palette.secondary.main,
+    color: theme.palette.leftMemu.contrastText,
+    backgroundColor: theme.palette.leftMemu.main,
+    boxShadow: '1px 1px 4px rgba(0, 0, 0, 0.15)',
     position: 'absolute',
     left: 2,
     '& $itemText': {
@@ -31,19 +32,20 @@ export const styles = (theme) => ({
   item: {
     position: 'relative',
     textDecoration: 'none',
-    color: theme.palette.primary.contrastText,
+    color: theme.palette.leftMemu.contrastText,
   },
   itemLink: {
     ...theme.palette.transition,
     width: 'auto',
-    color: `rgba(${hexToRgb(theme.palette.primary.contrastText)}, 0.7)`,
+    color: theme.palette.leftMemu.contrastText,
     borderRadius: '0px',
     position: 'relative',
     padding: '10px 15px',
     backgroundColor: 'transparent',
     height: '50px',
+    cursor: 'pointer',
     '&:hover': {
-      color: `rgba(${hexToRgb(theme.palette.primary.contrastText)}, 1)`,
+      color: theme.palette.leftMemu.highlight,
       backgroundColor: 'transparent',
     },
   },
@@ -62,7 +64,7 @@ export const styles = (theme) => ({
       showText ? theme.leftMenuWidth : theme.leftShrinkWidth,
     zIndex: 4,
     overflowScrolling: 'touch',
-    color: theme.palette.primary.contrastText,
+    color: theme.palette.leftMemu.contrastText,
     ...theme.palette.transition,
   },
   nested: {
@@ -80,36 +82,16 @@ export const styles = (theme) => ({
       left: 0,
       top: 0,
       content: '" "',
-      backgroundColor: theme.palette.highlight.main,
+      backgroundColor: theme.palette.leftMemu.highlight,
     },
   },
   active: {
-    color: theme.palette.highlight.main,
+    color: theme.palette.leftMemu.highlight,
+    backgroundColor: theme.palette.leftMemu.highlightBg,
     '&:hover': {
-      color: theme.palette.highlight.main,
+      color: theme.palette.leftMemu.highlight,
       fontWeight: 'bold',
     },
-  },
-  logoWrap: {
-    display: 'flex',
-    alignItems: 'center',
-    width: ({ showText }) =>
-      showText ? theme.leftMenuWidth : theme.leftShrinkWidth,
-    height: theme.appBarHeight,
-    zIndex: 4,
-  },
-  logoIconWrapper: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: theme.leftShrinkWidth,
-    '& img': {
-      width: 30,
-    },
-  },
-  logoName: {
-    display: ({ showText }) => (showText ? 'flex' : 'none'),
-    fontSize: 18,
   },
 });
 
