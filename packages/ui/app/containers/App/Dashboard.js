@@ -114,9 +114,9 @@ export const Dashboard = ({
             const cID = data[0].id;
             loadNamespaces(nurl, {
               cID,
-              resolve({ response: { data } }) {
-                if (data.length > 0) {
-                  const nID = data[0].id;
+              resolve({ response: { data: nsData } }) {
+                if (nsData.length > 0) {
+                  const nID = nsData[0].id;
                   setLastNamespace(nID);
                   setRedirectUrl(`/clusters/${cID}/namespaces/${nID}/overview`);
                 } else {
