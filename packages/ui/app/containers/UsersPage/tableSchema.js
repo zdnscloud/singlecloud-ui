@@ -2,12 +2,11 @@ import React, { Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import { ucfirst } from '@gsmlg/utils';
 import Chip from '@material-ui/core/Chip';
-import Icon from '@material-ui/core/Icon';
 import PersonIcon from '@material-ui/icons/Person';
-import DeleteIcon from '@material-ui/icons/Delete';
-import EditIcon from '@material-ui/icons/Edit';
-import IconButton from '@material-ui/core/IconButton';
 import ConfirmDelete from 'components/ConfirmDelete/ConfirmDelete';
+import Button from 'components/CustomButtons/Button';
+import { FormattedMessage } from 'react-intl';
+import messages from './messages';
 
 const schema = ['name', 'projects', 'creationTimestamp'];
 
@@ -22,11 +21,9 @@ const tableSchema = schema
       label: 'Actions',
       component: ({ data, removeUser }) => (
         <Fragment>
-          <Link to={`/users/${data.get('id')}/edit`}>
-            <IconButton>
-              <EditIcon />
-            </IconButton>
-          </Link>
+          <Button action  component={Link} k to={`/users/${data.get('id')}/edit`}>
+            <FormattedMessage {...messages.editButton} />
+          </Button>
           <ConfirmDelete
             actionName={removeUser}
             id={data.get('id')}

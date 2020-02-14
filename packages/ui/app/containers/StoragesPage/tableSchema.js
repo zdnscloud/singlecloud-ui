@@ -1,13 +1,10 @@
 import React, { Fragment } from 'react';
 import { ucfirst } from '@gsmlg/utils';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
 import { Link } from 'react-router-dom';
 import Button from 'components/CustomButtons/Button';
-import EditIcon from 'components/Icons/Edit';
-import IconButton from 'components/CustomIconButtons/IconButton';
 import ConfirmDelete from 'components/ConfirmDelete/ConfirmDelete';
+import { FormattedMessage } from 'react-intl';
+import messages from './messages';
 
 const schema = [
   'storageType',
@@ -46,13 +43,13 @@ const tableSchema = schema
         setError,
       }) => (
         <Fragment>
-          <IconButton
-            aria-label="Edit"
+          <Button
+            action
             component={Link}
             to={`${pathname}/${data.get('id')}/edit`}
           >
-            <EditIcon />
-          </IconButton>
+            <FormattedMessage {...messages.editButton} />
+          </Button>
 
           <ConfirmDelete
             actionName={removeStorageCluster}

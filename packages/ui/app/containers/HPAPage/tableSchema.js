@@ -4,9 +4,9 @@ import TimeCell from 'components/Cells/TimeCell';
 import { Link } from 'react-router-dom';
 import ConfirmDelete from 'components/ConfirmDelete/ConfirmDelete';
 import Button from 'components/CustomButtons/Button';
+import { FormattedMessage } from 'react-intl';
+import messages from './messages';
 
-import IconButton from 'components/CustomIconButtons/IconButton';
-import EditIcon from 'components/Icons/Edit';
 import { renderTableMetrics } from './utils/utils';
 
 const inflection = require('inflection');
@@ -126,15 +126,15 @@ const tableSchema = schema
         namespaceID,
       }) => (
         <Fragment>
-          <IconButton
-            aria-label="Edit"
+          <Button
+            action
             component={Link}
             to={`/clusters/${clusterID}/namespaces/${namespaceID}/horizontalPodAutoscalers/${data.get(
               'id'
             )}/update`}
           >
-            <EditIcon />
-          </IconButton>
+            <FormattedMessage {...messages.editButton} />
+          </Button>
           <ConfirmDelete
             actionName={removeHorizontalPodAutoscaler}
             id={data.get('id')}

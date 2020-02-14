@@ -141,4 +141,8 @@ export default defineMessages({
     id: `${scope}.formBlockDevices`,
     defaultMessage: 'formBlockDevices',
   },
+  editButton: {
+    id: `${scope}.editButton`,
+    defaultMessage: 'edit',
+  },
 });

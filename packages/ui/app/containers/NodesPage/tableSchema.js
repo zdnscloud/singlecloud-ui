@@ -94,7 +94,7 @@ const tableSchema = schema
             }
             dialogContentText={messages.cordonPromptText}
             component={
-              <Button className={classes.tableBtn} link>
+              <Button className={classes.tableBtn} action>
                 <FormattedMessage {...messages.tableCordonBtn} />
               </Button>
             }
@@ -112,7 +112,7 @@ const tableSchema = schema
             }
             dialogContentText={messages.drainPromptText}
             component={
-              <Button className={classes.tableBtn} link>
+              <Button className={classes.tableBtn} action>
                 <FormattedMessage {...messages.tableDrainBtn} />
               </Button>
             }
@@ -129,7 +129,7 @@ const tableSchema = schema
             }
             dialogContentText={messages.uncordonPromptText}
             component={
-              <Button className={classes.tableBtn} link>
+              <Button className={classes.tableBtn} action>
                 <FormattedMessage {...messages.tableUncordonBtn} />
               </Button>
             }

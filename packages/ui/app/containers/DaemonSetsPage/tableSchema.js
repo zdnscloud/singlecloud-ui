@@ -4,13 +4,13 @@ import TimeCell from 'components/Cells/TimeCell';
 import { Link } from 'react-router-dom';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import Button from 'components/CustomButtons/Button';
-import IconButton from 'components/CustomIconButtons/IconButton';
-import UpgradeIcon from 'components/Icons/Upgrade';
-import RollbackIcon from 'components/Icons/Rollback';
 import ConfirmDelete from 'components/ConfirmDelete/ConfirmDelete';
 import LogcollectionDialog from 'containers/LogcollectionPage/LogcollectionDialog';
 import MetricsDialog from 'containers/MetricsPage/MetricsDialog';
 import UpdatingProgress from 'components/Progress/UpdatingProgress';
+import { FormattedMessage } from 'react-intl';
+import TableActions from 'components/TableActions/TableActions';
+import messages from './messages';
 
 const schema = ['name', 'replicas', 'creationTimestamp'];
 
@@ -51,26 +51,31 @@ const tableSchema = schema
             type="daemonset"
           />
 
-          <IconButton
-            aria-label="Update"
-            component={Link}
-            to={`/clusters/${clusterID}/namespaces/${namespaceID}/daemonSets/${data.get(
-              'id'
-            )}/update`}
-          >
-            <UpgradeIcon />
-          </IconButton>
-          <IconButton onClick={() => setRollback(data.get('id'))}>
-            <RollbackIcon />
-          </IconButton>
-
-          <ConfirmDelete
-            actionName={removeDaemonSet}
-            id={data.get('id')}
-            url={data.getIn(['links', 'remove'])}
-            clusterID={clusterID}
-            namespaceID={namespaceID}
-          />
+          <TableActions 
+            actions={
+              [
+                <Button
+                  action
+                  component={Link}
+                  to={`/clusters/${clusterID}/namespaces/${namespaceID}/daemonSets/${data.get(
+                    'id'
+                  )}/update`}
+                >
+                  <FormattedMessage {...messages.upgradeButton} />
+                </Button>,
+                <Button onClick={() => setRollback(data.get('id'))} action>
+                  <FormattedMessage {...messages.rollbackButton} />
+                </Button>,
+    
+                <ConfirmDelete
+                  actionName={removeDaemonSet}
+                  id={data.get('id')}
+                  url={data.getIn(['links', 'remove'])}
+                  clusterID={clusterID}
+                  namespaceID={namespaceID}
+                />,
+              ]}
+          /> 
         </Fragment>
       ),
     },

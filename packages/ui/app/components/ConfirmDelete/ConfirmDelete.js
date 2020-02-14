@@ -2,6 +2,7 @@ import React, { Fragment, useState } from 'react';
 import IconButton from 'components/CustomIconButtons/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
 import Button from '@material-ui/core/Button';
+import CButton from 'components/CustomButtons/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -30,14 +31,14 @@ const ConfirmDelete = ({
 
   return (
     <Fragment>
-      <IconButton
-        aria-label="Delete"
+      <CButton
+        action 
         onClick={() => {
           setOpen(true);
         }}
       >
-        <img src={removeICon} alt="removeICon" style={{ width: 20 }} />
-      </IconButton>
+        <FormattedMessage {...messages.deleteButton} />
+      </CButton>
       <Dialog
         open={open}
         onClose={() => {

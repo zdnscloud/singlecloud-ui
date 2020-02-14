@@ -81,8 +81,7 @@ export const LogcollectionDialog = ({
   return (
     <Fragment>
       <CButton
-        className={classes.logBtn}
-        link
+        action
         onClick={() => {
           setCurrent(null);
           if (url && id) {

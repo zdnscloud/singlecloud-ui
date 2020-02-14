@@ -169,4 +169,8 @@ export default defineMessages({
     id: `${scope}.formCPUSuffix`,
     defaultMessage: 'He',
   },
+  editButton: {
+    id: `${scope}.editButton`,
+    defaultMessage: 'edit',
+  },
 });
