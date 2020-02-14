@@ -95,7 +95,8 @@ const Form = ({
     statefulSets,
   }[targetResourceType];
   const exposedPorts = formValues.get('exposedPorts');
-
+  const serviceType = formValues.get('serviceType');
+  console.log('serviceType', serviceType);
   return (
     <form className={classes.form} onSubmit={handleSubmit}>
       <GridContainer>
@@ -182,12 +183,72 @@ const Form = ({
                     options={[
                       { label: 'Cluster IP', value: 'clusterip' },
                       { label: 'Node Port', value: 'nodeport' },
+                      { label: 'loadbalance', value: 'loadbalancer' },
                     ]}
                     formControlComponent="div"
                     formLabelComponent="div"
                   />
                 </GridItem>
               </GridContainer>
+              {serviceType && serviceType === 'loadbalancer' ? (
+                <Fragment>
+                  <GridContainer>
+                    <GridItem xs={3} sm={3} md={3}>
+                      <InputField
+                        label={<FormattedMessage {...messages.formVip} />}
+                        name="loadBalanceVip"
+                        fullWidth
+                        inputProps={{
+                          type: 'text',
+                          autoComplete: 'off',
+                        }}
+                      />
+                    </GridItem>
+                  </GridContainer>
+                  <GridContainer>
+                    <GridItem
+                      xs={12}
+                      sm={12}
+                      md={12}
+                      className={classes.formLine}
+                    >
+                      <RadioField
+                        name="loadBalanceMethod"
+                        label={
+                          <FormattedMessage
+                            {...messages.formLoadBalanceMethod}
+                          />
+                        }
+                        classes={{
+                          formControl: classes.radioControl,
+                          formLabel: classes.radioLabel,
+                          group: classes.radioGroup,
+                        }}
+                        options={[
+                          {
+                            label: <FormattedMessage {...messages.formHash} />,
+                            value: 'hash',
+                          },
+                          {
+                            label: (
+                              <FormattedMessage {...messages.formPolling} />
+                            ),
+                            value: 'rr',
+                          },
+                          {
+                            label: (
+                              <FormattedMessage {...messages.formMinNum} />
+                            ),
+                            value: 'lc',
+                          },
+                        ]}
+                        formControlComponent="div"
+                        formLabelComponent="div"
+                      />
+                    </GridItem>
+                  </GridContainer>
+                </Fragment>
+              ) : null}
               <GridContainer>
                 <GridItem xs={12} sm={12} md={12} className={classes.formLine}>
                   <ExposedPortsField name="exposedPorts" />

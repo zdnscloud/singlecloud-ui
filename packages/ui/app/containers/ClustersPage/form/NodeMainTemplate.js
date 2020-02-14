@@ -28,7 +28,7 @@ const NodeMainTemplate = ({
         <Button
           color="secondary"
           onClick={(evt) =>
-            fields.push(fromJS({ name: '', addrsss: '', roles: [] }))
+            fields.push(fromJS({ name: '', address: '', roles: [] }))
           }
         >
           <FormattedMessage {...messages.formAddMainNode} />

@@ -17,6 +17,7 @@ const SwitchComponent = ({
       ...input,
       ...inputProps,
     }}
+    checked={input.value === true}
     {...input}
     {...custom}
   />

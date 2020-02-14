@@ -141,6 +141,26 @@ export default defineMessages({
     id: `${scope}.formBoundaryNode`,
     defaultMessage: 'formBoundaryNode',
   },
+  formLoadBalanceEnable: {
+    id: `${scope}.formLoadBalanceEnable`,
+    defaultMessage: 'formLoadBalanceEnable',
+  },
+  formLoadBalanceMasterServer: {
+    id: `${scope}.formLoadBalanceMasterServer`,
+    defaultMessage: 'formLoadBalanceMasterServer',
+  },
+  formLoadBalanceBackupServer: {
+    id: `${scope}.formLoadBalanceBackupServer`,
+    defaultMessage: 'formLoadBalanceBackupServer',
+  },
+  formLoadBalanceUser: {
+    id: `${scope}.formLoadBalanceUser`,
+    defaultMessage: 'formLoadBalanceUser',
+  },
+  formLoadBalancePassword: {
+    id: `${scope}.formLoadBalancePassword`,
+    defaultMessage: 'formLoadBalancePassword',
+  },
   createClusterButton: {
     id: `${scope}.createClusterButton`,
     defaultMessage: 'createClusterButton',
