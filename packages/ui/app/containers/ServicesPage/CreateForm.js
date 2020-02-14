@@ -96,7 +96,6 @@ const Form = ({
   }[targetResourceType];
   const exposedPorts = formValues.get('exposedPorts');
   const serviceType = formValues.get('serviceType');
-  console.log('serviceType', serviceType);
   return (
     <form className={classes.form} onSubmit={handleSubmit}>
       <GridContainer>
