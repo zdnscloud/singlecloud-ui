@@ -306,4 +306,12 @@ export default defineMessages({
     id: `${scope}.Memo`,
     defaultMessage: 'Memo',
   },
+  upgradeButton: {
+    id: `${scope}.upgradeButton`,
+    defaultMessage: 'upgrade',
+  },
+  rollbackButton: {
+    id: `${scope}.rollbackButton`,
+    defaultMessage: 'rollback',
+  },
 });

@@ -80,7 +80,8 @@ export const CreateHPAPage = ({
     .split('&')
     .map((p) => p.split('='));
   const params = searchData.reduce((memo, item) => {
-    memo[item[0]] = item[1];
+    const second = item[1];
+    memo[item[0]] = second;
     return memo;
   }, {});
   if (params && params.checked === 'true') {

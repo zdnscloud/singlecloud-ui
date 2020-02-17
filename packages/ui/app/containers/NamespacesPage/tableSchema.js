@@ -2,10 +2,10 @@ import React, { Fragment } from 'react';
 import { ucfirst } from '@gsmlg/utils';
 import { Link } from 'react-router-dom';
 import Button from 'components/CustomButtons/Button';
-import IconButton from 'components/CustomIconButtons/IconButton';
-import DeleteIcon from '@material-ui/icons/Delete';
 import TimeCell from 'components/Cells/TimeCell';
 import ConfirmDelete from 'components/ConfirmDelete/ConfirmDelete';
+import { FormattedMessage } from 'react-intl';
+import messages from './messages';
 
 const schema = ['name', 'creationTimestamp'];
 
@@ -35,13 +35,13 @@ const tableSchema = schema
             url={props.data.getIn(['links', 'remove'])}
             clusterID={props.clusterID}
           />
-          {/* <IconButton
-            aria-label="Edit"
+          {/* <Button
+            action
             to={`${props.pathname}/${props.data.get('id')}/edit`}
             component={Link}
           >
-            <EditIcon />
-          </IconButton> */}
+            <FormattedMessage {...messages.editButton} />
+          </Button> */}
         </Fragment>
       ),
     },

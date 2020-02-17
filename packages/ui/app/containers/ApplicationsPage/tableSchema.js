@@ -3,10 +3,10 @@ import { ucfirst } from '@gsmlg/utils';
 import { Link } from 'react-router-dom';
 import Button from 'components/CustomButtons/Button';
 import LinearProgress from '@material-ui/core/LinearProgress';
-import IconButton from 'components/CustomIconButtons/IconButton';
-import MonitorIcon from 'components/Icons/Monitor';
 import TrueIcon from 'components/Icons/True';
 import FalseIcon from 'components/Icons/False';
+import { FormattedMessage } from 'react-intl';
+import messages from './messages';
 
 const inflection = require('inflection');
 const schema = ['name', 'replicas', 'type', 'exists'];
@@ -24,15 +24,15 @@ const tableSchema = schema
   //       const workload = ['deployment', 'daemonset', 'statefulset'];
   //       return workload.includes(data.get('type')) ? (
   //         <Fragment>
-  //           <IconButton
-  //             link
+  //           <Button
+  //             action
   //             to={`/clusters/${clusterID}/linkerd/namespaces/${namespaceID}/${inflection.pluralize(
   //               data.get('type')
   //             )}/${data.get('name')}`}
   //             component={Link}
   //           >
-  //             <MonitorIcon />
-  //           </IconButton>
+  //             <FormattedMessage {...messages.monitorButton} />
+  //           </Button>
   //         </Fragment>
   //       ) : (
   //         '--'

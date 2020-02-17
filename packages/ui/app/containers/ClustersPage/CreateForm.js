@@ -185,12 +185,68 @@ export const CreateForm = ({ handleSubmit, error, classes, formValues }) => (
                     />
                   </GridItem>
                 </GridContainer>
+                <GridContainer>
+                  <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
+                    <SwitchField
+                      name="loadBalance.enable"
+                      label={
+                        <FormattedMessage {...messages.formLoadBalanceEnable} />
+                      }
+                    />
+                  </GridItem>
+                  <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
+                    <InputField
+                      label={
+                        <FormattedMessage
+                          {...messages.formLoadBalanceMasterServer}
+                        />
+                      }
+                      fullWidth
+                      inputProps={{ type: 'text', autoComplete: 'off' }}
+                      name="loadBalance.masterServer"
+                    />
+                  </GridItem>
+                  <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
+                    <InputField
+                      label={
+                        <FormattedMessage
+                          {...messages.formLoadBalanceBackupServer}
+                        />
+                      }
+                      fullWidth
+                      inputProps={{ type: 'text', autoComplete: 'off' }}
+                      name="loadBalance.backupServer"
+                    />
+                  </GridItem>
+                  <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
+                    <InputField
+                      label={
+                        <FormattedMessage {...messages.formLoadBalanceUser} />
+                      }
+                      fullWidth
+                      inputProps={{ type: 'text', autoComplete: 'off' }}
+                      name="loadBalance.user"
+                    />
+                  </GridItem>
+                  <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
+                    <InputField
+                      label={
+                        <FormattedMessage
+                          {...messages.formLoadBalancePassword}
+                        />
+                      }
+                      fullWidth
+                      inputProps={{ type: 'text', autoComplete: 'off' }}
+                      name="loadBalance.password"
+                    />
+                  </GridItem>
+                </GridContainer>
               </FormSection>
             ) : null}
           </GridItem>
         </CardBody>
       </Card>
-      <Card style={{ margin: 0, marginTop: 20 }}>
+      <Card>
         <CardHeader>
           <h4>
             <FormattedMessage {...messages.formNode} />

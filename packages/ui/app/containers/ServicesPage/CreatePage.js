@@ -164,7 +164,7 @@ export const CreateServicePage = ({
         onAction={() => {
           const p = values
             .get('exposedPorts')
-            .filter((p) => p.get('enable'))
+            .filter((v) => v.get('enable'))
             .first()
             .get('protocol');
           const page = p === 'udp' ? 'udpingresses' : 'ingresses';

@@ -18,7 +18,7 @@ const styles = (theme) => ({
     overflowX: 'hidden',
   },
   grid: {
-    padding: theme.spacing(2.5),
+    padding: theme.spacing(1.25),
   },
   contentGrid: {
     paddingLeft: theme.spacing(2),
@@ -126,6 +126,12 @@ const styles = (theme) => ({
   table: {
     '& thead tr': {
       whiteSpace: 'nowrap',
+    },
+    '& tbody tr td:last-child .MuiButton-text': {
+      borderRight:'1px solid #e9e9e9',
+    },
+    '& tbody tr td:last-child .MuiButton-text:last-child': {
+      borderRight:'none',
     },
   },
   infoCardHeader: {

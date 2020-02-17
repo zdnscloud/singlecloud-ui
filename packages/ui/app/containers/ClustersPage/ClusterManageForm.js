@@ -15,6 +15,7 @@ import CardHeader from 'components/Card/CardHeader';
 import Danger from 'components/Typography/Danger';
 import GridItem from 'components/Grid/GridItem';
 import GridContainer from 'components/Grid/GridContainer';
+import SwitchField from 'components/Field/SwitchField';
 import InputField from 'components/Field/InputField';
 import IconButton from '@material-ui/core/IconButton';
 import AddIcon from 'components/Icons/Add';
@@ -154,6 +155,58 @@ const ClusterManageForm = ({
                   }
                   fullWidth
                   value={cluster.getIn(['clusterUpstreamDNS', 1])}
+                />
+              </GridItem>
+            </GridContainer>
+            <GridContainer>
+              <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
+                <SwitchField
+                  name="loadBalance.enable"
+                  label={
+                    <FormattedMessage {...messages.formLoadBalanceEnable} />
+                  }
+                />
+              </GridItem>
+              <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
+                <InputField
+                  label={
+                    <FormattedMessage
+                      {...messages.formLoadBalanceMasterServer}
+                    />
+                  }
+                  fullWidth
+                  inputProps={{ type: 'text', autoComplete: 'off' }}
+                  name="loadBalance.masterServer"
+                />
+              </GridItem>
+              <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
+                <InputField
+                  label={
+                    <FormattedMessage
+                      {...messages.formLoadBalanceBackupServer}
+                    />
+                  }
+                  fullWidth
+                  inputProps={{ type: 'text', autoComplete: 'off' }}
+                  name="loadBalance.backupServer"
+                />
+              </GridItem>
+              <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
+                <InputField
+                  label={<FormattedMessage {...messages.formLoadBalanceUser} />}
+                  fullWidth
+                  inputProps={{ type: 'text', autoComplete: 'off' }}
+                  name="loadBalance.user"
+                />
+              </GridItem>
+              <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
+                <InputField
+                  label={
+                    <FormattedMessage {...messages.formLoadBalancePassword} />
+                  }
+                  fullWidth
+                  inputProps={{ type: 'text', autoComplete: 'off' }}
+                  name="loadBalance.password"
                 />
               </GridItem>
             </GridContainer>

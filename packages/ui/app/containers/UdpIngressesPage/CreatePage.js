@@ -35,7 +35,7 @@ import {
 } from 'ducks/services/selectors';
 import { makeSelectURL } from 'ducks/udpIngresses/selectors';
 import * as actions from 'ducks/udpIngresses/actions';
-import { loadServices } from 'ducks/services/actions';
+import * as sActions from 'ducks/services/actions';
 
 import messages from './messages';
 import useStyles from './styles';
@@ -160,7 +160,7 @@ const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
       ...actions,
-      loadServices,
+      loadServices: sActions.loadServices,
       submitForm: () => submit(formName),
     },
     dispatch

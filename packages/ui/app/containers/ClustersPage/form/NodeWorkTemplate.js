@@ -32,7 +32,7 @@ const NodeWorkTemplate = ({
           className={classes.addNodeBtn}
           variant="contained" color="primary"
           onClick={(evt) =>
-            fields.push(fromJS({ name: '', addrsss: '', roles: [] }))
+            fields.push(fromJS({ name: '', address: '', roles: [] }))
           }
         >
           <span className={classes.plusIcon}>+</span>

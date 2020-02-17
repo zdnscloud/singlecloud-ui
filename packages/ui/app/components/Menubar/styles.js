@@ -12,6 +12,7 @@ const styles = (theme) => ({
     width: '100%',
     backgroundColor: theme.palette.primary.contrastText,
     color: theme.palette.primary.main,
+    paddingLeft: 13,
   },
   toolbarLeft: {
     display: 'flex',
@@ -27,6 +28,21 @@ const styles = (theme) => ({
     flexGrow: 1,
     flexDirection: 'column',
     justifyContent: 'center',
+  },
+  logoIcon: {
+    width: 30,
+  },
+  logoName: {
+    fontSize: 18,
+    marginLeft: 10,
+  },
+  logoIconWrapper: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: theme.leftShrinkWidth,
+    marginLeft: 14,
+    marginRight: 16,
   },
 });
 

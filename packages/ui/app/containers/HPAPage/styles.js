@@ -21,6 +21,12 @@ export const styles = (theme) => ({
     '& .MuiChip-root': {
       marginBottom: 5,
     },
+    '& tbody tr td:last-child .MuiButton-text': {
+      borderRight:'1px solid #e9e9e9',
+    },
+    '& tbody tr td:last-child .MuiButton-text:last-child': {
+      borderRight:'none',
+    },
   },
   listItem: {
     '& .MuiSelect-selectMenu span': {

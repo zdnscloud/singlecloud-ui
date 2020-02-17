@@ -125,7 +125,7 @@ export const RollbackDialog = ({
           setInitialValues(fromJS(init));
         };
         const reject = (error) => {
-          console.log(error);
+          // console.log(error);
         };
         executeStatefulSetAction(
           'history',

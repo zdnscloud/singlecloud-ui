@@ -36,8 +36,7 @@ import {
 
 import { makeSelectURL } from 'ducks/ingresses/selectors';
 import * as actions from 'ducks/ingresses/actions';
-
-import { loadServices } from 'ducks/services/actions';
+import * as sActions from 'ducks/services/actions';
 
 import messages from './messages';
 import useStyles from './styles';
@@ -168,7 +167,7 @@ const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
       ...actions,
-      loadServices,
+      loadServices: sActions.loadServices,
       submitForm: () => submit(formName),
     },
     dispatch

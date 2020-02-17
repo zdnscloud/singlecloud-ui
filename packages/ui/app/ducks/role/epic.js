@@ -58,7 +58,7 @@ export const loadRoleEpic = (action$, state$, { ajax }) =>
                 window.location.reload();
               } else {
                 import('store').then((exports) => {
-                  const store = getByKey(exports, ['default', 'instance']);
+                  const store = getByKey(exports, ['default']);
                   setTimeout(() => {
                     store.dispatch(push('/login'));
                   }, 100);
@@ -71,7 +71,7 @@ export const loadRoleEpic = (action$, state$, { ajax }) =>
               window.location.reload();
             } else {
               import('store').then((exports) => {
-                const store = getByKey(exports, ['default', 'instance']);
+                const store = getByKey(exports, ['default']);
                 setTimeout(() => {
                   store.dispatch(push('/login'));
                 }, 100);
@@ -79,7 +79,7 @@ export const loadRoleEpic = (action$, state$, { ajax }) =>
             }
           } else if (!isLogin && window.location.pathname.includes('/login')) {
             import('store').then((exports) => {
-              const store = getByKey(exports, ['default', 'instance']);
+              const store = getByKey(exports, ['default']);
               setTimeout(() => {
                 store.dispatch(push('/'));
               }, 100);
