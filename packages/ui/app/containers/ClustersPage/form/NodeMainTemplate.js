@@ -12,6 +12,8 @@ import Danger from 'components/Typography/Danger';
 import GridItem from 'components/Grid/GridItem';
 import GridContainer from 'components/Grid/GridContainer';
 import InputField from 'components/Field/InputField';
+import Card from 'components/Card/Card';
+import CardBody from 'components/Card/CardBody';
 import CheckboxesField from 'components/Field/CheckboxesField';
 import PlusIcon from 'components/Icons/Plus';
 import MinusIcon from 'components/Icons/Minus';
@@ -26,13 +28,14 @@ const NodeMainTemplate = ({
     <GridContainer>
       <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
         <Button
-          color="secondary"
+          className={classes.addNodeBtn}
+          variant="contained" color="primary"
           onClick={(evt) =>
             fields.push(fromJS({ name: '', address: '', roles: [] }))
           }
         >
+          <span className={classes.plusIcon}>+</span>
           <FormattedMessage {...messages.formAddMainNode} />
-          <PlusIcon />
         </Button>
       </GridItem>
     </GridContainer>
@@ -41,61 +44,45 @@ const NodeMainTemplate = ({
         <Danger>{error}</Danger>
       </ListItem>
     )}
-    {fields.map((f, i) => (
-      <GridContainer key={i + 1}>
-        <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
-          <InputField
-            label={<FormattedMessage {...messages.formHostName} />}
-            name={`${f}.name`}
-            fullWidth
-            inputProps={{ type: 'text', autoComplete: 'off' }}
-          />
-        </GridItem>
-        <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
-          <InputField
-            label="IP"
-            name={`${f}.address`}
-            fullWidth
-            inputProps={{
-              type: 'text',
-              autoComplete: 'off',
-            }}
-          />
-        </GridItem>
-        <GridItem
-          xs={3}
-          sm={3}
-          md={3}
-          className={classes.formLine}
-          style={{ paddingTop: 18 }}
-        >
-          <IconButton variant="contained" onClick={(evt) => fields.remove(i)}>
-            <MinusIcon />
-          </IconButton>
-        </GridItem>
-        <GridContainer key={i + i}>
-          <GridItem xs={6} sm={6} md={6} className={classes.formLine}>
-            <CheckboxesField
-              name={`${f}.roles`}
-              label=""
-              classes={{
-                formControl: classes.chexboxesControl,
-                formLabel: classes.chexboxesLabel,
-                group: classes.chexboxesGroup,
-              }}
-              options={[
-                {
-                  label: <FormattedMessage {...messages.formETCDNode} />,
-                  value: 'etcd',
-                },
-              ]}
-              formControlComponent="div"
-              formLabelComponent="div"
-            />
-          </GridItem>
-        </GridContainer>
-      </GridContainer>
-    ))}
+    <Card border>
+      <CardBody>
+        {fields.map((f, i) => (
+          <GridContainer key={i + 1}>
+            <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
+              <InputField
+                label={<FormattedMessage {...messages.formHostName} />}
+                name={`${f}.name`}
+                fullWidth
+                inputProps={{ type: 'text', autoComplete: 'off' }}
+              />
+            </GridItem>
+            <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
+              <InputField
+                label="IP"
+                name={`${f}.address`}
+                fullWidth
+                inputProps={{
+                  type: 'text',
+                  autoComplete: 'off',
+                }}
+              />
+            </GridItem>
+            <GridItem
+              xs={3}
+              sm={3}
+              md={3}
+              className={classes.formLine}
+              style={{ paddingTop: 7 }}
+            >
+              <IconButton variant="contained" onClick={(evt) => fields.remove(i)}>
+                <MinusIcon />
+              </IconButton>
+            </GridItem>
+          </GridContainer>
+        ))}
+      </CardBody>
+    </Card>
+   
   </Fragment>
 );
 
