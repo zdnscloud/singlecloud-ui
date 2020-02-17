@@ -50,7 +50,7 @@ const DataComponent = ({ meta, input, classes }) => {
         PaperProps={{ style: { overflow: 'hidden' } }}
       >
         <Card className={classes.dialogCard}>
-          <CardHeader color="secondary" className={classes.dialogHeader}>
+          <CardHeader color="light" className={classes.dialogHeader}>
             <h4>
               <FormattedMessage {...messages.formEditFile} />
             </h4>

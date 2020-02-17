@@ -111,12 +111,12 @@ export const LogcollectionDialog = ({
         maxWidth="md"
       >
         <Card className={classes.dialogCard}>
-          <CardHeader color="secondary" className={classes.dialogHeader}>
+          <CardHeader color="light" className={classes.dialogHeader}>
             <h4 className={classes.cardTitleWhite}>
               <FormattedMessage {...messages.logAnalysis} />
             </h4>
             <IconButton onClick={() => setOpen(false)} style={{ padding: 0 }}>
-              <CloseIcon style={{ color: '#fff' }} />
+              <CloseIcon />
             </IconButton>
           </CardHeader>
           <CardBody className={classes.dialogCardBody}>

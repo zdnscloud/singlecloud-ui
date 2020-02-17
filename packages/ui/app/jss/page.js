@@ -71,7 +71,7 @@ const styles = (theme) => ({
     },
   },
   cardTitleWhite: {
-    color: '#FFFFFF',
+    color: '#000',
     marginTop: '0px',
     minHeight: 'auto',
     fontFamily: "'Roboto', 'Helvetica', 'Arial', sans-serif",
@@ -124,8 +124,14 @@ const styles = (theme) => ({
     overflow: 'auto',
   },
   table: {
+    '& .MuiTableCell-root':{
+      border: 'none',
+    },
     '& thead tr': {
       whiteSpace: 'nowrap',
+    },
+    '& thead tr, tbody tr:nth-child(2n)':{
+      backgroundColor:'rgba(223,224,223,0.15)',
     },
     '& tbody tr td:last-child .MuiButton-text': {
       borderRight:'1px solid #e9e9e9',
