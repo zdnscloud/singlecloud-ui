@@ -69,9 +69,9 @@ function Node({ node, onClick }) {
       }
       break;
     case 'deploy':
-      if (kind === 'Deployment') Icon = DeploymentIcon;
-      if (kind === 'DaemonSet') Icon = DaemonSetIcon;
-      if (kind === 'StatefulSet') Icon = StatefulSetIcon;
+      if (kind === 'deployment') Icon = DeploymentIcon;
+      if (kind === 'daemonset') Icon = DaemonSetIcon;
+      if (kind === 'statefulset') Icon = StatefulSetIcon;
       break;
     default:
       break;
