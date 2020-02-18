@@ -16,30 +16,28 @@ const tableSchema = schema
     id,
     label: ucfirst(id),
   }))
-  // .concat([
-  //   {
-  //     id: 'actions',
-  //     label: 'Actions',
-  //     component: ({ data, clusterID, namespaceID }) => {
-  //       const workload = ['deployment', 'daemonset', 'statefulset'];
-  //       return workload.includes(data.get('type')) ? (
-  //         <Fragment>
-  //           <Button
-  //             action
-  //             to={`/clusters/${clusterID}/linkerd/namespaces/${namespaceID}/${inflection.pluralize(
-  //               data.get('type')
-  //             )}/${data.get('name')}`}
-  //             component={Link}
-  //           >
-  //             <FormattedMessage {...messages.monitorButton} />
-  //           </Button>
-  //         </Fragment>
-  //       ) : (
-  //         '--'
-  //       );
-  //     },
-  //   },
-  // ])
+  .concat([
+    {
+      id: 'actions',
+      label: 'Actions',
+      component: ({ data, clusterID, namespaceID }) => {
+        const workload = ['deployment', 'daemonset', 'statefulset'];
+        return workload.includes(data.get('type')) ? (
+          <Fragment>
+            <Button
+              action
+              to={`/clusters/${clusterID}/namespaces/${namespaceID}/svcMeshWorkloads`}
+              component={Link}
+            >
+              <FormattedMessage {...messages.monitorButton} />
+            </Button>
+          </Fragment>
+        ) : (
+          '--'
+        );
+      },
+    },
+  ])
   .map((sch) => {
     if (sch.id === 'name') {
       return {
@@ -90,12 +88,12 @@ const tableSchema = schema
         ...sch,
         component: ({ data, classes }) =>
           data.get('exists') ? (
-            <div className={classes.icon}>
-              <TrueIcon />
+            <div>
+              <FormattedMessage {...messages.normal} />
             </div>
           ) : (
-            <div className={classes.icon}>
-              <FalseIcon />
+            <div className={classes.unnormal}>
+              <FormattedMessage {...messages.unnormal} />
             </div>
           ),
       };

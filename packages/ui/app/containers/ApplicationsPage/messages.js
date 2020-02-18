@@ -118,4 +118,12 @@ export default defineMessages({
     id: `${scope}.monitorButton`,
     defaultMessage: 'monitor',
   },
+  unnormal:{
+    id: `${scope}.unnormal`,
+    defaultMessage: 'unnormal',
+  },
+  normal:{
+    id: `${scope}.normal`,
+    defaultMessage: 'normal',
+  },
 });

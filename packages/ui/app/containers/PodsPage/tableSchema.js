@@ -106,7 +106,7 @@ const tableSchema = schema
             dialogContentText={messages.restartDialogContentText}
             component={
               <Button action>
-                <FormattedMessage {...messages.restarButton} />
+                <FormattedMessage {...messages.restartButton} />
               </Button>
             }
           />
