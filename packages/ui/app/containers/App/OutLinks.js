@@ -93,7 +93,7 @@ const OutLinks = ({
   const handleMemuClick = (r) => {
     setMemuRole(r);
     const loadAction = `load${inflection.camelize(r)}`;
-    const url = cluster.getIn(['links', role]);
+    const url = cluster.getIn(['links', r]);
     actionsGroup[loadAction](url, {
       clusterID,
       resolve(res) {

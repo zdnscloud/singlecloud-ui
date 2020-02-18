@@ -194,6 +194,8 @@ export const CreateForm = ({ handleSubmit, error, classes, formValues }) => (
                       }
                     />
                   </GridItem>
+                </GridContainer>
+                <GridContainer>
                   <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
                     <InputField
                       label={
@@ -218,6 +220,8 @@ export const CreateForm = ({ handleSubmit, error, classes, formValues }) => (
                       name="loadBalance.backupServer"
                     />
                   </GridItem>
+                </GridContainer>
+                <GridContainer>
                   <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
                     <InputField
                       label={
