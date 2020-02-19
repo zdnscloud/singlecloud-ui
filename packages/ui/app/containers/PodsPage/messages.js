@@ -74,8 +74,4 @@ export default defineMessages({
     id: `${scope}.logClose`,
     defaultMessage: 'Close Log',
   },
-  restarButton: {
-    id: `${scope}.restarButton`,
-    defaultMessage: 'restar',
-  },
 });
