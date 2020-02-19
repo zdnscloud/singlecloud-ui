@@ -136,6 +136,9 @@ const styles = (theme) => ({
     '& tbody tr td:last-child .MuiButton-text': {
       borderRight:'1px solid #e9e9e9',
     },
+    '& tbody tr td:last-child .MuiButton-text:first-child': {
+      paddingLeft: 0,
+    },
     '& tbody tr td:last-child .MuiButton-text:last-child': {
       borderRight:'none',
     },
@@ -156,7 +159,7 @@ const styles = (theme) => ({
     alignItems: 'center',
     borderRight: '1px solid #E8E8E8',
     '& h3': {
-      color: '#000',
+      color: '#404040',
       fontSize: 24,
       fontWeight: 'normal',
       lineHeight: '32px',
@@ -204,6 +207,8 @@ const styles = (theme) => ({
   },
   cancleBtn: {
     marginLeft: '10px',
+    backgroundColor:'#fff',
+    border:'1px solid #D9D9D9',
   },
   customCardHeaderH4: {
     paddingBottom: '0 !important',

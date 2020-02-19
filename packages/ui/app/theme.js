@@ -21,7 +21,7 @@ const theme = createMuiTheme({
       minor: `rgba(${hexToRgb('#1B9CCE')}, 0.2)`,
     },
     highlight: {
-      main: '#1B9CCE',
+      main: '#40A9FF',
       light: '#40B7E8',
       secondary: '#1B9CCE',
       minor: '#A2A2A2',
@@ -54,7 +54,7 @@ const theme = createMuiTheme({
       warning: '#ff9800',
       danger: '#f44336',
       success: '#4caf50',
-      info: '#00acc1',
+      info: '#40A9FF',
       gray: '#999999',
     },
     defaultFont: {
@@ -70,6 +70,13 @@ const theme = createMuiTheme({
     MuiButton: {
       root: {
         textTransform: 'none',
+        boxShadow:'none !important',
+      },
+      containedPrimary:{
+        backgroundColor:'#5B8FF9',
+        '&:hover':{
+          backgroundColor:'#5B8FF9',
+        },
       },
     },
     MuiInputLabel: {
