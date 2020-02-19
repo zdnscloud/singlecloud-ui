@@ -125,16 +125,16 @@ export const CreateNamespacePage = ({
                     type="create"
                   />
                 </CardBody>
-                <CardFooter className={classes.cardFooter}>
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    onClick={submitForm}
-                  >
-                    <FormattedMessage {...messages.createNamespaceButton} />
-                  </Button>
-                </CardFooter>
               </Card>
+              <div className={classes.buttonGroup}>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={submitForm}
+                >
+                  <FormattedMessage {...messages.createNamespaceButton} />
+                </Button>
+              </div>
             </GridItem>
           </GridContainer>
         </Typography>

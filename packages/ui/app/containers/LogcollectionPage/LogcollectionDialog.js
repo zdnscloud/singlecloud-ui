@@ -137,6 +137,7 @@ export const LogcollectionDialog = ({
                 setOpen(false);
               }}
               color="default"
+              className={classes.cancleBtn}
               variant="contained"
             >
               <FormattedMessage {...messages.cancle} />

@@ -143,17 +143,19 @@ export const CreateApplicationPage = ({
               />
             </GridItem>
             <GridItem xs={12} sm={12} md={12}>
-              <Button variant="contained" color="primary" onClick={submitForm}>
-                <FormattedMessage {...messages.createApplicationButton} />
-              </Button>
-              <Button
-                variant="contained"
-                className={classes.cancleBtn}
-                to={`/clusters/${clusterID}/namespaces/${namespaceID}/charts`}
-                component={Link}
-              >
-                <FormattedMessage {...messages.cancleApplicationButton} />
-              </Button>
+              <div className={classes.buttonGroup}>
+                <Button variant="contained" color="primary" onClick={submitForm}>
+                  <FormattedMessage {...messages.createApplicationButton} />
+                </Button>
+                <Button
+                  variant="contained"
+                  className={classes.cancleBtn}
+                  to={`/clusters/${clusterID}/namespaces/${namespaceID}/charts`}
+                  component={Link}
+                >
+                  <FormattedMessage {...messages.cancleApplicationButton} />
+                </Button>
+              </div>
             </GridItem>
           </GridContainer>
         </Typography>

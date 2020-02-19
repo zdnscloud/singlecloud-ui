@@ -212,7 +212,7 @@ const ClusterManageForm = ({
             </GridContainer>
           </CardBody>
         </Card>
-        <Card style={{ margin: 0, marginTop: 20 }}>
+        <Card  className={classes.cardMargin}>
           <CardHeader>
             <h4>
               <FormattedMessage {...messages.formNode} />

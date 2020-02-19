@@ -170,7 +170,7 @@ export const RollbackDialog = ({
           <Button onClick={submitForm} color="primary" variant="contained">
             <FormattedMessage {...messages.dialogRollbackButton} />
           </Button>
-          <Button onClick={close} color="default" variant="contained">
+          <Button onClick={close} className={classes.cancleBtn} variant="contained">
             <FormattedMessage {...messages.dialogCancelButton} />
           </Button>
         </CardFooter>

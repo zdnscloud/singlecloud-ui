@@ -147,27 +147,27 @@ export const CreateConfigMap = ({
                   type="create"
                 />
               </CardBody>
-              <CardFooter className={classes.cardFooter}>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  onClick={submitForm}
-                >
-                  <FormattedMessage {...messages.formCreate} />
-                </Button>
-                <Button
-                  variant="contained"
-                  className={classes.cancleBtn}
-                  onClick={() => {
-                    push(
-                      `/clusters/${clusterID}/namespaces/${namespaceID}/configmaps`
-                    );
-                  }}
-                >
-                  <FormattedMessage {...messages.formCancle} />
-                </Button>
-              </CardFooter>
             </Card>
+            <div className={classes.buttonGroup}>
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={submitForm}
+              >
+                <FormattedMessage {...messages.formCreate} />
+              </Button>
+              <Button
+                variant="contained"
+                className={classes.cancleBtn}
+                onClick={() => {
+                  push(
+                    `/clusters/${clusterID}/namespaces/${namespaceID}/configmaps`
+                  );
+                }}
+              >
+                <FormattedMessage {...messages.formCancle} />
+              </Button>
+            </div>
           </GridItem>
         </GridContainer>
       </div>

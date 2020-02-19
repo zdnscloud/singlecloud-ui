@@ -272,6 +272,16 @@ const styles = (theme) => ({
     margin: '0 !important',
     borderBottom: 'none !important',
   },
+  buttonGroup:{
+    backgroundColor:'#fff',
+    padding:"12px 20px",
+  },
+  cardMargin:{
+    margin:0,
+  },
+  cardMarginTop:{
+    marginTop:0,
+  },
 });
 
 export default styles;

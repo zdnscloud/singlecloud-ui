@@ -29,7 +29,7 @@ const styles = (theme) => ({
     justifyContent: 'flex-start',
     display: 'initial',
     '& button': {
-      marginRight: '1rem',
+      // marginRight: '1rem',
     },
   },
 });

@@ -71,7 +71,7 @@ const DataComponent = ({ meta, input, classes }) => {
           <CardFooter>
             <Button
               variant="contained"
-              color="secondary"
+              color="primary"
               onClick={() => {
                 setOpen(false);
               }}

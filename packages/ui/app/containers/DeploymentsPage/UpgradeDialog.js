@@ -148,7 +148,7 @@ export const UpgradeDialog = ({
           <Button onClick={submitForm} color="primary" variant="contained">
             <FormattedMessage {...messages.dialogUpgradeButton} />
           </Button>
-          <Button onClick={close} color="default" variant="contained">
+          <Button onClick={close} variant="contained" className={classes.cancleBtn}>
             <FormattedMessage {...messages.dialogCancelButton} />
           </Button>
         </CardFooter>

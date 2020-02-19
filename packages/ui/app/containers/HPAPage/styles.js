@@ -24,6 +24,9 @@ export const styles = (theme) => ({
     '& tbody tr td:last-child .MuiButton-text': {
       borderRight:'1px solid #e9e9e9',
     },
+    '& tbody tr td:last-child .MuiButton-text:first-child': {
+      paddingLeft: 0,
+    },
     '& tbody tr td:last-child .MuiButton-text:last-child': {
       borderRight:'none',
     },

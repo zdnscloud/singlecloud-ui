@@ -136,19 +136,17 @@ export const EditStoragePage = ({
               edit
             />
           ) : null}
-          <GridContainer className={classes.grid}>
-            <GridItem xs={12} sm={12} md={12}>
-              <CardFooter className={classes.cardFooter}>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  onClick={submitForm}
-                >
-                  <FormattedMessage {...messages.editStorageButton} />
-                </Button>
-              </CardFooter>
-            </GridItem>
-          </GridContainer>
+          <GridItem xs={12} sm={12} md={12}>
+            <div className={classes.buttonGroup}>
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={submitForm}
+              >
+                <FormattedMessage {...messages.editStorageButton} />
+              </Button>
+            </div>
+          </GridItem>
         </Typography>
       </div>
     </div>

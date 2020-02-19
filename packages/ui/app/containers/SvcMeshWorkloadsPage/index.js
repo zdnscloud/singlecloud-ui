@@ -145,7 +145,7 @@ const SvcMeshWorkloadsPage = ({
                   </GridItem>
                 ) : null}
                 <GridItem xs={12} sm={12} md={12}>
-                  <Card>
+                  <Card className={classes.cardMargin}>
                     <CardHeader>
                       <h4>
                         <FormattedMessage {...messages.svcMeshWorkloads} />

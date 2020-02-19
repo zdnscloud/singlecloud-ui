@@ -64,6 +64,7 @@ const ConfirmDelete = ({
             onClick={() => {
               setOpen(false);
             }}
+            style={{ backgroundColor: '#fff', border: '1px solid #D9D9D9' }}
             variant="contained"
           >
             <FormattedMessage {...messages.cancleButton} />
