@@ -67,7 +67,7 @@ export const updateIngressEpic = (action$, state$, { ajax }) =>
       ajax({
         url: `${meta.url}`,
         method: 'PUT',
-        body: payload,
+        body: payload
       }).pipe(
         map((resp) => {
           meta.resolve && meta.resolve(resp);
@@ -121,10 +121,11 @@ export const removeIngressEpic = (action$, state$, { ajax }) =>
     )
   );
 
+
 export default combineEpics(
   loadIngressesEpic,
   createIngressEpic,
   updateIngressEpic,
   readIngressEpic,
-  removeIngressEpic
+  removeIngressEpic,
 );

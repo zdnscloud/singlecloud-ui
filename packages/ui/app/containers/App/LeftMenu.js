@@ -90,10 +90,11 @@ const LeftMenu = ({
   const activeRoute = (routeName) => {
     const rnIsClusters = routeName === '/clusters';
     const rnIsGlobalConfig = routeName === '/globalConfiguration';
+    const rnIsAuditLogs = routeName === '/auditLogs';
     const rnIsNS = routeName === `/clusters/${clusterID}/namespaces`;
     if (!rnIsClusters) {
       if (!clusterID) {
-        if (rnIsGlobalConfig) {
+        if (rnIsGlobalConfig || rnIsAuditLogs) {
           return path.includes(routeName);
         }
         return path.includes('adminUserQuotas') || path.includes('userQuotas');

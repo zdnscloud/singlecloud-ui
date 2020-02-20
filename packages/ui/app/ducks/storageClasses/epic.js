@@ -39,4 +39,11 @@ export const loadStorageClassesEpic = (action$, state$, { ajax }) =>
     )
   );
 
-export default combineEpics(loadStorageClassesEpic);
+
+
+
+
+
+export default combineEpics(
+  loadStorageClassesEpic,
+);

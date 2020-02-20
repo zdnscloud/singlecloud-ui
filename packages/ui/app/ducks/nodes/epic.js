@@ -39,6 +39,8 @@ export const loadNodesEpic = (action$, state$, { ajax }) =>
     )
   );
 
+
+
 export const readNodeEpic = (action$, state$, { ajax }) =>
   action$.pipe(
     ofType(c.READ_NODE),
@@ -58,6 +60,7 @@ export const readNodeEpic = (action$, state$, { ajax }) =>
       )
     )
   );
+
 
 export const executeNodeActionEpic = (action$, state$, { ajax }) =>
   action$.pipe(
@@ -80,4 +83,8 @@ export const executeNodeActionEpic = (action$, state$, { ajax }) =>
     )
   );
 
-export default combineEpics(loadNodesEpic, readNodeEpic, executeNodeActionEpic);
+export default combineEpics(
+  loadNodesEpic,
+  readNodeEpic,
+  executeNodeActionEpic,
+);

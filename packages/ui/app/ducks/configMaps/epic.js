@@ -67,7 +67,7 @@ export const updateConfigMapEpic = (action$, state$, { ajax }) =>
       ajax({
         url: `${meta.url}`,
         method: 'PUT',
-        body: payload,
+        body: payload
       }).pipe(
         map((resp) => {
           meta.resolve && meta.resolve(resp);
@@ -121,10 +121,11 @@ export const removeConfigMapEpic = (action$, state$, { ajax }) =>
     )
   );
 
+
 export default combineEpics(
   loadConfigMapsEpic,
   createConfigMapEpic,
   updateConfigMapEpic,
   readConfigMapEpic,
-  removeConfigMapEpic
+  removeConfigMapEpic,
 );

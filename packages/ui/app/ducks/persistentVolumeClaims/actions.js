@@ -27,6 +27,9 @@ export const loadPersistentVolumeClaimsFailure = (error, meta = {}) => ({
   error: true,
 });
 
+
+
+
 export const removePersistentVolumeClaim = (id, meta = {}) => ({
   type: c.REMOVE_PERSISTENT_VOLUME_CLAIM,
   payload: id,
@@ -45,6 +48,7 @@ export const removePersistentVolumeClaimFailure = (error, meta = {}) => ({
   meta,
   error: true,
 });
+
 
 export const clearErrorsList = (payload, meta) => ({
   type: c.CLEAR_ERRORS_LIST,

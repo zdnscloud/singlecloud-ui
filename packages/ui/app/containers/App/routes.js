@@ -107,6 +107,7 @@ import UsersPage, {
 } from 'containers/UsersPage/Loadable';
 import AlarmMessagesPage from 'containers/AlarmMessagesPage';
 import GlobalConfigurationPage from 'containers/GlobalConfigurationPage';
+import AuditLogsPage from 'containers/AuditLogsPage/Loadable';
 
 const appRoutes = [
   {
@@ -120,6 +121,12 @@ const appRoutes = [
     name: 'GlobalConfiguration',
     icon: Dashboard,
     component: GlobalConfigurationPage,
+  },
+  {
+    path: '/auditLogs',
+    name: 'AuditLogs',
+    icon: Dashboard,
+    component: AuditLogsPage,
   },
   {
     path: '/clusters/create',

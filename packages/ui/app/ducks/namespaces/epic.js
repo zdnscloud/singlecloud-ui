@@ -60,6 +60,7 @@ export const createNamespaceEpic = (action$, state$, { ajax }) =>
     )
   );
 
+
 export const readNamespaceEpic = (action$, state$, { ajax }) =>
   action$.pipe(
     ofType(c.READ_NAMESPACE),
@@ -115,9 +116,7 @@ export const executeNamespaceActionEpic = (action$, state$, { ajax }) =>
         }),
         catchError((error) => {
           meta.reject && meta.reject(error);
-          return of(
-            a.executeNamespaceActionFailure(error, { ...meta, action })
-          );
+          return of(a.executeNamespaceActionFailure(error, { ...meta, action }));
         })
       )
     )
@@ -128,5 +127,5 @@ export default combineEpics(
   createNamespaceEpic,
   readNamespaceEpic,
   removeNamespaceEpic,
-  executeNamespaceActionEpic
+  executeNamespaceActionEpic,
 );

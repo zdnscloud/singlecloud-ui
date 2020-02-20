@@ -39,4 +39,11 @@ export const loadBlockDevicesEpic = (action$, state$, { ajax }) =>
     )
   );
 
-export default combineEpics(loadBlockDevicesEpic);
+
+
+
+
+
+export default combineEpics(
+  loadBlockDevicesEpic,
+);

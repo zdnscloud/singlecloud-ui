@@ -60,6 +60,7 @@ export const createResourceQuotumEpic = (action$, state$, { ajax }) =>
     )
   );
 
+
 export const readResourceQuotumEpic = (action$, state$, { ajax }) =>
   action$.pipe(
     ofType(c.READ_RESOURCE_QUOTUM),
@@ -74,9 +75,7 @@ export const readResourceQuotumEpic = (action$, state$, { ajax }) =>
         }),
         catchError((error) => {
           meta.reject && meta.reject(error);
-          return of(
-            a.readResourceQuotumFailure(error, { ...meta, id: payload })
-          );
+          return of(a.readResourceQuotumFailure(error, { ...meta, id: payload }));
         })
       )
     )
@@ -96,17 +95,16 @@ export const removeResourceQuotumEpic = (action$, state$, { ajax }) =>
         }),
         catchError((error) => {
           meta.reject && meta.reject(error);
-          return of(
-            a.removeResourceQuotumFailure(error, { ...meta, id: payload })
-          );
+          return of(a.removeResourceQuotumFailure(error, { ...meta, id: payload }));
         })
       )
     )
   );
 
+
 export default combineEpics(
   loadResourceQuotaEpic,
   createResourceQuotumEpic,
   readResourceQuotumEpic,
-  removeResourceQuotumEpic
+  removeResourceQuotumEpic,
 );
