@@ -96,21 +96,19 @@ export const NodeViewDialog = ({
             </div>
           </Paper>
         </CardBody>
-        <CardFooter>
-          <GridContainer className={classes.grid}>
-            <GridItem xs={12} sm={12} md={12}>
-              <Button onClick={submitForm} color="primary" variant="contained">
-                <FormattedMessage {...messages.createClusterButton} />
-              </Button>
-              <Button
-                onClick={closeDialog}
-                variant="contained"
-                className={classes.cancleBtn}
-              >
-                <FormattedMessage {...messages.cancleClustersButton} />
-              </Button>
-            </GridItem>
-          </GridContainer>
+        <CardFooter className={classes.cardFooter}>
+          <GridItem xs={12} sm={12} md={12}>
+            <Button onClick={submitForm} color="primary" variant="contained">
+              <FormattedMessage {...messages.createClusterButton} />
+            </Button>
+            <Button
+              onClick={closeDialog}
+              variant="contained"
+              className={classes.cancleBtn}
+            >
+              <FormattedMessage {...messages.cancleClustersButton} />
+            </Button>
+          </GridItem>
         </CardFooter>
       </Card>
     </Dialog>

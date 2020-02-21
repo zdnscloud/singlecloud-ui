@@ -117,6 +117,9 @@ export const styles = (theme) => ({
   addNodeBtn:{
     marginBottom:25,
   },
+  cardFooter:{
+    textAlign:'right',
+  },
 });
 
 export default makeStyles(styles);

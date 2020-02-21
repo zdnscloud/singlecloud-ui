@@ -36,7 +36,7 @@ export const TerminalDialog = ({ url, closeTerminal }) => {
       disableBackdropClick
       disableEscapeKeyDown
       fullWidth
-      maxWidth="lg"
+      maxWidth="md"
       open={Boolean(url)}
       onEnter={() => {
         open(url);

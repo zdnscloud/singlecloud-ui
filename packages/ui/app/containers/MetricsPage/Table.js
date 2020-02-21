@@ -71,6 +71,7 @@ const MetricsTable = ({ data, setSelected, selected, type }) => {
                   onChange={(event) => handleSelectAllClick(event)}
                   checked={selected.length === data.size}
                   color="primary"
+                  style={{padding:0}}
                 />
               </TableCell>
             ) : null}
