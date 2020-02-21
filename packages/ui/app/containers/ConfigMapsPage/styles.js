@@ -5,9 +5,6 @@ import dialogStyles from 'jss/dialog';
 export const styles = (theme) => ({
   ...pageStyles(theme),
   ...dialogStyles(theme),
-  filesList: {
-    width: '500px',
-  },
   fileContentButton: {
     display: 'inline-block',
     margin: '0 0 17px 0',
@@ -23,6 +20,7 @@ export const styles = (theme) => ({
   cardFooter: {
     display: 'block',
   },
+
 });
 
 export default makeStyles(styles);

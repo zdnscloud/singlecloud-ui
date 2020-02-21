@@ -44,7 +44,7 @@ const NodeMainTemplate = ({
         <Danger>{error}</Danger>
       </ListItem>
     )}
-    <Card border>
+    <Card border={fields&&fields.length>0 ? 'border':null } >
       <CardBody>
         {fields.map((f, i) => (
           <GridContainer key={i + 1}>

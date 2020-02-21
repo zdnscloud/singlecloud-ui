@@ -282,6 +282,23 @@ const styles = (theme) => ({
   cardMarginTop:{
     marginTop:0,
   },
+  plusIcon:{
+    fontSize: 16,
+    marginRight:5,
+    lineHeight:1.5,
+  },
+  addNodeBtn:{
+    marginBottom:25,
+  },
+  addNodeBtnWrap: {
+    marginTop:20,
+  },
+  nodeList: {
+    width: '800px',
+  },
+  minusIcon:{
+    marginTop:10,
+  },
 });
 
 export default styles;

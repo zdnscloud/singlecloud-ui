@@ -109,14 +109,6 @@ export const styles = (theme) => ({
     top: '22px',
     right: '18px',
   },
-  plusIcon:{
-    fontSize: 16,
-    marginRight:5,
-    lineHeight:1.5,
-  },
-  addNodeBtn:{
-    marginBottom:25,
-  },
   cardFooter:{
     textAlign:'right',
   },
