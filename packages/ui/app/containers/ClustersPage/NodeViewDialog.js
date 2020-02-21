@@ -88,8 +88,8 @@ export const NodeViewDialog = ({
                 formValues={values}
                 initialValues={fromJS({
                   nodes: {
-                    main: [{ name: '', addrsss: '', roles: [] }],
-                    work: [{ name: '', addrsss: '', roles: [] }],
+                    main: [{ name: '', address: '', roles: [] }],
+                    work: [{ name: '', address: '', roles: [] }],
                   },
                 })}
               />
