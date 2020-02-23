@@ -52,17 +52,20 @@ const tableSchema = schema
     if (sch.id === 'name') {
       return {
         ...sch,
-        component: (props) => (
-          <Button
-            link
-            to={`/clusters/${props.clusterID}/namespaces/${
-              props.namespaceID
-            }/configmaps/${props.data.get('id')}/show`}
-            component={Link}
-          >
-            {props.data.get('name')}
-          </Button>
-        ),
+        component: ({data,clusterID,namespaceID,classes}) =>
+          data.get('deletionTimestamp') ? (
+            <span className={ data.get('deletionTimestamp') ? classes.strikeout : null}>{ data.get('name')}</span>
+          ) : (
+            <Button
+              link
+              to={`/clusters/${clusterID}/namespaces/${
+                namespaceID
+              }/configmaps/${data.get('id')}/show`}
+              component={Link}
+            >
+              {data.get('name')}
+            </Button>
+          ),
       };
     }
     return sch;
