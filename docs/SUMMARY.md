@@ -9,6 +9,7 @@
   - [脚手架开发](./dev/scaffold_dev.md)
   - [React开发](./dev/react.md)
   - [Redux开发](./dev/redux.md)
+  - [合并分支流程](./dev/merge.md)
 - [开发设计](./design.md)
   - [实时通讯](./design/realtime.md)
   - [react-final-form](./design/react-final-form.md)
