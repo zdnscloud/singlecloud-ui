@@ -41,4 +41,12 @@ export default defineMessages({
     id: `${scope}.tableTitleCreationTimestamp`,
     defaultMessage: 'CreationTimestamp',
   },
+  tableTitleResourceKind: {
+    id: `${scope}.tableTitleResourceKind`,
+    defaultMessage: 'ResourceKind',
+  },
+  tableTitleResourcePath: {
+    id: `${scope}.tableTitleResourcePath`,
+    defaultMessage: 'ResourcePath',
+  },
 });

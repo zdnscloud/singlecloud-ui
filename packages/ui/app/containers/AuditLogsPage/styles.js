@@ -6,7 +6,7 @@ export const styles = (theme) => ({
   details: {
     margin: 0,
     fontSize: 14,
-    maxWidth: 300,
+    maxWidth: 240,
     textOverflow: 'ellipsis',
     overflow: 'hidden',
     verticalAlign: 'middle',

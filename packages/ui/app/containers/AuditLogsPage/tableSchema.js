@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import Button from 'components/CustomButtons/Button';
 import ConfirmDelete from 'components/ConfirmDelete/ConfirmDelete';
 
-const schema = ['user', 'sourceAddress','operation','detail','creationTimestamp'];
+const schema = ['user', 'sourceAddress','resourceKind','resourcePath','operation','detail','creationTimestamp'];
 
 const tableSchema = schema
   .map((id) => ({
@@ -18,6 +18,14 @@ const tableSchema = schema
         ...item,
         component: ({ classes,data }) => (
           <span className={classes.details} title={data.get('detail')}>{data.get('detail')}</span>
+        ),
+      };
+    }
+    if (item.id === 'resourcePath') {
+      return {
+        ...item,
+        component: ({ classes,data }) => (
+          <span className={classes.details} title={data.get('resourcePath')}>{data.get('resourcePath')}</span>
         ),
       };
     }

@@ -38,7 +38,13 @@ const AuditLogsTable = ({
       if (sch.id === 'detail') {
         return {
           ...sch,
-          props: { pathname, classes},
+          props: { classes},
+        };
+      };
+      if (sch.id === 'resourcePath') {
+        return {
+          ...sch,
+          props: {classes},
         };
       }
       return sch;
