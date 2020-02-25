@@ -39,6 +39,8 @@ export const loadSvcMeshWorkloadsEpic = (action$, state$, { ajax }) =>
     )
   );
 
+
+
 export const readSvcMeshWorkloadEpic = (action$, state$, { ajax }) =>
   action$.pipe(
     ofType(c.READ_SVC_MESH_WORKLOAD),
@@ -53,12 +55,15 @@ export const readSvcMeshWorkloadEpic = (action$, state$, { ajax }) =>
         }),
         catchError((error) => {
           meta.reject && meta.reject(error);
-          return of(
-            a.readSvcMeshWorkloadFailure(error, { ...meta, id: payload })
-          );
+          return of(a.readSvcMeshWorkloadFailure(error, { ...meta, id: payload }));
         })
       )
     )
   );
 
-export default combineEpics(loadSvcMeshWorkloadsEpic, readSvcMeshWorkloadEpic);
+
+
+export default combineEpics(
+  loadSvcMeshWorkloadsEpic,
+  readSvcMeshWorkloadEpic,
+);

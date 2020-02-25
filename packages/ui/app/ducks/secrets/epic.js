@@ -67,7 +67,7 @@ export const updateSecretEpic = (action$, state$, { ajax }) =>
       ajax({
         url: `${meta.url}`,
         method: 'PUT',
-        body: payload,
+        body: payload
       }).pipe(
         map((resp) => {
           meta.resolve && meta.resolve(resp);
@@ -121,10 +121,11 @@ export const removeSecretEpic = (action$, state$, { ajax }) =>
     )
   );
 
+
 export default combineEpics(
   loadSecretsEpic,
   createSecretEpic,
   updateSecretEpic,
   readSecretEpic,
-  removeSecretEpic
+  removeSecretEpic,
 );

@@ -39,6 +39,8 @@ export const loadSvcMeshPodsEpic = (action$, state$, { ajax }) =>
     )
   );
 
+
+
 export const readSvcMeshPodEpic = (action$, state$, { ajax }) =>
   action$.pipe(
     ofType(c.READ_SVC_MESH_POD),
@@ -59,4 +61,9 @@ export const readSvcMeshPodEpic = (action$, state$, { ajax }) =>
     )
   );
 
-export default combineEpics(loadSvcMeshPodsEpic, readSvcMeshPodEpic);
+
+
+export default combineEpics(
+  loadSvcMeshPodsEpic,
+  readSvcMeshPodEpic,
+);

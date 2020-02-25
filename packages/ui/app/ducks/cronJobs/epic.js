@@ -60,6 +60,7 @@ export const createCronJobEpic = (action$, state$, { ajax }) =>
     )
   );
 
+
 export const readCronJobEpic = (action$, state$, { ajax }) =>
   action$.pipe(
     ofType(c.READ_CRON_JOB),
@@ -100,9 +101,10 @@ export const removeCronJobEpic = (action$, state$, { ajax }) =>
     )
   );
 
+
 export default combineEpics(
   loadCronJobsEpic,
   createCronJobEpic,
   readCronJobEpic,
-  removeCronJobEpic
+  removeCronJobEpic,
 );

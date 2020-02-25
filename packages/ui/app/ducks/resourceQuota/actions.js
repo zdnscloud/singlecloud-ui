@@ -46,6 +46,7 @@ export const createResourceQuotumFailure = (error, meta = {}) => ({
   error: true,
 });
 
+
 export const readResourceQuotum = (id, meta = {}) => ({
   type: c.READ_RESOURCE_QUOTUM,
   payload: id,
@@ -83,6 +84,7 @@ export const removeResourceQuotumFailure = (error, meta = {}) => ({
   meta,
   error: true,
 });
+
 
 export const clearErrorsList = (payload, meta) => ({
   type: c.CLEAR_ERRORS_LIST,

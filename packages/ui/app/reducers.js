@@ -105,6 +105,9 @@ import persistentVolumeClaimsReducer, {
 import persistentVolumesReducer, {
   prefix as persistentVolumesPrefix,
 } from 'ducks/persistentVolumes';
+import auditLogsReducer, {
+  prefix as auditLogsPrefix,
+} from 'ducks/auditLogs';
 // import reducers end
 
 /**
@@ -159,6 +162,7 @@ export default function createReducer(injectedReducers = {}) {
     [thresholdsPrefix]: thresholdsReducer,
     [persistentVolumeClaimsPrefix]: persistentVolumeClaimsReducer,
     [persistentVolumesPrefix]: persistentVolumesReducer,
+    [auditLogsPrefix]: auditLogsReducer,
     // combine reducers end
     ...injectedReducers,
   });

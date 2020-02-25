@@ -60,6 +60,7 @@ export const createServiceEpic = (action$, state$, { ajax }) =>
     )
   );
 
+
 export const readServiceEpic = (action$, state$, { ajax }) =>
   action$.pipe(
     ofType(c.READ_SERVICE),
@@ -100,9 +101,10 @@ export const removeServiceEpic = (action$, state$, { ajax }) =>
     )
   );
 
+
 export default combineEpics(
   loadServicesEpic,
   createServiceEpic,
   readServiceEpic,
-  removeServiceEpic
+  removeServiceEpic,
 );
