@@ -1,0 +1,602 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN" class="sidebar-visible no-js">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>react-final-form - Zcloud UI Documents</title>
+        
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+
+        
+    </head>
+    <body class="light">
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../";
+            var default_theme = "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            document.body.className = theme;
+            document.querySelector('html').className = theme + ' js';
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-brand">
+              <image class="sidebar-icon" src="../images/icon.png" />
+              <b class="sidebar-book-title">Zcloud UI Documents</b>
+            </div>
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li><a href="../intro.html"><strong aria-hidden="true">1.</strong> 简介</a></li><li><ol class="section"><li><a href="../view.html"><strong aria-hidden="true">1.1.</strong> 视图</a></li><li><a href="../state.html"><strong aria-hidden="true">1.2.</strong> 状态</a></li><li><a href="../intl.html"><strong aria-hidden="true">1.3.</strong> 页面语言</a></li></ol></li><li><a href="../dev.html"><strong aria-hidden="true">2.</strong> 开发管理</a></li><li><ol class="section"><li><a href="../dev/scaffold.html"><strong aria-hidden="true">2.1.</strong> 脚手架使用</a></li><li><a href="../dev/scaffold_dev.html"><strong aria-hidden="true">2.2.</strong> 脚手架开发</a></li><li><a href="../dev/react.html"><strong aria-hidden="true">2.3.</strong> React开发</a></li><li><a href="../dev/redux.html"><strong aria-hidden="true">2.4.</strong> Redux开发</a></li><li><a href="../dev/merge.html"><strong aria-hidden="true">2.5.</strong> 合并分支流程</a></li></ol></li><li><a href="../design.html"><strong aria-hidden="true">3.</strong> 开发设计</a></li><li><ol class="section"><li><a href="../design/realtime.html"><strong aria-hidden="true">3.1.</strong> 实时通讯</a></li><li><a href="../design/react-final-form.html" class="active"><strong aria-hidden="true">3.2.</strong> react-final-form</a></li></ol></li><li><a href="../prod.html"><strong aria-hidden="true">4.</strong> 产品业务</a></li><li><ol class="section"><li><a href="../prod/workload.html"><strong aria-hidden="true">4.1.</strong> Workload</a></li></ol></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar" class="menu-bar">
+                    <div id="menu-bar-sticky-container">
+                        <div class="left-buttons">
+                            <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                                <i class="fa fa-bars"></i>
+                            </button>
+                            
+                            <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                                <i class="fa fa-search"></i>
+                            </button>
+                            
+                        </div>
+
+                        <h1 class="menu-title">Zcloud UI Documents</h1>
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1><a class="header" href="#react-final-form" id="react-final-form">react final form</a></h1>
+<h3><a class="header" href="#简述" id="简述">简述</a></h3>
+<p>React Final Form是用于Final Form的精简React包装器，Final Form是使用Observer模式的基于订阅的表单状态管理库，因此当表单状态更改时，仅需要更新的组件会重新呈现。</p>
+<h3><a class="header" href="#设计目的" id="设计目的">设计目的</a></h3>
+<p>由于Redux Form在编辑时候，将整体刷新所有的组件，导致在复杂表单中，频繁的更改会导致性能消耗过大，出现卡顿现象。而react final form是高性能的基于订阅的表单状态管理，可以根据业务需求，通过订阅的方式，有效减少上述的问题。</p>
+<p>此外，React Final Form和 Redux Form有许多API都是完全相同的，使得迁移相对平滑很多。其主要区别在于，React Final Form不使用高阶组件来包裹表单组件，而是使用React Final Form的<code>&lt;Form/&gt;</code>组件提供表单状态。</p>
+<h2><a class="header" href="#如何从redux-form-迁移" id="如何从redux-form-迁移">如何从Redux Form 迁移</a></h2>
+<p><a href="https://final-form.org/docs/react-final-form/migration/redux-form">官网修改意见</a></p>
+<p>结合项目，需要需改的模块示例： </p>
+<h3><a class="header" href="#一-在createpagejs中" id="一-在createpagejs中">(一) 在CreatePage.js中</a></h3>
+<p>(1) 表单引入：</p>
+<p>Redux Form： </p>
+<pre><code>import CreateClusterForm, { formName } from './CreateForm';
+
+...
+
+	&lt;CreateClusterForm
+       onSubmit={doSubmit}
+    /&gt;
+
+
+</code></pre>
+<p>react-final-form:</p>
+<ul>
+<li>无需 formName</li>
+<li>表单传入值新增formRef，主要用于按钮表单外提交时的绑定</li>
+</ul>
+<pre><code>import React, { useRef } from 'react';
+import CreateClusterForm  from './CreateForm';
+
+...
+
+export const CreateClusterPage = ({ createCluster, url }) =&gt; {
+ const formRef = useRef(null);
+ 
+ ...
+ 
+	&lt;CreateClusterForm
+       onSubmit={doSubmit}
+       formRef={formRef}
+    /&gt;
+	
+...
+
+### 在CreateForm.js 中:
+
+export const CreateForm = ({  formRef }) =&gt; (
+  &lt;Form &gt;
+    {({ handleSubmit }) =&gt; (
+      &lt;form
+        ref={formRef}
+      &gt;
+
+</code></pre>
+<p>(2)表单提交：</p>
+<p>Redux Form：</p>
+<pre><code>import { SubmissionError, submit } from 'redux-form';
+
+  ...
+  
+  async function doSubmit(formValues) {
+    try {
+      const data = formValues.toJS();
+      await new Promise((resolve, reject) =&gt; {
+        createCluster(data, {
+          resolve,
+          reject,
+          url,
+        });
+      });
+    } catch (error) {
+      throw new SubmissionError({ _error: error });
+    }
+  }
+  
+  ...
+  
+    &lt;Button
+      onClick={submitForm}
+    &gt;
+        FormattedMessage {...messages.formCreate} /&gt;
+    &lt;/Button&gt;
+  
+  ...
+  
+  const mapDispatchToProps = (dispatch) =&gt;
+    bindActionCreators(
+      {
+        ...actions,
+        submitForm: () =&gt; submit(formName),
+      },
+      dispatch
+    );
+  
+  
+</code></pre>
+<p>react-final-form:</p>
+<ul>
+<li>formValues 不需要转化</li>
+<li>报错信息处理使用 <code>FORM_ERROR</code></li>
+<li>外部提交按钮操作不同</li>
+</ul>
+<pre><code>import { FORM_ERROR } from 'final-form';
+...
+  async function doSubmit(formValues) {
+    try {
+      await new Promise((resolve, reject) =&gt; {
+        createCluster(formValues, {
+          resolve,
+          reject,
+          url,
+        });
+      });
+    } catch (error) {
+      return { [FORM_ERROR]: error };
+    }
+  }
+  
+  ...
+  
+   &lt;Button
+     onClick={() =&gt; {
+       formRef.current.dispatchEvent(
+          new Event('submit', { cancelable: true })
+        );
+     }}
+     type=&quot;submit&quot;
+   &gt;
+     &lt;FormattedMessage {...messages.formCreate} /&gt;
+   &lt;/Button&gt;
+  
+  
+  ...
+  
+  const mapDispatchToProps = (dispatch) =&gt;
+    bindActionCreators(
+      {
+        ...actions,
+      },
+      dispatch
+    );
+</code></pre>
+<h3><a class="header" href="#二在createformjs中" id="二在createformjs中">(二）在CreateForm.js中</a></h3>
+<p>（1）表单 </p>
+<p>Redux Form：</p>
+<pre><code>export const Form = ({
+  handleSubmit,
+  error,
+  formValues,
+}) =&gt; {
+  const classes = useStyles();
+  return (
+    &lt;form 
+	  className={getByKey(classes, 'form')} 
+	  onSubmit={handleSubmit}
+	&gt;
+</code></pre>
+<p>react-final-form:</p>
+<ul>
+<li>在 <code>&lt;form&gt;</code> 外包裹 <code>&lt;Form&gt;</code></li>
+<li>提交表单的绑定方式不同 </li>
+</ul>
+<pre><code>import { Form, Field } from 'react-final-form';
+
+...
+
+export const CreateForm = ({ onSubmit, formRef }) =&gt; (
+  &lt;Form
+    onSubmit={(values) =&gt; onSubmit(values)}
+  &gt;
+    {({ handleSubmit, values, submitError }) =&gt; (
+      &lt;form
+        className={getByKey(classes, 'form')}
+        onSubmit={handleSubmit}
+        ref={formRef}
+      &gt;
+</code></pre>
+<p>（2）错误验证</p>
+<p>Redux Form：</p>
+<pre><code>const validate = (values) =&gt; {
+  const errors = {};
+  const requiredFields = [
+    'name',
+  ];
+  requiredFields.forEach((field) =&gt; {
+    if (!values[field]) {
+      errors[field] = 'Required';
+    }
+  });
+  return errors;
+};
+
+...
+
+const ClusterForm = reduxForm({
+  form: formName,
+  validate,
+})(Form);
+
+</code></pre>
+<p>react-final-form:</p>
+<ul>
+<li>验证信息直接绑定到 <code>&lt;Form&gt;</code> 上</li>
+</ul>
+<pre><code>const validate = (values) =&gt; {
+  const errors = {};
+  const requiredFields = [
+    'name',
+  ];
+  requiredFields.forEach((field) =&gt; {
+    if (!values[field]) {
+      errors[field] = 'Required';
+    }
+  });
+  return errors;
+};
+
+...
+
+  &lt;Form
+    validate={validate}  
+  &gt;
+  
+</code></pre>
+<p>(3) 错误信息显示：</p>
+<p>Redux Form：</p>
+<pre><code>export const Form = ({
+  error,
+}) =&gt; {
+	
+...
+
+  {error ? (
+      &lt;GridItem xs={12} sm={12} md={12}&gt;
+            &lt;Danger&gt;{getByKey(error, ['response', 'message'])}&lt;/Danger&gt;
+      &lt;/GridItem&gt;
+  ) : null}
+
+</code></pre>
+<p>react-final-form:</p>
+<ul>
+<li>错误信息从<code>&lt;Form&gt;</code>中获取： </li>
+</ul>
+<pre><code> &lt;Form&gt;
+    {({ submitError }) =&gt; (
+	  &lt;form&gt;
+	  
+	...
+
+	 {submitError ? (
+		&lt;GridItem xs={12} sm={12} md={12}&gt;
+			&lt;Danger&gt;{getByKey(submitError, ['response', 'message'])}&lt;/Danger&gt;
+		&lt;/GridItem&gt;
+	 ) : null}
+	 
+</code></pre>
+<p>(4) 初始值：</p>
+<p>Redux Form：</p>
+<pre><code>&lt;CreateClusterForm
+   initialValues={fromJS({ name: &quot;cluster.local&quot; })}
+/&gt;
+</code></pre>
+<p>react-final-form:</p>
+<ul>
+<li>初始值直接绑定到 <code>&lt;Form&gt;</code> 上</li>
+<li>不需要 <code>fromJS（)</code>转化</li>
+</ul>
+<pre><code> &lt;Form
+    initialValues={{ name: &quot;cluster.local&quot; }}  
+  &gt;
+</code></pre>
+<p>（5）数组</p>
+<p>Redux Form：</p>
+<pre><code>import { FieldArray } from 'redux-form/immutable';
+
+...
+
+export const Form = ({
+  formValues,
+}) =&gt; {
+	
+	...
+	
+	&lt;FieldArray
+	   name=&quot;containers&quot;
+	   formValues={formValues}
+	/&gt;
+
+
+</code></pre>
+<p>react-final-form:</p>
+<ul>
+<li>替换 FieldArray 的引入源</li>
+<li>Form 新增 arrayMutators 属性</li>
+<li>传入的 formValues 的来源不同</li>
+</ul>
+<pre><code>import arrayMutators from 'final-form-arrays';
+import { FieldArray } from 'react-final-form-arrays';
+
+...
+
+  &lt;Form
+    mutators={{
+      ...arrayMutators,
+    }}
+  &gt;
+   {({ values }) =&gt; (
+	 &lt;form&gt;
+  ...
+  
+  &lt;FieldArray
+     name=&quot;containers&quot;
+     formValues={values}
+  /&gt;
+
+</code></pre>
+<p>（6）表单清空:</p>
+<p>Redux Form：</p>
+<pre><code>const Form = ({
+  reset,
+}) =&gt; (
+
+...
+
+	&lt;Button
+		onClick={reset}
+	 &gt;
+		 &lt;FormattedMessage {...messages.formRest} /&gt;
+	&lt;/button&gt;
+
+</code></pre>
+<p>react-final-form:</p>
+<ul>
+<li>提供reset功能的是整个FormApi对象，而不是提供reset()功能</li>
+</ul>
+<pre><code>&lt;Form&gt;
+    {({ form }) =&gt; (
+	  &lt;form&gt;
+...
+
+	&lt;Button
+		onClick={form.reset}
+	 &gt;
+		 &lt;FormattedMessage {...messages.formRest} /&gt;
+	&lt;/button&gt;
+</code></pre>
+<h3><a class="header" href="#三-在components中" id="三-在components中">(三) 在components中：</a></h3>
+<p>需要修改的文件夹涉及：</p>
+<ul>
+<li>CustomInput </li>
+<li>CustomSwitch</li>
+<li>CostomTextarea</li>
+<li>Filed</li>
+</ul>
+<p>具体修改的部分：</p>
+<ul>
+<li>替换 Field 的引入源</li>
+</ul>
+<pre><code>-  import { Field } from 'redux-form/immutable'; 
++  import { Field } from 'react-final-form';
+  
+</code></pre>
+<ul>
+<li>chexboxesFiled.js</li>
+</ul>
+<pre><code>line 27   -   let val = input.value || List([])
+line 27   +   let val = input.value || [];
+</code></pre>
+<h3><a class="header" href="#四在生成模板中" id="四在生成模板中">（四）在生成模板中：</a></h3>
+<p>上述的改动需要同步更新</p>
+<h2><a class="header" href="#存在问题" id="存在问题">存在问题</a></h2>
+<ul>
+<li>
+<p>表单提交之后，表单会被清空，即使后台有报错信息。</p>
+</li>
+<li>
+<p>自动刷新页面中对表单初始值存在的影响。</p>
+</li>
+</ul>
+<h2><a class="header" href="#对于迁移的探讨" id="对于迁移的探讨">对于迁移的探讨</a></h2>
+<ul>
+<li>
+<p>涉及的模块比较多，有的表单比较复杂，修改面临其他的未知的问题，会导致周期的不确定性。</p>
+</li>
+<li>
+<p>控制表单刷新的条件及实现方案。</p>
+</li>
+<li>
+<p>目前上述对于表单的外部提交方案是可行的，是否换成内部提交的会更简单。</p>
+</li>
+<li>
+<p>react-final-form的生成的数据格式与之前不同，在处理数据的时候需要做相应的转化，改后需要进行充分的自测，是否有必要统一数据的格式。</p>
+</li>
+</ul>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="../design/realtime.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+
+                        
+                            <a rel="next" href="../prod.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+                    <a href="../design/realtime.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+                    <a href="../prod.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+            </nav>
+
+        </div>
+
+        
+        <!-- Livereload script (if served using the cli tool) -->
+        <script type="text/javascript">
+            var socket = new WebSocket("ws://localhost:8081");
+            socket.onmessage = function (event) {
+                if (event.data === "reload") {
+                    socket.close();
+                    location.reload(true); // force reload from server (not from cache)
+                }
+            };
+
+            window.onbeforeunload = function() {
+                socket.close();
+            }
+        </script>
+        
+
+        
+
+        
+
+        
+        <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+
+        
+
+    </body>
+</html>

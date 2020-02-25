@@ -82,7 +82,7 @@
               <b class="sidebar-book-title">Zcloud UI Documents</b>
             </div>
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li><a href="intro.html"><strong aria-hidden="true">1.</strong> 简介</a></li><li><ol class="section"><li><a href="view.html"><strong aria-hidden="true">1.1.</strong> 视图</a></li><li><a href="state.html"><strong aria-hidden="true">1.2.</strong> 状态</a></li><li><a href="intl.html"><strong aria-hidden="true">1.3.</strong> 页面语言</a></li></ol></li><li><a href="dev.html"><strong aria-hidden="true">2.</strong> 开发管理</a></li><li><ol class="section"><li><a href="dev/scaffold.html"><strong aria-hidden="true">2.1.</strong> 脚手架使用</a></li><li><a href="dev/scaffold_dev.html"><strong aria-hidden="true">2.2.</strong> 脚手架开发</a></li><li><a href="dev/react.html"><strong aria-hidden="true">2.3.</strong> React开发</a></li><li><a href="dev/redux.html"><strong aria-hidden="true">2.4.</strong> Redux开发</a></li></ol></li><li><a href="design.html"><strong aria-hidden="true">3.</strong> 开发设计</a></li><li><ol class="section"><li><a href="design/realtime.html"><strong aria-hidden="true">3.1.</strong> 实时通讯</a></li></ol></li></ol>
+                <ol class="chapter"><li><a href="intro.html"><strong aria-hidden="true">1.</strong> 简介</a></li><li><ol class="section"><li><a href="view.html"><strong aria-hidden="true">1.1.</strong> 视图</a></li><li><a href="state.html"><strong aria-hidden="true">1.2.</strong> 状态</a></li><li><a href="intl.html"><strong aria-hidden="true">1.3.</strong> 页面语言</a></li></ol></li><li><a href="dev.html"><strong aria-hidden="true">2.</strong> 开发管理</a></li><li><ol class="section"><li><a href="dev/scaffold.html"><strong aria-hidden="true">2.1.</strong> 脚手架使用</a></li><li><a href="dev/scaffold_dev.html"><strong aria-hidden="true">2.2.</strong> 脚手架开发</a></li><li><a href="dev/react.html"><strong aria-hidden="true">2.3.</strong> React开发</a></li><li><a href="dev/redux.html"><strong aria-hidden="true">2.4.</strong> Redux开发</a></li><li><a href="dev/merge.html"><strong aria-hidden="true">2.5.</strong> 合并分支流程</a></li></ol></li><li><a href="design.html"><strong aria-hidden="true">3.</strong> 开发设计</a></li><li><ol class="section"><li><a href="design/realtime.html"><strong aria-hidden="true">3.1.</strong> 实时通讯</a></li><li><a href="design/react-final-form.html"><strong aria-hidden="true">3.2.</strong> react-final-form</a></li></ol></li><li><a href="prod.html"><strong aria-hidden="true">4.</strong> 产品业务</a></li><li><ol class="section"><li><a href="prod/workload.html"><strong aria-hidden="true">4.1.</strong> Workload</a></li></ol></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -396,6 +396,7 @@
      )
    );
 </code></pre>
+<h1><a class="header" href="#合并分支流程" id="合并分支流程">合并分支流程</a></h1>
 <h1><a class="header" href="#开发设计" id="开发设计">开发设计</a></h1>
 <h3><a class="header" href="#数据获取方式" id="数据获取方式">数据获取方式：</a></h3>
 <p>一般数据通过<code>ajax</code>/<code>fetch</code>从<code>singlecloud</code>读取数据，读取API通过<code>singlecloud/docs/resources</code>自动生成</p>
@@ -409,12 +410,22 @@ websocket是为web实时通讯开发的新协议，支持全双工通讯，实�
 <h3><a class="header" href="#设计目的" id="设计目的">设计目的</a></h3>
 <p>最初，为了解决<code>singlecloud</code>中的异步时间推送和读取信息，准备使用websocket来解决。
 检查后发现，还有一些问题，实时日志系统显示也需要websoket，实时交互如：命令行交互，
-或者将来的在线实时编辑，消息发送，可能都需要websoket来承载。为了解决这些问题，所以
-打算对当前的websoket通讯做一个规划。</p>
-<h3><a class="header" href="#设计主体" id="设计主体">设计主体</a></h3>
+或者将来的在线实时编辑，消息发送，都需要websoket来承载。为了解决这些问题，我们使用
+websocket来解决当前的通讯问题。</p>
+<h3><a class="header" href="#设计" id="设计">设计</a></h3>
 <h4><a class="header" href="#数据通道划分" id="数据通道划分">数据通道划分</a></h4>
-<p>参照websocket通讯，考虑可以使用几种方式来接受后端的消息</p>
-<p>每一个模块单独打开一个websoket连接，处理自己的数据。</p>
+<p>每一个模块单独打开一个websoket连接，监听和发送自己的数据自己的数据。</p>
+<h5><a class="header" href="#url-定义" id="url-定义">URL 定义</a></h5>
+<p>定义方式和其它资源相同，URL中的group部分和REST接口有区分，如下</p>
+<pre><code>/apis/ws.zcloud.cn/v1/resources
+
+Group: ws.zcloud.cn
+
+Version: v1
+
+resources为需要接入的资源URL
+</code></pre>
+<p>现在会在链接上打开一个websocket通道，在通道上传送数据</p>
 <h4><a class="header" href="#通讯数据划分分类" id="通讯数据划分分类">通讯数据划分分类</a></h4>
 <ul>
 <li>单向服务器推送
@@ -476,6 +487,419 @@ websocket是为web实时通讯开发的新协议，支持全双工通讯，实�
 <li>shell</li>
 </ul>
 <p>传输shell模拟器输入输出，传输时做base64编码</p>
+<h1><a class="header" href="#react-final-form" id="react-final-form">react final form</a></h1>
+<h3><a class="header" href="#简述" id="简述">简述</a></h3>
+<p>React Final Form是用于Final Form的精简React包装器，Final Form是使用Observer模式的基于订阅的表单状态管理库，因此当表单状态更改时，仅需要更新的组件会重新呈现。</p>
+<h3><a class="header" href="#设计目的-1" id="设计目的-1">设计目的</a></h3>
+<p>由于Redux Form在编辑时候，将整体刷新所有的组件，导致在复杂表单中，频繁的更改会导致性能消耗过大，出现卡顿现象。而react final form是高性能的基于订阅的表单状态管理，可以根据业务需求，通过订阅的方式，有效减少上述的问题。</p>
+<p>此外，React Final Form和 Redux Form有许多API都是完全相同的，使得迁移相对平滑很多。其主要区别在于，React Final Form不使用高阶组件来包裹表单组件，而是使用React Final Form的<code>&lt;Form/&gt;</code>组件提供表单状态。</p>
+<h2><a class="header" href="#如何从redux-form-迁移" id="如何从redux-form-迁移">如何从Redux Form 迁移</a></h2>
+<p><a href="https://final-form.org/docs/react-final-form/migration/redux-form">官网修改意见</a></p>
+<p>结合项目，需要需改的模块示例： </p>
+<h3><a class="header" href="#一-在createpagejs中" id="一-在createpagejs中">(一) 在CreatePage.js中</a></h3>
+<p>(1) 表单引入：</p>
+<p>Redux Form： </p>
+<pre><code>import CreateClusterForm, { formName } from './CreateForm';
+
+...
+
+	&lt;CreateClusterForm
+       onSubmit={doSubmit}
+    /&gt;
+
+
+</code></pre>
+<p>react-final-form:</p>
+<ul>
+<li>无需 formName</li>
+<li>表单传入值新增formRef，主要用于按钮表单外提交时的绑定</li>
+</ul>
+<pre><code>import React, { useRef } from 'react';
+import CreateClusterForm  from './CreateForm';
+
+...
+
+export const CreateClusterPage = ({ createCluster, url }) =&gt; {
+ const formRef = useRef(null);
+ 
+ ...
+ 
+	&lt;CreateClusterForm
+       onSubmit={doSubmit}
+       formRef={formRef}
+    /&gt;
+	
+...
+
+### 在CreateForm.js 中:
+
+export const CreateForm = ({  formRef }) =&gt; (
+  &lt;Form &gt;
+    {({ handleSubmit }) =&gt; (
+      &lt;form
+        ref={formRef}
+      &gt;
+
+</code></pre>
+<p>(2)表单提交：</p>
+<p>Redux Form：</p>
+<pre><code>import { SubmissionError, submit } from 'redux-form';
+
+  ...
+  
+  async function doSubmit(formValues) {
+    try {
+      const data = formValues.toJS();
+      await new Promise((resolve, reject) =&gt; {
+        createCluster(data, {
+          resolve,
+          reject,
+          url,
+        });
+      });
+    } catch (error) {
+      throw new SubmissionError({ _error: error });
+    }
+  }
+  
+  ...
+  
+    &lt;Button
+      onClick={submitForm}
+    &gt;
+        FormattedMessage {...messages.formCreate} /&gt;
+    &lt;/Button&gt;
+  
+  ...
+  
+  const mapDispatchToProps = (dispatch) =&gt;
+    bindActionCreators(
+      {
+        ...actions,
+        submitForm: () =&gt; submit(formName),
+      },
+      dispatch
+    );
+  
+  
+</code></pre>
+<p>react-final-form:</p>
+<ul>
+<li>formValues 不需要转化</li>
+<li>报错信息处理使用 <code>FORM_ERROR</code></li>
+<li>外部提交按钮操作不同</li>
+</ul>
+<pre><code>import { FORM_ERROR } from 'final-form';
+...
+  async function doSubmit(formValues) {
+    try {
+      await new Promise((resolve, reject) =&gt; {
+        createCluster(formValues, {
+          resolve,
+          reject,
+          url,
+        });
+      });
+    } catch (error) {
+      return { [FORM_ERROR]: error };
+    }
+  }
+  
+  ...
+  
+   &lt;Button
+     onClick={() =&gt; {
+       formRef.current.dispatchEvent(
+          new Event('submit', { cancelable: true })
+        );
+     }}
+     type=&quot;submit&quot;
+   &gt;
+     &lt;FormattedMessage {...messages.formCreate} /&gt;
+   &lt;/Button&gt;
+  
+  
+  ...
+  
+  const mapDispatchToProps = (dispatch) =&gt;
+    bindActionCreators(
+      {
+        ...actions,
+      },
+      dispatch
+    );
+</code></pre>
+<h3><a class="header" href="#二在createformjs中" id="二在createformjs中">(二）在CreateForm.js中</a></h3>
+<p>（1）表单 </p>
+<p>Redux Form：</p>
+<pre><code>export const Form = ({
+  handleSubmit,
+  error,
+  formValues,
+}) =&gt; {
+  const classes = useStyles();
+  return (
+    &lt;form 
+	  className={getByKey(classes, 'form')} 
+	  onSubmit={handleSubmit}
+	&gt;
+</code></pre>
+<p>react-final-form:</p>
+<ul>
+<li>在 <code>&lt;form&gt;</code> 外包裹 <code>&lt;Form&gt;</code></li>
+<li>提交表单的绑定方式不同 </li>
+</ul>
+<pre><code>import { Form, Field } from 'react-final-form';
+
+...
+
+export const CreateForm = ({ onSubmit, formRef }) =&gt; (
+  &lt;Form
+    onSubmit={(values) =&gt; onSubmit(values)}
+  &gt;
+    {({ handleSubmit, values, submitError }) =&gt; (
+      &lt;form
+        className={getByKey(classes, 'form')}
+        onSubmit={handleSubmit}
+        ref={formRef}
+      &gt;
+</code></pre>
+<p>（2）错误验证</p>
+<p>Redux Form：</p>
+<pre><code>const validate = (values) =&gt; {
+  const errors = {};
+  const requiredFields = [
+    'name',
+  ];
+  requiredFields.forEach((field) =&gt; {
+    if (!values[field]) {
+      errors[field] = 'Required';
+    }
+  });
+  return errors;
+};
+
+...
+
+const ClusterForm = reduxForm({
+  form: formName,
+  validate,
+})(Form);
+
+</code></pre>
+<p>react-final-form:</p>
+<ul>
+<li>验证信息直接绑定到 <code>&lt;Form&gt;</code> 上</li>
+</ul>
+<pre><code>const validate = (values) =&gt; {
+  const errors = {};
+  const requiredFields = [
+    'name',
+  ];
+  requiredFields.forEach((field) =&gt; {
+    if (!values[field]) {
+      errors[field] = 'Required';
+    }
+  });
+  return errors;
+};
+
+...
+
+  &lt;Form
+    validate={validate}  
+  &gt;
+  
+</code></pre>
+<p>(3) 错误信息显示：</p>
+<p>Redux Form：</p>
+<pre><code>export const Form = ({
+  error,
+}) =&gt; {
+	
+...
+
+  {error ? (
+      &lt;GridItem xs={12} sm={12} md={12}&gt;
+            &lt;Danger&gt;{getByKey(error, ['response', 'message'])}&lt;/Danger&gt;
+      &lt;/GridItem&gt;
+  ) : null}
+
+</code></pre>
+<p>react-final-form:</p>
+<ul>
+<li>错误信息从<code>&lt;Form&gt;</code>中获取： </li>
+</ul>
+<pre><code> &lt;Form&gt;
+    {({ submitError }) =&gt; (
+	  &lt;form&gt;
+	  
+	...
+
+	 {submitError ? (
+		&lt;GridItem xs={12} sm={12} md={12}&gt;
+			&lt;Danger&gt;{getByKey(submitError, ['response', 'message'])}&lt;/Danger&gt;
+		&lt;/GridItem&gt;
+	 ) : null}
+	 
+</code></pre>
+<p>(4) 初始值：</p>
+<p>Redux Form：</p>
+<pre><code>&lt;CreateClusterForm
+   initialValues={fromJS({ name: &quot;cluster.local&quot; })}
+/&gt;
+</code></pre>
+<p>react-final-form:</p>
+<ul>
+<li>初始值直接绑定到 <code>&lt;Form&gt;</code> 上</li>
+<li>不需要 <code>fromJS（)</code>转化</li>
+</ul>
+<pre><code> &lt;Form
+    initialValues={{ name: &quot;cluster.local&quot; }}  
+  &gt;
+</code></pre>
+<p>（5）数组</p>
+<p>Redux Form：</p>
+<pre><code>import { FieldArray } from 'redux-form/immutable';
+
+...
+
+export const Form = ({
+  formValues,
+}) =&gt; {
+	
+	...
+	
+	&lt;FieldArray
+	   name=&quot;containers&quot;
+	   formValues={formValues}
+	/&gt;
+
+
+</code></pre>
+<p>react-final-form:</p>
+<ul>
+<li>替换 FieldArray 的引入源</li>
+<li>Form 新增 arrayMutators 属性</li>
+<li>传入的 formValues 的来源不同</li>
+</ul>
+<pre><code>import arrayMutators from 'final-form-arrays';
+import { FieldArray } from 'react-final-form-arrays';
+
+...
+
+  &lt;Form
+    mutators={{
+      ...arrayMutators,
+    }}
+  &gt;
+   {({ values }) =&gt; (
+	 &lt;form&gt;
+  ...
+  
+  &lt;FieldArray
+     name=&quot;containers&quot;
+     formValues={values}
+  /&gt;
+
+</code></pre>
+<p>（6）表单清空:</p>
+<p>Redux Form：</p>
+<pre><code>const Form = ({
+  reset,
+}) =&gt; (
+
+...
+
+	&lt;Button
+		onClick={reset}
+	 &gt;
+		 &lt;FormattedMessage {...messages.formRest} /&gt;
+	&lt;/button&gt;
+
+</code></pre>
+<p>react-final-form:</p>
+<ul>
+<li>提供reset功能的是整个FormApi对象，而不是提供reset()功能</li>
+</ul>
+<pre><code>&lt;Form&gt;
+    {({ form }) =&gt; (
+	  &lt;form&gt;
+...
+
+	&lt;Button
+		onClick={form.reset}
+	 &gt;
+		 &lt;FormattedMessage {...messages.formRest} /&gt;
+	&lt;/button&gt;
+</code></pre>
+<h3><a class="header" href="#三-在components中" id="三-在components中">(三) 在components中：</a></h3>
+<p>需要修改的文件夹涉及：</p>
+<ul>
+<li>CustomInput </li>
+<li>CustomSwitch</li>
+<li>CostomTextarea</li>
+<li>Filed</li>
+</ul>
+<p>具体修改的部分：</p>
+<ul>
+<li>替换 Field 的引入源</li>
+</ul>
+<pre><code>-  import { Field } from 'redux-form/immutable'; 
++  import { Field } from 'react-final-form';
+  
+</code></pre>
+<ul>
+<li>chexboxesFiled.js</li>
+</ul>
+<pre><code>line 27   -   let val = input.value || List([])
+line 27   +   let val = input.value || [];
+</code></pre>
+<h3><a class="header" href="#四在生成模板中" id="四在生成模板中">（四）在生成模板中：</a></h3>
+<p>上述的改动需要同步更新</p>
+<h2><a class="header" href="#存在问题" id="存在问题">存在问题</a></h2>
+<ul>
+<li>
+<p>表单提交之后，表单会被清空，即使后台有报错信息。</p>
+</li>
+<li>
+<p>自动刷新页面中对表单初始值存在的影响。</p>
+</li>
+</ul>
+<h2><a class="header" href="#对于迁移的探讨" id="对于迁移的探讨">对于迁移的探讨</a></h2>
+<ul>
+<li>
+<p>涉及的模块比较多，有的表单比较复杂，修改面临其他的未知的问题，会导致周期的不确定性。</p>
+</li>
+<li>
+<p>控制表单刷新的条件及实现方案。</p>
+</li>
+<li>
+<p>目前上述对于表单的外部提交方案是可行的，是否换成内部提交的会更简单。</p>
+</li>
+<li>
+<p>react-final-form的生成的数据格式与之前不同，在处理数据的时候需要做相应的转化，改后需要进行充分的自测，是否有必要统一数据的格式。</p>
+</li>
+</ul>
+<h1><a class="header" href="#产品业务" id="产品业务">产品业务</a></h1>
+<h1><a class="header" href="#workload" id="workload">Workload</a></h1>
+<h3><a class="header" href="#workload-更新状态" id="workload-更新状态">Workload 更新状态</a></h3>
+<p><strong>状态：</strong></p>
+<ul>
+<li>ready还是原来的意思</li>
+<li>current表示未升级的</li>
+<li>updated表示升级完成的</li>
+<li>unavaliable表示正在升级的</li>
+</ul>
+<p><strong>颜色：</strong></p>
+<ul>
+<li><code>#52C41A</code>  <i style="color: #52C41A">创建完成</i></li>
+<li><code>#B7EB8F</code>  <i style="color: #B7EB8F">待创建</i></li>
+<li><code>#1890FF</code>  <i style="color: #1890FF">升级完成</i></li>
+<li><code>#91D5FF</code>  <i style="color: #91D5FF">待升级</i></li>
+<li><code>#F7B500</code>  <i style="color: #F7B500">升级中</i></li>
+<li><code>#F5222D</code>  <i style="color: #F5222D">升级失败</i></li>
+</ul>
 
                     </main>
 

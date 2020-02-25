@@ -80,7 +80,7 @@
               <b class="sidebar-book-title">Zcloud UI Documents</b>
             </div>
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li><a href="../intro.html"><strong aria-hidden="true">1.</strong> 简介</a></li><li><ol class="section"><li><a href="../view.html"><strong aria-hidden="true">1.1.</strong> 视图</a></li><li><a href="../state.html"><strong aria-hidden="true">1.2.</strong> 状态</a></li><li><a href="../intl.html"><strong aria-hidden="true">1.3.</strong> 页面语言</a></li></ol></li><li><a href="../dev.html"><strong aria-hidden="true">2.</strong> 开发管理</a></li><li><ol class="section"><li><a href="../dev/scaffold.html"><strong aria-hidden="true">2.1.</strong> 脚手架使用</a></li><li><a href="../dev/scaffold_dev.html"><strong aria-hidden="true">2.2.</strong> 脚手架开发</a></li><li><a href="../dev/react.html"><strong aria-hidden="true">2.3.</strong> React开发</a></li><li><a href="../dev/redux.html"><strong aria-hidden="true">2.4.</strong> Redux开发</a></li></ol></li><li><a href="../design.html"><strong aria-hidden="true">3.</strong> 开发设计</a></li><li><ol class="section"><li><a href="../design/realtime.html" class="active"><strong aria-hidden="true">3.1.</strong> 实时通讯</a></li></ol></li></ol>
+                <ol class="chapter"><li><a href="../intro.html"><strong aria-hidden="true">1.</strong> 简介</a></li><li><ol class="section"><li><a href="../view.html"><strong aria-hidden="true">1.1.</strong> 视图</a></li><li><a href="../state.html"><strong aria-hidden="true">1.2.</strong> 状态</a></li><li><a href="../intl.html"><strong aria-hidden="true">1.3.</strong> 页面语言</a></li></ol></li><li><a href="../dev.html"><strong aria-hidden="true">2.</strong> 开发管理</a></li><li><ol class="section"><li><a href="../dev/scaffold.html"><strong aria-hidden="true">2.1.</strong> 脚手架使用</a></li><li><a href="../dev/scaffold_dev.html"><strong aria-hidden="true">2.2.</strong> 脚手架开发</a></li><li><a href="../dev/react.html"><strong aria-hidden="true">2.3.</strong> React开发</a></li><li><a href="../dev/redux.html"><strong aria-hidden="true">2.4.</strong> Redux开发</a></li><li><a href="../dev/merge.html"><strong aria-hidden="true">2.5.</strong> 合并分支流程</a></li></ol></li><li><a href="../design.html"><strong aria-hidden="true">3.</strong> 开发设计</a></li><li><ol class="section"><li><a href="../design/realtime.html" class="active"><strong aria-hidden="true">3.1.</strong> 实时通讯</a></li><li><a href="../design/react-final-form.html"><strong aria-hidden="true">3.2.</strong> react-final-form</a></li></ol></li><li><a href="../prod.html"><strong aria-hidden="true">4.</strong> 产品业务</a></li><li><ol class="section"><li><a href="../prod/workload.html"><strong aria-hidden="true">4.1.</strong> Workload</a></li></ol></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -139,12 +139,22 @@ websocket是为web实时通讯开发的新协议，支持全双工通讯，实�
 <h3><a class="header" href="#设计目的" id="设计目的">设计目的</a></h3>
 <p>最初，为了解决<code>singlecloud</code>中的异步时间推送和读取信息，准备使用websocket来解决。
 检查后发现，还有一些问题，实时日志系统显示也需要websoket，实时交互如：命令行交互，
-或者将来的在线实时编辑，消息发送，可能都需要websoket来承载。为了解决这些问题，所以
-打算对当前的websoket通讯做一个规划。</p>
-<h3><a class="header" href="#设计主体" id="设计主体">设计主体</a></h3>
+或者将来的在线实时编辑，消息发送，都需要websoket来承载。为了解决这些问题，我们使用
+websocket来解决当前的通讯问题。</p>
+<h3><a class="header" href="#设计" id="设计">设计</a></h3>
 <h4><a class="header" href="#数据通道划分" id="数据通道划分">数据通道划分</a></h4>
-<p>参照websocket通讯，考虑可以使用几种方式来接受后端的消息</p>
-<p>每一个模块单独打开一个websoket连接，处理自己的数据。</p>
+<p>每一个模块单独打开一个websoket连接，监听和发送自己的数据自己的数据。</p>
+<h5><a class="header" href="#url-定义" id="url-定义">URL 定义</a></h5>
+<p>定义方式和其它资源相同，URL中的group部分和REST接口有区分，如下</p>
+<pre><code>/apis/ws.zcloud.cn/v1/resources
+
+Group: ws.zcloud.cn
+
+Version: v1
+
+resources为需要接入的资源URL
+</code></pre>
+<p>现在会在链接上打开一个websocket通道，在通道上传送数据</p>
 <h4><a class="header" href="#通讯数据划分分类" id="通讯数据划分分类">通讯数据划分分类</a></h4>
 <ul>
 <li>单向服务器推送
@@ -218,6 +228,10 @@ websocket是为web实时通讯开发的新协议，支持全双工通讯，实�
                         
 
                         
+                            <a rel="next" href="../design/react-final-form.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
 
                         <div style="clear: both"></div>
                     </nav>
@@ -231,6 +245,10 @@ websocket是为web实时通讯开发的新协议，支持全双工通讯，实�
                     </a>
                 
 
+                
+                    <a href="../design/react-final-form.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
                 
             </nav>
 
