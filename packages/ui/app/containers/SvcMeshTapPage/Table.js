@@ -9,6 +9,7 @@ import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import { bindActionCreators, compose } from 'redux';
+import throttleRender from '@gsmlg/com/throttleRender';
 
 import { Link } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
@@ -95,4 +96,4 @@ const mapDispatchToProps = (dispatch) =>
 
 const withConnect = connect(mapStateToProps, mapDispatchToProps);
 
-export default compose(withConnect)(TapTable);
+export default compose(withConnect)(throttleRender(TapTable, 250));
