@@ -52,7 +52,7 @@ export const SecretsTable = ({
       if (sch.id === 'name') {
         return {
           ...sch,
-          props: { clusterID, namespaceID },
+          props: { clusterID, namespaceID ,classes},
         };
       }
       return sch;

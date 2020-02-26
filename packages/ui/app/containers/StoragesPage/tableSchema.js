@@ -47,6 +47,7 @@ const tableSchema = schema
             action
             component={Link}
             to={`${pathname}/${data.get('id')}/edit`}
+            disabled={data.get('deletionTimestamp')}
           >
             <FormattedMessage {...messages.editButton} />
           </Button>
@@ -57,6 +58,7 @@ const tableSchema = schema
             url={data.getIn(['links', 'remove'])}
             clusterID={clusterID}
             reject={(e) => setError(e)}
+            disabled={data.get('deletionTimestamp')}
           />
         </Fragment>
       ),
@@ -66,15 +68,18 @@ const tableSchema = schema
     if (sch.id === 'storageType') {
       return {
         ...sch,
-        component: (props) => (
-          <Button
-            link
-            component={Link}
-            to={`${props.pathname}/${props.data.get('id')}/show`}
-          >
-            {props.data.get('storageType')}
-          </Button>
-        ),
+        component: ({data, pathname,classes}) => 
+          data.get('deletionTimestamp') ? (
+            <span className={ data.get('deletionTimestamp') ? classes.strikeout : null}>{ data.get('storageType')}</span>
+          ) :(
+            <Button
+              link
+              component={Link}
+              to={`${pathname}/${data.get('id')}/show`}
+            >
+              {data.get('storageType')}
+            </Button>
+          ),
       };
     }
     return sch;

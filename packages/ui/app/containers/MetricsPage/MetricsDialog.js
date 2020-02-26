@@ -41,6 +41,7 @@ const MetricsDialog = ({
   url,
   id,
   type,
+  disabled,
 }) => {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
@@ -93,6 +94,7 @@ const MetricsDialog = ({
           }
           setOpen(true);
         }}
+        disabled={disabled}
       >
         <FormattedMessage {...messages.metricBtn} />
       </CButton>

@@ -43,6 +43,7 @@ const tableSchema = schema
             id={data.get('id')}
             url={data.getIn(['links', 'remove'])}
             reject={(e) => setError(e)}
+            disabled={data.get('status') === 'Deleting'}
           />
         </Fragment>
       ),
@@ -52,7 +53,7 @@ const tableSchema = schema
     if (sch.id === 'name') {
       return {
         ...sch,
-        component: ({ data }) =>
+        component: ({ data ,classes}) =>
           data.get('status') === 'Running' ? (
             <Button
               link
@@ -62,7 +63,7 @@ const tableSchema = schema
               {data.get('name')}
             </Button>
           ) : (
-            data.get('name')
+            <span className={ data.get('status') === 'Deleting' ? classes.strikeout : null}>{ data.get('name')}</span>
           ),
       };
     }

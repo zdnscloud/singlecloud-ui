@@ -261,6 +261,10 @@ const styles = (theme) => ({
     margin: '0 !important',
     borderBottom: 'none !important',
   },
+  strikeout:{
+    color:'#D9D9D9',
+    textDecoration:'line-through',
+  },
 });
 
 export default styles;

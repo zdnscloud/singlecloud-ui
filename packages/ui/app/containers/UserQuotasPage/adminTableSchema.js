@@ -24,6 +24,15 @@ const adminTableSchema = schema
     label: ucfirst(id),
   }))
   .map((item) => {
+    if (item.id === 'namespace') {
+      return {
+        ...item,
+        component: ({ data ,classes}) =>  <span className={ data.get('status') === 'Deleting' ? classes.strikeout : null}>{ data.get('name')}</span>,
+      };
+    }
+    return item;
+  })
+  .map((item) => {
     if (item.id === 'creationTimestamp' || item.id === 'responseTimestamp') {
       return {
         ...item,
@@ -51,6 +60,7 @@ const adminTableSchema = schema
             id={data.get('id')}
             url={data.getIn(['links', 'remove'])}
             reject={(e) => setError(e)}
+            disabled={data.get('status') === 'Deleting'}
           />
         </Fragment>
       ),

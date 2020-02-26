@@ -30,15 +30,18 @@ const tableSchema = schema
     if (sch.id === 'name') {
       return {
         ...sch,
-        component: ({ data, pathname }) => (
-          <Button
-            link
-            component={Link}
-            to={`${pathname}/${data.get('id')}/show`}
-          >
-            {data.get('name')}
-          </Button>
-        ),
+        component: ({ data, pathname,classes }) =>
+          data.get('deletionTimestamp') ? (
+            <span className={ data.get('deletionTimestamp') ? classes.strikeout : null}>{ data.get('name')}</span>
+          ) : (
+            <Button
+              link
+              component={Link}
+              to={`${pathname}/${data.get('id')}/show`}
+            >
+              {data.get('name')}
+            </Button>
+          ),
       };
     }
     return sch;
@@ -132,6 +135,7 @@ const tableSchema = schema
             to={`/clusters/${clusterID}/namespaces/${namespaceID}/horizontalPodAutoscalers/${data.get(
               'id'
             )}/update`}
+            disabled={data.get('deletionTimestamp')}
           >
             <FormattedMessage {...messages.editButton} />
           </Button>
@@ -141,6 +145,7 @@ const tableSchema = schema
             url={data.getIn(['links', 'remove'])}
             clusterID={clusterID}
             namespaceID={namespaceID}
+            disabled={data.get('deletionTimestamp')}
           />
         </Fragment>
       ),

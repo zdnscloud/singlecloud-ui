@@ -43,12 +43,14 @@ const tableSchema = schema
           <LogcollectionDialog
             url={data.getIn(['links', 'fluentbitconfigs'])}
             id={`${namespaceID}_daemonset_${data.get('id')}`}
+            disabled={data.get('deletionTimestamp')}
           />
 
           <MetricsDialog
             url={data.getIn(['links', 'metrics'])}
             id={data.get('id')}
             type="daemonset"
+            disabled={data.get('deletionTimestamp')}
           />
 
           <TableActions 
@@ -60,10 +62,15 @@ const tableSchema = schema
                   to={`/clusters/${clusterID}/namespaces/${namespaceID}/daemonSets/${data.get(
                     'id'
                   )}/update`}
+                  disabled={data.get('deletionTimestamp')}
                 >
                   <FormattedMessage {...messages.upgradeButton} />
                 </Button>,
-                <Button onClick={() => setRollback(data.get('id'))} action>
+                <Button 
+                  onClick={() => setRollback(data.get('id'))} 
+                  action
+                  disabled={data.get('deletionTimestamp')}
+                >
                   <FormattedMessage {...messages.rollbackButton} />
                 </Button>,
     
@@ -73,6 +80,7 @@ const tableSchema = schema
                   url={data.getIn(['links', 'remove'])}
                   clusterID={clusterID}
                   namespaceID={namespaceID}
+                  disabled={data.get('deletionTimestamp')}
                 />,
               ]}
           /> 
@@ -84,15 +92,17 @@ const tableSchema = schema
     if (sch.id === 'name') {
       return {
         ...sch,
-        component: (props) => (
-          <Button
-            link
-            component={Link}
-            to={`${props.pathname}/${props.data.get('id')}/show`}
-          >
-            {props.data.get('name')}
-          </Button>
-        ),
+        component: ({data,classes,pathname}) => 
+          data.get('deletionTimestamp') ? (
+            <span className={ data.get('deletionTimestamp') ? classes.strikeout : null}>{ data.get('name')}</span>
+          ) :
+            (<Button
+              link
+              component={Link}
+              to={`${pathname}/${data.get('id')}/show`}
+            >
+              {data.get('name')}
+            </Button>),
       };
     }
 

@@ -64,6 +64,14 @@ const PodsTable = ({
           },
         };
       }
+      if (item.id === 'name') {
+        return {
+          ...item,
+          props: {
+            classes,
+          },
+        };
+      }
       if (item.id === 'containers') {
         return {
           ...item,
