@@ -51,6 +51,7 @@ export const LogcollectionDialog = ({
   updateFluentbitconfig,
   url,
   id,
+  disabled,
 }) => {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
@@ -96,6 +97,7 @@ export const LogcollectionDialog = ({
           }
           setOpen(true);
         }}
+        disabled={disabled}
       >
         <FormattedMessage {...messages.logCollectionBtn} />
       </CButton>

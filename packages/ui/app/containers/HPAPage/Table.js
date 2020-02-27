@@ -54,7 +54,7 @@ const HorizontalPodAutoscalersTable = ({
       if (sch.id === 'name') {
         return {
           ...sch,
-          props: { pathname },
+          props: { pathname,classes },
         };
       }
       if (sch.id === 'app') {

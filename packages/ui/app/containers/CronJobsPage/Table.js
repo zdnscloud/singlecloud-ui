@@ -53,7 +53,7 @@ const CronJobsTable = ({
       if (sch.id === 'name') {
         return {
           ...sch,
-          props: { pathname },
+          props: { pathname,classes },
         };
       }
       return sch;

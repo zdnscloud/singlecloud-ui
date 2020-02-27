@@ -103,6 +103,7 @@ export const removeNamespaceThresholdFailure = (error, meta = {}) => ({
   error: true,
 });
 
+
 export const clearErrorsList = (payload, meta) => ({
   type: c.CLEAR_ERRORS_LIST,
   payload,

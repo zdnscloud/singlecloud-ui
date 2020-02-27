@@ -46,6 +46,7 @@ export const createJobFailure = (error, meta = {}) => ({
   error: true,
 });
 
+
 export const readJob = (id, meta = {}) => ({
   type: c.READ_JOB,
   payload: id,
@@ -83,6 +84,7 @@ export const removeJobFailure = (error, meta = {}) => ({
   meta,
   error: true,
 });
+
 
 export const clearErrorsList = (payload, meta) => ({
   type: c.CLEAR_ERRORS_LIST,

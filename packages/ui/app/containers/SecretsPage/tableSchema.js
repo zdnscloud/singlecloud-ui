@@ -26,23 +26,25 @@ const tableSchema = schema
     {
       id: 'actions',
       label: 'Actions',
-      component: (props) => (
+      component: ({data,clusterID,namespaceID,removeSecret}) => (
         <Fragment>
           <Button
             action
             component={Link}
-            to={`/clusters/${props.clusterID}/namespaces/${
-              props.namespaceID
-            }/secrets/${props.data.get('id')}/edit`}
+            to={`/clusters/${clusterID}/namespaces/${
+              namespaceID
+            }/secrets/${data.get('id')}/edit`}
+            disabled={data.get('deletionTimestamp')}
           >
             <FormattedMessage {...messages.editButton} />
           </Button>
           <ConfirmDelete
-            actionName={props.removeSecret}
-            id={props.data.get('id')}
-            url={props.data.getIn(['links', 'remove'])}
-            clusterID={props.clusterID}
-            namespaceID={props.namespaceID}
+            actionName={removeSecret}
+            id={data.get('id')}
+            url={data.getIn(['links', 'remove'])}
+            clusterID={clusterID}
+            namespaceID={namespaceID}
+            disabled={data.get('deletionTimestamp')}
           />
         </Fragment>
       ),
@@ -52,17 +54,20 @@ const tableSchema = schema
     if (sch.id === 'name') {
       return {
         ...sch,
-        component: (props) => (
-          <Button
-            link
-            to={`/clusters/${props.clusterID}/namespaces/${
-              props.namespaceID
-            }/secrets/${props.data.get('id')}/show`}
-            component={Link}
-          >
-            {props.data.get('name')}
-          </Button>
-        ),
+        component: ({data,clusterID,namespaceID,classes}) => 
+          data.get('deletionTimestamp') ? (
+            <span className={ data.get('deletionTimestamp') ? classes.strikeout : null}>{ data.get('name')}</span>
+          ) :(
+            <Button
+              link
+              to={`/clusters/${clusterID}/namespaces/${
+                namespaceID
+              }/secrets/${data.get('id')}/show`}
+              component={Link}
+            >
+              {data.get('name')}
+            </Button>
+          ),
       };
     }
     return sch;

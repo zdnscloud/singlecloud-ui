@@ -67,7 +67,7 @@ export const updateStatefulSetEpic = (action$, state$, { ajax }) =>
       ajax({
         url: `${meta.url}`,
         method: 'PUT',
-        body: payload,
+        body: payload
       }).pipe(
         map((resp) => {
           meta.resolve && meta.resolve(resp);
@@ -115,9 +115,7 @@ export const removeStatefulSetEpic = (action$, state$, { ajax }) =>
         }),
         catchError((error) => {
           meta.reject && meta.reject(error);
-          return of(
-            a.removeStatefulSetFailure(error, { ...meta, id: payload })
-          );
+          return of(a.removeStatefulSetFailure(error, { ...meta, id: payload }));
         })
       )
     )
@@ -138,9 +136,7 @@ export const executeStatefulSetActionEpic = (action$, state$, { ajax }) =>
         }),
         catchError((error) => {
           meta.reject && meta.reject(error);
-          return of(
-            a.executeStatefulSetActionFailure(error, { ...meta, action })
-          );
+          return of(a.executeStatefulSetActionFailure(error, { ...meta, action }));
         })
       )
     )
@@ -152,5 +148,5 @@ export default combineEpics(
   updateStatefulSetEpic,
   readStatefulSetEpic,
   removeStatefulSetEpic,
-  executeStatefulSetActionEpic
+  executeStatefulSetActionEpic,
 );

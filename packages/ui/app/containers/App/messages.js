@@ -265,4 +265,9 @@ export default defineMessages({
     id: `${scope}.leftMenuDialogFormStorageSize`,
     defaultMessage: 'StorageSize:',
   },
+  leftMenuAuditLogs: {
+    id: `${scope}.leftMenuAuditLogs`,
+    defaultMessage: 'AuditLogs',
+  },
+  
 });

@@ -21,9 +21,9 @@ const ConfirmDelete = ({
   namespaceID,
   resolve,
   reject,
+  disabled,
 }) => {
   const [open, setOpen] = useState(false);
-
   const handleDelete = () => {
     actionName(id, { url, clusterID, namespaceID, resolve, reject });
     setOpen(false);
@@ -36,6 +36,7 @@ const ConfirmDelete = ({
         onClick={() => {
           setOpen(true);
         }}
+        disabled={disabled}
       >
         <FormattedMessage {...messages.deleteButton} />
       </CButton>

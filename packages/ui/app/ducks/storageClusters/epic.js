@@ -67,7 +67,7 @@ export const updateStorageClusterEpic = (action$, state$, { ajax }) =>
       ajax({
         url: `${meta.url}`,
         method: 'PUT',
-        body: payload,
+        body: payload
       }).pipe(
         map((resp) => {
           meta.resolve && meta.resolve(resp);
@@ -95,9 +95,7 @@ export const readStorageClusterEpic = (action$, state$, { ajax }) =>
         }),
         catchError((error) => {
           meta.reject && meta.reject(error);
-          return of(
-            a.readStorageClusterFailure(error, { ...meta, id: payload })
-          );
+          return of(a.readStorageClusterFailure(error, { ...meta, id: payload }));
         })
       )
     )
@@ -117,18 +115,17 @@ export const removeStorageClusterEpic = (action$, state$, { ajax }) =>
         }),
         catchError((error) => {
           meta.reject && meta.reject(error);
-          return of(
-            a.removeStorageClusterFailure(error, { ...meta, id: payload })
-          );
+          return of(a.removeStorageClusterFailure(error, { ...meta, id: payload }));
         })
       )
     )
   );
+
 
 export default combineEpics(
   loadStorageClustersEpic,
   createStorageClusterEpic,
   updateStorageClusterEpic,
   readStorageClusterEpic,
-  removeStorageClusterEpic
+  removeStorageClusterEpic,
 );

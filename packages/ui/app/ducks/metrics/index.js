@@ -32,18 +32,33 @@ export const reducer = (
       return state;
     case c.LOAD_METRICS_SUCCESS: {
       const { data, list } = procCollectionData(payload);
-      const { clusterID, namespaceID, deploymentID } = meta;
+      const {
+        clusterID,
+        namespaceID,
+        deploymentID,
+      } = meta;
       return state
-        .update('errorsList', (errors) =>
-          errors.filterNot((e) => e.type === c.LOAD_METRICS_FAILURE)
-        )
-        .setIn(['data', clusterID, namespaceID, deploymentID], fromJS(data))
-        .setIn(['list', clusterID, namespaceID, deploymentID], fromJS(list));
+        .update('errorsList', (errors) => errors.filterNot((e) => e.type === c.LOAD_METRICS_FAILURE))
+        .setIn([
+          'data',
+          clusterID,
+          namespaceID,
+          deploymentID,
+        ], fromJS(data))
+        .setIn([
+          'list',
+          clusterID,
+          namespaceID,
+          deploymentID,
+        ], fromJS(list));
     }
     case c.LOAD_METRICS_FAILURE:
-      return state.update('errorsList', (errors) =>
-        errors.filterNot((e) => e.type === type).push({ type, payload, meta })
-      );
+      return state.update('errorsList', (errors) => errors.filterNot((e) => e.type === type).push({ type, payload, meta }));
+
+
+
+
+
 
     case c.CLEAR_ERRORS_LIST:
       return state.update('errorsList', (errors) => errors.clear());

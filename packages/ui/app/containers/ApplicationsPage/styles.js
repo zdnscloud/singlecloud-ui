@@ -30,7 +30,7 @@ export const styles = (theme) => ({
     marginBottom: 25,
     display: 'flex',
   },
-  aapName: {
+  appName: {
     margin: 0,
     fontSize: 14,
     width: 'calc(100% - 20px)',
@@ -39,6 +39,18 @@ export const styles = (theme) => ({
     verticalAlign: 'middle',
     display: 'inline-block',
     whiteSpace: 'nowrap',
+  },
+  strikeoutAppName:{
+    margin: 0,
+    fontSize: 14,
+    width: 'calc(100% - 20px)',
+    textOverflow: 'ellipsis',
+    overflow: 'hidden',
+    verticalAlign: 'middle',
+    display: 'inline-block',
+    whiteSpace: 'nowrap',
+    color:'#D9D9D9',
+    textDecoration:'line-through',
   },
   appLogo: {
     width: 80,
@@ -64,6 +76,11 @@ export const styles = (theme) => ({
     right: 4,
     top: 1,
     cursor: 'pointer',
+  },
+  disabledDeleteIcon: {
+    position: 'absolute',
+    right: 4,
+    top: 1,
   },
   appDetailBtn: {
     padding: 0,

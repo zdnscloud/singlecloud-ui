@@ -299,6 +299,10 @@ const styles = (theme) => ({
   minusIcon:{
     marginTop:10,
   },
+  strikeout:{
+    color:'#D9D9D9',
+    textDecoration:'line-through',
+  },
 });
 
 export default styles;

@@ -38,6 +38,12 @@ const AdminUserQuotasTable = ({ data, removeUserQuota, filter, setError }) => {
           ...sch,
           props: { classes, removeUserQuota, setError },
         };
+      };
+      if (sch.id === 'namespace') {
+        return {
+          ...sch,
+          props: { classes },
+        };
       }
       return sch;
     })

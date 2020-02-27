@@ -32,41 +32,54 @@ export const reducer = (
       return state;
     case c.LOAD_PERSISTENT_VOLUME_CLAIMS_SUCCESS: {
       const { data, list } = procCollectionData(payload);
-      const { clusterID, namespaceID } = meta;
+      const {
+        clusterID,
+        namespaceID,
+      } = meta;
       return state
-        .update('errorsList', (errors) =>
-          errors.filterNot(
-            (e) => e.type === c.LOAD_PERSISTENT_VOLUME_CLAIMS_FAILURE
-          )
-        )
-        .setIn(['data', clusterID, namespaceID], fromJS(data))
-        .setIn(['list', clusterID, namespaceID], fromJS(list));
+        .update('errorsList', (errors) => errors.filterNot((e) => e.type === c.LOAD_PERSISTENT_VOLUME_CLAIMS_FAILURE))
+        .setIn([
+          'data',
+          clusterID,
+          namespaceID,
+        ], fromJS(data))
+        .setIn([
+          'list',
+          clusterID,
+          namespaceID,
+        ], fromJS(list));
     }
     case c.LOAD_PERSISTENT_VOLUME_CLAIMS_FAILURE:
-      return state.update('errorsList', (errors) =>
-        errors.filterNot((e) => e.type === type).push({ type, payload, meta })
-      );
+      return state.update('errorsList', (errors) => errors.filterNot((e) => e.type === type).push({ type, payload, meta }));
+
+
+
 
     case c.REMOVE_PERSISTENT_VOLUME_CLAIM:
       return state;
     case c.REMOVE_PERSISTENT_VOLUME_CLAIM_SUCCESS: {
       const { id } = meta;
-      const { clusterID, namespaceID } = meta;
+      const {
+        clusterID,
+        namespaceID,
+      } = meta;
       return state
-        .removeIn(['data', clusterID, namespaceID, id])
-        .updateIn(['list', clusterID, namespaceID], (l) =>
-          l.filterNot((i) => i === id)
-        )
-        .update('errorsList', (errors) =>
-          errors.filterNot(
-            (e) => e.type === c.REMOVE_PERSISTENT_VOLUME_CLAIM_FAILURE
-          )
-        );
+        .removeIn([
+          'data',
+          clusterID,
+          namespaceID,
+          id,
+        ])
+        .updateIn([
+          'list',
+          clusterID,
+          namespaceID,
+        ], (l) => l.filterNot((i) => i === id))
+        .update('errorsList', (errors) => errors.filterNot((e) => e.type === c.REMOVE_PERSISTENT_VOLUME_CLAIM_FAILURE));
     }
     case c.REMOVE_PERSISTENT_VOLUME_CLAIM_FAILURE:
-      return state.update('errorsList', (errors) =>
-        errors.filterNot((e) => e.type === type).push({ type, payload, meta })
-      );
+      return state.update('errorsList', (errors) => errors.filterNot((e) => e.type === type).push({ type, payload, meta }));
+
 
     case c.CLEAR_ERRORS_LIST:
       return state.update('errorsList', (errors) => errors.clear());

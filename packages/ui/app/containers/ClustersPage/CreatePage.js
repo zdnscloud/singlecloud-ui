@@ -121,7 +121,7 @@ export const CreateClusterPage = ({
                 onSubmit={doSubmit}
                 initialValues={fromJS({
                   name: '',
-                  nodes: { main: [{ name: '', addrsss: '', roles: []}], work: [{ name: '', addrsss: '', roles: []}] },
+                  nodes: { main: [{ name: '', address: '', roles: []}], work: [{ name: '', address: '', roles: []}] },
                 })}
                 formValues={values}
               />
