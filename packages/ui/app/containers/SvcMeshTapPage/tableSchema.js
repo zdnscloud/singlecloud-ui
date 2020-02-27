@@ -174,12 +174,12 @@ const tableSchema = schema
               <OpenInNewIcon fontSize="small" />
             </IconButton>
           );
-          const link = cur.get('link').replace('/apis/zcloud.cn/v1', '');
+          const curLink = (cur.get('link') || '').replace('/apis/zcloud.cn/v1', '');
 
           return (
             <Grid container direction="row" alignItems="center" spacing={1}>
               <Grid item>
-                <Button link component={Link} to={`${link}/show`}>
+                <Button link component={Link} to={`${curLink}/show`}>
                   {cur.get('deployment') || cur.get('statefulset') || cur.get('daemonset')}
                 </Button>
               </Grid>
