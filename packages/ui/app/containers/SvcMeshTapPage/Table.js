@@ -96,4 +96,4 @@ const mapDispatchToProps = (dispatch) =>
 
 const withConnect = connect(mapStateToProps, mapDispatchToProps);
 
-export default compose(withConnect)(throttleRender(TapTable, 250));
+export default compose(withConnect)(throttleRender(TapTable, 400));
