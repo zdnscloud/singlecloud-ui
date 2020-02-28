@@ -25,7 +25,7 @@ const tableSchema = schema
         return workload.includes(data.get('type')) ? (
           <Fragment>
             <Button
-              action
+              link
               to={`/clusters/${clusterID}/namespaces/${namespaceID}/svcMeshWorkloads`}
               component={Link}
             >
