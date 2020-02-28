@@ -146,6 +146,10 @@ export const makeSelectLeftMenus = () =>
             name: 'AppManagement',
             children: [
               {
+                name: 'Cicds',
+                path: `/clusters/${cluster}/namespaces/${namespace}/cicds`,
+              },
+              {
                 name: 'Applications',
                 path: `/clusters/${cluster}/namespaces/${namespace}/applications`,
               },

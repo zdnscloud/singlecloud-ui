@@ -269,5 +269,8 @@ export default defineMessages({
     id: `${scope}.leftMenuAuditLogs`,
     defaultMessage: 'AuditLogs',
   },
-  
+  leftMenuCicds: {
+    id: `${scope}.leftMenuCicds`,
+    defaultMessage: 'Cicds',
+  },
 });

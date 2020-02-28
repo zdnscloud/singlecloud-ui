@@ -108,6 +108,11 @@ import UsersPage, {
 import AlarmMessagesPage from 'containers/AlarmMessagesPage';
 import GlobalConfigurationPage from 'containers/GlobalConfigurationPage';
 import AuditLogsPage from 'containers/AuditLogsPage/Loadable';
+import CicdPage, {
+  CreateCicdPage,
+  ShowCicdPage,
+  UpdateCicdPage,
+} from 'containers/CicdPage/Loadable';
 
 const appRoutes = [
   {
@@ -658,6 +663,37 @@ const appRoutes = [
     component: AlarmMessagesPage,
   },
   // applications end
+  // cicd
+  {
+    path:
+      '/clusters/:cluster_id/namespaces/:namespace_id/cicds',
+    name: 'Cicd',
+    icon: Dashboard,
+    component: CicdPage,
+  },
+  {
+    path:
+      '/clusters/:cluster_id/namespaces/:namespace_id/cicds/create',
+    name: 'Create Cicd',
+    icon: Dashboard,
+    component: CreateCicdPage,
+  },
+  {
+    path:
+      '/clusters/:cluster_id/namespaces/:namespace_id/cicds/:cicd_id/update',
+    name: ' Update Cicd',
+    icon: Dashboard,
+    component: UpdateCicdPage,
+  },
+  {
+    path:
+      '/clusters/:cluster_id/namespaces/:namespace_id/cicds/:cicd_id/show',
+    name: 'Cicd Detail',
+    icon: Dashboard,
+    component: ShowCicdPage,
+  },
+
+  // cicd end
 ];
 
 export default appRoutes;
