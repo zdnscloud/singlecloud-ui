@@ -49,12 +49,12 @@ const LogViewDialog = ({ isOpen, id, closeDialog }) => {
       PaperProps={{ style: { overflow: 'hidden' } }}
     >
       <Card className={classes.dialogCard}>
-        <CardHeader color="secondary" className={classes.dialogHeader}>
+        <CardHeader color="light" className={classes.dialogHeader}>
           <h4>
             <FormattedMessage {...messages.logTitle} />
           </h4>
           <IconButton onClick={closeDialog} style={{ padding: 0 }}>
-            <CloseIcon style={{ color: '#fff' }} />
+            <CloseIcon />
           </IconButton>
         </CardHeader>
         <CardBody className={classes.logCardBody}>

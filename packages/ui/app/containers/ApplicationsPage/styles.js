@@ -134,9 +134,6 @@ export const styles = (theme) => ({
     flexDirection: 'row',
     marginLeft: '0.8rem',
   },
-  cancleBtn: {
-    marginLeft: '10px',
-  },
   status: {
     width: 6,
     height: 6,

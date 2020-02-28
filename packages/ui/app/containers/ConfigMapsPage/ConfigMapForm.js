@@ -7,9 +7,7 @@ import getByKey from '@gsmlg/utils/getByKey';
 import AceEditor from 'react-ace';
 import 'ace-builds/src-noconflict/theme-tomorrow_night';
 
-import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import Dialog from '@material-ui/core/Dialog';
@@ -25,6 +23,7 @@ import Danger from 'components/Typography/Danger';
 import GridItem from 'components/Grid/GridItem';
 import GridContainer from 'components/Grid/GridContainer';
 import InputField from 'components/Field/InputField';
+import MinusIcon from 'components/Icons/Minus';
 import ReadOnlyInput from 'components/CustomInput/ReadOnlyInput';
 
 import messages from './messages';
@@ -35,7 +34,7 @@ const DataComponent = ({ meta, input, classes }) => {
 
   return (
     <div className={classes.fileContentButton}>
-      <Button color="secondary" onClick={() => setOpen(true)}>
+      <Button color="secondary"  onClick={() => setOpen(true)} className={classes.fileNameLink}>
         <FormattedMessage {...messages.formFileContent} />
       </Button>
       {touched && error && <Danger>{error}</Danger>}
@@ -50,7 +49,7 @@ const DataComponent = ({ meta, input, classes }) => {
         PaperProps={{ style: { overflow: 'hidden' } }}
       >
         <Card className={classes.dialogCard}>
-          <CardHeader color="secondary" className={classes.dialogHeader}>
+          <CardHeader color="light" className={classes.dialogHeader}>
             <h4>
               <FormattedMessage {...messages.formEditFile} />
             </h4>
@@ -71,7 +70,7 @@ const DataComponent = ({ meta, input, classes }) => {
           <CardFooter>
             <Button
               variant="contained"
-              color="secondary"
+              color="primary"
               onClick={() => {
                 setOpen(false);
               }}
@@ -86,45 +85,56 @@ const DataComponent = ({ meta, input, classes }) => {
 };
 
 const renderConfigs = ({ fields, meta: { error, submitFailed }, classes }) => (
-  <List component="ul" className={classes.filesList}>
-    <ListItem>
-      <ListItemText primary={<FormattedMessage {...messages.formFiles} />} />
-      <IconButton
-        onClick={(evt) => fields.push(fromJS({}))}
-        className={classes.createBtnLink}
-      >
-        <AddIcon />
-      </IconButton>
-    </ListItem>
+  <Fragment>
+    <GridContainer>
+      <GridItem xs={3} sm={3} md={3} className={classes.addNodeBtnWrap}>
+        <Button
+          className={classes.addNodeBtn}
+          variant="contained" color="primary"
+          onClick={(evt) => fields.push(fromJS({}))}
+        >
+          <span className={classes.plusIcon}>+</span>
+          <FormattedMessage {...messages.formFiles} />
+        </Button>
+      </GridItem>
+    </GridContainer>
     {submitFailed && error && (
       <ListItem>
         <Danger>{error}</Danger>
       </ListItem>
     )}
-    {fields.map((f, i) => (
-      <ListItem key={i}>
-        <ListItemText>
-          <InputField
-            name={`${f}.name`}
-            label={<FormattedMessage {...messages.formFileName} />}
-          />
-          &nbsp;&nbsp;&nbsp;&nbsp;
-          <Field
-            name={`${f}.data`}
-            component={DataComponent}
-            classes={classes}
-          />
-        </ListItemText>
-        <IconButton
-          variant="contained"
-          color="secondary"
-          onClick={(evt) => fields.remove(i)}
-        >
-          <DeleteIcon />
-        </IconButton>
-      </ListItem>
-    ))}
-  </List>
+    <Card className={classes.nodeList} border={fields&&fields.length>0 ? 'border':null } >
+      <CardBody>
+        {fields.map((f, i) => (
+          <GridContainer key={i}>
+            <GridItem xs={4} sm={4} md={4}>
+              <InputField
+                name={`${f}.name`}
+                label={<FormattedMessage {...messages.formFileName} />}
+                fullWidth
+              />
+            </GridItem>
+            <GridItem xs={2} sm={2} md={2}>
+              <Field
+                name={`${f}.data`}
+                component={DataComponent}
+                classes={classes}
+              />
+            </GridItem>
+            <GridItem xs={3} sm={3} md={3}>
+              <IconButton
+                variant="contained"
+                onClick={(evt) => fields.remove(i)}
+                className={classes.minusIcon}
+              >
+                <MinusIcon />
+              </IconButton>
+            </GridItem>
+          </GridContainer>
+        ))}
+      </CardBody>
+    </Card>
+  </Fragment>
 );
 
 const ConfigMapForm = ({

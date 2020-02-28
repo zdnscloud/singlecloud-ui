@@ -41,13 +41,13 @@ const tableSchema = schema
         ...item,
         component: ({ data, updateAlarm }) =>
           data.get('acknowledged') ? (
-            <Info inverse style={{ textAlign: 'center' }}>
+            <Info inverse style={{ textAlign: 'center' ,fontWeight: 500}}>
               <FormattedMessage {...messages.read} />
             </Info>
           ) : (
             <Danger
               inverse
-              style={{ cursor: 'pointer', textAlign: 'center' }}
+              style={{ cursor: 'pointer', textAlign: 'center', fontWeight: 500 }}
               onClick={(evt) => {
                 updateAlarm(data.set('acknowledged', true).toJS(), {
                   url: data.getIn(['links', 'update']),

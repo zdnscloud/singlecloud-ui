@@ -116,28 +116,26 @@ const CreateUserQuotaPage = ({ url, createUserQuota, submitForm, role }) => {
                     role={role}
                   />
                 </CardBody>
-                <CardFooter className={classes.cardFooter}>
-                  <GridContainer>
-                    <GridItem xs={12} sm={12} md={12}>
-                      <Button
-                        variant="contained"
-                        color="primary"
-                        onClick={submitForm}
-                      >
-                        <FormattedMessage {...messages.createUserQuotaButton} />
-                      </Button>
-                      <Button
-                        variant="contained"
-                        className={classes.cancleBtn}
-                        to="/userQuotas"
-                        component={Link}
-                      >
-                        <FormattedMessage {...messages.cancleUserQuotaButton} />
-                      </Button>
-                    </GridItem>
-                  </GridContainer>
-                </CardFooter>
               </Card>
+              <div className={classes.buttonGroup}>
+                <GridItem xs={12} sm={12} md={12}>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={submitForm}
+                  >
+                    <FormattedMessage {...messages.createUserQuotaButton} />
+                  </Button>
+                  <Button
+                    variant="contained"
+                    className={classes.cancleBtn}
+                    to="/userQuotas"
+                    component={Link}
+                  >
+                    <FormattedMessage {...messages.cancleUserQuotaButton} />
+                  </Button>
+                </GridItem>
+              </div>
             </GridItem>
           </GridContainer>
         </Typography>

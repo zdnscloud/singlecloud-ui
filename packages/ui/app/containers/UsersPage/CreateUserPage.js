@@ -117,17 +117,17 @@ export const CreateUserPage = ({
                   })}
                 />
               </CardBody>
-              <CardFooter className={classes.cardFooter}>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  size="large"
-                  onClick={submitForm}
-                >
-                  <FormattedMessage {...messages.createUserButton} />
-                </Button>
-              </CardFooter>
             </Card>
+            <div className={classes.buttonGroup}>
+              <Button
+                variant="contained"
+                color="primary"
+                size="large"
+                onClick={submitForm}
+              >
+                <FormattedMessage {...messages.createUserButton} />
+              </Button>
+            </div>
           </GridItem>
         </GridContainer>
       </div>

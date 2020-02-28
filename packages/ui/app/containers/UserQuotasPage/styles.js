@@ -3,9 +3,6 @@ import pageStyles from 'jss/page';
 
 export const styles = (theme) => ({
   ...pageStyles(theme),
-  cancleBtn: {
-    marginLeft: '10px',
-  },
   username: {
     fontSize: '14px',
     display: 'block',

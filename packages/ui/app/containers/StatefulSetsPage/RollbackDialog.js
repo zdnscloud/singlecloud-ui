@@ -146,12 +146,12 @@ export const RollbackDialog = ({
       PaperProps={{ style: { overflow: 'hidden' } }}
     >
       <Card className={classes.dialogCard}>
-        <CardHeader color="secondary" className={classes.dialogHeader}>
+        <CardHeader color="light" className={classes.dialogHeader}>
           <h4 className={classes.cardTitleWhite}>
             <FormattedMessage {...messages.dialogRollback} />
           </h4>
           <IconButton onClick={close} style={{ padding: 0 }}>
-            <CloseIcon style={{ color: '#fff' }} />
+            <CloseIcon />
           </IconButton>
         </CardHeader>
         <CardBody className={classes.dialogCardBody}>
@@ -170,7 +170,7 @@ export const RollbackDialog = ({
           <Button onClick={submitForm} color="primary" variant="contained">
             <FormattedMessage {...messages.dialogRollbackButton} />
           </Button>
-          <Button onClick={close} color="default" variant="contained">
+          <Button onClick={close}  className={classes.cancleBtn} variant="contained">
             <FormattedMessage {...messages.dialogCancelButton} />
           </Button>
         </CardFooter>

@@ -45,7 +45,7 @@ const StorageForm = ({
   <form className={classes.form} onSubmit={handleSubmit}>
     <GridContainer className={classes.grid}>
       <GridItem xs={12} sm={12} md={12}>
-        <Card>
+        <Card >
           <CardHeader>
             <h4>
               <FormattedMessage {...messages.formStorage} />
@@ -87,7 +87,7 @@ const StorageForm = ({
         </Card>
       </GridItem>
       <GridItem xs={12} sm={12} md={12}>
-        <Card>
+        <Card className={classes.cardMarginTop}>
           <CardHeader>
             <h4>
               <FormattedMessage {...messages.formHostnames} />

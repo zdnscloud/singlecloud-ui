@@ -37,7 +37,7 @@ function Menubar({
         <div className={classes.toolbarLeft}>
           <div className={classes.menuButton}>
             <IconButton onClick={onClickMenuButton}>
-              <MenuIcon color="inherit" />
+              <MenuIcon color="inherit"  style={{transform : showMenuText ? 'rotate(0deg)':'rotate(180deg)' }}/>
             </IconButton>
           </div>
           <div className={classes.logoWrap}>

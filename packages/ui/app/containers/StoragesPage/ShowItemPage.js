@@ -84,7 +84,7 @@ export const StoragePage = ({
         />
         <GridContainer className={classes.grid}>
           <GridItem xs={12} sm={12} md={12}>
-            <Card>
+            <Card className={classes.cardMargin}>
               <CardHeader>
                 <h4>{storageType}</h4>
               </CardHeader>

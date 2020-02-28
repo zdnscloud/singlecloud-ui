@@ -113,7 +113,7 @@ export const CreateClusterPage = ({
             },
           ]}
         />
-        <Typography component="div" className="">
+        <Typography component="div">
           <GridContainer className={classes.grid}>
             <GridItem xs={12} sm={12} md={12}>
               <CreateClusterForm
@@ -125,17 +125,19 @@ export const CreateClusterPage = ({
                 })}
                 formValues={values}
               />
-              <Button variant="contained" color="primary" onClick={submitForm}>
-                <FormattedMessage {...messages.createClusterButton} />
-              </Button>
-              <Button
-                variant="contained"
-                className={classes.cancleBtn}
-                component={Link}
-                to="/clusters"
-              >
-                <FormattedMessage {...messages.cancleClustersButton} />
-              </Button>
+              <div className={classes.buttonGroup}>
+                <Button variant="contained" color="primary" onClick={submitForm}>
+                  <FormattedMessage {...messages.createClusterButton} />
+                </Button>
+                <Button
+                  variant="contained"
+                  className={classes.cancleBtn}
+                  component={Link}
+                  to="/clusters"
+                >
+                  <FormattedMessage {...messages.cancleClustersButton} />
+                </Button>
+              </div>
             </GridItem>
           </GridContainer>
         </Typography>

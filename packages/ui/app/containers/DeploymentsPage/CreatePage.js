@@ -197,20 +197,22 @@ export const CreateDeployment = ({
               })}
               formValues={values}
             />
-            <Button variant="contained" color="primary" onClick={submitForm}>
-              <FormattedMessage {...messages.save} />
-            </Button>
-            <Button
-              variant="contained"
-              className={classes.cancleBtn}
-              onClick={() => {
-                push(
-                  `/clusters/${clusterID}/namespaces/${namespaceID}/deployments`
-                );
-              }}
-            >
-              <FormattedMessage {...messages.cancle} />
-            </Button>
+            <div className={classes.buttonGroup}>
+              <Button variant="contained" color="primary" onClick={submitForm}>
+                <FormattedMessage {...messages.save} />
+              </Button>
+              <Button
+                variant="contained"
+                className={classes.cancleBtn}
+                onClick={() => {
+                  push(
+                    `/clusters/${clusterID}/namespaces/${namespaceID}/deployments`
+                  );
+                }}
+              >
+                <FormattedMessage {...messages.cancle} />
+              </Button>
+            </div>
           </GridItem>
         </GridContainer>
       </div>

@@ -55,14 +55,14 @@ const Form = ({ formValues, handleSubmit, error, services }) => {
             <Danger>{getByKey(error, ['response', 'message'])}</Danger>
           </GridItem>
         ) : null}
-        <Card style={{ margin: 0, marginTop: 20 }}>
+        <Card>
           <CardHeader>
             <h4>
               <FormattedMessage {...messages.createUdpIngress} />
             </h4>
           </CardHeader>
           <CardBody>
-            <GridContainer style={{ margin: 0 }}>
+            <GridContainer>
               <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
                 <SelectField
                   label={<FormattedMessage {...messages.formServiceName} />}

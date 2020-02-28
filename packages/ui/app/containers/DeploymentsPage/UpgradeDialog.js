@@ -125,12 +125,12 @@ export const UpgradeDialog = ({
       PaperProps={{ style: { overflow: 'hidden' } }}
     >
       <Card className={classes.dialogCard}>
-        <CardHeader color="secondary" className={classes.dialogHeader}>
+        <CardHeader color="light" className={classes.dialogHeader}>
           <h4 className={classes.cardTitleWhite}>
             <FormattedMessage {...messages.dialogUpgrade} />
           </h4>
           <IconButton onClick={close} style={{ padding: 0 }}>
-            <CloseIcon style={{ color: '#fff' }} />
+            <CloseIcon />
           </IconButton>
         </CardHeader>
         <CardBody className={classes.dialogCardBody}>
@@ -148,7 +148,7 @@ export const UpgradeDialog = ({
           <Button onClick={submitForm} color="primary" variant="contained">
             <FormattedMessage {...messages.dialogUpgradeButton} />
           </Button>
-          <Button onClick={close} color="default" variant="contained">
+          <Button onClick={close} variant="contained" className={classes.cancleBtn}>
             <FormattedMessage {...messages.dialogCancelButton} />
           </Button>
         </CardFooter>

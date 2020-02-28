@@ -113,21 +113,23 @@ export const Update{{properCase singular}}Page = ({
                 initialValues={current}
               />
             )}
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={submitForm}
-            >
-              <FormattedMessage {...messages.update} />
-            </Button>
-            <Button
+            <div className={classes.buttonGroup}></div>
+              <Button
                 variant="contained"
-                className={classes.cancleBtn}
-                component={Link}
-                to={`/clusters`}
+                color="primary"
+                onClick={submitForm}
               >
-              <FormattedMessage {...messages.cancle} />
-            </Button>
+                <FormattedMessage {...messages.update} />
+              </Button>
+              <Button
+                  variant="contained"
+                  className={classes.cancleBtn}
+                  component={Link}
+                  to={`/clusters`}
+                >
+                <FormattedMessage {...messages.cancle} />
+              </Button>
+            </div>  
           </GridItem>
         </GridContainer>
       </div>

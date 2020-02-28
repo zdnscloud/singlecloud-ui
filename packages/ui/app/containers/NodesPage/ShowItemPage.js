@@ -79,7 +79,7 @@ export const NodeDetailPage = ({ clusterID, url, readNode, node, nodeID }) => {
         />
         <GridContainer className={classes.grid}>
           <GridItem xs={12} sm={12} md={12}>
-            <Card>
+            <Card  className={classes.cardMargin}>
               <CardHeader>
                 <h4>
                   <FormattedMessage {...messages.nodeInfo} />
@@ -235,7 +235,7 @@ export const NodeDetailPage = ({ clusterID, url, readNode, node, nodeID }) => {
 
         <GridContainer className={classes.grid}>
           <GridItem xs={12} sm={12} md={12}>
-            <Card>
+            <Card className={classes.cardMargin}>
               <CardHeader>
                 <h4>
                   <FormattedMessage {...messages.labels} />
