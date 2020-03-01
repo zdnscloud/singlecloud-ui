@@ -1,6 +1,6 @@
 /**
- * Duck: Applications
- * selectors: applications
+ * Duck: WorkFlows
+ * selectors: workFlows
  *
  */
 import { fromJS } from 'immutable';
@@ -18,7 +18,7 @@ import * as c from './constants';
 import { initialState } from './index';
 
 /**
- * Direct selector to the applications domain
+ * Direct selector to the workFlows domain
  */
 export const selectDomain = (state) => state.get(c.prefix) || initialState;
 
@@ -28,7 +28,7 @@ export const selectDomain = (state) => state.get(c.prefix) || initialState;
 export const makeSelectURL = () =>
   createSelector(
     makeSelectCurrentNamespace(),
-    (pt) => pt.getIn(['links', 'applications'])
+    (pt) => pt.getIn(['links', 'workflows'])
   );
 
 export const makeSelectData = () =>
@@ -37,7 +37,7 @@ export const makeSelectData = () =>
     (substate) => substate.get('data')
   );
 
-export const makeSelectApplications = () =>
+export const makeSelectWorkFlows = () =>
   createSelector(
     selectDomain,
     makeSelectCurrentClusterID(),
@@ -54,10 +54,10 @@ export const makeSelectApplications = () =>
       ]) || substate.clear()
   );
 
-export const makeSelectApplicationsList = () =>
+export const makeSelectWorkFlowsList = () =>
   createSelector(
     selectDomain,
-    makeSelectApplications(),
+    makeSelectWorkFlows(),
     makeSelectCurrentClusterID(),
     makeSelectCurrentNamespaceID(),
     (
@@ -75,7 +75,7 @@ export const makeSelectApplicationsList = () =>
 
 export const makeSelectCurrentID = () =>
    createSelector(
-     createMatchSelector('*/applications/:id/*'),
+     createMatchSelector('*/workFlows/:id/*'),
      (match) => {
        if (match && match.params) {
          return match.params.id;
@@ -115,7 +115,7 @@ export const makeSelectLoadErrorsList = () =>
     selectDomain,
     (substate) =>
       substate.get('errorsList')
-      .filter(({ type }) => type === c.LOAD_APPLICATIONS_FAILURE)
+      .filter(({ type }) => type === c.LOAD_WORK_FLOWS_FAILURE)
   );
 
 export const makeSelectCreateErrorsList = () =>
@@ -123,16 +123,23 @@ export const makeSelectCreateErrorsList = () =>
     selectDomain,
     (substate) =>
       substate.get('errorsList')
-      .filter(({ type }) => type === c.CREATE_APPLICATION_FAILURE)
+      .filter(({ type }) => type === c.CREATE_WORK_FLOW_FAILURE)
   );
 
+export const makeSelectUpdateErrorsList = () =>
+  createSelector(
+    selectDomain,
+    (substate) =>
+      substate.get('errorsList')
+      .filter(({ type }) => type === c.UPDATE_WORK_FLOW_FAILURE)
+  );
 
 export const makeSelectReadErrorsList = () =>
   createSelector(
     selectDomain,
     (substate) =>
       substate.get('errorsList')
-      .filter(({ type }) => type === c.READ_APPLICATION_FAILURE)
+      .filter(({ type }) => type === c.READ_WORK_FLOW_FAILURE)
   );
 
 export const makeSelectRemoveErrorsList = () =>
@@ -140,6 +147,6 @@ export const makeSelectRemoveErrorsList = () =>
     selectDomain,
     (substate) =>
       substate.get('errorsList')
-      .filter(({ type }) => type === c.REMOVE_APPLICATION_FAILURE)
+      .filter(({ type }) => type === c.REMOVE_WORK_FLOW_FAILURE)
   );
 

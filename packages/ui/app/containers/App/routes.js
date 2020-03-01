@@ -112,7 +112,7 @@ import CicdPage, {
   CreateCicdPage,
   ShowCicdPage,
   UpdateCicdPage,
-} from 'containers/CicdPage/Loadable';
+} from 'containers/CicdsPage/Loadable';
 
 const appRoutes = [
   {

@@ -1,6 +1,6 @@
 /**
- * Duck: Applications
- * selectors: applications
+ * Duck: WorkFlowTasks
+ * selectors: workFlowTasks
  *
  */
 import { fromJS } from 'immutable';
@@ -10,15 +10,16 @@ import {
   getLocation,
 } from 'connected-react-router/immutable';
 import {
-  makeSelectCurrent as makeSelectCurrentNamespace,
-} from 'ducks/namespaces/selectors';
+  makeSelectCurrent as makeSelectCurrentWorkFlow,
+} from 'ducks/workFlows/selectors';
 import { makeSelectCurrentID as makeSelectCurrentClusterID } from 'ducks/clusters/selectors';
 import { makeSelectCurrentID as makeSelectCurrentNamespaceID } from 'ducks/namespaces/selectors';
+import { makeSelectCurrentID as makeSelectCurrentWorkFlowID } from 'ducks/workFlows/selectors';
 import * as c from './constants';
 import { initialState } from './index';
 
 /**
- * Direct selector to the applications domain
+ * Direct selector to the workFlowTasks domain
  */
 export const selectDomain = (state) => state.get(c.prefix) || initialState;
 
@@ -27,8 +28,8 @@ export const selectDomain = (state) => state.get(c.prefix) || initialState;
  */
 export const makeSelectURL = () =>
   createSelector(
-    makeSelectCurrentNamespace(),
-    (pt) => pt.getIn(['links', 'applications'])
+    makeSelectCurrentWorkFlow(),
+    (pt) => pt.getIn(['links', 'workflowtasks'])
   );
 
 export const makeSelectData = () =>
@@ -37,45 +38,51 @@ export const makeSelectData = () =>
     (substate) => substate.get('data')
   );
 
-export const makeSelectApplications = () =>
+export const makeSelectWorkFlowTasks = () =>
   createSelector(
     selectDomain,
     makeSelectCurrentClusterID(),
     makeSelectCurrentNamespaceID(),
+    makeSelectCurrentWorkFlowID(),
   (
     substate,
       clusterID,
       namespaceID,
+      workFlowID,
   ) =>
     substate.getIn([
       'data',
       clusterID,
       namespaceID,
+      workFlowID,
       ]) || substate.clear()
   );
 
-export const makeSelectApplicationsList = () =>
+export const makeSelectWorkFlowTasksList = () =>
   createSelector(
     selectDomain,
-    makeSelectApplications(),
+    makeSelectWorkFlowTasks(),
     makeSelectCurrentClusterID(),
     makeSelectCurrentNamespaceID(),
+    makeSelectCurrentWorkFlowID(),
     (
       substate,
       data,
       clusterID,
       namespaceID,
+      workFlowID,
     ) =>
       (substate.getIn([
         'list',
         clusterID,
         namespaceID,
+        workFlowID,
       ]) || fromJS([])).map((id) => data.get(id)) || fromJS([])
   );
 
 export const makeSelectCurrentID = () =>
    createSelector(
-     createMatchSelector('*/applications/:id/*'),
+     createMatchSelector('*/workFlowTasks/:id/*'),
      (match) => {
        if (match && match.params) {
          return match.params.id;
@@ -89,17 +96,20 @@ export const makeSelectCurrent = () =>
     selectDomain,
     makeSelectCurrentClusterID(),
     makeSelectCurrentNamespaceID(),
+    makeSelectCurrentWorkFlowID(),
     makeSelectCurrentID(),
     (
       substate,
       clusterID,
       namespaceID,
+      workFlowID,
       id
     ) =>
       substate.getIn([
         'data',
         clusterID,
         namespaceID,
+        workFlowID,
         id,
       ]) || substate.clear()
   );
@@ -115,7 +125,7 @@ export const makeSelectLoadErrorsList = () =>
     selectDomain,
     (substate) =>
       substate.get('errorsList')
-      .filter(({ type }) => type === c.LOAD_APPLICATIONS_FAILURE)
+      .filter(({ type }) => type === c.LOAD_WORK_FLOW_TASKS_FAILURE)
   );
 
 export const makeSelectCreateErrorsList = () =>
@@ -123,7 +133,7 @@ export const makeSelectCreateErrorsList = () =>
     selectDomain,
     (substate) =>
       substate.get('errorsList')
-      .filter(({ type }) => type === c.CREATE_APPLICATION_FAILURE)
+      .filter(({ type }) => type === c.CREATE_WORK_FLOW_TASK_FAILURE)
   );
 
 
@@ -132,7 +142,7 @@ export const makeSelectReadErrorsList = () =>
     selectDomain,
     (substate) =>
       substate.get('errorsList')
-      .filter(({ type }) => type === c.READ_APPLICATION_FAILURE)
+      .filter(({ type }) => type === c.READ_WORK_FLOW_TASK_FAILURE)
   );
 
 export const makeSelectRemoveErrorsList = () =>
@@ -140,6 +150,6 @@ export const makeSelectRemoveErrorsList = () =>
     selectDomain,
     (substate) =>
       substate.get('errorsList')
-      .filter(({ type }) => type === c.REMOVE_APPLICATION_FAILURE)
+      .filter(({ type }) => type === c.REMOVE_WORK_FLOW_TASK_FAILURE)
   );
 

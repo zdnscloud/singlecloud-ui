@@ -293,8 +293,8 @@ const styles = (theme) => ({
   addNodeBtnWrap: {
     marginTop:20,
   },
-  nodeList: {
-    width: '800px',
+  addList: {
+    width: '880px',
   },
   minusIcon:{
     marginTop:10,

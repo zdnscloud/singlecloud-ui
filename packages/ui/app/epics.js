@@ -46,6 +46,8 @@ import thresholdsEpic from 'ducks/thresholds/epic';
 import persistentVolumeClaimsEpic from 'ducks/persistentVolumeClaims/epic';
 import persistentVolumesEpic from 'ducks/persistentVolumes/epic';
 import auditLogsEpic from 'ducks/auditLogs/epic';
+import workFlowsEpic from 'ducks/workFlows/epic';
+import workFlowTasksEpic from 'ducks/workFlowTasks/epic';
 
 import svcMeshWorkloadsEpic from 'ducks/svcMeshWorkloads/epic';
 import svcMeshPodsEpic from 'ducks/svcMeshPods/epic';
@@ -103,6 +105,8 @@ export default function createEpic(injectedEpics = {}) {
     persistentVolumeClaimsEpic,
     persistentVolumesEpic,
     auditLogsEpic,
+    workFlowTasksEpic,
+    workFlowsEpic
     // combine epics end
   );
 

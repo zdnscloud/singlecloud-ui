@@ -1,6 +1,6 @@
 /**
  *
- * Update {{properCase singular}} Page
+ * Update cicd Page
  *
  */
 import React, { Fragment, useState, useEffect } from 'react';
@@ -16,9 +16,7 @@ import {
   submit,
 } from 'redux-form/immutable';
 
-{{#if wantHeaders}}
 import Helmet from 'components/Helmet/Helmet';
-{{/if}}
 import { FormattedMessage } from 'react-intl';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Button from '@material-ui/core/Button';
@@ -26,28 +24,28 @@ import GridItem from 'components/Grid/GridItem';
 import GridContainer from 'components/Grid/GridContainer';
 import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
 
-// import { makeSelectCurrentID as makeSelectClusterID } from 'ducks/clusters/selectors';
-// import { makeSelectCurrentID as makeSelectNamespaceID } from 'ducks/namespaces/selectors';
-import {
-  makeSelectURL,
-  makeSelectCurrent,
-  makeSelectCurrentID,
-} from 'ducks/{{duck}}/selectors';
-import * as actions from 'ducks/{{duck}}/actions';
+import { makeSelectCurrentID as makeSelectClusterID } from 'ducks/clusters/selectors';
+import { makeSelectCurrentID as makeSelectNamespaceID } from 'ducks/namespaces/selectors';
+// import {
+//   makeSelectURL,
+//   makeSelectCurrent,
+//   makeSelectCurrentID,
+// } from 'ducks/cicds/selectors';
+// import * as actions from 'ducks/cicds/actions';
 
 import messages from './messages';
 import useStyles from './styles';
-import Update{{properCase singular}}Form, {
+import UpdateCicdForm, {
   formName,
 } from './UpdateForm';
 
-export const Update{{properCase singular}}Page = ({
-  update{{properCase singular}},
-  read{{properCase singular}},
+export const UpdateCicdPage = ({
+  updateCicd,
+  readCicd,
   submitForm,
   url,
-  // clusterID,
-  // namespaceID,
+  clusterID,
+  namespaceID,
   id,
   current,
   values,
@@ -55,7 +53,7 @@ export const Update{{properCase singular}}Page = ({
   const classes = useStyles();
   useEffect(() => {
     if (current.size === 0) {
-      read{{properCase singular}}(id, {
+      readCicd(id, {
         url: `${url}/${id}`,
         // clusterID,
         // namespaceID,
@@ -64,18 +62,14 @@ export const Update{{properCase singular}}Page = ({
     return () => {
       // cancel someThing
     };
-  }, [
-    // clusterID,
-    // namespaceID,
-    id,
-  ]);
+  }, [current.size, id, readCicd, url]);
 
   async function doSubmit(formValues) {
     try {
       const data = formValues.toJS();
 
       await new Promise((resolve, reject) => {
-        update{{properCase singular}}(data, {
+        updateCicd(data, {
           resolve,
           reject,
           url,
@@ -96,7 +90,7 @@ export const Update{{properCase singular}}Page = ({
         <Breadcrumbs
           data={[
             {
-              path: `/clusters`,
+              path: `/clusters/${clusterID}/namespaces/${namespaceID}/cicds`,
               name: <FormattedMessage {...messages.pageTitle} />,
             },
             {
@@ -107,7 +101,7 @@ export const Update{{properCase singular}}Page = ({
         <GridContainer className={classes.grid}>
           <GridItem xs={12} sm={12} md={12}>
             {current.size === 0 ? null : (
-              <Update{{properCase singular}}Form
+              <UpdateCicdForm
                 onSubmit={doSubmit}
                 formValues={values}
                 initialValues={current}
@@ -122,11 +116,11 @@ export const Update{{properCase singular}}Page = ({
                 <FormattedMessage {...messages.update} />
               </Button>
               <Button
-                  variant="contained"
-                  className={classes.cancleBtn}
-                  component={Link}
-                  to={`/clusters`}
-                >
+                variant="contained"
+                className={classes.cancleBtn}
+                // component={Link}
+                to="/clusters"
+              >
                 <FormattedMessage {...messages.cancle} />
               </Button>
             </div>  
@@ -138,18 +132,18 @@ export const Update{{properCase singular}}Page = ({
 };
 
 const mapStateToProps = createStructuredSelector({
-  // clusterID: makeSelectClusterID(),
-  // namespaceID: makeSelectNamespaceID(),
-  url: makeSelectURL(),
-  current: makeSelectCurrent(),
-  id: makeSelectCurrentID(),
+  clusterID: makeSelectClusterID(),
+  namespaceID: makeSelectNamespaceID(),
+  // url: makeSelectURL(),
+  // current: makeSelectCurrent(),
+  // id: makeSelectCurrentID(),
   values: getFormValues(formName),
 });
 
 const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
-      ...actions,
+      // ...actions,
       submitForm: () => submit(formName),
     },
     dispatch
@@ -162,4 +156,4 @@ const withConnect = connect(
 
 export default compose(
   withConnect,
-)(Update{{properCase singular}}Page);
+)(UpdateCicdPage);

@@ -1,6 +1,6 @@
 /**
  *
- * Update {{properCase singular}} Page
+ * Create cicd Page
  *
  */
 import React, { Fragment, useState, useEffect } from 'react';
@@ -16,9 +16,7 @@ import {
   submit,
 } from 'redux-form/immutable';
 
-{{#if wantHeaders}}
 import Helmet from 'components/Helmet/Helmet';
-{{/if}}
 import { FormattedMessage } from 'react-intl';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Button from '@material-ui/core/Button';
@@ -26,61 +24,38 @@ import GridItem from 'components/Grid/GridItem';
 import GridContainer from 'components/Grid/GridContainer';
 import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
 
-// import { makeSelectCurrentID as makeSelectClusterID } from 'ducks/clusters/selectors';
-// import { makeSelectCurrentID as makeSelectNamespaceID } from 'ducks/namespaces/selectors';
-import {
-  makeSelectURL,
-  makeSelectCurrent,
-  makeSelectCurrentID,
-} from 'ducks/{{duck}}/selectors';
-import * as actions from 'ducks/{{duck}}/actions';
+import { makeSelectCurrentID as makeSelectClusterID } from 'ducks/clusters/selectors';
+import { makeSelectCurrentID as makeSelectNamespaceID } from 'ducks/namespaces/selectors';
+import { makeSelectURL } from 'ducks/workFlows/selectors';
+import * as actions from 'ducks/workFlows/actions';
 
 import messages from './messages';
 import useStyles from './styles';
-import Update{{properCase singular}}Form, {
+import CreateCicdForm, {
   formName,
-} from './UpdateForm';
+} from './CreateForm';
 
-export const Update{{properCase singular}}Page = ({
-  update{{properCase singular}},
-  read{{properCase singular}},
+export const CreateCicdPage = ({
+  createWorkFlow,
   submitForm,
   url,
-  // clusterID,
-  // namespaceID,
-  id,
-  current,
+  clusterID,
+  namespaceID,
   values,
 }) => {
   const classes = useStyles();
-  useEffect(() => {
-    if (current.size === 0) {
-      read{{properCase singular}}(id, {
-        url: `${url}/${id}`,
-        // clusterID,
-        // namespaceID,
-      });
-    }
-    return () => {
-      // cancel someThing
-    };
-  }, [
-    // clusterID,
-    // namespaceID,
-    id,
-  ]);
 
   async function doSubmit(formValues) {
     try {
       const data = formValues.toJS();
 
       await new Promise((resolve, reject) => {
-        update{{properCase singular}}(data, {
+        createWorkFlow(data, {
           resolve,
           reject,
           url,
-          // clusterID,
-          // namespaceID,
+          clusterID,
+          namespaceID,
         });
       });
     } catch (error) {
@@ -90,43 +65,41 @@ export const Update{{properCase singular}}Page = ({
 
   return (
     <div className={classes.root}>
-      <Helmet title={messages.updatePageTitle} description={messages.updatePageDesc} />
+      <Helmet title={messages.createPageTitle} description={messages.createPageDesc} />
       <CssBaseline />
       <div className={classes.content}>
         <Breadcrumbs
           data={[
             {
-              path: `/clusters`,
+              path: `/clusters/${clusterID}/namespaces/${namespaceID}/cicds`,
               name: <FormattedMessage {...messages.pageTitle} />,
             },
             {
-              name: <FormattedMessage {...messages.updatePageTitle} />,
+              name: <FormattedMessage {...messages.createPageTitle} />,
             },
           ]}
         />
         <GridContainer className={classes.grid}>
           <GridItem xs={12} sm={12} md={12}>
-            {current.size === 0 ? null : (
-              <Update{{properCase singular}}Form
-                onSubmit={doSubmit}
-                formValues={values}
-                initialValues={current}
-              />
-            )}
+            <CreateCicdForm
+              onSubmit={doSubmit}
+              formValues={values}
+              initialValues={fromJS({})}
+            />
             <div className={classes.buttonGroup}>
               <Button
                 variant="contained"
                 color="primary"
                 onClick={submitForm}
               >
-                <FormattedMessage {...messages.update} />
+                <FormattedMessage {...messages.save} />
               </Button>
               <Button
-                  variant="contained"
-                  className={classes.cancleBtn}
-                  component={Link}
-                  to={`/clusters`}
-                >
+                variant="contained"
+                className={classes.cancleBtn}
+                // component={Link}
+                to="/clusters"
+              >
                 <FormattedMessage {...messages.cancle} />
               </Button>
             </div>  
@@ -138,11 +111,9 @@ export const Update{{properCase singular}}Page = ({
 };
 
 const mapStateToProps = createStructuredSelector({
-  // clusterID: makeSelectClusterID(),
-  // namespaceID: makeSelectNamespaceID(),
+  clusterID: makeSelectClusterID(),
+  namespaceID: makeSelectNamespaceID(),
   url: makeSelectURL(),
-  current: makeSelectCurrent(),
-  id: makeSelectCurrentID(),
   values: getFormValues(formName),
 });
 
@@ -162,4 +133,4 @@ const withConnect = connect(
 
 export default compose(
   withConnect,
-)(Update{{properCase singular}}Page);
+)(CreateCicdPage);
