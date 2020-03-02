@@ -65,7 +65,7 @@ export const reducer = (
           clusterID,
           id,
         ], fromJS(data))
-        .update('errorsList', (errors) => errors.filterNot((e) => e.type === c.READ_PERSISTENT_VOLUME_FAILURE));
+          .update('errorsList', (errors) => errors.filterNot((e) => e.type === c.READ_PERSISTENT_VOLUME_FAILURE));
       }
       return state;
     }

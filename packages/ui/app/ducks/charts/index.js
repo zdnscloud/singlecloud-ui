@@ -70,7 +70,7 @@ export const reducer = (
           namespaceID,
           id,
         ], fromJS(data))
-        .update('errorsList', (errors) => errors.filterNot((e) => e.type === c.READ_CHART_FAILURE));
+          .update('errorsList', (errors) => errors.filterNot((e) => e.type === c.READ_CHART_FAILURE));
       }
       return state;
     }

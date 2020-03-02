@@ -71,7 +71,7 @@ export const reducer = (
         workFlowID,
         data.id,
       ], fromJS(data))
-      .update('errorsList', (errors) => errors.filterNot((e) => e.type === c.CREATE_WORK_FLOW_TASK_FAILURE));
+        .update('errorsList', (errors) => errors.filterNot((e) => e.type === c.CREATE_WORK_FLOW_TASK_FAILURE));
     }
     case c.CREATE_WORK_FLOW_TASK_FAILURE:
       return state.update('errorsList', (errors) => errors.filterNot((e) => e.type === type).push({ type, payload, meta }));
@@ -95,7 +95,7 @@ export const reducer = (
           workFlowID,
           id,
         ], fromJS(data))
-        .update('errorsList', (errors) => errors.filterNot((e) => e.type === c.READ_WORK_FLOW_TASK_FAILURE));
+          .update('errorsList', (errors) => errors.filterNot((e) => e.type === c.READ_WORK_FLOW_TASK_FAILURE));
       }
       return state;
     }
