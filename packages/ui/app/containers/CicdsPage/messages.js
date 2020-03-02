@@ -37,6 +37,14 @@ export default defineMessages({
     id: `${scope}.tableTitleActions`,
     defaultMessage: 'Actions',
   },
+  tableButtonModify:{
+    id: `${scope}.tableButtonModify`,
+    defaultMessage: 'Modify',
+  },
+  tableButtonRun:{
+    id: `${scope}.tableButtonRun`,
+    defaultMessage: 'Run',
+  },
   createPageTitle: {
     id: `${scope}.createPageTitle`,
     defaultMessage: 'Create cicd',
@@ -220,5 +228,13 @@ export default defineMessages({
   cancle: {
     id: `${scope}.cancle`,
     defaultMessage: 'Cancle',
+  },
+  dialogTitleRun:{
+    id: `${scope}.dialogTitleRun`,
+    defaultMessage: 'Run',
+  },
+  dialogFormImageTag:{
+    id: `${scope}.dialogFormImageTag`,
+    defaultMessage: 'ImageTag',
   },
 });

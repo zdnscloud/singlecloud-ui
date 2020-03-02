@@ -170,20 +170,6 @@ const Form = ({
             <CardBody>
               <GridContainer>
                 <GridItem xs={3} sm={3} md={3}>
-                  <SelectField
-                    label={
-                      <FormattedMessage {...messages.formName} />
-                    }
-                    name="name"
-                    formControlProps={{
-                      style: {
-                        width: '100%',
-                      },
-                    }}
-                    options={options}
-                  />
-                </GridItem>
-                <GridItem xs={3} sm={3} md={3}>
                   <InputField
                     label={<FormattedMessage {...messages.formReplicas} />}
                     name="deploy.replicas"

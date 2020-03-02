@@ -3,7 +3,7 @@
  * Cicds Table
  *
  */
-import React, { Fragment } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
@@ -19,26 +19,27 @@ import {
 } from 'ducks/app/selectors';
 import { makeSelectCurrentID as makeSelectClusterID } from 'ducks/clusters/selectors';
 import { makeSelectCurrentID as makeSelectNamespaceID } from 'ducks/namespaces/selectors';
-// import {
-//   makeSelectCicdsList,
-// } from 'ducks/cicds/selectors';
-// import * as actions from 'ducks/cicds/actions';
+import {
+  makeSelectWorkFlowsList,
+} from 'ducks/workFlows/selectors';
+import * as actions from 'ducks/workFlows/actions';
 
 import messages from './messages';
 import useStyles from './styles';
 import schema from './tableSchema';
+import RunDialog from './RunDialog';
 
 /* eslint-disable react/prefer-stateless-function */
 const CicdsTable = ({
   location,
-  // data,
+  data,
   clusterID,
   namespaceID,
   removeCicd,
 }) => {
-  const data=Map({});
   const classes = useStyles();
   const pathname = location.get('pathname');
+  const [dialog, setRunDialog] = useState(null);
   const mergedSchema = schema
     .map((sch) => {
       if (sch.id === 'actions') {
@@ -46,8 +47,9 @@ const CicdsTable = ({
           ...sch,
           props: {
             removeCicd,
-            // clusterID,
-            // namespaceID,
+            clusterID,
+            namespaceID,
+            setRunDialog,
           },
         };
       }
@@ -79,13 +81,13 @@ const mapStateToProps = createStructuredSelector({
   location: makeSelectLocation(),
   clusterID: makeSelectClusterID(),
   namespaceID: makeSelectNamespaceID(),
-  // data: makeSelectCicdsList(),
+  data: makeSelectWorkFlowsList(),
 });
 
 const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
-      // ...actions,
+      ...actions,
     },
     dispatch
   );

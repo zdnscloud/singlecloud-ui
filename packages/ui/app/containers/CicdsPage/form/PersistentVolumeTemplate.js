@@ -23,6 +23,7 @@ import messages from '../messages';
 export const PersistentVolumeTemplate = ({
   fields,
   classes,
+  formValues,
   meta: { error, submitFailed },
 }) => {
   const options =[];
@@ -49,93 +50,102 @@ export const PersistentVolumeTemplate = ({
       )}
       <Card  className={classes.addList} border={fields&&fields.length>0 ? 'border':null } >
         <CardBody>
-          {fields.map((f, i) => (
-            <GridContainer key={i}>
-              <GridItem xs={4} sm={4} md={4} className={classes.radioWrap}>
-                <RadioField
-                  name={`${f}.pvStatus`}
-                  label={
-                    <FormattedMessage
-                      {...messages.formPvStatus}
-                    />
-                  }
-                  classes={{
-                    formControl: classes.radioControl,
-                    formLabel: classes.radioLabel,
-                    group: classes.radioGroup,
-                  }}
-                  options={[
-                    {
-                      label: (
-                        <FormattedMessage
-                          {...messages.formPvCreate}
-                        />
-                      ),
-                      value: 'create',
-                    },
-                    {
-                      label: (
-                        <FormattedMessage
-                          {...messages.formPvExist}
-                        />
-                      ),
-                      value: 'exist',
-                    },
-                  ]}
-                  formControlComponent="div"
-                  formLabelComponent="div"
-                />
-              </GridItem>
-              <GridItem xs={3} sm={3} md={3}>
-                <SelectField
-                  label={
-                    <FormattedMessage {...messages.formPvName} />
-                  }
-                  name="name"
-                  formControlProps={{
-                    style: {
-                      width: '100%',
-                    },
-                  }}
-                  options={options}
-                />
-              </GridItem>
-              <GridItem xs={1} sm={1} md={1}>
-                <InputField
-                  name={`${f}.size`}
-                  fullWidth
-                  inputProps={{
-                    autoComplete: 'off',
-                    endAdornment: 'Gi',
-                  }}
-                  label={<FormattedMessage {...messages.formPvSize} />}
-                />
-              </GridItem>
-              <GridItem xs={3} sm={3} md={3}>
-                <SelectField
-                  label={
-                    <FormattedMessage {...messages.formPvStorageClassName} />
-                  }
-                  name="storageClassName"
-                  formControlProps={{
-                    style: {
-                      width: '100%',
-                    },
-                  }}
-                  options={options}
-                />
-              </GridItem>
-              <GridItem xs={1} sm={1} md={1}>
-                <IconButton
-                  variant="contained"
-                  onClick={(evt) => fields.remove(i)}
-                  className={classes.minusIcon}
-                >
-                  <MinusIcon />
-                </IconButton>
-              </GridItem>
-            </GridContainer>
-          ))}
+          {fields.map((f, i) =>
+          // const pvStatus =
+          //   formValues && formValues.getIn(['deploy'.persistentVolumeTemplate', i, 'pvStatus']);
+          // if (pvStatus && pvStatus === 'exist') {
+          //   storageClassesOptions = storageClassesOptions.filter(
+          //     (s) => s.value === 'cephfs'
+          //   );
+          // }
+            (
+              <GridContainer key={i}>
+                <GridItem xs={4} sm={4} md={4} className={classes.radioWrap}>
+                  <RadioField
+                    name={`${f}.pvStatus`}
+                    label={
+                      <FormattedMessage
+                        {...messages.formPvStatus}
+                      />
+                    }
+                    classes={{
+                      formControl: classes.radioControl,
+                      formLabel: classes.radioLabel,
+                      group: classes.radioGroup,
+                    }}
+                    options={[
+                      {
+                        label: (
+                          <FormattedMessage
+                            {...messages.formPvCreate}
+                          />
+                        ),
+                        value: 'create',
+                      },
+                      {
+                        label: (
+                          <FormattedMessage
+                            {...messages.formPvExist}
+                          />
+                        ),
+                        value: 'exist',
+                      },
+                    ]}
+                    formControlComponent="div"
+                    formLabelComponent="div"
+                  />
+                </GridItem>
+                <GridItem xs={3} sm={3} md={3}>
+                  <SelectField
+                    label={
+                      <FormattedMessage {...messages.formPvName} />
+                    }
+                    name="name"
+                    formControlProps={{
+                      style: {
+                        width: '100%',
+                      },
+                    }}
+                    options={options}
+                  />
+                </GridItem>
+                <GridItem xs={1} sm={1} md={1}>
+                  <InputField
+                    name={`${f}.size`}
+                    fullWidth
+                    inputProps={{
+                      autoComplete: 'off',
+                      endAdornment: 'Gi',
+                    }}
+                    label={<FormattedMessage {...messages.formPvSize} />}
+                  />
+                </GridItem>
+                <GridItem xs={3} sm={3} md={3}>
+                  <SelectField
+                    label={
+                      <FormattedMessage {...messages.formPvStorageClassName} />
+                    }
+                    name="storageClassName"
+                    formControlProps={{
+                      style: {
+                        width: '100%',
+                      },
+                    }}
+                    options={options}
+                  />
+                </GridItem>
+                <GridItem xs={1} sm={1} md={1}>
+                  <IconButton
+                    variant="contained"
+                    onClick={(evt) => fields.remove(i)}
+                    className={classes.minusIcon}
+                  >
+                    <MinusIcon />
+                  </IconButton>
+                </GridItem>
+              </GridContainer>
+            )
+          )}
         </CardBody>
       </Card>
      
