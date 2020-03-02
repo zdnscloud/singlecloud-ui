@@ -11,9 +11,9 @@ import {
 } from 'connected-react-router/immutable';
 import {
   makeSelectCurrent as makeSelectCurrentNamespace,
-} from 'ducks/namespaces/selectors';
+  makeSelectCurrentID as makeSelectCurrentNamespaceID } from 'ducks/namespaces/selectors';
 import { makeSelectCurrentID as makeSelectCurrentClusterID } from 'ducks/clusters/selectors';
-import { makeSelectCurrentID as makeSelectCurrentNamespaceID } from 'ducks/namespaces/selectors';
+
 import * as c from './constants';
 import { initialState } from './index';
 
@@ -42,15 +42,15 @@ export const makeSelectLimitRanges = () =>
     selectDomain,
     makeSelectCurrentClusterID(),
     makeSelectCurrentNamespaceID(),
-  (
-    substate,
+    (
+      substate,
       clusterID,
       namespaceID,
-  ) =>
-    substate.getIn([
-      'data',
-      clusterID,
-      namespaceID,
+    ) =>
+      substate.getIn([
+        'data',
+        clusterID,
+        namespaceID,
       ]) || substate.clear()
   );
 
@@ -74,15 +74,15 @@ export const makeSelectLimitRangesList = () =>
   );
 
 export const makeSelectCurrentID = () =>
-   createSelector(
-     createMatchSelector('*/limitRanges/:id/*'),
-     (match) => {
-       if (match && match.params) {
-         return match.params.id;
-       }
-       return '';
-     }
-   );
+  createSelector(
+    createMatchSelector('*/limitRanges/:id/*'),
+    (match) => {
+      if (match && match.params) {
+        return match.params.id;
+      }
+      return '';
+    }
+  );
 
 export const makeSelectCurrent = () =>
   createSelector(
@@ -115,7 +115,7 @@ export const makeSelectLoadErrorsList = () =>
     selectDomain,
     (substate) =>
       substate.get('errorsList')
-      .filter(({ type }) => type === c.LOAD_LIMIT_RANGES_FAILURE)
+        .filter(({ type }) => type === c.LOAD_LIMIT_RANGES_FAILURE)
   );
 
 export const makeSelectCreateErrorsList = () =>
@@ -123,7 +123,7 @@ export const makeSelectCreateErrorsList = () =>
     selectDomain,
     (substate) =>
       substate.get('errorsList')
-      .filter(({ type }) => type === c.CREATE_LIMIT_RANGE_FAILURE)
+        .filter(({ type }) => type === c.CREATE_LIMIT_RANGE_FAILURE)
   );
 
 
@@ -132,7 +132,7 @@ export const makeSelectReadErrorsList = () =>
     selectDomain,
     (substate) =>
       substate.get('errorsList')
-      .filter(({ type }) => type === c.READ_LIMIT_RANGE_FAILURE)
+        .filter(({ type }) => type === c.READ_LIMIT_RANGE_FAILURE)
   );
 
 export const makeSelectRemoveErrorsList = () =>
@@ -140,6 +140,6 @@ export const makeSelectRemoveErrorsList = () =>
     selectDomain,
     (substate) =>
       substate.get('errorsList')
-      .filter(({ type }) => type === c.REMOVE_LIMIT_RANGE_FAILURE)
+        .filter(({ type }) => type === c.REMOVE_LIMIT_RANGE_FAILURE)
   );
 

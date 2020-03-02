@@ -35,11 +35,11 @@ export const makeSelectData = () =>
 export const makeSelectThresholds = () =>
   createSelector(
     selectDomain,
-  (
-    substate,
-  ) =>
-    substate.getIn([
-      'data',
+    (
+      substate,
+    ) =>
+      substate.getIn([
+        'data',
       ]) || substate.clear()
   );
 
@@ -57,15 +57,15 @@ export const makeSelectThresholdsList = () =>
   );
 
 export const makeSelectCurrentID = () =>
-   createSelector(
-     createMatchSelector('*/thresholds/:id/*'),
-     (match) => {
-       if (match && match.params) {
-         return match.params.id;
-       }
-       return '';
-     }
-   );
+  createSelector(
+    createMatchSelector('*/thresholds/:id/*'),
+    (match) => {
+      if (match && match.params) {
+        return match.params.id;
+      }
+      return '';
+    }
+  );
 
 export const makeSelectCurrent = () =>
   createSelector(
@@ -92,7 +92,7 @@ export const makeSelectLoadErrorsList = () =>
     selectDomain,
     (substate) =>
       substate.get('errorsList')
-      .filter(({ type }) => type === c.LOAD_THRESHOLDS_FAILURE)
+        .filter(({ type }) => type === c.LOAD_THRESHOLDS_FAILURE)
   );
 
 
@@ -101,7 +101,7 @@ export const makeSelectUpdateErrorsList = () =>
     selectDomain,
     (substate) =>
       substate.get('errorsList')
-      .filter(({ type }) => type === c.UPDATE_THRESHOLD_FAILURE)
+        .filter(({ type }) => type === c.UPDATE_THRESHOLD_FAILURE)
   );
 
 export const makeSelectReadErrorsList = () =>
@@ -109,7 +109,7 @@ export const makeSelectReadErrorsList = () =>
     selectDomain,
     (substate) =>
       substate.get('errorsList')
-      .filter(({ type }) => type === c.READ_THRESHOLD_FAILURE)
+        .filter(({ type }) => type === c.READ_THRESHOLD_FAILURE)
   );
 
 

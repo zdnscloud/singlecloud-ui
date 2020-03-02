@@ -61,7 +61,7 @@ export const reducer = (
         clusterID,
         data.id,
       ], fromJS(data))
-      .update('errorsList', (errors) => errors.filterNot((e) => e.type === c.CREATE_STORAGE_CLUSTER_FAILURE));
+        .update('errorsList', (errors) => errors.filterNot((e) => e.type === c.CREATE_STORAGE_CLUSTER_FAILURE));
     }
     case c.CREATE_STORAGE_CLUSTER_FAILURE:
       return state.update('errorsList', (errors) => errors.filterNot((e) => e.type === type).push({ type, payload, meta }));
@@ -80,7 +80,7 @@ export const reducer = (
           clusterID,
           id,
         ], fromJS(data))
-        .update('errorsList', (errors) => errors.filterNot((e) => e.type === c.UPDATE_STORAGE_CLUSTER_FAILURE));
+          .update('errorsList', (errors) => errors.filterNot((e) => e.type === c.UPDATE_STORAGE_CLUSTER_FAILURE));
       }
       return state;
     }
@@ -101,7 +101,7 @@ export const reducer = (
           clusterID,
           id,
         ], fromJS(data))
-        .update('errorsList', (errors) => errors.filterNot((e) => e.type === c.READ_STORAGE_CLUSTER_FAILURE));
+          .update('errorsList', (errors) => errors.filterNot((e) => e.type === c.READ_STORAGE_CLUSTER_FAILURE));
       }
       return state;
     }

@@ -66,7 +66,7 @@ export const reducer = (
         namespaceID,
         data.id,
       ], fromJS(data))
-      .update('errorsList', (errors) => errors.filterNot((e) => e.type === c.CREATE_UDP_INGRESS_FAILURE));
+        .update('errorsList', (errors) => errors.filterNot((e) => e.type === c.CREATE_UDP_INGRESS_FAILURE));
     }
     case c.CREATE_UDP_INGRESS_FAILURE:
       return state.update('errorsList', (errors) => errors.filterNot((e) => e.type === type).push({ type, payload, meta }));
@@ -88,7 +88,7 @@ export const reducer = (
           namespaceID,
           id,
         ], fromJS(data))
-        .update('errorsList', (errors) => errors.filterNot((e) => e.type === c.READ_UDP_INGRESS_FAILURE));
+          .update('errorsList', (errors) => errors.filterNot((e) => e.type === c.READ_UDP_INGRESS_FAILURE));
       }
       return state;
     }
