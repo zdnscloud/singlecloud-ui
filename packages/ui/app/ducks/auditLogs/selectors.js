@@ -35,11 +35,11 @@ export const makeSelectData = () =>
 export const makeSelectAuditLogs = () =>
   createSelector(
     selectDomain,
-  (
-    substate,
-  ) =>
-    substate.getIn([
-      'data',
+    (
+      substate,
+    ) =>
+      substate.getIn([
+        'data',
       ]) || substate.clear()
   );
 
@@ -57,15 +57,15 @@ export const makeSelectAuditLogsList = () =>
   );
 
 export const makeSelectCurrentID = () =>
-   createSelector(
-     createMatchSelector('*/auditLogs/:id/*'),
-     (match) => {
-       if (match && match.params) {
-         return match.params.id;
-       }
-       return '';
-     }
-   );
+  createSelector(
+    createMatchSelector('*/auditLogs/:id/*'),
+    (match) => {
+      if (match && match.params) {
+        return match.params.id;
+      }
+      return '';
+    }
+  );
 
 export const makeSelectCurrent = () =>
   createSelector(
@@ -92,7 +92,7 @@ export const makeSelectLoadErrorsList = () =>
     selectDomain,
     (substate) =>
       substate.get('errorsList')
-      .filter(({ type }) => type === c.LOAD_AUDIT_LOGS_FAILURE)
+        .filter(({ type }) => type === c.LOAD_AUDIT_LOGS_FAILURE)
   );
 
 

@@ -52,7 +52,7 @@ export const reducer = (
         'data',
         data.id,
       ], fromJS(data))
-      .update('errorsList', (errors) => errors.filterNot((e) => e.type === c.CREATE_CLUSTER_FAILURE));
+        .update('errorsList', (errors) => errors.filterNot((e) => e.type === c.CREATE_CLUSTER_FAILURE));
     }
     case c.CREATE_CLUSTER_FAILURE:
       return state.update('errorsList', (errors) => errors.filterNot((e) => e.type === type).push({ type, payload, meta }));
@@ -67,7 +67,7 @@ export const reducer = (
           'data',
           id,
         ], fromJS(data))
-        .update('errorsList', (errors) => errors.filterNot((e) => e.type === c.UPDATE_CLUSTER_FAILURE));
+          .update('errorsList', (errors) => errors.filterNot((e) => e.type === c.UPDATE_CLUSTER_FAILURE));
       }
       return state;
     }
@@ -84,7 +84,7 @@ export const reducer = (
           'data',
           id,
         ], fromJS(data))
-        .update('errorsList', (errors) => errors.filterNot((e) => e.type === c.READ_CLUSTER_FAILURE));
+          .update('errorsList', (errors) => errors.filterNot((e) => e.type === c.READ_CLUSTER_FAILURE));
       }
       return state;
     }

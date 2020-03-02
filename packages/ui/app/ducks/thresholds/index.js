@@ -55,7 +55,7 @@ export const reducer = (
           'data',
           id,
         ], fromJS(data))
-        .update('errorsList', (errors) => errors.filterNot((e) => e.type === c.UPDATE_THRESHOLD_FAILURE));
+          .update('errorsList', (errors) => errors.filterNot((e) => e.type === c.UPDATE_THRESHOLD_FAILURE));
       }
       return state;
     }
@@ -72,7 +72,7 @@ export const reducer = (
           'data',
           id,
         ], fromJS(data))
-        .update('errorsList', (errors) => errors.filterNot((e) => e.type === c.READ_THRESHOLD_FAILURE));
+          .update('errorsList', (errors) => errors.filterNot((e) => e.type === c.READ_THRESHOLD_FAILURE));
       }
       return state;
     }
