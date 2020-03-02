@@ -97,7 +97,7 @@
   "app.containers.ApplicationsPage.formName": "名称",
   "app.containers.ApplicationsPage.formNamespaceName": "用户空间",
   "app.containers.ApplicationsPage.header": "应用管理",
-  "app.containers.ApplicationsPage.monitorButton": "服务关系",
+  "app.containers.ApplicationsPage.monitorButton": "服务网格",
   "app.containers.ApplicationsPage.normal": "normal",
   "app.containers.ApplicationsPage.pageDesc": "应用管理",
   "app.containers.ApplicationsPage.pageTitle": "Zcloud",
