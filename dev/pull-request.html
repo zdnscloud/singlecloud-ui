@@ -80,7 +80,7 @@
               <b class="sidebar-book-title">Zcloud UI Documents</b>
             </div>
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li><a href="../intro.html"><strong aria-hidden="true">1.</strong> 简介</a></li><li><ol class="section"><li><a href="../view.html"><strong aria-hidden="true">1.1.</strong> 视图</a></li><li><a href="../state.html"><strong aria-hidden="true">1.2.</strong> 状态</a></li><li><a href="../intl.html"><strong aria-hidden="true">1.3.</strong> 页面语言</a></li></ol></li><li><a href="../dev.html"><strong aria-hidden="true">2.</strong> 开发管理</a></li><li><ol class="section"><li><a href="../dev/scaffold.html"><strong aria-hidden="true">2.1.</strong> 脚手架使用</a></li><li><a href="../dev/scaffold_dev.html"><strong aria-hidden="true">2.2.</strong> 脚手架开发</a></li><li><a href="../dev/react.html"><strong aria-hidden="true">2.3.</strong> React开发</a></li><li><a href="../dev/redux.html"><strong aria-hidden="true">2.4.</strong> Redux开发</a></li><li><a href="../dev/merge.html" class="active"><strong aria-hidden="true">2.5.</strong> 合并分支流程</a></li></ol></li><li><a href="../design.html"><strong aria-hidden="true">3.</strong> 开发设计</a></li><li><ol class="section"><li><a href="../design/realtime.html"><strong aria-hidden="true">3.1.</strong> 实时通讯</a></li><li><a href="../design/react-final-form.html"><strong aria-hidden="true">3.2.</strong> react-final-form</a></li></ol></li><li><a href="../prod.html"><strong aria-hidden="true">4.</strong> 产品业务</a></li><li><ol class="section"><li><a href="../prod/workload.html"><strong aria-hidden="true">4.1.</strong> Workload</a></li></ol></li></ol>
+                <ol class="chapter"><li><a href="../intro.html"><strong aria-hidden="true">1.</strong> 简介</a></li><li><ol class="section"><li><a href="../view.html"><strong aria-hidden="true">1.1.</strong> 视图</a></li><li><a href="../state.html"><strong aria-hidden="true">1.2.</strong> 状态</a></li><li><a href="../intl.html"><strong aria-hidden="true">1.3.</strong> 页面语言</a></li></ol></li><li><a href="../dev.html"><strong aria-hidden="true">2.</strong> 开发管理</a></li><li><ol class="section"><li><a href="../dev/scaffold.html"><strong aria-hidden="true">2.1.</strong> 脚手架使用</a></li><li><a href="../dev/scaffold_dev.html"><strong aria-hidden="true">2.2.</strong> 脚手架开发</a></li><li><a href="../dev/react.html"><strong aria-hidden="true">2.3.</strong> React开发</a></li><li><a href="../dev/redux.html"><strong aria-hidden="true">2.4.</strong> Redux开发</a></li><li><a href="../dev/pull-request.html" class="active"><strong aria-hidden="true">2.5.</strong> 合并分支流程</a></li></ol></li><li><a href="../design.html"><strong aria-hidden="true">3.</strong> 开发设计</a></li><li><ol class="section"><li><a href="../design/realtime.html"><strong aria-hidden="true">3.1.</strong> 实时通讯</a></li><li><a href="../design/react-final-form.html"><strong aria-hidden="true">3.2.</strong> react-final-form</a></li></ol></li><li><a href="../prod.html"><strong aria-hidden="true">4.</strong> 产品业务</a></li><li><ol class="section"><li><a href="../prod/workload.html"><strong aria-hidden="true">4.1.</strong> Workload</a></li></ol></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -131,6 +131,48 @@
                 <div id="content" class="content">
                     <main>
                         <h1><a class="header" href="#合并分支流程" id="合并分支流程">合并分支流程</a></h1>
+<h3><a class="header" href="#流程举例" id="流程举例">流程举例</a></h3>
+<ol>
+<li>需要开发一个功能或修复一个bug时，创建一个issue，label标记为<code>feature</code>或<code>bug</code></li>
+<li>这时，对应开发接到任务，创建分支，进行开发</li>
+<li>开发完成后，发起pull request，指定对应的issue，指定reviewer来进行review，添加label: <code>need-review</code></li>
+</ol>
+<pre><code>hub pull-request \
+    -b &lt;需要合并到的分支，通常是master&gt; \
+    -h &lt;开发功能的分支，默认是当前分支&gt; \
+    -i &lt;issue 序号，可以通过hub issue查看到&gt; \
+    -r &lt;reviewers, 逗号分割，不能有空格&gt; \
+    -l &lt;labels, 逗号分隔&gt;
+</code></pre>
+<ol start="4">
+<li>运行对应的自动化检查，自动CI检查通过后@reviewer进行review，CI检查失败则返回开发修复</li>
+<li>reviewer开始review，assign给自己，在review之后，添加label：<code>reviewed/approved</code>，@开发人员，
+开发收到后，assign给自己，构建好对应镜像，@测试
+若review意见需要修改，则添加label：<code>reviewed/need-optimize</code>，@开发人员，再进入步骤2</li>
+<li>测试看到pull request后，assign给自己，进行测试</li>
+<li>测试完成后，
+成功添加label：<code>tested/passed</code>，@开发；
+失败添加label：<code>tested/failed</code>，写失败说明，@开发。</li>
+<li>开发看到test/passed，沟通可以合并后，通过pull request合并，并删除对应分支</li>
+</ol>
+<ul>
+<li>补充：
+<ul>
+<li>assign给自己，表示自己在处理这个任务，需要别人处理的时候@对应人员</li>
+<li>如果发现冲突，则需要将目标分支，合并过来，解决冲突后，提交推送到远端</li>
+<li>步骤4后，如果base分支（通常是master）发生变化，如果出现合并冲突，这个时候需要将master合并到分支，并解决冲突</li>
+<li>Pull request合并可以使用squash and merge方式，会将分支修改所有提交合并为一个commit，使用pull request信息来代替commit信息，方便后续生成release node</li>
+<li>hub 操作</li>
+</ul>
+<pre><code># 快速查看pull request列表
+hub pr list
+# checkout pull request分支
+hub pr checkout &lt;pr number&gt;
+# 快速查看issue
+hub issue
+</code></pre>
+</li>
+</ul>
 
                     </main>
 
@@ -169,21 +211,6 @@
 
         </div>
 
-        
-        <!-- Livereload script (if served using the cli tool) -->
-        <script type="text/javascript">
-            var socket = new WebSocket("ws://localhost:8081");
-            socket.onmessage = function (event) {
-                if (event.data === "reload") {
-                    socket.close();
-                    location.reload(true); // force reload from server (not from cache)
-                }
-            };
-
-            window.onbeforeunload = function() {
-                socket.close();
-            }
-        </script>
         
 
         
