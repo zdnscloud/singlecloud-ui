@@ -18,31 +18,32 @@ import MinusIcon from 'components/Icons/Minus';
 
 import messages from '../messages';
 
-export const EnvTemplate = ({
+export const Envs = ({
   fields,
   classes,
   meta: { error, submitFailed },
+  role,
 }) => (
   <Fragment>
     <GridContainer>
       <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
-        <Button
-          className={classes.addNodeBtn}
-          variant="contained" color="primary"
-          onClick={(evt) =>
-            fields.push(fromJS({}))
-          }
-        >
-          <span className={classes.plusIcon}>+</span>
-          <FormattedMessage {...messages.formEnvBtn} />
-        </Button>
+        {role === 'update' ? (
+          <p ><FormattedMessage {...messages.formEnvBtn} /></p>
+        ) : (
+          <Button
+            className={classes.addNodeBtn}
+            variant="contained" color="primary"
+            onClick={(evt) =>
+              fields.push(fromJS({}))
+            }
+          >
+            <span className={classes.plusIcon}>+</span>
+            <FormattedMessage {...messages.formEnvBtn} />
+          </Button>
+        )}
+       
       </GridItem>
     </GridContainer>
-    {submitFailed && error && (
-      <ListItem>
-        <Danger>{error}</Danger>
-      </ListItem>
-    )}
     <Card  className={classes.addList} border={fields&&fields.length>0 ? 'border':null } >
       <CardBody>
         {fields.map((f, i) => (
@@ -62,13 +63,13 @@ export const EnvTemplate = ({
               />
             </GridItem>
             <GridItem xs={3} sm={3} md={3}>
-              <IconButton
+              {role === 'update' ? null : <IconButton
                 variant="contained"
                 onClick={(evt) => fields.remove(i)}
                 className={classes.minusIcon}
               >
                 <MinusIcon />
-              </IconButton>
+              </IconButton>}
             </GridItem>
           </GridContainer>
         ))}
@@ -78,4 +79,4 @@ export const EnvTemplate = ({
   </Fragment>
 );
 
-export default EnvTemplate;
+export default Envs;

@@ -32,7 +32,7 @@ const tableSchema = schema
         clusterID,
         namespaceID,
         data,
-        removeCicd,
+        removeWorkFlow,
         setRunDialog,
       }) => (
         <Fragment>
@@ -40,12 +40,12 @@ const tableSchema = schema
             onClick={() => setRunDialog(data.get('id'))} action  
             disabled={data.get('deletionTimestamp')}>
             <FormattedMessage {...messages.tableButtonRun} />
-          </Button>,
+          </Button>
           <Button
             action
-            to={`/clusters/${clusterID}/namespaces/${namespaceID}/cicds/${data.get('id')}/update`}
+            to={`/clusters/${clusterID}/namespaces/${namespaceID}/workFlows/${data.get('id')}/update`}
             component={Link}
-            disabled={data.get('status') === 'Deleting'}
+            disabled={data.get('deletionTimestamp')}
           >
             <FormattedMessage {...messages.tableButtonModify} />
           </Button>
@@ -53,12 +53,21 @@ const tableSchema = schema
           <TableActions 
             actions={
               [
+                <Button
+                  action
+                  to={`/clusters/${clusterID}/namespaces/${namespaceID}/workFlows/${data.get('id')}/logs`}
+                  component={Link}
+                  disabled={data.get('deletionTimestamp')}
+                >
+                  <FormattedMessage {...messages.logs} />
+                </Button>,
                 <ConfirmDelete
-                  actionName={removeCicd }
+                  actionName={removeWorkFlow }
                   id={data.get('id')}
                   url={data.getIn(['links', 'remove'])}
                   clusterID={clusterID}
                   namespaceID={namespaceID}
+                  disabled={data.get('deletionTimestamp')}
                 />,
               ]}
           />
@@ -73,7 +82,7 @@ const tableSchema = schema
         ...sch,
         component: ({ pathname, data }) => (
           <Button
-            color="primary"
+            link
             component={Link}
             to={`${pathname}/${data.get('id')}/show`}
           >

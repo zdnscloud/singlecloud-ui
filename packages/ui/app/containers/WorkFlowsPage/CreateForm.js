@@ -25,12 +25,10 @@ import RadioField from 'components/Field/RadioField';
 
 import useStyles from './styles';
 import messages from './messages';
-import EnvTemplate from './form/EnvTemplate';
-import VolumeTemplate from './form/VolumeTemplate';
-import ExposedPortTemplate from './form/ExposedPortTemplate';
-import PersistentVolumeTemplate from './form/PersistentVolumeTemplate';
+import Containers from './form/Containers';
+import VolumeClaimTemplate from './form/VolumeClaimTemplate';
 
-export const formName = 'createCicdForm';
+export const formName = 'createWorkFlowForm';
 
 const validate = (values) => {
   const errors = {};
@@ -48,6 +46,11 @@ const Form = ({
   formValues,
   handleSubmit,
   error,
+  configMaps,
+  secrets,
+  storageClasses,
+  role,
+  pvc,
 }) => {
   const classes = useStyles();
   const options =[];
@@ -69,7 +72,7 @@ const Form = ({
                     label={<FormattedMessage {...messages.formName} />}
                     name="name"
                     fullWidth
-                    inputProps={ { type: 'text', autoComplete: 'off' } }
+                    disabled={role === 'update'}
                   />
                 </GridItem>
               </GridContainer>
@@ -91,7 +94,6 @@ const Form = ({
                     label={<FormattedMessage {...messages.formGitRepositoryUrl} />}
                     name="git.repositoryUrl"
                     fullWidth
-                    inputProps={ { type: 'text', autoComplete: 'off' } }
                   />
                 </GridItem>
                 <GridItem xs={3} sm={3} md={3}>
@@ -99,7 +101,6 @@ const Form = ({
                     label={<FormattedMessage {...messages.formGitRevision} />}
                     name="git.revision"
                     fullWidth
-                    inputProps={ { type: 'text', autoComplete: 'off' } }
                   />
                 </GridItem>
               </GridContainer>
@@ -109,7 +110,6 @@ const Form = ({
                     label={<FormattedMessage {...messages.formGitUser} />}
                     name="git.user"
                     fullWidth
-                    inputProps={ { type: 'text', autoComplete: 'off' } }
                   />
                 </GridItem>
                 <GridItem xs={3} sm={3} md={3}>
@@ -134,7 +134,6 @@ const Form = ({
                     label={<FormattedMessage {...messages.formImageName} />}
                     name="image.name"
                     fullWidth
-                    inputProps={ { type: 'text', autoComplete: 'off' } }
                   />
                 </GridItem>
               </GridContainer>
@@ -144,7 +143,6 @@ const Form = ({
                     label={<FormattedMessage {...messages.formImageRegistryUser} />}
                     name="image.registryUser"
                     fullWidth
-                    inputProps={ { type: 'text', autoComplete: 'off' } }
                   />
                 </GridItem>
                 <GridItem xs={3} sm={3} md={3}>
@@ -174,7 +172,14 @@ const Form = ({
                     label={<FormattedMessage {...messages.formReplicas} />}
                     name="deploy.replicas"
                     fullWidth
-                    inputProps={ { type: 'text', autoComplete: 'off' } }
+                    disabled={role === 'update'}
+                    normalize={(val) => (val ? Number(val) : val)}
+                    inputProps={ { 
+                      type: 'number',
+                      autoComplete: 'off',
+                      min: 1,
+                      max: 255,
+                    }}
                   />
                 </GridItem>
                 <GridItem xs={3} sm={3} md={3}>
@@ -183,61 +188,21 @@ const Form = ({
                     label={
                       <FormattedMessage {...messages.formInjectServiceMesh} />
                     }
-                    // disabled={role === 'update'}
+                    disabled={role === 'update'}
                   />
                 </GridItem>
               </GridContainer>
-              <GridContainer>
-                <GridItem xs={3} sm={3} md={3}>
-                  <InputField
-                    label={<FormattedMessage {...messages.formContainerName} />}
-                    name="deploy.container.name"
-                    fullWidth
-                    inputProps={ { type: 'text', autoComplete: 'off' } }
-                  />
-                </GridItem>
-                <GridItem xs={3} sm={3} md={3}>
-                  <InputField
-                    label={<FormattedMessage {...messages.formContainerCommand} />}
-                    name="deploy.container.command"
-                    fullWidth
-                    inputProps={ { type: 'text', autoComplete: 'off' } }
-                  />
-                </GridItem>
-                <GridItem xs={3} sm={3} md={3}>
-                  <InputField
-                    label={<FormattedMessage {...messages.formContainerArgs} />}
-                    name="deploy.container.args"
-                    fullWidth
-                    inputProps={ { type: 'text', autoComplete: 'off' } }
-                  />
-                </GridItem>
-                <GridItem xs={12} sm={12} md={12}>
-                  <FieldArray 
-                    name="deploy.container.env" 
-                    component={EnvTemplate} 
-                    classes={classes} 
-                    formValues={formValues}
-                  />
-                </GridItem>
-                <GridItem xs={12} sm={12} md={12}>
-                  <FieldArray 
-                    name="deploy.container.volumes" 
-                    component={VolumeTemplate} 
-                    classes={classes} 
-                    formValues={formValues}
-                  />
-                </GridItem>
-                <GridItem xs={12} sm={12} md={12}>
-                  <FieldArray 
-                    name="deploy.container.exposedPorts" 
-                    component={ExposedPortTemplate} 
-                    classes={classes} 
-                    formValues={formValues}
-                  />
-                </GridItem>
-              </GridContainer>
-              <GridContainer>
+              
+              <FieldArray 
+                name="deploy.containers" 
+                component={Containers} 
+                classes={classes} 
+                formValues={formValues}
+                configMaps={configMaps}
+                secrets={secrets}
+                role={role}
+              />
+              <GridContainer style={{marginBottom:role === 'update'? '16px':'0px'}}>
                 <GridItem xs={3} sm={3} md={3}>
                   <span className={classes.serviceConfig}>
                     <FormattedMessage {...messages.formServiceConfiguration} />:
@@ -257,7 +222,7 @@ const Form = ({
                     label={<FormattedMessage {...messages.formExposedMetricPath} />}
                     name="deploy.advancedOptions.exposedMetric.path"
                     fullWidth
-                    inputProps={ { type: 'text', autoComplete: 'off' } }
+                    disabled={role === 'update'}
                   />
                 </GridItem>
                 <GridItem xs={3} sm={3} md={3}>
@@ -265,30 +230,62 @@ const Form = ({
                     label={<FormattedMessage {...messages.formExposedMetricPort} />}
                     name="deploy.advancedOptions.exposedMetric.port"
                     fullWidth
-                    inputProps={ { type: 'text', autoComplete: 'off' } }
+                    normalize={(val) => (val ? Number(val) : val)}
+                    inputProps={{
+                      type: 'number',
+                      autoComplete: 'off',
+                      min: 1,
+                      max: 65535,
+                    }}
+                    disabled={role === 'update'}
                   />
                 </GridItem>
                 <GridItem xs={12} sm={12} md={12}>
                   <FieldArray 
-                    name="deploy.persistentVolumeTemplate" 
-                    component={PersistentVolumeTemplate} 
+                    name="deploy.persistentVolumes" 
                     classes={classes} 
                     formValues={formValues}
+                    component={VolumeClaimTemplate}
+                    storageClasses={storageClasses}
+                    role={role}
+                    pvc={pvc}
                   />
                 </GridItem>
               </GridContainer>
             </CardBody>
           </Card>
         </GridItem>
+
+        {role === 'update' ? (
+          <GridItem xs={12} sm={12} md={12}>
+            <Card>
+              <CardHeader>
+                <h4>
+                  <FormattedMessage {...messages.formUpdateMemo} />
+                </h4>
+              </CardHeader>
+              <CardBody>
+                <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
+                  <InputField
+                    label={<FormattedMessage {...messages.formMemo} />}
+                    fullWidth
+                    inputProps={{ type: 'text', autoComplete: 'off' }}
+                    name="deploy.memo"
+                  />
+                </GridItem>
+              </CardBody>
+            </Card>
+          </GridItem>
+        ) : null}
        
       </GridContainer>
     </form>
   );
 }
 
-const CreateCicdForm = reduxForm({
+const CreateWorkFlowForm = reduxForm({
   form: formName,
   validate,
 })(Form);
 
-export default CreateCicdForm;
+export default CreateWorkFlowForm;

@@ -1,25 +1,25 @@
 /*
- * CicdsPage Messages
+ * WorkFlowsPage Messages
  *
- * This contains all the text for the CicdsPage container.
+ * This contains all the text for the WorkFlowsPage container.
  */
 
 import { defineMessages } from 'react-intl';
 
-export const scope = 'app.containers.CicdsPage';
+export const scope = 'app.containers.WorkFlowsPage';
 
 export default defineMessages({
   pageTitle: {
     id: `${scope}.pageTitle`,
-    defaultMessage: 'CicdsPage',
+    defaultMessage: 'WorkFlowsPage',
   },
   pageDesc: {
     id: `${scope}.pageDesc`,
-    defaultMessage: 'Description of CicdsPage',
+    defaultMessage: 'Description of WorkFlowsPage',
   },
-  cicds: {
-    id: `${scope}.cicds`,
-    defaultMessage: 'cicds',
+  workFlows: {
+    id: `${scope}.workFlows`,
+    defaultMessage: 'workFlows',
   },
   tableTitleName: {
     id: `${scope}.tableTitleName`,
@@ -47,15 +47,15 @@ export default defineMessages({
   },
   createPageTitle: {
     id: `${scope}.createPageTitle`,
-    defaultMessage: 'Create cicd',
+    defaultMessage: 'Create workFlow',
   },
   createPageDesc: {
     id: `${scope}.createPageDesc`,
-    defaultMessage: 'Description of Create cicd',
+    defaultMessage: 'Description of Create workFlow',
   },
-  createCicd: {
-    id: `${scope}.createCicd`,
-    defaultMessage: 'Create cicd',
+  createWorkFlow: {
+    id: `${scope}.createWorkFlow`,
+    defaultMessage: 'Create workFlow',
   },
   save: {
     id: `${scope}.save`,
@@ -111,7 +111,7 @@ export default defineMessages({
   },
   formContainerName:{
     id: `${scope}.ContainerName`,
-    defaultMessage: 'InjectServiceMesh',
+    defaultMessage: 'ContainerName',
   },
   formContainerCommand:{
     id: `${scope}.formContainerCommand`,
@@ -141,6 +141,18 @@ export default defineMessages({
     id: `${scope}.formVolumeType`,
     defaultMessage: 'VolumeType',
   },
+  formVolumeTypeConfigMap: {
+    id: `${scope}.formVolumeTypeConfigMap`,
+    defaultMessage: 'Config Map',
+  },
+  formVolumeTypeSecret: {
+    id: `${scope}.formVolumeTypeSecret`,
+    defaultMessage: 'Secret',
+  },
+  formVolumeTypePersistentVolume: {
+    id: `${scope}.formVolumeTypePersistentVolume`,
+    defaultMessage: 'Persistent Volume',
+  },
   formVolumeName:{
     id: `${scope}.formVolumeName`,
     defaultMessage: 'VolumeName',
@@ -148,6 +160,10 @@ export default defineMessages({
   formVolumeMountPath:{
     id: `${scope}.formVolumeMountPath`,
     defaultMessage: 'VolumeMountPath',
+  },
+  formNone: {
+    id: `${scope}.formNone`,
+    defaultMessage: 'None',
   },
   formExposedPortBtn:{
     id: `${scope}.formExposedPortBtn`,
@@ -209,17 +225,25 @@ export default defineMessages({
     id: `${scope}.formPvStorageClassName`,
     defaultMessage: 'StorageClassName',
   },
+  formUpdateMemo:{
+    id: `${scope}.formUpdateMemo`,
+    defaultMessage: 'UpdateMemo',
+  },
+  formMemo: {
+    id: `${scope}.formMemo`,
+    defaultMessage: 'Memo',
+  },
   updatePageTitle: {
     id: `${scope}.updatePageTitle`,
-    defaultMessage: 'Update cicd',
+    defaultMessage: 'Update workFlow',
   },
   updatePageDesc: {
     id: `${scope}.updatePageDesc`,
-    defaultMessage: 'Description of Update cicd',
+    defaultMessage: 'Description of Update workFlow',
   },
-  updateCicd: {
-    id: `${scope}.updateCicd`,
-    defaultMessage: 'Update cicd',
+  updateWorkFlow: {
+    id: `${scope}.updateWorkFlow`,
+    defaultMessage: 'Update workFlow',
   },
   update: {
     id: `${scope}.update`,
@@ -236,5 +260,29 @@ export default defineMessages({
   dialogFormImageTag:{
     id: `${scope}.dialogFormImageTag`,
     defaultMessage: 'ImageTag',
+  },
+  logsPageTitle: {
+    id: `${scope}.logsPageTitle`,
+    defaultMessage: 'WorkFlowLogsPage',
+  },
+  logsPageDesc: {
+    id: `${scope}.logsPageDesc`,
+    defaultMessage: 'Description of workFlow logs',
+  },
+  logsWorkFlow: {
+    id: `${scope}.logsWorkFlow`,
+    defaultMessage: 'workFlow Logs',
+  },
+  logs: {
+    id: `${scope}.logs`,
+    defaultMessage: 'Logs',
+  },
+  detailPageTitle:{
+    id: `${scope}.detailPageTitle`,
+    defaultMessage: 'Detail',
+  },
+  stepOne: {
+    id: `${scope}.stepOne`,
+    defaultMessage: 'One',
   },
 });

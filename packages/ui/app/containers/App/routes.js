@@ -108,11 +108,12 @@ import UsersPage, {
 import AlarmMessagesPage from 'containers/AlarmMessagesPage';
 import GlobalConfigurationPage from 'containers/GlobalConfigurationPage';
 import AuditLogsPage from 'containers/AuditLogsPage/Loadable';
-import CicdPage, {
-  CreateCicdPage,
-  ShowCicdPage,
-  UpdateCicdPage,
-} from 'containers/CicdsPage/Loadable';
+import WorkFlowPage, {
+  CreateWorkFlowPage,
+  ShowWorkFlowPage,
+  UpdateWorkFlowPage,
+  LogsPage,
+} from 'containers/WorkFlowsPage/Loadable';
 
 const appRoutes = [
   {
@@ -663,37 +664,45 @@ const appRoutes = [
     component: AlarmMessagesPage,
   },
   // applications end
-  // cicd
+  // workFlow
   {
     path:
-      '/clusters/:cluster_id/namespaces/:namespace_id/cicds',
-    name: 'Cicd',
+      '/clusters/:cluster_id/namespaces/:namespace_id/workFlows',
+    name: 'WorkFlow',
     icon: Dashboard,
-    component: CicdPage,
+    component: WorkFlowPage,
   },
   {
     path:
-      '/clusters/:cluster_id/namespaces/:namespace_id/cicds/create',
-    name: 'Create Cicd',
+      '/clusters/:cluster_id/namespaces/:namespace_id/workFlows/create',
+    name: 'Create WorkFlow',
     icon: Dashboard,
-    component: CreateCicdPage,
+    component: CreateWorkFlowPage,
   },
   {
     path:
-      '/clusters/:cluster_id/namespaces/:namespace_id/cicds/:cicd_id/update',
-    name: ' Update Cicd',
+      '/clusters/:cluster_id/namespaces/:namespace_id/workFlows/:workFlow_id/update',
+    name: ' Update WorkFlow',
     icon: Dashboard,
-    component: UpdateCicdPage,
+    component: UpdateWorkFlowPage,
   },
   {
     path:
-      '/clusters/:cluster_id/namespaces/:namespace_id/cicds/:cicd_id/show',
-    name: 'Cicd Detail',
+      '/clusters/:cluster_id/namespaces/:namespace_id/workFlows/:workFlow_id/show',
+    name: 'WorkFlow Detail',
     icon: Dashboard,
-    component: ShowCicdPage,
+    component: ShowWorkFlowPage,
+  },
+  {
+    path:
+      '/clusters/:cluster_id/namespaces/:namespace_id/workFlows/:workFlow_id/logs',
+    name: 'WorkFlow Logs',
+    icon: Dashboard,
+    component: LogsPage,
   },
 
-  // cicd end
+
+  // workFlow end
 ];
 
 export default appRoutes;

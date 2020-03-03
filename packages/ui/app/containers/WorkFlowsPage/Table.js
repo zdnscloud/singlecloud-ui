@@ -1,6 +1,6 @@
 /**
  *
- * Cicds Table
+ * WorkFlows Table
  *
  */
 import React, { useState } from 'react';
@@ -30,12 +30,12 @@ import schema from './tableSchema';
 import RunDialog from './RunDialog';
 
 /* eslint-disable react/prefer-stateless-function */
-const CicdsTable = ({
+const WorkFlowsTable = ({
   location,
   data,
   clusterID,
   namespaceID,
-  removeCicd,
+  removeWorkFlow,
 }) => {
   const classes = useStyles();
   const pathname = location.get('pathname');
@@ -46,7 +46,7 @@ const CicdsTable = ({
         return {
           ...sch,
           props: {
-            removeCicd,
+            removeWorkFlow,
             clusterID,
             namespaceID,
             setRunDialog,
@@ -99,4 +99,4 @@ const withConnect = connect(
 
 export default compose(
   withConnect,
-)(CicdsTable);
+)(WorkFlowsTable);

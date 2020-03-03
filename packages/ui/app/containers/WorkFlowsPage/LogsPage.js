@@ -1,6 +1,6 @@
 /**
  *
- * CicdsPage
+ * LogsPage
  *
  */
 import React, { useEffect, useState, memo } from 'react';
@@ -16,13 +16,19 @@ import { Link } from 'react-router-dom';
 import Typography from '@material-ui/core/Typography';
 import Fab from '@material-ui/core/Fab';
 import IconButton from '@material-ui/core/IconButton';
-import AddIcon from 'components/Icons/Add';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
+import ListItemAvatar from '@material-ui/core/ListItemAvatar';
+import Avatar from '@material-ui/core/Avatar';
 import GridItem from 'components/Grid/GridItem';
 import GridContainer from 'components/Grid/GridContainer';
 import Card from 'components/Card/Card';
 import CardHeader from 'components/Card/CardHeader';
 import CardBody from 'components/Card/CardBody';
 import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
+import TrueIcon from 'components/Icons/True';
+import FalseIcon from 'components/Icons/False';
 
 import { makeSelectCurrentID as makeSelectClusterID } from 'ducks/clusters/selectors';
 import { makeSelectCurrentID as makeSelectNamespaceID } from 'ducks/namespaces/selectors';
@@ -31,16 +37,15 @@ import * as actions from 'ducks/workFlows/actions';
 
 import useStyles from './styles';
 import messages from './messages';
-import CicdsTable from './Table';
+import Stepper from './components/WorkFlowStepper';
 
-const CicdsPage = ({
+const LogsPage = ({
   clusterID,
   namespaceID,
   location,
   url,
   loadWorkFlows,
 }) => {
-  console.log('url',url);
   const classes = useStyles();
   useEffect(() => {
     if (url) {
@@ -56,13 +61,17 @@ const CicdsPage = ({
 
   return (
     <div className={classes.root}>
-      <Helmet title={messages.pageTitle} description={messages.pageDesc} />
+      <Helmet title={messages.logsPageTitle} description={messages.logsPageDesc} />
       <CssBaseline />
       <div className={classes.content}>
         <Breadcrumbs
           data={[
             {
+              path: `/clusters/${clusterID}/namespaces/${namespaceID}/workFlows`,
               name: <FormattedMessage {...messages.pageTitle} />,
+            },
+            {
+              name: <FormattedMessage {...messages.logsPageTitle} />,
             },
           ]}
         />
@@ -71,19 +80,43 @@ const CicdsPage = ({
             <Card>
               <CardHeader>
                 <h4>
-                  <FormattedMessage {...messages.cicds } />
-                  <Link
-                    to={`${location.pathname}/create`}
-                    className={classes.createBtnLink}
-                  >
-                    <IconButton>
-                      <AddIcon />
-                    </IconButton>
-                  </Link>
+                  <FormattedMessage {...messages.workFlows } />
                 </h4>
               </CardHeader>
               <CardBody>
-                <CicdsTable />
+                <Stepper />
+              </CardBody>
+            </Card>
+          </GridItem>
+          <GridItem xs={12} sm={12} md={12}>
+            <Card>
+              <CardHeader>
+                <h4>
+                  <FormattedMessage {...messages.workFlows } />
+                </h4>
+              </CardHeader>
+              <CardBody>
+                <GridContainer >
+                  <GridItem xs={3} sm={3} md={3}>
+                    <List className={classes.list}>
+                      <ListItem className={classes.success}>
+                        <ListItemAvatar>
+                          <TrueIcon />
+                        </ListItemAvatar>
+                        <ListItemText primary="success" />
+                      </ListItem>
+                      <ListItem className={classes.fails}>
+                        <ListItemAvatar>
+                          <FalseIcon />
+                        </ListItemAvatar>
+                        <ListItemText primary="fails" />
+                      </ListItem>
+                    </List>
+                  </GridItem>
+                  <GridItem xs={9} sm={9} md={9}>
+                    
+                  </GridItem>
+                </GridContainer>
               </CardBody>
             </Card>
           </GridItem>
@@ -112,4 +145,4 @@ const withConnect = connect(mapStateToProps, mapDispatchToProps);
 export default compose(
   withConnect,
   memo,
-)(CicdsPage);
+)(LogsPage);
