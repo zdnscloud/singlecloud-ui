@@ -9,6 +9,7 @@ import Notifications from '@material-ui/icons/Notifications';
 import Unarchive from '@material-ui/icons/Unarchive';
 import Language from '@material-ui/icons/Language';
 
+import NotFoundPage from 'containers/NotFoundPage/Loadable';
 import ClustersPage, {
   CreateClusterPage,
   ClusterManagePage,
@@ -110,6 +111,12 @@ import GlobalConfigurationPage from 'containers/GlobalConfigurationPage';
 import AuditLogsPage from 'containers/AuditLogsPage/Loadable';
 
 const appRoutes = [
+  {
+    path: '/404',
+    name: 'NotFound',
+    icon: Dashboard,
+    component: NotFoundPage,
+  },
   {
     path: '/clusters',
     name: 'Clusters',

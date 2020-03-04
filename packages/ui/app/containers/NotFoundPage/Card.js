@@ -13,33 +13,32 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
-import { withStyles } from '@material-ui/core/styles';
-import GridItem from 'components/Grid/GridItem';
-import GridContainer from 'components/Grid/GridContainer';
 import Card from 'components/Card/Card';
 import CardHeader from 'components/Card/CardHeader';
 import CardBody from 'components/Card/CardBody';
-import Helmet from 'components/Helmet/Helmet';
 
 import img404 from 'images/404.png';
 
-import NotFoundCard from './Card';
 import messages from './messages';
 import useStyles from './styles';
 
-/* eslint-disable react/prefer-stateless-function */
-const NotFound = () => {
+const NotFoundCard = () => {
   const classes = useStyles();
   return (
-    <div className={classes.root}>
-      <div className={classes.content}>
-        <GridContainer className={classes.grid}>
-          <GridItem xs={12} sm={12} md={12}>
-            <NotFoundCard />
-          </GridItem>
-        </GridContainer>
-      </div>
-    </div>
+    <Card className={classes.card404}>
+      <CardBody className={classes.card404Body}>
+        <img className={classes.img404} src={img404}  />
+        <div className={classes.textBlock}>
+          <h4>很抱歉,地球我们都找遍了,还是没发现您要的页面</h4>
+          <ul>
+            请试试以下办法：
+            <li>检查网络连接</li>
+            <li>检查代理服务器和防火墙</li>
+          </ul>
+        </div>
+      </CardBody>
+    </Card>
   );
 };
-export default NotFound;
+
+export default NotFoundCard;
