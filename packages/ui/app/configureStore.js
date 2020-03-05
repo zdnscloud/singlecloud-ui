@@ -42,27 +42,15 @@ const epicMiddleware = createEpicMiddleware({
           if (getByKey(error, 'status') === 401) {
             return of(loadRole('/web/role'));
           }
+          if (getByKey(error, 'status') === 0) {
+            return of({ type: 'CONNECT_ERROR', payload: error, error: true });
+          }
+          if (getByKey(error, 'status') >= 500) {
+            return of({ type: 'SERVER_ERROR', payload: error, error: true });
+          }
           return throwError(error);
         })
       );
-    },
-    getJSON: (arg) => {
-      let opt = arg;
-      if (typeof opt === 'string') {
-        opt = {
-          url: arg,
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        };
-      }
-      return ajax.getJSON({
-        ...opt,
-        headers: {
-          'Content-Type': 'application/json',
-          ...(opt.headers || {}),
-        },
-      });
     },
   },
 });
