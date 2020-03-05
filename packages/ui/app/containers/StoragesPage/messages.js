@@ -125,6 +125,10 @@ export default defineMessages({
     id: `${scope}.formName`,
     defaultMessage: 'formName',
   },
+  formStorageName: {
+    id: `${scope}.formStorageName`,
+    defaultMessage: 'formStorageName',
+  },
   formStorageType: {
     id: `${scope}.formStorageType`,
     defaultMessage: 'formStorageType',
