@@ -63,7 +63,7 @@ export const reducer = (
           clusterID,
           id,
         ], fromJS(data))
-        .update('errorsList', (errors) => errors.filterNot((e) => e.type === c.READ_NODE_FAILURE));
+          .update('errorsList', (errors) => errors.filterNot((e) => e.type === c.READ_NODE_FAILURE));
       }
       return state;
     }

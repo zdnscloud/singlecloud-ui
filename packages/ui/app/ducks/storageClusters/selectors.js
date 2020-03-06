@@ -11,8 +11,8 @@ import {
 } from 'connected-react-router/immutable';
 import {
   makeSelectCurrent as makeSelectCurrentCluster,
-} from 'ducks/clusters/selectors';
-import { makeSelectCurrentID as makeSelectCurrentClusterID } from 'ducks/clusters/selectors';
+  makeSelectCurrentID as makeSelectCurrentClusterID } from 'ducks/clusters/selectors';
+
 import * as c from './constants';
 import { initialState } from './index';
 
@@ -40,13 +40,13 @@ export const makeSelectStorageClusters = () =>
   createSelector(
     selectDomain,
     makeSelectCurrentClusterID(),
-  (
-    substate,
+    (
+      substate,
       clusterID,
-  ) =>
-    substate.getIn([
-      'data',
-      clusterID,
+    ) =>
+      substate.getIn([
+        'data',
+        clusterID,
       ]) || substate.clear()
   );
 
@@ -67,15 +67,15 @@ export const makeSelectStorageClustersList = () =>
   );
 
 export const makeSelectCurrentID = () =>
-   createSelector(
-     createMatchSelector('*/storageClusters/:id/*'),
-     (match) => {
-       if (match && match.params) {
-         return match.params.id;
-       }
-       return '';
-     }
-   );
+  createSelector(
+    createMatchSelector('*/storageClusters/:id/*'),
+    (match) => {
+      if (match && match.params) {
+        return match.params.id;
+      }
+      return '';
+    }
+  );
 
 export const makeSelectCurrent = () =>
   createSelector(
@@ -105,7 +105,7 @@ export const makeSelectLoadErrorsList = () =>
     selectDomain,
     (substate) =>
       substate.get('errorsList')
-      .filter(({ type }) => type === c.LOAD_STORAGE_CLUSTERS_FAILURE)
+        .filter(({ type }) => type === c.LOAD_STORAGE_CLUSTERS_FAILURE)
   );
 
 export const makeSelectCreateErrorsList = () =>
@@ -113,7 +113,7 @@ export const makeSelectCreateErrorsList = () =>
     selectDomain,
     (substate) =>
       substate.get('errorsList')
-      .filter(({ type }) => type === c.CREATE_STORAGE_CLUSTER_FAILURE)
+        .filter(({ type }) => type === c.CREATE_STORAGE_CLUSTER_FAILURE)
   );
 
 export const makeSelectUpdateErrorsList = () =>
@@ -121,7 +121,7 @@ export const makeSelectUpdateErrorsList = () =>
     selectDomain,
     (substate) =>
       substate.get('errorsList')
-      .filter(({ type }) => type === c.UPDATE_STORAGE_CLUSTER_FAILURE)
+        .filter(({ type }) => type === c.UPDATE_STORAGE_CLUSTER_FAILURE)
   );
 
 export const makeSelectReadErrorsList = () =>
@@ -129,7 +129,7 @@ export const makeSelectReadErrorsList = () =>
     selectDomain,
     (substate) =>
       substate.get('errorsList')
-      .filter(({ type }) => type === c.READ_STORAGE_CLUSTER_FAILURE)
+        .filter(({ type }) => type === c.READ_STORAGE_CLUSTER_FAILURE)
   );
 
 export const makeSelectRemoveErrorsList = () =>
@@ -137,6 +137,6 @@ export const makeSelectRemoveErrorsList = () =>
     selectDomain,
     (substate) =>
       substate.get('errorsList')
-      .filter(({ type }) => type === c.REMOVE_STORAGE_CLUSTER_FAILURE)
+        .filter(({ type }) => type === c.REMOVE_STORAGE_CLUSTER_FAILURE)
   );
 

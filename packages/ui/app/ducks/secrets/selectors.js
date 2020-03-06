@@ -11,9 +11,9 @@ import {
 } from 'connected-react-router/immutable';
 import {
   makeSelectCurrent as makeSelectCurrentNamespace,
-} from 'ducks/namespaces/selectors';
+  makeSelectCurrentID as makeSelectCurrentNamespaceID } from 'ducks/namespaces/selectors';
 import { makeSelectCurrentID as makeSelectCurrentClusterID } from 'ducks/clusters/selectors';
-import { makeSelectCurrentID as makeSelectCurrentNamespaceID } from 'ducks/namespaces/selectors';
+
 import * as c from './constants';
 import { initialState } from './index';
 
@@ -42,15 +42,15 @@ export const makeSelectSecrets = () =>
     selectDomain,
     makeSelectCurrentClusterID(),
     makeSelectCurrentNamespaceID(),
-  (
-    substate,
+    (
+      substate,
       clusterID,
       namespaceID,
-  ) =>
-    substate.getIn([
-      'data',
-      clusterID,
-      namespaceID,
+    ) =>
+      substate.getIn([
+        'data',
+        clusterID,
+        namespaceID,
       ]) || substate.clear()
   );
 
@@ -74,15 +74,15 @@ export const makeSelectSecretsList = () =>
   );
 
 export const makeSelectCurrentID = () =>
-   createSelector(
-     createMatchSelector('*/secrets/:id/*'),
-     (match) => {
-       if (match && match.params) {
-         return match.params.id;
-       }
-       return '';
-     }
-   );
+  createSelector(
+    createMatchSelector('*/secrets/:id/*'),
+    (match) => {
+      if (match && match.params) {
+        return match.params.id;
+      }
+      return '';
+    }
+  );
 
 export const makeSelectCurrent = () =>
   createSelector(
@@ -115,7 +115,7 @@ export const makeSelectLoadErrorsList = () =>
     selectDomain,
     (substate) =>
       substate.get('errorsList')
-      .filter(({ type }) => type === c.LOAD_SECRETS_FAILURE)
+        .filter(({ type }) => type === c.LOAD_SECRETS_FAILURE)
   );
 
 export const makeSelectCreateErrorsList = () =>
@@ -123,7 +123,7 @@ export const makeSelectCreateErrorsList = () =>
     selectDomain,
     (substate) =>
       substate.get('errorsList')
-      .filter(({ type }) => type === c.CREATE_SECRET_FAILURE)
+        .filter(({ type }) => type === c.CREATE_SECRET_FAILURE)
   );
 
 export const makeSelectUpdateErrorsList = () =>
@@ -131,7 +131,7 @@ export const makeSelectUpdateErrorsList = () =>
     selectDomain,
     (substate) =>
       substate.get('errorsList')
-      .filter(({ type }) => type === c.UPDATE_SECRET_FAILURE)
+        .filter(({ type }) => type === c.UPDATE_SECRET_FAILURE)
   );
 
 export const makeSelectReadErrorsList = () =>
@@ -139,7 +139,7 @@ export const makeSelectReadErrorsList = () =>
     selectDomain,
     (substate) =>
       substate.get('errorsList')
-      .filter(({ type }) => type === c.READ_SECRET_FAILURE)
+        .filter(({ type }) => type === c.READ_SECRET_FAILURE)
   );
 
 export const makeSelectRemoveErrorsList = () =>
@@ -147,6 +147,6 @@ export const makeSelectRemoveErrorsList = () =>
     selectDomain,
     (substate) =>
       substate.get('errorsList')
-      .filter(({ type }) => type === c.REMOVE_SECRET_FAILURE)
+        .filter(({ type }) => type === c.REMOVE_SECRET_FAILURE)
   );
 

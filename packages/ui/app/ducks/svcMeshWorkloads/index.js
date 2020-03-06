@@ -68,7 +68,7 @@ export const reducer = (
           namespaceID,
           id,
         ], fromJS(data))
-        .update('errorsList', (errors) => errors.filterNot((e) => e.type === c.READ_SVC_MESH_WORKLOAD_FAILURE));
+          .update('errorsList', (errors) => errors.filterNot((e) => e.type === c.READ_SVC_MESH_WORKLOAD_FAILURE));
       }
       return state;
     }
