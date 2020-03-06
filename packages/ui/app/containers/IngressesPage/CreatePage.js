@@ -36,8 +36,7 @@ import {
 
 import { makeSelectURL } from 'ducks/ingresses/selectors';
 import * as actions from 'ducks/ingresses/actions';
-
-import { loadServices } from 'ducks/services/actions';
+import * as sActions from 'ducks/services/actions';
 
 import messages from './messages';
 import useStyles from './styles';
@@ -133,20 +132,22 @@ export const CreateIngressPage = ({
                 serviceName: targetName,
               })}
             />
-            <Button variant="contained" color="primary" onClick={submitForm}>
-              <FormattedMessage {...messages.save} />
-            </Button>
-            <Button
-              variant="contained"
-              className={classes.cancleBtn}
-              onClick={() => {
-                push(
-                  `/clusters/${clusterID}/namespaces/${namespaceID}/ingresses`
-                );
-              }}
-            >
-              <FormattedMessage {...messages.cancle} />
-            </Button>
+            <div className={classes.buttonGroup}>
+              <Button variant="contained" color="primary" onClick={submitForm}>
+                <FormattedMessage {...messages.save} />
+              </Button>
+              <Button
+                variant="contained"
+                className={classes.cancleBtn}
+                onClick={() => {
+                  push(
+                    `/clusters/${clusterID}/namespaces/${namespaceID}/ingresses`
+                  );
+                }}
+              >
+                <FormattedMessage {...messages.cancle} />
+              </Button>
+            </div>
           </GridItem>
         </GridContainer>
       </div>
@@ -168,7 +169,7 @@ const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
       ...actions,
-      loadServices,
+      loadServices: sActions.loadServices,
       submitForm: () => submit(formName),
     },
     dispatch

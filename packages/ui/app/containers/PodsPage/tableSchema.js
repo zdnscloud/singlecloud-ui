@@ -26,6 +26,14 @@ const tableSchema = schema
         component: TimeCell,
       };
     }
+    if (item.id === 'name') {
+      return {
+        ...item,
+        component: ({data,classes }) => (
+          <span className={ data.get('deletionTimestamp') ? classes.strikeout : null}>{ data.get('name')}</span>
+        ),
+      };
+    }
     if (item.id === 'containers') {
       return {
         ...item,
@@ -105,9 +113,10 @@ const tableSchema = schema
             }
             dialogContentText={messages.restartDialogContentText}
             component={
-              <IconButton>
-                <RestartIcon />
-              </IconButton>
+              <Button action disabled={data.get('deletionTimestamp')}>
+                <FormattedMessage {...messages.restartButton} />
+                
+              </Button>
             }
           />
         </Fragment>

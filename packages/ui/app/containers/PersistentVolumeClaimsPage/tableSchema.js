@@ -34,6 +34,14 @@ const tableSchema = schema
         },
       };
     }
+    if (item.id === 'name') {
+      return {
+        ...item,
+        component({ data,classes }) {
+          return  (<span className={ data.get('deletionTimestamp') ? classes.strikeout : null}>{ data.get('name')}</span>);
+        },
+      };
+    }
     if (item.id === 'used') {
       return {
         ...item,
@@ -72,6 +80,7 @@ const tableSchema = schema
             clusterID={clusterID}
             namespaceID={namespaceID}
             reject={(e) => setError(e)}
+            disabled={data.get('deletionTimestamp')}
           />
         </Fragment>
       ),

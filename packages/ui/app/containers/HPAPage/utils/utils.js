@@ -237,7 +237,8 @@ export const renderSubmitData = (formValues) => {
     customMetrics.forEach((item) => {
       if (item.metricName) {
         const arr = item.metricName.split(' ');
-        item.metricName = arr[0];
+        const first = arr[0];
+        item.metricName = first;
         item.labels = arr[1] ? JSON.parse(arr[1]) : undefined;
       }
       if (item.averageValue) {
@@ -417,11 +418,11 @@ export const renderTableMetrics = (data, intl) => {
   mefactorMetrics(customMetrics, currentCustomMetrics, carr, 'customMetrics');
   arr = arr.concat(rarr, carr);
   return arr.length > 0
-    ? arr.map((val, key) => (
+    ? arr.map((value, key) => (
       <Chip
         key={key}
-        title={val.name_labels}
-        label={`${val.name} : ${val.systemVal} / ${val.thresholdVal} `}
+        title={value.name_labels}
+        label={`${value.name} : ${value.systemVal} / ${value.thresholdVal} `}
       />
     ))
     : '--';

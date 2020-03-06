@@ -48,7 +48,7 @@ export const StoragesTable = ({
       if (sch.id === 'storageType') {
         return {
           ...sch,
-          props: { pathname },
+          props: { pathname,classes },
         };
       }
       return sch;

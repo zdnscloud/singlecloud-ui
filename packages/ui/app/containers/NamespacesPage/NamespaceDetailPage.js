@@ -45,26 +45,24 @@ export const NamespaceDetailPage = ({
   resourceQuotas,
 }) => {
   const classes = useStyles();
-  const resourceQuota =
-    resourceQuotas.get(namespaceID) || resourceQuotas.clear();
-  const load = async () => {
-    await new Promise((resolve, reject) => {
-      readNamespace(namespaceID, {
-        url: `${url}/${namespaceID}`,
-        clusterID,
-        resolve,
-        reject,
-      });
-    });
-    readResourceQuota(namespaceID, {
-      url: `${resourceQuotasUrl}/${namespaceID}`,
-      clusterID,
-      namespaceID,
-    });
-  };
+  const resourceQuota = resourceQuotas.get(namespaceID) || resourceQuotas.clear();
   useEffect(() => {
-    load();
-  }, [load, resourceQuotasUrl]);
+    (async () => {
+      await new Promise((resolve, reject) => {
+        readNamespace(namespaceID, {
+          url: `${url}/${namespaceID}`,
+          clusterID,
+          resolve,
+          reject,
+        });
+      });
+      readResourceQuota(namespaceID, {
+        url: `${resourceQuotasUrl}/${namespaceID}`,
+        clusterID,
+        namespaceID,
+      });
+    })();
+  }, [clusterID, namespaceID, resourceQuotasUrl, url, readNamespace, readResourceQuota]);
 
   return (
     <div className={classes.root}>

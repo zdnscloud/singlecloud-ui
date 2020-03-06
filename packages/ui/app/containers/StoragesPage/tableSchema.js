@@ -1,13 +1,10 @@
 import React, { Fragment } from 'react';
 import { ucfirst } from '@gsmlg/utils';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
 import { Link } from 'react-router-dom';
 import Button from 'components/CustomButtons/Button';
-import EditIcon from 'components/Icons/Edit';
-import IconButton from 'components/CustomIconButtons/IconButton';
 import ConfirmDelete from 'components/ConfirmDelete/ConfirmDelete';
+import { FormattedMessage } from 'react-intl';
+import messages from './messages';
 
 const schema = [
   'storageType',
@@ -46,13 +43,14 @@ const tableSchema = schema
         setError,
       }) => (
         <Fragment>
-          <IconButton
-            aria-label="Edit"
+          <Button
+            action
             component={Link}
             to={`${pathname}/${data.get('id')}/edit`}
+            disabled={data.get('deletionTimestamp')}
           >
-            <EditIcon />
-          </IconButton>
+            <FormattedMessage {...messages.editButton} />
+          </Button>
 
           <ConfirmDelete
             actionName={removeStorageCluster}
@@ -60,6 +58,7 @@ const tableSchema = schema
             url={data.getIn(['links', 'remove'])}
             clusterID={clusterID}
             reject={(e) => setError(e)}
+            disabled={data.get('deletionTimestamp')}
           />
         </Fragment>
       ),
@@ -69,15 +68,18 @@ const tableSchema = schema
     if (sch.id === 'storageType') {
       return {
         ...sch,
-        component: (props) => (
-          <Button
-            link
-            component={Link}
-            to={`${props.pathname}/${props.data.get('id')}/show`}
-          >
-            {props.data.get('storageType')}
-          </Button>
-        ),
+        component: ({data, pathname,classes}) => 
+          data.get('deletionTimestamp') ? (
+            <span className={ data.get('deletionTimestamp') ? classes.strikeout : null}>{ data.get('storageType')}</span>
+          ) :(
+            <Button
+              link
+              component={Link}
+              to={`${pathname}/${data.get('id')}/show`}
+            >
+              {data.get('storageType')}
+            </Button>
+          ),
       };
     }
     return sch;

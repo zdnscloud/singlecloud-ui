@@ -164,7 +164,7 @@ export const CreateServicePage = ({
         onAction={() => {
           const p = values
             .get('exposedPorts')
-            .filter((p) => p.get('enable'))
+            .filter((v) => v.get('enable'))
             .first()
             .get('protocol');
           const page = p === 'udp' ? 'udpingresses' : 'ingresses';
@@ -199,20 +199,22 @@ export const CreateServicePage = ({
               statefulSets={statefulSets.toList()}
               changeFormValue={changeFormValue}
             />
-            <Button variant="contained" color="primary" onClick={submitForm}>
-              <FormattedMessage {...messages.save} />
-            </Button>
-            <Button
-              variant="contained"
-              className={classes.cancleBtn}
-              onClick={() => {
-                push(
-                  `/clusters/${clusterID}/namespaces/${namespaceID}/services`
-                );
-              }}
-            >
-              <FormattedMessage {...messages.cancle} />
-            </Button>
+            <div className={classes.buttonGroup}>
+              <Button variant="contained" color="primary" onClick={submitForm}>
+                <FormattedMessage {...messages.save} />
+              </Button>
+              <Button
+                variant="contained"
+                className={classes.cancleBtn}
+                onClick={() => {
+                  push(
+                    `/clusters/${clusterID}/namespaces/${namespaceID}/services`
+                  );
+                }}
+              >
+                <FormattedMessage {...messages.cancle} />
+              </Button>
+            </div>
           </GridItem>
         </GridContainer>
       </div>

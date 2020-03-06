@@ -51,6 +51,7 @@ export const LogcollectionDialog = ({
   updateFluentbitconfig,
   url,
   id,
+  disabled,
 }) => {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
@@ -81,8 +82,7 @@ export const LogcollectionDialog = ({
   return (
     <Fragment>
       <CButton
-        className={classes.logBtn}
-        link
+        action
         onClick={() => {
           setCurrent(null);
           if (url && id) {
@@ -97,6 +97,7 @@ export const LogcollectionDialog = ({
           }
           setOpen(true);
         }}
+        disabled={disabled}
       >
         <FormattedMessage {...messages.logCollectionBtn} />
       </CButton>
@@ -112,12 +113,12 @@ export const LogcollectionDialog = ({
         maxWidth="md"
       >
         <Card className={classes.dialogCard}>
-          <CardHeader color="secondary" className={classes.dialogHeader}>
+          <CardHeader color="light" className={classes.dialogHeader}>
             <h4 className={classes.cardTitleWhite}>
               <FormattedMessage {...messages.logAnalysis} />
             </h4>
             <IconButton onClick={() => setOpen(false)} style={{ padding: 0 }}>
-              <CloseIcon style={{ color: '#fff' }} />
+              <CloseIcon />
             </IconButton>
           </CardHeader>
           <CardBody className={classes.dialogCardBody}>
@@ -138,6 +139,7 @@ export const LogcollectionDialog = ({
                 setOpen(false);
               }}
               color="default"
+              className={classes.cancleBtn}
               variant="contained"
             >
               <FormattedMessage {...messages.cancle} />

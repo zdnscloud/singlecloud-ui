@@ -114,9 +114,9 @@ export const Dashboard = ({
             const cID = data[0].id;
             loadNamespaces(nurl, {
               cID,
-              resolve({ response: { data } }) {
-                if (data.length > 0) {
-                  const nID = data[0].id;
+              resolve({ response: { data: nsData } }) {
+                if (nsData.length > 0) {
+                  const nID = nsData[0].id;
                   setLastNamespace(nID);
                   setRedirectUrl(`/clusters/${cID}/namespaces/${nID}/overview`);
                 } else {
@@ -136,32 +136,35 @@ export const Dashboard = ({
   }, [isAdmin, loadClusters, loadNamespaces, setLastNamespace, url]);
 
   return (
-    <div className={classes.wrapper}>
-      <LeftMenu />
-      <div className={classes.mainWrapper}>
-        <AppMenubar />
-        <div className={classNames(classes.mainPanel)} ref={redirectRef}>
-          <div className={classes.content}>
-            <Switch>
-              {appRoutes.map((route, key) => (
-                <Route
-                  exact
-                  key={key}
-                  path={route.path}
-                  component={route.component}
-                />
-              ))}
-              <Redirect to={redirectUrl} />
-            </Switch>
-          </div>
-          <div className={classes.events}>
-            <EventsList />
+    <div>
+      <AppMenubar />
+      <div className={classes.wrapper}>
+        <LeftMenu />
+        <div className={classes.mainWrapper}>
+          <div className={classNames(classes.mainPanel)} ref={redirectRef}>
+            <div className={classes.content}>
+              <Switch>
+                {appRoutes.map((route, key) => (
+                  <Route
+                    exact
+                    key={key}
+                    path={route.path}
+                    component={route.component}
+                  />
+                ))}
+                <Redirect to={redirectUrl} />
+              </Switch>
+            </div>
+            <div className={classes.events}>
+              <EventsList />
+            </div>
           </div>
         </div>
+        <TerminalDialog />
+        <GlobalStyle />
       </div>
-      <TerminalDialog />
-      <GlobalStyle />
     </div>
+   
   );
 };
 

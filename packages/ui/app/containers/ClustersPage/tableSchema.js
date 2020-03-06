@@ -2,14 +2,10 @@ import React, { Fragment } from 'react';
 import { ucfirst } from '@gsmlg/utils';
 import { Link } from 'react-router-dom';
 import Button from 'components/CustomButtons/Button';
-import IconButton from 'components/CustomIconButtons/IconButton';
-import DeleteIcon from '@material-ui/icons/Delete';
 import TimeCell from 'components/Cells/TimeCell';
-import ShellIcon from 'components/Icons/Shell';
-import SuccessIcon from 'components/Icons/Success';
-import FailureIcon from 'components/Icons/Failure';
 import ConfirmDelete from 'components/ConfirmDelete/ConfirmDelete';
-import manageIcon from 'images/clusters/manage.png';
+import { FormattedMessage } from 'react-intl';
+import messages from './messages';
 
 const schema = ['status', 'name', 'nodeCount', 'creationTimestamp'];
 
@@ -33,21 +29,21 @@ const tableSchema = schema
       label: 'Actions',
       component: ({ classes, data, removeCluster, setError }) => (
         <Fragment>
-          <IconButton
-            variant="outlined"
-            size="small"
+          <Button
+            action
             className={classes.button}
             to={`/clusters/${data.get('id')}/manage`}
             component={Link}
             disabled={data.get('status') === 'Deleting'}
           >
-            <img src={manageIcon} alt="manageIcon" />
-          </IconButton>
+            <FormattedMessage {...messages.manageButton} />
+          </Button>
           <ConfirmDelete
             actionName={removeCluster}
             id={data.get('id')}
             url={data.getIn(['links', 'remove'])}
             reject={(e) => setError(e)}
+            disabled={data.get('status') === 'Deleting'}
           />
         </Fragment>
       ),
@@ -57,7 +53,7 @@ const tableSchema = schema
     if (sch.id === 'name') {
       return {
         ...sch,
-        component: ({ data }) =>
+        component: ({ data ,classes}) =>
           data.get('status') === 'Running' ? (
             <Button
               link
@@ -67,7 +63,7 @@ const tableSchema = schema
               {data.get('name')}
             </Button>
           ) : (
-            data.get('name')
+            <span className={ data.get('status') === 'Deleting' ? classes.strikeout : null}>{ data.get('name')}</span>
           ),
       };
     }

@@ -132,33 +132,33 @@ const RequestUserQuotaPage = ({
                   clusters={clusters}
                 />
               </CardBody>
-              <CardFooter className={classes.cardFooter}>
-                <GridContainer>
-                  <GridItem xs={12} sm={12} md={12}>
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      onClick={() => {
-                        setActionType('approval');
-                        setTimeout(submitForm, 100);
-                      }}
-                    >
-                      <FormattedMessage {...messages.passBtn} />
-                    </Button>
-                    <Button
-                      variant="contained"
-                      className={classes.cancleBtn}
-                      onClick={() => {
-                        setActionType('reject');
-                        setTimeout(submitForm, 100);
-                      }}
-                    >
-                      <FormattedMessage {...messages.rejectBtn} />
-                    </Button>
-                  </GridItem>
-                </GridContainer>
-              </CardFooter>
             </Card>
+            <div className={classes.buttonGroup}>
+              <GridContainer>
+                <GridItem xs={12} sm={12} md={12}>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={() => {
+                      setActionType('approval');
+                      setTimeout(submitForm, 100);
+                    }}
+                  >
+                    <FormattedMessage {...messages.passBtn} />
+                  </Button>
+                  <Button
+                    variant="contained"
+                    className={classes.cancleBtn}
+                    onClick={() => {
+                      setActionType('reject');
+                      setTimeout(submitForm, 100);
+                    }}
+                  >
+                    <FormattedMessage {...messages.rejectBtn} />
+                  </Button>
+                </GridItem>
+              </GridContainer>
+            </div>
           </GridItem>
         </GridContainer>
       </div>

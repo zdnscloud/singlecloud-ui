@@ -41,6 +41,7 @@ const MetricsDialog = ({
   url,
   id,
   type,
+  disabled,
 }) => {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
@@ -77,8 +78,7 @@ const MetricsDialog = ({
   return (
     <Fragment>
       <CButton
-        className={classes.logBtn}
-        link
+        action
         onClick={() => {
           setCurrent(null);
           if (url && id) {
@@ -94,6 +94,7 @@ const MetricsDialog = ({
           }
           setOpen(true);
         }}
+        disabled={disabled}
       >
         <FormattedMessage {...messages.metricBtn} />
       </CButton>
@@ -109,12 +110,12 @@ const MetricsDialog = ({
         maxWidth="md"
       >
         <Card className={classes.dialogCard}>
-          <CardHeader color="secondary" className={classes.dialogHeader}>
+          <CardHeader color="light" className={classes.dialogHeader}>
             <h4 className={classes.cardTitleWhite}>
               <FormattedMessage {...messages.metrics} />
             </h4>
             <IconButton onClick={() => setOpen(false)} style={{ padding: 0 }}>
-              <CloseIcon style={{ color: '#fff' }} />
+              <CloseIcon />
             </IconButton>
           </CardHeader>
           <CardBody className={classes.dialogCardBody}>

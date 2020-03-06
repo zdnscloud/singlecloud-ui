@@ -66,14 +66,15 @@ const tableSchema = schema
     {
       id: 'actions',
       label: 'Actions',
-      component: (props) => (
+      component: ({data,namespaceID,clusterID,removeIngress}) => (
         <Fragment>
           <ConfirmDelete
-            actionName={props.removeIngress}
-            id={props.data.get('id')}
-            url={props.data.getIn(['links', 'remove'])}
-            clusterID={props.clusterID}
-            namespaceID={props.namespaceID}
+            actionName={removeIngress}
+            id={data.get('id')}
+            url={data.getIn(['links', 'remove'])}
+            clusterID={clusterID}
+            namespaceID={namespaceID}
+            disabled={data.get('deletionTimestamp')}
           />
         </Fragment>
       ),
@@ -83,15 +84,18 @@ const tableSchema = schema
     if (sch.id === 'name') {
       return {
         ...sch,
-        component: (props) => (
-          <Button
-            link
-            component={Link}
-            to={`${props.pathname}/${props.data.get('id')}/show`}
-          >
-            {props.data.get('name')}
-          </Button>
-        ),
+        component: ({ data, pathname,classes}) => 
+          data.get('deletionTimestamp') ? (
+            <span className={ data.get('deletionTimestamp') ? classes.strikeout : null}>{ data.get('name')}</span>
+          ) :(
+            <Button
+              link
+              component={Link}
+              to={`${pathname}/${data.get('id')}/show`}
+            >
+              {data.get('name')}
+            </Button>
+          ),
       };
     }
     return sch;

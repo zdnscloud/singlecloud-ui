@@ -120,19 +120,17 @@ export const CreateStoragePage = ({
             blockDevices={blockDevices.filter((b) => !b.get('usedby'))}
             formValues={values || initFormValue}
           />
-          <GridContainer className={classes.grid}>
-            <GridItem xs={12} sm={12} md={12}>
-              <CardFooter className={classes.cardFooter}>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  onClick={submitForm}
-                >
-                  <FormattedMessage {...messages.createStorageButton} />
-                </Button>
-              </CardFooter>
-            </GridItem>
-          </GridContainer>
+          <GridItem xs={12} sm={12} md={12}>
+            <div className={classes.buttonGroup}>
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={submitForm}
+              >
+                <FormattedMessage {...messages.createStorageButton} />
+              </Button>
+            </div>
+          </GridItem>
         </Typography>
       </div>
     </div>

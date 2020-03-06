@@ -11,9 +11,9 @@ import {
 } from 'connected-react-router/immutable';
 import {
   makeSelectCurrent as makeSelectCurrentNamespace,
-  makeSelectCurrentID as makeSelectCurrentNamespaceID } from 'ducks/namespaces/selectors';
+} from 'ducks/namespaces/selectors';
 import { makeSelectCurrentID as makeSelectCurrentClusterID } from 'ducks/clusters/selectors';
-
+import { makeSelectCurrentID as makeSelectCurrentNamespaceID } from 'ducks/namespaces/selectors';
 import * as c from './constants';
 import { initialState } from './index';
 
@@ -42,15 +42,15 @@ export const makeSelectJobs = () =>
     selectDomain,
     makeSelectCurrentClusterID(),
     makeSelectCurrentNamespaceID(),
-    (
-      substate,
+  (
+    substate,
       clusterID,
       namespaceID,
-    ) =>
-      substate.getIn([
-        'data',
-        clusterID,
-        namespaceID,
+  ) =>
+    substate.getIn([
+      'data',
+      clusterID,
+      namespaceID,
       ]) || substate.clear()
   );
 
@@ -74,15 +74,15 @@ export const makeSelectJobsList = () =>
   );
 
 export const makeSelectCurrentID = () =>
-  createSelector(
-    createMatchSelector('*/jobs/:id/*'),
-    (match) => {
-      if (match && match.params) {
-        return match.params.id;
-      }
-      return '';
-    }
-  );
+   createSelector(
+     createMatchSelector('*/jobs/:id/*'),
+     (match) => {
+       if (match && match.params) {
+         return match.params.id;
+       }
+       return '';
+     }
+   );
 
 export const makeSelectCurrent = () =>
   createSelector(
@@ -115,7 +115,7 @@ export const makeSelectLoadErrorsList = () =>
     selectDomain,
     (substate) =>
       substate.get('errorsList')
-        .filter(({ type }) => type === c.LOAD_JOBS_FAILURE)
+      .filter(({ type }) => type === c.LOAD_JOBS_FAILURE)
   );
 
 export const makeSelectCreateErrorsList = () =>
@@ -123,7 +123,7 @@ export const makeSelectCreateErrorsList = () =>
     selectDomain,
     (substate) =>
       substate.get('errorsList')
-        .filter(({ type }) => type === c.CREATE_JOB_FAILURE)
+      .filter(({ type }) => type === c.CREATE_JOB_FAILURE)
   );
 
 export const makeSelectReadErrorsList = () =>
@@ -131,7 +131,7 @@ export const makeSelectReadErrorsList = () =>
     selectDomain,
     (substate) =>
       substate.get('errorsList')
-        .filter(({ type }) => type === c.READ_JOB_FAILURE)
+      .filter(({ type }) => type === c.READ_JOB_FAILURE)
   );
 
 export const makeSelectRemoveErrorsList = () =>
@@ -139,6 +139,6 @@ export const makeSelectRemoveErrorsList = () =>
     selectDomain,
     (substate) =>
       substate.get('errorsList')
-        .filter(({ type }) => type === c.REMOVE_JOB_FAILURE)
+      .filter(({ type }) => type === c.REMOVE_JOB_FAILURE)
   );
 

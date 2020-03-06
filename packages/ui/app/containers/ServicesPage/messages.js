@@ -69,6 +69,10 @@ export default defineMessages({
     id: `${scope}.formName`,
     defaultMessage: 'Name',
   },
+  formVip: {
+    id: `${scope}.formVip`,
+    defaultMessage: 'Vip',
+  },
   formTargetResourceType: {
     id: `${scope}.formTargetResourceType`,
     defaultMessage: 'TargetResourceType',
@@ -80,6 +84,22 @@ export default defineMessages({
   formServiceType: {
     id: `${scope}.formServiceType`,
     defaultMessage: 'ServiceType',
+  },
+  formHash: {
+    id: `${scope}.formHash`,
+    defaultMessage: 'Hash',
+  },
+  formPolling: {
+    id: `${scope}.formPolling`,
+    defaultMessage: 'Polling',
+  },
+  formMinNum: {
+    id: `${scope}.formMinNum`,
+    defaultMessage: 'Minimum number of connections',
+  },
+  formLoadBalanceMethod: {
+    id: `${scope}.formLoadBalanceMethod`,
+    defaultMessage: 'LoadBalanceMethod',
   },
   formExposedPorts: {
     id: `${scope}.formExposedPorts`,

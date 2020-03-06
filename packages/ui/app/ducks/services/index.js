@@ -66,7 +66,7 @@ export const reducer = (
         namespaceID,
         data.id,
       ], fromJS(data))
-        .update('errorsList', (errors) => errors.filterNot((e) => e.type === c.CREATE_SERVICE_FAILURE));
+      .update('errorsList', (errors) => errors.filterNot((e) => e.type === c.CREATE_SERVICE_FAILURE));
     }
     case c.CREATE_SERVICE_FAILURE:
       return state.update('errorsList', (errors) => errors.filterNot((e) => e.type === type).push({ type, payload, meta }));
@@ -87,7 +87,7 @@ export const reducer = (
           namespaceID,
           id,
         ], fromJS(data))
-          .update('errorsList', (errors) => errors.filterNot((e) => e.type === c.READ_SERVICE_FAILURE));
+        .update('errorsList', (errors) => errors.filterNot((e) => e.type === c.READ_SERVICE_FAILURE));
       }
       return state;
     }

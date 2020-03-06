@@ -153,4 +153,8 @@ export default defineMessages({
     id: `${scope}.podsUseMostMemoryTable`,
     defaultMessage: 'PodsUseMostMemory',
   },
+  linkButton:{
+    id: `${scope}.linkButton`,
+    defaultMessage: 'link',
+  },
 });

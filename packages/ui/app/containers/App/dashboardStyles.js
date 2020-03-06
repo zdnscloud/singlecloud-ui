@@ -4,14 +4,14 @@ import hexToRgb from '@gsmlg/utils/hexToRgb';
 export const styles = (theme) => ({
   wrapper: {
     display: 'flex',
-    height: '100vh',
+    height: `calc(100vh - ${theme.appBarHeight}px)`,
     overflow: 'hidden',
   },
   mainWrapper: {
     display: 'flex',
     flex: 1,
     flexDirection: 'column',
-    height: '100vh',
+    height: `calc(100vh - ${theme.appBarHeight}px)`,
     overflow: 'hidden',
   },
   mainPanel: {
@@ -46,7 +46,7 @@ export const styles = (theme) => ({
     paddingRight: '40px !important',
     boxShadow: 'none !important',
     height: 40,
-    color: '#4A4A4A',
+    color: '#404040',
     marginLeft: 12,
   },
   menuItem: {

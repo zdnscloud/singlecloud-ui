@@ -80,7 +80,8 @@ export const CreateHPAPage = ({
     .split('&')
     .map((p) => p.split('='));
   const params = searchData.reduce((memo, item) => {
-    memo[item[0]] = item[1];
+    const second = item[1];
+    memo[item[0]] = second;
     return memo;
   }, {});
   if (params && params.checked === 'true') {
@@ -207,21 +208,22 @@ export const CreateHPAPage = ({
               statefulsets={statefulsets}
               metrics={metrics}
             />
-
-            <Button variant="contained" color="primary" onClick={submitForm}>
-              <FormattedMessage {...messages.save} />
-            </Button>
-            <Button
-              variant="contained"
-              className={classes.cancleBtn}
-              onClick={() => {
-                push(
-                  `/clusters/${clusterID}/namespaces/${namespaceID}/horizontalPodAutoscalers`
-                );
-              }}
-            >
-              <FormattedMessage {...messages.cancle} />
-            </Button>
+            <div className={classes.buttonGroup}>
+              <Button variant="contained" color="primary" onClick={submitForm}>
+                <FormattedMessage {...messages.save} />
+              </Button>
+              <Button
+                variant="contained"
+                className={classes.cancleBtn}
+                onClick={() => {
+                  push(
+                    `/clusters/${clusterID}/namespaces/${namespaceID}/horizontalPodAutoscalers`
+                  );
+                }}
+              >
+                <FormattedMessage {...messages.cancle} />
+              </Button>
+            </div>
           </GridItem>
         </GridContainer>
       </div>

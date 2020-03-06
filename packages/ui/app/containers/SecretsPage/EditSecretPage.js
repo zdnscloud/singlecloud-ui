@@ -146,17 +146,17 @@ export const EditSecret = ({
                   />
                 ) : null}
               </CardBody>
-              <CardFooter className={classes.cardFooter}>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  size="large"
-                  onClick={submitForm}
-                >
-                  <FormattedMessage {...messages.formCreate} />
-                </Button>
-              </CardFooter>
             </Card>
+            <div className={classes.buttonGroup}>
+              <Button
+                variant="contained"
+                color="primary"
+                size="large"
+                onClick={submitForm}
+              >
+                <FormattedMessage {...messages.formCreate} />
+              </Button>
+            </div>
           </GridItem>
         </GridContainer>
       </div>

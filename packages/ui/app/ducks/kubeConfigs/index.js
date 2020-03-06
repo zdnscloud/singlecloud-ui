@@ -63,7 +63,7 @@ export const reducer = (
           clusterID,
           id,
         ], fromJS(data))
-          .update('errorsList', (errors) => errors.filterNot((e) => e.type === c.READ_KUBE_CONFIG_FAILURE));
+        .update('errorsList', (errors) => errors.filterNot((e) => e.type === c.READ_KUBE_CONFIG_FAILURE));
       }
       return state;
     }

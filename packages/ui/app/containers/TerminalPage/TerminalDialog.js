@@ -36,7 +36,7 @@ export const TerminalDialog = ({ url, closeTerminal }) => {
       disableBackdropClick
       disableEscapeKeyDown
       fullWidth
-      maxWidth="lg"
+      maxWidth="md"
       open={Boolean(url)}
       onEnter={() => {
         open(url);
@@ -47,12 +47,12 @@ export const TerminalDialog = ({ url, closeTerminal }) => {
       PaperProps={{ style: { overflow: 'hidden' } }}
     >
       <Card className={classes.dialogCard}>
-        <CardHeader color="secondary" className={classes.dialogHeader}>
+        <CardHeader color="light" className={classes.dialogHeader}>
           <h4>
             <FormattedMessage {...messages.header} />
           </h4>
           <IconButton onClick={closeTerminal} style={{ padding: 0 }}>
-            <CloseIcon style={{ color: '#fff' }} />
+            <CloseIcon />
           </IconButton>
         </CardHeader>
         <CardBody className={classes.dialogCardBody}>

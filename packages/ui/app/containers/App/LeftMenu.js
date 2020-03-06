@@ -21,8 +21,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 
-import logoICon from 'images/logo.svg';
-import ZcloudICon from 'images/Zcloud.png';
+import ChevronRight from 'components/Icons/ChevronRight';
 
 import * as actions from 'ducks/app/actions';
 import { makeSelectCurrentID as makeSelectCurrentClusterID } from 'ducks/clusters/selectors';
@@ -91,10 +90,11 @@ const LeftMenu = ({
   const activeRoute = (routeName) => {
     const rnIsClusters = routeName === '/clusters';
     const rnIsGlobalConfig = routeName === '/globalConfiguration';
+    const rnIsAuditLogs = routeName === '/auditLogs';
     const rnIsNS = routeName === `/clusters/${clusterID}/namespaces`;
     if (!rnIsClusters) {
       if (!clusterID) {
-        if (rnIsGlobalConfig) {
+        if (rnIsGlobalConfig || rnIsAuditLogs) {
           return path.includes(routeName);
         }
         return path.includes('adminUserQuotas') || path.includes('userQuotas');
@@ -208,6 +208,12 @@ const LeftMenu = ({
                 className={classNames(classes.itemText)}
                 disableTypography
               />
+              <ChevronRight  
+                className={classNames(classes.itemText)} 
+                style={{
+                  fontSize: 16,
+                }}
+              />
             </ListItem>
             {openingMenu && prop.name === openingMenu[0] && prop.children ? (
               <Popper
@@ -274,12 +280,6 @@ const LeftMenu = ({
   );
   return (
     <div className={classes.root}>
-      <div className={classes.logoWrap}>
-        <div className={classes.logoIconWrapper}>
-          <img src={logoICon} alt="logo" className={classes.logoIcon} />
-        </div>
-        <img src={ZcloudICon} alt="Zcloud" className={classes.logoName} />
-      </div>
       <div className={classes.sidebarWrapper} ref={menuRef}>
         {links}
       </div>

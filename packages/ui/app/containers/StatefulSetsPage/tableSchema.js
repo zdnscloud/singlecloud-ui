@@ -3,13 +3,13 @@ import { ucfirst } from '@gsmlg/utils';
 import TimeCell from 'components/Cells/TimeCell';
 import { Link } from 'react-router-dom';
 import Button from 'components/CustomButtons/Button';
-import IconButton from 'components/CustomIconButtons/IconButton';
-import UpgradeIcon from 'components/Icons/Upgrade';
-import RollbackIcon from 'components/Icons/Rollback';
 import ConfirmDelete from 'components/ConfirmDelete/ConfirmDelete';
 import LogcollectionDialog from 'containers/LogcollectionPage/LogcollectionDialog';
 import MetricsDialog from 'containers/MetricsPage/MetricsDialog';
 import UpdatingProgress from 'components/Progress/UpdatingProgress';
+import { FormattedMessage } from 'react-intl';
+import TableActions from 'components/TableActions/TableActions';
+import messages from './messages';
 
 const schema = ['name', 'replicas', 'creationTimestamp'];
 
@@ -42,34 +42,47 @@ const tableSchema = schema
           <LogcollectionDialog
             url={data.getIn(['links', 'fluentbitconfigs'])}
             id={`${namespaceID}_statefulset_${data.get('id')}`}
+            disabled={data.get('deletionTimestamp')}
           />
 
           <MetricsDialog
             url={data.getIn(['links', 'metrics'])}
             id={data.get('id')}
             type="statefulset"
+            disabled={data.get('deletionTimestamp')}
           />
 
-          <IconButton
-            aria-label="Update"
-            component={Link}
-            to={`/clusters/${clusterID}/namespaces/${namespaceID}/statefulSets/${data.get(
-              'id'
-            )}/update`}
-          >
-            <UpgradeIcon />
-          </IconButton>
-
-          <IconButton onClick={() => setRollback(data.get('id'))}>
-            <RollbackIcon />
-          </IconButton>
-
-          <ConfirmDelete
-            actionName={removeStatefulSet}
-            id={data.get('id')}
-            url={data.getIn(['links', 'remove'])}
-            clusterID={clusterID}
-            namespaceID={namespaceID}
+          <TableActions 
+            actions={
+              [
+                <Button
+                  action
+                  component={Link}
+                  to={`/clusters/${clusterID}/namespaces/${namespaceID}/statefulSets/${data.get(
+                    'id'
+                  )}/update`}
+                  disabled={data.get('deletionTimestamp')}
+                >
+                  <FormattedMessage {...messages.upgradeButton} />
+                </Button>,
+    
+                <Button 
+                  disabled={data.get('deletionTimestamp')}
+                  onClick={() => setRollback(data.get('id'))} 
+                  action
+                >
+                  <FormattedMessage {...messages.rollbackButton} />
+                </Button>,
+    
+                <ConfirmDelete
+                  actionName={removeStatefulSet}
+                  id={data.get('id')}
+                  url={data.getIn(['links', 'remove'])}
+                  clusterID={clusterID}
+                  namespaceID={namespaceID}
+                  disabled={data.get('deletionTimestamp')}
+                />,
+              ]}
           />
         </Fragment>
       ),
@@ -79,15 +92,18 @@ const tableSchema = schema
     if (sch.id === 'name') {
       return {
         ...sch,
-        component: (props) => (
-          <Button
-            link
-            component={Link}
-            to={`${props.pathname}/${props.data.get('id')}/show`}
-          >
-            {props.data.get('name')}
-          </Button>
-        ),
+        component: ({ data, pathname,classes }) =>
+          data.get('deletionTimestamp') ? (
+            <span className={ data.get('deletionTimestamp') ? classes.strikeout : null}>{ data.get('name')}</span>
+          ) : (
+            <Button
+              link
+              component={Link}
+              to={`${pathname}/${data.get('id')}/show`}
+            >
+              {data.get('name')}
+            </Button>
+          ),
       };
     }
 

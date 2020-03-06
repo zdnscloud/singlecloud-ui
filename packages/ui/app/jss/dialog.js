@@ -6,19 +6,20 @@ const styles = (theme) => ({
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
+    borderBottom: '1px #DFE0DF solid',
     justifyContent: 'space-between',
     '& h4': {
-      marginTop: 0,
-      marginBottom: 3,
-      width: 'auto',
-      borderBottom: 'none',
-      paddingBottom: 0,
-      paddingTop: 0,
+      marginBottom: 0,
+      paddingTop: 8,
+      borderBottom:'none',
+      paddingBottom: 8,
     },
   },
   dialogCardBody: {
     display: 'flex',
     alignItems: 'center',
+    marginBottom:5,
+    maginTop:5,
   },
   dialogCardBodyPaper: {
     display: 'flex',
@@ -28,11 +29,11 @@ const styles = (theme) => ({
   dialogCardFooter: {
     justifyContent: 'flex-start',
     display: 'initial',
+    textAlign:'right',
     '& button': {
-      marginRight: '1rem',
+      marginBottom: 10,
     },
   },
-  logBtn: { marginRight: 10 },
 });
 
 export default styles;

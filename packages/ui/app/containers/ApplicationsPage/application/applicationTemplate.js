@@ -24,6 +24,35 @@ const ApplicationTemplate = ({
     });
   };
 
+  const renderName = () => {
+    switch (true) {
+      case item.get('status') === 'failed'  &&  !item.get('deletionTimestamp'):
+        return(  <p className={classes.appName} title={item.get('name')}>
+          {item.get('name')}
+        </p>)
+      case  item.get('status') === 'succeed' &&  !item.get('deletionTimestamp'):
+        return( <Button
+          link
+          to={`/clusters/${clusterID}/namespaces/${namespaceID}/applications/${item.get(
+            'id'
+          )}/show`}
+          component={Link}
+          className={classes.appDetailBtn}
+          title={item.get('name')}
+        >
+          {item.get('name')}
+        </Button>)
+      case item.get('deletionTimestamp') && item.get('status') === 'failed':
+        return( <p className={classes.strikeoutAppName} title={item.get('name')}>
+          {item.get('name')}
+        </p>)
+      default:
+        break;
+    }
+    return null;
+  };
+
+
   return (
     <Fragment>
       <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
@@ -52,23 +81,7 @@ const ApplicationTemplate = ({
                       : { background: '#6DD400' }
                   }
                 ></div>
-                {item.get('status') === 'failed' ? (
-                  <p className={classes.aapName} title={item.get('name')}>
-                    {item.get('name')}
-                  </p>
-                ) : (
-                  <Button
-                    link
-                    to={`/clusters/${clusterID}/namespaces/${namespaceID}/applications/${item.get(
-                      'id'
-                    )}/show`}
-                    component={Link}
-                    className={classes.appDetailBtn}
-                    title={item.get('name')}
-                  >
-                    {item.get('name')}
-                  </Button>
-                )}
+                {renderName()}
               </div>
               <div className={classes.count}>
                 {item.get('readyWorkloadCount')
@@ -78,7 +91,8 @@ const ApplicationTemplate = ({
                 <Confirm
                   handleConfirm={handleConfirm}
                   dialogContentText={messages.removeAppText}
-                  component={<DeleteIcon className={classes.deleteIcon} />}
+                  component={<DeleteIcon className={ item.get('deletionTimestamp') ? classes.disabledDeleteIcon :classes.deleteIcon}  />}
+                  disabled={item.get('deletionTimestamp')}
                 />
               </div>
             </div>

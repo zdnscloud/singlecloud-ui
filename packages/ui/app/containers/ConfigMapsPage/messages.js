@@ -89,4 +89,8 @@ export default defineMessages({
     id: `${scope}.formShowFile`,
     defaultMessage: 'Show File Content',
   },
+  editButton: {
+    id: `${scope}.editButton`,
+    defaultMessage: 'edit',
+  },
 });

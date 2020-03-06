@@ -33,13 +33,16 @@ const tableSchema = schema
     if (item.id === 'name') {
       return {
         ...item,
-        component: (props) => (
+        component: ({data, pathname,classes}) =>
+        data.get('deletionTimestamp') ? (
+          <span className={ data.get('deletionTimestamp') ? classes.strikeout : null}>{ data.get('name')}</span>
+        ) : (
           <Button
             link
-            to={`${props.pathname}/${props.data.get('id')}/show`}
+            to={`${pathname}/${data.get('id')}/show`}
             component={Link}
           >
-            {props.data.get('name')}
+            {data.get('name')}
           </Button>
         ),
       };
@@ -94,8 +97,8 @@ const tableSchema = schema
             }
             dialogContentText={messages.cordonPromptText}
             component={
-              <Button className={classes.tableBtn} link>
-                <FormattedMessage {...messages.tableCordonBtn} />
+              <Button className={classes.tableBtn} action disabled={data.get('deletionTimestamp')}>
+                <FormattedMessage {...messages.tableCordonBtn}   />
               </Button>
             }
           />
@@ -112,7 +115,7 @@ const tableSchema = schema
             }
             dialogContentText={messages.drainPromptText}
             component={
-              <Button className={classes.tableBtn} link>
+              <Button className={classes.tableBtn} action  disabled={data.get('deletionTimestamp')}>
                 <FormattedMessage {...messages.tableDrainBtn} />
               </Button>
             }
@@ -129,8 +132,8 @@ const tableSchema = schema
             }
             dialogContentText={messages.uncordonPromptText}
             component={
-              <Button className={classes.tableBtn} link>
-                <FormattedMessage {...messages.tableUncordonBtn} />
+              <Button className={classes.tableBtn} action  disabled={data.get('deletionTimestamp')}>
+                <FormattedMessage {...messages.tableUncordonBtn}  />
               </Button>
             }
           />

@@ -6,11 +6,14 @@ import { FormattedMessage } from 'react-intl';
 import getByKey from '@gsmlg/utils/getByKey';
 
 import List from '@material-ui/core/List';
+import Button from '@material-ui/core/Button';
+import Card from 'components/Card/Card';
+import CardBody from 'components/Card/CardBody';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import IconButton from '@material-ui/core/IconButton';
 import AddIcon from '@material-ui/icons/Add';
-import DeleteIcon from '@material-ui/icons/Delete';
+import MinusIcon from 'components/Icons/Minus';
 
 import Danger from 'components/Typography/Danger';
 import GridItem from 'components/Grid/GridItem';
@@ -20,45 +23,59 @@ import ReadOnlyInput from 'components/CustomInput/ReadOnlyInput';
 
 import messages from './messages';
 
-const renderConfigs = ({ fields, meta: { error, submitFailed }, classes }) => (
-  <List component="ul" className={classes.dataList}>
-    <ListItem>
-      <ListItemText primary={<FormattedMessage {...messages.formData} />} />
-      <IconButton onClick={(evt) => fields.push(fromJS({}))}>
-        <AddIcon />
-      </IconButton>
-    </ListItem>
+const renderConfigs = ({ fields, meta: { error, submitFailed }, classes }) =>(
+  <Fragment>
+    <GridContainer>
+      <GridItem xs={3} sm={3} md={3} className={classes.addNodeBtnWrap}>
+        <Button
+          className={classes.addNodeBtn}
+          variant="contained" color="primary"
+          onClick={(evt) => fields.push(fromJS({}))}
+        >
+          <span className={classes.plusIcon}>+</span>
+          <FormattedMessage {...messages.formData} />
+        </Button>
+      </GridItem>
+    </GridContainer>
     {submitFailed && error && (
       <ListItem>
         <Danger>{error}</Danger>
       </ListItem>
     )}
-    {fields.map((f, i) => (
-      <ListItem key={i}>
-        <ListItemText>
-          <InputField
-            name={`${f}.key`}
-            label={<FormattedMessage {...messages.formDataKey} />}
-            className={classes.dataListKey}
-          />
-          &nbsp;&nbsp;&nbsp;&nbsp;
-          <InputField
-            name={`${f}.value`}
-            label={<FormattedMessage {...messages.formDataValue} />}
-            className={classes.dataListValue}
-          />
-        </ListItemText>
-        <IconButton
-          variant="contained"
-          color="secondary"
-          onClick={(evt) => fields.remove(i)}
-        >
-          <DeleteIcon />
-        </IconButton>
-      </ListItem>
-    ))}
-  </List>
-);
+    <Card border={fields&&fields.length>0 ? 'border':null } className={classes.nodeList}>
+      <CardBody>
+        {fields.map((f, i) => (
+          <GridContainer key={i}>
+            <GridItem xs={4} sm={4} md={4}>
+              <InputField
+                name={`${f}.key`}
+                fullWidth
+                label={<FormattedMessage {...messages.formDataKey} />}
+              />
+            </GridItem>
+            <GridItem xs={4} sm={4} md={4}>
+              <InputField
+                name={`${f}.value`}
+                fullWidth
+                label={<FormattedMessage {...messages.formDataValue} />}
+              />
+            </GridItem>
+            <GridItem xs={3} sm={3} md={3}>
+              <IconButton
+                variant="contained"
+                onClick={(evt) => fields.remove(i)}
+                className={classes.minusIcon}
+              >
+                <MinusIcon />
+              </IconButton>
+            </GridItem>
+          </GridContainer>
+        ))}
+      </CardBody>
+    </Card>
+     
+  </Fragment>
+) ;
 
 const SecretForm = ({
   clusters,

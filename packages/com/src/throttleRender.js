@@ -13,27 +13,32 @@ export const throttleRender = (View, throttleTime = 100) => {
   class ThrottleView extends React.Component {
 
     timer = null;
-    shouldUpdate = false;
+    shouldUpdate = true;
 
     state = { count: 0 };
 
-    shouldComponentUpdate(nextProps) {
-      if (!this.timer) {
+    shouldComponentUpdate(nextProps, nextState) {
+      if (this.shouldUpdate) {
         return true;
       }
-      this.shouldUpdate = true;
+      if (this.timer == null) {
+        this.timer = setTimeout(() => {
+          this.timer = null;
+          this.shouldUpdate = true;
+          this.setState((sts) => ({ count: sts.count + 1 }));
+        }, throttleTime);
+      }
+      this.shouldUpdate = false;
       return false;
     }
 
     componentDidUpdate() {
-      if (this.shouldUpdate === true) {
-        this.timer = setTimeout(() => {
-          this.timer = null;
-          this.setState((sts) => ({ count: sts.count + 1 }));
-        }, throttleTime);
-        this.shouldUpdate = false;
-      }
       this.shouldUpdate = false;
+      if (this.timer == null) {
+        setTimeout(() => {
+          this.shouldUpdate = true;
+        }, throttleTime);
+      }
     }
 
     render() {

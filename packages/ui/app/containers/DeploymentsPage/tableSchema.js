@@ -3,13 +3,13 @@ import { ucfirst } from '@gsmlg/utils';
 import TimeCell from 'components/Cells/TimeCell';
 import { Link } from 'react-router-dom';
 import Button from 'components/CustomButtons/Button';
-import IconButton from 'components/CustomIconButtons/IconButton';
-import UpgradeIcon from 'components/Icons/Upgrade';
-import RollbackIcon from 'components/Icons/Rollback';
 import ConfirmDelete from 'components/ConfirmDelete/ConfirmDelete';
 import LogcollectionDialog from 'containers/LogcollectionPage/LogcollectionDialog';
 import MetricsDialog from 'containers/MetricsPage/MetricsDialog';
 import UpdatingProgress from 'components/Progress/UpdatingProgress';
+import TableActions from 'components/TableActions/TableActions';
+import { FormattedMessage } from 'react-intl';
+import messages from './messages';
 
 const schema = ['name', 'replicas', 'creationTimestamp'];
 
@@ -42,33 +42,45 @@ const tableSchema = schema
           <LogcollectionDialog
             url={data.getIn(['links', 'fluentbitconfigs'])}
             id={`${namespaceID}_deployment_${data.get('id')}`}
+            disabled={data.get('deletionTimestamp')}
           />
 
           <MetricsDialog
             url={data.getIn(['links', 'metrics'])}
             id={data.get('id')}
             type="deployment"
+            disabled={data.get('deletionTimestamp')}
           />
 
-          <IconButton
-            aria-label="Update"
-            component={Link}
-            to={`/clusters/${clusterID}/namespaces/${namespaceID}/deployments/${data.get(
-              'id'
-            )}/update`}
-          >
-            <UpgradeIcon />
-          </IconButton>
-          <IconButton onClick={() => setRollback(data.get('id'))}>
-            <RollbackIcon />
-          </IconButton>
+          <TableActions 
+            actions={
+              [
+                <Button
+                  action
+                  component={Link}
+                  to={`/clusters/${clusterID}/namespaces/${namespaceID}/deployments/${data.get(
+                    'id'
+                  )}/update`}
+                  disabled={data.get('deletionTimestamp')}
+                >
+                  <FormattedMessage {...messages.upgradeButton} />
+                </Button>,
+              
+                <Button onClick={() => setRollback(data.get('id'))} action  disabled={data.get('deletionTimestamp')}>
+                  <FormattedMessage {...messages.rollbackButton} />
+                </Button>,
 
-          <ConfirmDelete
-            actionName={removeDeployment}
-            id={data.get('id')}
-            url={data.getIn(['links', 'remove'])}
-            clusterID={clusterID}
-            namespaceID={namespaceID}
+                <ConfirmDelete
+                  actionName={removeDeployment}
+                  id={data.get('id')}
+                  url={data.getIn(['links', 'remove'])}
+                  clusterID={clusterID}
+                  namespaceID={namespaceID}
+                  disabled={data.get('deletionTimestamp')}
+                />,
+              ]
+            }
+          
           />
         </Fragment>
       ),
@@ -78,15 +90,18 @@ const tableSchema = schema
     if (sch.id === 'name') {
       return {
         ...sch,
-        component: ({ data, pathname }) => (
-          <Button
-            link
-            component={Link}
-            to={`${pathname}/${data.get('id')}/show`}
-          >
-            {data.get('name')}
-          </Button>
-        ),
+        component: ({ data, pathname,classes }) => 
+          data.get('deletionTimestamp') ? (
+            <span className={ data.get('deletionTimestamp') ? classes.strikeout : null}>{ data.get('name')}</span>
+          ) : (
+            <Button
+              link
+              component={Link}
+              to={`${pathname}/${data.get('id')}/show`}
+            >
+              {data.get('name')}
+            </Button>
+          ),
       };
     }
 

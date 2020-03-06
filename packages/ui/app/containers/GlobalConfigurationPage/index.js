@@ -110,9 +110,11 @@ const GlobalConfigurationPage = ({
                 })
               }
             />
-            <Button variant="contained" color="primary" onClick={submitForm}>
-              <FormattedMessage {...messages.save} />
-            </Button>
+            <div className={classes.buttonGroup}>
+              <Button variant="contained" color="primary" onClick={submitForm}>
+                <FormattedMessage {...messages.save} />
+              </Button>
+            </div>
           </GridItem>
         </GridContainer>
         <ConfirmDialog

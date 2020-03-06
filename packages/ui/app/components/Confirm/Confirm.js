@@ -11,9 +11,8 @@ import warningIcon from 'images/warning.png';
 import messages from './messages';
 
 const Confirm = (props) => {
-  const { component, handleConfirm, dialogContentText } = props;
+  const { component, handleConfirm, dialogContentText,disabled } = props;
   const [open, setOpen] = useState(false);
-
   const handleConfirmClick = () => {
     handleConfirm();
     setOpen(false);
@@ -22,7 +21,9 @@ const Confirm = (props) => {
     <Fragment>
       <div
         onClick={() => {
-          setOpen(true);
+          if(!disabled){
+            setOpen(true);
+          }
         }}
         style={{ display: 'inline' }}
       >

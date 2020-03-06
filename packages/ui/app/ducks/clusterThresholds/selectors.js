@@ -11,8 +11,8 @@ import {
 } from 'connected-react-router/immutable';
 import {
   makeSelectCurrent as makeSelectCurrentCluster,
-  makeSelectCurrentID as makeSelectCurrentClusterID } from 'ducks/clusters/selectors';
-
+} from 'ducks/clusters/selectors';
+import { makeSelectCurrentID as makeSelectCurrentClusterID } from 'ducks/clusters/selectors';
 import * as c from './constants';
 import { initialState } from './index';
 
@@ -40,13 +40,13 @@ export const makeSelectClusterThresholds = () =>
   createSelector(
     selectDomain,
     makeSelectCurrentClusterID(),
-    (
-      substate,
+  (
+    substate,
       clusterID,
-    ) =>
-      substate.getIn([
-        'data',
-        clusterID,
+  ) =>
+    substate.getIn([
+      'data',
+      clusterID,
       ]) || substate.clear()
   );
 
@@ -67,15 +67,15 @@ export const makeSelectClusterThresholdsList = () =>
   );
 
 export const makeSelectCurrentID = () =>
-  createSelector(
-    createMatchSelector('*/clusterThresholds/:id/*'),
-    (match) => {
-      if (match && match.params) {
-        return match.params.id;
-      }
-      return '';
-    }
-  );
+   createSelector(
+     createMatchSelector('*/clusterThresholds/:id/*'),
+     (match) => {
+       if (match && match.params) {
+         return match.params.id;
+       }
+       return '';
+     }
+   );
 
 export const makeSelectCurrent = () =>
   createSelector(
@@ -105,7 +105,7 @@ export const makeSelectLoadErrorsList = () =>
     selectDomain,
     (substate) =>
       substate.get('errorsList')
-        .filter(({ type }) => type === c.LOAD_CLUSTER_THRESHOLDS_FAILURE)
+      .filter(({ type }) => type === c.LOAD_CLUSTER_THRESHOLDS_FAILURE)
   );
 
 export const makeSelectCreateErrorsList = () =>
@@ -113,7 +113,7 @@ export const makeSelectCreateErrorsList = () =>
     selectDomain,
     (substate) =>
       substate.get('errorsList')
-        .filter(({ type }) => type === c.CREATE_CLUSTER_THRESHOLD_FAILURE)
+      .filter(({ type }) => type === c.CREATE_CLUSTER_THRESHOLD_FAILURE)
   );
 
 export const makeSelectUpdateErrorsList = () =>
@@ -121,7 +121,7 @@ export const makeSelectUpdateErrorsList = () =>
     selectDomain,
     (substate) =>
       substate.get('errorsList')
-        .filter(({ type }) => type === c.UPDATE_CLUSTER_THRESHOLD_FAILURE)
+      .filter(({ type }) => type === c.UPDATE_CLUSTER_THRESHOLD_FAILURE)
   );
 
 export const makeSelectReadErrorsList = () =>
@@ -129,7 +129,7 @@ export const makeSelectReadErrorsList = () =>
     selectDomain,
     (substate) =>
       substate.get('errorsList')
-        .filter(({ type }) => type === c.READ_CLUSTER_THRESHOLD_FAILURE)
+      .filter(({ type }) => type === c.READ_CLUSTER_THRESHOLD_FAILURE)
   );
 
 export const makeSelectRemoveErrorsList = () =>
@@ -137,6 +137,6 @@ export const makeSelectRemoveErrorsList = () =>
     selectDomain,
     (substate) =>
       substate.get('errorsList')
-        .filter(({ type }) => type === c.REMOVE_CLUSTER_THRESHOLD_FAILURE)
+      .filter(({ type }) => type === c.REMOVE_CLUSTER_THRESHOLD_FAILURE)
   );
 

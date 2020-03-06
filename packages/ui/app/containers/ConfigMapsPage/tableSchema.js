@@ -2,9 +2,9 @@ import React, { Fragment } from 'react';
 import { ucfirst } from '@gsmlg/utils';
 import { Link } from 'react-router-dom';
 import Button from 'components/CustomButtons/Button';
-import EditIcon from 'components/Icons/Edit';
 import ConfirmDelete from 'components/ConfirmDelete/ConfirmDelete';
-import IconButton from 'components/CustomIconButtons/IconButton';
+import { FormattedMessage } from 'react-intl';
+import messages from './messages';
 
 const schema = ['name'];
 
@@ -28,15 +28,15 @@ const tableSchema = schema
       label: 'Actions',
       component: (props) => (
         <Fragment>
-          <IconButton
-            aria-label="Edit"
+          <Button
+            action
             component={Link}
             to={`/clusters/${props.clusterID}/namespaces/${
               props.namespaceID
             }/configmaps/${props.data.get('id')}/edit`}
-          >
-            <EditIcon />
-          </IconButton>
+          > 
+            <FormattedMessage {...messages.editButton} />
+          </Button>
           <ConfirmDelete
             actionName={props.removeConfigMap}
             id={props.data.get('id')}
@@ -52,17 +52,20 @@ const tableSchema = schema
     if (sch.id === 'name') {
       return {
         ...sch,
-        component: (props) => (
-          <Button
-            link
-            to={`/clusters/${props.clusterID}/namespaces/${
-              props.namespaceID
-            }/configmaps/${props.data.get('id')}/show`}
-            component={Link}
-          >
-            {props.data.get('name')}
-          </Button>
-        ),
+        component: ({data,clusterID,namespaceID,classes}) =>
+          data.get('deletionTimestamp') ? (
+            <span className={ data.get('deletionTimestamp') ? classes.strikeout : null}>{ data.get('name')}</span>
+          ) : (
+            <Button
+              link
+              to={`/clusters/${clusterID}/namespaces/${
+                namespaceID
+              }/configmaps/${data.get('id')}/show`}
+              component={Link}
+            >
+              {data.get('name')}
+            </Button>
+          ),
       };
     }
     return sch;

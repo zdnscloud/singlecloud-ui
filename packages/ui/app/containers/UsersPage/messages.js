@@ -97,4 +97,8 @@ export default defineMessages({
     id: `${scope}.createUserButton`,
     defaultMessage: 'Craete User',
   },
+  editButton: {
+    id: `${scope}.editButton`,
+    defaultMessage: 'edit',
+  },
 });

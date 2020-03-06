@@ -1,4 +1,3 @@
-/* eslint-disable no-param-reassign */
 /**
  *
  * Create Cluster Page
@@ -74,24 +73,12 @@ export const CreateClusterPage = ({
       } = formValues.toJS();
       const { main, work } = nodes;
       main.forEach((item) => {
-        if (Object.keys(item).length !== 0) {
-          if (item.roles) {
-            item.roles.push('controlplane');
-          } else {
-            item.roles = ['controlplane'];
-          }
-        }
+        item.roles.push('controlplane');
       });
       work.forEach((item) => {
-        if (Object.keys(item).length !== 0) {
-          if (item.roles) {
-            item.roles.push('worker');
-          } else {
-            item.roles = ['worker'];
-          }
-        }
+        item.roles.push('worker');
       });
-      const nodeArr = main.concat(work).filter((v) => v.roles);
+      const nodeArr = main.concat(work).filter((v) => v.name && v.address);
       const data = {
         nodes: nodeArr,
         ...formData,
@@ -126,7 +113,7 @@ export const CreateClusterPage = ({
             },
           ]}
         />
-        <Typography component="div" className="">
+        <Typography component="div">
           <GridContainer className={classes.grid}>
             <GridItem xs={12} sm={12} md={12}>
               <CreateClusterForm
@@ -134,21 +121,23 @@ export const CreateClusterPage = ({
                 onSubmit={doSubmit}
                 initialValues={fromJS({
                   name: '',
-                  nodes: { main: [], work: [] },
+                  nodes: { main: [{ name: '', address: '', roles: []}], work: [{ name: '', address: '', roles: []}] },
                 })}
                 formValues={values}
               />
-              <Button variant="contained" color="primary" onClick={submitForm}>
-                <FormattedMessage {...messages.createClusterButton} />
-              </Button>
-              <Button
-                variant="contained"
-                className={classes.cancleBtn}
-                component={Link}
-                to="/clusters"
-              >
-                <FormattedMessage {...messages.cancleClustersButton} />
-              </Button>
+              <div className={classes.buttonGroup}>
+                <Button variant="contained" color="primary" onClick={submitForm}>
+                  <FormattedMessage {...messages.createClusterButton} />
+                </Button>
+                <Button
+                  variant="contained"
+                  className={classes.cancleBtn}
+                  component={Link}
+                  to="/clusters"
+                >
+                  <FormattedMessage {...messages.cancleClustersButton} />
+                </Button>
+              </div>
             </GridItem>
           </GridContainer>
         </Typography>

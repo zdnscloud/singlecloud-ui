@@ -116,17 +116,17 @@ export const EditUserPage = ({
                   />
                 )}
               </CardBody>
-              <CardFooter className={classes.cardFooter}>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  size="large"
-                  onClick={submitForm}
-                >
-                  <FormattedMessage {...messages.updateUser} />
-                </Button>
-              </CardFooter>
             </Card>
+            <div className={classes.buttonGroup}>
+              <Button
+                variant="contained"
+                color="primary"
+                size="large"
+                onClick={submitForm}
+              >
+                <FormattedMessage {...messages.updateUser} />
+              </Button>
+            </div>
           </GridItem>
         </GridContainer>
       </div>

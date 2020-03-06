@@ -3,7 +3,7 @@ import hexToRgb from '@gsmlg/utils/hexToRgb';
 
 const theme = createMuiTheme({
   appBarHeight: 65,
-  leftMenuWidth: 232,
+  leftMenuWidth: 200,
   leftShrinkWidth: 85,
   typography: {
     useNextVariants: true,
@@ -21,14 +21,21 @@ const theme = createMuiTheme({
       minor: `rgba(${hexToRgb('#1B9CCE')}, 0.2)`,
     },
     highlight: {
-      main: '#1B9CCE',
+      main: '#40A9FF',
       light: '#40B7E8',
       secondary: '#1B9CCE',
       minor: '#A2A2A2',
+      normal: '#404040',
     },
     light: {
       main: '#FFFFFF',
       contrastText: '#000000',
+    },
+    leftMemu:{
+      main: '#FFFFFF',
+      highlight: '#40A9FF',
+      highlightBg: '#F5F9FF',
+      contrastText: '#404040',
     },
     icons: {
       a: '#7ED321',
@@ -47,7 +54,7 @@ const theme = createMuiTheme({
       warning: '#ff9800',
       danger: '#f44336',
       success: '#4caf50',
-      info: '#00acc1',
+      info: '#40A9FF',
       gray: '#999999',
     },
     defaultFont: {
@@ -63,6 +70,13 @@ const theme = createMuiTheme({
     MuiButton: {
       root: {
         textTransform: 'none',
+        boxShadow:'none !important',
+      },
+      containedPrimary:{
+        backgroundColor:'#5B8FF9',
+        '&:hover':{
+          backgroundColor:'#5B8FF9',
+        },
       },
     },
     MuiInputLabel: {

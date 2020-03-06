@@ -73,7 +73,7 @@ export const reducer = (
           svcMeshWorkloadID,
           id,
         ], fromJS(data))
-          .update('errorsList', (errors) => errors.filterNot((e) => e.type === c.READ_SVC_MESH_POD_FAILURE));
+        .update('errorsList', (errors) => errors.filterNot((e) => e.type === c.READ_SVC_MESH_POD_FAILURE));
       }
       return state;
     }

@@ -7,9 +7,9 @@ import { readAsText } from '@gsmlg/utils/readFile';
 
 const Input = ({ label, input, classes, meta, buttonProps, ...custom }) => {
   const [node, setNode] = useState(null);
-  const measuredRef = useCallback((node) => {
-    if (node !== null) {
-      setNode(node);
+  const measuredRef = useCallback((n) => {
+    if (n !== null) {
+      setNode(n);
     }
   }, []);
 

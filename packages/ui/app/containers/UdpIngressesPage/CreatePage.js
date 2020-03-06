@@ -35,7 +35,7 @@ import {
 } from 'ducks/services/selectors';
 import { makeSelectURL } from 'ducks/udpIngresses/selectors';
 import * as actions from 'ducks/udpIngresses/actions';
-import { loadServices } from 'ducks/services/actions';
+import * as sActions from 'ducks/services/actions';
 
 import messages from './messages';
 import useStyles from './styles';
@@ -125,20 +125,22 @@ export const CreateUdpIngressPage = ({
               services={services}
               initialValues={fromJS({ serviceName: targetName })}
             />
-            <Button variant="contained" color="primary" onClick={submitForm}>
-              <FormattedMessage {...messages.save} />
-            </Button>
-            <Button
-              variant="contained"
-              className={classes.cancleBtn}
-              onClick={() => {
-                push(
-                  `/clusters/${clusterID}/namespaces/${namespaceID}/udpIngresses`
-                );
-              }}
-            >
-              <FormattedMessage {...messages.cancle} />
-            </Button>
+            <div className={classes.buttonGroup}>
+              <Button variant="contained" color="primary" onClick={submitForm}>
+                <FormattedMessage {...messages.save} />
+              </Button>
+              <Button
+                variant="contained"
+                className={classes.cancleBtn}
+                onClick={() => {
+                  push(
+                    `/clusters/${clusterID}/namespaces/${namespaceID}/udpIngresses`
+                  );
+                }}
+              >
+                <FormattedMessage {...messages.cancle} />
+              </Button>
+            </div>
           </GridItem>
         </GridContainer>
       </div>
@@ -160,7 +162,7 @@ const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
       ...actions,
-      loadServices,
+      loadServices: sActions.loadServices,
       submitForm: () => submit(formName),
     },
     dispatch

@@ -18,14 +18,14 @@ const style = {
     width: 20,
     height: 20,
     verticalAlign: 'text-bottom',
-    color: '#9B9B9B',
+    color: '#404040',
   },
   inherit: {
-    color: '#9B9B9B',
+    color: '#8C8C8C',
     textDecoration: 'none',
   },
   textPrimary: {
-    color: '#1A435F',
+    color: '#404040',
     textDecoration: 'none',
   },
 };

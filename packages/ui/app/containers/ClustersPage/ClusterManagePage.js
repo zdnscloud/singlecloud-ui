@@ -115,17 +115,19 @@ export const ClusterManagePage = ({
                 setNodes={setNodes}
               />
             ) : null}
-            <Button variant="contained" color="primary" onClick={submitForm}>
-              <FormattedMessage {...messages.createClusterButton} />
-            </Button>
-            <Button
-              variant="contained"
-              className={classes.cancleBtn}
-              component={Link}
-              to="/clusters"
-            >
-              <FormattedMessage {...messages.cancleClustersButton} />
-            </Button>
+            <div className={classes.buttonGroup}>
+              <Button variant="contained" color="primary" onClick={submitForm}>
+                <FormattedMessage {...messages.createClusterButton} />
+              </Button>
+              <Button
+                variant="contained"
+                className={classes.cancleBtn}
+                component={Link}
+                to="/clusters"
+              >
+                <FormattedMessage {...messages.cancleClustersButton} />
+              </Button>
+            </div>
           </GridItem>
         </GridContainer>
       </div>

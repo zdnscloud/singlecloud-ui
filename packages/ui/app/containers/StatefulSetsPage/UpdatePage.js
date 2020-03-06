@@ -187,14 +187,16 @@ export const UpdateStatefulSetPage = ({
                 role="update"
               />
             )}
-            <Button
-              variant="contained"
-              color="primary"
-              size="large"
-              onClick={submitForm}
-            >
-              <FormattedMessage {...messages.update} />
-            </Button>
+            <div className={classes.buttonGroup}>
+              <Button
+                variant="contained"
+                color="primary"
+                size="large"
+                onClick={submitForm}
+              >
+                <FormattedMessage {...messages.update} />
+              </Button>
+            </div>
           </GridItem>
         </GridContainer>
       </div>

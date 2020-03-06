@@ -66,7 +66,7 @@ export const reducer = (
         namespaceID,
         data.id,
       ], fromJS(data))
-        .update('errorsList', (errors) => errors.filterNot((e) => e.type === c.CREATE_RESOURCE_QUOTUM_FAILURE));
+      .update('errorsList', (errors) => errors.filterNot((e) => e.type === c.CREATE_RESOURCE_QUOTUM_FAILURE));
     }
     case c.CREATE_RESOURCE_QUOTUM_FAILURE:
       return state.update('errorsList', (errors) => errors.filterNot((e) => e.type === type).push({ type, payload, meta }));
@@ -87,7 +87,7 @@ export const reducer = (
           namespaceID,
           id,
         ], fromJS(data))
-          .update('errorsList', (errors) => errors.filterNot((e) => e.type === c.READ_RESOURCE_QUOTUM_FAILURE));
+        .update('errorsList', (errors) => errors.filterNot((e) => e.type === c.READ_RESOURCE_QUOTUM_FAILURE));
       }
       return state;
     }

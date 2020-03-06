@@ -18,7 +18,7 @@ const styles = (theme) => ({
     overflowX: 'hidden',
   },
   grid: {
-    padding: theme.spacing(2.5),
+    padding: theme.spacing(1.25),
   },
   contentGrid: {
     paddingLeft: theme.spacing(2),
@@ -71,7 +71,7 @@ const styles = (theme) => ({
     },
   },
   cardTitleWhite: {
-    color: '#FFFFFF',
+    color: '#000',
     marginTop: '0px',
     minHeight: 'auto',
     fontFamily: "'Roboto', 'Helvetica', 'Arial', sans-serif",
@@ -124,8 +124,23 @@ const styles = (theme) => ({
     overflow: 'auto',
   },
   table: {
+    '& .MuiTableCell-root':{
+      border: 'none',
+    },
     '& thead tr': {
       whiteSpace: 'nowrap',
+    },
+    '& thead tr, tbody tr:nth-child(2n)':{
+      backgroundColor:'rgba(223,224,223,0.15)',
+    },
+    '& tbody tr td:last-child .MuiButton-text': {
+      borderRight:'1px solid #e9e9e9',
+    },
+    '& tbody tr td:last-child .MuiButton-text:first-child': {
+      paddingLeft: 0,
+    },
+    '& tbody tr td:last-child .MuiButton-text:last-child': {
+      borderRight:'none',
     },
   },
   infoCardHeader: {
@@ -144,7 +159,7 @@ const styles = (theme) => ({
     alignItems: 'center',
     borderRight: '1px solid #E8E8E8',
     '& h3': {
-      color: '#000',
+      color: '#404040',
       fontSize: 24,
       fontWeight: 'normal',
       lineHeight: '32px',
@@ -192,6 +207,8 @@ const styles = (theme) => ({
   },
   cancleBtn: {
     marginLeft: '10px',
+    backgroundColor:'#fff',
+    border:'1px solid #D9D9D9',
   },
   customCardHeaderH4: {
     paddingBottom: '0 !important',
@@ -254,6 +271,37 @@ const styles = (theme) => ({
   h4: {
     margin: '0 !important',
     borderBottom: 'none !important',
+  },
+  buttonGroup:{
+    backgroundColor:'#fff',
+    padding:"12px 20px",
+  },
+  cardMargin:{
+    margin:0,
+  },
+  cardMarginTop:{
+    marginTop:0,
+  },
+  plusIcon:{
+    fontSize: 16,
+    marginRight:5,
+    lineHeight:1.5,
+  },
+  addNodeBtn:{
+    marginBottom:25,
+  },
+  addNodeBtnWrap: {
+    marginTop:20,
+  },
+  nodeList: {
+    width: '800px',
+  },
+  minusIcon:{
+    marginTop:10,
+  },
+  strikeout:{
+    color:'#D9D9D9',
+    textDecoration:'line-through',
   },
 });
 

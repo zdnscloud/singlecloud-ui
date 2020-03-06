@@ -37,6 +37,12 @@ export const ClustersTable = ({ data, removeCluster, setError }) => {
           ...sch,
           props: { classes, removeCluster, setError },
         };
+      };
+      if (sch.id === 'name') {
+        return {
+          ...sch,
+          props: { classes },
+        };
       }
       return sch;
     })

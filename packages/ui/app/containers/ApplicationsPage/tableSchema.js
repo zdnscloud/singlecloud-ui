@@ -3,10 +3,10 @@ import { ucfirst } from '@gsmlg/utils';
 import { Link } from 'react-router-dom';
 import Button from 'components/CustomButtons/Button';
 import LinearProgress from '@material-ui/core/LinearProgress';
-import IconButton from 'components/CustomIconButtons/IconButton';
-import MonitorIcon from 'components/Icons/Monitor';
 import TrueIcon from 'components/Icons/True';
 import FalseIcon from 'components/Icons/False';
+import { FormattedMessage } from 'react-intl';
+import messages from './messages';
 
 const inflection = require('inflection');
 const schema = ['name', 'replicas', 'type', 'exists'];
@@ -16,30 +16,28 @@ const tableSchema = schema
     id,
     label: ucfirst(id),
   }))
-  // .concat([
-  //   {
-  //     id: 'actions',
-  //     label: 'Actions',
-  //     component: ({ data, clusterID, namespaceID }) => {
-  //       const workload = ['deployment', 'daemonset', 'statefulset'];
-  //       return workload.includes(data.get('type')) ? (
-  //         <Fragment>
-  //           <IconButton
-  //             link
-  //             to={`/clusters/${clusterID}/linkerd/namespaces/${namespaceID}/${inflection.pluralize(
-  //               data.get('type')
-  //             )}/${data.get('name')}`}
-  //             component={Link}
-  //           >
-  //             <MonitorIcon />
-  //           </IconButton>
-  //         </Fragment>
-  //       ) : (
-  //         '--'
-  //       );
-  //     },
-  //   },
-  // ])
+  .concat([
+    {
+      id: 'actions',
+      label: 'Actions',
+      component: ({ data, clusterID, namespaceID }) => {
+        const workload = ['deployment', 'daemonset', 'statefulset'];
+        return workload.includes(data.get('type')) ? (
+          <Fragment>
+            <Button
+              link
+              to={`/clusters/${clusterID}/namespaces/${namespaceID}/svcMeshWorkloads`}
+              component={Link}
+            >
+              <FormattedMessage {...messages.monitorButton} />
+            </Button>
+          </Fragment>
+        ) : (
+          '--'
+        );
+      },
+    },
+  ])
   .map((sch) => {
     if (sch.id === 'name') {
       return {
@@ -90,12 +88,12 @@ const tableSchema = schema
         ...sch,
         component: ({ data, classes }) =>
           data.get('exists') ? (
-            <div className={classes.icon}>
-              <TrueIcon />
+            <div>
+              <FormattedMessage {...messages.normal} />
             </div>
           ) : (
-            <div className={classes.icon}>
-              <FalseIcon />
+            <div className={classes.unnormal}>
+              <FormattedMessage {...messages.unnormal} />
             </div>
           ),
       };
