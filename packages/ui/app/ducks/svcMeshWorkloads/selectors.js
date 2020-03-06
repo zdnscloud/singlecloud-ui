@@ -118,8 +118,6 @@ export const makeSelectLoadErrorsList = () =>
         .filter(({ type }) => type === c.LOAD_SVC_MESH_WORKLOADS_FAILURE)
   );
 
-
-
 export const makeSelectReadErrorsList = () =>
   createSelector(
     selectDomain,
@@ -127,5 +125,4 @@ export const makeSelectReadErrorsList = () =>
       substate.get('errorsList')
         .filter(({ type }) => type === c.READ_SVC_MESH_WORKLOAD_FAILURE)
   );
-
 

@@ -55,11 +55,6 @@ export const reducer = (
     case c.LOAD_METRICS_FAILURE:
       return state.update('errorsList', (errors) => errors.filterNot((e) => e.type === type).push({ type, payload, meta }));
 
-
-
-
-
-
     case c.CLEAR_ERRORS_LIST:
       return state.update('errorsList', (errors) => errors.clear());
 

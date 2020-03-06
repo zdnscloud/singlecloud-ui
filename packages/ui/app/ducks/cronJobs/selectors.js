@@ -126,7 +126,6 @@ export const makeSelectCreateErrorsList = () =>
         .filter(({ type }) => type === c.CREATE_CRON_JOB_FAILURE)
   );
 
-
 export const makeSelectReadErrorsList = () =>
   createSelector(
     selectDomain,

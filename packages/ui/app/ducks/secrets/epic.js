@@ -121,7 +121,6 @@ export const removeSecretEpic = (action$, state$, { ajax }) =>
     )
   );
 
-
 export default combineEpics(
   loadSecretsEpic,
   createSecretEpic,

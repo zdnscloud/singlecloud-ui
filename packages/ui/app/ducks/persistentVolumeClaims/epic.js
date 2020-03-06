@@ -39,9 +39,6 @@ export const loadPersistentVolumeClaimsEpic = (action$, state$, { ajax }) =>
     )
   );
 
-
-
-
 export const removePersistentVolumeClaimEpic = (action$, state$, { ajax }) =>
   action$.pipe(
     ofType(c.REMOVE_PERSISTENT_VOLUME_CLAIM),
@@ -61,7 +58,6 @@ export const removePersistentVolumeClaimEpic = (action$, state$, { ajax }) =>
       )
     )
   );
-
 
 export default combineEpics(
   loadPersistentVolumeClaimsEpic,

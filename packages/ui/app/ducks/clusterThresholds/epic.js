@@ -121,7 +121,6 @@ export const removeClusterThresholdEpic = (action$, state$, { ajax }) =>
     )
   );
 
-
 export default combineEpics(
   loadClusterThresholdsEpic,
   createClusterThresholdEpic,

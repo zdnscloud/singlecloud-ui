@@ -46,7 +46,6 @@ export const createRegistryFailure = (error, meta = {}) => ({
   error: true,
 });
 
-
 export const readRegistry = (id, meta = {}) => ({
   type: c.READ_REGISTRY,
   payload: id,
@@ -84,7 +83,6 @@ export const removeRegistryFailure = (error, meta = {}) => ({
   meta,
   error: true,
 });
-
 
 export const clearErrorsList = (payload, meta) => ({
   type: c.CLEAR_ERRORS_LIST,

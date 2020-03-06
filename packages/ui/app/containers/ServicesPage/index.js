@@ -42,14 +42,21 @@ const ServicesPage = ({
 }) => {
   const classes = useStyles();
   useEffect(() => {
+    let t = null;
     if (url) {
       loadServices(url, {
         clusterID,
         namespaceID,
       });
+      t = setInterval(() => {
+        loadServices(url, {
+          clusterID,
+          namespaceID,
+        });
+      }, 3000);
     }
     return () => {
-      // try cancel something when unmount
+      clearInterval(t);
     };
   }, [clusterID, loadServices, namespaceID, url]);
 

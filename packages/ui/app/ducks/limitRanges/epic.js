@@ -60,7 +60,6 @@ export const createLimitRangeEpic = (action$, state$, { ajax }) =>
     )
   );
 
-
 export const readLimitRangeEpic = (action$, state$, { ajax }) =>
   action$.pipe(
     ofType(c.READ_LIMIT_RANGE),
@@ -100,7 +99,6 @@ export const removeLimitRangeEpic = (action$, state$, { ajax }) =>
       )
     )
   );
-
 
 export default combineEpics(
   loadLimitRangesEpic,

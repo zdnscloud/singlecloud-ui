@@ -55,8 +55,6 @@ export const reducer = (
     case c.LOAD_SVC_MESH_PODS_FAILURE:
       return state.update('errorsList', (errors) => errors.filterNot((e) => e.type === type).push({ type, payload, meta }));
 
-
-
     case c.READ_SVC_MESH_POD:
       return state;
     case c.READ_SVC_MESH_POD_SUCCESS: {
@@ -81,8 +79,6 @@ export const reducer = (
     }
     case c.READ_SVC_MESH_POD_FAILURE:
       return state.update('errorsList', (errors) => errors.filterNot((e) => e.type === type).push({ type, payload, meta }));
-
-
 
     case c.CLEAR_ERRORS_LIST:
       return state.update('errorsList', (errors) => errors.clear());

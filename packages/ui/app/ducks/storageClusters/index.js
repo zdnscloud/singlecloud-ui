@@ -115,6 +115,10 @@ export const reducer = (
       const {
         clusterID,
       } = meta;
+      const status = getByKey(payload, ['status']);
+      if (status === 202) {
+        return state.update('errorsList', (errors) => errors.filterNot((e) => e.type === c.REMOVE_STORAGE_CLUSTER_FAILURE));
+      }
       return state
         .removeIn([
           'data',
@@ -129,7 +133,6 @@ export const reducer = (
     }
     case c.REMOVE_STORAGE_CLUSTER_FAILURE:
       return state.update('errorsList', (errors) => errors.filterNot((e) => e.type === type).push({ type, payload, meta }));
-
 
     case c.CLEAR_ERRORS_LIST:
       return state.update('errorsList', (errors) => errors.clear());

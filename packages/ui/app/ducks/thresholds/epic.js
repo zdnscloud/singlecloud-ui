@@ -39,7 +39,6 @@ export const loadThresholdsEpic = (action$, state$, { ajax }) =>
     )
   );
 
-
 export const updateThresholdEpic = (action$, state$, { ajax }) =>
   action$.pipe(
     ofType(c.UPDATE_THRESHOLD),
@@ -80,8 +79,6 @@ export const readThresholdEpic = (action$, state$, { ajax }) =>
       )
     )
   );
-
-
 
 export default combineEpics(
   loadThresholdsEpic,
