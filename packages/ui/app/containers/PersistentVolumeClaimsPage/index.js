@@ -45,14 +45,21 @@ const PersistentVolumeClaimsPage = ({
   const classes = useStyles();
   const [error, setError] = useState(null);
   useEffect(() => {
+    let t = null;
     if (url) {
       loadPersistentVolumeClaims(url, {
         clusterID,
         namespaceID,
       });
+      t = setInterval(() => {
+        loadPersistentVolumeClaims(url, {
+          clusterID,
+          namespaceID,
+        });
+      }, 3000);
     }
     return () => {
-      // try cancel something when unmount
+      clearInterval(t);
     };
   }, [clusterID, loadPersistentVolumeClaims, namespaceID, url]);
 

@@ -121,7 +121,6 @@ export const removeStorageClusterEpic = (action$, state$, { ajax }) =>
     )
   );
 
-
 export default combineEpics(
   loadStorageClustersEpic,
   createStorageClusterEpic,

@@ -116,7 +116,6 @@ export const makeSelectCreateErrorsList = () =>
         .filter(({ type }) => type === c.CREATE_REGISTRY_FAILURE)
   );
 
-
 export const makeSelectReadErrorsList = () =>
   createSelector(
     selectDomain,

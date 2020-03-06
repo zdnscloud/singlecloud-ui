@@ -27,8 +27,6 @@ export const loadKubeConfigsFailure = (error, meta = {}) => ({
   error: true,
 });
 
-
-
 export const readKubeConfig = (id, meta = {}) => ({
   type: c.READ_KUBE_CONFIG,
   payload: id,
@@ -47,8 +45,6 @@ export const readKubeConfigFailure = (error, meta = {}) => ({
   meta,
   error: true,
 });
-
-
 
 export const clearErrorsList = (payload, meta) => ({
   type: c.CLEAR_ERRORS_LIST,

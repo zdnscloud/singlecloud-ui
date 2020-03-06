@@ -44,7 +44,6 @@ export const reducer = (
     case c.LOAD_THRESHOLDS_FAILURE:
       return state.update('errorsList', (errors) => errors.filterNot((e) => e.type === type).push({ type, payload, meta }));
 
-
     case c.UPDATE_THRESHOLD:
       return state;
     case c.UPDATE_THRESHOLD_SUCCESS: {
@@ -78,8 +77,6 @@ export const reducer = (
     }
     case c.READ_THRESHOLD_FAILURE:
       return state.update('errorsList', (errors) => errors.filterNot((e) => e.type === type).push({ type, payload, meta }));
-
-
 
     case c.CLEAR_ERRORS_LIST:
       return state.update('errorsList', (errors) => errors.clear());

@@ -146,8 +146,8 @@ export const makeSelectCreateErrorsList = () =>
       substate.get('errorsList')
       .filter(({ type }) => type === c.CREATE_{{scCase name}}_FAILURE)
   );
-{{/if}}
 
+{{/if}}
 {{#if wannaUpdateAction}}
 export const makeSelectUpdateErrorsList = () =>
   createSelector(
@@ -156,8 +156,8 @@ export const makeSelectUpdateErrorsList = () =>
       substate.get('errorsList')
       .filter(({ type }) => type === c.UPDATE_{{scCase name}}_FAILURE)
   );
-{{/if}}
 
+{{/if}}
 {{#if wannaReadOneAction}}
 export const makeSelectReadErrorsList = () =>
   createSelector(
@@ -166,8 +166,8 @@ export const makeSelectReadErrorsList = () =>
       substate.get('errorsList')
       .filter(({ type }) => type === c.READ_{{scCase name}}_FAILURE)
   );
-{{/if}}
 
+{{/if}}
 {{#if wannaRemoveAction}}
 export const makeSelectRemoveErrorsList = () =>
   createSelector(
@@ -176,8 +176,8 @@ export const makeSelectRemoveErrorsList = () =>
       substate.get('errorsList')
       .filter(({ type }) => type === c.REMOVE_{{scCase name}}_FAILURE)
   );
-{{/if}}
 
+{{/if}}
 {{#if wannaResourceActions}}
 export const makeSelectActionErrorsList = () =>
   createSelector(

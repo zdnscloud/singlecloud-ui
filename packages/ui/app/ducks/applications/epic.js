@@ -60,7 +60,6 @@ export const createApplicationEpic = (action$, state$, { ajax }) =>
     )
   );
 
-
 export const readApplicationEpic = (action$, state$, { ajax }) =>
   action$.pipe(
     ofType(c.READ_APPLICATION),
@@ -100,7 +99,6 @@ export const removeApplicationEpic = (action$, state$, { ajax }) =>
       )
     )
   );
-
 
 export default combineEpics(
   loadApplicationsEpic,

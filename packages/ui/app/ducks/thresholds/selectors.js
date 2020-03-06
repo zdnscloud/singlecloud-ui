@@ -95,7 +95,6 @@ export const makeSelectLoadErrorsList = () =>
         .filter(({ type }) => type === c.LOAD_THRESHOLDS_FAILURE)
   );
 
-
 export const makeSelectUpdateErrorsList = () =>
   createSelector(
     selectDomain,
@@ -111,5 +110,4 @@ export const makeSelectReadErrorsList = () =>
       substate.get('errorsList')
         .filter(({ type }) => type === c.READ_THRESHOLD_FAILURE)
   );
-
 

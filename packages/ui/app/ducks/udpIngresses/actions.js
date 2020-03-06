@@ -46,7 +46,6 @@ export const createUdpIngressFailure = (error, meta = {}) => ({
   error: true,
 });
 
-
 export const readUdpIngress = (id, meta = {}) => ({
   type: c.READ_UDP_INGRESS,
   payload: id,
@@ -84,7 +83,6 @@ export const removeUdpIngressFailure = (error, meta = {}) => ({
   meta,
   error: true,
 });
-
 
 export const clearErrorsList = (payload, meta) => ({
   type: c.CLEAR_ERRORS_LIST,

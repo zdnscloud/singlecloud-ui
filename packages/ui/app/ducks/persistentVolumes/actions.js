@@ -27,8 +27,6 @@ export const loadPersistentVolumesFailure = (error, meta = {}) => ({
   error: true,
 });
 
-
-
 export const readPersistentVolume = (id, meta = {}) => ({
   type: c.READ_PERSISTENT_VOLUME,
   payload: id,
@@ -66,7 +64,6 @@ export const removePersistentVolumeFailure = (error, meta = {}) => ({
   meta,
   error: true,
 });
-
 
 export const clearErrorsList = (payload, meta) => ({
   type: c.CLEAR_ERRORS_LIST,

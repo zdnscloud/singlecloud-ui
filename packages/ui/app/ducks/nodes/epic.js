@@ -39,8 +39,6 @@ export const loadNodesEpic = (action$, state$, { ajax }) =>
     )
   );
 
-
-
 export const readNodeEpic = (action$, state$, { ajax }) =>
   action$.pipe(
     ofType(c.READ_NODE),
@@ -60,7 +58,6 @@ export const readNodeEpic = (action$, state$, { ajax }) =>
       )
     )
   );
-
 
 export const executeNodeActionEpic = (action$, state$, { ajax }) =>
   action$.pipe(

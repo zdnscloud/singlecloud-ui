@@ -27,7 +27,6 @@ export const loadThresholdsFailure = (error, meta = {}) => ({
   error: true,
 });
 
-
 export const updateThreshold = (data, meta = {}) => ({
   type: c.UPDATE_THRESHOLD,
   payload: data,
@@ -65,8 +64,6 @@ export const readThresholdFailure = (error, meta = {}) => ({
   meta,
   error: true,
 });
-
-
 
 export const clearErrorsList = (payload, meta) => ({
   type: c.CLEAR_ERRORS_LIST,

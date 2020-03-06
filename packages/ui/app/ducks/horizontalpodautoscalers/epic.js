@@ -121,7 +121,6 @@ export const removeHorizontalPodAutoscalerEpic = (action$, state$, { ajax }) =>
     )
   );
 
-
 export default combineEpics(
   loadHorizontalPodAutoscalersEpic,
   createHorizontalPodAutoscalerEpic,

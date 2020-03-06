@@ -39,8 +39,6 @@ export const loadPersistentVolumesEpic = (action$, state$, { ajax }) =>
     )
   );
 
-
-
 export const readPersistentVolumeEpic = (action$, state$, { ajax }) =>
   action$.pipe(
     ofType(c.READ_PERSISTENT_VOLUME),
@@ -80,7 +78,6 @@ export const removePersistentVolumeEpic = (action$, state$, { ajax }) =>
       )
     )
   );
-
 
 export default combineEpics(
   loadPersistentVolumesEpic,

@@ -39,8 +39,6 @@ export const loadSvcMeshWorkloadsEpic = (action$, state$, { ajax }) =>
     )
   );
 
-
-
 export const readSvcMeshWorkloadEpic = (action$, state$, { ajax }) =>
   action$.pipe(
     ofType(c.READ_SVC_MESH_WORKLOAD),
@@ -60,8 +58,6 @@ export const readSvcMeshWorkloadEpic = (action$, state$, { ajax }) =>
       )
     )
   );
-
-
 
 export default combineEpics(
   loadSvcMeshWorkloadsEpic,
