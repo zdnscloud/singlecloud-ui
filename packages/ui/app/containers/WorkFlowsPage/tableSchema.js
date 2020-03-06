@@ -37,7 +37,7 @@ const tableSchema = schema
       }) => (
         <Fragment>
           <Button 
-            onClick={() => setRunDialog(data.get('id'))} action  
+            onClick={() => setRunDialog(data)} action  
             disabled={data.get('deletionTimestamp')}>
             <FormattedMessage {...messages.tableButtonRun} />
           </Button>
@@ -71,7 +71,6 @@ const tableSchema = schema
                 />,
               ]}
           />
-
         </Fragment>
       ),
     },
@@ -88,6 +87,17 @@ const tableSchema = schema
           >
             {data.get('name')}
           </Button>
+        ),
+      };
+    };
+    if (sch.id === 'status') {
+      return {
+        ...sch,
+        component: ({data }) => (
+          <span
+          >
+            {data.getIn(['status','currentStatus']) !== ''? data.getIn(['status','currentStatus']) : '--'} 
+          </span>
         ),
       };
     }

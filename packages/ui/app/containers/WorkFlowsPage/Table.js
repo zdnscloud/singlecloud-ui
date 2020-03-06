@@ -68,6 +68,12 @@ const WorkFlowsTable = ({
 
   return (
     <Paper className={classes.tableWrapper}>
+      <RunDialog
+        open={dialog}
+        close={()=>setRunDialog(null)}
+        id={dialog}
+        workFlow={dialog}
+      />
       <SimpleTable
         className={classes.table}
         schema={mergedSchema}

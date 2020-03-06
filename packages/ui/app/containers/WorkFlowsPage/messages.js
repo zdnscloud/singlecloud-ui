@@ -281,8 +281,24 @@ export default defineMessages({
     id: `${scope}.detailPageTitle`,
     defaultMessage: 'Detail',
   },
-  stepOne: {
-    id: `${scope}.stepOne`,
-    defaultMessage: 'One',
+  clearLogs: {
+    id: `${scope}.clearLogs`,
+    defaultMessage: 'clearLogs',
+  },
+  completed:{
+    id: `${scope}.completed`,
+    defaultMessage: 'completed',
+  },
+  tabTitleStatus:{
+    id: `${scope}.tabTitleStatus`,
+    defaultMessage: 'Status',
+  },
+  tabTitleLogs:{
+    id: `${scope}.tabTitleLogs`,
+    defaultMessage: 'Logs',
+  },
+  tabContainerStatus:{
+    id: `${scope}.tabContainerStatus`,
+    defaultMessage: 'Container Status',
   },
 });

@@ -34,23 +34,18 @@ export const RunForm = ({
 
   return (
     <form className={getByKey(classes, 'form')} onSubmit={handleSubmit}>
-      <GridContainer>
+      <GridContainer style={{minWidth:280}}>
         {error ? (
           <GridItem xs={12} sm={12} md={12}>
             <Danger>{getByKey(error, ['response', 'message'])}</Danger>
           </GridItem>
         ) : null}
         <GridItem xs={12} sm={12} md={12}>
-          <GridContainer>
-            <GridItem xs={5} sm={5} md={5}>
-              <InputField
-                label={<FormattedMessage {...messages.dialogFormImageTag} />}
-                name="imageTag"
-                fullWidth
-                inputProps={ { type: 'text', autoComplete: 'off' } }
-              />
-            </GridItem>
-          </GridContainer>
+          <InputField
+            label={<FormattedMessage {...messages.dialogFormImageTag} />}
+            name="imageTag"
+            fullWidth
+          />
         </GridItem>
       </GridContainer>
     </form>

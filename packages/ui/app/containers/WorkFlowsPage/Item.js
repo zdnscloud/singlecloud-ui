@@ -44,16 +44,6 @@ export const WorkFlow = ({
 }) => {
   const classes = useStyles();
   const intl = useIntl();
-  const replicas = workFlow.get('replicas');
-  const id = workFlow.get('id');
-  const selfUrl = workFlow.getIn(['links', 'self']);
-  const typeMap = {
-    configmap: intl.formatMessage(messages.formVolumeTypeConfigMap),
-    secret: intl.formatMessage(messages.formVolumeTypeSecret),
-    persistentVolume: intl.formatMessage(
-      messages.formVolumeTypePersistentVolume
-    ),
-  };
   const containers = workFlow &&
   workFlow.getIn(['deploy','containers']);
   
@@ -177,7 +167,7 @@ export const WorkFlow = ({
                   labelText={
                     <FormattedMessage {...messages.formInjectServiceMesh} />
                   }
-                  value={workFlow.getIn([
+                  value={workFlow.size>0 && workFlow.getIn([
                     'deploy', 'advancedOptions',
                     'injectServiceMesh',
                   ])}
@@ -316,7 +306,7 @@ export const WorkFlow = ({
                   labelText={
                     <FormattedMessage {...messages.formAutoDeploy} />
                   }
-                  value={workFlow.get('autoDeploy')}
+                  value={workFlow.size>0 && workFlow.get('autoDeploy')}
                 />
               </GridItem>
             </GridContainer>

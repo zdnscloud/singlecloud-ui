@@ -33,9 +33,7 @@ import {
   makeSelectCurrent,
   makeSelectURL,
 } from 'ducks/workFlows/selectors';
-import * as podsActions from 'ducks/pods/actions';
 import * as actions from 'ducks/workFlows/actions';
-import PodsTable from 'containers/PodsPage/PodsTable';
 
 import Item from './Item';
 import messages from './messages';
@@ -94,20 +92,6 @@ export const WorkFlowDetailPage = ({
           ]}
         />
         <Item workFlow={workFlow} />
-        {/* <GridContainer className={classes.grid}>
-          <GridItem xs={12} sm={12} md={12}>
-            <Card>
-              <CardHeader>
-                <h4>
-                  <FormattedMessage {...messages.pods} />
-                </h4>
-              </CardHeader>
-              <CardBody>
-                <PodsTable />
-              </CardBody>
-            </Card>
-          </GridItem>
-        </GridContainer> */}
       </div>
     </div>
   );
@@ -125,7 +109,6 @@ const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
       ...actions,
-      ...podsActions,
     },
     dispatch
   );
