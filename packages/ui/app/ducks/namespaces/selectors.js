@@ -11,8 +11,8 @@ import {
 } from 'connected-react-router/immutable';
 import {
   makeSelectCurrent as makeSelectCurrentCluster,
-  makeSelectCurrentID as makeSelectCurrentClusterID } from 'ducks/clusters/selectors';
-
+} from 'ducks/clusters/selectors';
+import { makeSelectCurrentID as makeSelectCurrentClusterID } from 'ducks/clusters/selectors';
 import * as c from './constants';
 import { initialState } from './index';
 
@@ -40,13 +40,13 @@ export const makeSelectNamespaces = () =>
   createSelector(
     selectDomain,
     makeSelectCurrentClusterID(),
-    (
-      substate,
+  (
+    substate,
       clusterID,
-    ) =>
-      substate.getIn([
-        'data',
-        clusterID,
+  ) =>
+    substate.getIn([
+      'data',
+      clusterID,
       ]) || substate.clear()
   );
 
@@ -67,15 +67,15 @@ export const makeSelectNamespacesList = () =>
   );
 
 export const makeSelectCurrentID = () =>
-  createSelector(
-    createMatchSelector('*/namespaces/:id/*'),
-    (match) => {
-      if (match && match.params) {
-        return match.params.id;
-      }
-      return '';
-    }
-  );
+   createSelector(
+     createMatchSelector('*/namespaces/:id/*'),
+     (match) => {
+       if (match && match.params) {
+         return match.params.id;
+       }
+       return '';
+     }
+   );
 
 export const makeSelectCurrent = () =>
   createSelector(
@@ -105,7 +105,7 @@ export const makeSelectLoadErrorsList = () =>
     selectDomain,
     (substate) =>
       substate.get('errorsList')
-        .filter(({ type }) => type === c.LOAD_NAMESPACES_FAILURE)
+      .filter(({ type }) => type === c.LOAD_NAMESPACES_FAILURE)
   );
 
 export const makeSelectCreateErrorsList = () =>
@@ -113,7 +113,7 @@ export const makeSelectCreateErrorsList = () =>
     selectDomain,
     (substate) =>
       substate.get('errorsList')
-        .filter(({ type }) => type === c.CREATE_NAMESPACE_FAILURE)
+      .filter(({ type }) => type === c.CREATE_NAMESPACE_FAILURE)
   );
 
 
@@ -122,7 +122,7 @@ export const makeSelectReadErrorsList = () =>
     selectDomain,
     (substate) =>
       substate.get('errorsList')
-        .filter(({ type }) => type === c.READ_NAMESPACE_FAILURE)
+      .filter(({ type }) => type === c.READ_NAMESPACE_FAILURE)
   );
 
 export const makeSelectRemoveErrorsList = () =>
@@ -130,7 +130,7 @@ export const makeSelectRemoveErrorsList = () =>
     selectDomain,
     (substate) =>
       substate.get('errorsList')
-        .filter(({ type }) => type === c.REMOVE_NAMESPACE_FAILURE)
+      .filter(({ type }) => type === c.REMOVE_NAMESPACE_FAILURE)
   );
 
 export const makeSelectActionErrorsList = () =>
@@ -138,5 +138,5 @@ export const makeSelectActionErrorsList = () =>
     selectDomain,
     (substate) =>
       substate.get('errorsList')
-        .filter(({ type }) => type === c.EXECUTE_NAMESPACE_ACTION_FAILURE)
+      .filter(({ type }) => type === c.EXECUTE_NAMESPACE_ACTION_FAILURE)
   );

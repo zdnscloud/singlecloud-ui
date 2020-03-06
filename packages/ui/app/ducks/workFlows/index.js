@@ -66,7 +66,7 @@ export const reducer = (
         namespaceID,
         data.id,
       ], fromJS(data))
-        .update('errorsList', (errors) => errors.filterNot((e) => e.type === c.CREATE_WORK_FLOW_FAILURE));
+      .update('errorsList', (errors) => errors.filterNot((e) => e.type === c.CREATE_WORK_FLOW_FAILURE));
     }
     case c.CREATE_WORK_FLOW_FAILURE:
       return state.update('errorsList', (errors) => errors.filterNot((e) => e.type === type).push({ type, payload, meta }));
@@ -87,7 +87,7 @@ export const reducer = (
           namespaceID,
           id,
         ], fromJS(data))
-          .update('errorsList', (errors) => errors.filterNot((e) => e.type === c.UPDATE_WORK_FLOW_FAILURE));
+        .update('errorsList', (errors) => errors.filterNot((e) => e.type === c.UPDATE_WORK_FLOW_FAILURE));
       }
       return state;
     }
@@ -110,7 +110,7 @@ export const reducer = (
           namespaceID,
           id,
         ], fromJS(data))
-          .update('errorsList', (errors) => errors.filterNot((e) => e.type === c.READ_WORK_FLOW_FAILURE));
+        .update('errorsList', (errors) => errors.filterNot((e) => e.type === c.READ_WORK_FLOW_FAILURE));
       }
       return state;
     }
@@ -142,6 +142,27 @@ export const reducer = (
     case c.REMOVE_WORK_FLOW_FAILURE:
       return state.update('errorsList', (errors) => errors.filterNot((e) => e.type === type).push({ type, payload, meta }));
 
+    case c.EXECUTE_WORK_FLOW_ACTION:
+      return state;
+    case c.EXECUTE_WORK_FLOW_ACTION_SUCCESS:
+      if (meta.patch === true) {
+        const {
+          clusterID,
+          namespaceID,
+          id,
+        } = meta;
+        const data = getByKey(payload, ['response']);
+        return state.mergeDeepIn([
+          'data',
+          clusterID,
+          namespaceID,
+          id,
+        ], data)
+          .update('errorsList', (errors) => errors.filterNot((e) => e.type === c.EXECUTE_WORK_FLOW_ACTION_FAILURE));
+      }
+      return state.update('errorsList', (errors) => errors.filterNot((e) => e.type === c.EXECUTE_WORK_FLOW_ACTION_FAILURE));
+    case c.EXECUTE_WORK_FLOW_ACTION_FAILURE:
+      return state.update('errorsList', (errors) => errors.filterNot((e) => e.type === type).push({ type, payload, meta }));
 
     case c.CLEAR_ERRORS_LIST:
       return state.update('errorsList', (errors) => errors.clear());

@@ -11,10 +11,10 @@ import {
 } from 'connected-react-router/immutable';
 import {
   makeSelectCurrent as makeSelectCurrentSvcMeshWorkload,
-  makeSelectCurrentID as makeSelectCurrentSvcMeshWorkloadID } from 'ducks/svcMeshWorkloads/selectors';
+} from 'ducks/svcMeshWorkloads/selectors';
 import { makeSelectCurrentID as makeSelectCurrentClusterID } from 'ducks/clusters/selectors';
 import { makeSelectCurrentID as makeSelectCurrentNamespaceID } from 'ducks/namespaces/selectors';
-
+import { makeSelectCurrentID as makeSelectCurrentSvcMeshWorkloadID } from 'ducks/svcMeshWorkloads/selectors';
 import * as c from './constants';
 import { initialState } from './index';
 
@@ -44,17 +44,17 @@ export const makeSelectSvcMeshPods = () =>
     makeSelectCurrentClusterID(),
     makeSelectCurrentNamespaceID(),
     makeSelectCurrentSvcMeshWorkloadID(),
-    (
-      substate,
+  (
+    substate,
       clusterID,
       namespaceID,
       svcMeshWorkloadID,
-    ) =>
-      substate.getIn([
-        'data',
-        clusterID,
-        namespaceID,
-        svcMeshWorkloadID,
+  ) =>
+    substate.getIn([
+      'data',
+      clusterID,
+      namespaceID,
+      svcMeshWorkloadID,
       ]) || substate.clear()
   );
 
@@ -81,15 +81,15 @@ export const makeSelectSvcMeshPodsList = () =>
   );
 
 export const makeSelectCurrentID = () =>
-  createSelector(
-    createMatchSelector('*/svcMeshPods/:id/*'),
-    (match) => {
-      if (match && match.params) {
-        return match.params.id;
-      }
-      return '';
-    }
-  );
+   createSelector(
+     createMatchSelector('*/svcMeshPods/:id/*'),
+     (match) => {
+       if (match && match.params) {
+         return match.params.id;
+       }
+       return '';
+     }
+   );
 
 export const makeSelectCurrent = () =>
   createSelector(
@@ -125,7 +125,7 @@ export const makeSelectLoadErrorsList = () =>
     selectDomain,
     (substate) =>
       substate.get('errorsList')
-        .filter(({ type }) => type === c.LOAD_SVC_MESH_PODS_FAILURE)
+      .filter(({ type }) => type === c.LOAD_SVC_MESH_PODS_FAILURE)
   );
 
 
@@ -135,7 +135,7 @@ export const makeSelectReadErrorsList = () =>
     selectDomain,
     (substate) =>
       substate.get('errorsList')
-        .filter(({ type }) => type === c.READ_SVC_MESH_POD_FAILURE)
+      .filter(({ type }) => type === c.READ_SVC_MESH_POD_FAILURE)
   );
 
 

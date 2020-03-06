@@ -11,8 +11,8 @@ import {
 } from 'connected-react-router/immutable';
 import {
   makeSelectCurrent as makeSelectCurrentCluster,
-  makeSelectCurrentID as makeSelectCurrentClusterID } from 'ducks/clusters/selectors';
-
+} from 'ducks/clusters/selectors';
+import { makeSelectCurrentID as makeSelectCurrentClusterID } from 'ducks/clusters/selectors';
 import * as c from './constants';
 import { initialState } from './index';
 
@@ -40,13 +40,13 @@ export const makeSelectKubeConfigs = () =>
   createSelector(
     selectDomain,
     makeSelectCurrentClusterID(),
-    (
-      substate,
+  (
+    substate,
       clusterID,
-    ) =>
-      substate.getIn([
-        'data',
-        clusterID,
+  ) =>
+    substate.getIn([
+      'data',
+      clusterID,
       ]) || substate.clear()
   );
 
@@ -67,15 +67,15 @@ export const makeSelectKubeConfigsList = () =>
   );
 
 export const makeSelectCurrentID = () =>
-  createSelector(
-    createMatchSelector('*/kubeConfigs/:id/*'),
-    (match) => {
-      if (match && match.params) {
-        return match.params.id;
-      }
-      return '';
-    }
-  );
+   createSelector(
+     createMatchSelector('*/kubeConfigs/:id/*'),
+     (match) => {
+       if (match && match.params) {
+         return match.params.id;
+       }
+       return '';
+     }
+   );
 
 export const makeSelectCurrent = () =>
   createSelector(
@@ -105,7 +105,7 @@ export const makeSelectLoadErrorsList = () =>
     selectDomain,
     (substate) =>
       substate.get('errorsList')
-        .filter(({ type }) => type === c.LOAD_KUBE_CONFIGS_FAILURE)
+      .filter(({ type }) => type === c.LOAD_KUBE_CONFIGS_FAILURE)
   );
 
 
@@ -115,7 +115,7 @@ export const makeSelectReadErrorsList = () =>
     selectDomain,
     (substate) =>
       substate.get('errorsList')
-        .filter(({ type }) => type === c.READ_KUBE_CONFIG_FAILURE)
+      .filter(({ type }) => type === c.READ_KUBE_CONFIG_FAILURE)
   );
 
 

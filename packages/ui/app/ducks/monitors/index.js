@@ -61,7 +61,7 @@ export const reducer = (
         clusterID,
         data.id,
       ], fromJS(data))
-        .update('errorsList', (errors) => errors.filterNot((e) => e.type === c.CREATE_MONITOR_FAILURE));
+      .update('errorsList', (errors) => errors.filterNot((e) => e.type === c.CREATE_MONITOR_FAILURE));
     }
     case c.CREATE_MONITOR_FAILURE:
       return state.update('errorsList', (errors) => errors.filterNot((e) => e.type === type).push({ type, payload, meta }));
@@ -81,7 +81,7 @@ export const reducer = (
           clusterID,
           id,
         ], fromJS(data))
-          .update('errorsList', (errors) => errors.filterNot((e) => e.type === c.READ_MONITOR_FAILURE));
+        .update('errorsList', (errors) => errors.filterNot((e) => e.type === c.READ_MONITOR_FAILURE));
       }
       return state;
     }

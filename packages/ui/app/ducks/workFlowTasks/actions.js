@@ -66,24 +66,6 @@ export const readWorkFlowTaskFailure = (error, meta = {}) => ({
   error: true,
 });
 
-export const removeWorkFlowTask = (id, meta = {}) => ({
-  type: c.REMOVE_WORK_FLOW_TASK,
-  payload: id,
-  meta,
-});
-
-export const removeWorkFlowTaskSuccess = (resp, meta = {}) => ({
-  type: c.REMOVE_WORK_FLOW_TASK_SUCCESS,
-  payload: resp,
-  meta,
-});
-
-export const removeWorkFlowTaskFailure = (error, meta = {}) => ({
-  type: c.REMOVE_WORK_FLOW_TASK_FAILURE,
-  payload: error,
-  meta,
-  error: true,
-});
 
 
 export const clearErrorsList = (payload, meta) => ({
