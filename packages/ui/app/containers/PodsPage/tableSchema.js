@@ -12,7 +12,7 @@ import LogIcon from 'components/Icons/Log';
 import Chip from '@material-ui/core/Chip';
 import messages from './messages';
 
-const schema = ['state', 'name', 'nodeName', 'containers', 'creationTimestamp'];
+const schema = ['name', 'state', 'nodeName', 'containers', 'creationTimestamp'];
 
 const tableSchema = schema
   .map((id) => ({
@@ -115,7 +115,7 @@ const tableSchema = schema
             component={
               <Button action disabled={data.get('deletionTimestamp')}>
                 <FormattedMessage {...messages.restartButton} />
-                
+
               </Button>
             }
           />
