@@ -28,16 +28,6 @@ export const styles = (theme) => ({
   radioWrap:{
     paddingTop:10,
   },
-  success:{
-    background:'#52C41A',
-    color:'#fff',
-    boxShadow:'0px -1px 0px 0px rgba(0,0,0,0.09)',
-  },
-  fails:{
-    background:'#F5222D',
-    color:'#fff',
-    boxShadow:'0px -1px 0px 0px rgba(0,0,0,0.09)',
-  },
   taskContent:{
     display:'flex',
     border:'1px solid #DFE0DF',
@@ -73,7 +63,7 @@ export const styles = (theme) => ({
       background:'rgba(0,0,0,0.04)',
       color:'#4A4A4A',
     },
-    '& svg':{
+    '& svg , & img':{
       transform: 'scale(1.2)',
       position:'absolute',
       left:3,
@@ -87,7 +77,6 @@ export const styles = (theme) => ({
       paddingLeft:35,
       '& span':{
         marginLeft:24,
-        color:'#52C41A',
         fontSize:12,
       },
     },
@@ -95,40 +84,77 @@ export const styles = (theme) => ({
   taskStatus:{
     display:'flex',
   },
+  statusContent:{
+    position: 'relative',
+  },
   statusWrap:{
     flex:1,
     position: 'relative',
     marginBottom:20,
     display:'inline-block',
     marginRight:14,
-    '& .MuiButton-root':{
+    '& p':{
       minWidth:150,
+      display:'inline-block',
+      padding:"5px 20px",
+      borderRadius:2,
+      margin:0,
     },
     '& .MuiFab-root':{
       boxShadow:'none',
     },
   },
-  buttonProgress:{
-    color: 'green',
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    marginTop: -12,
-    marginLeft: -12,
-  },
   fabProgress:{
-    color: 'green',
+    color: '#40A9FF',
     position: 'absolute',
     top: -6,
     left: -6,
     zIndex: 1,
   },
-  logPaper:{
-    // width: 'calc(100% - 240px)',
-    // overflowX:'scroll',
-    // '& div':{
-    //   maxWidth:'calc(100% - 240px)',
-    // },
+  hookIcon:{
+    width:23,
+    height:17,
+    marginTop:6,
+  },
+  hourglassIcon:{
+    marginLeft:4,
+  },
+  statusArrow:{
+    width:94,
+    display:'inline-block',
+    '& .MuiSvgIcon-root':{
+      width:'100%',
+    },
+    verticalAlign:"text-top",
+    marginRight:40,
+  },
+  red:{
+    color:'#FF7875',
+  },
+  gray:{
+    color:'#F7F7F7',
+  },
+  green:{
+    color:'#A0D911',
+  },
+  blue:{
+    color:'#40A9FF',
+  },
+  redBtn:{
+    color:'#fff',
+    background:'#FF7875',
+  },
+  greenBtn:{
+    color:'#fff',
+    background:'#A0D911',
+  },
+  blueBtn:{
+    color:'#fff',
+    background:'#40A9FF',
+  },
+  grayBtn:{
+    color:'#B4B4B4',
+    background:'#F7F7F7',
   },
 });
 

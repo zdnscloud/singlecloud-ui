@@ -281,13 +281,13 @@ export default defineMessages({
     id: `${scope}.detailPageTitle`,
     defaultMessage: 'Detail',
   },
-  clearLogs: {
-    id: `${scope}.clearLogs`,
-    defaultMessage: 'clearLogs',
+  clearTasks: {
+    id: `${scope}.clearTasks`,
+    defaultMessage: 'ClearTasks',
   },
-  completed:{
-    id: `${scope}.completed`,
-    defaultMessage: 'completed',
+  clearTasksPromptText:{
+    id: `${scope}.clearTasksPromptText`,
+    defaultMessage: 'Are you sure you want to clear the history？',
   },
   tabTitleStatus:{
     id: `${scope}.tabTitleStatus`,

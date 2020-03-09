@@ -8,7 +8,7 @@ import TableActions from 'components/TableActions/TableActions';
 import { FormattedMessage } from 'react-intl';
 import messages from './messages';
 
-const schema = ['status','name', 'creationTimestamp'];
+const schema = ['name','status', 'creationTimestamp'];
 
 const tableSchema = schema
   .map((id) => ({

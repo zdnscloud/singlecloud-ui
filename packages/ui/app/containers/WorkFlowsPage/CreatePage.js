@@ -104,7 +104,7 @@ export const CreateWorkFlowPage = ({
   async function doSubmit(formValues) {
     try {
       const data = formValues.toJS();
-      const { image:{name},deploy:{ containers, persistentVolumes} } = data;
+      const { name, deploy:{ containers, persistentVolumes},image } = data;
       data.deploy.name = name;
       data.deploy.containers = containers.map((item) => {
         if (item && item.args) {
@@ -113,20 +113,13 @@ export const CreateWorkFlowPage = ({
         if (item && item.command) {
           item.command = parseCmd(item.command);
         }
-        item.image = name;
+        item.image = image.name;
         return item;
       });
       persistentVolumes.forEach((item) => {
         if (item && item.size) {
           item.size = `${item.size}Gi`;
         }
-        // if (item && item.name) {
-        //   if (pvc.get(item.name)) {
-        //     item.size = pvc.getIn([item.name, 'actualStorageSize']);
-        //   } else {
-        //     item.size = `${item.size}Gi`;
-        //   }
-        // }
       });
       await new Promise((resolve, reject) => {
         createWorkFlow(data, {

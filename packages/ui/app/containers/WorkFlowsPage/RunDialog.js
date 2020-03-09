@@ -117,7 +117,6 @@ export const RunDialog = ({
         <CardBody className={classes.dialogCardBody}>
           <RunForm
             onSubmit={doSubmit}
-            // initialValues={initialValues}
             formValues={values}
           />
         </CardBody>

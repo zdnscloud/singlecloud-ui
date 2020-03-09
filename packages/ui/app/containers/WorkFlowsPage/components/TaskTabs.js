@@ -1,4 +1,4 @@
-import React, { PureComponent, Fragment, useState } from 'react';
+import React, { PureComponent, Fragment, useState ,useEffect} from 'react';
 import { fromJS, is } from 'immutable';
 import { compose } from 'redux';
 import { FormattedMessage } from 'react-intl';
@@ -10,41 +10,62 @@ import CardHeader from 'components/Card/CardHeader';
 import GridItem from 'components/Grid/GridItem';
 import GridContainer from 'components/Grid/GridContainer';
 
+import { useLogs } from 'hooks/logs';
+
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
 
-import TrueIcon from 'components/Icons/True';
-import FalseIcon from 'components/Icons/False';
+import Confirm from 'components/Confirm/Confirm';
+
+import { returnActiveIcon, returnActiveColor } from '../utils/utils';
 
 import messages from '../messages';
 import useStyles from '../styles';
 
-export const TaskStepper = ({
+export const TaskTabs = ({
   workFlowTask,
-  currentStatus,
   workFlowsTaskID,
-  logs,
+  clearTasks,
+  logUrl,
 }) => {
   const classes = useStyles();
   const [tab, setTab] = useState(0);
+  const { open, close, logs } = useLogs();
+  const currentStatus = workFlowTask && workFlowTask.getIn(['status','currentStatus']);
   const status = workFlowTask && workFlowTask.get('status');
-  // console.log('status',status && status.toJS());
-  // console.log('logs22',logs);
+  
+  useEffect(()=>{
+    if(logUrl){
+      open(logUrl);
+    };
+    return () =>{
+      close();
+    };
+  },[close, logUrl, open]);
+  
+
+
   return (
     <Fragment>
       <div className={classes.titleWrap}>
         <h4>
-          {currentStatus === 'Failed' ? <FalseIcon  style={{color:'#F5222D'}} /> : <TrueIcon  style={{color:'#389E0D'}} />}
+          {returnActiveIcon(currentStatus,classes)}
           {workFlowsTaskID}
-          {currentStatus === 'Failed' ? null:<span><FormattedMessage {...messages.completed} /></span>}
+          <span className={returnActiveColor(currentStatus,classes)}>{currentStatus}</span>
         </h4>
-        <Button
-          variant="contained"
-        >
-          <FormattedMessage {...messages.clearLogs} />
-        </Button>
+        <Confirm
+          handleConfirm={clearTasks}
+          dialogContentText={messages.clearTasksPromptText}
+          component={
+            <Button
+              variant="contained"
+            >
+              <FormattedMessage {...messages.clearTasks} />
+            </Button>
+          }
+        />
       </div>
       <Card>
         <CardHeader style={{ paddingLeft:0 }}>
@@ -78,7 +99,7 @@ export const TaskStepper = ({
                 <div key={idx}>
                   <p>{idx} : {st}</p>
                 </div>
-              )) 
+              )).toList() 
               }
             </div>
           )}
@@ -88,4 +109,4 @@ export const TaskStepper = ({
   );
 };
 
-export default TaskStepper;
+export default TaskTabs;

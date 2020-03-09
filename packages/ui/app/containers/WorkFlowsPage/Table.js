@@ -21,6 +21,7 @@ import { makeSelectCurrentID as makeSelectClusterID } from 'ducks/clusters/selec
 import { makeSelectCurrentID as makeSelectNamespaceID } from 'ducks/namespaces/selectors';
 import {
   makeSelectWorkFlowsList,
+  makeSelectURL,
 } from 'ducks/workFlows/selectors';
 import * as actions from 'ducks/workFlows/actions';
 
@@ -36,6 +37,8 @@ const WorkFlowsTable = ({
   clusterID,
   namespaceID,
   removeWorkFlow,
+  loadWorkFlows,
+  url,
 }) => {
   const classes = useStyles();
   const pathname = location.get('pathname');
@@ -70,7 +73,13 @@ const WorkFlowsTable = ({
     <Paper className={classes.tableWrapper}>
       <RunDialog
         open={dialog}
-        close={()=>setRunDialog(null)}
+        close={()=>{
+          setRunDialog(null);
+          loadWorkFlows(url, {
+            clusterID,
+            namespaceID,
+          });
+        }}
         id={dialog}
         workFlow={dialog}
       />
@@ -88,6 +97,7 @@ const mapStateToProps = createStructuredSelector({
   clusterID: makeSelectClusterID(),
   namespaceID: makeSelectNamespaceID(),
   data: makeSelectWorkFlowsList(),
+  url: makeSelectURL(),
 });
 
 const mapDispatchToProps = (dispatch) =>

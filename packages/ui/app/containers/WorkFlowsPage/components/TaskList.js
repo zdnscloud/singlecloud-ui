@@ -16,18 +16,12 @@ import Avatar from '@material-ui/core/Avatar';
 
 import Button from '@material-ui/core/Button';
 
-import TrueIcon from 'components/Icons/True';
-import FalseIcon from 'components/Icons/False';
-
 import messages from '../messages';
 import useStyles from '../styles';
+import { returnActiveStyle ,returnActiveIcon} from '../utils/utils';
 
 export const TaskList = ({
-  workFlowTask,
-  currentStatus,
-  workFlowsTaskID,
   workFlowTasksList,
-  setWorkFlowTask,
   changeTask,
 }) => {
   const classes = useStyles();
@@ -35,19 +29,20 @@ export const TaskList = ({
   return (
     <Fragment>
       <List className={classes.list}>
-        {workFlowTasksList && workFlowTasksList.toList().map((t,i)=>{
-          const cStatus = t.getIn(['status','currentStatus']);
+        {workFlowTasksList && workFlowTasksList.toList().map((task,i)=>{
+          const cSt = task.getIn(['status','currentStatus']);
           return  (
             <ListItem 
-              className={cStatus === 'Failed' ? classes.fails :classes.success} key={i}
+              className={returnActiveStyle(cSt,classes)} key={i}
               onClick={()=>{
-                changeTask(t);
+                changeTask(task);
               }}
+              style={{boxShadow:'0px -1px 0px 0px rgba(0,0,0,0.09)'}}
             >
               <ListItemAvatar>
-                {cStatus === 'Failed' ?  <FalseIcon /> :  <TrueIcon />}
+                {returnActiveIcon(cSt,'list')}
               </ListItemAvatar>
-              <ListItemText primary={t.get('id')} />
+              <ListItemText primary={task.get('id')} />
             </ListItem>
           )
         }

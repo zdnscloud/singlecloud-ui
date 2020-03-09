@@ -61,23 +61,22 @@ const LogsPage = ({
   workFlow,
   loadWorkFlowTasks,
   workFlowTasksList,
+  executeWorkFlowAction,
 }) => {
   const classes = useStyles();
-  const firstWorkFlowTask = workFlowTasksList && workFlowTasksList.first();
-
-  const [workFlowTask, setWorkFlowTask] = useState(null);
-  const [taskLogs, settaskLogs] = useState(null);
-
-  const workFlowsTaskURL = workFlowTask && workFlowTask.getIn(['links','self']);
-  const workFlowsTaskID = workFlowTask && workFlowTask.get('id');
-  const currentStatus =  workFlowTask && workFlowTask.getIn(['status','currentStatus']);
-
-  const { protocol, hostname, port } = window.location;
   const { open, close, logs } = useLogs();
 
+  const firstWorkFlowTask = workFlowTasksList && workFlowTasksList.first();
+
+  const [logUrl, setLogUrl] = useState('');
+  const [workFlowTask, setWorkFlowTask] = useState(null);
+  const [workFlowsTaskID, setWorkFlowsTaskID] = useState(null);
+
+  const workFlowsTaskURL = workFlowTask && workFlowTask.getIn(['links','self']);
+  const { protocol, hostname, port } = window.location;
+
   useEffect(() => { 
-    if(firstWorkFlowTask && firstWorkFlowTask.size>0){
-      setWorkFlowTask(firstWorkFlowTask);
+    if(firstWorkFlowTask){
       changeTask(firstWorkFlowTask);
     };
   }, [changeTask, firstWorkFlowTask]);
@@ -90,32 +89,7 @@ const LogsPage = ({
         url: `${workFlowsURL}/${workFlowID}`,
       });
     }
-    return () => {
-      // try cancel something when unmount
-    };
   }, [clusterID, namespaceID, readWorkFlow, workFlowID, workFlowsURL]);
-
-  useEffect(() => {
-    if (workFlowsTaskURL) {
-      readWorkFlowTask(workFlowsTaskURL, {
-        clusterID,
-        namespaceID,
-        workFlowID,
-        url: `${workFlowsTaskURL}`,
-        // resolve(res) {
-        //   if (res.response) {
-        //     setWorkFlowTask(fromJS(res.response));
-        //     // console.log('logUrl',logUrl);
-        //     // open(logUrl);
-        //   }
-        // },
-        // reject() {},
-      });
-    }
-    return () => {
-      // try cancel something when unmount
-    };
-  }, [clusterID, namespaceID, readWorkFlowTask, workFlowID, workFlowsTaskURL]);
 
   useEffect(() => {
     if (url) {
@@ -125,33 +99,62 @@ const LogsPage = ({
         workFlowID,
       });
     }
+    return () => {
+      // try cancel something when unmount
+    };
+  }, [clusterID, loadWorkFlowTasks, namespaceID, url, workFlowID]);
+
+  useEffect(() => {
+    if (workFlowsTaskURL) {
+      readWorkFlowTask(workFlowsTaskURL, {
+        clusterID,
+        namespaceID,
+        workFlowID,
+        url: `${workFlowsTaskURL}`,
+      });
+    }
     const t = setInterval(() => {
-      if (url) {
+      if (workFlowsTaskURL) {
+        readWorkFlowTask(workFlowsTaskURL, {
+          clusterID,
+          namespaceID,
+          workFlowID,
+          url: `${workFlowsTaskURL}`,
+        });
+      }
+    }, 3000);
+
+    return () => {
+      clearInterval(t);
+    };
+  }, [clusterID, namespaceID, readWorkFlowTask, workFlowID, workFlowsTaskURL]);
+
+  const changeTask = useCallback((task) => {
+    const taskID = task && task.get('id');
+    setWorkFlowTask(task);
+    setWorkFlowsTaskID(taskID);
+    if(taskID){
+      setLogUrl(`${
+        protocol === 'https:' ? 'wss:' : 'ws:'
+      }//${hostname}:${port}/apis/ws.zcloud.cn/v1/clusters/${clusterID}/namespaces/${namespaceID}/workflows/${workFlowID}/workflowtasks/${taskID}/log`)
+    }
+  }, [clusterID, hostname, namespaceID, port, protocol, workFlowID]);
+
+  const clearTasks =()=> {
+    executeWorkFlowAction('emptytask',null,{
+      url: workFlow.getIn(['links', 'self']),
+      resolve(){
+        setWorkFlowTask(null);
         loadWorkFlowTasks(url, {
           clusterID,
           namespaceID,
           workFlowID,
         });
-      }
-    }, 63000);
+      }, 
+      reject(){},
+    });
+  };
 
-    return () => {
-      clearInterval(t);
-    };
-  }, [clusterID, loadWorkFlowTasks, namespaceID, url, workFlowID]);
-
-  const changeTask = useCallback((task) => {
-    close();
-    setWorkFlowTask(task);
-    const taskID = task && task.get('id');
-    if(taskID){
-      const logUrl = `${
-        protocol === 'https:' ? 'wss:' : 'ws:'
-      }//${hostname}:${port}/apis/ws.zcloud.cn/v1/clusters/${clusterID}/namespaces/${namespaceID}/workflows/${workFlowID}/workflowtasks/${taskID}/log`;
-      console.log('logUrl',logUrl);
-      open(logUrl);
-    }
-  }, [close, clusterID, hostname, namespaceID, open, port, protocol, workFlowID]);
 
 
   return (
@@ -174,8 +177,9 @@ const LogsPage = ({
           <TaskStatus 
             workFlowID={workFlowID} 
             workFlowTask={workFlowTask}
+            workFlowTasksList={workFlowTasksList}
           />
-          <GridItem xs={12} sm={12} md={12}>
+          {workFlowTasksList.size>0 ?  <GridItem xs={12} sm={12} md={12}>
             <Card>
               <CardHeader>
                 <h4 style={{border:'none'}}>
@@ -193,15 +197,15 @@ const LogsPage = ({
                   <div className={classes.tasktabs}>
                     <TaskTabs 
                       workFlowTask={workFlowTask}
-                      currentStatus={currentStatus}
                       workFlowsTaskID={workFlowsTaskID}
-                      logs={logs}
+                      logUrl={logUrl}
+                      clearTasks={clearTasks}
                     />
                   </div>
                 </div>
               </CardBody>
             </Card>
-          </GridItem>
+          </GridItem>: null}
         </GridContainer>
       </div>
     </div>
@@ -223,6 +227,7 @@ const mapDispatchToProps = (dispatch) =>
     {
       ...actions,
       readWorkFlow:wActions.readWorkFlow,
+      executeWorkFlowAction:wActions.executeWorkFlowAction,
     },
     dispatch,
   );
