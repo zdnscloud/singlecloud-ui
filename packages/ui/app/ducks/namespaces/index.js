@@ -66,7 +66,6 @@ export const reducer = (
     case c.CREATE_NAMESPACE_FAILURE:
       return state.update('errorsList', (errors) => errors.filterNot((e) => e.type === type).push({ type, payload, meta }));
 
-
     case c.READ_NAMESPACE:
       return state;
     case c.READ_NAMESPACE_SUCCESS: {
@@ -95,6 +94,10 @@ export const reducer = (
       const {
         clusterID,
       } = meta;
+      const status = getByKey(payload, ['status']);
+      if (status === 202) {
+        return state.update('errorsList', (errors) => errors.filterNot((e) => e.type === c.REMOVE_NAMESPACE_FAILURE));
+      }
       return state
         .removeIn([
           'data',

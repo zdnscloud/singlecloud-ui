@@ -121,7 +121,6 @@ export const removeIngressEpic = (action$, state$, { ajax }) =>
     )
   );
 
-
 export default combineEpics(
   loadIngressesEpic,
   createIngressEpic,

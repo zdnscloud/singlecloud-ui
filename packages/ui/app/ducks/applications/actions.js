@@ -46,7 +46,6 @@ export const createApplicationFailure = (error, meta = {}) => ({
   error: true,
 });
 
-
 export const readApplication = (id, meta = {}) => ({
   type: c.READ_APPLICATION,
   payload: id,
@@ -84,7 +83,6 @@ export const removeApplicationFailure = (error, meta = {}) => ({
   meta,
   error: true,
 });
-
 
 export const clearErrorsList = (payload, meta) => ({
   type: c.CLEAR_ERRORS_LIST,

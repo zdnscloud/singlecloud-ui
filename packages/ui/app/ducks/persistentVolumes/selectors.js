@@ -108,8 +108,6 @@ export const makeSelectLoadErrorsList = () =>
       .filter(({ type }) => type === c.LOAD_PERSISTENT_VOLUMES_FAILURE)
   );
 
-
-
 export const makeSelectReadErrorsList = () =>
   createSelector(
     selectDomain,

@@ -49,8 +49,6 @@ export const reducer = (
     case c.LOAD_KUBE_CONFIGS_FAILURE:
       return state.update('errorsList', (errors) => errors.filterNot((e) => e.type === type).push({ type, payload, meta }));
 
-
-
     case c.READ_KUBE_CONFIG:
       return state;
     case c.READ_KUBE_CONFIG_SUCCESS: {
@@ -71,8 +69,6 @@ export const reducer = (
     }
     case c.READ_KUBE_CONFIG_FAILURE:
       return state.update('errorsList', (errors) => errors.filterNot((e) => e.type === type).push({ type, payload, meta }));
-
-
 
     case c.CLEAR_ERRORS_LIST:
       return state.update('errorsList', (errors) => errors.clear());

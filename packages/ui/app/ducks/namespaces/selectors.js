@@ -116,7 +116,6 @@ export const makeSelectCreateErrorsList = () =>
       .filter(({ type }) => type === c.CREATE_NAMESPACE_FAILURE)
   );
 
-
 export const makeSelectReadErrorsList = () =>
   createSelector(
     selectDomain,

@@ -27,8 +27,6 @@ export const loadNodesFailure = (error, meta = {}) => ({
   error: true,
 });
 
-
-
 export const readNode = (id, meta = {}) => ({
   type: c.READ_NODE,
   payload: id,
@@ -47,7 +45,6 @@ export const readNodeFailure = (error, meta = {}) => ({
   meta,
   error: true,
 });
-
 
 export const executeNodeAction = (action, data, meta = {}) => ({
   type: c.EXECUTE_NODE_ACTION,

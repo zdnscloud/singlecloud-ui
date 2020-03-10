@@ -7,7 +7,7 @@ import ConfirmDelete from 'components/ConfirmDelete/ConfirmDelete';
 import { FormattedMessage } from 'react-intl';
 import messages from './messages';
 
-const schema = ['status', 'name', 'nodeCount', 'creationTimestamp'];
+const schema = ['name', 'status', 'nodeCount', 'creationTimestamp'];
 
 const tableSchema = schema
   .map((id) => ({

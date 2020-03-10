@@ -60,7 +60,6 @@ export const createMonitorEpic = (action$, state$, { ajax }) =>
     )
   );
 
-
 export const readMonitorEpic = (action$, state$, { ajax }) =>
   action$.pipe(
     ofType(c.READ_MONITOR),
@@ -100,7 +99,6 @@ export const removeMonitorEpic = (action$, state$, { ajax }) =>
       )
     )
   );
-
 
 export default combineEpics(
   loadMonitorsEpic,

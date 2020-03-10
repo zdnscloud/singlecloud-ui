@@ -125,6 +125,10 @@ export const reducer = (
         clusterID,
         namespaceID,
       } = meta;
+      const status = getByKey(payload, ['status']);
+      if (status === 202) {
+        return state.update('errorsList', (errors) => errors.filterNot((e) => e.type === c.REMOVE_DAEMON_SET_FAILURE));
+      }
       return state
         .removeIn([
           'data',

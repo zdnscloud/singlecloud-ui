@@ -52,8 +52,6 @@ export const reducer = (
     case c.LOAD_CHARTS_FAILURE:
       return state.update('errorsList', (errors) => errors.filterNot((e) => e.type === type).push({ type, payload, meta }));
 
-
-
     case c.READ_CHART:
       return state;
     case c.READ_CHART_SUCCESS: {
@@ -76,8 +74,6 @@ export const reducer = (
     }
     case c.READ_CHART_FAILURE:
       return state.update('errorsList', (errors) => errors.filterNot((e) => e.type === type).push({ type, payload, meta }));
-
-
 
     case c.CLEAR_ERRORS_LIST:
       return state.update('errorsList', (errors) => errors.clear());

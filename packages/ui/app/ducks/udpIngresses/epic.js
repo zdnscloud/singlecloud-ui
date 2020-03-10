@@ -60,7 +60,6 @@ export const createUdpIngressEpic = (action$, state$, { ajax }) =>
     )
   );
 
-
 export const readUdpIngressEpic = (action$, state$, { ajax }) =>
   action$.pipe(
     ofType(c.READ_UDP_INGRESS),
@@ -100,7 +99,6 @@ export const removeUdpIngressEpic = (action$, state$, { ajax }) =>
       )
     )
   );
-
 
 export default combineEpics(
   loadUdpIngressesEpic,

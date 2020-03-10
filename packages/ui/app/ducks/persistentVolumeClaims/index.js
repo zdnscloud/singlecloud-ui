@@ -52,9 +52,6 @@ export const reducer = (
     case c.LOAD_PERSISTENT_VOLUME_CLAIMS_FAILURE:
       return state.update('errorsList', (errors) => errors.filterNot((e) => e.type === type).push({ type, payload, meta }));
 
-
-
-
     case c.REMOVE_PERSISTENT_VOLUME_CLAIM:
       return state;
     case c.REMOVE_PERSISTENT_VOLUME_CLAIM_SUCCESS: {
@@ -63,6 +60,10 @@ export const reducer = (
         clusterID,
         namespaceID,
       } = meta;
+      const status = getByKey(payload, ['status']);
+      if (status === 202) {
+        return state.update('errorsList', (errors) => errors.filterNot((e) => e.type === c.REMOVE_PERSISTENT_VOLUME_CLAIM_FAILURE));
+      }
       return state
         .removeIn([
           'data',
@@ -79,7 +80,6 @@ export const reducer = (
     }
     case c.REMOVE_PERSISTENT_VOLUME_CLAIM_FAILURE:
       return state.update('errorsList', (errors) => errors.filterNot((e) => e.type === type).push({ type, payload, meta }));
-
 
     case c.CLEAR_ERRORS_LIST:
       return state.update('errorsList', (errors) => errors.clear());

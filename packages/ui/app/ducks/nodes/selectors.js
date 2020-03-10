@@ -108,8 +108,6 @@ export const makeSelectLoadErrorsList = () =>
       .filter(({ type }) => type === c.LOAD_NODES_FAILURE)
   );
 
-
-
 export const makeSelectReadErrorsList = () =>
   createSelector(
     selectDomain,
@@ -117,7 +115,6 @@ export const makeSelectReadErrorsList = () =>
       substate.get('errorsList')
       .filter(({ type }) => type === c.READ_NODE_FAILURE)
   );
-
 
 export const makeSelectActionErrorsList = () =>
   createSelector(

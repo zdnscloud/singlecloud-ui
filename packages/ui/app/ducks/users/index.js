@@ -95,6 +95,10 @@ export const reducer = (
       return state;
     case c.REMOVE_USER_SUCCESS: {
       const { id } = meta;
+      const status = getByKey(payload, ['status']);
+      if (status === 202) {
+        return state.update('errorsList', (errors) => errors.filterNot((e) => e.type === c.REMOVE_USER_FAILURE));
+      }
       return state
         .removeIn([
           'data',

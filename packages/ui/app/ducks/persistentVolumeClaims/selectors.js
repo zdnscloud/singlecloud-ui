@@ -118,9 +118,6 @@ export const makeSelectLoadErrorsList = () =>
       .filter(({ type }) => type === c.LOAD_PERSISTENT_VOLUME_CLAIMS_FAILURE)
   );
 
-
-
-
 export const makeSelectRemoveErrorsList = () =>
   createSelector(
     selectDomain,
