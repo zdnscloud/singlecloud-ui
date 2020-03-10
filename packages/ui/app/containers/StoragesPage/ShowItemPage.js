@@ -1,6 +1,6 @@
 /**
  *
- * ConfigMapsPage
+ * Show Storage Page
  *
  */
 
@@ -65,6 +65,8 @@ export const StoragePage = ({
   const nodes = storage.get('nodes');
   const pvs = storage.get('pvs');
   const enableFilter = storage.get('type') === 'lvm';
+  const iscsi = storage.get('iscsi');
+  const nfs = storage.get('nfs');
 
   return (
     <div className={classes.root}>
@@ -89,6 +91,67 @@ export const StoragePage = ({
                 <h4>{type}</h4>
               </CardHeader>
               <CardBody>
+                {type === 'iscsi' ? (
+                  <GridContainer>
+                    <GridItem xs={2} sm={2} md={2}>
+                      <ReadOnlyInput
+                        labelText={<FormattedMessage {...messages.formTarget} />}
+                        value={`${iscsi.get('target')}`}
+                        fullWidth
+                      />
+                    </GridItem>
+                    <GridItem xs={2} sm={2} md={2}>
+                      <ReadOnlyInput
+                        labelText={<FormattedMessage {...messages.formPort} />}
+                        value={`${iscsi.get('port')}`}
+                        fullWidth
+                      />
+                    </GridItem>
+                    <GridItem xs={2} sm={2} md={2}>
+                      <ReadOnlyInput
+                        labelText={<FormattedMessage {...messages.formIqn} />}
+                        value={`${iscsi.get('iqn')}`}
+                        fullWidth
+                      />
+                    </GridItem>
+                    {iscsi.get('chap') === true ? (
+                      <>
+                        <GridItem xs={2} sm={2} md={2}>
+                          <ReadOnlyInput
+                            labelText={<FormattedMessage {...messages.formUsername} />}
+                            value={`${iscsi.get('username')}`}
+                            fullWidth
+                          />
+                        </GridItem>
+                        <GridItem xs={2} sm={2} md={2}>
+                          <ReadOnlyInput
+                            labelText={<FormattedMessage {...messages.formPassword} />}
+                            value={`${iscsi.get('password')}`}
+                            fullWidth
+                          />
+                        </GridItem>
+                      </>
+                    ) : null}
+                  </GridContainer>
+                ) : null}
+                {type === 'nfs' ? (
+                  <GridContainer>
+                    <GridItem xs={2} sm={2} md={2}>
+                      <ReadOnlyInput
+                        labelText={<FormattedMessage {...messages.formServer} />}
+                        value={`${nfs.get('server')}`}
+                        fullWidth
+                      />
+                    </GridItem>
+                    <GridItem xs={2} sm={2} md={2}>
+                      <ReadOnlyInput
+                        labelText={<FormattedMessage {...messages.formPath} />}
+                        value={`${nfs.get('path')}`}
+                        fullWidth
+                      />
+                    </GridItem>
+                  </GridContainer>
+                ) : null}
                 <GridContainer>
                   <GridItem xs={2} sm={2} md={2}>
                     <ReadOnlyInput
@@ -97,6 +160,7 @@ export const StoragePage = ({
                       inputProps={{
                         endAdornment: <span className={classes.text}>G</span>,
                       }}
+                      fullWidth
                     />
                   </GridItem>
                   <GridItem xs={2} sm={2} md={2}>
@@ -106,6 +170,7 @@ export const StoragePage = ({
                       inputProps={{
                         endAdornment: <span className={classes.text}>G</span>,
                       }}
+                      fullWidth
                     />
                   </GridItem>
                   <GridItem xs={2} sm={2} md={2}>
@@ -115,6 +180,7 @@ export const StoragePage = ({
                       inputProps={{
                         endAdornment: <span className={classes.text}>G</span>,
                       }}
+                      fullWidth
                     />
                   </GridItem>
                 </GridContainer>

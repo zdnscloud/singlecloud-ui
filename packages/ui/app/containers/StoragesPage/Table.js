@@ -45,10 +45,10 @@ export const StoragesTable = ({
           props: { removeStorage, clusterID, pathname, setError },
         };
       }
-      if (sch.id === 'type') {
+      if (sch.id === 'name') {
         return {
           ...sch,
-          props: { pathname,classes },
+          props: { pathname, classes },
         };
       }
       return sch;

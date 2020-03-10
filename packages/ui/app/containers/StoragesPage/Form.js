@@ -113,7 +113,7 @@ const StorageForm = ({
                           label={
                             <FormattedMessage {...messages.formTarget} />
                           }
-                          name="target"
+                          name="parameter.target"
                           fullWidth
                         />
                       </GridItem>
@@ -122,7 +122,7 @@ const StorageForm = ({
                           label={
                             <FormattedMessage {...messages.formPort} />
                           }
-                          name="port"
+                          name="parameter.port"
                           fullWidth
                         />
                       </GridItem>
@@ -131,7 +131,7 @@ const StorageForm = ({
                           label={
                             <FormattedMessage {...messages.formIqn} />
                           }
-                          name="iqn"
+                          name="parameter.iqn"
                           fullWidth
                         />
                       </GridItem>
@@ -144,18 +144,18 @@ const StorageForm = ({
                           label={
                             <FormattedMessage {...messages.formChap} />
                           }
-                          name="chap"
+                          name="parameter.chap"
                           fullWidth
                         />
                       </GridItem>
-                      {formValues.get('chap') === true ? (
+                      {formValues.getIn(['parameter', 'chap']) === true ? (
                         <>
                           <GridItem xs={3} sm={3} md={3}>
                             <InputField
                               label={
                                 <FormattedMessage {...messages.formUsername} />
                               }
-                              name="username"
+                              name="parameter.username"
                               fullWidth
                             />
                           </GridItem>
@@ -164,7 +164,7 @@ const StorageForm = ({
                               label={
                                 <FormattedMessage {...messages.formPassword} />
                               }
-                              name="password"
+                              name="parameter.password"
                               fullWidth
                             />
                           </GridItem>
@@ -182,7 +182,7 @@ const StorageForm = ({
                         label={
                           <FormattedMessage {...messages.formServer} />
                         }
-                        name="server"
+                        name="parameter.server"
                         fullWidth
                       />
                     </GridItem>
@@ -191,7 +191,7 @@ const StorageForm = ({
                         label={
                           <FormattedMessage {...messages.formPath} />
                         }
-                        name="path"
+                        name="parameter.path"
                         fullWidth
                       />
                     </GridItem>
@@ -214,11 +214,11 @@ const StorageForm = ({
               <GridContainer>
                 <GridItem xs={12} sm={12} md={12} >
                   <Field
-                    name="hosts"
+                    name="parameter.hosts"
                     classes={classes}
                     blockDevices={blockDevices}
                     component={Hosts}
-                    values={formValues.get('hosts')}
+                    values={formValues.getIn(['parameter', 'hosts'])}
                   />
                 </GridItem>
               </GridContainer>
@@ -238,11 +238,11 @@ const StorageForm = ({
               <GridContainer>
                 <GridItem xs={12} sm={12} md={12} >
                   <Field
-                    name="initiators"
+                    name="parameter.initiators"
                     classes={classes}
                     nodes={nodes}
                     component={Initiators}
-                    values={formValues.get('initiators')}
+                    values={formValues.getIn(['parameter', 'initiators'])}
                   />
                 </GridItem>
               </GridContainer>

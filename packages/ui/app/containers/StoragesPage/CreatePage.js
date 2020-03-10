@@ -27,6 +27,7 @@ import Card from 'components/Card/Card';
 import CardHeader from 'components/Card/CardHeader';
 import CardBody from 'components/Card/CardBody';
 import CardFooter from 'components/Card/CardFooter';
+import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
 
 import { makeSelectCurrentID as makeSelectClusterID } from 'ducks/clusters/selectors';
 import * as actions from 'ducks/storages/actions';
@@ -44,7 +45,6 @@ import {
 
 import { usePush, useLocation } from 'hooks/router';
 
-import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
 import messages from './messages';
 import useStyles from './styles';
 import StorageForm from './Form';
@@ -67,7 +67,7 @@ const CreateStorageForm = reduxForm({
   validate,
 })(StorageForm);
 
-const initFormValue = fromJS({ name: '', type: '', hosts: [], initiators: [] });
+const initFormValue = fromJS({ name: '', type: '', parameter: { hosts: [], initiators: [] } });
 
 export const CreateStoragePage = ({
   loadBlockDevices,
@@ -97,7 +97,7 @@ export const CreateStoragePage = ({
 
   async function doSubmit(formValues) {
     try {
-      const data = formValues.toJS();
+      const data = formValues.set(formValues.get('type'), formValues.get('parameter')).remove('parameter').toJS();
       await new Promise((resolve, reject) => {
         createStorage({ ...data }, { resolve, reject, clusterID, url });
       });

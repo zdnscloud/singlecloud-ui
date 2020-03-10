@@ -68,7 +68,7 @@ const tableSchema = schema
     if (sch.id === 'name') {
       return {
         ...sch,
-        component: ({data, pathname,classes}) =>
+        component: ({ data, pathname, classes }) =>
           data.get('deletionTimestamp') ? (
             <span className={ data.get('deletionTimestamp') ? classes.strikeout : null}>{data.get('name')}</span>
           ) :(
