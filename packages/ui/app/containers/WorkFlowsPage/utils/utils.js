@@ -72,3 +72,31 @@ export const returnStatusIcon = (cSt,classes) => {
   }
   return <HourglassIcon  className={classes.hourglassIcon} />;
 };
+
+
+export const returnTime =(time) => {
+  const curTime = new Date();
+  const postTime = new Date(time);
+  const timeDiff = curTime.getTime() - postTime.getTime();
+
+  const min = 60 * 1000;
+  const hour = min * 60;
+  const day = hour * 24;
+  const week = day * 7;
+
+  const exceedWeek = Math.floor(timeDiff/week);
+  const exceedDay = Math.floor(timeDiff/day);
+  const exceedHour = Math.floor(timeDiff/hour);
+  const exceedMin = Math.floor(timeDiff/min);
+
+  if(exceedWeek > 0){
+    return time;                    
+  }
+  if(exceedDay < 7 && exceedDay > 0){
+    return `${exceedDay  } days ago`;
+  }
+  if(exceedHour < 24 && exceedHour > 0){
+    return `${exceedHour  } hours ago`;
+  }
+  return `${exceedMin  } minutes ago`;
+};

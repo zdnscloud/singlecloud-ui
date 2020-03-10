@@ -48,6 +48,7 @@ import messages from './messages';
 import TaskTabs from './components/TaskTabs';
 import TaskStatus from './components/TaskStatus';
 import TaskList from './components/TaskList';
+import { returnTime } from './utils/utils';
 
 const LogsPage = ({
   clusterID,
@@ -182,8 +183,9 @@ const LogsPage = ({
           {workFlowTasksList.size>0 ?  <GridItem xs={12} sm={12} md={12}>
             <Card>
               <CardHeader>
-                <h4 style={{border:'none'}}>
+                <h4 className={classes.headerTitle}>
                   {workFlowsTaskID}
+                  <span>{returnTime(workFlowTask && workFlowTask.get('creationTimestamp'))}</span>
                 </h4>
               </CardHeader>
               <CardBody>

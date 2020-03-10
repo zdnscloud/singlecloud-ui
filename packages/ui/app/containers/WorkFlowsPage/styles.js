@@ -156,6 +156,16 @@ export const styles = (theme) => ({
     color:'#B4B4B4',
     background:'#F7F7F7',
   },
+  headerTitle:{
+    border:'none !important',
+    fontSize:18,
+    fontWeight:'normal',
+    '& span':{
+      marginLeft:20,
+      fontSize:12,
+      color:'#4a4a4a',
+    },
+  },
 });
 
 export default makeStyles(styles);
