@@ -83,7 +83,7 @@ const Initiators = ({
           </TableRow>
         </TableHead>
         <TableBody>
-          {nodes.map((node, i) => (
+          {nodes.filter((node) => node.get('roles').includes('worker')).map((node, i) => (
             <TableRow key={i}>
               <TableCell className={classes.tableCell}>
                 <Checkbox
