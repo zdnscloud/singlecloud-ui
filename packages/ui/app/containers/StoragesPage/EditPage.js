@@ -3,7 +3,7 @@
  * Edit Storage Page
  *
  */
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
@@ -90,8 +90,9 @@ export const EditStoragePage = ({
   const classes = useStyles();
   const push = usePush();
   const location = useLocation();
+  const [ready, setReady] = useState(false);
   useEffect(() => {
-    readStorage(id, { clusterID, url: `${url}/${id}` });
+    readStorage(id, { clusterID, url: `${url}/${id}`, resolve: () => setTimeout(() => setReady(true), 20) });
     if (devicesURL) {
       loadBlockDevices(devicesURL, { clusterID });
     }
@@ -116,6 +117,8 @@ export const EditStoragePage = ({
     }
   }
 
+  const initialValues = storage.set('parameter', storage.get(storage.get('type')));
+
   return (
     <div className={classes.root}>
       <Helmet title={messages.pageTitle} description={messages.pageDesc} />
@@ -133,7 +136,7 @@ export const EditStoragePage = ({
           ]}
         />
         <Typography component="div">
-          {storage.size > 0 ? (
+          {ready > 0 ? (
             <EditStorageForm
               classes={classes}
               onSubmit={doSubmit}
@@ -144,7 +147,7 @@ export const EditStoragePage = ({
                   b.get('usedby') === storage.get('type')
               )}
               nodes={nodes}
-              formValues={values || storage}
+              formValues={values || storage.set('parameter', storage.get(storage.get('type')))}
               edit
             />
           ) : null}
