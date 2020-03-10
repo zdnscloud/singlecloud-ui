@@ -6,7 +6,7 @@ import { FormattedMessage } from 'react-intl';
 import Fab from '@material-ui/core/Fab';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Button from '@material-ui/core/Button';
-import CloseIcon from '@material-ui/icons/Close';
+
 
 import Card from 'components/Card/Card';
 import CardBody from 'components/Card/CardBody';
@@ -14,12 +14,10 @@ import CardHeader from 'components/Card/CardHeader';
 import GridItem from 'components/Grid/GridItem';
 import GridContainer from 'components/Grid/GridContainer';
 
-import HourglassIcon from 'components/Icons/Hourglass';
 import BlankIcon from 'components/Icons/Blank';
 import StatusArrowIcon from 'components/Icons/StatusArrow';
-import HookIcon from 'components/Icons/Hook';
 
-import { returnActiveStyle } from '../utils/utils';
+import { returnActiveStyle, returnStatusIcon } from '../utils/utils';
 import messages from '../messages';
 import useStyles from '../styles';
 
@@ -50,18 +48,6 @@ export const TaskStatus = ({
     return null;
   };
 
-  const returnIcon = (cSt) => {
-    switch (true) {
-      case cSt === 'Failed':
-        return <CloseIcon />;
-      case cSt === 'Succeeded':
-        return <HookIcon className={classes.hookIcon} />;
-      default:
-        break;
-    }
-    return <HourglassIcon  className={classes.hourglassIcon} />;
-  };
-
   return (
     <Fragment>
       <GridItem xs={12} sm={12} md={12}>
@@ -80,9 +66,9 @@ export const TaskStatus = ({
                     <div className={classes.statusWrap}>
                       <Fab
                         className={returnActiveStyle(currentStatus,classes)}
-                        style={{border:'5px solid #fff'}}
+                        style={{border:'5px solid #fff',pointerEvents:'none'}}
                       >
-                        {returnIcon(currentStatus)}
+                        {returnStatusIcon(currentStatus,classes)}
                       </Fab>
                       {returnLodding(currentStatus)}
                     </div>

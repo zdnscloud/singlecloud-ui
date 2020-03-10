@@ -2,7 +2,12 @@ import React, { PureComponent, Fragment, useState } from 'react';
 
 import TrueIcon from 'components/Icons/True';
 import FalseIcon from 'components/Icons/False';
-import loaddingIcon from 'images/loadding.gif';
+import CloseIcon from '@material-ui/icons/Close';
+import HookIcon from 'components/Icons/Hook';
+import HourglassIcon from 'components/Icons/Hourglass';
+import LoaddingIcon from '../images/loadding.gif';
+import RunningIcon from '../images/running.gif';
+import RunningHlIcon from '../images/runningHl.gif';
 
 
 export const returnActiveStyle = (cSt,classes) => {
@@ -26,7 +31,7 @@ export const returnActiveIcon = (cSt,type) => {
     case cSt === 'Failed':
       return  <FalseIcon  style={{color: type === 'list'? '#fff' :'#F5222D'}} />;
     case cSt === 'Running':
-      return <img src={loaddingIcon} alt='loaddingIcon' style={{width:17}} />;
+      return <img src={type === 'list'? RunningIcon:RunningHlIcon } alt='icon' style={{width:22}} />;
     case cSt === 'Succeeded':
       return  <TrueIcon  style={{color: type === 'list'? '#fff' :'#389E0D'}} /> ;
     case cSt === 'Pending':
@@ -52,4 +57,18 @@ export const returnActiveColor = (cSt,classes) => {
       break;
   }
   return classes.gray;
+};
+
+export const returnStatusIcon = (cSt,classes) => {
+  switch (true) {
+    case cSt === 'Failed':
+      return <CloseIcon />;
+    case cSt === 'Succeeded':
+      return <HookIcon className={classes.hookIcon} />;
+    case cSt === 'Running':
+      return <img src={LoaddingIcon} alt='LoaddingIcon' style={{width:20}} />;
+    default:
+      break;
+  }
+  return <HourglassIcon  className={classes.hourglassIcon} />;
 };
