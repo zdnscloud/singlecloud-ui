@@ -31,7 +31,7 @@ import schema from './tableSchema';
 export const StoragesTable = ({
   clusterID,
   data,
-  removeStorageCluster,
+  removeStorage,
   setError,
 }) => {
   const classes = useStyles();
@@ -42,10 +42,10 @@ export const StoragesTable = ({
       if (sch.id === 'actions') {
         return {
           ...sch,
-          props: { removeStorageCluster, clusterID, pathname, setError },
+          props: { removeStorage, clusterID, pathname, setError },
         };
       }
-      if (sch.id === 'storageType') {
+      if (sch.id === 'type') {
         return {
           ...sch,
           props: { pathname,classes },

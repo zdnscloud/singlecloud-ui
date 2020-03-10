@@ -25,9 +25,11 @@ import GridItem from 'components/Grid/GridItem';
 import GridContainer from 'components/Grid/GridContainer';
 import InputField from 'components/Field/InputField';
 import SelectField from 'components/Field/SelectField';
+import SwitchField from 'components/Field/SwitchField';
 
 import messages from './messages';
 import Hosts from './form/Hosts';
+import Initiators from './form/Initiators';
 
 const StorageForm = ({
   handleSubmit,
@@ -38,6 +40,7 @@ const StorageForm = ({
   classes,
   profile,
   blockDevices,
+  nodes,
   initialValues,
   formValues,
   edit,
@@ -58,7 +61,7 @@ const StorageForm = ({
                   <Danger>{getByKey(error, ['response', 'message'])}</Danger>
                 </GridItem>
               ) : null}
-              <GridItem xs={12} sm={12} md={12} className={classes.formLine}>
+              <GridItem xs={12} sm={12} md={12} >
                 <GridContainer>
                   <GridItem xs={3} sm={3} md={3}>
                     {edit ? (
@@ -85,7 +88,7 @@ const StorageForm = ({
                         labelText={
                           <FormattedMessage {...messages.formStorageType} />
                         }
-                        value={initialValues.get('storageType')}
+                        value={initialValues.get('type')}
                         fullWidth
                       />
                     ) : (
@@ -93,7 +96,7 @@ const StorageForm = ({
                         label={
                           <FormattedMessage {...messages.formStorageType} />
                         }
-                        name="storageType"
+                        name="type"
                         fullWidth
                         options={['lvm', 'cephfs', 'iscsi', 'nfs']}
                       />
@@ -101,33 +104,152 @@ const StorageForm = ({
                   </GridItem>
                 </GridContainer>
               </GridItem>
+              {['iscsi'].includes(formValues.get('type')) ? (
+                <>
+                  <GridItem xs={12} sm={12} md={12}>
+                    <GridContainer>
+                      <GridItem xs={3} sm={3} md={3}>
+                        <InputField
+                          label={
+                            <FormattedMessage {...messages.formTarget} />
+                          }
+                          name="target"
+                          fullWidth
+                        />
+                      </GridItem>
+                      <GridItem xs={3} sm={3} md={3}>
+                        <InputField
+                          label={
+                            <FormattedMessage {...messages.formPort} />
+                          }
+                          name="port"
+                          fullWidth
+                        />
+                      </GridItem>
+                      <GridItem xs={3} sm={3} md={3}>
+                        <InputField
+                          label={
+                            <FormattedMessage {...messages.formIqn} />
+                          }
+                          name="iqn"
+                          fullWidth
+                        />
+                      </GridItem>
+                    </GridContainer>
+                  </GridItem>
+                  <GridItem xs={12} sm={12} md={12}>
+                    <GridContainer>
+                      <GridItem xs={3} sm={3} md={3}>
+                        <SwitchField
+                          label={
+                            <FormattedMessage {...messages.formChap} />
+                          }
+                          name="chap"
+                          fullWidth
+                        />
+                      </GridItem>
+                      {formValues.get('chap') === true ? (
+                        <>
+                          <GridItem xs={3} sm={3} md={3}>
+                            <InputField
+                              label={
+                                <FormattedMessage {...messages.formUsername} />
+                              }
+                              name="username"
+                              fullWidth
+                            />
+                          </GridItem>
+                          <GridItem xs={3} sm={3} md={3}>
+                            <InputField
+                              label={
+                                <FormattedMessage {...messages.formPassword} />
+                              }
+                              name="password"
+                              fullWidth
+                            />
+                          </GridItem>
+                        </>
+                      ) : null}
+                    </GridContainer>
+                  </GridItem>
+                </>
+              ) : null}
+              {['nfs'].includes(formValues.get('type')) ? (
+                <GridItem xs={12} sm={12} md={12}>
+                  <GridContainer>
+                    <GridItem xs={3} sm={3} md={3} >
+                      <InputField
+                        label={
+                          <FormattedMessage {...messages.formServer} />
+                        }
+                        name="server"
+                        fullWidth
+                      />
+                    </GridItem>
+                    <GridItem xs={3} sm={3} md={3} >
+                      <InputField
+                        label={
+                          <FormattedMessage {...messages.formPath} />
+                        }
+                        name="path"
+                        fullWidth
+                      />
+                    </GridItem>
+                  </GridContainer>
+                </GridItem>
+              ) : null}
             </GridContainer>
           </CardBody>
         </Card>
       </GridItem>
-      <GridItem xs={12} sm={12} md={12}>
-        <Card className={classes.cardMarginTop}>
-          <CardHeader>
-            <h4>
-              <FormattedMessage {...messages.formHostnames} />
-            </h4>
-          </CardHeader>
-          <CardBody>
-            <GridContainer>
-              <GridItem xs={12} sm={12} md={12} className={classes.formLine}>
-                <Field
-                  name="hosts"
-                  classes={classes}
-                  storageType={formValues.get('storageType')}
-                  blockDevices={blockDevices}
-                  component={Hosts}
-                  values={formValues.get('hosts')}
-                />
-              </GridItem>
-            </GridContainer>
-          </CardBody>
-        </Card>
-      </GridItem>
+      {['lvm', 'cephfs'].includes(formValues.get('type')) ? (
+        <GridItem xs={12} sm={12} md={12}>
+          <Card className={classes.cardMarginTop}>
+            <CardHeader>
+              <h4>
+                <FormattedMessage {...messages.formHostnames} />
+              </h4>
+            </CardHeader>
+            <CardBody>
+              <GridContainer>
+                <GridItem xs={12} sm={12} md={12} >
+                  <Field
+                    name="hosts"
+                    classes={classes}
+                    blockDevices={blockDevices}
+                    component={Hosts}
+                    values={formValues.get('hosts')}
+                  />
+                </GridItem>
+              </GridContainer>
+            </CardBody>
+          </Card>
+        </GridItem>
+      ) : null}
+      {['iscsi'].includes(formValues.get('type')) ? (
+        <GridItem xs={12} sm={12} md={12}>
+          <Card className={classes.cardMarginTop}>
+            <CardHeader>
+              <h4>
+                <FormattedMessage {...messages.formInitiators} />
+              </h4>
+            </CardHeader>
+            <CardBody>
+              <GridContainer>
+                <GridItem xs={12} sm={12} md={12} >
+                  <Field
+                    name="initiators"
+                    classes={classes}
+                    nodes={nodes}
+                    component={Initiators}
+                    values={formValues.get('initiators')}
+                  />
+                </GridItem>
+              </GridContainer>
+            </CardBody>
+          </Card>
+        </GridItem>
+      ) : null}
     </GridContainer>
   </form>
 );

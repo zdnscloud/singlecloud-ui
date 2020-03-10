@@ -36,6 +36,11 @@ import {
   makeSelectURL as makeSelectBlockDevicesURL,
   makeSelectBlockDevicesList,
 } from 'ducks/blockDevices/selectors';
+import * as nodesActions from 'ducks/nodes/actions';
+import {
+  makeSelectURL as makeSelectNodesURL,
+  makeSelectNodesList,
+} from 'ducks/nodes/selectors';
 
 import { usePush, useLocation } from 'hooks/router';
 
@@ -62,15 +67,18 @@ const CreateStorageForm = reduxForm({
   validate,
 })(StorageForm);
 
-const initFormValue = fromJS({ storageType: '', hosts: [] });
+const initFormValue = fromJS({ name: '', type: '', hosts: [], initiators: [] });
 
 export const CreateStoragePage = ({
   loadBlockDevices,
   devicesURL,
   blockDevices,
+  loadNodes,
+  nodesURL,
+  nodes,
   cluster,
   clusterID,
-  createStorageCluster,
+  createStorage,
   submitForm,
   url,
   values,
@@ -82,13 +90,16 @@ export const CreateStoragePage = ({
     if (devicesURL) {
       loadBlockDevices(devicesURL, { clusterID });
     }
-  }, [clusterID, devicesURL, loadBlockDevices]);
+    if (nodesURL) {
+      loadNodes(nodesURL, { clusterID });
+    }
+  }, [clusterID, devicesURL, loadBlockDevices, loadNodes, nodesURL]);
 
   async function doSubmit(formValues) {
     try {
       const data = formValues.toJS();
       await new Promise((resolve, reject) => {
-        createStorageCluster({ ...data }, { resolve, reject, clusterID, url });
+        createStorage({ ...data }, { resolve, reject, clusterID, url });
       });
       push(`/clusters/${clusterID}/storages`);
     } catch (error) {
@@ -112,12 +123,13 @@ export const CreateStoragePage = ({
             },
           ]}
         />
-        <Typography component="div" className="">
+        <Typography component="div">
           <CreateStorageForm
             classes={classes}
             onSubmit={doSubmit}
             initialValues={initFormValue}
             blockDevices={blockDevices.filter((b) => !b.get('usedby'))}
+            nodes={nodes}
             formValues={values || initFormValue}
           />
           <GridItem xs={12} sm={12} md={12}>
@@ -142,6 +154,8 @@ const mapStateToProps = createStructuredSelector({
   url: makeSelectURL(),
   devicesURL: makeSelectBlockDevicesURL(),
   blockDevices: makeSelectBlockDevicesList(),
+  nodesURL: makeSelectNodesURL(),
+  nodes: makeSelectNodesList(),
   values: getFormValues(formName),
 });
 
@@ -150,6 +164,7 @@ const mapDispatchToProps = (dispatch) =>
     {
       ...actions,
       ...bdActions,
+      ...nodesActions,
       submitForm: () => submit(formName),
     },
     dispatch

@@ -72,8 +72,8 @@ export const EditStoragePage = ({
   blockDevices,
   clusterID,
   id,
-  readStorageCluster,
-  updateStorageCluster,
+  readStorage,
+  updateStorage,
   submitForm,
   storage,
   url,
@@ -83,18 +83,18 @@ export const EditStoragePage = ({
   const push = usePush();
   const location = useLocation();
   useEffect(() => {
-    readStorageCluster(id, { clusterID, url: `${url}/${id}` });
+    readStorage(id, { clusterID, url: `${url}/${id}` });
     if (devicesURL) {
       loadBlockDevices(devicesURL, { clusterID });
     }
-  }, [devicesURL, url, id, clusterID, readStorageCluster, loadBlockDevices]);
+  }, [devicesURL, url, id, clusterID, readStorage, loadBlockDevices]);
 
   const itemUrl = storage.getIn(['links', 'update']);
   async function doSubmit(formValues) {
     try {
       const data = formValues.toJS();
       await new Promise((resolve, reject) => {
-        updateStorageCluster(
+        updateStorage(
           { ...data },
           { resolve, reject, clusterID, url: itemUrl }
         );
@@ -130,7 +130,7 @@ export const EditStoragePage = ({
               blockDevices={blockDevices.filter(
                 (b) =>
                   !b.get('usedby') ||
-                  b.get('usedby') === storage.get('storageType')
+                  b.get('usedby') === storage.get('type')
               )}
               formValues={values || storage}
               edit

@@ -57,9 +57,9 @@ export default defineMessages({
     id: `${scope}.tableTitleName`,
     defaultMessage: 'Name',
   },
-  tableTitleStorageType: {
-    id: `${scope}.tableTitleStorageType`,
-    defaultMessage: 'StorageType',
+  tableTitleType: {
+    id: `${scope}.tableTitleType`,
+    defaultMessage: 'Type',
   },
   tableTitleHosts: {
     id: `${scope}.tableTitleHosts`,
@@ -144,6 +144,46 @@ export default defineMessages({
   formBlockDevices: {
     id: `${scope}.formBlockDevices`,
     defaultMessage: 'formBlockDevices',
+  },
+  formNodeAddress: {
+    id: `${scope}.formNodeAddress`,
+    defaultMessage: 'formNodeAddress',
+  },
+  formServer: {
+    id: `${scope}.formServer`,
+    defaultMessage: 'formServer',
+  },
+  formPath: {
+    id: `${scope}.formPath`,
+    defaultMessage: 'formPath',
+  },
+  formTarget: {
+    id: `${scope}.formTarget`,
+    defaultMessage: 'formTarget',
+  },
+  formPort: {
+    id: `${scope}.formPort`,
+    defaultMessage: 'formPort',
+  },
+  formIqn: {
+    id: `${scope}.formIqn`,
+    defaultMessage: 'formIqn',
+  },
+  formChap: {
+    id: `${scope}.formChap`,
+    defaultMessage: 'formChap',
+  },
+  formUsername: {
+    id: `${scope}.formUsername`,
+    defaultMessage: 'formUsername',
+  },
+  formPassword: {
+    id: `${scope}.formPassword`,
+    defaultMessage: 'formPassword',
+  },
+  formInitiators: {
+    id: `${scope}.formInitiators`,
+    defaultMessage: 'formInitiators',
   },
   editButton: {
     id: `${scope}.editButton`,

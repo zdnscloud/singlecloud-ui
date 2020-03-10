@@ -7,9 +7,9 @@ import { FormattedMessage } from 'react-intl';
 import messages from './messages';
 
 const schema = [
-  'storageType',
+  'name',
   'phase',
-  'hosts',
+  'type',
   'size',
   'usedSize',
   'freeSize',
@@ -38,7 +38,7 @@ const tableSchema = schema
       component: ({
         pathname,
         data,
-        removeStorageCluster,
+        removeStorage,
         clusterID,
         setError,
       }) => (
@@ -53,7 +53,7 @@ const tableSchema = schema
           </Button>
 
           <ConfirmDelete
-            actionName={removeStorageCluster}
+            actionName={removeStorage}
             id={data.get('id')}
             url={data.getIn(['links', 'remove'])}
             clusterID={clusterID}
@@ -65,19 +65,19 @@ const tableSchema = schema
     },
   ])
   .map((sch) => {
-    if (sch.id === 'storageType') {
+    if (sch.id === 'name') {
       return {
         ...sch,
-        component: ({data, pathname,classes}) => 
+        component: ({data, pathname,classes}) =>
           data.get('deletionTimestamp') ? (
-            <span className={ data.get('deletionTimestamp') ? classes.strikeout : null}>{ data.get('storageType')}</span>
+            <span className={ data.get('deletionTimestamp') ? classes.strikeout : null}>{data.get('name')}</span>
           ) :(
             <Button
               link
               component={Link}
               to={`${pathname}/${data.get('id')}/show`}
             >
-              {data.get('storageType')}
+              {data.get('name')}
             </Button>
           ),
       };
