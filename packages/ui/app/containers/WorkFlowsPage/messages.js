@@ -29,10 +29,6 @@ export default defineMessages({
     id: `${scope}.tableTitleStatus`,
     defaultMessage: 'Status',
   },
-  tableTitleCreationTimestamp: {
-    id: `${scope}.tableTitleCreationTimestamp`,
-    defaultMessage: 'CreationTimestamp',
-  },
   tableTitleActions: {
     id: `${scope}.tableTitleActions`,
     defaultMessage: 'Actions',

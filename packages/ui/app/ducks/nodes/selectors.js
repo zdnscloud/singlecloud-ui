@@ -11,8 +11,8 @@ import {
 } from 'connected-react-router/immutable';
 import {
   makeSelectCurrent as makeSelectCurrentCluster,
-} from 'ducks/clusters/selectors';
-import { makeSelectCurrentID as makeSelectCurrentClusterID } from 'ducks/clusters/selectors';
+  makeSelectCurrentID as makeSelectCurrentClusterID } from 'ducks/clusters/selectors';
+
 import * as c from './constants';
 import { initialState } from './index';
 
@@ -40,13 +40,13 @@ export const makeSelectNodes = () =>
   createSelector(
     selectDomain,
     makeSelectCurrentClusterID(),
-  (
-    substate,
+    (
+      substate,
       clusterID,
-  ) =>
-    substate.getIn([
-      'data',
-      clusterID,
+    ) =>
+      substate.getIn([
+        'data',
+        clusterID,
       ]) || substate.clear()
   );
 
@@ -67,15 +67,15 @@ export const makeSelectNodesList = () =>
   );
 
 export const makeSelectCurrentID = () =>
-   createSelector(
-     createMatchSelector('*/nodes/:id/*'),
-     (match) => {
-       if (match && match.params) {
-         return match.params.id;
-       }
-       return '';
-     }
-   );
+  createSelector(
+    createMatchSelector('*/nodes/:id/*'),
+    (match) => {
+      if (match && match.params) {
+        return match.params.id;
+      }
+      return '';
+    }
+  );
 
 export const makeSelectCurrent = () =>
   createSelector(
@@ -105,7 +105,7 @@ export const makeSelectLoadErrorsList = () =>
     selectDomain,
     (substate) =>
       substate.get('errorsList')
-      .filter(({ type }) => type === c.LOAD_NODES_FAILURE)
+        .filter(({ type }) => type === c.LOAD_NODES_FAILURE)
   );
 
 export const makeSelectReadErrorsList = () =>
@@ -113,7 +113,7 @@ export const makeSelectReadErrorsList = () =>
     selectDomain,
     (substate) =>
       substate.get('errorsList')
-      .filter(({ type }) => type === c.READ_NODE_FAILURE)
+        .filter(({ type }) => type === c.READ_NODE_FAILURE)
   );
 
 export const makeSelectActionErrorsList = () =>
@@ -121,5 +121,5 @@ export const makeSelectActionErrorsList = () =>
     selectDomain,
     (substate) =>
       substate.get('errorsList')
-      .filter(({ type }) => type === c.EXECUTE_NODE_ACTION_FAILURE)
+        .filter(({ type }) => type === c.EXECUTE_NODE_ACTION_FAILURE)
   );

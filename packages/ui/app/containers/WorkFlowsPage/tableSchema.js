@@ -8,22 +8,13 @@ import TableActions from 'components/TableActions/TableActions';
 import { FormattedMessage } from 'react-intl';
 import messages from './messages';
 
-const schema = ['name','status', 'creationTimestamp'];
+const schema = ['name','status'];
 
 const tableSchema = schema
   .map((id) => ({
     id,
     label: ucfirst(id),
   }))
-  .map((item) => {
-    if (item.id === 'creationTimestamp') {
-      return {
-        ...item,
-        component: TimeCell,
-      };
-    }
-    return item;
-  })
   .concat([
     {
       id: 'actions',
