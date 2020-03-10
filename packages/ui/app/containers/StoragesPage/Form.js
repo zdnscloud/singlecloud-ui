@@ -118,6 +118,7 @@ const StorageForm = ({
                 <Field
                   name="hosts"
                   classes={classes}
+                  storageType={formValues.get('storageType')}
                   blockDevices={blockDevices}
                   component={Hosts}
                   values={formValues.get('hosts')}

@@ -29,12 +29,12 @@ import CardBody from 'components/Card/CardBody';
 import CardFooter from 'components/Card/CardFooter';
 
 import { makeSelectCurrentID as makeSelectClusterID } from 'ducks/clusters/selectors';
-import * as actions from 'ducks/storageClusters/actions';
+import * as actions from 'ducks/storages/actions';
 import {
   makeSelectURL,
   makeSelectCurrent,
   makeSelectCurrentID,
-} from 'ducks/storageClusters/selectors';
+} from 'ducks/storages/selectors';
 import * as bdActions from 'ducks/blockDevices/actions';
 import {
   makeSelectURL as makeSelectBlockDevicesURL,
@@ -99,7 +99,7 @@ export const EditStoragePage = ({
           { resolve, reject, clusterID, url: itemUrl }
         );
       });
-      push(`/clusters/${clusterID}/storageClusters`);
+      push(`/clusters/${clusterID}/storages`);
     } catch (error) {
       throw new SubmissionError({ _error: error });
     }
@@ -113,7 +113,7 @@ export const EditStoragePage = ({
         <Breadcrumbs
           data={[
             {
-              path: `/clusters/${clusterID}/storageClusters`,
+              path: `/clusters/${clusterID}/storages`,
               name: <FormattedMessage {...messages.pageTitle} />,
             },
             {

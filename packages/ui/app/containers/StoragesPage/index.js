@@ -1,6 +1,6 @@
 /**
  *
- * StorageClusters Page
+ * Storages Page
  *
  */
 
@@ -32,23 +32,23 @@ import CardBody from 'components/Card/CardBody';
 import ReadOnlyInput from 'components/CustomInput/ReadOnlyInput';
 import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
 
-import * as actions from 'ducks/storageClusters/actions';
+import * as actions from 'ducks/storages/actions';
 import { makeSelectCurrentID as makeSelectClusterID } from 'ducks/clusters/selectors';
-import { makeSelectURL } from 'ducks/storageClusters/selectors';
+import { makeSelectURL } from 'ducks/storages/selectors';
 
 import StoragesTable from './Table';
 import messages from './messages';
 import useStyles from './styles';
 
-export const StoragesPage = ({ clusterID, loadStorageClusters, url }) => {
+export const StoragesPage = ({ clusterID, loadStorages, url }) => {
   const classes = useStyles();
   useEffect(() => {
     if (url) {
-      loadStorageClusters(url, { clusterID });
+      loadStorages(url, { clusterID });
     }
-    const t = setInterval(() => loadStorageClusters(url, { clusterID }), 3000);
+    const t = setInterval(() => loadStorages(url, { clusterID }), 3000);
     return () => clearInterval(t);
-  }, [clusterID, loadStorageClusters, url]);
+  }, [clusterID, loadStorages, url]);
   const [error, setError] = useState(null);
 
   return (
@@ -59,7 +59,7 @@ export const StoragesPage = ({ clusterID, loadStorageClusters, url }) => {
         <Breadcrumbs
           data={[
             {
-              path: `/clusters/${clusterID}/storageClusters`,
+              path: `/clusters/${clusterID}/storages`,
               name: <FormattedMessage {...messages.pageTitle} />,
             },
           ]}
@@ -79,7 +79,7 @@ export const StoragesPage = ({ clusterID, loadStorageClusters, url }) => {
                 </h4>
                 <IconButton
                   component={Link}
-                  to={`/clusters/${clusterID}/storageClusters/create`}
+                  to={`/clusters/${clusterID}/storages/create`}
                   className={classes.createBtnLink}
                 >
                   <AddIcon />

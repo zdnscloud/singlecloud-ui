@@ -1,6 +1,6 @@
 /**
- * Duck: StorageClusters
- * selectors: storageClusters
+ * Duck: Storages
+ * selectors: storages
  *
  */
 import { fromJS } from 'immutable';
@@ -17,7 +17,7 @@ import * as c from './constants';
 import { initialState } from './index';
 
 /**
- * Direct selector to the storageClusters domain
+ * Direct selector to the storages domain
  */
 export const selectDomain = (state) => state.get(c.prefix) || initialState;
 
@@ -27,7 +27,7 @@ export const selectDomain = (state) => state.get(c.prefix) || initialState;
 export const makeSelectURL = () =>
   createSelector(
     makeSelectCurrentCluster(),
-    (pt) => pt.getIn(['links', 'storageclusters'])
+    (pt) => pt.getIn(['links', 'storages'])
   );
 
 export const makeSelectData = () =>
@@ -36,7 +36,7 @@ export const makeSelectData = () =>
     (substate) => substate.get('data')
   );
 
-export const makeSelectStorageClusters = () =>
+export const makeSelectStorages = () =>
   createSelector(
     selectDomain,
     makeSelectCurrentClusterID(),
@@ -50,10 +50,10 @@ export const makeSelectStorageClusters = () =>
       ]) || substate.clear()
   );
 
-export const makeSelectStorageClustersList = () =>
+export const makeSelectStoragesList = () =>
   createSelector(
     selectDomain,
-    makeSelectStorageClusters(),
+    makeSelectStorages(),
     makeSelectCurrentClusterID(),
     (
       substate,
@@ -68,7 +68,7 @@ export const makeSelectStorageClustersList = () =>
 
 export const makeSelectCurrentID = () =>
   createSelector(
-    createMatchSelector('*/storageClusters/:id/*'),
+    createMatchSelector('*/storages/:id/*'),
     (match) => {
       if (match && match.params) {
         return match.params.id;
@@ -105,7 +105,7 @@ export const makeSelectLoadErrorsList = () =>
     selectDomain,
     (substate) =>
       substate.get('errorsList')
-        .filter(({ type }) => type === c.LOAD_STORAGE_CLUSTERS_FAILURE)
+        .filter(({ type }) => type === c.LOAD_STORAGES_FAILURE)
   );
 
 export const makeSelectCreateErrorsList = () =>
@@ -113,7 +113,7 @@ export const makeSelectCreateErrorsList = () =>
     selectDomain,
     (substate) =>
       substate.get('errorsList')
-        .filter(({ type }) => type === c.CREATE_STORAGE_CLUSTER_FAILURE)
+        .filter(({ type }) => type === c.CREATE_STORAGE_FAILURE)
   );
 
 export const makeSelectUpdateErrorsList = () =>
@@ -121,7 +121,7 @@ export const makeSelectUpdateErrorsList = () =>
     selectDomain,
     (substate) =>
       substate.get('errorsList')
-        .filter(({ type }) => type === c.UPDATE_STORAGE_CLUSTER_FAILURE)
+        .filter(({ type }) => type === c.UPDATE_STORAGE_FAILURE)
   );
 
 export const makeSelectReadErrorsList = () =>
@@ -129,7 +129,7 @@ export const makeSelectReadErrorsList = () =>
     selectDomain,
     (substate) =>
       substate.get('errorsList')
-        .filter(({ type }) => type === c.READ_STORAGE_CLUSTER_FAILURE)
+        .filter(({ type }) => type === c.READ_STORAGE_FAILURE)
   );
 
 export const makeSelectRemoveErrorsList = () =>
@@ -137,6 +137,6 @@ export const makeSelectRemoveErrorsList = () =>
     selectDomain,
     (substate) =>
       substate.get('errorsList')
-        .filter(({ type }) => type === c.REMOVE_STORAGE_CLUSTER_FAILURE)
+        .filter(({ type }) => type === c.REMOVE_STORAGE_FAILURE)
   );
 

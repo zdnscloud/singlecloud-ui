@@ -30,12 +30,12 @@ import ReadOnlyInput from 'components/CustomInput/ReadOnlyInput';
 import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
 
 import { makeSelectCurrentID as makeSelectClusterID } from 'ducks/clusters/selectors';
-import * as actions from 'ducks/storageClusters/actions';
+import * as actions from 'ducks/storages/actions';
 import {
   makeSelectURL,
   makeSelectCurrent,
   makeSelectCurrentID,
-} from 'ducks/storageClusters/selectors';
+} from 'ducks/storages/selectors';
 
 import messages from './messages';
 import useStyles from './styles';
@@ -74,7 +74,7 @@ export const StoragePage = ({
         <Breadcrumbs
           data={[
             {
-              path: `/clusters/${clusterID}/storageClusters`,
+              path: `/clusters/${clusterID}/storages`,
               name: <FormattedMessage {...messages.pageTitle} />,
             },
             {
