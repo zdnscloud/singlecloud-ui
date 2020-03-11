@@ -30,6 +30,7 @@ const ApplicationForm = ({
   clusterID,
   namespaceID,
   chart,
+  storageClasses,
   formValues,
 }) => {
   const versions = chart.get('versions') || fromJS([]);
@@ -161,6 +162,7 @@ const ApplicationForm = ({
                 classes={classes}
                 component={DynamicForm}
                 config={config}
+                storageClasses={storageClasses}
                 formValues={formValues}
               />
             </CardBody>

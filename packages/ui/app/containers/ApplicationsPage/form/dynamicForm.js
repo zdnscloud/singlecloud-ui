@@ -5,9 +5,11 @@ import InputField from 'components/Field/InputField';
 import SwitchField from 'components/Field/SwitchField';
 import RadioField from 'components/Field/RadioField';
 import CheckboxesField from 'components/Field/CheckboxesField';
+import SelectField from 'components/Field/SelectField';
+
 import useStyles from '../styles';
 
-const DynamicForm = ({ fields, config, formValues }) => {
+const DynamicForm = ({ fields, config, storageClasses, formValues }) => {
   const classes = useStyles();
   const renderItem = (item) => {
     const radioOptions = item.get('validValues')
@@ -108,6 +110,23 @@ const DynamicForm = ({ fields, config, formValues }) => {
             />
           </GridItem>
         );
+
+      case 'storageClass': {
+        const storageClassesOptions = storageClasses.toList().map((sc) => ({
+          label: sc.get('name'),
+          value: sc.get('name'),
+        }));
+        return (
+          <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
+            <SelectField
+              label={item.get('label')}
+              name={item.get('jsonKey')}
+              options={storageClassesOptions}
+              fullWidth
+            />
+          </GridItem>
+        );
+      }
       default:
         break;
     }

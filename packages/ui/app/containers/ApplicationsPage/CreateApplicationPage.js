@@ -148,6 +148,7 @@ export const CreateApplicationPage = ({
                   injectServiceMesh: true,
                 })}
                 chart={chart}
+                storageClasses={storageClasses}
                 clusterID={clusterID}
                 namespaceID={namespaceID}
                 formValues={values}
