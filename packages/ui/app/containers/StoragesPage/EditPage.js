@@ -144,7 +144,7 @@ export const EditStoragePage = ({
               blockDevices={blockDevices.filter(
                 (b) =>
                   !b.get('usedby') ||
-                  b.get('usedby') === storage.get('type')
+                  b.get('usedby') === storage.get('name')
               )}
               nodes={nodes}
               formValues={values || storage.set('parameter', storage.get(storage.get('type')))}
