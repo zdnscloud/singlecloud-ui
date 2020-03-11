@@ -37,7 +37,7 @@ import {
   makeSelectStorageClasses,
   makeSelectURL as makeSelectStorageClassesURL,
 } from 'ducks/storageClasses/selectors';
-import * as storagesAction from 'ducks/storageClasses/actions';
+import * as storagesActions from 'ducks/storageClasses/actions';
 
 import messages from './messages';
 import useStyles from './LeftMenuStyle';
@@ -234,7 +234,7 @@ const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
       ...actions,
-      ...storagesAction,
+      ...storagesActions,
       loadMonitors: mActions.loadMonitors,
       createMonitor: mActions.createMonitor,
       loadRegistries: rActions.loadRegistries,
