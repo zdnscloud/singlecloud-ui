@@ -25,15 +25,20 @@ const ConfirmDialog = ({
   content,
   sureButtonText,
   hideCancleBtn,
+  ...rest
 }) => (
-  <Dialog open={open} onClose={onClose}>
+  <Dialog open={open} onClose={onClose} {...rest}>
     <DialogTitle>{title}</DialogTitle>
     <DialogContent style={{ minWidth: 300 }}>
       {content || children}
     </DialogContent>
     <DialogActions>
       {hideCancleBtn ? null : (
-        <Button onClick={onCancel || onClose} variant="contained"  style={{ backgroundColor:'#fff', border:'1px solid #D9D9D9' }}>
+        <Button
+          variant="contained"
+          onClick={onCancel || onClose}
+          style={{ backgroundColor:'#fff', border:'1px solid #D9D9D9' }}
+        >
           <FormattedMessage {...messages.cancleButton} />
         </Button>
       )}

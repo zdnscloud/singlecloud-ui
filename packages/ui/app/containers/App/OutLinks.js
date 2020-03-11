@@ -33,6 +33,11 @@ import {
   makeSelectCurrentID as makeSelectCurrentClusterID,
   makeSelectCurrent as makeSelectCurrentCluster,
 } from 'ducks/clusters/selectors';
+import {
+  makeSelectStorageClasses,
+  makeSelectURL as makeSelectStorageClassesURL,
+} from 'ducks/storageClasses/selectors';
+import * as storagesAction from 'ducks/storageClasses/actions';
 
 import messages from './messages';
 import useStyles from './LeftMenuStyle';
@@ -56,6 +61,9 @@ const OutLinks = ({
   isAdmin,
   handleClose,
   setHidden,
+  loadStorageClasses,
+  storageClasses,
+  storageClassesURL,
 }) => {
   let menus = [
     {
@@ -179,6 +187,7 @@ const OutLinks = ({
           setError(null);
           handleClose();
         }}
+        maxWidth="lg"
         title={<FormattedMessage {...messages.leftMenuDialogTitle} />}
         content={
           memuRole === 'monitors' ? (
@@ -189,7 +198,16 @@ const OutLinks = ({
               <FormattedMessage {...messages.leftMenuDialogContent} />
             </>
           ) : (
-            <RegistryForm role={role} onSubmit={doSubmit} memuRole={memuRole} />
+            <RegistryForm
+              isOpen={!!open}
+              clusterID={clusterID}
+              loadStorageClasses={loadStorageClasses}
+              storageClasses={storageClasses}
+              storageClassesURL={storageClassesURL}
+              role={role}
+              onSubmit={doSubmit}
+              memuRole={memuRole}
+            />
           )
         }
         onAction={() =>
@@ -208,12 +226,15 @@ const mapStateToProps = createStructuredSelector({
   role: makeSelectRole(),
   formValues: getFormValues(formName),
   isAdmin: makeSelectIsAdmin(),
+  storageClasses: makeSelectStorageClasses(),
+  storageClassesURL: makeSelectStorageClassesURL(),
 });
 
 const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
       ...actions,
+      ...storagesAction,
       loadMonitors: mActions.loadMonitors,
       createMonitor: mActions.createMonitor,
       loadRegistries: rActions.loadRegistries,
