@@ -48,10 +48,20 @@ const WorkFlowsPage = ({
         namespaceID,
       });
     }
+    const t = setInterval(() => {
+      if (url) {
+        loadWorkFlows(url, {
+          clusterID,
+          namespaceID,
+        });
+      }
+    }, 3000);
+
     return () => {
-      // try cancel something when unmount
+      clearInterval(t);
     };
   }, [clusterID, loadWorkFlows, namespaceID, url]);
+
 
   return (
     <div className={classes.root}>
