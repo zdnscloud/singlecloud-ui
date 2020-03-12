@@ -64,9 +64,9 @@ export const TaskStatus = ({
                 return (
                   <div key={i} className={classes.statusContent}>
                     <div className={classes.statusWrap}>
-                      <Fab
-                        className={returnActiveStyle(currentStatus,classes)}
-                        style={{border:'5px solid #fff',pointerEvents:'none'}}
+                      <Fab 
+                        classes={{root: returnActiveStyle(currentStatus,classes)}}
+                        style={{ border:'5px solid #fff',pointerEvents:'none' }}
                       >
                         {returnStatusIcon(currentStatus,classes)}
                       </Fab>
