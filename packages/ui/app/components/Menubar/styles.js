@@ -12,7 +12,6 @@ const styles = (theme) => ({
     width: '100%',
     backgroundColor: theme.palette.primary.contrastText,
     color: theme.palette.primary.main,
-    paddingLeft: 13,
   },
   toolbarLeft: {
     display: 'flex',
@@ -23,11 +22,20 @@ const styles = (theme) => ({
     alignItems: 'center',
   },
   menuButton: {
-    display: 'flex',
-    width: 60,
+    display: 'inline-block',
+    width: theme.leftShrinkWidth,
     flexGrow: 1,
     flexDirection: 'column',
     justifyContent: 'center',
+    height:65,
+    background: '#112338',
+    paddingLeft: 18,
+  },
+  menuIcon:{
+    transform: ({ showMenuText }) =>
+      showMenuText ?'rotate(0deg)':'rotate(180deg)',
+    color:'#fff',
+    marginTop:10,
   },
   logoIcon: {
     width: 30,
@@ -35,14 +43,17 @@ const styles = (theme) => ({
   logoName: {
     fontSize: 18,
     marginLeft: 10,
+    verticalAlign:'super',
   },
   logoIconWrapper: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: theme.leftShrinkWidth,
-    marginLeft: 14,
-    marginRight: 16,
+    display: 'inline-block',
+    width: 115,
+    paddingLeft: 14,
+    height:65,
+    paddingTop:20,
+    background: ({ showMenuText }) =>
+      showMenuText ? '#112338' :'#fff',
+    ...theme.palette.transition,  
   },
 });
 

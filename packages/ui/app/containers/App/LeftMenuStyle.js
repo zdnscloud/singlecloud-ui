@@ -5,7 +5,7 @@ export const styles = (theme) => ({
   root: {
     display: 'flex',
     flexDirection: 'column',
-    backgroundColor: theme.palette.leftMemu.main,
+    background: theme.palette.leftMemu.main,
     color: theme.palette.leftMemu.contrastText,
     ...theme.palette.transition,
     border: 'none',
@@ -16,7 +16,7 @@ export const styles = (theme) => ({
   secondMenu: {
     width: theme.leftMenuWidth,
     color: theme.palette.leftMemu.contrastText,
-    backgroundColor: theme.palette.leftMemu.main,
+    background: theme.palette.leftMemu.main,
     boxShadow: '1px 1px 4px rgba(0, 0, 0, 0.15)',
     position: 'absolute',
     left: 2,
@@ -87,7 +87,6 @@ export const styles = (theme) => ({
   },
   active: {
     color: theme.palette.leftMemu.highlight,
-    backgroundColor: theme.palette.leftMemu.highlightBg,
     '&:hover': {
       color: theme.palette.leftMemu.highlight,
       fontWeight: 'bold',

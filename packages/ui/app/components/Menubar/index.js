@@ -18,6 +18,8 @@ import logo from 'images/page-logo.png';
 
 import logoICon from 'images/logo.svg';
 import ZcloudICon from 'images/Zcloud.svg';
+import ZcloudWhiteICon from 'images/ZcloudWhite.svg';
+
 
 import MenuIcon from 'components/Icons/Menu';
 import Brand from 'components/Brand/Brand';
@@ -35,16 +37,14 @@ function Menubar({
     <AppBar className={classes.appBar}>
       <Toolbar disableGutters className={classes.toolbar}>
         <div className={classes.toolbarLeft}>
-          <div className={classes.menuButton}>
+          <div className={classes.menuButton} >
             <IconButton onClick={onClickMenuButton}>
-              <MenuIcon color="inherit"  style={{transform : showMenuText ? 'rotate(0deg)':'rotate(180deg)' }}/>
+              <MenuIcon className={classes.menuIcon} />
             </IconButton>
           </div>
-          <div className={classes.logoWrap}>
-            <div className={classes.logoIconWrapper}>
-              <img src={logoICon} alt="logo" className={classes.logoIcon} />
-              <img src={ZcloudICon} alt="Zcloud" className={classes.logoName} />
-            </div>
+          <div className={classes.logoIconWrapper}>
+            <img src={logoICon} alt="logo" className={classes.logoIcon} />
+            <img src={ showMenuText ? ZcloudWhiteICon :ZcloudICon} alt="Zcloud" className={classes.logoName} />
           </div>
           {headerLeftContent}
         </div>
