@@ -225,10 +225,6 @@ export default defineMessages({
     id: `${scope}.formUpdateMemo`,
     defaultMessage: 'UpdateMemo',
   },
-  formMemo: {
-    id: `${scope}.formMemo`,
-    defaultMessage: 'Memo',
-  },
   updatePageTitle: {
     id: `${scope}.updatePageTitle`,
     defaultMessage: 'Update workFlow',

@@ -57,7 +57,7 @@ export const TaskStatus = ({
               {workFlowID}
             </h4>
           </CardHeader>
-          <CardBody>
+          <CardBody className={classes.cardBody}>
             {workFlowTasksList.size > 0 ? <div className={classes.taskStatus}>
               {subTasks && subTasks.map((s,i)=>{
                 const currentStatus = s.getIn(['status','currentStatus']);
@@ -77,7 +77,7 @@ export const TaskStatus = ({
                         className={returnActiveStyle(currentStatus,classes)}
                       >{s.get('name')}</p>
                     </div>
-                    {i === 0 ? <div className={classes.statusArrow}>
+                    {i === 0 && subTasks.size > 1 ? <div className={classes.statusArrow}>
                       <StatusArrowIcon className={classes.statusArrow} />
                     </div>: null}
                   </div>

@@ -103,24 +103,38 @@ export const CreateWorkFlowPage = ({
 
   async function doSubmit(formValues) {
     try {
-      const data = formValues.toJS();
-      const { name, deploy:{ containers, persistentVolumes},image } = data;
-      data.deploy.name = name;
-      data.deploy.containers = containers.map((item) => {
-        if (item && item.args) {
-          item.args = parseCmd(item.args);
-        }
-        if (item && item.command) {
-          item.command = parseCmd(item.command);
-        }
-        item.image = image.name;
-        return item;
-      });
-      persistentVolumes.forEach((item) => {
-        if (item && item.size) {
-          item.size = `${item.size}Gi`;
-        }
-      });
+      const { name, autoDeploy, deploy, image, ...formData } = formValues.toJS();
+      const {containers, persistentVolumes} = deploy;
+      deploy.name = name;
+      if(containers){
+        deploy.containers = containers.map((item) => {
+          if (item && item.args) {
+            item.args = parseCmd(item.args);
+          }
+          if (item && item.command) {
+            item.command = parseCmd(item.command);
+          }
+          item.image = image.name;
+          return item;
+        });
+      };
+      if(persistentVolumes){
+        persistentVolumes.forEach((item) => {
+          if (item && item.size) {
+            item.size = `${item.size}Gi`;
+          }
+        });
+      };
+      const data = {
+        name,
+        image,
+        autoDeploy,
+        deploy,
+        ...formData,
+      };
+      if(!autoDeploy){
+        delete data.deploy
+      }
       await new Promise((resolve, reject) => {
         createWorkFlow(data, {
           resolve,
@@ -162,15 +176,11 @@ export const CreateWorkFlowPage = ({
               storageClasses={storageClasses}
               pvc={pvc}
               initialValues={fromJS({
+                autoDeploy:false,
                 deploy:{
                   replicas:1,
-                  containers: [{
-                    env: [{}],
-                    volumes:[{}],
-                    exposedPorts: [{}],
-                  }],
+                  containers: [{}],
                   advancedOptions: { injectServiceMesh: true },
-                  persistentVolumes:[{}],
                 },
               })}
             />

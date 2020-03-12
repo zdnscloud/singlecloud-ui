@@ -1,6 +1,7 @@
 import { makeStyles } from '@material-ui/styles';
 import pageStyles from 'jss/page';
 import dialogStyles from 'jss/dialog';
+import { autofill } from 'redux-form';
 
 export const styles = (theme) => ({
   ...pageStyles(theme),
@@ -165,6 +166,9 @@ export const styles = (theme) => ({
       fontSize:12,
       color:'#4a4a4a',
     },
+  },
+  cardBody:{
+    margin: '0 auto',
   },
 });
 

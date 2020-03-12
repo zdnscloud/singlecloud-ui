@@ -33,6 +33,7 @@ export const Volumes = ({
         {role === 'update' ? (<p><FormattedMessage {...messages.formVolumeBtn} /></p>):(
           <Button
             className={classes.addNodeBtn}
+            style={{ marginBottom: fields && fields.length > 0 ? 25 : 0 }}
             variant="contained" color="primary"
             onClick={(evt) =>
               fields.push(fromJS({}))

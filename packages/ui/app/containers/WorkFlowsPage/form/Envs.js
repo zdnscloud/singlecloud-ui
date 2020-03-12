@@ -36,6 +36,7 @@ export const Envs = ({
             onClick={(evt) =>
               fields.push(fromJS({}))
             }
+            style={{ marginBottom: fields && fields.length > 0 ? 25 : 0 }}
           >
             <span className={classes.plusIcon}>+</span>
             <FormattedMessage {...messages.formEnvBtn} />
@@ -44,7 +45,7 @@ export const Envs = ({
        
       </GridItem>
     </GridContainer>
-    <Card  className={classes.addList} border={fields&&fields.length>0 ? 'border':null } >
+    <Card  className={classes.addList} border={fields && fields.length > 0 ? 'border':null } >
       <CardBody>
         {fields.map((f, i) => (
           <GridContainer key={i}>

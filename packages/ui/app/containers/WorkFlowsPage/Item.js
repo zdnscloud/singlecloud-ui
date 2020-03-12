@@ -25,6 +25,7 @@ import ReadOnlyCheckbox from 'components/CustomCheckbox/ReadOnlyCheckbox';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
+import SwitchField from 'components/Field/SwitchField';
 
 import * as cActions from 'ducks/configMaps/actions';
 import * as actions from 'ducks/workFlows/actions';
@@ -154,27 +155,41 @@ export const WorkFlow = ({
             </h4>
           </CardHeader>
           <CardBody>
-            <GridContainer>
+            <GridContainer style={{marginBottom:'16px'}}>
               <GridItem xs={3} sm={3} md={3}>
-                <ReadOnlyInput
-                  label={<FormattedMessage {...messages.formReplicas} />}
-                  fullWidth
-                  value={workFlow.getIn(['deploy','replicas'])}
-                />
-              </GridItem>
-              <GridItem xs={3} sm={3} md={3}>
+                <span className={classes.serviceConfig}>
+                  <FormattedMessage {...messages.formServiceConfiguration} />:
+                </span> 
                 <ReadOnlyCheckbox
                   labelText={
-                    <FormattedMessage {...messages.formInjectServiceMesh} />
+                    <FormattedMessage {...messages.formAutoDeploy} />
                   }
-                  value={workFlow.size>0 && workFlow.getIn([
-                    'deploy', 'advancedOptions',
-                    'injectServiceMesh',
-                  ])}
+                  value={workFlow.size>0 && workFlow.get('autoDeploy')}
                 />
               </GridItem>
             </GridContainer>
-            {containers &&
+            {workFlow.size>0 && workFlow.get('autoDeploy') ? <Fragment>
+              <GridContainer>
+                <GridItem xs={3} sm={3} md={3}>
+                  <ReadOnlyInput
+                    label={<FormattedMessage {...messages.formReplicas} />}
+                    fullWidth
+                    value={workFlow.getIn(['deploy','replicas'])}
+                  />
+                </GridItem>
+                <GridItem xs={3} sm={3} md={3}>
+                  <ReadOnlyCheckbox
+                    labelText={
+                      <FormattedMessage {...messages.formInjectServiceMesh} />
+                    }
+                    value={workFlow.size>0 && workFlow.getIn([
+                      'deploy', 'advancedOptions',
+                      'injectServiceMesh',
+                    ])}
+                  />
+                </GridItem>
+              </GridContainer>
+              {containers &&
               containers.map((c, i) => (
                 <GridContainer key={i}>
                   <GridItem xs={3} sm={3} md={3}>
@@ -297,39 +312,26 @@ export const WorkFlow = ({
                 </GridContainer>
               ))}
 
-            <GridContainer style={{marginBottom:'16px'}}>
-              <GridItem xs={3} sm={3} md={3}>
-                <span className={classes.serviceConfig}>
-                  <FormattedMessage {...messages.formServiceConfiguration} />:
-                </span> 
-                <ReadOnlyCheckbox
-                  labelText={
-                    <FormattedMessage {...messages.formAutoDeploy} />
-                  }
-                  value={workFlow.size>0 && workFlow.get('autoDeploy')}
-                />
-              </GridItem>
-            </GridContainer>
-            <GridContainer>
-              <GridItem xs={3} sm={3} md={3}>
-                <ReadOnlyInput
-                  label={<FormattedMessage {...messages.formExposedMetricPath} />}
-                  value={workFlow.getIn(['deploy','advancedOptions','exposedMetric','path'])}
-                  fullWidth
-                />
-              </GridItem>
-              <GridItem xs={3} sm={3} md={3}>
-                <ReadOnlyInput
-                  label={<FormattedMessage {...messages.formExposedMetricPort} />}
-                  value={workFlow.getIn(['deploy','advancedOptions','exposedMetric','port'])}
-                  fullWidth
-                />
-              </GridItem>
-              <GridItem xs={12} sm={12} md={12}>
-                <p> <FormattedMessage {...messages.formPersistentVolumeBtn} /></p>
-                <Card  className={classes.addList} border={persistentVolumes&&persistentVolumes.size>0 ? 'border':null } >
-                  <CardBody>
-                    {persistentVolumes &&
+              <GridContainer>
+                <GridItem xs={3} sm={3} md={3}>
+                  <ReadOnlyInput
+                    label={<FormattedMessage {...messages.formExposedMetricPath} />}
+                    value={workFlow.getIn(['deploy','advancedOptions','exposedMetric','path'])}
+                    fullWidth
+                  />
+                </GridItem>
+                <GridItem xs={3} sm={3} md={3}>
+                  <ReadOnlyInput
+                    label={<FormattedMessage {...messages.formExposedMetricPort} />}
+                    value={workFlow.getIn(['deploy','advancedOptions','exposedMetric','port'])}
+                    fullWidth
+                  />
+                </GridItem>
+                <GridItem xs={12} sm={12} md={12}>
+                  <p> <FormattedMessage {...messages.formPersistentVolumeBtn} /></p>
+                  <Card  className={classes.addList} border={persistentVolumes&&persistentVolumes.size>0 ? 'border':null } >
+                    <CardBody>
+                      {persistentVolumes &&
               persistentVolumes.map((pv,k) => (
                 <GridContainer key={k}>
                   <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
@@ -364,10 +366,12 @@ export const WorkFlow = ({
                   </GridItem>
                 </GridContainer>
               ))}
-                  </CardBody>
-                </Card>
-              </GridItem>
-            </GridContainer>
+                    </CardBody>
+                  </Card>
+                </GridItem>
+              </GridContainer>
+            </Fragment>: null}
+           
           </CardBody>
         </Card>
       </GridItem>

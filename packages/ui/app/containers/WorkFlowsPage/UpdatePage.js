@@ -122,17 +122,29 @@ export const UpdateWorkFlowPage = ({
   async function doSubmit(formValues) {
     const updateUrl = current.getIn(['links', 'update']);
     try {
-      const data = formValues.toJS();
-      const { deploy:{ containers} } = data;
-      data.deploy.containers = containers.map((item) => {
+      const { name, autoDeploy, deploy, image, ...formData } = formValues.toJS();
+      const {containers, persistentVolumes} = deploy;
+      deploy.name = name;
+      deploy.containers = containers.map((item) => {
         if (item && item.args) {
           item.args = parseCmd(item.args);
         }
         if (item && item.command) {
           item.command = parseCmd(item.command);
         }
+        item.image = image.name;
         return item;
       });
+      const data = {
+        name,
+        image,
+        autoDeploy,
+        ...formData,
+      };
+      if(!autoDeploy){
+        delete data.deploy
+      }
+
       await new Promise((resolve, reject) => {
         updateWorkFlow(data, {
           resolve,
@@ -177,7 +189,7 @@ export const UpdateWorkFlowPage = ({
                 initialValues={current.update((c) => {
                   const val = c.toJS();
                   const { deploy:{containers} } = val;
-                  val.deploy.containers = containers.map((item) => {
+                  val.deploy.containers = containers && containers.map((item) => {
                     if (item && item.args) {
                       item.args = parseCmd(item.args);
                     }
@@ -185,7 +197,7 @@ export const UpdateWorkFlowPage = ({
                       item.command = parseCmd(item.command);
                     }
                     return item;
-                  });
+                  }) || [{}];
                   return val;
                 })}
                 role="update"

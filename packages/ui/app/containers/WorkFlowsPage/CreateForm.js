@@ -31,14 +31,25 @@ import VolumeClaimTemplate from './form/VolumeClaimTemplate';
 export const formName = 'createWorkFlowForm';
 
 const validate = (values) => {
-  const errors = {};
+  const errors = { git:{} ,image:{}};
   const requiredFields = ['name'];
   requiredFields.forEach((field) => {
     if (!values.get(field)) {
       errors[field] = 'Required';
     }
   });
-
+  const gitFields = ['repositoryUrl','revision','user','password'];
+  gitFields.forEach((field) => {
+    if (!values.getIn(['git',field])) {
+      errors.git[field] = 'Required';
+    }
+  });
+  const imageFields = ['name','registryUser','registryPassword'];
+  imageFields.forEach((field) => {
+    if (!values.getIn(['image',field])) {
+      errors.image[field] = 'Required';
+    }
+  });
   return errors;
 };
 
@@ -160,124 +171,112 @@ const Form = ({
 
         <GridItem xs={12} sm={12} md={12}>
           <Card>
-            <CardHeader>
-              <h4>
-                <FormattedMessage {...messages.formDeploymentConfiguration } />
-              </h4>
-            </CardHeader>
             <CardBody>
               <GridContainer>
-                <GridItem xs={3} sm={3} md={3}>
-                  <InputField
-                    label={<FormattedMessage {...messages.formReplicas} />}
-                    name="deploy.replicas"
-                    fullWidth
-                    disabled={role === 'update'}
-                    normalize={(val) => (val ? Number(val) : val)}
-                    inputProps={ { 
-                      type: 'number',
-                      autoComplete: 'off',
-                      min: 1,
-                      max: 255,
-                    }}
-                  />
-                </GridItem>
-                <GridItem xs={3} sm={3} md={3}>
-                  <CheckboxField
-                    name="deploy.advancedOptions.injectServiceMesh"
-                    label={
-                      <FormattedMessage {...messages.formInjectServiceMesh} />
-                    }
-                    disabled={role === 'update'}
-                  />
-                </GridItem>
-              </GridContainer>
-              
-              <FieldArray 
-                name="deploy.containers" 
-                component={Containers} 
-                classes={classes} 
-                formValues={formValues}
-                configMaps={configMaps}
-                secrets={secrets}
-                role={role}
-              />
-              <GridContainer style={{marginBottom:role === 'update'? '16px':'0px'}}>
-                <GridItem xs={3} sm={3} md={3}>
+                <GridItem xs={2} sm={2} md={2}>
                   <span className={classes.serviceConfig}>
                     <FormattedMessage {...messages.formServiceConfiguration} />:
                   </span>
-                  <CheckboxField
+                </GridItem>
+                <GridItem xs={3} sm={3} md={3}>
+                  <SwitchField
                     name="autoDeploy"
-                    label={
-                      <FormattedMessage {...messages.formAutoDeploy} />
-                    }
-                    // disabled={role === 'update'}
-                  />
-                </GridItem>
-              </GridContainer>
-              <GridContainer>
-                <GridItem xs={3} sm={3} md={3}>
-                  <InputField
-                    label={<FormattedMessage {...messages.formExposedMetricPath} />}
-                    name="deploy.advancedOptions.exposedMetric.path"
-                    fullWidth
-                    disabled={role === 'update'}
-                  />
-                </GridItem>
-                <GridItem xs={3} sm={3} md={3}>
-                  <InputField
-                    label={<FormattedMessage {...messages.formExposedMetricPort} />}
-                    name="deploy.advancedOptions.exposedMetric.port"
-                    fullWidth
-                    normalize={(val) => (val ? Number(val) : val)}
-                    inputProps={{
-                      type: 'number',
-                      autoComplete: 'off',
-                      min: 1,
-                      max: 65535,
-                    }}
-                    disabled={role === 'update'}
-                  />
-                </GridItem>
-                <GridItem xs={12} sm={12} md={12}>
-                  <FieldArray 
-                    name="deploy.persistentVolumes" 
-                    classes={classes} 
-                    formValues={formValues}
-                    component={VolumeClaimTemplate}
-                    storageClasses={storageClasses}
-                    role={role}
-                    pvc={pvc}
+                    label={<FormattedMessage {...messages.formAutoDeploy} />}
                   />
                 </GridItem>
               </GridContainer>
             </CardBody>
           </Card>
         </GridItem>
-
-        {role === 'update' ? (
+        
+        {formValues && formValues.get('autoDeploy') ? (
           <GridItem xs={12} sm={12} md={12}>
             <Card>
               <CardHeader>
                 <h4>
-                  <FormattedMessage {...messages.formUpdateMemo} />
+                  <FormattedMessage {...messages.formDeploymentConfiguration } />
                 </h4>
               </CardHeader>
               <CardBody>
-                <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
-                  <InputField
-                    label={<FormattedMessage {...messages.formMemo} />}
-                    fullWidth
-                    inputProps={{ type: 'text', autoComplete: 'off' }}
-                    name="deploy.memo"
+                <FormSection name="deploy">
+                  <GridContainer>
+                    <GridItem xs={3} sm={3} md={3}>
+                      <InputField
+                        label={<FormattedMessage {...messages.formReplicas} />}
+                        name="replicas"
+                        fullWidth
+                        disabled={role === 'update'}
+                        normalize={(val) => (val ? Number(val) : val)}
+                        inputProps={ { 
+                          type: 'number',
+                          autoComplete: 'off',
+                          min: 1,
+                          max: 255,
+                        }}
+                      />
+                    </GridItem>
+                    <GridItem xs={3} sm={3} md={3}>
+                      <CheckboxField
+                        name="advancedOptions.injectServiceMesh"
+                        label={
+                          <FormattedMessage {...messages.formInjectServiceMesh} />
+                        }
+                        disabled={role === 'update'}
+                      />
+                    </GridItem>
+                  </GridContainer>
+              
+                  <FieldArray 
+                    name="containers" 
+                    component={Containers} 
+                    classes={classes} 
+                    formValues={formValues}
+                    configMaps={configMaps}
+                    secrets={secrets}
+                    role={role}
                   />
-                </GridItem>
+            
+                  <GridContainer>
+                    <GridItem xs={3} sm={3} md={3}>
+                      <InputField
+                        label={<FormattedMessage {...messages.formExposedMetricPath} />}
+                        name="advancedOptions.exposedMetric.path"
+                        fullWidth
+                        disabled={role === 'update'}
+                      />
+                    </GridItem>
+                    <GridItem xs={3} sm={3} md={3}>
+                      <InputField
+                        label={<FormattedMessage {...messages.formExposedMetricPort} />}
+                        name="advancedOptions.exposedMetric.port"
+                        fullWidth
+                        normalize={(val) => (val ? Number(val) : val)}
+                        inputProps={{
+                          type: 'number',
+                          autoComplete: 'off',
+                          min: 1,
+                          max: 65535,
+                        }}
+                        disabled={role === 'update'}
+                      />
+                    </GridItem>
+                    <GridItem xs={12} sm={12} md={12}>
+                      <FieldArray 
+                        name="persistentVolumes" 
+                        classes={classes} 
+                        formValues={formValues}
+                        component={VolumeClaimTemplate}
+                        storageClasses={storageClasses}
+                        role={role}
+                        pvc={pvc}
+                      />
+                    </GridItem>
+                  </GridContainer>
+                </FormSection>
               </CardBody>
             </Card>
-          </GridItem>
-        ) : null}
-       
+          </GridItem> 
+        ):null}      
       </GridContainer>
     </form>
   );

@@ -37,9 +37,11 @@ export const Ports = ({
           ) : (
             <Button
               className={classes.addNodeBtn}
+              style={{ marginBottom: fields && fields.length > 0 ? 25 : 0 }}
               variant="contained" color="primary"
               onClick={(evt) =>
-                fields.push(fromJS({}))
+                fields
+                  .push(fromJS({}))
               }
             >
               <span className={classes.plusIcon}>+</span>

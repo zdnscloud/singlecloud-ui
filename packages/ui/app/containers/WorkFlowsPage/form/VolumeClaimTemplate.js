@@ -101,6 +101,7 @@ export const VolumeClaimTemplate = ({
           {role === 'update' ?  <p><FormattedMessage {...messages.formPersistentVolumeBtn} /></p> : (
             <Button
               className={classes.addNodeBtn}
+              style={{ marginBottom: fields && fields.length > 0 ? 25 : 0 }}
               variant="contained" color="primary"
               onClick={(evt) =>
                 fields.push(fromJS({}))
