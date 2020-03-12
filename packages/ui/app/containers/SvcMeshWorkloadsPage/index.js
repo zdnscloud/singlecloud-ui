@@ -127,7 +127,7 @@ const SvcMeshWorkloadsPage = ({
             const hasLink = links.length > 0;
 
             return (
-              <GridContainer className={classes.grid} key={i}>
+              <GridContainer className={classes.grid} key={i} style={{paddingBottom:0}}>
                 {hasLink ? (
                   <GridItem xs={12} sm={12} md={12}>
                     <Card>

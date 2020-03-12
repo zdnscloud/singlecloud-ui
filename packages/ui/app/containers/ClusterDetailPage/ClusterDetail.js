@@ -112,7 +112,7 @@ export const ClusterDetail = ({ cluster }) => {
             <CardFooter />
           </Card>
         </GridItem>
-        <GridItem xs={12} sm={12} md={4}>
+        <GridItem xs={12} sm={12} md={4} style={{padding:0}}>
           <Card chart className={classes.card}>
             <CardHeader color="azure" className={classes.cardHeaderLine}>
               <CircleChart value={memoryRatio} total={100} />

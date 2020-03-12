@@ -18,11 +18,11 @@ const styles = (theme) => ({
     overflowX: 'hidden',
   },
   grid: {
-    padding: theme.spacing(1.25),
+    padding: 15,
   },
   contentGrid: {
-    paddingLeft: theme.spacing(2),
-    paddingRight: theme.spacing(2),
+    paddingLeft: 15,
+    paddingRight: 15,
   },
   appContainer: {},
   advanceContainer: {},
