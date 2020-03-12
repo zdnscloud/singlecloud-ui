@@ -13,12 +13,14 @@ const LogView = ({ logs = [] }) => {
           const idx = log.indexOf(' ');
           const t = log.slice(0, idx);
           const l = log.slice(idx + 1);
+          // this remove shell control attribute
+          const ll = l.replace(/\x1b\[\d{1,2}(;\d{1,2})*m/g, ''); // eslint-disable-line
           return (
             <div key={i}>
               <time className={classes.logTime}>
                 {dayjs(t).format('YYYY-MM-DD HH:mm:ss')}
               </time>
-              <span className={classes.log}>{l}</span>
+              <span className={classes.log}>{ll}</span>
             </div>
           );
         })}
