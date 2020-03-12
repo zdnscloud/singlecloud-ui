@@ -123,8 +123,9 @@ export const VolumeClaimTemplate = ({
         <CardBody>
           {fields.map((f, i) => {
             let storageOptions = storageClassesOptions;
-            const pvStatus =
-            formValues && formValues.getIn(['deploy','persistentVolumes', i, 'pvStatus']);
+            // const pvStatus =
+            // formValues && formValues.getIn(['deploy','persistentVolumes', i, 'pvStatus']);
+            const pvStatus = 'create';
             if (pvStatus && pvStatus === 'exist') {
               storageOptions = storageClassesOptions.filter(
                 (s) => s.value === 'cephfs'
@@ -132,7 +133,7 @@ export const VolumeClaimTemplate = ({
             }
             return(
               <GridContainer key={i}>
-                {role === 'update' ? null : (
+                {/* {role === 'update' ? null : (
                   <GridItem xs={4} sm={4} md={4} className={classes.radioWrap}>
                     <RadioField
                       name={`${f}.pvStatus`}
@@ -168,11 +169,11 @@ export const VolumeClaimTemplate = ({
                       formLabelComponent="div"
                     />
                   </GridItem>
-                )}
+                )} */}
                 <GridItem xs={3} sm={3} md={3}>
                   {renderTemplateName(f, i, pvStatus)}
                 </GridItem>
-                <GridItem xs={1} sm={1} md={1}>
+                <GridItem xs={2} sm={2} md={2}>
                   {renderTemplateSize(f, i, pvStatus)}
                 </GridItem>
                 <GridItem xs={3} sm={3} md={3}>
