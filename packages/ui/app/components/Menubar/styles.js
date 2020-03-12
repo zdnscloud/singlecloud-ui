@@ -23,19 +23,17 @@ const styles = (theme) => ({
   },
   menuButton: {
     display: 'inline-block',
-    width: theme.leftShrinkWidth,
     flexGrow: 1,
-    flexDirection: 'column',
-    justifyContent: 'center',
     height:65,
-    background: '#112338',
     paddingLeft: 18,
+    width: theme.leftShrinkWidth,
   },
   menuIcon:{
     transform: ({ showMenuText }) =>
       showMenuText ?'rotate(0deg)':'rotate(180deg)',
     color:'#fff',
     marginTop:10,
+    width:20,
   },
   logoIcon: {
     width: 30,
@@ -47,13 +45,16 @@ const styles = (theme) => ({
   },
   logoIconWrapper: {
     display: 'inline-block',
-    width: 115,
-    paddingLeft: 14,
     height:65,
-    paddingTop:20,
-    background: ({ showMenuText }) =>
-      showMenuText ? '#112338' :'#fff',
+    verticalAlign:'text-top',
+  },
+  content:{
+    display: 'inline-block',
+    background: '#112338',
+    width: ({ showMenuText }) =>
+      showMenuText ? theme.leftMenuWidth :theme.leftShrinkWidth,
     ...theme.palette.transition,  
+    height:65,
   },
 });
 

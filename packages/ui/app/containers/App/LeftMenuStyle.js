@@ -51,6 +51,7 @@ export const styles = (theme) => ({
   },
   itemIcon: {
     justifyContent: 'center',
+    marginTop:5,
   },
   itemText: {
     display: ({ showText }) => (showText ? 'flex' : 'none'),

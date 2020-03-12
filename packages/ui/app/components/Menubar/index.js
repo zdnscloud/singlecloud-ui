@@ -37,14 +37,16 @@ function Menubar({
     <AppBar className={classes.appBar}>
       <Toolbar disableGutters className={classes.toolbar}>
         <div className={classes.toolbarLeft}>
-          <div className={classes.menuButton} >
-            <IconButton onClick={onClickMenuButton}>
-              <MenuIcon className={classes.menuIcon} />
-            </IconButton>
-          </div>
-          <div className={classes.logoIconWrapper}>
-            <img src={logoICon} alt="logo" className={classes.logoIcon} />
-            <img src={ showMenuText ? ZcloudWhiteICon :ZcloudICon} alt="Zcloud" className={classes.logoName} />
+          <div className={classes.content}>
+            <div className={classes.menuButton} >
+              <IconButton onClick={onClickMenuButton}>
+                <MenuIcon className={classes.menuIcon} />
+              </IconButton>
+            </div>
+            <div className={classes.logoIconWrapper}>
+              <img src={logoICon} alt="logo" className={classes.logoIcon} />
+              <img src={ZcloudWhiteICon} alt="Zcloud" className={classes.logoName} />
+            </div>
           </div>
           {headerLeftContent}
         </div>
