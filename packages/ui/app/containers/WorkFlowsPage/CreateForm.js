@@ -181,6 +181,7 @@ const Form = ({
                 <GridItem xs={3} sm={3} md={3}>
                   <SwitchField
                     name="autoDeploy"
+                    disabled={role === 'update'}
                     label={<FormattedMessage {...messages.formAutoDeploy} />}
                   />
                 </GridItem>
