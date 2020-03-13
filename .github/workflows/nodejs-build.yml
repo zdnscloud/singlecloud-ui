@@ -1,6 +1,6 @@
-name: Node CI Test
+name: Node CI Build
 
-on: [push]
+on: [pull-request]
 
 jobs:
   build:
@@ -17,11 +17,11 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
-    - name: yarn install, build, and test
+    - name: yarn install and build
       run: |
         npm install --global yarn
         yarn
-        npm run test
+        yarn run build
       env:
         CI: true
         NODE_ENV: test
