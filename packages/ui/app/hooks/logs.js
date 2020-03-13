@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { of } from 'rxjs';
 import { webSocket } from 'rxjs/webSocket';
 import { map, scan, catchError, debounceTime } from 'rxjs/operators';
@@ -38,14 +38,14 @@ export const useLogs = () => {
       subject.complete();
     };
   }, [url]);
-  const open = (l) => {
+  const open = useCallback((l) => {
     setUrl(l);
     setLogs([]);
-  };
-  const close = () => {
+  }, []);
+  const close = useCallback(() => {
     setUrl(null);
     setLogs([]);
-  };
+  }, []);
 
   return { open, close, logs };
 };

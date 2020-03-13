@@ -108,6 +108,12 @@ import UsersPage, {
 import AlarmMessagesPage from 'containers/AlarmMessagesPage';
 import GlobalConfigurationPage from 'containers/GlobalConfigurationPage';
 import AuditLogsPage from 'containers/AuditLogsPage/Loadable';
+import WorkFlowPage, {
+  CreateWorkFlowPage,
+  ShowWorkFlowPage,
+  UpdateWorkFlowPage,
+  LogsPage,
+} from 'containers/WorkFlowsPage/Loadable';
 
 const appRoutes = [
   {
@@ -658,6 +664,45 @@ const appRoutes = [
     component: AlarmMessagesPage,
   },
   // applications end
+  // workFlow
+  {
+    path:
+      '/clusters/:cluster_id/namespaces/:namespace_id/workFlows',
+    name: 'WorkFlow',
+    icon: Dashboard,
+    component: WorkFlowPage,
+  },
+  {
+    path:
+      '/clusters/:cluster_id/namespaces/:namespace_id/workFlows/create',
+    name: 'Create WorkFlow',
+    icon: Dashboard,
+    component: CreateWorkFlowPage,
+  },
+  {
+    path:
+      '/clusters/:cluster_id/namespaces/:namespace_id/workFlows/:workFlow_id/update',
+    name: ' Update WorkFlow',
+    icon: Dashboard,
+    component: UpdateWorkFlowPage,
+  },
+  {
+    path:
+      '/clusters/:cluster_id/namespaces/:namespace_id/workFlows/:workFlow_id/show',
+    name: 'WorkFlow Detail',
+    icon: Dashboard,
+    component: ShowWorkFlowPage,
+  },
+  {
+    path:
+      '/clusters/:cluster_id/namespaces/:namespace_id/workFlows/:workFlow_id/logs',
+    name: 'WorkFlow Logs',
+    icon: Dashboard,
+    component: LogsPage,
+  },
+
+
+  // workFlow end
 ];
 
 export default appRoutes;

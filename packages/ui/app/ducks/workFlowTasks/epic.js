@@ -81,30 +81,10 @@ export const readWorkFlowTaskEpic = (action$, state$, { ajax }) =>
     )
   );
 
-export const removeWorkFlowTaskEpic = (action$, state$, { ajax }) =>
-  action$.pipe(
-    ofType(c.REMOVE_WORK_FLOW_TASK),
-    mergeMap(({ payload, meta }) =>
-      ajax({
-        url: `${meta.url}`,
-        method: 'DELETE',
-      }).pipe(
-        map((resp) => {
-          meta.resolve && meta.resolve(resp);
-          return a.removeWorkFlowTaskSuccess(resp, { ...meta, id: payload });
-        }),
-        catchError((error) => {
-          meta.reject && meta.reject(error);
-          return of(a.removeWorkFlowTaskFailure(error, { ...meta, id: payload }));
-        })
-      )
-    )
-  );
 
 
 export default combineEpics(
   loadWorkFlowTasksEpic,
   createWorkFlowTaskEpic,
   readWorkFlowTaskEpic,
-  removeWorkFlowTaskEpic,
 );

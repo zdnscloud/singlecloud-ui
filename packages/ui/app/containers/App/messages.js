@@ -273,5 +273,8 @@ export default defineMessages({
     id: `${scope}.leftMenuAuditLogs`,
     defaultMessage: 'AuditLogs',
   },
-
+  leftMenuWorkFlows: {
+    id: `${scope}.leftMenuWorkFlows`,
+    defaultMessage: 'WorkFlows',
+  },
 });

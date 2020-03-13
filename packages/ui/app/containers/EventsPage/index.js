@@ -12,13 +12,18 @@ import { createStructuredSelector, createSelector } from 'reselect';
 import { bindActionCreators, compose } from 'redux';
 import { reduxForm, getFormValues } from 'redux-form/immutable';
 import { fromJS } from 'immutable';
+import { Link } from 'react-router-dom';
+
+import history from 'utils/history';
 
 import { withStyles } from '@material-ui/core/styles';
 import Menubar from 'components/Menubar';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Typography from '@material-ui/core/Typography';
 import Fab from '@material-ui/core/Fab';
-import AddIcon from '@material-ui/icons/Add';
+import IconButton from '@material-ui/core/IconButton';
+
+import BackIcon from 'components/Icons/Back';
 import GridItem from 'components/Grid/GridItem';
 import GridContainer from 'components/Grid/GridContainer';
 import Card from 'components/Card/Card';
@@ -66,7 +71,6 @@ const EventsPage = ({ clusterID, events, filters }) => {
       names: [],
     }
   );
-
   return (
     <div className={classes.root}>
       <Helmet title={messages.pageTitle} description={messages.pageDesc} />
@@ -88,6 +92,12 @@ const EventsPage = ({ clusterID, events, filters }) => {
                   <h4>
                     <FormattedMessage {...messages.events} />
                   </h4>
+                  <IconButton
+                    className={classes.createBtnLink}
+                    onClick={()=>{history.go(-1)}}
+                  >
+                    <BackIcon />
+                  </IconButton>
                 </CardHeader>
                 <CardBody>
                   <EventsFilterForm
