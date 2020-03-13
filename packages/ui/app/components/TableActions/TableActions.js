@@ -32,7 +32,7 @@ const TableActions = ({
         onClick={handleClick}
         style={{
           position: 'relative',
-          color: anchorEl ? '#40B7E8':'#404040',
+          color: '#40B7E8',
         }}
       >
         <FormattedMessage {...messages.moreButton} />
