@@ -22,6 +22,7 @@ import ZcloudWhiteICon from 'images/ZcloudWhite.svg';
 
 
 import MenuIcon from 'components/Icons/Menu';
+import MenuRotateIcon from 'components/Icons/MenuRotate';
 import Brand from 'components/Brand/Brand';
 
 import styles from './styles';
@@ -40,7 +41,7 @@ function Menubar({
           <div className={classes.content}>
             <div className={classes.menuButton} >
               <IconButton onClick={onClickMenuButton}>
-                <MenuIcon className={classes.menuIcon} />
+                {showMenuText?  <MenuIcon className={classes.menuIcon} /> :  <MenuRotateIcon className={classes.menuIcon} />}
               </IconButton>
             </div>
             <div className={classes.logoIconWrapper}>

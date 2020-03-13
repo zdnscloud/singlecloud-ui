@@ -29,10 +29,7 @@ const styles = (theme) => ({
     width: theme.leftShrinkWidth,
   },
   menuIcon:{
-    transform: ({ showMenuText }) =>
-      showMenuText ?'rotate(0deg)':'rotate(180deg)',
-    color:'#fff',
-    marginTop:10,
+    marginTop:15,
     width:20,
   },
   logoIcon: {
