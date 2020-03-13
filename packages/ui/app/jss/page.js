@@ -131,7 +131,7 @@ const styles = (theme) => ({
       whiteSpace: 'nowrap',
     },
     '& thead tr, tbody tr:nth-child(2n)':{
-      backgroundColor:'rgba(223,224,223,0.15)',
+      backgroundColor:'#F5F5F5',
     },
     '& tbody tr td:last-child .MuiButton-text': {
       borderRight:'1px solid #e9e9e9',
