@@ -126,6 +126,7 @@ const styles = (theme) => ({
   table: {
     '& .MuiTableCell-root':{
       border: 'none',
+      padding:8,
     },
     '& thead tr': {
       whiteSpace: 'nowrap',
