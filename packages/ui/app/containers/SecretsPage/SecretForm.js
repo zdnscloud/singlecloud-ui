@@ -42,7 +42,7 @@ const renderConfigs = ({ fields, meta: { error, submitFailed }, classes }) =>(
         <Danger>{error}</Danger>
       </ListItem>
     )}
-    <Card border={fields&&fields.length>0 ? 'border':null } className={classes.nodeList}>
+    <Card border={fields&&fields.length>0 ? 'border':null } className={classes.addList}>
       <CardBody>
         {fields.map((f, i) => (
           <GridContainer key={i}>

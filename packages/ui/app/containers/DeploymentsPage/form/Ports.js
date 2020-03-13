@@ -102,9 +102,7 @@ const Ports = ({ fields, meta: { error, submitFailed }, role }) => {
               disabled={role === 'update'}
             />
           </ListItemText>
-          <IconButton variant="contained" onClick={(evt) => fields.remove(i)}>
-            {role === 'update' ? null : <MinusIcon />}
-          </IconButton>
+          {role === 'update' ? null :   <IconButton variant="contained" onClick={(evt) => fields.remove(i)}><MinusIcon /></IconButton>}
         </ListItem>
       ))}
     </List>

@@ -108,6 +108,13 @@ import persistentVolumesReducer, {
 import auditLogsReducer, {
   prefix as auditLogsPrefix,
 } from 'ducks/auditLogs';
+import workFlowTasksReducer, {
+  prefix as workFlowTasksPrefix,
+} from 'ducks/workFlowTasks';
+import workFlowsReducer, {
+  prefix as workFlowsPrefix,
+} from 'ducks/workFlows';
+
 // import reducers end
 
 /**
@@ -163,6 +170,8 @@ export default function createReducer(injectedReducers = {}) {
     [persistentVolumeClaimsPrefix]: persistentVolumeClaimsReducer,
     [persistentVolumesPrefix]: persistentVolumesReducer,
     [auditLogsPrefix]: auditLogsReducer,
+    [workFlowTasksPrefix]: workFlowTasksReducer,
+    [workFlowsPrefix]: workFlowsReducer,
     // combine reducers end
     ...injectedReducers,
   });

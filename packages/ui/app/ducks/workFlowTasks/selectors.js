@@ -145,11 +145,4 @@ export const makeSelectReadErrorsList = () =>
         .filter(({ type }) => type === c.READ_WORK_FLOW_TASK_FAILURE)
   );
 
-export const makeSelectRemoveErrorsList = () =>
-  createSelector(
-    selectDomain,
-    (substate) =>
-      substate.get('errorsList')
-        .filter(({ type }) => type === c.REMOVE_WORK_FLOW_TASK_FAILURE)
-  );
 

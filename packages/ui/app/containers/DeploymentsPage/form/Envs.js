@@ -75,9 +75,10 @@ const Envs = ({ fields, meta: { error, submitFailed }, role }) => (
             label={<FormattedMessage {...messages.formENVValue} />}
           />
         </ListItemText>
-        <IconButton variant="contained" onClick={(evt) => fields.remove(i)}>
-          {role === 'update' ? null : <MinusIcon />}
-        </IconButton>
+        {role === 'update' ? null : <IconButton variant="contained" onClick={(evt) => fields.remove(i)}>
+          <MinusIcon />
+        </IconButton>}
+        
       </ListItem>
     ))}
   </List>
