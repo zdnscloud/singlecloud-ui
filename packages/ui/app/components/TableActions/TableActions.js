@@ -30,18 +30,11 @@ const TableActions = ({
       <Button
         action
         onClick={handleClick}
-        style={{
-          position: 'relative',
-          color: '#40B7E8',
-        }}
+        className={classes.moreButton}
       >
         <FormattedMessage {...messages.moreButton} />
         <ChevronBottom
-          style={{
-            position: 'absolute',
-            left: 44,
-            top: 6,
-          }}
+          className={classes.chevronBottom}
         />
       </Button>
       <Menu
