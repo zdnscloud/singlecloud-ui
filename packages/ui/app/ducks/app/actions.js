@@ -30,3 +30,10 @@ export const closeTerminal = () => ({
   type: c.CLOSE_TERMINAL,
   payload: {},
 });
+
+export const httpError = (error, meta) => ({
+  type: c.HTTP_ERROR,
+  payload: error,
+  error: true,
+  meta,
+});

@@ -19,4 +19,16 @@ import { makeSelectURL } from 'ducks/clusters/selectors';
 import * as c from './constants';
 import * as a from './actions';
 
+export const httpErrorEpic = (action$, state$) =>
+  action$.pipe(
+    ofType(c.HTTP_ERROR),
+    mergeMap(({ payload, error }) => {
+      console.log('http error: ', payload);
+      if (payload.statusCode) {
+        console.log(payload.statusCode);
+      }
+      return of({ type: 'noop' });
+    })
+  );
+
 export default combineEpics();

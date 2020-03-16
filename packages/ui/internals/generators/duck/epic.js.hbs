@@ -19,6 +19,8 @@ import {
 } from 'rxjs/operators';
 import { ofType, combineEpics } from 'redux-observable';
 
+import { httpError } from 'ducks/app/actions';
+
 import * as c from './constants';
 import * as a from './actions';
 
@@ -33,7 +35,7 @@ export const load{{pProperCase name}}Epic = (action$, state$, { ajax }) =>
         }),
         catchError((error) => {
           meta.reject && meta.reject(error);
-          return of(a.load{{pProperCase name}}Failure(error, meta));
+          return of(error).pipe(concat(httpError(error, meta), a.load{{pProperCase name}}Failure(error, meta)));
         })
       )
     )
@@ -55,7 +57,7 @@ export const create{{sProperCase name}}Epic = (action$, state$, { ajax }) =>
         }),
         catchError((error) => {
           meta.reject && meta.reject(error);
-          return of(a.create{{sProperCase name}}Failure(error, meta));
+          return of(error).pipe(concat(httpError(error, meta), a.create{{sProperCase name}}Failure(error, meta)));
         })
       )
     )
@@ -78,7 +80,7 @@ export const update{{sProperCase name}}Epic = (action$, state$, { ajax }) =>
         }),
         catchError((error) => {
           meta.reject && meta.reject(error);
-          return of(a.update{{sProperCase name}}Failure(error, meta));
+          return of(error).pipe(concat(httpError(error, meta), a.update{{sProperCase name}}Failure(error, meta)));
         })
       )
     )
@@ -100,7 +102,7 @@ export const read{{sProperCase name}}Epic = (action$, state$, { ajax }) =>
         }),
         catchError((error) => {
           meta.reject && meta.reject(error);
-          return of(a.read{{sProperCase name}}Failure(error, { ...meta, id: payload }));
+          return of(error).pipe(concat(httpError(error, meta), a.read{{sProperCase name}}Failure(error, { ...meta, id: payload })));
         })
       )
     )
@@ -122,7 +124,7 @@ export const remove{{sProperCase name}}Epic = (action$, state$, { ajax }) =>
         }),
         catchError((error) => {
           meta.reject && meta.reject(error);
-          return of(a.remove{{sProperCase name}}Failure(error, { ...meta, id: payload }));
+          return of(error).pipe(concat(httpError(error, meta), a.remove{{sProperCase name}}Failure(error, { ...meta, id: payload })));
         })
       )
     )
@@ -145,7 +147,7 @@ export const execute{{sProperCase name}}ActionEpic = (action$, state$, { ajax })
         }),
         catchError((error) => {
           meta.reject && meta.reject(error);
-          return of(a.execute{{sProperCase name}}ActionFailure(error, { ...meta, action }));
+          return of(error).pipe(concat(httpError(error, meta), a.execute{{sProperCase name}}ActionFailure(error, { ...meta, action })));
         })
       )
     )
