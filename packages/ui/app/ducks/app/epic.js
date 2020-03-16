@@ -17,7 +17,7 @@ export const httpErrorEpic = (action$, state$) =>
     mergeMap(({ payload }) => {
       const status = getByKey(payload, 'status');
       if (status === 0) {
-        of(a.httpConnectionError(payload));
+        return of(a.httpConnectionError(payload));
       }
       if (status >= 400 && status < 500) {
         if (status === 401) {
