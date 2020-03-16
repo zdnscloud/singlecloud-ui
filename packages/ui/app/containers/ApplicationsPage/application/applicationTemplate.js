@@ -26,10 +26,6 @@ const ApplicationTemplate = ({
 
   const renderName = () => {
     switch (true) {
-      case item.get('status') === 'failed'  &&  !item.get('deletionTimestamp'):
-        return(  <p className={classes.appName} title={item.get('name')}>
-          {item.get('name')}
-        </p>)
       case  item.get('status') === 'succeed' ||  item.get('status') === '':
         return( <Button
           link
@@ -47,11 +43,11 @@ const ApplicationTemplate = ({
           {item.get('name')}
         </p>)
       default:
-        break;
+        return( <p className={classes.appName} title={item.get('name')}>
+          {item.get('name')}
+        </p>)
     }
-    return null;
   };
-
 
   return (
     <Fragment>
