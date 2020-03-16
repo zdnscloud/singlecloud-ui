@@ -27,8 +27,6 @@ export const loadSvcMeshWorkloadsFailure = (error, meta = {}) => ({
   error: true,
 });
 
-
-
 export const readSvcMeshWorkload = (id, meta = {}) => ({
   type: c.READ_SVC_MESH_WORKLOAD,
   payload: id,
@@ -47,8 +45,6 @@ export const readSvcMeshWorkloadFailure = (error, meta = {}) => ({
   meta,
   error: true,
 });
-
-
 
 export const clearErrorsList = (payload, meta) => ({
   type: c.CLEAR_ERRORS_LIST,

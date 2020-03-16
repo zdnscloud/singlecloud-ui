@@ -39,11 +39,6 @@ export const loadMetricsEpic = (action$, state$, { ajax }) =>
     )
   );
 
-
-
-
-
-
 export default combineEpics(
   loadMetricsEpic,
 );

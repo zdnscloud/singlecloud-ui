@@ -49,8 +49,6 @@ export const reducer = (
     case c.LOAD_NODES_FAILURE:
       return state.update('errorsList', (errors) => errors.filterNot((e) => e.type === type).push({ type, payload, meta }));
 
-
-
     case c.READ_NODE:
       return state;
     case c.READ_NODE_SUCCESS: {
@@ -71,7 +69,6 @@ export const reducer = (
     }
     case c.READ_NODE_FAILURE:
       return state.update('errorsList', (errors) => errors.filterNot((e) => e.type === type).push({ type, payload, meta }));
-
 
     case c.EXECUTE_NODE_ACTION:
       return state;

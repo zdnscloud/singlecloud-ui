@@ -27,8 +27,6 @@ export const loadChartsFailure = (error, meta = {}) => ({
   error: true,
 });
 
-
-
 export const readChart = (id, meta = {}) => ({
   type: c.READ_CHART,
   payload: id,
@@ -47,8 +45,6 @@ export const readChartFailure = (error, meta = {}) => ({
   meta,
   error: true,
 });
-
-
 
 export const clearErrorsList = (payload, meta) => ({
   type: c.CLEAR_ERRORS_LIST,

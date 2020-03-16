@@ -18,11 +18,11 @@ const styles = (theme) => ({
     overflowX: 'hidden',
   },
   grid: {
-    padding: theme.spacing(1.25),
+    padding: theme.spacing(1.875),
   },
   contentGrid: {
-    paddingLeft: theme.spacing(2),
-    paddingRight: theme.spacing(2),
+    paddingLeft: theme.spacing(1.875),
+    paddingRight: theme.spacing(1.875),
   },
   appContainer: {},
   advanceContainer: {},
@@ -39,10 +39,10 @@ const styles = (theme) => ({
     flexBasis: 200,
   },
   padding10: {
-    padding: '10px',
+    padding: theme.spacing(1.25),
   },
   marginRight10: {
-    marginRight: '10px',
+    marginRight: theme.spacing(1.25),
   },
   formControl: {
     margin: theme.spacing(1),
@@ -61,10 +61,10 @@ const styles = (theme) => ({
   cardCategoryWhite: {
     '&,& a,& a:hover,& a:focus': {
       color: 'rgba(255,255,255,.62)',
-      margin: '0',
+      margin: 0,
       fontSize: '14px',
-      marginTop: '0',
-      marginBottom: '0',
+      marginTop: 0,
+      marginBottom: 0,
     },
     '& a,& a:hover,& a:focus': {
       color: '#FFFFFF',
@@ -72,7 +72,7 @@ const styles = (theme) => ({
   },
   cardTitleWhite: {
     color: '#000',
-    marginTop: '0px',
+    marginTop: 0,
     minHeight: 'auto',
     fontFamily: "'Roboto', 'Helvetica', 'Arial', sans-serif",
     marginBottom: '3px',
@@ -85,12 +85,12 @@ const styles = (theme) => ({
     },
   },
   separateLineWrap: {
-    marginTop: '8px',
-    marginRight: '5px',
+    marginTop: theme.spacing(1),
+    marginRight: theme.spacing(0.625),
     background: '#eee',
   },
   separateLine: {
-    marginTop: '8px',
+    marginTop: theme.spacing(1),
     boxShadow: '1px 0px 2px #ccc',
     border: '1px solid #ccc',
   },
@@ -99,8 +99,8 @@ const styles = (theme) => ({
   },
   createBtnLink: {
     position: 'absolute',
-    top: '8px',
-    right: '10px',
+    top: `${theme.spacing(1)}px`,
+    right: `${theme.spacing(1.25)}px`,
   },
   radioControl: {
     flexDirection: 'row',
@@ -114,8 +114,8 @@ const styles = (theme) => ({
     marginLeft: '2rem',
   },
   menuButton: {
-    marginLeft: 12,
-    marginRight: 36,
+    marginLeft: theme.spacing(1.5),
+    marginRight: theme.spacing(4.5),
     position: 'absolute',
     right: 0,
     top: 6,
@@ -126,12 +126,13 @@ const styles = (theme) => ({
   table: {
     '& .MuiTableCell-root':{
       border: 'none',
+      padding:theme.spacing(1),
     },
     '& thead tr': {
       whiteSpace: 'nowrap',
     },
     '& thead tr, tbody tr:nth-child(2n)':{
-      backgroundColor:'rgba(223,224,223,0.15)',
+      backgroundColor:'#F5F5F5',
     },
     '& tbody tr td:last-child .MuiButton-text': {
       borderRight:'1px solid #e9e9e9',
@@ -190,11 +191,11 @@ const styles = (theme) => ({
     width: 120,
   },
   cardHeader: {
-    marginLeft: '15px !important',
-    marginRight: '15px !important',
+    marginLeft: `${theme.spacing(1.875)}px !important`,
+    marginRight: `${theme.spacing(1.875)}px !important`,
   },
   cardBody: {
-    padding: '0 18px',
+    padding:`0 ${theme.spacing(2.25)}px`,
   },
   cardTitle: {
     margin: 0,
@@ -206,7 +207,7 @@ const styles = (theme) => ({
     fontSize: 14,
   },
   cancleBtn: {
-    marginLeft: '10px',
+    marginLeft: theme.spacing(1.25),
     backgroundColor:'#fff',
     border:'1px solid #D9D9D9',
   },
@@ -220,7 +221,7 @@ const styles = (theme) => ({
   // svcMeshx
   graphContainer: {
     overflowX: 'auto',
-    padding: '16px 0',
+    padding: `${theme.spacing(1.25)}px 0`,
   },
   graph: {
     maxWidth: '974px',
@@ -235,7 +236,7 @@ const styles = (theme) => ({
     width: 220,
   },
   linearProgressWrap: {
-    marginBottom: '-20px',
+    marginBottom:`-${theme.spacing(2.5)}px`,
     position: 'relative',
     '& > div': {
       width: '75%',
@@ -266,7 +267,7 @@ const styles = (theme) => ({
     height: 7,
     borderRadius: '50%',
     display: 'inline-block',
-    marginRight: 10,
+    marginRight: theme.spacing(1.25),
   },
   h4: {
     margin: '0 !important',
@@ -274,7 +275,7 @@ const styles = (theme) => ({
   },
   buttonGroup:{
     backgroundColor:'#fff',
-    padding:"12px 20px",
+    padding: `${theme.spacing(1.5)}px ${theme.spacing(2.5)}px`,
   },
   cardMargin:{
     margin:0,
@@ -288,20 +289,37 @@ const styles = (theme) => ({
     lineHeight:1.5,
   },
   addNodeBtn:{
-    marginBottom:25,
+    marginBottom:theme.spacing(3.125),
   },
   addNodeBtnWrap: {
-    marginTop:20,
+    marginTop:theme.spacing(2.5),
   },
-  nodeList: {
-    width: '800px',
+  addList: {
+    width: '880px',
   },
   minusIcon:{
-    marginTop:10,
+    marginTop:theme.spacing(1.25),
   },
   strikeout:{
     color:'#D9D9D9',
     textDecoration:'line-through',
+  },
+  blank: {
+    display: 'flex',
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: 'calc(100vh - 200px)',
+    flexDirection: 'column',
+    '& .MuiSvgIcon-root': {
+      width: 96,
+      height: 100,
+    },
+  },
+  blankText: {
+    fontSize: 14,
+    color: '#B4B4B4',
+    marginTop: 20,
   },
 });
 

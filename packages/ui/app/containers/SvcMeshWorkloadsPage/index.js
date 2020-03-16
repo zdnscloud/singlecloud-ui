@@ -3,7 +3,7 @@
  * SvcMeshWorkloadsPage
  *
  */
-import React, { useEffect, useState, memo } from 'react';
+import React, { useEffect, useState, memo ,Fragment} from 'react';
 import PropTypes from 'prop-types';
 import { createStructuredSelector } from 'reselect';
 import { bindActionCreators, compose } from 'redux';
@@ -92,75 +92,75 @@ const SvcMeshWorkloadsPage = ({
             },
           ]}
         />
-        {workloadGroups.size > 0 ? (
-          workloadGroups.map((workload, i) => {
-            const nodesData = workload.map((wl, idx) => ({
-              id: wl.get('id'),
-              label: wl.getIn(['stat', 'resource', 'name']),
-              kind: wl.getIn(['stat', 'resource', 'type']),
-            }));
-            const nodes = nodesData.toJS();
+        <GridContainer className={classes.grid}>
+          {workloadGroups.size > 0 ? (
+            workloadGroups.map((workload, i) => {
+              const nodesData = workload.map((wl, idx) => ({
+                id: wl.get('id'),
+                label: wl.getIn(['stat', 'resource', 'name']),
+                kind: wl.getIn(['stat', 'resource', 'type']),
+              }));
+              const nodes = nodesData.toJS();
 
-            const linkData = workload
-              .map((wl) =>
-                wl.get('destinations')
-                  ? wl.get('destinations').map((tid) => ({
-                    source: wl.get('id'),
-                    target: tid,
-                    id: `${wl.get('id')}_${tid}`,
-                  }))
-                  : null
-              )
-              .filter((wl) => wl)
-              .flatten(1)
-              .toJS();
-            const links = linkData.map((l) => ({
-              ...l,
-              source: nodes[nodesData.findIndex((n) => n.id === l.source)],
-              target: nodes[nodesData.findIndex((n) => n.id === l.target)],
-            }));
+              const linkData = workload
+                .map((wl) =>
+                  wl.get('destinations')
+                    ? wl.get('destinations').map((tid) => ({
+                      source: wl.get('id'),
+                      target: tid,
+                      id: `${wl.get('id')}_${tid}`,
+                    }))
+                    : null
+                )
+                .filter((wl) => wl)
+                .flatten(1)
+                .toJS();
+              const links = linkData.map((l) => ({
+                ...l,
+                source: nodes[nodesData.findIndex((n) => n.id === l.source)],
+                target: nodes[nodesData.findIndex((n) => n.id === l.target)],
+              }));
 
-            const data = {
-              nodes,
-              links,
-            };
-            const hasLink = links.length > 0;
+              const data = {
+                nodes,
+                links,
+              };
+              const hasLink = links.length > 0;
 
-            return (
-              <GridContainer className={classes.grid} key={i}>
-                {hasLink ? (
+              return (
+                <Fragment key={i}>
+                  {hasLink ? (
+                    <GridItem xs={12} sm={12} md={12}>
+                      <Card>
+                        <CardBody>
+                          <NetworkGraph
+                            ariaLabel="network-graph"
+                            width={600}
+                            height={360}
+                            graph={data}
+                            renderTooltip={null}
+                          /* waitingForLayoutLabel={null} */
+                          />
+                        </CardBody>
+                      </Card>
+                    </GridItem>
+                  ) : null}
                   <GridItem xs={12} sm={12} md={12}>
                     <Card>
+                      <CardHeader>
+                        <h4>
+                          <FormattedMessage {...messages.svcMeshWorkloads} />
+                        </h4>
+                      </CardHeader>
                       <CardBody>
-                        <NetworkGraph
-                          ariaLabel="network-graph"
-                          width={600}
-                          height={360}
-                          graph={data}
-                          renderTooltip={null}
-                          /* waitingForLayoutLabel={null} */
-                        />
+                        <SvcMeshWorkloadsTable data={workload} />
                       </CardBody>
                     </Card>
                   </GridItem>
-                ) : null}
-                <GridItem xs={12} sm={12} md={12}>
-                  <Card className={classes.cardMargin}>
-                    <CardHeader>
-                      <h4>
-                        <FormattedMessage {...messages.svcMeshWorkloads} />
-                      </h4>
-                    </CardHeader>
-                    <CardBody>
-                      <SvcMeshWorkloadsTable data={workload} />
-                    </CardBody>
-                  </Card>
-                </GridItem>
-              </GridContainer>
-            );
-          })
-        ) : (
-          <GridContainer className={classes.grid}>
+                </Fragment>
+              );
+            })
+          ) : (
             <GridItem xs={12} sm={12} md={12}>
               <Card>
                 <CardBody>
@@ -171,8 +171,9 @@ const SvcMeshWorkloadsPage = ({
                 </CardBody>
               </Card>
             </GridItem>
-          </GridContainer>
-        )}
+          )}
+        </GridContainer>
+       
       </div>
     </div>
   );

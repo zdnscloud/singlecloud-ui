@@ -3,9 +3,6 @@ import pageStyles from 'jss/page';
 
 export const styles = (theme) => ({
   ...pageStyles(theme),
-  dataList: {
-    width: '800px',
-  },
   dataListKey: {
     width: '300px',
   },

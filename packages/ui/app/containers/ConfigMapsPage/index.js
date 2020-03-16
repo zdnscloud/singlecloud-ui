@@ -47,6 +47,10 @@ export const ConfigMapsPage = ({
   const classes = useStyles();
   useEffect(() => {
     loadConfigMaps(url, { clusterID, namespaceID });
+    const t = setInterval(() => {
+      loadConfigMaps(url, { clusterID, namespaceID });
+    }, 3000);
+    return () => clearInterval(t);
   }, [clusterID, loadConfigMaps, namespaceID, url]);
 
   return (

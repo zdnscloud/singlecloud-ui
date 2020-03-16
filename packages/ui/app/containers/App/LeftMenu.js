@@ -56,6 +56,7 @@ const LeftMenu = ({
   const isManage = /^\/clusters\/[^/]+\/manage/.test(path);
   const isShow = /\/show$/.test(path);
   const isEdit = /\/edit$/.test(path);
+  const isLogs = /\/logs$/.test(path);
   const isUpdate = /\/update$/.test(path);
   const isCreate = /\/create$/.test(path);
   const isCCreate = /^\/clusters+\/create/.test(path);
@@ -100,7 +101,7 @@ const LeftMenu = ({
         return path.includes('adminUserQuotas') || path.includes('userQuotas');
       }
       if (
-        ((isShow || isCreate || isEdit || isUpdate) && !rnIsNS) ||
+        ((isShow || isCreate || isEdit || isUpdate || isLogs) && !rnIsNS) ||
         isNsCreate ||
         isNsShow
       ) {

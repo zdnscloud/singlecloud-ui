@@ -30,7 +30,7 @@ const ApplicationTemplate = ({
         return(  <p className={classes.appName} title={item.get('name')}>
           {item.get('name')}
         </p>)
-      case  item.get('status') === 'succeed' &&  !item.get('deletionTimestamp'):
+      case  item.get('status') === 'succeed' ||  item.get('status') === '':
         return( <Button
           link
           to={`/clusters/${clusterID}/namespaces/${namespaceID}/applications/${item.get(

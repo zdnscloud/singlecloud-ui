@@ -87,7 +87,7 @@ const StorageForm = ({
         </Card>
       </GridItem>
       <GridItem xs={12} sm={12} md={12}>
-        <Card className={classes.cardMarginTop}>
+        <Card style={{margin:0}}>
           <CardHeader>
             <h4>
               <FormattedMessage {...messages.formHostnames} />

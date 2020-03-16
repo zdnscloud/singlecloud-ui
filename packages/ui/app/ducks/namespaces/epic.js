@@ -60,7 +60,6 @@ export const createNamespaceEpic = (action$, state$, { ajax }) =>
     )
   );
 
-
 export const readNamespaceEpic = (action$, state$, { ajax }) =>
   action$.pipe(
     ofType(c.READ_NAMESPACE),

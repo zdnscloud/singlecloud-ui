@@ -40,7 +40,11 @@ const epicMiddleware = createEpicMiddleware({
         map((resp) => resp),
         catchError((error) => {
           if (getByKey(error, 'status') === 401) {
-            return of(loadRole('/web/role'));
+            import('store').then(({ default: store }) => { // eslint-disable-line
+              setTimeout(() => {
+                store.dispatch(loadRole('/web/role'));
+              }, 50);
+            })
           }
           if (getByKey(error, 'status') === 0) {
             return of({ type: 'CONNECT_ERROR', payload: error, error: true });

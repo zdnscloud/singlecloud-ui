@@ -121,7 +121,6 @@ export const removeNamespaceThresholdEpic = (action$, state$, { ajax }) =>
     )
   );
 
-
 export default combineEpics(
   loadNamespaceThresholdsEpic,
   createNamespaceThresholdEpic,

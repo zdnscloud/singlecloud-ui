@@ -52,8 +52,6 @@ export const reducer = (
     case c.LOAD_SVC_MESH_WORKLOADS_FAILURE:
       return state.update('errorsList', (errors) => errors.filterNot((e) => e.type === type).push({ type, payload, meta }));
 
-
-
     case c.READ_SVC_MESH_WORKLOAD:
       return state;
     case c.READ_SVC_MESH_WORKLOAD_SUCCESS: {
@@ -76,8 +74,6 @@ export const reducer = (
     }
     case c.READ_SVC_MESH_WORKLOAD_FAILURE:
       return state.update('errorsList', (errors) => errors.filterNot((e) => e.type === type).push({ type, payload, meta }));
-
-
 
     case c.CLEAR_ERRORS_LIST:
       return state.update('errorsList', (errors) => errors.clear());

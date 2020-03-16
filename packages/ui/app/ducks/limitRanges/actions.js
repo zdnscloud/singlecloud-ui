@@ -46,7 +46,6 @@ export const createLimitRangeFailure = (error, meta = {}) => ({
   error: true,
 });
 
-
 export const readLimitRange = (id, meta = {}) => ({
   type: c.READ_LIMIT_RANGE,
   payload: id,
@@ -84,7 +83,6 @@ export const removeLimitRangeFailure = (error, meta = {}) => ({
   meta,
   error: true,
 });
-
 
 export const clearErrorsList = (payload, meta) => ({
   type: c.CLEAR_ERRORS_LIST,

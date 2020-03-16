@@ -3,7 +3,7 @@ import hexToRgb from '@gsmlg/utils/hexToRgb';
 const cardStyle = (theme) => ({
   card: {
     border: '0',
-    marginBottom: '20px',
+    marginBottom: '15px',
     marginTop: '0',
     borderRadius: '6px',
     color: `rgba(${hexToRgb(theme.palette.text.a)}, 0.87)`,

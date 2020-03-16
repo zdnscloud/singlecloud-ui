@@ -121,6 +121,26 @@ export const removeWorkFlowEpic = (action$, state$, { ajax }) =>
     )
   );
 
+export const executeWorkFlowActionEpic = (action$, state$, { ajax }) =>
+  action$.pipe(
+    ofType(c.EXECUTE_WORK_FLOW_ACTION),
+    mergeMap(({ payload: { action, data }, meta }) =>
+      ajax({
+        url: `${meta.url}?action=${action}`,
+        method: 'POST',
+        body: data,
+      }).pipe(
+        map((resp) => {
+          meta.resolve && meta.resolve(resp);
+          return a.executeWorkFlowActionSuccess(resp, { ...meta, action });
+        }),
+        catchError((error) => {
+          meta.reject && meta.reject(error);
+          return of(a.executeWorkFlowActionFailure(error, { ...meta, action }));
+        })
+      )
+    )
+  );
 
 export default combineEpics(
   loadWorkFlowsEpic,
@@ -128,4 +148,5 @@ export default combineEpics(
   updateWorkFlowEpic,
   readWorkFlowEpic,
   removeWorkFlowEpic,
+  executeWorkFlowActionEpic,
 );

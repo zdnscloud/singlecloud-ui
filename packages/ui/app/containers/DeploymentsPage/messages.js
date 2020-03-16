@@ -299,11 +299,11 @@ export default defineMessages({
     defaultMessage: 'Update',
   },
   formUpdateMemo: {
-    id: `${scope}.UpdateMemo`,
+    id: `${scope}.formUpdateMemo`,
     defaultMessage: 'Update Memo',
   },
   formMemo: {
-    id: `${scope}.Memo`,
+    id: `${scope}.formMemo`,
     defaultMessage: 'Memo',
   },
   upgradeButton: {

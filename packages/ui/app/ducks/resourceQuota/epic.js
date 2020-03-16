@@ -60,7 +60,6 @@ export const createResourceQuotumEpic = (action$, state$, { ajax }) =>
     )
   );
 
-
 export const readResourceQuotumEpic = (action$, state$, { ajax }) =>
   action$.pipe(
     ofType(c.READ_RESOURCE_QUOTUM),
@@ -100,7 +99,6 @@ export const removeResourceQuotumEpic = (action$, state$, { ajax }) =>
       )
     )
   );
-
 
 export default combineEpics(
   loadResourceQuotaEpic,

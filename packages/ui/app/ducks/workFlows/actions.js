@@ -103,6 +103,27 @@ export const removeWorkFlowFailure = (error, meta = {}) => ({
   error: true,
 });
 
+export const executeWorkFlowAction = (action, data, meta = {}) => ({
+  type: c.EXECUTE_WORK_FLOW_ACTION,
+  payload: {
+    action,
+    data,
+  },
+  meta,
+});
+
+export const executeWorkFlowActionSuccess = (resp, meta = {}) => ({
+  type: c.EXECUTE_WORK_FLOW_ACTION_SUCCESS,
+  payload: resp,
+  meta,
+});
+
+export const executeWorkFlowActionFailure = (error, meta = {}) => ({
+  type: c.EXECUTE_WORK_FLOW_ACTION_FAILURE,
+  payload: error,
+  meta,
+  error: true,
+});
 
 export const clearErrorsList = (payload, meta) => ({
   type: c.CLEAR_ERRORS_LIST,

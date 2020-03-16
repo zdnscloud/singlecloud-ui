@@ -60,8 +60,8 @@ export const create{{sProperCase name}}Epic = (action$, state$, { ajax }) =>
       )
     )
   );
-{{/if}}
 
+{{/if}}
 {{#if wannaUpdateAction}}
 export const update{{sProperCase name}}Epic = (action$, state$, { ajax }) =>
   action$.pipe(
@@ -83,8 +83,8 @@ export const update{{sProperCase name}}Epic = (action$, state$, { ajax }) =>
       )
     )
   );
-{{/if}}
 
+{{/if}}
 {{#if wannaReadOneAction}}
 export const read{{sProperCase name}}Epic = (action$, state$, { ajax }) =>
   action$.pipe(
@@ -105,8 +105,8 @@ export const read{{sProperCase name}}Epic = (action$, state$, { ajax }) =>
       )
     )
   );
-{{/if}}
 
+{{/if}}
 {{#if wannaRemoveAction}}
 export const remove{{sProperCase name}}Epic = (action$, state$, { ajax }) =>
   action$.pipe(
@@ -127,8 +127,8 @@ export const remove{{sProperCase name}}Epic = (action$, state$, { ajax }) =>
       )
     )
   );
-{{/if}}
 
+{{/if}}
 {{#if wannaResourceActions}}
 export const execute{{sProperCase name}}ActionEpic = (action$, state$, { ajax }) =>
   action$.pipe(
@@ -150,8 +150,8 @@ export const execute{{sProperCase name}}ActionEpic = (action$, state$, { ajax })
       )
     )
   );
-{{/if}}
 
+{{/if}}
 export default combineEpics(
   load{{pProperCase name}}Epic,
 {{#if wannaCreateAction}}

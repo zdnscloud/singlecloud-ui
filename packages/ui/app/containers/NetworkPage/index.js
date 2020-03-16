@@ -73,29 +73,41 @@ const NetworkPage = ({
   const [tab, setTab] = useState(0);
 
   useEffect(() => {
+    let t = null;
     if (podUrl) {
       loadPodNetworks(podUrl, { clusterID });
+      t = setInterval(() => {
+        loadPodNetworks(podUrl, { clusterID });
+      }, 3000);
     }
     return () => {
-      // try cancel something when unmount
+      clearInterval(t);
     };
   }, [clusterID, loadPodNetworks, podUrl]);
 
   useEffect(() => {
+    let t = null;
     if (serviceUrl) {
       loadServiceNetworks(serviceUrl, { clusterID });
+      t = setInterval(() => {
+        loadServiceNetworks(serviceUrl, { clusterID });
+      }, 3000);
     }
     return () => {
-      // try cancel something when unmount
+      clearInterval(t);
     };
   }, [clusterID, loadServiceNetworks, serviceUrl]);
 
   useEffect(() => {
+    let t = null;
     if (nodeUrl) {
       loadNodeNetworks(nodeUrl, { clusterID });
+      t = setInterval(() => {
+        loadNodeNetworks(nodeUrl, { clusterID });
+      }, 3000);
     }
     return () => {
-      // try cancel something when unmount
+      clearInterval(t);
     };
   }, [clusterID, loadNodeNetworks, nodeUrl]);
 

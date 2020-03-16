@@ -9,6 +9,8 @@ import { createStructuredSelector } from 'reselect';
 import { bindActionCreators, compose } from 'redux';
 import { connect } from 'react-redux';
 
+import history from 'utils/history';
+
 import Helmet from 'components/Helmet/Helmet';
 import { FormattedMessage } from 'react-intl';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -16,7 +18,8 @@ import { Link } from 'react-router-dom';
 import Typography from '@material-ui/core/Typography';
 import Fab from '@material-ui/core/Fab';
 import IconButton from '@material-ui/core/IconButton';
-import AddIcon from 'components/Icons/Add';
+
+import BackIcon from 'components/Icons/Back';
 import GridItem from 'components/Grid/GridItem';
 import GridContainer from 'components/Grid/GridContainer';
 import Card from 'components/Card/Card';
@@ -39,7 +42,6 @@ const AlarmMessagesPage = ({ url, loadAlarms }) => {
       // try cancel something when unmount
     };
   }, [loadAlarms, url]);
-
   return (
     <div className={classes.root}>
       <Helmet title={messages.pageTitle} description={messages.pageDesc} />
@@ -60,6 +62,12 @@ const AlarmMessagesPage = ({ url, loadAlarms }) => {
                 <h4>
                   <FormattedMessage {...messages.alarms} />
                 </h4>
+                <IconButton
+                  className={classes.createBtnLink}
+                  onClick={()=>{history.go(-1)}}
+                >
+                  <BackIcon />
+                </IconButton>
               </CardHeader>
               <CardBody>
                 <AlarmsTable />

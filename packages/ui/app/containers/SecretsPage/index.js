@@ -45,8 +45,15 @@ export const SecretsPage = ({
 }) => {
   const classes = useStyles();
   useEffect(() => {
+    let t = null;
     if (url) {
       loadSecrets(url, { clusterID, namespaceID });
+      t = setInterval(() => {
+        loadSecrets(url, { clusterID, namespaceID });
+      }, 3000);
+    }
+    return () => {
+      clearInterval(t);
     }
   }, [clusterID, loadSecrets, namespaceID, url]);
 

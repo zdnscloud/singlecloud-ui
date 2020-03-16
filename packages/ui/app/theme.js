@@ -32,10 +32,10 @@ const theme = createMuiTheme({
       contrastText: '#000000',
     },
     leftMemu:{
-      main: '#FFFFFF',
+      main: 'linear-gradient(180deg,rgba(17,35,56,1) 0%,rgba(50,104,176,1) 100%,rgba(30,60,100,1) 100%)',
       highlight: '#40A9FF',
       highlightBg: '#F5F9FF',
-      contrastText: '#404040',
+      contrastText: '#FFFFFF',
     },
     icons: {
       a: '#7ED321',

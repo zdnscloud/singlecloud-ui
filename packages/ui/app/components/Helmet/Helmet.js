@@ -8,7 +8,7 @@ const ZcloudHelmet = ({ title, description }) => {
 
   return (
     <Helmet>
-      <title>{intl.formatMessage(title)}</title>
+      <title>Zcloud</title>
       <meta name="description" content={intl.formatMessage(description)} />
     </Helmet>
   );

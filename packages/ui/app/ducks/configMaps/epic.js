@@ -121,7 +121,6 @@ export const removeConfigMapEpic = (action$, state$, { ajax }) =>
     )
   );
 
-
 export default combineEpics(
   loadConfigMapsEpic,
   createConfigMapEpic,

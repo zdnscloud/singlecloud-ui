@@ -46,8 +46,8 @@ export const create{{sProperCase name}}Failure = (error, meta = {}) => ({
   meta,
   error: true,
 });
-{{/if}}
 
+{{/if}}
 {{#if wannaUpdateAction}}
 export const update{{sProperCase name}} = (data, meta = {}) => ({
   type: c.UPDATE_{{scCase name}},
@@ -67,8 +67,8 @@ export const update{{sProperCase name}}Failure = (error, meta = {}) => ({
   meta,
   error: true,
 });
-{{/if}}
 
+{{/if}}
 {{#if wannaReadOneAction}}
 export const read{{sProperCase name}} = (id, meta = {}) => ({
   type: c.READ_{{scCase name}},
@@ -88,8 +88,8 @@ export const read{{sProperCase name}}Failure = (error, meta = {}) => ({
   meta,
   error: true,
 });
-{{/if}}
 
+{{/if}}
 {{#if wannaRemoveAction}}
 export const remove{{sProperCase name}} = (id, meta = {}) => ({
   type: c.REMOVE_{{scCase name}},
@@ -109,8 +109,8 @@ export const remove{{sProperCase name}}Failure = (error, meta = {}) => ({
   meta,
   error: true,
 });
-{{/if}}
 
+{{/if}}
 {{#if wannaResourceActions}}
 export const execute{{sProperCase name}}Action = (action, data, meta = {}) => ({
   type: c.EXECUTE_{{scCase name}}_ACTION,
@@ -133,8 +133,8 @@ export const execute{{sProperCase name}}ActionFailure = (error, meta = {}) => ({
   meta,
   error: true,
 });
-{{/if}}
 
+{{/if}}
 export const clearErrorsList = (payload, meta) => ({
   type: c.CLEAR_ERRORS_LIST,
   payload,

@@ -108,7 +108,3 @@ export const makeSelectLoadErrorsList = () =>
         .filter(({ type }) => type === c.LOAD_STORAGE_CLASSES_FAILURE)
   );
 
-
-
-
-

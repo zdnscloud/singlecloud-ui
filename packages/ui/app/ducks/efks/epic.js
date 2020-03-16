@@ -60,7 +60,6 @@ export const createEfkEpic = (action$, state$, { ajax }) =>
     )
   );
 
-
 export const readEfkEpic = (action$, state$, { ajax }) =>
   action$.pipe(
     ofType(c.READ_EFK),
@@ -100,7 +99,6 @@ export const removeEfkEpic = (action$, state$, { ajax }) =>
       )
     )
   );
-
 
 export default combineEpics(
   loadEfksEpic,

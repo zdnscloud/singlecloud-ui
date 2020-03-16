@@ -125,6 +125,10 @@ export const reducer = (
         clusterID,
         namespaceID,
       } = meta;
+      const status = getByKey(payload, ['status']);
+      if (status === 202) {
+        return state.update('errorsList', (errors) => errors.filterNot((e) => e.type === c.REMOVE_HORIZONTAL_POD_AUTOSCALER_FAILURE));
+      }
       return state
         .removeIn([
           'data',
@@ -141,7 +145,6 @@ export const reducer = (
     }
     case c.REMOVE_HORIZONTAL_POD_AUTOSCALER_FAILURE:
       return state.update('errorsList', (errors) => errors.filterNot((e) => e.type === type).push({ type, payload, meta }));
-
 
     case c.CLEAR_ERRORS_LIST:
       return state.update('errorsList', (errors) => errors.clear());
