@@ -20,3 +20,7 @@ export const OPEN_TERMINAL = `${prefix}/OPEN_TERMINAL`;
 export const CLOSE_TERMINAL = `${prefix}/CLOSE_TERMINAL`;
 
 export const HTTP_ERROR = `${prefix}/HTTP_ERROR`;
+export const HTTP_CONNECTION_ERROR = `${prefix}/HTTP_CONNECTION_ERROR`;
+export const HTTP_CLIENT_ERROR = `${prefix}/HTTP_CLIENT_ERROR`;
+export const HTTP_SERVER_ERROR = `${prefix}/HTTP_SERVER_ERROR`;
+export const HTTP_UNHANDLED_ERROR = `${prefix}/HTTP_UNHANDLED_ERROR`;

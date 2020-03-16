@@ -22,7 +22,7 @@ import { ofType, combineEpics } from 'redux-observable';
 import * as c from './constants';
 import * as a from './actions';
 
-export const loadCronJobsEpic = (action$, state$, { ajax }) =>
+export const loadCronJobsEpic = (action$, state$, { ajax, catchAjaxError }) =>
   action$.pipe(
     ofType(c.LOAD_CRON_JOBS),
     mergeMap(({ payload, meta }) =>
@@ -31,15 +31,15 @@ export const loadCronJobsEpic = (action$, state$, { ajax }) =>
           meta.resolve && meta.resolve(resp);
           return a.loadCronJobsSuccess(resp, meta);
         }),
-        catchError((error) => {
+        catchAjaxError((error) => {
           meta.reject && meta.reject(error);
-          return of(a.loadCronJobsFailure(error, meta));
+          return a.loadCronJobsFailure(error, meta);
         })
       )
     )
   );
 
-export const createCronJobEpic = (action$, state$, { ajax }) =>
+export const createCronJobEpic = (action$, state$, { ajax, catchAjaxError }) =>
   action$.pipe(
     ofType(c.CREATE_CRON_JOB),
     mergeMap(({ payload, meta }) =>
@@ -52,15 +52,15 @@ export const createCronJobEpic = (action$, state$, { ajax }) =>
           meta.resolve && meta.resolve(resp);
           return a.createCronJobSuccess(resp, meta);
         }),
-        catchError((error) => {
+        catchAjaxError((error) => {
           meta.reject && meta.reject(error);
-          return of(a.createCronJobFailure(error, meta));
+          return a.createCronJobFailure(error, meta);
         })
       )
     )
   );
 
-export const readCronJobEpic = (action$, state$, { ajax }) =>
+export const readCronJobEpic = (action$, state$, { ajax, catchAjaxError }) =>
   action$.pipe(
     ofType(c.READ_CRON_JOB),
     mergeMap(({ payload, meta }) =>
@@ -72,15 +72,15 @@ export const readCronJobEpic = (action$, state$, { ajax }) =>
           meta.resolve && meta.resolve(resp);
           return a.readCronJobSuccess(resp, { ...meta, id: payload });
         }),
-        catchError((error) => {
+        catchAjaxError((error) => {
           meta.reject && meta.reject(error);
-          return of(a.readCronJobFailure(error, { ...meta, id: payload }));
+          return a.readCronJobFailure(error, { ...meta, id: payload });
         })
       )
     )
   );
 
-export const removeCronJobEpic = (action$, state$, { ajax }) =>
+export const removeCronJobEpic = (action$, state$, { ajax, catchAjaxError }) =>
   action$.pipe(
     ofType(c.REMOVE_CRON_JOB),
     mergeMap(({ payload, meta }) =>
@@ -92,9 +92,9 @@ export const removeCronJobEpic = (action$, state$, { ajax }) =>
           meta.resolve && meta.resolve(resp);
           return a.removeCronJobSuccess(resp, { ...meta, id: payload });
         }),
-        catchError((error) => {
+        catchAjaxError((error) => {
           meta.reject && meta.reject(error);
-          return of(a.removeCronJobFailure(error, { ...meta, id: payload }));
+          return a.removeCronJobFailure(error, { ...meta, id: payload });
         })
       )
     )

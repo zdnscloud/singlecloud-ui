@@ -22,7 +22,7 @@ import { ofType, combineEpics } from 'redux-observable';
 import * as c from './constants';
 import * as a from './actions';
 
-export const loadNamespaceThresholdsEpic = (action$, state$, { ajax }) =>
+export const loadNamespaceThresholdsEpic = (action$, state$, { ajax, catchAjaxError }) =>
   action$.pipe(
     ofType(c.LOAD_NAMESPACE_THRESHOLDS),
     mergeMap(({ payload, meta }) =>
@@ -31,15 +31,15 @@ export const loadNamespaceThresholdsEpic = (action$, state$, { ajax }) =>
           meta.resolve && meta.resolve(resp);
           return a.loadNamespaceThresholdsSuccess(resp, meta);
         }),
-        catchError((error) => {
+        catchAjaxError((error) => {
           meta.reject && meta.reject(error);
-          return of(a.loadNamespaceThresholdsFailure(error, meta));
+          return a.loadNamespaceThresholdsFailure(error, meta);
         })
       )
     )
   );
 
-export const createNamespaceThresholdEpic = (action$, state$, { ajax }) =>
+export const createNamespaceThresholdEpic = (action$, state$, { ajax, catchAjaxError }) =>
   action$.pipe(
     ofType(c.CREATE_NAMESPACE_THRESHOLD),
     mergeMap(({ payload, meta }) =>
@@ -52,15 +52,15 @@ export const createNamespaceThresholdEpic = (action$, state$, { ajax }) =>
           meta.resolve && meta.resolve(resp);
           return a.createNamespaceThresholdSuccess(resp, meta);
         }),
-        catchError((error) => {
+        catchAjaxError((error) => {
           meta.reject && meta.reject(error);
-          return of(a.createNamespaceThresholdFailure(error, meta));
+          return a.createNamespaceThresholdFailure(error, meta);
         })
       )
     )
   );
 
-export const updateNamespaceThresholdEpic = (action$, state$, { ajax }) =>
+export const updateNamespaceThresholdEpic = (action$, state$, { ajax, catchAjaxError }) =>
   action$.pipe(
     ofType(c.UPDATE_NAMESPACE_THRESHOLD),
     mergeMap(({ payload, meta }) =>
@@ -73,15 +73,15 @@ export const updateNamespaceThresholdEpic = (action$, state$, { ajax }) =>
           meta.resolve && meta.resolve(resp);
           return a.updateNamespaceThresholdSuccess(resp, meta);
         }),
-        catchError((error) => {
+        catchAjaxError((error) => {
           meta.reject && meta.reject(error);
-          return of(a.updateNamespaceThresholdFailure(error, meta));
+          return a.updateNamespaceThresholdFailure(error, meta);
         })
       )
     )
   );
 
-export const readNamespaceThresholdEpic = (action$, state$, { ajax }) =>
+export const readNamespaceThresholdEpic = (action$, state$, { ajax, catchAjaxError }) =>
   action$.pipe(
     ofType(c.READ_NAMESPACE_THRESHOLD),
     mergeMap(({ payload, meta }) =>
@@ -93,15 +93,15 @@ export const readNamespaceThresholdEpic = (action$, state$, { ajax }) =>
           meta.resolve && meta.resolve(resp);
           return a.readNamespaceThresholdSuccess(resp, { ...meta, id: payload });
         }),
-        catchError((error) => {
+        catchAjaxError((error) => {
           meta.reject && meta.reject(error);
-          return of(a.readNamespaceThresholdFailure(error, { ...meta, id: payload }));
+          return a.readNamespaceThresholdFailure(error, { ...meta, id: payload });
         })
       )
     )
   );
 
-export const removeNamespaceThresholdEpic = (action$, state$, { ajax }) =>
+export const removeNamespaceThresholdEpic = (action$, state$, { ajax, catchAjaxError }) =>
   action$.pipe(
     ofType(c.REMOVE_NAMESPACE_THRESHOLD),
     mergeMap(({ payload, meta }) =>
@@ -113,9 +113,9 @@ export const removeNamespaceThresholdEpic = (action$, state$, { ajax }) =>
           meta.resolve && meta.resolve(resp);
           return a.removeNamespaceThresholdSuccess(resp, { ...meta, id: payload });
         }),
-        catchError((error) => {
+        catchAjaxError((error) => {
           meta.reject && meta.reject(error);
-          return of(a.removeNamespaceThresholdFailure(error, { ...meta, id: payload }));
+          return a.removeNamespaceThresholdFailure(error, { ...meta, id: payload });
         })
       )
     )

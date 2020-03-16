@@ -22,7 +22,7 @@ import { ofType, combineEpics } from 'redux-observable';
 import * as c from './constants';
 import * as a from './actions';
 
-export const loadStorageClassesEpic = (action$, state$, { ajax }) =>
+export const loadStorageClassesEpic = (action$, state$, { ajax, catchAjaxError }) =>
   action$.pipe(
     ofType(c.LOAD_STORAGE_CLASSES),
     mergeMap(({ payload, meta }) =>
@@ -31,9 +31,9 @@ export const loadStorageClassesEpic = (action$, state$, { ajax }) =>
           meta.resolve && meta.resolve(resp);
           return a.loadStorageClassesSuccess(resp, meta);
         }),
-        catchError((error) => {
+        catchAjaxError((error) => {
           meta.reject && meta.reject(error);
-          return of(a.loadStorageClassesFailure(error, meta));
+          return a.loadStorageClassesFailure(error, meta);
         })
       )
     )

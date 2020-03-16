@@ -22,7 +22,7 @@ import { ofType, combineEpics } from 'redux-observable';
 import * as c from './constants';
 import * as a from './actions';
 
-export const loadPersistentVolumesEpic = (action$, state$, { ajax }) =>
+export const loadPersistentVolumesEpic = (action$, state$, { ajax, catchAjaxError }) =>
   action$.pipe(
     ofType(c.LOAD_PERSISTENT_VOLUMES),
     mergeMap(({ payload, meta }) =>
@@ -31,15 +31,15 @@ export const loadPersistentVolumesEpic = (action$, state$, { ajax }) =>
           meta.resolve && meta.resolve(resp);
           return a.loadPersistentVolumesSuccess(resp, meta);
         }),
-        catchError((error) => {
+        catchAjaxError((error) => {
           meta.reject && meta.reject(error);
-          return of(a.loadPersistentVolumesFailure(error, meta));
+          return a.loadPersistentVolumesFailure(error, meta);
         })
       )
     )
   );
 
-export const readPersistentVolumeEpic = (action$, state$, { ajax }) =>
+export const readPersistentVolumeEpic = (action$, state$, { ajax, catchAjaxError }) =>
   action$.pipe(
     ofType(c.READ_PERSISTENT_VOLUME),
     mergeMap(({ payload, meta }) =>
@@ -51,15 +51,15 @@ export const readPersistentVolumeEpic = (action$, state$, { ajax }) =>
           meta.resolve && meta.resolve(resp);
           return a.readPersistentVolumeSuccess(resp, { ...meta, id: payload });
         }),
-        catchError((error) => {
+        catchAjaxError((error) => {
           meta.reject && meta.reject(error);
-          return of(a.readPersistentVolumeFailure(error, { ...meta, id: payload }));
+          return a.readPersistentVolumeFailure(error, { ...meta, id: payload });
         })
       )
     )
   );
 
-export const removePersistentVolumeEpic = (action$, state$, { ajax }) =>
+export const removePersistentVolumeEpic = (action$, state$, { ajax, catchAjaxError }) =>
   action$.pipe(
     ofType(c.REMOVE_PERSISTENT_VOLUME),
     mergeMap(({ payload, meta }) =>
@@ -71,9 +71,9 @@ export const removePersistentVolumeEpic = (action$, state$, { ajax }) =>
           meta.resolve && meta.resolve(resp);
           return a.removePersistentVolumeSuccess(resp, { ...meta, id: payload });
         }),
-        catchError((error) => {
+        catchAjaxError((error) => {
           meta.reject && meta.reject(error);
-          return of(a.removePersistentVolumeFailure(error, { ...meta, id: payload }));
+          return a.removePersistentVolumeFailure(error, { ...meta, id: payload });
         })
       )
     )

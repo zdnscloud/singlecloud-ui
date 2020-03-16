@@ -22,7 +22,7 @@ import { ofType, combineEpics } from 'redux-observable';
 import * as c from './constants';
 import * as a from './actions';
 
-export const loadClusterThresholdsEpic = (action$, state$, { ajax }) =>
+export const loadClusterThresholdsEpic = (action$, state$, { ajax, catchAjaxError }) =>
   action$.pipe(
     ofType(c.LOAD_CLUSTER_THRESHOLDS),
     mergeMap(({ payload, meta }) =>
@@ -31,15 +31,15 @@ export const loadClusterThresholdsEpic = (action$, state$, { ajax }) =>
           meta.resolve && meta.resolve(resp);
           return a.loadClusterThresholdsSuccess(resp, meta);
         }),
-        catchError((error) => {
+        catchAjaxError((error) => {
           meta.reject && meta.reject(error);
-          return of(a.loadClusterThresholdsFailure(error, meta));
+          return a.loadClusterThresholdsFailure(error, meta);
         })
       )
     )
   );
 
-export const createClusterThresholdEpic = (action$, state$, { ajax }) =>
+export const createClusterThresholdEpic = (action$, state$, { ajax, catchAjaxError }) =>
   action$.pipe(
     ofType(c.CREATE_CLUSTER_THRESHOLD),
     mergeMap(({ payload, meta }) =>
@@ -52,15 +52,15 @@ export const createClusterThresholdEpic = (action$, state$, { ajax }) =>
           meta.resolve && meta.resolve(resp);
           return a.createClusterThresholdSuccess(resp, meta);
         }),
-        catchError((error) => {
+        catchAjaxError((error) => {
           meta.reject && meta.reject(error);
-          return of(a.createClusterThresholdFailure(error, meta));
+          return a.createClusterThresholdFailure(error, meta);
         })
       )
     )
   );
 
-export const updateClusterThresholdEpic = (action$, state$, { ajax }) =>
+export const updateClusterThresholdEpic = (action$, state$, { ajax, catchAjaxError }) =>
   action$.pipe(
     ofType(c.UPDATE_CLUSTER_THRESHOLD),
     mergeMap(({ payload, meta }) =>
@@ -73,15 +73,15 @@ export const updateClusterThresholdEpic = (action$, state$, { ajax }) =>
           meta.resolve && meta.resolve(resp);
           return a.updateClusterThresholdSuccess(resp, meta);
         }),
-        catchError((error) => {
+        catchAjaxError((error) => {
           meta.reject && meta.reject(error);
-          return of(a.updateClusterThresholdFailure(error, meta));
+          return a.updateClusterThresholdFailure(error, meta);
         })
       )
     )
   );
 
-export const readClusterThresholdEpic = (action$, state$, { ajax }) =>
+export const readClusterThresholdEpic = (action$, state$, { ajax, catchAjaxError }) =>
   action$.pipe(
     ofType(c.READ_CLUSTER_THRESHOLD),
     mergeMap(({ payload, meta }) =>
@@ -93,15 +93,15 @@ export const readClusterThresholdEpic = (action$, state$, { ajax }) =>
           meta.resolve && meta.resolve(resp);
           return a.readClusterThresholdSuccess(resp, { ...meta, id: payload });
         }),
-        catchError((error) => {
+        catchAjaxError((error) => {
           meta.reject && meta.reject(error);
-          return of(a.readClusterThresholdFailure(error, { ...meta, id: payload }));
+          return a.readClusterThresholdFailure(error, { ...meta, id: payload });
         })
       )
     )
   );
 
-export const removeClusterThresholdEpic = (action$, state$, { ajax }) =>
+export const removeClusterThresholdEpic = (action$, state$, { ajax, catchAjaxError }) =>
   action$.pipe(
     ofType(c.REMOVE_CLUSTER_THRESHOLD),
     mergeMap(({ payload, meta }) =>
@@ -113,9 +113,9 @@ export const removeClusterThresholdEpic = (action$, state$, { ajax }) =>
           meta.resolve && meta.resolve(resp);
           return a.removeClusterThresholdSuccess(resp, { ...meta, id: payload });
         }),
-        catchError((error) => {
+        catchAjaxError((error) => {
           meta.reject && meta.reject(error);
-          return of(a.removeClusterThresholdFailure(error, { ...meta, id: payload }));
+          return a.removeClusterThresholdFailure(error, { ...meta, id: payload });
         })
       )
     )

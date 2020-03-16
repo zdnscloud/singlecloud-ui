@@ -22,7 +22,7 @@ import { ofType, combineEpics } from 'redux-observable';
 import * as c from './constants';
 import * as a from './actions';
 
-export const loadWorkFlowTasksEpic = (action$, state$, { ajax }) =>
+export const loadWorkFlowTasksEpic = (action$, state$, { ajax, catchAjaxError }) =>
   action$.pipe(
     ofType(c.LOAD_WORK_FLOW_TASKS),
     mergeMap(({ payload, meta }) =>
@@ -31,15 +31,15 @@ export const loadWorkFlowTasksEpic = (action$, state$, { ajax }) =>
           meta.resolve && meta.resolve(resp);
           return a.loadWorkFlowTasksSuccess(resp, meta);
         }),
-        catchError((error) => {
+        catchAjaxError((error) => {
           meta.reject && meta.reject(error);
-          return of(a.loadWorkFlowTasksFailure(error, meta));
+          return a.loadWorkFlowTasksFailure(error, meta);
         })
       )
     )
   );
 
-export const createWorkFlowTaskEpic = (action$, state$, { ajax }) =>
+export const createWorkFlowTaskEpic = (action$, state$, { ajax, catchAjaxError }) =>
   action$.pipe(
     ofType(c.CREATE_WORK_FLOW_TASK),
     mergeMap(({ payload, meta }) =>
@@ -52,16 +52,15 @@ export const createWorkFlowTaskEpic = (action$, state$, { ajax }) =>
           meta.resolve && meta.resolve(resp);
           return a.createWorkFlowTaskSuccess(resp, meta);
         }),
-        catchError((error) => {
+        catchAjaxError((error) => {
           meta.reject && meta.reject(error);
-          return of(a.createWorkFlowTaskFailure(error, meta));
+          return a.createWorkFlowTaskFailure(error, meta);
         })
       )
     )
   );
 
-
-export const readWorkFlowTaskEpic = (action$, state$, { ajax }) =>
+export const readWorkFlowTaskEpic = (action$, state$, { ajax, catchAjaxError }) =>
   action$.pipe(
     ofType(c.READ_WORK_FLOW_TASK),
     mergeMap(({ payload, meta }) =>
@@ -73,15 +72,13 @@ export const readWorkFlowTaskEpic = (action$, state$, { ajax }) =>
           meta.resolve && meta.resolve(resp);
           return a.readWorkFlowTaskSuccess(resp, { ...meta, id: payload });
         }),
-        catchError((error) => {
+        catchAjaxError((error) => {
           meta.reject && meta.reject(error);
-          return of(a.readWorkFlowTaskFailure(error, { ...meta, id: payload }));
+          return a.readWorkFlowTaskFailure(error, { ...meta, id: payload });
         })
       )
     )
   );
-
-
 
 export default combineEpics(
   loadWorkFlowTasksEpic,

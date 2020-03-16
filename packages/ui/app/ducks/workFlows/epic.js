@@ -22,7 +22,7 @@ import { ofType, combineEpics } from 'redux-observable';
 import * as c from './constants';
 import * as a from './actions';
 
-export const loadWorkFlowsEpic = (action$, state$, { ajax }) =>
+export const loadWorkFlowsEpic = (action$, state$, { ajax, catchAjaxError }) =>
   action$.pipe(
     ofType(c.LOAD_WORK_FLOWS),
     mergeMap(({ payload, meta }) =>
@@ -31,15 +31,15 @@ export const loadWorkFlowsEpic = (action$, state$, { ajax }) =>
           meta.resolve && meta.resolve(resp);
           return a.loadWorkFlowsSuccess(resp, meta);
         }),
-        catchError((error) => {
+        catchAjaxError((error) => {
           meta.reject && meta.reject(error);
-          return of(a.loadWorkFlowsFailure(error, meta));
+          return a.loadWorkFlowsFailure(error, meta);
         })
       )
     )
   );
 
-export const createWorkFlowEpic = (action$, state$, { ajax }) =>
+export const createWorkFlowEpic = (action$, state$, { ajax, catchAjaxError }) =>
   action$.pipe(
     ofType(c.CREATE_WORK_FLOW),
     mergeMap(({ payload, meta }) =>
@@ -52,15 +52,15 @@ export const createWorkFlowEpic = (action$, state$, { ajax }) =>
           meta.resolve && meta.resolve(resp);
           return a.createWorkFlowSuccess(resp, meta);
         }),
-        catchError((error) => {
+        catchAjaxError((error) => {
           meta.reject && meta.reject(error);
-          return of(a.createWorkFlowFailure(error, meta));
+          return a.createWorkFlowFailure(error, meta);
         })
       )
     )
   );
 
-export const updateWorkFlowEpic = (action$, state$, { ajax }) =>
+export const updateWorkFlowEpic = (action$, state$, { ajax, catchAjaxError }) =>
   action$.pipe(
     ofType(c.UPDATE_WORK_FLOW),
     mergeMap(({ payload, meta }) =>
@@ -73,15 +73,15 @@ export const updateWorkFlowEpic = (action$, state$, { ajax }) =>
           meta.resolve && meta.resolve(resp);
           return a.updateWorkFlowSuccess(resp, meta);
         }),
-        catchError((error) => {
+        catchAjaxError((error) => {
           meta.reject && meta.reject(error);
-          return of(a.updateWorkFlowFailure(error, meta));
+          return a.updateWorkFlowFailure(error, meta);
         })
       )
     )
   );
 
-export const readWorkFlowEpic = (action$, state$, { ajax }) =>
+export const readWorkFlowEpic = (action$, state$, { ajax, catchAjaxError }) =>
   action$.pipe(
     ofType(c.READ_WORK_FLOW),
     mergeMap(({ payload, meta }) =>
@@ -93,15 +93,15 @@ export const readWorkFlowEpic = (action$, state$, { ajax }) =>
           meta.resolve && meta.resolve(resp);
           return a.readWorkFlowSuccess(resp, { ...meta, id: payload });
         }),
-        catchError((error) => {
+        catchAjaxError((error) => {
           meta.reject && meta.reject(error);
-          return of(a.readWorkFlowFailure(error, { ...meta, id: payload }));
+          return a.readWorkFlowFailure(error, { ...meta, id: payload });
         })
       )
     )
   );
 
-export const removeWorkFlowEpic = (action$, state$, { ajax }) =>
+export const removeWorkFlowEpic = (action$, state$, { ajax, catchAjaxError }) =>
   action$.pipe(
     ofType(c.REMOVE_WORK_FLOW),
     mergeMap(({ payload, meta }) =>
@@ -113,15 +113,15 @@ export const removeWorkFlowEpic = (action$, state$, { ajax }) =>
           meta.resolve && meta.resolve(resp);
           return a.removeWorkFlowSuccess(resp, { ...meta, id: payload });
         }),
-        catchError((error) => {
+        catchAjaxError((error) => {
           meta.reject && meta.reject(error);
-          return of(a.removeWorkFlowFailure(error, { ...meta, id: payload }));
+          return a.removeWorkFlowFailure(error, { ...meta, id: payload });
         })
       )
     )
   );
 
-export const executeWorkFlowActionEpic = (action$, state$, { ajax }) =>
+export const executeWorkFlowActionEpic = (action$, state$, { ajax, catchAjaxError }) =>
   action$.pipe(
     ofType(c.EXECUTE_WORK_FLOW_ACTION),
     mergeMap(({ payload: { action, data }, meta }) =>
@@ -134,9 +134,9 @@ export const executeWorkFlowActionEpic = (action$, state$, { ajax }) =>
           meta.resolve && meta.resolve(resp);
           return a.executeWorkFlowActionSuccess(resp, { ...meta, action });
         }),
-        catchError((error) => {
+        catchAjaxError((error) => {
           meta.reject && meta.reject(error);
-          return of(a.executeWorkFlowActionFailure(error, { ...meta, action }));
+          return a.executeWorkFlowActionFailure(error, { ...meta, action });
         })
       )
     )

@@ -22,7 +22,7 @@ import { ofType, combineEpics } from 'redux-observable';
 import * as c from './constants';
 import * as a from './actions';
 
-export const loadChartsEpic = (action$, state$, { ajax }) =>
+export const loadChartsEpic = (action$, state$, { ajax, catchAjaxError }) =>
   action$.pipe(
     ofType(c.LOAD_CHARTS),
     mergeMap(({ payload, meta }) =>
@@ -31,15 +31,15 @@ export const loadChartsEpic = (action$, state$, { ajax }) =>
           meta.resolve && meta.resolve(resp);
           return a.loadChartsSuccess(resp, meta);
         }),
-        catchError((error) => {
+        catchAjaxError((error) => {
           meta.reject && meta.reject(error);
-          return of(a.loadChartsFailure(error, meta));
+          return a.loadChartsFailure(error, meta);
         })
       )
     )
   );
 
-export const readChartEpic = (action$, state$, { ajax }) =>
+export const readChartEpic = (action$, state$, { ajax, catchAjaxError }) =>
   action$.pipe(
     ofType(c.READ_CHART),
     mergeMap(({ payload, meta }) =>
@@ -51,9 +51,9 @@ export const readChartEpic = (action$, state$, { ajax }) =>
           meta.resolve && meta.resolve(resp);
           return a.readChartSuccess(resp, { ...meta, id: payload });
         }),
-        catchError((error) => {
+        catchAjaxError((error) => {
           meta.reject && meta.reject(error);
-          return of(a.readChartFailure(error, { ...meta, id: payload }));
+          return a.readChartFailure(error, { ...meta, id: payload });
         })
       )
     )

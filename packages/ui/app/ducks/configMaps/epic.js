@@ -22,7 +22,7 @@ import { ofType, combineEpics } from 'redux-observable';
 import * as c from './constants';
 import * as a from './actions';
 
-export const loadConfigMapsEpic = (action$, state$, { ajax }) =>
+export const loadConfigMapsEpic = (action$, state$, { ajax, catchAjaxError }) =>
   action$.pipe(
     ofType(c.LOAD_CONFIG_MAPS),
     mergeMap(({ payload, meta }) =>
@@ -31,15 +31,15 @@ export const loadConfigMapsEpic = (action$, state$, { ajax }) =>
           meta.resolve && meta.resolve(resp);
           return a.loadConfigMapsSuccess(resp, meta);
         }),
-        catchError((error) => {
+        catchAjaxError((error) => {
           meta.reject && meta.reject(error);
-          return of(a.loadConfigMapsFailure(error, meta));
+          return a.loadConfigMapsFailure(error, meta);
         })
       )
     )
   );
 
-export const createConfigMapEpic = (action$, state$, { ajax }) =>
+export const createConfigMapEpic = (action$, state$, { ajax, catchAjaxError }) =>
   action$.pipe(
     ofType(c.CREATE_CONFIG_MAP),
     mergeMap(({ payload, meta }) =>
@@ -52,15 +52,15 @@ export const createConfigMapEpic = (action$, state$, { ajax }) =>
           meta.resolve && meta.resolve(resp);
           return a.createConfigMapSuccess(resp, meta);
         }),
-        catchError((error) => {
+        catchAjaxError((error) => {
           meta.reject && meta.reject(error);
-          return of(a.createConfigMapFailure(error, meta));
+          return a.createConfigMapFailure(error, meta);
         })
       )
     )
   );
 
-export const updateConfigMapEpic = (action$, state$, { ajax }) =>
+export const updateConfigMapEpic = (action$, state$, { ajax, catchAjaxError }) =>
   action$.pipe(
     ofType(c.UPDATE_CONFIG_MAP),
     mergeMap(({ payload, meta }) =>
@@ -73,15 +73,15 @@ export const updateConfigMapEpic = (action$, state$, { ajax }) =>
           meta.resolve && meta.resolve(resp);
           return a.updateConfigMapSuccess(resp, meta);
         }),
-        catchError((error) => {
+        catchAjaxError((error) => {
           meta.reject && meta.reject(error);
-          return of(a.updateConfigMapFailure(error, meta));
+          return a.updateConfigMapFailure(error, meta);
         })
       )
     )
   );
 
-export const readConfigMapEpic = (action$, state$, { ajax }) =>
+export const readConfigMapEpic = (action$, state$, { ajax, catchAjaxError }) =>
   action$.pipe(
     ofType(c.READ_CONFIG_MAP),
     mergeMap(({ payload, meta }) =>
@@ -93,15 +93,15 @@ export const readConfigMapEpic = (action$, state$, { ajax }) =>
           meta.resolve && meta.resolve(resp);
           return a.readConfigMapSuccess(resp, { ...meta, id: payload });
         }),
-        catchError((error) => {
+        catchAjaxError((error) => {
           meta.reject && meta.reject(error);
-          return of(a.readConfigMapFailure(error, { ...meta, id: payload }));
+          return a.readConfigMapFailure(error, { ...meta, id: payload });
         })
       )
     )
   );
 
-export const removeConfigMapEpic = (action$, state$, { ajax }) =>
+export const removeConfigMapEpic = (action$, state$, { ajax, catchAjaxError }) =>
   action$.pipe(
     ofType(c.REMOVE_CONFIG_MAP),
     mergeMap(({ payload, meta }) =>
@@ -113,9 +113,9 @@ export const removeConfigMapEpic = (action$, state$, { ajax }) =>
           meta.resolve && meta.resolve(resp);
           return a.removeConfigMapSuccess(resp, { ...meta, id: payload });
         }),
-        catchError((error) => {
+        catchAjaxError((error) => {
           meta.reject && meta.reject(error);
-          return of(a.removeConfigMapFailure(error, { ...meta, id: payload }));
+          return a.removeConfigMapFailure(error, { ...meta, id: payload });
         })
       )
     )

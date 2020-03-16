@@ -22,7 +22,7 @@ import { ofType, combineEpics } from 'redux-observable';
 import * as c from './constants';
 import * as a from './actions';
 
-export const loadStorageClustersEpic = (action$, state$, { ajax }) =>
+export const loadStorageClustersEpic = (action$, state$, { ajax, catchAjaxError }) =>
   action$.pipe(
     ofType(c.LOAD_STORAGE_CLUSTERS),
     mergeMap(({ payload, meta }) =>
@@ -31,15 +31,15 @@ export const loadStorageClustersEpic = (action$, state$, { ajax }) =>
           meta.resolve && meta.resolve(resp);
           return a.loadStorageClustersSuccess(resp, meta);
         }),
-        catchError((error) => {
+        catchAjaxError((error) => {
           meta.reject && meta.reject(error);
-          return of(a.loadStorageClustersFailure(error, meta));
+          return a.loadStorageClustersFailure(error, meta);
         })
       )
     )
   );
 
-export const createStorageClusterEpic = (action$, state$, { ajax }) =>
+export const createStorageClusterEpic = (action$, state$, { ajax, catchAjaxError }) =>
   action$.pipe(
     ofType(c.CREATE_STORAGE_CLUSTER),
     mergeMap(({ payload, meta }) =>
@@ -52,15 +52,15 @@ export const createStorageClusterEpic = (action$, state$, { ajax }) =>
           meta.resolve && meta.resolve(resp);
           return a.createStorageClusterSuccess(resp, meta);
         }),
-        catchError((error) => {
+        catchAjaxError((error) => {
           meta.reject && meta.reject(error);
-          return of(a.createStorageClusterFailure(error, meta));
+          return a.createStorageClusterFailure(error, meta);
         })
       )
     )
   );
 
-export const updateStorageClusterEpic = (action$, state$, { ajax }) =>
+export const updateStorageClusterEpic = (action$, state$, { ajax, catchAjaxError }) =>
   action$.pipe(
     ofType(c.UPDATE_STORAGE_CLUSTER),
     mergeMap(({ payload, meta }) =>
@@ -73,15 +73,15 @@ export const updateStorageClusterEpic = (action$, state$, { ajax }) =>
           meta.resolve && meta.resolve(resp);
           return a.updateStorageClusterSuccess(resp, meta);
         }),
-        catchError((error) => {
+        catchAjaxError((error) => {
           meta.reject && meta.reject(error);
-          return of(a.updateStorageClusterFailure(error, meta));
+          return a.updateStorageClusterFailure(error, meta);
         })
       )
     )
   );
 
-export const readStorageClusterEpic = (action$, state$, { ajax }) =>
+export const readStorageClusterEpic = (action$, state$, { ajax, catchAjaxError }) =>
   action$.pipe(
     ofType(c.READ_STORAGE_CLUSTER),
     mergeMap(({ payload, meta }) =>
@@ -93,15 +93,15 @@ export const readStorageClusterEpic = (action$, state$, { ajax }) =>
           meta.resolve && meta.resolve(resp);
           return a.readStorageClusterSuccess(resp, { ...meta, id: payload });
         }),
-        catchError((error) => {
+        catchAjaxError((error) => {
           meta.reject && meta.reject(error);
-          return of(a.readStorageClusterFailure(error, { ...meta, id: payload }));
+          return a.readStorageClusterFailure(error, { ...meta, id: payload });
         })
       )
     )
   );
 
-export const removeStorageClusterEpic = (action$, state$, { ajax }) =>
+export const removeStorageClusterEpic = (action$, state$, { ajax, catchAjaxError }) =>
   action$.pipe(
     ofType(c.REMOVE_STORAGE_CLUSTER),
     mergeMap(({ payload, meta }) =>
@@ -113,9 +113,9 @@ export const removeStorageClusterEpic = (action$, state$, { ajax }) =>
           meta.resolve && meta.resolve(resp);
           return a.removeStorageClusterSuccess(resp, { ...meta, id: payload });
         }),
-        catchError((error) => {
+        catchAjaxError((error) => {
           meta.reject && meta.reject(error);
-          return of(a.removeStorageClusterFailure(error, { ...meta, id: payload }));
+          return a.removeStorageClusterFailure(error, { ...meta, id: payload });
         })
       )
     )

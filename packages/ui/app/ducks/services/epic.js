@@ -22,7 +22,7 @@ import { ofType, combineEpics } from 'redux-observable';
 import * as c from './constants';
 import * as a from './actions';
 
-export const loadServicesEpic = (action$, state$, { ajax }) =>
+export const loadServicesEpic = (action$, state$, { ajax, catchAjaxError }) =>
   action$.pipe(
     ofType(c.LOAD_SERVICES),
     mergeMap(({ payload, meta }) =>
@@ -31,15 +31,15 @@ export const loadServicesEpic = (action$, state$, { ajax }) =>
           meta.resolve && meta.resolve(resp);
           return a.loadServicesSuccess(resp, meta);
         }),
-        catchError((error) => {
+        catchAjaxError((error) => {
           meta.reject && meta.reject(error);
-          return of(a.loadServicesFailure(error, meta));
+          return a.loadServicesFailure(error, meta);
         })
       )
     )
   );
 
-export const createServiceEpic = (action$, state$, { ajax }) =>
+export const createServiceEpic = (action$, state$, { ajax, catchAjaxError }) =>
   action$.pipe(
     ofType(c.CREATE_SERVICE),
     mergeMap(({ payload, meta }) =>
@@ -52,15 +52,15 @@ export const createServiceEpic = (action$, state$, { ajax }) =>
           meta.resolve && meta.resolve(resp);
           return a.createServiceSuccess(resp, meta);
         }),
-        catchError((error) => {
+        catchAjaxError((error) => {
           meta.reject && meta.reject(error);
-          return of(a.createServiceFailure(error, meta));
+          return a.createServiceFailure(error, meta);
         })
       )
     )
   );
 
-export const readServiceEpic = (action$, state$, { ajax }) =>
+export const readServiceEpic = (action$, state$, { ajax, catchAjaxError }) =>
   action$.pipe(
     ofType(c.READ_SERVICE),
     mergeMap(({ payload, meta }) =>
@@ -72,15 +72,15 @@ export const readServiceEpic = (action$, state$, { ajax }) =>
           meta.resolve && meta.resolve(resp);
           return a.readServiceSuccess(resp, { ...meta, id: payload });
         }),
-        catchError((error) => {
+        catchAjaxError((error) => {
           meta.reject && meta.reject(error);
-          return of(a.readServiceFailure(error, { ...meta, id: payload }));
+          return a.readServiceFailure(error, { ...meta, id: payload });
         })
       )
     )
   );
 
-export const removeServiceEpic = (action$, state$, { ajax }) =>
+export const removeServiceEpic = (action$, state$, { ajax, catchAjaxError }) =>
   action$.pipe(
     ofType(c.REMOVE_SERVICE),
     mergeMap(({ payload, meta }) =>
@@ -92,9 +92,9 @@ export const removeServiceEpic = (action$, state$, { ajax }) =>
           meta.resolve && meta.resolve(resp);
           return a.removeServiceSuccess(resp, { ...meta, id: payload });
         }),
-        catchError((error) => {
+        catchAjaxError((error) => {
           meta.reject && meta.reject(error);
-          return of(a.removeServiceFailure(error, { ...meta, id: payload }));
+          return a.removeServiceFailure(error, { ...meta, id: payload });
         })
       )
     )

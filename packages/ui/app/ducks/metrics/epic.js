@@ -22,7 +22,7 @@ import { ofType, combineEpics } from 'redux-observable';
 import * as c from './constants';
 import * as a from './actions';
 
-export const loadMetricsEpic = (action$, state$, { ajax }) =>
+export const loadMetricsEpic = (action$, state$, { ajax, catchAjaxError }) =>
   action$.pipe(
     ofType(c.LOAD_METRICS),
     mergeMap(({ payload, meta }) =>
@@ -31,9 +31,9 @@ export const loadMetricsEpic = (action$, state$, { ajax }) =>
           meta.resolve && meta.resolve(resp);
           return a.loadMetricsSuccess(resp, meta);
         }),
-        catchError((error) => {
+        catchAjaxError((error) => {
           meta.reject && meta.reject(error);
-          return of(a.loadMetricsFailure(error, meta));
+          return a.loadMetricsFailure(error, meta);
         })
       )
     )

@@ -22,7 +22,7 @@ import { ofType, combineEpics } from 'redux-observable';
 import * as c from './constants';
 import * as a from './actions';
 
-export const loadClustersEpic = (action$, state$, { ajax }) =>
+export const loadClustersEpic = (action$, state$, { ajax, catchAjaxError }) =>
   action$.pipe(
     ofType(c.LOAD_CLUSTERS),
     mergeMap(({ payload, meta }) =>
@@ -31,15 +31,15 @@ export const loadClustersEpic = (action$, state$, { ajax }) =>
           meta.resolve && meta.resolve(resp);
           return a.loadClustersSuccess(resp, meta);
         }),
-        catchError((error) => {
+        catchAjaxError((error) => {
           meta.reject && meta.reject(error);
-          return of(a.loadClustersFailure(error, meta));
+          return a.loadClustersFailure(error, meta);
         })
       )
     )
   );
 
-export const createClusterEpic = (action$, state$, { ajax }) =>
+export const createClusterEpic = (action$, state$, { ajax, catchAjaxError }) =>
   action$.pipe(
     ofType(c.CREATE_CLUSTER),
     mergeMap(({ payload, meta }) =>
@@ -52,15 +52,15 @@ export const createClusterEpic = (action$, state$, { ajax }) =>
           meta.resolve && meta.resolve(resp);
           return a.createClusterSuccess(resp, meta);
         }),
-        catchError((error) => {
+        catchAjaxError((error) => {
           meta.reject && meta.reject(error);
-          return of(a.createClusterFailure(error, meta));
+          return a.createClusterFailure(error, meta);
         })
       )
     )
   );
 
-export const updateClusterEpic = (action$, state$, { ajax }) =>
+export const updateClusterEpic = (action$, state$, { ajax, catchAjaxError }) =>
   action$.pipe(
     ofType(c.UPDATE_CLUSTER),
     mergeMap(({ payload, meta }) =>
@@ -73,15 +73,15 @@ export const updateClusterEpic = (action$, state$, { ajax }) =>
           meta.resolve && meta.resolve(resp);
           return a.updateClusterSuccess(resp, meta);
         }),
-        catchError((error) => {
+        catchAjaxError((error) => {
           meta.reject && meta.reject(error);
-          return of(a.updateClusterFailure(error, meta));
+          return a.updateClusterFailure(error, meta);
         })
       )
     )
   );
 
-export const readClusterEpic = (action$, state$, { ajax }) =>
+export const readClusterEpic = (action$, state$, { ajax, catchAjaxError }) =>
   action$.pipe(
     ofType(c.READ_CLUSTER),
     mergeMap(({ payload, meta }) =>
@@ -93,15 +93,15 @@ export const readClusterEpic = (action$, state$, { ajax }) =>
           meta.resolve && meta.resolve(resp);
           return a.readClusterSuccess(resp, { ...meta, id: payload });
         }),
-        catchError((error) => {
+        catchAjaxError((error) => {
           meta.reject && meta.reject(error);
-          return of(a.readClusterFailure(error, { ...meta, id: payload }));
+          return a.readClusterFailure(error, { ...meta, id: payload });
         })
       )
     )
   );
 
-export const removeClusterEpic = (action$, state$, { ajax }) =>
+export const removeClusterEpic = (action$, state$, { ajax, catchAjaxError }) =>
   action$.pipe(
     ofType(c.REMOVE_CLUSTER),
     mergeMap(({ payload, meta }) =>
@@ -113,15 +113,15 @@ export const removeClusterEpic = (action$, state$, { ajax }) =>
           meta.resolve && meta.resolve(resp);
           return a.removeClusterSuccess(resp, { ...meta, id: payload });
         }),
-        catchError((error) => {
+        catchAjaxError((error) => {
           meta.reject && meta.reject(error);
-          return of(a.removeClusterFailure(error, { ...meta, id: payload }));
+          return a.removeClusterFailure(error, { ...meta, id: payload });
         })
       )
     )
   );
 
-export const executeClusterActionEpic = (action$, state$, { ajax }) =>
+export const executeClusterActionEpic = (action$, state$, { ajax, catchAjaxError }) =>
   action$.pipe(
     ofType(c.EXECUTE_CLUSTER_ACTION),
     mergeMap(({ payload: { action, data }, meta }) =>
@@ -134,9 +134,9 @@ export const executeClusterActionEpic = (action$, state$, { ajax }) =>
           meta.resolve && meta.resolve(resp);
           return a.executeClusterActionSuccess(resp, { ...meta, action });
         }),
-        catchError((error) => {
+        catchAjaxError((error) => {
           meta.reject && meta.reject(error);
-          return of(a.executeClusterActionFailure(error, { ...meta, action }));
+          return a.executeClusterActionFailure(error, { ...meta, action });
         })
       )
     )

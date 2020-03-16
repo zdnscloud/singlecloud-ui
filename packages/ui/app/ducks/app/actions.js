@@ -31,9 +31,32 @@ export const closeTerminal = () => ({
   payload: {},
 });
 
-export const httpError = (error, meta) => ({
+export const httpError = (error) => ({
   type: c.HTTP_ERROR,
   payload: error,
   error: true,
-  meta,
+});
+
+export const httpConnectionError = (error) => ({
+  type: c.HTTP_CONNECTION_ERROR,
+  payload: error,
+  error: true,
+});
+
+export const httpClientError = (error) => ({
+  type: c.HTTP_CLIENT_ERROR,
+  payload: error,
+  error: true,
+});
+
+export const httpServerError = (error) => ({
+  type: c.HTTP_SERVER_ERROR,
+  payload: error,
+  error: true,
+});
+
+export const httpUnhandledError = (error) => ({
+  type: c.HTTP_UNHANDLED_ERROR,
+  payload: error,
+  error: true,
 });

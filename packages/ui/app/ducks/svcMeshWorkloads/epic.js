@@ -22,7 +22,7 @@ import { ofType, combineEpics } from 'redux-observable';
 import * as c from './constants';
 import * as a from './actions';
 
-export const loadSvcMeshWorkloadsEpic = (action$, state$, { ajax }) =>
+export const loadSvcMeshWorkloadsEpic = (action$, state$, { ajax, catchAjaxError }) =>
   action$.pipe(
     ofType(c.LOAD_SVC_MESH_WORKLOADS),
     mergeMap(({ payload, meta }) =>
@@ -31,15 +31,15 @@ export const loadSvcMeshWorkloadsEpic = (action$, state$, { ajax }) =>
           meta.resolve && meta.resolve(resp);
           return a.loadSvcMeshWorkloadsSuccess(resp, meta);
         }),
-        catchError((error) => {
+        catchAjaxError((error) => {
           meta.reject && meta.reject(error);
-          return of(a.loadSvcMeshWorkloadsFailure(error, meta));
+          return a.loadSvcMeshWorkloadsFailure(error, meta);
         })
       )
     )
   );
 
-export const readSvcMeshWorkloadEpic = (action$, state$, { ajax }) =>
+export const readSvcMeshWorkloadEpic = (action$, state$, { ajax, catchAjaxError }) =>
   action$.pipe(
     ofType(c.READ_SVC_MESH_WORKLOAD),
     mergeMap(({ payload, meta }) =>
@@ -51,9 +51,9 @@ export const readSvcMeshWorkloadEpic = (action$, state$, { ajax }) =>
           meta.resolve && meta.resolve(resp);
           return a.readSvcMeshWorkloadSuccess(resp, { ...meta, id: payload });
         }),
-        catchError((error) => {
+        catchAjaxError((error) => {
           meta.reject && meta.reject(error);
-          return of(a.readSvcMeshWorkloadFailure(error, { ...meta, id: payload }));
+          return a.readSvcMeshWorkloadFailure(error, { ...meta, id: payload });
         })
       )
     )

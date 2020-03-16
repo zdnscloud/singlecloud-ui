@@ -22,7 +22,7 @@ import { ofType, combineEpics } from 'redux-observable';
 import * as c from './constants';
 import * as a from './actions';
 
-export const loadBlockDevicesEpic = (action$, state$, { ajax }) =>
+export const loadBlockDevicesEpic = (action$, state$, { ajax, catchAjaxError }) =>
   action$.pipe(
     ofType(c.LOAD_BLOCK_DEVICES),
     mergeMap(({ payload, meta }) =>
@@ -31,9 +31,9 @@ export const loadBlockDevicesEpic = (action$, state$, { ajax }) =>
           meta.resolve && meta.resolve(resp);
           return a.loadBlockDevicesSuccess(resp, meta);
         }),
-        catchError((error) => {
+        catchAjaxError((error) => {
           meta.reject && meta.reject(error);
-          return of(a.loadBlockDevicesFailure(error, meta));
+          return a.loadBlockDevicesFailure(error, meta);
         })
       )
     )

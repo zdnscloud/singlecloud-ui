@@ -22,7 +22,7 @@ import { ofType, combineEpics } from 'redux-observable';
 import * as c from './constants';
 import * as a from './actions';
 
-export const loadDeploymentsEpic = (action$, state$, { ajax }) =>
+export const loadDeploymentsEpic = (action$, state$, { ajax, catchAjaxError }) =>
   action$.pipe(
     ofType(c.LOAD_DEPLOYMENTS),
     mergeMap(({ payload, meta }) =>
@@ -31,15 +31,15 @@ export const loadDeploymentsEpic = (action$, state$, { ajax }) =>
           meta.resolve && meta.resolve(resp);
           return a.loadDeploymentsSuccess(resp, meta);
         }),
-        catchError((error) => {
+        catchAjaxError((error) => {
           meta.reject && meta.reject(error);
-          return of(a.loadDeploymentsFailure(error, meta));
+          return a.loadDeploymentsFailure(error, meta);
         })
       )
     )
   );
 
-export const createDeploymentEpic = (action$, state$, { ajax }) =>
+export const createDeploymentEpic = (action$, state$, { ajax, catchAjaxError }) =>
   action$.pipe(
     ofType(c.CREATE_DEPLOYMENT),
     mergeMap(({ payload, meta }) =>
@@ -52,15 +52,15 @@ export const createDeploymentEpic = (action$, state$, { ajax }) =>
           meta.resolve && meta.resolve(resp);
           return a.createDeploymentSuccess(resp, meta);
         }),
-        catchError((error) => {
+        catchAjaxError((error) => {
           meta.reject && meta.reject(error);
-          return of(a.createDeploymentFailure(error, meta));
+          return a.createDeploymentFailure(error, meta);
         })
       )
     )
   );
 
-export const updateDeploymentEpic = (action$, state$, { ajax }) =>
+export const updateDeploymentEpic = (action$, state$, { ajax, catchAjaxError }) =>
   action$.pipe(
     ofType(c.UPDATE_DEPLOYMENT),
     mergeMap(({ payload, meta }) =>
@@ -73,15 +73,15 @@ export const updateDeploymentEpic = (action$, state$, { ajax }) =>
           meta.resolve && meta.resolve(resp);
           return a.updateDeploymentSuccess(resp, meta);
         }),
-        catchError((error) => {
+        catchAjaxError((error) => {
           meta.reject && meta.reject(error);
-          return of(a.updateDeploymentFailure(error, meta));
+          return a.updateDeploymentFailure(error, meta);
         })
       )
     )
   );
 
-export const readDeploymentEpic = (action$, state$, { ajax }) =>
+export const readDeploymentEpic = (action$, state$, { ajax, catchAjaxError }) =>
   action$.pipe(
     ofType(c.READ_DEPLOYMENT),
     mergeMap(({ payload, meta }) =>
@@ -93,15 +93,15 @@ export const readDeploymentEpic = (action$, state$, { ajax }) =>
           meta.resolve && meta.resolve(resp);
           return a.readDeploymentSuccess(resp, { ...meta, id: payload });
         }),
-        catchError((error) => {
+        catchAjaxError((error) => {
           meta.reject && meta.reject(error);
-          return of(a.readDeploymentFailure(error, { ...meta, id: payload }));
+          return a.readDeploymentFailure(error, { ...meta, id: payload });
         })
       )
     )
   );
 
-export const removeDeploymentEpic = (action$, state$, { ajax }) =>
+export const removeDeploymentEpic = (action$, state$, { ajax, catchAjaxError }) =>
   action$.pipe(
     ofType(c.REMOVE_DEPLOYMENT),
     mergeMap(({ payload, meta }) =>
@@ -113,15 +113,15 @@ export const removeDeploymentEpic = (action$, state$, { ajax }) =>
           meta.resolve && meta.resolve(resp);
           return a.removeDeploymentSuccess(resp, { ...meta, id: payload });
         }),
-        catchError((error) => {
+        catchAjaxError((error) => {
           meta.reject && meta.reject(error);
-          return of(a.removeDeploymentFailure(error, { ...meta, id: payload }));
+          return a.removeDeploymentFailure(error, { ...meta, id: payload });
         })
       )
     )
   );
 
-export const executeDeploymentActionEpic = (action$, state$, { ajax }) =>
+export const executeDeploymentActionEpic = (action$, state$, { ajax, catchAjaxError }) =>
   action$.pipe(
     ofType(c.EXECUTE_DEPLOYMENT_ACTION),
     mergeMap(({ payload: { action, data }, meta }) =>
@@ -134,9 +134,9 @@ export const executeDeploymentActionEpic = (action$, state$, { ajax }) =>
           meta.resolve && meta.resolve(resp);
           return a.executeDeploymentActionSuccess(resp, { ...meta, action });
         }),
-        catchError((error) => {
+        catchAjaxError((error) => {
           meta.reject && meta.reject(error);
-          return of(a.executeDeploymentActionFailure(error, { ...meta, action }));
+          return a.executeDeploymentActionFailure(error, { ...meta, action });
         })
       )
     )

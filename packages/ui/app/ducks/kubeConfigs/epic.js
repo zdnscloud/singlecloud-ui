@@ -22,7 +22,7 @@ import { ofType, combineEpics } from 'redux-observable';
 import * as c from './constants';
 import * as a from './actions';
 
-export const loadKubeConfigsEpic = (action$, state$, { ajax }) =>
+export const loadKubeConfigsEpic = (action$, state$, { ajax, catchAjaxError }) =>
   action$.pipe(
     ofType(c.LOAD_KUBE_CONFIGS),
     mergeMap(({ payload, meta }) =>
@@ -31,15 +31,15 @@ export const loadKubeConfigsEpic = (action$, state$, { ajax }) =>
           meta.resolve && meta.resolve(resp);
           return a.loadKubeConfigsSuccess(resp, meta);
         }),
-        catchError((error) => {
+        catchAjaxError((error) => {
           meta.reject && meta.reject(error);
-          return of(a.loadKubeConfigsFailure(error, meta));
+          return a.loadKubeConfigsFailure(error, meta);
         })
       )
     )
   );
 
-export const readKubeConfigEpic = (action$, state$, { ajax }) =>
+export const readKubeConfigEpic = (action$, state$, { ajax, catchAjaxError }) =>
   action$.pipe(
     ofType(c.READ_KUBE_CONFIG),
     mergeMap(({ payload, meta }) =>
@@ -51,9 +51,9 @@ export const readKubeConfigEpic = (action$, state$, { ajax }) =>
           meta.resolve && meta.resolve(resp);
           return a.readKubeConfigSuccess(resp, { ...meta, id: payload });
         }),
-        catchError((error) => {
+        catchAjaxError((error) => {
           meta.reject && meta.reject(error);
-          return of(a.readKubeConfigFailure(error, { ...meta, id: payload }));
+          return a.readKubeConfigFailure(error, { ...meta, id: payload });
         })
       )
     )

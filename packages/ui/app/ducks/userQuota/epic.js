@@ -22,7 +22,7 @@ import { ofType, combineEpics } from 'redux-observable';
 import * as c from './constants';
 import * as a from './actions';
 
-export const loadUserQuotaEpic = (action$, state$, { ajax }) =>
+export const loadUserQuotaEpic = (action$, state$, { ajax, catchAjaxError }) =>
   action$.pipe(
     ofType(c.LOAD_USER_QUOTA),
     mergeMap(({ payload, meta }) =>
@@ -31,15 +31,15 @@ export const loadUserQuotaEpic = (action$, state$, { ajax }) =>
           meta.resolve && meta.resolve(resp);
           return a.loadUserQuotaSuccess(resp, meta);
         }),
-        catchError((error) => {
+        catchAjaxError((error) => {
           meta.reject && meta.reject(error);
-          return of(a.loadUserQuotaFailure(error, meta));
+          return a.loadUserQuotaFailure(error, meta);
         })
       )
     )
   );
 
-export const createUserQuotumEpic = (action$, state$, { ajax }) =>
+export const createUserQuotumEpic = (action$, state$, { ajax, catchAjaxError }) =>
   action$.pipe(
     ofType(c.CREATE_USER_QUOTUM),
     mergeMap(({ payload, meta }) =>
@@ -52,15 +52,15 @@ export const createUserQuotumEpic = (action$, state$, { ajax }) =>
           meta.resolve && meta.resolve(resp);
           return a.createUserQuotumSuccess(resp, meta);
         }),
-        catchError((error) => {
+        catchAjaxError((error) => {
           meta.reject && meta.reject(error);
-          return of(a.createUserQuotumFailure(error, meta));
+          return a.createUserQuotumFailure(error, meta);
         })
       )
     )
   );
 
-export const updateUserQuotumEpic = (action$, state$, { ajax }) =>
+export const updateUserQuotumEpic = (action$, state$, { ajax, catchAjaxError }) =>
   action$.pipe(
     ofType(c.UPDATE_USER_QUOTUM),
     mergeMap(({ payload, meta }) =>
@@ -73,15 +73,15 @@ export const updateUserQuotumEpic = (action$, state$, { ajax }) =>
           meta.resolve && meta.resolve(resp);
           return a.updateUserQuotumSuccess(resp, meta);
         }),
-        catchError((error) => {
+        catchAjaxError((error) => {
           meta.reject && meta.reject(error);
-          return of(a.updateUserQuotumFailure(error, meta));
+          return a.updateUserQuotumFailure(error, meta);
         })
       )
     )
   );
 
-export const readUserQuotumEpic = (action$, state$, { ajax }) =>
+export const readUserQuotumEpic = (action$, state$, { ajax, catchAjaxError }) =>
   action$.pipe(
     ofType(c.READ_USER_QUOTUM),
     mergeMap(({ payload, meta }) =>
@@ -93,15 +93,15 @@ export const readUserQuotumEpic = (action$, state$, { ajax }) =>
           meta.resolve && meta.resolve(resp);
           return a.readUserQuotumSuccess(resp, { ...meta, id: payload });
         }),
-        catchError((error) => {
+        catchAjaxError((error) => {
           meta.reject && meta.reject(error);
-          return of(a.readUserQuotumFailure(error, { ...meta, id: payload }));
+          return a.readUserQuotumFailure(error, { ...meta, id: payload });
         })
       )
     )
   );
 
-export const removeUserQuotumEpic = (action$, state$, { ajax }) =>
+export const removeUserQuotumEpic = (action$, state$, { ajax, catchAjaxError }) =>
   action$.pipe(
     ofType(c.REMOVE_USER_QUOTUM),
     mergeMap(({ payload, meta }) =>
@@ -113,15 +113,15 @@ export const removeUserQuotumEpic = (action$, state$, { ajax }) =>
           meta.resolve && meta.resolve(resp);
           return a.removeUserQuotumSuccess(resp, { ...meta, id: payload });
         }),
-        catchError((error) => {
+        catchAjaxError((error) => {
           meta.reject && meta.reject(error);
-          return of(a.removeUserQuotumFailure(error, { ...meta, id: payload }));
+          return a.removeUserQuotumFailure(error, { ...meta, id: payload });
         })
       )
     )
   );
 
-export const executeUserQuotumActionEpic = (action$, state$, { ajax }) =>
+export const executeUserQuotumActionEpic = (action$, state$, { ajax, catchAjaxError }) =>
   action$.pipe(
     ofType(c.EXECUTE_USER_QUOTUM_ACTION),
     mergeMap(({ payload: { action, data }, meta }) =>
@@ -134,9 +134,9 @@ export const executeUserQuotumActionEpic = (action$, state$, { ajax }) =>
           meta.resolve && meta.resolve(resp);
           return a.executeUserQuotumActionSuccess(resp, { ...meta, action });
         }),
-        catchError((error) => {
+        catchAjaxError((error) => {
           meta.reject && meta.reject(error);
-          return of(a.executeUserQuotumActionFailure(error, { ...meta, action }));
+          return a.executeUserQuotumActionFailure(error, { ...meta, action });
         })
       )
     )

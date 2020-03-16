@@ -108,10 +108,10 @@ module.exports = {
       },
     ];
 
-    // actions.push({
-    //   type: 'cPrettify',
-    //   path: '/ducks/',
-    // });
+    actions.push({
+      type: 'cPrettify',
+      path: '/ducks/',
+    });
 
     return actions;
   },

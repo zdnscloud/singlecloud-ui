@@ -22,7 +22,7 @@ import { ofType, combineEpics } from 'redux-observable';
 import * as c from './constants';
 import * as a from './actions';
 
-export const loadNodeNetworksEpic = (action$, state$, { ajax }) =>
+export const loadNodeNetworksEpic = (action$, state$, { ajax, catchAjaxError }) =>
   action$.pipe(
     ofType(c.LOAD_NODE_NETWORKS),
     mergeMap(({ payload, meta }) =>
@@ -31,9 +31,9 @@ export const loadNodeNetworksEpic = (action$, state$, { ajax }) =>
           meta.resolve && meta.resolve(resp);
           return a.loadNodeNetworksSuccess(resp, meta);
         }),
-        catchError((error) => {
+        catchAjaxError((error) => {
           meta.reject && meta.reject(error);
-          return of(a.loadNodeNetworksFailure(error, meta));
+          return a.loadNodeNetworksFailure(error, meta);
         })
       )
     )

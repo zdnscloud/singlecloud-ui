@@ -22,7 +22,7 @@ import { ofType, combineEpics } from 'redux-observable';
 import * as c from './constants';
 import * as a from './actions';
 
-export const loadIngressesEpic = (action$, state$, { ajax }) =>
+export const loadIngressesEpic = (action$, state$, { ajax, catchAjaxError }) =>
   action$.pipe(
     ofType(c.LOAD_INGRESSES),
     mergeMap(({ payload, meta }) =>
@@ -31,15 +31,15 @@ export const loadIngressesEpic = (action$, state$, { ajax }) =>
           meta.resolve && meta.resolve(resp);
           return a.loadIngressesSuccess(resp, meta);
         }),
-        catchError((error) => {
+        catchAjaxError((error) => {
           meta.reject && meta.reject(error);
-          return of(a.loadIngressesFailure(error, meta));
+          return a.loadIngressesFailure(error, meta);
         })
       )
     )
   );
 
-export const createIngressEpic = (action$, state$, { ajax }) =>
+export const createIngressEpic = (action$, state$, { ajax, catchAjaxError }) =>
   action$.pipe(
     ofType(c.CREATE_INGRESS),
     mergeMap(({ payload, meta }) =>
@@ -52,15 +52,15 @@ export const createIngressEpic = (action$, state$, { ajax }) =>
           meta.resolve && meta.resolve(resp);
           return a.createIngressSuccess(resp, meta);
         }),
-        catchError((error) => {
+        catchAjaxError((error) => {
           meta.reject && meta.reject(error);
-          return of(a.createIngressFailure(error, meta));
+          return a.createIngressFailure(error, meta);
         })
       )
     )
   );
 
-export const updateIngressEpic = (action$, state$, { ajax }) =>
+export const updateIngressEpic = (action$, state$, { ajax, catchAjaxError }) =>
   action$.pipe(
     ofType(c.UPDATE_INGRESS),
     mergeMap(({ payload, meta }) =>
@@ -73,15 +73,15 @@ export const updateIngressEpic = (action$, state$, { ajax }) =>
           meta.resolve && meta.resolve(resp);
           return a.updateIngressSuccess(resp, meta);
         }),
-        catchError((error) => {
+        catchAjaxError((error) => {
           meta.reject && meta.reject(error);
-          return of(a.updateIngressFailure(error, meta));
+          return a.updateIngressFailure(error, meta);
         })
       )
     )
   );
 
-export const readIngressEpic = (action$, state$, { ajax }) =>
+export const readIngressEpic = (action$, state$, { ajax, catchAjaxError }) =>
   action$.pipe(
     ofType(c.READ_INGRESS),
     mergeMap(({ payload, meta }) =>
@@ -93,15 +93,15 @@ export const readIngressEpic = (action$, state$, { ajax }) =>
           meta.resolve && meta.resolve(resp);
           return a.readIngressSuccess(resp, { ...meta, id: payload });
         }),
-        catchError((error) => {
+        catchAjaxError((error) => {
           meta.reject && meta.reject(error);
-          return of(a.readIngressFailure(error, { ...meta, id: payload }));
+          return a.readIngressFailure(error, { ...meta, id: payload });
         })
       )
     )
   );
 
-export const removeIngressEpic = (action$, state$, { ajax }) =>
+export const removeIngressEpic = (action$, state$, { ajax, catchAjaxError }) =>
   action$.pipe(
     ofType(c.REMOVE_INGRESS),
     mergeMap(({ payload, meta }) =>
@@ -113,9 +113,9 @@ export const removeIngressEpic = (action$, state$, { ajax }) =>
           meta.resolve && meta.resolve(resp);
           return a.removeIngressSuccess(resp, { ...meta, id: payload });
         }),
-        catchError((error) => {
+        catchAjaxError((error) => {
           meta.reject && meta.reject(error);
-          return of(a.removeIngressFailure(error, { ...meta, id: payload }));
+          return a.removeIngressFailure(error, { ...meta, id: payload });
         })
       )
     )

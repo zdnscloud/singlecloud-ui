@@ -22,7 +22,7 @@ import { ofType, combineEpics } from 'redux-observable';
 import * as c from './constants';
 import * as a from './actions';
 
-export const loadRegistriesEpic = (action$, state$, { ajax }) =>
+export const loadRegistriesEpic = (action$, state$, { ajax, catchAjaxError }) =>
   action$.pipe(
     ofType(c.LOAD_REGISTRIES),
     mergeMap(({ payload, meta }) =>
@@ -31,15 +31,15 @@ export const loadRegistriesEpic = (action$, state$, { ajax }) =>
           meta.resolve && meta.resolve(resp);
           return a.loadRegistriesSuccess(resp, meta);
         }),
-        catchError((error) => {
+        catchAjaxError((error) => {
           meta.reject && meta.reject(error);
-          return of(a.loadRegistriesFailure(error, meta));
+          return a.loadRegistriesFailure(error, meta);
         })
       )
     )
   );
 
-export const createRegistryEpic = (action$, state$, { ajax }) =>
+export const createRegistryEpic = (action$, state$, { ajax, catchAjaxError }) =>
   action$.pipe(
     ofType(c.CREATE_REGISTRY),
     mergeMap(({ payload, meta }) =>
@@ -52,15 +52,15 @@ export const createRegistryEpic = (action$, state$, { ajax }) =>
           meta.resolve && meta.resolve(resp);
           return a.createRegistrySuccess(resp, meta);
         }),
-        catchError((error) => {
+        catchAjaxError((error) => {
           meta.reject && meta.reject(error);
-          return of(a.createRegistryFailure(error, meta));
+          return a.createRegistryFailure(error, meta);
         })
       )
     )
   );
 
-export const readRegistryEpic = (action$, state$, { ajax }) =>
+export const readRegistryEpic = (action$, state$, { ajax, catchAjaxError }) =>
   action$.pipe(
     ofType(c.READ_REGISTRY),
     mergeMap(({ payload, meta }) =>
@@ -72,15 +72,15 @@ export const readRegistryEpic = (action$, state$, { ajax }) =>
           meta.resolve && meta.resolve(resp);
           return a.readRegistrySuccess(resp, { ...meta, id: payload });
         }),
-        catchError((error) => {
+        catchAjaxError((error) => {
           meta.reject && meta.reject(error);
-          return of(a.readRegistryFailure(error, { ...meta, id: payload }));
+          return a.readRegistryFailure(error, { ...meta, id: payload });
         })
       )
     )
   );
 
-export const removeRegistryEpic = (action$, state$, { ajax }) =>
+export const removeRegistryEpic = (action$, state$, { ajax, catchAjaxError }) =>
   action$.pipe(
     ofType(c.REMOVE_REGISTRY),
     mergeMap(({ payload, meta }) =>
@@ -92,9 +92,9 @@ export const removeRegistryEpic = (action$, state$, { ajax }) =>
           meta.resolve && meta.resolve(resp);
           return a.removeRegistrySuccess(resp, { ...meta, id: payload });
         }),
-        catchError((error) => {
+        catchAjaxError((error) => {
           meta.reject && meta.reject(error);
-          return of(a.removeRegistryFailure(error, { ...meta, id: payload }));
+          return a.removeRegistryFailure(error, { ...meta, id: payload });
         })
       )
     )
