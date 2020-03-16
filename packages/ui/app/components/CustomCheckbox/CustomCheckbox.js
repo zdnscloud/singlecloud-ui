@@ -43,7 +43,7 @@ CustomCheckbox.defaultProps = {
 };
 
 CustomCheckbox.propTypes = {
-  classes: PropTypes.object.isRequired,
+  classes: PropTypes.object,
   labelText: PropTypes.node,
   id: PropTypes.string,
   inputProps: PropTypes.object,

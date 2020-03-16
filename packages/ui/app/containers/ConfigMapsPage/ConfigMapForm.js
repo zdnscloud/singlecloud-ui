@@ -1,4 +1,4 @@
-import React, { PureComponent, Fragment, useState } from 'react';
+import React, { PureComponent, Fragment, useState,useEffect } from 'react';
 import { compose } from 'redux';
 import { fromJS } from 'immutable';
 import { Field, FieldArray, reduxForm } from 'redux-form/immutable';
@@ -25,6 +25,7 @@ import GridContainer from 'components/Grid/GridContainer';
 import InputField from 'components/Field/InputField';
 import MinusIcon from 'components/Icons/Minus';
 import ReadOnlyInput from 'components/CustomInput/ReadOnlyInput';
+import ConfirmDialog from 'components/Confirm/ConfirmDialog';
 
 import messages from './messages';
 
@@ -149,49 +150,63 @@ const ConfigMapForm = ({
   initialValues,
   type,
   configMap,
-}) => (
-  <form className={getByKey(classes, 'form')} onSubmit={handleSubmit}>
-    <GridContainer>
-      {error ? (
-        <GridItem xs={12} sm={12} md={12}>
-          <Danger>{getByKey(error, ['response', 'message'])}</Danger>
+}) => {
+  const [openConfirm, setOpenConfirm] = useState(false);
+
+  useEffect(() => {
+    if (error) {
+      setOpenConfirm(true);
+    }
+  }, [error]);
+  return (
+    <form className={getByKey(classes, 'form')} onSubmit={handleSubmit}>
+      <GridContainer>
+        { error ? <ConfirmDialog
+          open={openConfirm}
+          onClose={() => {
+            setOpenConfirm(false)
+          }}
+          content={<p className={classes.saveFaildText}>{getByKey(error, ['response', 'message'])}</p>}
+          hideActions
+          type="save"
+          showCloseIcon
+        />: null}
+        <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
+          {type === 'create' ? (
+            <InputField
+              label={<FormattedMessage {...messages.formName} />}
+              name="name"
+              formControlProps={{
+                className: classes.nameControl,
+              }}
+              inputProps={{
+                type: 'text',
+                autoComplete: 'off',
+                disabled: edit,
+              }}
+              fullWidth
+            />
+          ) : (
+            <ReadOnlyInput
+              labelText={<FormattedMessage {...messages.formName} />}
+              value={configMap ? initialValues.get('name') : ''}
+              formControlProps={{
+                className: classes.nameControl,
+              }}
+              fullWidth
+            />
+          )}
         </GridItem>
-      ) : null}
-      <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
-        {type === 'create' ? (
-          <InputField
-            label={<FormattedMessage {...messages.formName} />}
-            name="name"
-            formControlProps={{
-              className: classes.nameControl,
-            }}
-            inputProps={{
-              type: 'text',
-              autoComplete: 'off',
-              disabled: edit,
-            }}
-            fullWidth
+        <GridItem xs={12} sm={12} md={12}>
+          <FieldArray
+            name="configs"
+            component={renderConfigs}
+            classes={classes}
           />
-        ) : (
-          <ReadOnlyInput
-            labelText={<FormattedMessage {...messages.formName} />}
-            value={configMap ? initialValues.get('name') : ''}
-            formControlProps={{
-              className: classes.nameControl,
-            }}
-            fullWidth
-          />
-        )}
-      </GridItem>
-      <GridItem xs={12} sm={12} md={12}>
-        <FieldArray
-          name="configs"
-          component={renderConfigs}
-          classes={classes}
-        />
-      </GridItem>
-    </GridContainer>
-  </form>
-);
+        </GridItem>
+      </GridContainer>
+    </form>
+  )
+};
 
 export default ConfigMapForm;
