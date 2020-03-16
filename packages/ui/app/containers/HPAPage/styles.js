@@ -32,6 +32,7 @@ export const styles = (theme) => ({
     },
   },
   listItem: {
+    paddingLeft:0,
     '& .MuiSelect-selectMenu span': {
       width: '100% !important',
     },

@@ -45,9 +45,9 @@ export default defineMessages({
     id: `${scope}.tableTitleStatus`,
     defaultMessage: 'Status',
   },
-  tableTitleLabels: {
-    id: `${scope}.tableTitleLabels`,
-    defaultMessage: 'Labels',
+  tableTitleOperatingSystemImage: {
+    id: `${scope}.tableTitleOperatingSystemImage`,
+    defaultMessage: 'OperatingSystemImage',
   },
   tableTitleCreationTimestamp: {
     id: `${scope}.tableTitleCreationTimestamp`,
