@@ -2,15 +2,6 @@ import { push } from 'connected-react-router';
 import { Observable, interval, of, timer } from 'rxjs';
 import {
   mergeMap,
-  map,
-  mapTo,
-  debounce,
-  debounceTime,
-  reduce,
-  scan,
-  throttle,
-  throttleTime,
-  catchError,
 } from 'rxjs/operators';
 import { ofType, combineEpics } from 'redux-observable';
 import getByKey from '@gsmlg/utils/getByKey';
