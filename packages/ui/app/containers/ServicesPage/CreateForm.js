@@ -1,4 +1,4 @@
-import React, { PureComponent, Fragment, useState } from 'react';
+import React, { PureComponent, Fragment, useState,useEffect } from 'react';
 import { fromJS } from 'immutable';
 import { compose } from 'redux';
 import { FormattedMessage } from 'react-intl';
@@ -22,6 +22,7 @@ import SelectField from 'components/Field/SelectField';
 import SwitchField from 'components/Field/SwitchField';
 import RadioField from 'components/Field/RadioField';
 import ReadOnlyInput from 'components/CustomInput/ReadOnlyInput';
+import ConfirmDialog from 'components/Confirm/ConfirmDialog';
 
 import useStyles from './styles';
 import messages from './messages';
@@ -96,14 +97,25 @@ const Form = ({
   }[targetResourceType];
   const exposedPorts = formValues.get('exposedPorts');
   const serviceType = formValues.get('serviceType');
+  const [open, setOpen] = useState(false);
+  useEffect(() => {
+    if (error) {
+      setOpen(true);
+    }
+  }, [error]);
   return (
     <form className={classes.form} onSubmit={handleSubmit}>
       <GridContainer>
-        {error ? (
-          <GridItem xs={12} sm={12} md={12}>
-            <Danger>{getByKey(error, ['response', 'message'])}</Danger>
-          </GridItem>
-        ) : null}
+        {error ? <ConfirmDialog
+          open={open}
+          onClose={() => {
+            setOpen(false)
+          }}
+          content={<p className={classes.saveFaildText}>{getByKey(error, ['response', 'message'])}</p>}
+          hideActions
+          type="save"
+          showCloseIcon
+        />: null}
         <GridItem xs={12} sm={12} md={12}>
           <Card>
             <CardHeader>

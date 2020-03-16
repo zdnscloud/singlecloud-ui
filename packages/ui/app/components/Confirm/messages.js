@@ -21,4 +21,8 @@ export default defineMessages({
     id: `${scope}.cancleButton`,
     defaultMessage: 'cancle',
   },
+  saveFailed:{
+    id: `${scope}.saveFailed`,
+    defaultMessage: 'Save Failed',
+  },
 });
