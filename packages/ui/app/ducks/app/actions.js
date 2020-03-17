@@ -31,6 +31,11 @@ export const closeTerminal = () => ({
   payload: {},
 });
 
+export const clearHttpError = () => ({
+  type: c.CLEAR_HTTP_ERROR,
+  payload: {},
+});
+
 export const httpError = (error) => ({
   type: c.HTTP_ERROR,
   payload: error,

@@ -19,6 +19,7 @@ export const SET_LAST_NAMESPACE = `${prefix}/SET_LAST_NAMESPACE`;
 export const OPEN_TERMINAL = `${prefix}/OPEN_TERMINAL`;
 export const CLOSE_TERMINAL = `${prefix}/CLOSE_TERMINAL`;
 
+export const CLEAR_HTTP_ERROR = `${prefix}/CLEAR_HTTP_ERROR`;
 export const HTTP_ERROR = `${prefix}/HTTP_ERROR`;
 export const HTTP_CONNECTION_ERROR = `${prefix}/HTTP_CONNECTION_ERROR`;
 export const HTTP_CLIENT_ERROR = `${prefix}/HTTP_CLIENT_ERROR`;
