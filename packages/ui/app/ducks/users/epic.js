@@ -15,14 +15,13 @@ import {
   scan,
   throttleTime,
   throttle,
-  catchError,
 } from 'rxjs/operators';
 import { ofType, combineEpics } from 'redux-observable';
 
 import * as c from './constants';
 import * as a from './actions';
 
-export const loadUsersEpic = (action$, state$, { ajax }) =>
+export const loadUsersEpic = (action$, state$, { ajax, catchAjaxError }) =>
   action$.pipe(
     ofType(c.LOAD_USERS),
     mergeMap(({ payload, meta }) =>
@@ -31,15 +30,15 @@ export const loadUsersEpic = (action$, state$, { ajax }) =>
           meta.resolve && meta.resolve(resp);
           return a.loadUsersSuccess(resp, meta);
         }),
-        catchError((error) => {
+        catchAjaxError((error) => {
           meta.reject && meta.reject(error);
-          return of(a.loadUsersFailure(error, meta));
+          return a.loadUsersFailure(error, meta);
         })
       )
     )
   );
 
-export const createUserEpic = (action$, state$, { ajax }) =>
+export const createUserEpic = (action$, state$, { ajax, catchAjaxError }) =>
   action$.pipe(
     ofType(c.CREATE_USER),
     mergeMap(({ payload, meta }) =>
@@ -52,15 +51,15 @@ export const createUserEpic = (action$, state$, { ajax }) =>
           meta.resolve && meta.resolve(resp);
           return a.createUserSuccess(resp, meta);
         }),
-        catchError((error) => {
+        catchAjaxError((error) => {
           meta.reject && meta.reject(error);
-          return of(a.createUserFailure(error, meta));
+          return a.createUserFailure(error, meta);
         })
       )
     )
   );
 
-export const updateUserEpic = (action$, state$, { ajax }) =>
+export const updateUserEpic = (action$, state$, { ajax, catchAjaxError }) =>
   action$.pipe(
     ofType(c.UPDATE_USER),
     mergeMap(({ payload, meta }) =>
@@ -73,15 +72,15 @@ export const updateUserEpic = (action$, state$, { ajax }) =>
           meta.resolve && meta.resolve(resp);
           return a.updateUserSuccess(resp, meta);
         }),
-        catchError((error) => {
+        catchAjaxError((error) => {
           meta.reject && meta.reject(error);
-          return of(a.updateUserFailure(error, meta));
+          return a.updateUserFailure(error, meta);
         })
       )
     )
   );
 
-export const readUserEpic = (action$, state$, { ajax }) =>
+export const readUserEpic = (action$, state$, { ajax, catchAjaxError }) =>
   action$.pipe(
     ofType(c.READ_USER),
     mergeMap(({ payload, meta }) =>
@@ -93,15 +92,15 @@ export const readUserEpic = (action$, state$, { ajax }) =>
           meta.resolve && meta.resolve(resp);
           return a.readUserSuccess(resp, { ...meta, id: payload });
         }),
-        catchError((error) => {
+        catchAjaxError((error) => {
           meta.reject && meta.reject(error);
-          return of(a.readUserFailure(error, { ...meta, id: payload }));
+          return a.readUserFailure(error, { ...meta, id: payload });
         })
       )
     )
   );
 
-export const removeUserEpic = (action$, state$, { ajax }) =>
+export const removeUserEpic = (action$, state$, { ajax, catchAjaxError }) =>
   action$.pipe(
     ofType(c.REMOVE_USER),
     mergeMap(({ payload, meta }) =>
@@ -113,15 +112,15 @@ export const removeUserEpic = (action$, state$, { ajax }) =>
           meta.resolve && meta.resolve(resp);
           return a.removeUserSuccess(resp, { ...meta, id: payload });
         }),
-        catchError((error) => {
+        catchAjaxError((error) => {
           meta.reject && meta.reject(error);
-          return of(a.removeUserFailure(error, { ...meta, id: payload }));
+          return a.removeUserFailure(error, { ...meta, id: payload });
         })
       )
     )
   );
 
-export const executeUserActionEpic = (action$, state$, { ajax }) =>
+export const executeUserActionEpic = (action$, state$, { ajax, catchAjaxError }) =>
   action$.pipe(
     ofType(c.EXECUTE_USER_ACTION),
     mergeMap(({ payload: { action, data }, meta }) =>
@@ -134,9 +133,9 @@ export const executeUserActionEpic = (action$, state$, { ajax }) =>
           meta.resolve && meta.resolve(resp);
           return a.executeUserActionSuccess(resp, { ...meta, action });
         }),
-        catchError((error) => {
+        catchAjaxError((error) => {
           meta.reject && meta.reject(error);
-          return of(a.executeUserActionFailure(error, { ...meta, action }));
+          return a.executeUserActionFailure(error, { ...meta, action });
         })
       )
     )

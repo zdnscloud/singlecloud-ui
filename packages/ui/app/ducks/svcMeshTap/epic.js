@@ -12,7 +12,7 @@ import { webSocket } from 'rxjs/webSocket';
 import * as c from './constants';
 import * as a from './actions';
 
-export const svcMeshTap = (action$, state$, { ajax }) =>
+export const svcMeshTap = (action$, state$, { ajax, catchAjaxError }) =>
   action$.pipe(
     ofType(c.SVC_MESH_TAP_START),
     mergeMap(({ payload, meta: { clusterID, namespaceID } }) => {

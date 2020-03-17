@@ -15,14 +15,13 @@ import {
   scan,
   throttleTime,
   throttle,
-  catchError,
 } from 'rxjs/operators';
 import { ofType, combineEpics } from 'redux-observable';
 
 import * as c from './constants';
 import * as a from './actions';
 
-export const loadMonitorsEpic = (action$, state$, { ajax }) =>
+export const loadMonitorsEpic = (action$, state$, { ajax, catchAjaxError }) =>
   action$.pipe(
     ofType(c.LOAD_MONITORS),
     mergeMap(({ payload, meta }) =>
@@ -31,15 +30,15 @@ export const loadMonitorsEpic = (action$, state$, { ajax }) =>
           meta.resolve && meta.resolve(resp);
           return a.loadMonitorsSuccess(resp, meta);
         }),
-        catchError((error) => {
+        catchAjaxError((error) => {
           meta.reject && meta.reject(error);
-          return of(a.loadMonitorsFailure(error, meta));
+          return a.loadMonitorsFailure(error, meta);
         })
       )
     )
   );
 
-export const createMonitorEpic = (action$, state$, { ajax }) =>
+export const createMonitorEpic = (action$, state$, { ajax, catchAjaxError }) =>
   action$.pipe(
     ofType(c.CREATE_MONITOR),
     mergeMap(({ payload, meta }) =>
@@ -52,15 +51,15 @@ export const createMonitorEpic = (action$, state$, { ajax }) =>
           meta.resolve && meta.resolve(resp);
           return a.createMonitorSuccess(resp, meta);
         }),
-        catchError((error) => {
+        catchAjaxError((error) => {
           meta.reject && meta.reject(error);
-          return of(a.createMonitorFailure(error, meta));
+          return a.createMonitorFailure(error, meta);
         })
       )
     )
   );
 
-export const readMonitorEpic = (action$, state$, { ajax }) =>
+export const readMonitorEpic = (action$, state$, { ajax, catchAjaxError }) =>
   action$.pipe(
     ofType(c.READ_MONITOR),
     mergeMap(({ payload, meta }) =>
@@ -72,15 +71,15 @@ export const readMonitorEpic = (action$, state$, { ajax }) =>
           meta.resolve && meta.resolve(resp);
           return a.readMonitorSuccess(resp, { ...meta, id: payload });
         }),
-        catchError((error) => {
+        catchAjaxError((error) => {
           meta.reject && meta.reject(error);
-          return of(a.readMonitorFailure(error, { ...meta, id: payload }));
+          return a.readMonitorFailure(error, { ...meta, id: payload });
         })
       )
     )
   );
 
-export const removeMonitorEpic = (action$, state$, { ajax }) =>
+export const removeMonitorEpic = (action$, state$, { ajax, catchAjaxError }) =>
   action$.pipe(
     ofType(c.REMOVE_MONITOR),
     mergeMap(({ payload, meta }) =>
@@ -92,9 +91,9 @@ export const removeMonitorEpic = (action$, state$, { ajax }) =>
           meta.resolve && meta.resolve(resp);
           return a.removeMonitorSuccess(resp, { ...meta, id: payload });
         }),
-        catchError((error) => {
+        catchAjaxError((error) => {
           meta.reject && meta.reject(error);
-          return of(a.removeMonitorFailure(error, { ...meta, id: payload }));
+          return a.removeMonitorFailure(error, { ...meta, id: payload });
         })
       )
     )

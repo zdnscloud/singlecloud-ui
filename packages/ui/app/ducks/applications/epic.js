@@ -15,14 +15,13 @@ import {
   scan,
   throttleTime,
   throttle,
-  catchError,
 } from 'rxjs/operators';
 import { ofType, combineEpics } from 'redux-observable';
 
 import * as c from './constants';
 import * as a from './actions';
 
-export const loadApplicationsEpic = (action$, state$, { ajax }) =>
+export const loadApplicationsEpic = (action$, state$, { ajax, catchAjaxError }) =>
   action$.pipe(
     ofType(c.LOAD_APPLICATIONS),
     mergeMap(({ payload, meta }) =>
@@ -31,15 +30,15 @@ export const loadApplicationsEpic = (action$, state$, { ajax }) =>
           meta.resolve && meta.resolve(resp);
           return a.loadApplicationsSuccess(resp, meta);
         }),
-        catchError((error) => {
+        catchAjaxError((error) => {
           meta.reject && meta.reject(error);
-          return of(a.loadApplicationsFailure(error, meta));
+          return a.loadApplicationsFailure(error, meta);
         })
       )
     )
   );
 
-export const createApplicationEpic = (action$, state$, { ajax }) =>
+export const createApplicationEpic = (action$, state$, { ajax, catchAjaxError }) =>
   action$.pipe(
     ofType(c.CREATE_APPLICATION),
     mergeMap(({ payload, meta }) =>
@@ -52,15 +51,15 @@ export const createApplicationEpic = (action$, state$, { ajax }) =>
           meta.resolve && meta.resolve(resp);
           return a.createApplicationSuccess(resp, meta);
         }),
-        catchError((error) => {
+        catchAjaxError((error) => {
           meta.reject && meta.reject(error);
-          return of(a.createApplicationFailure(error, meta));
+          return a.createApplicationFailure(error, meta);
         })
       )
     )
   );
 
-export const readApplicationEpic = (action$, state$, { ajax }) =>
+export const readApplicationEpic = (action$, state$, { ajax, catchAjaxError }) =>
   action$.pipe(
     ofType(c.READ_APPLICATION),
     mergeMap(({ payload, meta }) =>
@@ -72,15 +71,15 @@ export const readApplicationEpic = (action$, state$, { ajax }) =>
           meta.resolve && meta.resolve(resp);
           return a.readApplicationSuccess(resp, { ...meta, id: payload });
         }),
-        catchError((error) => {
+        catchAjaxError((error) => {
           meta.reject && meta.reject(error);
-          return of(a.readApplicationFailure(error, { ...meta, id: payload }));
+          return a.readApplicationFailure(error, { ...meta, id: payload });
         })
       )
     )
   );
 
-export const removeApplicationEpic = (action$, state$, { ajax }) =>
+export const removeApplicationEpic = (action$, state$, { ajax, catchAjaxError }) =>
   action$.pipe(
     ofType(c.REMOVE_APPLICATION),
     mergeMap(({ payload, meta }) =>
@@ -92,9 +91,9 @@ export const removeApplicationEpic = (action$, state$, { ajax }) =>
           meta.resolve && meta.resolve(resp);
           return a.removeApplicationSuccess(resp, { ...meta, id: payload });
         }),
-        catchError((error) => {
+        catchAjaxError((error) => {
           meta.reject && meta.reject(error);
-          return of(a.removeApplicationFailure(error, { ...meta, id: payload }));
+          return a.removeApplicationFailure(error, { ...meta, id: payload });
         })
       )
     )

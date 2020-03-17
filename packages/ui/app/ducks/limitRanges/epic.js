@@ -15,14 +15,13 @@ import {
   scan,
   throttleTime,
   throttle,
-  catchError,
 } from 'rxjs/operators';
 import { ofType, combineEpics } from 'redux-observable';
 
 import * as c from './constants';
 import * as a from './actions';
 
-export const loadLimitRangesEpic = (action$, state$, { ajax }) =>
+export const loadLimitRangesEpic = (action$, state$, { ajax, catchAjaxError }) =>
   action$.pipe(
     ofType(c.LOAD_LIMIT_RANGES),
     mergeMap(({ payload, meta }) =>
@@ -31,15 +30,15 @@ export const loadLimitRangesEpic = (action$, state$, { ajax }) =>
           meta.resolve && meta.resolve(resp);
           return a.loadLimitRangesSuccess(resp, meta);
         }),
-        catchError((error) => {
+        catchAjaxError((error) => {
           meta.reject && meta.reject(error);
-          return of(a.loadLimitRangesFailure(error, meta));
+          return a.loadLimitRangesFailure(error, meta);
         })
       )
     )
   );
 
-export const createLimitRangeEpic = (action$, state$, { ajax }) =>
+export const createLimitRangeEpic = (action$, state$, { ajax, catchAjaxError }) =>
   action$.pipe(
     ofType(c.CREATE_LIMIT_RANGE),
     mergeMap(({ payload, meta }) =>
@@ -52,15 +51,15 @@ export const createLimitRangeEpic = (action$, state$, { ajax }) =>
           meta.resolve && meta.resolve(resp);
           return a.createLimitRangeSuccess(resp, meta);
         }),
-        catchError((error) => {
+        catchAjaxError((error) => {
           meta.reject && meta.reject(error);
-          return of(a.createLimitRangeFailure(error, meta));
+          return a.createLimitRangeFailure(error, meta);
         })
       )
     )
   );
 
-export const readLimitRangeEpic = (action$, state$, { ajax }) =>
+export const readLimitRangeEpic = (action$, state$, { ajax, catchAjaxError }) =>
   action$.pipe(
     ofType(c.READ_LIMIT_RANGE),
     mergeMap(({ payload, meta }) =>
@@ -72,15 +71,15 @@ export const readLimitRangeEpic = (action$, state$, { ajax }) =>
           meta.resolve && meta.resolve(resp);
           return a.readLimitRangeSuccess(resp, { ...meta, id: payload });
         }),
-        catchError((error) => {
+        catchAjaxError((error) => {
           meta.reject && meta.reject(error);
-          return of(a.readLimitRangeFailure(error, { ...meta, id: payload }));
+          return a.readLimitRangeFailure(error, { ...meta, id: payload });
         })
       )
     )
   );
 
-export const removeLimitRangeEpic = (action$, state$, { ajax }) =>
+export const removeLimitRangeEpic = (action$, state$, { ajax, catchAjaxError }) =>
   action$.pipe(
     ofType(c.REMOVE_LIMIT_RANGE),
     mergeMap(({ payload, meta }) =>
@@ -92,9 +91,9 @@ export const removeLimitRangeEpic = (action$, state$, { ajax }) =>
           meta.resolve && meta.resolve(resp);
           return a.removeLimitRangeSuccess(resp, { ...meta, id: payload });
         }),
-        catchError((error) => {
+        catchAjaxError((error) => {
           meta.reject && meta.reject(error);
-          return of(a.removeLimitRangeFailure(error, { ...meta, id: payload }));
+          return a.removeLimitRangeFailure(error, { ...meta, id: payload });
         })
       )
     )

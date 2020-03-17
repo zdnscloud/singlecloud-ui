@@ -136,7 +136,6 @@ export const makeSelectCreateErrorsList = () =>
         .filter(({ type }) => type === c.CREATE_WORK_FLOW_TASK_FAILURE)
   );
 
-
 export const makeSelectReadErrorsList = () =>
   createSelector(
     selectDomain,
@@ -144,5 +143,4 @@ export const makeSelectReadErrorsList = () =>
       substate.get('errorsList')
         .filter(({ type }) => type === c.READ_WORK_FLOW_TASK_FAILURE)
   );
-
 

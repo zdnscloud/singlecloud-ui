@@ -15,14 +15,13 @@ import {
   scan,
   throttleTime,
   throttle,
-  catchError,
 } from 'rxjs/operators';
 import { ofType, combineEpics } from 'redux-observable';
 
 import * as c from './constants';
 import * as a from './actions';
 
-export const loadPersistentVolumeClaimsEpic = (action$, state$, { ajax }) =>
+export const loadPersistentVolumeClaimsEpic = (action$, state$, { ajax, catchAjaxError }) =>
   action$.pipe(
     ofType(c.LOAD_PERSISTENT_VOLUME_CLAIMS),
     mergeMap(({ payload, meta }) =>
@@ -31,15 +30,15 @@ export const loadPersistentVolumeClaimsEpic = (action$, state$, { ajax }) =>
           meta.resolve && meta.resolve(resp);
           return a.loadPersistentVolumeClaimsSuccess(resp, meta);
         }),
-        catchError((error) => {
+        catchAjaxError((error) => {
           meta.reject && meta.reject(error);
-          return of(a.loadPersistentVolumeClaimsFailure(error, meta));
+          return a.loadPersistentVolumeClaimsFailure(error, meta);
         })
       )
     )
   );
 
-export const removePersistentVolumeClaimEpic = (action$, state$, { ajax }) =>
+export const removePersistentVolumeClaimEpic = (action$, state$, { ajax, catchAjaxError }) =>
   action$.pipe(
     ofType(c.REMOVE_PERSISTENT_VOLUME_CLAIM),
     mergeMap(({ payload, meta }) =>
@@ -51,9 +50,9 @@ export const removePersistentVolumeClaimEpic = (action$, state$, { ajax }) =>
           meta.resolve && meta.resolve(resp);
           return a.removePersistentVolumeClaimSuccess(resp, { ...meta, id: payload });
         }),
-        catchError((error) => {
+        catchAjaxError((error) => {
           meta.reject && meta.reject(error);
-          return of(a.removePersistentVolumeClaimFailure(error, { ...meta, id: payload }));
+          return a.removePersistentVolumeClaimFailure(error, { ...meta, id: payload });
         })
       )
     )

@@ -76,7 +76,6 @@ export const reducer = (
     case c.CREATE_WORK_FLOW_TASK_FAILURE:
       return state.update('errorsList', (errors) => errors.filterNot((e) => e.type === type).push({ type, payload, meta }));
 
-
     case c.READ_WORK_FLOW_TASK:
       return state;
     case c.READ_WORK_FLOW_TASK_SUCCESS: {
@@ -101,8 +100,6 @@ export const reducer = (
     }
     case c.READ_WORK_FLOW_TASK_FAILURE:
       return state.update('errorsList', (errors) => errors.filterNot((e) => e.type === type).push({ type, payload, meta }));
-
-
 
     case c.CLEAR_ERRORS_LIST:
       return state.update('errorsList', (errors) => errors.clear());

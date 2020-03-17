@@ -15,14 +15,13 @@ import {
   scan,
   throttleTime,
   throttle,
-  catchError,
 } from 'rxjs/operators';
 import { ofType, combineEpics } from 'redux-observable';
 
 import * as c from './constants';
 import * as a from './actions';
 
-export const loadNamespacesEpic = (action$, state$, { ajax }) =>
+export const loadNamespacesEpic = (action$, state$, { ajax, catchAjaxError }) =>
   action$.pipe(
     ofType(c.LOAD_NAMESPACES),
     mergeMap(({ payload, meta }) =>
@@ -31,15 +30,15 @@ export const loadNamespacesEpic = (action$, state$, { ajax }) =>
           meta.resolve && meta.resolve(resp);
           return a.loadNamespacesSuccess(resp, meta);
         }),
-        catchError((error) => {
+        catchAjaxError((error) => {
           meta.reject && meta.reject(error);
-          return of(a.loadNamespacesFailure(error, meta));
+          return a.loadNamespacesFailure(error, meta);
         })
       )
     )
   );
 
-export const createNamespaceEpic = (action$, state$, { ajax }) =>
+export const createNamespaceEpic = (action$, state$, { ajax, catchAjaxError }) =>
   action$.pipe(
     ofType(c.CREATE_NAMESPACE),
     mergeMap(({ payload, meta }) =>
@@ -52,15 +51,15 @@ export const createNamespaceEpic = (action$, state$, { ajax }) =>
           meta.resolve && meta.resolve(resp);
           return a.createNamespaceSuccess(resp, meta);
         }),
-        catchError((error) => {
+        catchAjaxError((error) => {
           meta.reject && meta.reject(error);
-          return of(a.createNamespaceFailure(error, meta));
+          return a.createNamespaceFailure(error, meta);
         })
       )
     )
   );
 
-export const readNamespaceEpic = (action$, state$, { ajax }) =>
+export const readNamespaceEpic = (action$, state$, { ajax, catchAjaxError }) =>
   action$.pipe(
     ofType(c.READ_NAMESPACE),
     mergeMap(({ payload, meta }) =>
@@ -72,15 +71,15 @@ export const readNamespaceEpic = (action$, state$, { ajax }) =>
           meta.resolve && meta.resolve(resp);
           return a.readNamespaceSuccess(resp, { ...meta, id: payload });
         }),
-        catchError((error) => {
+        catchAjaxError((error) => {
           meta.reject && meta.reject(error);
-          return of(a.readNamespaceFailure(error, { ...meta, id: payload }));
+          return a.readNamespaceFailure(error, { ...meta, id: payload });
         })
       )
     )
   );
 
-export const removeNamespaceEpic = (action$, state$, { ajax }) =>
+export const removeNamespaceEpic = (action$, state$, { ajax, catchAjaxError }) =>
   action$.pipe(
     ofType(c.REMOVE_NAMESPACE),
     mergeMap(({ payload, meta }) =>
@@ -92,15 +91,15 @@ export const removeNamespaceEpic = (action$, state$, { ajax }) =>
           meta.resolve && meta.resolve(resp);
           return a.removeNamespaceSuccess(resp, { ...meta, id: payload });
         }),
-        catchError((error) => {
+        catchAjaxError((error) => {
           meta.reject && meta.reject(error);
-          return of(a.removeNamespaceFailure(error, { ...meta, id: payload }));
+          return a.removeNamespaceFailure(error, { ...meta, id: payload });
         })
       )
     )
   );
 
-export const executeNamespaceActionEpic = (action$, state$, { ajax }) =>
+export const executeNamespaceActionEpic = (action$, state$, { ajax, catchAjaxError }) =>
   action$.pipe(
     ofType(c.EXECUTE_NAMESPACE_ACTION),
     mergeMap(({ payload: { action, data }, meta }) =>
@@ -113,9 +112,9 @@ export const executeNamespaceActionEpic = (action$, state$, { ajax }) =>
           meta.resolve && meta.resolve(resp);
           return a.executeNamespaceActionSuccess(resp, { ...meta, action });
         }),
-        catchError((error) => {
+        catchAjaxError((error) => {
           meta.reject && meta.reject(error);
-          return of(a.executeNamespaceActionFailure(error, { ...meta, action }));
+          return a.executeNamespaceActionFailure(error, { ...meta, action });
         })
       )
     )

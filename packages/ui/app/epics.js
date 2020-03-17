@@ -5,7 +5,7 @@
 import { combineEpics } from 'redux-observable';
 
 // import epics start
-// import appEpic from 'ducks/app/epic';
+import appEpic from 'ducks/app/epic';
 import eventsEpic from 'ducks/events/epic';
 import roleEpic from 'ducks/role/epic';
 import usersEpic from 'ducks/users/epic';
@@ -61,7 +61,7 @@ import svcMeshTapEpic from 'ducks/svcMeshTap/epic';
 export default function createEpic(injectedEpics = {}) {
   const rootEpic = combineEpics(
     // combine epics start
-    // appEpic,
+    appEpic,
     clustersEpic,
     eventsEpic,
     roleEpic,

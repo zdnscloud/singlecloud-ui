@@ -10,14 +10,13 @@ import {
   scan,
   throttleTime,
   throttle,
-  catchError,
 } from 'rxjs/operators';
 import { ofType, combineEpics } from 'redux-observable';
 
 import * as c from './constants';
 import * as a from './actions';
 
-export const loadPodsEpic = (action$, state$, { ajax }) =>
+export const loadPodsEpic = (action$, state$, { ajax, catchAjaxError }) =>
   action$.pipe(
     ofType(c.LOAD_PODS),
     mergeMap(({ payload, meta }) =>
@@ -26,16 +25,16 @@ export const loadPodsEpic = (action$, state$, { ajax }) =>
           meta.resolve && meta.resolve(resp);
           return a.loadPodsSuccess(resp, meta);
         }),
-        catchError((error) => {
+        catchAjaxError((error) => {
           meta.reject && meta.reject(error);
-          return of(a.loadPodsFailure(error, meta));
+          return a.loadPodsFailure(error, meta);
         })
       )
     )
   );
 
 // sts
-export const loadSTSPodsEpic = (action$, state$, { ajax }) =>
+export const loadSTSPodsEpic = (action$, state$, { ajax, catchAjaxError }) =>
   action$.pipe(
     ofType(c.LOAD_STS_PODS),
     mergeMap(({ payload, meta }) =>
@@ -44,16 +43,16 @@ export const loadSTSPodsEpic = (action$, state$, { ajax }) =>
           meta.resolve && meta.resolve(resp);
           return a.loadSTSPodsSuccess(resp, meta);
         }),
-        catchError((error) => {
+        catchAjaxError((error) => {
           meta.reject && meta.reject(error);
-          return of(a.loadSTSPodsFailure(error, meta));
+          return a.loadSTSPodsFailure(error, meta);
         })
       )
     )
   );
 
 // ds
-export const loadDSPodsEpic = (action$, state$, { ajax }) =>
+export const loadDSPodsEpic = (action$, state$, { ajax, catchAjaxError }) =>
   action$.pipe(
     ofType(c.LOAD_DS_PODS),
     mergeMap(({ payload, meta }) =>
@@ -62,16 +61,16 @@ export const loadDSPodsEpic = (action$, state$, { ajax }) =>
           meta.resolve && meta.resolve(resp);
           return a.loadDSPodsSuccess(resp, meta);
         }),
-        catchError((error) => {
+        catchAjaxError((error) => {
           meta.reject && meta.reject(error);
-          return of(a.loadDSPodsFailure(error, meta));
+          return a.loadDSPodsFailure(error, meta);
         })
       )
     )
   );
 
 // cj
-export const loadCJPodsEpic = (action$, state$, { ajax }) =>
+export const loadCJPodsEpic = (action$, state$, { ajax, catchAjaxError }) =>
   action$.pipe(
     ofType(c.LOAD_CJ_PODS),
     mergeMap(({ payload, meta }) =>
@@ -80,16 +79,16 @@ export const loadCJPodsEpic = (action$, state$, { ajax }) =>
           meta.resolve && meta.resolve(resp);
           return a.loadCJPodsSuccess(resp, meta);
         }),
-        catchError((error) => {
+        catchAjaxError((error) => {
           meta.reject && meta.reject(error);
-          return of(a.loadCJPodsFailure(error, meta));
+          return a.loadCJPodsFailure(error, meta);
         })
       )
     )
   );
 
 // job
-export const loadJOBPodsEpic = (action$, state$, { ajax }) =>
+export const loadJOBPodsEpic = (action$, state$, { ajax, catchAjaxError }) =>
   action$.pipe(
     ofType(c.LOAD_JOB_PODS),
     mergeMap(({ payload, meta }) =>
@@ -98,15 +97,15 @@ export const loadJOBPodsEpic = (action$, state$, { ajax }) =>
           meta.resolve && meta.resolve(resp);
           return a.loadJOBPodsSuccess(resp, meta);
         }),
-        catchError((error) => {
+        catchAjaxError((error) => {
           meta.reject && meta.reject(error);
-          return of(a.loadJOBPodsFailure(error, meta));
+          return a.loadJOBPodsFailure(error, meta);
         })
       )
     )
   );
 
-export const removePodEpic = (action$, state$, { ajax }) =>
+export const removePodEpic = (action$, state$, { ajax, catchAjaxError }) =>
   action$.pipe(
     ofType(c.REMOVE_POD),
     mergeMap(({ payload, meta }) =>
@@ -118,9 +117,9 @@ export const removePodEpic = (action$, state$, { ajax }) =>
           meta.resolve && meta.resolve(resp);
           return a.removePodSuccess(resp, { ...meta, id: payload });
         }),
-        catchError((error) => {
+        catchAjaxError((error) => {
           meta.reject && meta.reject(error);
-          return of(a.removePodFailure(error, { ...meta, id: payload }));
+          return a.removePodFailure(error, { ...meta, id: payload });
         })
       )
     )

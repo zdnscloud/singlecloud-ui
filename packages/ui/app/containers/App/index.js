@@ -19,8 +19,9 @@ import { MuiThemeProvider } from '@material-ui/core/styles';
 import { withRouter } from 'react-router';
 
 import GlobalStyle from 'global-styles';
-import LoginPage from 'containers/LoginPage/Loadable';
 import theme from 'theme';
+import LoginPage from 'containers/LoginPage/Loadable';
+import ErrorDialog from 'containers/ErrorDialog';
 
 import * as roleActions from 'ducks/role/actions';
 
@@ -63,6 +64,7 @@ class App extends PureComponent {
             <Route path="/login" component={LoginPage} exact />
             <Route component={Dashboard} />
           </Switch>
+          <ErrorDialog />
           <GlobalStyle />
         </Fragment>
       </MuiThemeProvider>

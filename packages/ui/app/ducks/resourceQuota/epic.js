@@ -15,14 +15,13 @@ import {
   scan,
   throttleTime,
   throttle,
-  catchError,
 } from 'rxjs/operators';
 import { ofType, combineEpics } from 'redux-observable';
 
 import * as c from './constants';
 import * as a from './actions';
 
-export const loadResourceQuotaEpic = (action$, state$, { ajax }) =>
+export const loadResourceQuotaEpic = (action$, state$, { ajax, catchAjaxError }) =>
   action$.pipe(
     ofType(c.LOAD_RESOURCE_QUOTA),
     mergeMap(({ payload, meta }) =>
@@ -31,15 +30,15 @@ export const loadResourceQuotaEpic = (action$, state$, { ajax }) =>
           meta.resolve && meta.resolve(resp);
           return a.loadResourceQuotaSuccess(resp, meta);
         }),
-        catchError((error) => {
+        catchAjaxError((error) => {
           meta.reject && meta.reject(error);
-          return of(a.loadResourceQuotaFailure(error, meta));
+          return a.loadResourceQuotaFailure(error, meta);
         })
       )
     )
   );
 
-export const createResourceQuotumEpic = (action$, state$, { ajax }) =>
+export const createResourceQuotumEpic = (action$, state$, { ajax, catchAjaxError }) =>
   action$.pipe(
     ofType(c.CREATE_RESOURCE_QUOTUM),
     mergeMap(({ payload, meta }) =>
@@ -52,15 +51,15 @@ export const createResourceQuotumEpic = (action$, state$, { ajax }) =>
           meta.resolve && meta.resolve(resp);
           return a.createResourceQuotumSuccess(resp, meta);
         }),
-        catchError((error) => {
+        catchAjaxError((error) => {
           meta.reject && meta.reject(error);
-          return of(a.createResourceQuotumFailure(error, meta));
+          return a.createResourceQuotumFailure(error, meta);
         })
       )
     )
   );
 
-export const readResourceQuotumEpic = (action$, state$, { ajax }) =>
+export const readResourceQuotumEpic = (action$, state$, { ajax, catchAjaxError }) =>
   action$.pipe(
     ofType(c.READ_RESOURCE_QUOTUM),
     mergeMap(({ payload, meta }) =>
@@ -72,15 +71,15 @@ export const readResourceQuotumEpic = (action$, state$, { ajax }) =>
           meta.resolve && meta.resolve(resp);
           return a.readResourceQuotumSuccess(resp, { ...meta, id: payload });
         }),
-        catchError((error) => {
+        catchAjaxError((error) => {
           meta.reject && meta.reject(error);
-          return of(a.readResourceQuotumFailure(error, { ...meta, id: payload }));
+          return a.readResourceQuotumFailure(error, { ...meta, id: payload });
         })
       )
     )
   );
 
-export const removeResourceQuotumEpic = (action$, state$, { ajax }) =>
+export const removeResourceQuotumEpic = (action$, state$, { ajax, catchAjaxError }) =>
   action$.pipe(
     ofType(c.REMOVE_RESOURCE_QUOTUM),
     mergeMap(({ payload, meta }) =>
@@ -92,9 +91,9 @@ export const removeResourceQuotumEpic = (action$, state$, { ajax }) =>
           meta.resolve && meta.resolve(resp);
           return a.removeResourceQuotumSuccess(resp, { ...meta, id: payload });
         }),
-        catchError((error) => {
+        catchAjaxError((error) => {
           meta.reject && meta.reject(error);
-          return of(a.removeResourceQuotumFailure(error, { ...meta, id: payload }));
+          return a.removeResourceQuotumFailure(error, { ...meta, id: payload });
         })
       )
     )

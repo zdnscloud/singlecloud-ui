@@ -12,6 +12,7 @@ export const initialState = fromJS({
   showEvents: false,
   showMenuText: true,
   termUrl: null,
+  httpError: null,
 });
 
 function appReducer(state = initialState, { type, payload }) {
@@ -45,6 +46,13 @@ function appReducer(state = initialState, { type, payload }) {
 
     case c.CLOSE_TERMINAL:
       return state.set('termUrl', null);
+
+    case c.CLEAR_HTTP_ERROR:
+      return state.set('httpError', null);
+
+    case c.HTTP_CONNECTION_ERROR:
+    case c.HTTP_SERVER_ERROR:
+      return state.set('httpError', payload);
 
     default:
       return state;
