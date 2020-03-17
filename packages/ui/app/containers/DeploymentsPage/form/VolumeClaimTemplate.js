@@ -4,6 +4,8 @@ import { FormattedMessage } from 'react-intl';
 import ListItem from '@material-ui/core/ListItem';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
+import AddIcon from '@material-ui/icons/Add';
+
 import Danger from 'components/Typography/Danger';
 import GridItem from 'components/Grid/GridItem';
 import GridContainer from 'components/Grid/GridContainer';
@@ -100,11 +102,12 @@ const VolumeClaimTemplate = ({
         <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
           {role === 'update' ? null : (
             <Button
-              color="secondary"
+              className={classes.addNodeBtn}
+              variant="contained" color="primary"
               onClick={(evt) => fields.push(fromJS({}))}
             >
+              <AddIcon className={classes.plusIcon} />
               <FormattedMessage {...messages.formAddVolumeClaimTemplate} />
-              <PlusIcon />
             </Button>
           )}
         </GridItem>

@@ -58,16 +58,17 @@ const Volumes = ({
   formValues,
   meta: { error, submitFailed },
   role,
+  classes,
 }) => (
-  <List component="ul">
+  <List component="ul" className={classes.noPaddingList}>
     <ListItem>
       <ListItemText>
         {role === 'update' ? (
           <FormattedMessage {...messages.formVolumes} />
         ) : (
-          <Button color="secondary" onClick={(evt) => fields.push(fromJS({}))}>
+          <Button   className={classes.addNodeBtn}  variant="contained" color="primary" onClick={(evt) => fields.push(fromJS({}))}>
+            <AddIcon className={classes.plusIcon} />
             <FormattedMessage {...messages.formVolumes} />
-            <PlusIcon />
           </Button>
         )}
       </ListItemText>

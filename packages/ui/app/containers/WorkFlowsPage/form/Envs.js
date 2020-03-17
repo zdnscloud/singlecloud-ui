@@ -7,6 +7,7 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
+import AddIcon from '@material-ui/icons/Add';
 
 import Danger from 'components/Typography/Danger';
 import GridItem from 'components/Grid/GridItem';
@@ -38,7 +39,7 @@ export const Envs = ({
             }
             style={{ marginBottom: fields && fields.length > 0 ? 25 : 0 }}
           >
-            <span className={classes.plusIcon}>+</span>
+            <AddIcon className={classes.plusIcon} />
             <FormattedMessage {...messages.formEnvBtn} />
           </Button>
         )}

@@ -85,8 +85,8 @@ export const JobDetailPage = ({
             },
           ]}
         />
-        <Item job={job} />
         <GridContainer className={classes.grid}>
+          <Item job={job} />
           <GridItem xs={12} sm={12} md={12}>
             <Card>
               <CardHeader>

@@ -7,6 +7,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
+import AddIcon from '@material-ui/icons/Add';
 
 import Card from 'components/Card/Card';
 import CardBody from 'components/Card/CardBody';
@@ -62,16 +63,17 @@ const Containers = ({
         </h4>
       </CardHeader>
       <CardBody>
-        <List component="ul">
+        <List component="ul" className={classes.noPaddingList}>
           {role === 'update' ? null : (
             <ListItem>
               <ListItemText>
                 <Button
-                  color="secondary"
+                  className={classes.addNodeBtn}
+                  variant="contained" color="primary"
                   onClick={(evt) => fields.push(fromJS({}))}
                 >
+                  <AddIcon className={classes.plusIcon} />
                   <FormattedMessage {...messages.formAddContainer} />
-                  <PlusIcon />
                 </Button>
               </ListItemText>
             </ListItem>
@@ -128,6 +130,7 @@ const Containers = ({
                           name={`${f}.env`}
                           component={Envs}
                           role={role}
+                          classes={classes}
                         />
                       </GridItem>
                     </GridContainer>
@@ -141,6 +144,7 @@ const Containers = ({
                           secretsOptions={secretsOptions}
                           formValues={formValues}
                           role={role}
+                          classes={classes}
                         />
                       </GridItem>
                     </GridContainer>
@@ -150,6 +154,7 @@ const Containers = ({
                           name={`${f}.exposedPorts`}
                           component={Ports}
                           role={role}
+                          classes={classes}
                         />
                       </GridItem>
                     </GridContainer>

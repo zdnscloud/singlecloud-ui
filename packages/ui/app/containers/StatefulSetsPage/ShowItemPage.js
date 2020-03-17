@@ -93,8 +93,8 @@ export const StatefulSetDetailPage = ({
             },
           ]}
         />
-        <Item statefulSet={statefulSet} />
         <GridContainer className={classes.grid}>
+          <Item statefulSet={statefulSet} />
           <GridItem xs={12} sm={12} md={12}>
             <Card>
               <CardHeader>

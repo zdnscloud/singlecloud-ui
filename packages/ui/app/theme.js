@@ -73,9 +73,9 @@ const theme = createMuiTheme({
         boxShadow:'none !important',
       },
       containedPrimary:{
-        backgroundColor:'#5B8FF9',
+        backgroundColor:'#40A9FF',
         '&:hover':{
-          backgroundColor:'#5B8FF9',
+          backgroundColor:'#40A9FF',
         },
       },
     },

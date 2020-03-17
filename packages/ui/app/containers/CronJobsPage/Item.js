@@ -49,7 +49,7 @@ export const CronJob = ({ updateJob, cronJob, clusterID, namespaceID }) => {
   };
 
   return (
-    <GridContainer className={classes.grid}>
+    <Fragment>
       <GridItem xs={12} sm={12} md={12}>
         <Card>
           <CardHeader>
@@ -57,9 +57,9 @@ export const CronJob = ({ updateJob, cronJob, clusterID, namespaceID }) => {
               <FormattedMessage {...messages.cronJobDetail} />
             </h4>
           </CardHeader>
-          <CardBody style={{ paddingLeft: 0, paddingRight: 0 }}>
+          <CardBody>
             <GridItem xs={12} sm={12} md={12}>
-              <GridContainer style={{ paddingLeft: 30, paddingRight: 30 }}>
+              <GridContainer>
                 <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
                   <ReadOnlyInput
                     labelText={<FormattedMessage {...messages.formName} />}
@@ -91,7 +91,7 @@ export const CronJob = ({ updateJob, cronJob, clusterID, namespaceID }) => {
             </h4>
           </CardHeader>
           <CardBody>
-            <List component="ul">
+            <List component="ul" className={classes.noPaddingList}>
               {cronJob &&
                 cronJob.get('containers') &&
                 cronJob.get('containers').map((c, i) => (
@@ -144,7 +144,7 @@ export const CronJob = ({ updateJob, cronJob, clusterID, namespaceID }) => {
                           {c.get('env') ? (
                             <GridContainer>
                               <GridItem>
-                                <List component="ul">
+                                <List component="ul" className={classes.noPaddingList}>
                                   <ListItem>
                                     <ListItemText
                                       primary={
@@ -184,7 +184,7 @@ export const CronJob = ({ updateJob, cronJob, clusterID, namespaceID }) => {
                           {c.get('volumes') ? (
                             <GridContainer>
                               <GridItem>
-                                <List component="ul">
+                                <List component="ul" className={classes.noPaddingList}>
                                   <ListItem>
                                     <ListItemText
                                       primary={
@@ -233,7 +233,7 @@ export const CronJob = ({ updateJob, cronJob, clusterID, namespaceID }) => {
                           {c.get('exposedPorts') ? (
                             <GridContainer>
                               <GridItem>
-                                <List component="ul">
+                                <List component="ul" className={classes.noPaddingList}>
                                   <ListItem>
                                     <ListItemText
                                       primary={
@@ -288,7 +288,7 @@ export const CronJob = ({ updateJob, cronJob, clusterID, namespaceID }) => {
           </CardBody>
         </Card>
       </GridItem>
-    </GridContainer>
+    </Fragment>
   );
 };
 

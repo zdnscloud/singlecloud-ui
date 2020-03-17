@@ -7,6 +7,7 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
+import AddIcon from '@material-ui/icons/Add';
 
 import Danger from 'components/Typography/Danger';
 import GridItem from 'components/Grid/GridItem';
@@ -35,7 +36,7 @@ const NodeWorkTemplate = ({
             fields.push(fromJS({ name: '', address: '', roles: [] }))
           }
         >
-          <span className={classes.plusIcon}>+</span>
+          <AddIcon className={classes.plusIcon} />
           <FormattedMessage {...messages.formAddWorkNode} />
         </Button>
       </GridItem>

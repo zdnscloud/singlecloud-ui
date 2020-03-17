@@ -80,40 +80,8 @@ export const CronJobDetailPage = ({
             },
           ]}
         />
-        <CronJob
-          cronJob={cronJob.update((c) => {
-            const data = c.toJS();
-            const { containers } = data;
-            if (containers) {
-              containers.forEach((item) => {
-                if (item && item.args) {
-                  item.args = item.args
-                    .map((n) => {
-                      if (n.indexOf(' ') !== -1) {
-                        n = ` "${n}" `;
-                      }
-                      return n;
-                    })
-                    .join(' ');
-                }
-                if (item && item.command) {
-                  item.command = item.command
-                    .map((cmd) => {
-                      if (cmd.indexOf(' ') !== -1) {
-                        cmd = ` "${cmd}" `;
-                      }
-                      return cmd;
-                    })
-                    .join(' ');
-                }
-                return item;
-              });
-            }
-            data.containers = containers;
-            return fromJS(data);
-          })}
-        />
         <GridContainer className={classes.grid}>
+          <CronJob cronJob={cronJob} />
           <GridItem xs={12} sm={12} md={12}>
             <Card>
               <CardHeader>

@@ -83,7 +83,7 @@ export const Form = ({
               </h4>
             </CardHeader>
             <CardBody>
-              <GridContainer style={{ margin: 0 }}>
+              <GridContainer>
                 <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
                   <InputField
                     label={<FormattedMessage {...messages.formName} />}

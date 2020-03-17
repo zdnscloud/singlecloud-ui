@@ -15,9 +15,11 @@ import GridItem from 'components/Grid/GridItem';
 import GridContainer from 'components/Grid/GridContainer';
 import InputField from 'components/Field/InputField';
 import SelectField from 'components/Field/SelectField';
-import PlusIcon from 'components/Icons/Plus';
+import AddIcon from '@material-ui/icons/Add';
+import PlusIcon from 'images/icons/plusHl.svg';
 import MinusIcon from 'components/Icons/Minus';
 import ReadOnlyInput from 'components/CustomInput/ReadOnlyInput';
+
 
 import useStyles from '../styles';
 import messages from '../messages';
@@ -53,7 +55,7 @@ const RuleTemplate = ({
         }
         className={classes.formPlusIcon}
       >
-        <PlusIcon />
+        <img src={PlusIcon} alt='PlusIcon' />
       </Button>
       {submitFailed && error && (
         <ListItem>
