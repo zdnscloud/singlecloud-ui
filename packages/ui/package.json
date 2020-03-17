@@ -69,6 +69,7 @@
     "@vx/mock-data": "^0.0.192",
     "@vx/scale": "^0.0.192",
     "@vx/shape": "^0.0.192",
+    "ansi-to-react": "^6.0.5",
     "autoresponsive-react": "^1.1.31",
     "chalk": "3.0.0",
     "change-case": "4.0.0",
