@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import React, { PureComponent,useState,useEffect } from 'react';
 import { compose } from 'redux';
 import { FormattedMessage } from 'react-intl';
 import { Field, reduxForm } from 'redux-form/immutable';
@@ -10,6 +10,7 @@ import GridContainer from 'components/Grid/GridContainer';
 import InputField from 'components/Field/InputField';
 import TextareaField from 'components/Field/TextareaField';
 import ReadOnlyInput from 'components/CustomInput/ReadOnlyInput';
+import ConfirmDialog from 'components/Confirm/ConfirmDialog';
 
 import messages from './messages';
 import useStyles from './styles';
@@ -22,15 +23,25 @@ const UserQuotaForm = ({
   userHash,
 }) => {
   const classes = useStyles();
-
+  const [open, setOpen] = useState(false);
+  useEffect(() => {
+    if (error) {
+      setOpen(true);
+    }
+  }, [error]);
   return (
     <form className={getByKey(classes, 'form')} onSubmit={handleSubmit}>
       <GridContainer>
-        {error ? (
-          <GridItem xs={12} sm={12} md={12}>
-            <Danger>{getByKey(error, ['response', 'message'])}</Danger>
-          </GridItem>
-        ) : null}
+        {error ? <ConfirmDialog
+          open={open}
+          onClose={() => {
+            setOpen(false)
+          }}
+          content={<p className={classes.saveFaildText}>{getByKey(error, ['response', 'message'])}</p>}
+          hideActions
+          type="save"
+          showCloseIcon
+        />: null}
         {formRole === 'edit' ? (
           <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
             <ReadOnlyInput

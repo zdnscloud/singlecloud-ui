@@ -15,14 +15,13 @@ import {
   scan,
   throttleTime,
   throttle,
-  catchError,
 } from 'rxjs/operators';
 import { ofType, combineEpics } from 'redux-observable';
 
 import * as c from './constants';
 import * as a from './actions';
 
-export const loadThresholdsEpic = (action$, state$, { ajax }) =>
+export const loadThresholdsEpic = (action$, state$, { ajax, catchAjaxError }) =>
   action$.pipe(
     ofType(c.LOAD_THRESHOLDS),
     mergeMap(({ payload, meta }) =>
@@ -31,15 +30,15 @@ export const loadThresholdsEpic = (action$, state$, { ajax }) =>
           meta.resolve && meta.resolve(resp);
           return a.loadThresholdsSuccess(resp, meta);
         }),
-        catchError((error) => {
+        catchAjaxError((error) => {
           meta.reject && meta.reject(error);
-          return of(a.loadThresholdsFailure(error, meta));
+          return a.loadThresholdsFailure(error, meta);
         })
       )
     )
   );
 
-export const updateThresholdEpic = (action$, state$, { ajax }) =>
+export const updateThresholdEpic = (action$, state$, { ajax, catchAjaxError }) =>
   action$.pipe(
     ofType(c.UPDATE_THRESHOLD),
     mergeMap(({ payload, meta }) =>
@@ -52,15 +51,15 @@ export const updateThresholdEpic = (action$, state$, { ajax }) =>
           meta.resolve && meta.resolve(resp);
           return a.updateThresholdSuccess(resp, meta);
         }),
-        catchError((error) => {
+        catchAjaxError((error) => {
           meta.reject && meta.reject(error);
-          return of(a.updateThresholdFailure(error, meta));
+          return a.updateThresholdFailure(error, meta);
         })
       )
     )
   );
 
-export const readThresholdEpic = (action$, state$, { ajax }) =>
+export const readThresholdEpic = (action$, state$, { ajax, catchAjaxError }) =>
   action$.pipe(
     ofType(c.READ_THRESHOLD),
     mergeMap(({ payload, meta }) =>
@@ -72,9 +71,9 @@ export const readThresholdEpic = (action$, state$, { ajax }) =>
           meta.resolve && meta.resolve(resp);
           return a.readThresholdSuccess(resp, { ...meta, id: payload });
         }),
-        catchError((error) => {
+        catchAjaxError((error) => {
           meta.reject && meta.reject(error);
-          return of(a.readThresholdFailure(error, { ...meta, id: payload }));
+          return a.readThresholdFailure(error, { ...meta, id: payload });
         })
       )
     )

@@ -15,14 +15,13 @@ import {
   scan,
   throttleTime,
   throttle,
-  catchError,
 } from 'rxjs/operators';
 import { ofType, combineEpics } from 'redux-observable';
 
 import * as c from './constants';
 import * as a from './actions';
 
-export const loadSecretsEpic = (action$, state$, { ajax }) =>
+export const loadSecretsEpic = (action$, state$, { ajax, catchAjaxError }) =>
   action$.pipe(
     ofType(c.LOAD_SECRETS),
     mergeMap(({ payload, meta }) =>
@@ -31,15 +30,15 @@ export const loadSecretsEpic = (action$, state$, { ajax }) =>
           meta.resolve && meta.resolve(resp);
           return a.loadSecretsSuccess(resp, meta);
         }),
-        catchError((error) => {
+        catchAjaxError((error) => {
           meta.reject && meta.reject(error);
-          return of(a.loadSecretsFailure(error, meta));
+          return a.loadSecretsFailure(error, meta);
         })
       )
     )
   );
 
-export const createSecretEpic = (action$, state$, { ajax }) =>
+export const createSecretEpic = (action$, state$, { ajax, catchAjaxError }) =>
   action$.pipe(
     ofType(c.CREATE_SECRET),
     mergeMap(({ payload, meta }) =>
@@ -52,15 +51,15 @@ export const createSecretEpic = (action$, state$, { ajax }) =>
           meta.resolve && meta.resolve(resp);
           return a.createSecretSuccess(resp, meta);
         }),
-        catchError((error) => {
+        catchAjaxError((error) => {
           meta.reject && meta.reject(error);
-          return of(a.createSecretFailure(error, meta));
+          return a.createSecretFailure(error, meta);
         })
       )
     )
   );
 
-export const updateSecretEpic = (action$, state$, { ajax }) =>
+export const updateSecretEpic = (action$, state$, { ajax, catchAjaxError }) =>
   action$.pipe(
     ofType(c.UPDATE_SECRET),
     mergeMap(({ payload, meta }) =>
@@ -73,15 +72,15 @@ export const updateSecretEpic = (action$, state$, { ajax }) =>
           meta.resolve && meta.resolve(resp);
           return a.updateSecretSuccess(resp, meta);
         }),
-        catchError((error) => {
+        catchAjaxError((error) => {
           meta.reject && meta.reject(error);
-          return of(a.updateSecretFailure(error, meta));
+          return a.updateSecretFailure(error, meta);
         })
       )
     )
   );
 
-export const readSecretEpic = (action$, state$, { ajax }) =>
+export const readSecretEpic = (action$, state$, { ajax, catchAjaxError }) =>
   action$.pipe(
     ofType(c.READ_SECRET),
     mergeMap(({ payload, meta }) =>
@@ -93,15 +92,15 @@ export const readSecretEpic = (action$, state$, { ajax }) =>
           meta.resolve && meta.resolve(resp);
           return a.readSecretSuccess(resp, { ...meta, id: payload });
         }),
-        catchError((error) => {
+        catchAjaxError((error) => {
           meta.reject && meta.reject(error);
-          return of(a.readSecretFailure(error, { ...meta, id: payload }));
+          return a.readSecretFailure(error, { ...meta, id: payload });
         })
       )
     )
   );
 
-export const removeSecretEpic = (action$, state$, { ajax }) =>
+export const removeSecretEpic = (action$, state$, { ajax, catchAjaxError }) =>
   action$.pipe(
     ofType(c.REMOVE_SECRET),
     mergeMap(({ payload, meta }) =>
@@ -113,9 +112,9 @@ export const removeSecretEpic = (action$, state$, { ajax }) =>
           meta.resolve && meta.resolve(resp);
           return a.removeSecretSuccess(resp, { ...meta, id: payload });
         }),
-        catchError((error) => {
+        catchAjaxError((error) => {
           meta.reject && meta.reject(error);
-          return of(a.removeSecretFailure(error, { ...meta, id: payload }));
+          return a.removeSecretFailure(error, { ...meta, id: payload });
         })
       )
     )

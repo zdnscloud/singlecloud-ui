@@ -15,14 +15,13 @@ import {
   scan,
   throttleTime,
   throttle,
-  catchError,
 } from 'rxjs/operators';
 import { ofType, combineEpics } from 'redux-observable';
 
 import * as c from './constants';
 import * as a from './actions';
 
-export const loadJobsEpic = (action$, state$, { ajax }) =>
+export const loadJobsEpic = (action$, state$, { ajax, catchAjaxError }) =>
   action$.pipe(
     ofType(c.LOAD_JOBS),
     mergeMap(({ payload, meta }) =>
@@ -31,15 +30,15 @@ export const loadJobsEpic = (action$, state$, { ajax }) =>
           meta.resolve && meta.resolve(resp);
           return a.loadJobsSuccess(resp, meta);
         }),
-        catchError((error) => {
+        catchAjaxError((error) => {
           meta.reject && meta.reject(error);
-          return of(a.loadJobsFailure(error, meta));
+          return a.loadJobsFailure(error, meta);
         })
       )
     )
   );
 
-export const createJobEpic = (action$, state$, { ajax }) =>
+export const createJobEpic = (action$, state$, { ajax, catchAjaxError }) =>
   action$.pipe(
     ofType(c.CREATE_JOB),
     mergeMap(({ payload, meta }) =>
@@ -52,15 +51,15 @@ export const createJobEpic = (action$, state$, { ajax }) =>
           meta.resolve && meta.resolve(resp);
           return a.createJobSuccess(resp, meta);
         }),
-        catchError((error) => {
+        catchAjaxError((error) => {
           meta.reject && meta.reject(error);
-          return of(a.createJobFailure(error, meta));
+          return a.createJobFailure(error, meta);
         })
       )
     )
   );
 
-export const readJobEpic = (action$, state$, { ajax }) =>
+export const readJobEpic = (action$, state$, { ajax, catchAjaxError }) =>
   action$.pipe(
     ofType(c.READ_JOB),
     mergeMap(({ payload, meta }) =>
@@ -72,15 +71,15 @@ export const readJobEpic = (action$, state$, { ajax }) =>
           meta.resolve && meta.resolve(resp);
           return a.readJobSuccess(resp, { ...meta, id: payload });
         }),
-        catchError((error) => {
+        catchAjaxError((error) => {
           meta.reject && meta.reject(error);
-          return of(a.readJobFailure(error, { ...meta, id: payload }));
+          return a.readJobFailure(error, { ...meta, id: payload });
         })
       )
     )
   );
 
-export const removeJobEpic = (action$, state$, { ajax }) =>
+export const removeJobEpic = (action$, state$, { ajax, catchAjaxError }) =>
   action$.pipe(
     ofType(c.REMOVE_JOB),
     mergeMap(({ payload, meta }) =>
@@ -92,9 +91,9 @@ export const removeJobEpic = (action$, state$, { ajax }) =>
           meta.resolve && meta.resolve(resp);
           return a.removeJobSuccess(resp, { ...meta, id: payload });
         }),
-        catchError((error) => {
+        catchAjaxError((error) => {
           meta.reject && meta.reject(error);
-          return of(a.removeJobFailure(error, { ...meta, id: payload }));
+          return a.removeJobFailure(error, { ...meta, id: payload });
         })
       )
     )

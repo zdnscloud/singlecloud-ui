@@ -14,8 +14,16 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
 import { withStyles } from '@material-ui/core/styles';
-import Menubar from 'components/Menubar';
+import GridItem from 'components/Grid/GridItem';
+import GridContainer from 'components/Grid/GridContainer';
+import Card from 'components/Card/Card';
+import CardHeader from 'components/Card/CardHeader';
+import CardBody from 'components/Card/CardBody';
+import Helmet from 'components/Helmet/Helmet';
 
+import img404 from 'images/404.png';
+
+import NotFoundCard from './Card';
 import messages from './messages';
 import useStyles from './styles';
 
@@ -24,10 +32,12 @@ const NotFound = () => {
   const classes = useStyles();
   return (
     <div className={classes.root}>
-      <Menubar headerContent={<FormattedMessage {...messages.header} />} />
       <div className={classes.content}>
-        <div className={classes.appBarSpacer} />
-        <h1>404</h1>
+        <GridContainer className={classes.grid}>
+          <GridItem xs={12} sm={12} md={12}>
+            <NotFoundCard />
+          </GridItem>
+        </GridContainer>
       </div>
     </div>
   );

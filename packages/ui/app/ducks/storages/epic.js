@@ -15,14 +15,13 @@ import {
   scan,
   throttleTime,
   throttle,
-  catchError,
 } from 'rxjs/operators';
 import { ofType, combineEpics } from 'redux-observable';
 
 import * as c from './constants';
 import * as a from './actions';
 
-export const loadStoragesEpic = (action$, state$, { ajax }) =>
+export const loadStoragesEpic = (action$, state$, { ajax, catchAjaxError }) =>
   action$.pipe(
     ofType(c.LOAD_STORAGES),
     mergeMap(({ payload, meta }) =>
@@ -31,15 +30,15 @@ export const loadStoragesEpic = (action$, state$, { ajax }) =>
           meta.resolve && meta.resolve(resp);
           return a.loadStoragesSuccess(resp, meta);
         }),
-        catchError((error) => {
+        catchAjaxError((error) => {
           meta.reject && meta.reject(error);
-          return of(a.loadStoragesFailure(error, meta));
+          return a.loadStoragesFailure(error, meta);
         })
       )
     )
   );
 
-export const createStorageEpic = (action$, state$, { ajax }) =>
+export const createStorageEpic = (action$, state$, { ajax, catchAjaxError }) =>
   action$.pipe(
     ofType(c.CREATE_STORAGE),
     mergeMap(({ payload, meta }) =>
@@ -52,15 +51,15 @@ export const createStorageEpic = (action$, state$, { ajax }) =>
           meta.resolve && meta.resolve(resp);
           return a.createStorageSuccess(resp, meta);
         }),
-        catchError((error) => {
+        catchAjaxError((error) => {
           meta.reject && meta.reject(error);
-          return of(a.createStorageFailure(error, meta));
+          return a.createStorageFailure(error, meta);
         })
       )
     )
   );
 
-export const updateStorageEpic = (action$, state$, { ajax }) =>
+export const updateStorageEpic = (action$, state$, { ajax, catchAjaxError }) =>
   action$.pipe(
     ofType(c.UPDATE_STORAGE),
     mergeMap(({ payload, meta }) =>
@@ -73,15 +72,15 @@ export const updateStorageEpic = (action$, state$, { ajax }) =>
           meta.resolve && meta.resolve(resp);
           return a.updateStorageSuccess(resp, meta);
         }),
-        catchError((error) => {
+        catchAjaxError((error) => {
           meta.reject && meta.reject(error);
-          return of(a.updateStorageFailure(error, meta));
+          return a.updateStorageFailure(error, meta);
         })
       )
     )
   );
 
-export const readStorageEpic = (action$, state$, { ajax }) =>
+export const readStorageEpic = (action$, state$, { ajax, catchAjaxError }) =>
   action$.pipe(
     ofType(c.READ_STORAGE),
     mergeMap(({ payload, meta }) =>
@@ -93,15 +92,15 @@ export const readStorageEpic = (action$, state$, { ajax }) =>
           meta.resolve && meta.resolve(resp);
           return a.readStorageSuccess(resp, { ...meta, id: payload });
         }),
-        catchError((error) => {
+        catchAjaxError((error) => {
           meta.reject && meta.reject(error);
-          return of(a.readStorageFailure(error, { ...meta, id: payload }));
+          return a.readStorageFailure(error, { ...meta, id: payload });
         })
       )
     )
   );
 
-export const removeStorageEpic = (action$, state$, { ajax }) =>
+export const removeStorageEpic = (action$, state$, { ajax, catchAjaxError }) =>
   action$.pipe(
     ofType(c.REMOVE_STORAGE),
     mergeMap(({ payload, meta }) =>
@@ -113,9 +112,9 @@ export const removeStorageEpic = (action$, state$, { ajax }) =>
           meta.resolve && meta.resolve(resp);
           return a.removeStorageSuccess(resp, { ...meta, id: payload });
         }),
-        catchError((error) => {
+        catchAjaxError((error) => {
           meta.reject && meta.reject(error);
-          return of(a.removeStorageFailure(error, { ...meta, id: payload }));
+          return a.removeStorageFailure(error, { ...meta, id: payload });
         })
       )
     )

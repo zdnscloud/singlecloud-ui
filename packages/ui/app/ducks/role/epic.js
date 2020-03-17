@@ -10,7 +10,6 @@ import {
   scan,
   throttleTime,
   throttle,
-  catchError,
 } from 'rxjs/operators';
 import { ofType, combineEpics } from 'redux-observable';
 import { push } from 'connected-react-router';
@@ -20,7 +19,7 @@ import * as c from './constants';
 import * as a from './actions';
 import { makeSelectIsLogin, makeSelectIsCAS } from './selectors';
 
-export const loginEpic = (action$, state$, { ajax }) =>
+export const loginEpic = (action$, state$, { ajax, catchAjaxError }) =>
   action$.pipe(
     ofType(c.LOGIN),
     mergeMap(({ payload, meta: { resolve, reject } }) =>
@@ -34,16 +33,16 @@ export const loginEpic = (action$, state$, { ajax }) =>
             resolve(resp);
             return a.loginSuccess(resp);
           }),
-          catchError((error) => {
+          catchAjaxError((error) => {
             reject(error);
-            return of(a.loginFailure(error));
+            return a.loginFailure(error);
           })
         )
         .pipe(mapTo(a.loadRole('/web/role')))
     )
   );
 
-export const loadRoleEpic = (action$, state$, { ajax }) =>
+export const loadRoleEpic = (action$, state$, { ajax, catchAjaxError }) =>
   action$.pipe(
     ofType(c.LOAD_ROLE),
     mergeMap(({ payload, meta }) =>
@@ -87,12 +86,12 @@ export const loadRoleEpic = (action$, state$, { ajax }) =>
           }
           return a.loadRoleSuccess(resp, meta);
         }),
-        catchError((error) => of(a.loadRoleFailure(error, meta)))
+        catchAjaxError((error) => a.loadRoleFailure(error, meta))
       )
     )
   );
 
-export const logoutEpic = (action$, state$, { ajax }) =>
+export const logoutEpic = (action$, state$, { ajax, catchAjaxError }) =>
   action$.pipe(
     ofType(c.LOGOUT),
     mergeMap(({ payload }) => {
@@ -108,7 +107,7 @@ export const logoutEpic = (action$, state$, { ajax }) =>
       })
         .pipe(
           map((resp) => a.logoutSuccess(resp)),
-          catchError((error) => of(a.logoutFailure(error)))
+          catchAjaxError((error) => a.logoutFailure(error))
         )
         .pipe(mapTo(a.loadRole('/web/role', { logout: true, isCAS })));
     })

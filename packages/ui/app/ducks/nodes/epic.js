@@ -15,14 +15,13 @@ import {
   scan,
   throttleTime,
   throttle,
-  catchError,
 } from 'rxjs/operators';
 import { ofType, combineEpics } from 'redux-observable';
 
 import * as c from './constants';
 import * as a from './actions';
 
-export const loadNodesEpic = (action$, state$, { ajax }) =>
+export const loadNodesEpic = (action$, state$, { ajax, catchAjaxError }) =>
   action$.pipe(
     ofType(c.LOAD_NODES),
     mergeMap(({ payload, meta }) =>
@@ -31,15 +30,15 @@ export const loadNodesEpic = (action$, state$, { ajax }) =>
           meta.resolve && meta.resolve(resp);
           return a.loadNodesSuccess(resp, meta);
         }),
-        catchError((error) => {
+        catchAjaxError((error) => {
           meta.reject && meta.reject(error);
-          return of(a.loadNodesFailure(error, meta));
+          return a.loadNodesFailure(error, meta);
         })
       )
     )
   );
 
-export const readNodeEpic = (action$, state$, { ajax }) =>
+export const readNodeEpic = (action$, state$, { ajax, catchAjaxError }) =>
   action$.pipe(
     ofType(c.READ_NODE),
     mergeMap(({ payload, meta }) =>
@@ -51,15 +50,15 @@ export const readNodeEpic = (action$, state$, { ajax }) =>
           meta.resolve && meta.resolve(resp);
           return a.readNodeSuccess(resp, { ...meta, id: payload });
         }),
-        catchError((error) => {
+        catchAjaxError((error) => {
           meta.reject && meta.reject(error);
-          return of(a.readNodeFailure(error, { ...meta, id: payload }));
+          return a.readNodeFailure(error, { ...meta, id: payload });
         })
       )
     )
   );
 
-export const executeNodeActionEpic = (action$, state$, { ajax }) =>
+export const executeNodeActionEpic = (action$, state$, { ajax, catchAjaxError }) =>
   action$.pipe(
     ofType(c.EXECUTE_NODE_ACTION),
     mergeMap(({ payload: { action, data }, meta }) =>
@@ -72,9 +71,9 @@ export const executeNodeActionEpic = (action$, state$, { ajax }) =>
           meta.resolve && meta.resolve(resp);
           return a.executeNodeActionSuccess(resp, { ...meta, action });
         }),
-        catchError((error) => {
+        catchAjaxError((error) => {
           meta.reject && meta.reject(error);
-          return of(a.executeNodeActionFailure(error, { ...meta, action }));
+          return a.executeNodeActionFailure(error, { ...meta, action });
         })
       )
     )

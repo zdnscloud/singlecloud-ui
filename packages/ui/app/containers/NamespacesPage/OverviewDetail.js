@@ -99,7 +99,7 @@ export const OverviewDetail = ({ namespace }) => {
             <CardFooter />
           </Card>
         </GridItem>
-        <GridItem xs={12} sm={12} md={4}>
+        <GridItem xs={12} sm={12} md={4} style={{padding:0}}>
           <Card chart className={classes.card}>
             <CardHeader color="azure" className={classes.cardHeaderLine}>
               <CircleChart value={memoryRatio} total={100} />
@@ -130,7 +130,7 @@ export const OverviewDetail = ({ namespace }) => {
       </GridContainer>
 
       <GridContainer>
-        <GridItem xs={12} sm={12} md={6}>
+        <GridItem xs={12} sm={12} md={6} style={{paddingRight:0}}>
           <Card>
             <CardHeader>
               <h4>

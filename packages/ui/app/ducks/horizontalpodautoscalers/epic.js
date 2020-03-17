@@ -15,14 +15,13 @@ import {
   scan,
   throttleTime,
   throttle,
-  catchError,
 } from 'rxjs/operators';
 import { ofType, combineEpics } from 'redux-observable';
 
 import * as c from './constants';
 import * as a from './actions';
 
-export const loadHorizontalPodAutoscalersEpic = (action$, state$, { ajax }) =>
+export const loadHorizontalPodAutoscalersEpic = (action$, state$, { ajax, catchAjaxError }) =>
   action$.pipe(
     ofType(c.LOAD_HORIZONTAL_POD_AUTOSCALERS),
     mergeMap(({ payload, meta }) =>
@@ -31,15 +30,15 @@ export const loadHorizontalPodAutoscalersEpic = (action$, state$, { ajax }) =>
           meta.resolve && meta.resolve(resp);
           return a.loadHorizontalPodAutoscalersSuccess(resp, meta);
         }),
-        catchError((error) => {
+        catchAjaxError((error) => {
           meta.reject && meta.reject(error);
-          return of(a.loadHorizontalPodAutoscalersFailure(error, meta));
+          return a.loadHorizontalPodAutoscalersFailure(error, meta);
         })
       )
     )
   );
 
-export const createHorizontalPodAutoscalerEpic = (action$, state$, { ajax }) =>
+export const createHorizontalPodAutoscalerEpic = (action$, state$, { ajax, catchAjaxError }) =>
   action$.pipe(
     ofType(c.CREATE_HORIZONTAL_POD_AUTOSCALER),
     mergeMap(({ payload, meta }) =>
@@ -52,15 +51,15 @@ export const createHorizontalPodAutoscalerEpic = (action$, state$, { ajax }) =>
           meta.resolve && meta.resolve(resp);
           return a.createHorizontalPodAutoscalerSuccess(resp, meta);
         }),
-        catchError((error) => {
+        catchAjaxError((error) => {
           meta.reject && meta.reject(error);
-          return of(a.createHorizontalPodAutoscalerFailure(error, meta));
+          return a.createHorizontalPodAutoscalerFailure(error, meta);
         })
       )
     )
   );
 
-export const updateHorizontalPodAutoscalerEpic = (action$, state$, { ajax }) =>
+export const updateHorizontalPodAutoscalerEpic = (action$, state$, { ajax, catchAjaxError }) =>
   action$.pipe(
     ofType(c.UPDATE_HORIZONTAL_POD_AUTOSCALER),
     mergeMap(({ payload, meta }) =>
@@ -73,15 +72,15 @@ export const updateHorizontalPodAutoscalerEpic = (action$, state$, { ajax }) =>
           meta.resolve && meta.resolve(resp);
           return a.updateHorizontalPodAutoscalerSuccess(resp, meta);
         }),
-        catchError((error) => {
+        catchAjaxError((error) => {
           meta.reject && meta.reject(error);
-          return of(a.updateHorizontalPodAutoscalerFailure(error, meta));
+          return a.updateHorizontalPodAutoscalerFailure(error, meta);
         })
       )
     )
   );
 
-export const readHorizontalPodAutoscalerEpic = (action$, state$, { ajax }) =>
+export const readHorizontalPodAutoscalerEpic = (action$, state$, { ajax, catchAjaxError }) =>
   action$.pipe(
     ofType(c.READ_HORIZONTAL_POD_AUTOSCALER),
     mergeMap(({ payload, meta }) =>
@@ -93,15 +92,15 @@ export const readHorizontalPodAutoscalerEpic = (action$, state$, { ajax }) =>
           meta.resolve && meta.resolve(resp);
           return a.readHorizontalPodAutoscalerSuccess(resp, { ...meta, id: payload });
         }),
-        catchError((error) => {
+        catchAjaxError((error) => {
           meta.reject && meta.reject(error);
-          return of(a.readHorizontalPodAutoscalerFailure(error, { ...meta, id: payload }));
+          return a.readHorizontalPodAutoscalerFailure(error, { ...meta, id: payload });
         })
       )
     )
   );
 
-export const removeHorizontalPodAutoscalerEpic = (action$, state$, { ajax }) =>
+export const removeHorizontalPodAutoscalerEpic = (action$, state$, { ajax, catchAjaxError }) =>
   action$.pipe(
     ofType(c.REMOVE_HORIZONTAL_POD_AUTOSCALER),
     mergeMap(({ payload, meta }) =>
@@ -113,9 +112,9 @@ export const removeHorizontalPodAutoscalerEpic = (action$, state$, { ajax }) =>
           meta.resolve && meta.resolve(resp);
           return a.removeHorizontalPodAutoscalerSuccess(resp, { ...meta, id: payload });
         }),
-        catchError((error) => {
+        catchAjaxError((error) => {
           meta.reject && meta.reject(error);
-          return of(a.removeHorizontalPodAutoscalerFailure(error, { ...meta, id: payload }));
+          return a.removeHorizontalPodAutoscalerFailure(error, { ...meta, id: payload });
         })
       )
     )

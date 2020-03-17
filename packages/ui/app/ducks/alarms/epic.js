@@ -24,7 +24,7 @@ import { ofType, combineEpics } from 'redux-observable';
 import * as c from './constants';
 import * as a from './actions';
 
-export const loadAlarmsEpic = (action$, state$, { ajax }) =>
+export const loadAlarmsEpic = (action$, state$, { ajax, catchAjaxError }) =>
   action$.pipe(
     ofType(c.LOAD_ALARMS),
     mergeMap(({ payload, meta }) =>
@@ -33,15 +33,15 @@ export const loadAlarmsEpic = (action$, state$, { ajax }) =>
           meta.resolve && meta.resolve(resp);
           return a.loadAlarmsSuccess(resp, meta);
         }),
-        catchError((error) => {
+        catchAjaxError((error) => {
           meta.reject && meta.reject(error);
-          return of(a.loadAlarmsFailure(error, meta));
+          return a.loadAlarmsFailure(error, meta);
         })
       )
     )
   );
 
-export const updateAlarmEpic = (action$, state$, { ajax }) =>
+export const updateAlarmEpic = (action$, state$, { ajax, catchAjaxError }) =>
   action$.pipe(
     ofType(c.UPDATE_ALARM),
     mergeMap(({ payload, meta }) =>
@@ -54,15 +54,15 @@ export const updateAlarmEpic = (action$, state$, { ajax }) =>
           meta.resolve && meta.resolve(resp);
           return a.updateAlarmSuccess(resp, meta);
         }),
-        catchError((error) => {
+        catchAjaxError((error) => {
           meta.reject && meta.reject(error);
-          return of(a.updateAlarmFailure(error, meta));
+          return a.updateAlarmFailure(error, meta);
         })
       )
     )
   );
 
-export const removeAlarmEpic = (action$, state$, { ajax }) =>
+export const removeAlarmEpic = (action$, state$, { ajax, catchAjaxError }) =>
   action$.pipe(
     ofType(c.REMOVE_ALARM),
     mergeMap(({ payload, meta }) =>
@@ -74,9 +74,9 @@ export const removeAlarmEpic = (action$, state$, { ajax }) =>
           meta.resolve && meta.resolve(resp);
           return a.removeAlarmSuccess(resp, { ...meta, id: payload });
         }),
-        catchError((error) => {
+        catchAjaxError((error) => {
           meta.reject && meta.reject(error);
-          return of(a.removeAlarmFailure(error, { ...meta, id: payload }));
+          return a.removeAlarmFailure(error, { ...meta, id: payload });
         })
       )
     )

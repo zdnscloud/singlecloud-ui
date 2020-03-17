@@ -23,6 +23,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import Footer from 'components/Footer/Footer';
 import TerminalDialog from 'containers/TerminalPage/TerminalDialog';
 import GlobalStyle from 'global-styles';
+import NotFoundPage from 'containers/NotFoundPage/Loadable';
 
 import * as actions from 'ducks/clusters/actions';
 import * as nsActions from 'ducks/namespaces/actions';
@@ -152,7 +153,8 @@ export const Dashboard = ({
                     component={route.component}
                   />
                 ))}
-                <Redirect to={redirectUrl} />
+                <Redirect exact from="/" to={redirectUrl} />
+                <Route component={NotFoundPage} />
               </Switch>
             </div>
             <div className={classes.events}>
@@ -164,7 +166,6 @@ export const Dashboard = ({
         <GlobalStyle />
       </div>
     </div>
-   
   );
 };
 

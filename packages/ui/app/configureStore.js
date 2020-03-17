@@ -10,9 +10,8 @@ import { ajax } from 'rxjs/ajax';
 import { BehaviorSubject, concat, of, throwError } from 'rxjs';
 import { catchError, map, switchMap } from 'rxjs/operators';
 import getByKey from '@gsmlg/utils/getByKey';
-// import persistentEnhancer from 'utils/persistentEnhancer';
 
-import { loadRole } from 'ducks/role/actions';
+import { httpError } from 'ducks/app/actions';
 
 import createReducer from './reducers';
 import createEpic from './epics';
@@ -36,20 +35,13 @@ const epicMiddleware = createEpicMiddleware({
           'Content-Type': 'application/json',
           ...((opt && opt.headers) || {}),
         },
-      }).pipe(
-        map((resp) => resp),
-        catchError((error) => {
-          if (getByKey(error, 'status') === 401) {
-            import('store').then(({ default: store }) => { // eslint-disable-line
-              setTimeout(() => {
-                store.dispatch(loadRole('/web/role'));
-              }, 50);
-            })
-          }
-          return throwError(error);
-        })
-      );
+      });
     },
+    catchAjaxError: (handler) => (
+      catchError((error) => (
+        of(httpError(error), handler(error))
+      ))
+    ),
   },
 });
 

@@ -15,14 +15,13 @@ import {
   scan,
   throttleTime,
   throttle,
-  catchError,
 } from 'rxjs/operators';
 import { ofType, combineEpics } from 'redux-observable';
 
 import * as c from './constants';
 import * as a from './actions';
 
-export const loadEfksEpic = (action$, state$, { ajax }) =>
+export const loadEfksEpic = (action$, state$, { ajax, catchAjaxError }) =>
   action$.pipe(
     ofType(c.LOAD_EFKS),
     mergeMap(({ payload, meta }) =>
@@ -31,15 +30,15 @@ export const loadEfksEpic = (action$, state$, { ajax }) =>
           meta.resolve && meta.resolve(resp);
           return a.loadEfksSuccess(resp, meta);
         }),
-        catchError((error) => {
+        catchAjaxError((error) => {
           meta.reject && meta.reject(error);
-          return of(a.loadEfksFailure(error, meta));
+          return a.loadEfksFailure(error, meta);
         })
       )
     )
   );
 
-export const createEfkEpic = (action$, state$, { ajax }) =>
+export const createEfkEpic = (action$, state$, { ajax, catchAjaxError }) =>
   action$.pipe(
     ofType(c.CREATE_EFK),
     mergeMap(({ payload, meta }) =>
@@ -52,15 +51,15 @@ export const createEfkEpic = (action$, state$, { ajax }) =>
           meta.resolve && meta.resolve(resp);
           return a.createEfkSuccess(resp, meta);
         }),
-        catchError((error) => {
+        catchAjaxError((error) => {
           meta.reject && meta.reject(error);
-          return of(a.createEfkFailure(error, meta));
+          return a.createEfkFailure(error, meta);
         })
       )
     )
   );
 
-export const readEfkEpic = (action$, state$, { ajax }) =>
+export const readEfkEpic = (action$, state$, { ajax, catchAjaxError }) =>
   action$.pipe(
     ofType(c.READ_EFK),
     mergeMap(({ payload, meta }) =>
@@ -72,15 +71,15 @@ export const readEfkEpic = (action$, state$, { ajax }) =>
           meta.resolve && meta.resolve(resp);
           return a.readEfkSuccess(resp, { ...meta, id: payload });
         }),
-        catchError((error) => {
+        catchAjaxError((error) => {
           meta.reject && meta.reject(error);
-          return of(a.readEfkFailure(error, { ...meta, id: payload }));
+          return a.readEfkFailure(error, { ...meta, id: payload });
         })
       )
     )
   );
 
-export const removeEfkEpic = (action$, state$, { ajax }) =>
+export const removeEfkEpic = (action$, state$, { ajax, catchAjaxError }) =>
   action$.pipe(
     ofType(c.REMOVE_EFK),
     mergeMap(({ payload, meta }) =>
@@ -92,9 +91,9 @@ export const removeEfkEpic = (action$, state$, { ajax }) =>
           meta.resolve && meta.resolve(resp);
           return a.removeEfkSuccess(resp, { ...meta, id: payload });
         }),
-        catchError((error) => {
+        catchAjaxError((error) => {
           meta.reject && meta.reject(error);
-          return of(a.removeEfkFailure(error, { ...meta, id: payload }));
+          return a.removeEfkFailure(error, { ...meta, id: payload });
         })
       )
     )

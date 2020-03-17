@@ -15,14 +15,13 @@ import {
   scan,
   throttleTime,
   throttle,
-  catchError,
 } from 'rxjs/operators';
 import { ofType, combineEpics } from 'redux-observable';
 
 import * as c from './constants';
 import * as a from './actions';
 
-export const load{{pProperCase name}}Epic = (action$, state$, { ajax }) =>
+export const load{{pProperCase name}}Epic = (action$, state$, { ajax, catchAjaxError }) =>
   action$.pipe(
     ofType(c.LOAD_{{pcCase name}}),
     mergeMap(({ payload, meta }) =>
@@ -31,16 +30,16 @@ export const load{{pProperCase name}}Epic = (action$, state$, { ajax }) =>
           meta.resolve && meta.resolve(resp);
           return a.load{{pProperCase name}}Success(resp, meta);
         }),
-        catchError((error) => {
+        catchAjaxError((error) => {
           meta.reject && meta.reject(error);
-          return of(a.load{{pProperCase name}}Failure(error, meta));
+          return a.load{{pProperCase name}}Failure(error, meta);
         })
       )
     )
   );
 
 {{#if wannaCreateAction}}
-export const create{{sProperCase name}}Epic = (action$, state$, { ajax }) =>
+export const create{{sProperCase name}}Epic = (action$, state$, { ajax, catchAjaxError }) =>
   action$.pipe(
     ofType(c.CREATE_{{scCase name}}),
     mergeMap(({ payload, meta }) =>
@@ -53,9 +52,9 @@ export const create{{sProperCase name}}Epic = (action$, state$, { ajax }) =>
           meta.resolve && meta.resolve(resp);
           return a.create{{sProperCase name}}Success(resp, meta);
         }),
-        catchError((error) => {
+        catchAjaxError((error) => {
           meta.reject && meta.reject(error);
-          return of(a.create{{sProperCase name}}Failure(error, meta));
+          return a.create{{sProperCase name}}Failure(error, meta);
         })
       )
     )
@@ -63,7 +62,7 @@ export const create{{sProperCase name}}Epic = (action$, state$, { ajax }) =>
 
 {{/if}}
 {{#if wannaUpdateAction}}
-export const update{{sProperCase name}}Epic = (action$, state$, { ajax }) =>
+export const update{{sProperCase name}}Epic = (action$, state$, { ajax, catchAjaxError }) =>
   action$.pipe(
     ofType(c.UPDATE_{{scCase name}}),
     mergeMap(({ payload, meta }) =>
@@ -76,9 +75,9 @@ export const update{{sProperCase name}}Epic = (action$, state$, { ajax }) =>
           meta.resolve && meta.resolve(resp);
           return a.update{{sProperCase name}}Success(resp, meta);
         }),
-        catchError((error) => {
+        catchAjaxError((error) => {
           meta.reject && meta.reject(error);
-          return of(a.update{{sProperCase name}}Failure(error, meta));
+          return a.update{{sProperCase name}}Failure(error, meta);
         })
       )
     )
@@ -86,7 +85,7 @@ export const update{{sProperCase name}}Epic = (action$, state$, { ajax }) =>
 
 {{/if}}
 {{#if wannaReadOneAction}}
-export const read{{sProperCase name}}Epic = (action$, state$, { ajax }) =>
+export const read{{sProperCase name}}Epic = (action$, state$, { ajax, catchAjaxError }) =>
   action$.pipe(
     ofType(c.READ_{{scCase name}}),
     mergeMap(({ payload, meta }) =>
@@ -98,9 +97,9 @@ export const read{{sProperCase name}}Epic = (action$, state$, { ajax }) =>
           meta.resolve && meta.resolve(resp);
           return a.read{{sProperCase name}}Success(resp, { ...meta, id: payload });
         }),
-        catchError((error) => {
+        catchAjaxError((error) => {
           meta.reject && meta.reject(error);
-          return of(a.read{{sProperCase name}}Failure(error, { ...meta, id: payload }));
+          return a.read{{sProperCase name}}Failure(error, { ...meta, id: payload });
         })
       )
     )
@@ -108,7 +107,7 @@ export const read{{sProperCase name}}Epic = (action$, state$, { ajax }) =>
 
 {{/if}}
 {{#if wannaRemoveAction}}
-export const remove{{sProperCase name}}Epic = (action$, state$, { ajax }) =>
+export const remove{{sProperCase name}}Epic = (action$, state$, { ajax, catchAjaxError }) =>
   action$.pipe(
     ofType(c.REMOVE_{{scCase name}}),
     mergeMap(({ payload, meta }) =>
@@ -120,9 +119,9 @@ export const remove{{sProperCase name}}Epic = (action$, state$, { ajax }) =>
           meta.resolve && meta.resolve(resp);
           return a.remove{{sProperCase name}}Success(resp, { ...meta, id: payload });
         }),
-        catchError((error) => {
+        catchAjaxError((error) => {
           meta.reject && meta.reject(error);
-          return of(a.remove{{sProperCase name}}Failure(error, { ...meta, id: payload }));
+          return a.remove{{sProperCase name}}Failure(error, { ...meta, id: payload });
         })
       )
     )
@@ -130,7 +129,7 @@ export const remove{{sProperCase name}}Epic = (action$, state$, { ajax }) =>
 
 {{/if}}
 {{#if wannaResourceActions}}
-export const execute{{sProperCase name}}ActionEpic = (action$, state$, { ajax }) =>
+export const execute{{sProperCase name}}ActionEpic = (action$, state$, { ajax, catchAjaxError }) =>
   action$.pipe(
     ofType(c.EXECUTE_{{scCase name}}_ACTION),
     mergeMap(({ payload: { action, data }, meta }) =>
@@ -143,9 +142,9 @@ export const execute{{sProperCase name}}ActionEpic = (action$, state$, { ajax })
           meta.resolve && meta.resolve(resp);
           return a.execute{{sProperCase name}}ActionSuccess(resp, { ...meta, action });
         }),
-        catchError((error) => {
+        catchAjaxError((error) => {
           meta.reject && meta.reject(error);
-          return of(a.execute{{sProperCase name}}ActionFailure(error, { ...meta, action }));
+          return a.execute{{sProperCase name}}ActionFailure(error, { ...meta, action });
         })
       )
     )

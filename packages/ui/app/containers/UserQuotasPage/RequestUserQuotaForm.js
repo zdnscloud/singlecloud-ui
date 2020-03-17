@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import React, { PureComponent,useState,useEffect } from 'react';
 import { compose } from 'redux';
 import { FormattedMessage } from 'react-intl';
 import { Field, reduxForm } from 'redux-form/immutable';
@@ -11,6 +11,7 @@ import TextareaField from 'components/Field/TextareaField';
 import ReadOnlyInput from 'components/CustomInput/ReadOnlyInput';
 import ReadOnlyTextarea from 'components/CustomTextarea/ReadOnlyTextarea';
 import SelectField from 'components/Field/SelectField';
+import ConfirmDialog from 'components/Confirm/ConfirmDialog';
 
 import messages from './messages';
 import useStyles from './styles';
@@ -24,14 +25,25 @@ const RequestUserQuotaForm = ({ handleSubmit, error, userQuota, clusters }) => {
   const reg = /^(\d+)([a-zA-Z]+)?$/;
   const memory = userQuota.get('memory');
   const storage = userQuota.get('storage');
+  const [open, setOpen] = useState(false);
+  useEffect(() => {
+    if (error) {
+      setOpen(true);
+    }
+  }, [error]);
   return (
     <form className={getByKey(classes, 'form')} onSubmit={handleSubmit}>
       <GridContainer>
-        {error ? (
-          <GridItem xs={12} sm={12} md={12}>
-            <Danger>{getByKey(error, ['response', 'message'])}</Danger>
-          </GridItem>
-        ) : null}
+        {error ? <ConfirmDialog
+          open={open}
+          onClose={() => {
+            setOpen(false)
+          }}
+          content={<p className={classes.saveFaildText}>{getByKey(error, ['response', 'message'])}</p>}
+          hideActions
+          type="save"
+          showCloseIcon
+        />: null}
         <GridItem xs={3} sm={3} md={3}>
           <ReadOnlyInput
             value={userQuota.get('requestType')}

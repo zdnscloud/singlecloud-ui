@@ -20,7 +20,7 @@ const schema = [
   // 'operatingSystemImage',
   // 'pod',
   // 'dockerVersion',
-  'labels',
+  'operatingSystemImage',
   'creationTimestamp',
 ];
 
@@ -54,18 +54,6 @@ const tableSchema = schema
           return value != null
             ? value
                 .map((val, key) => <Chip key={key} label={`${val}`} />)
-                .toList()
-            : null;
-        },
-      };
-    }
-    if (item.id === 'labels') {
-      return {
-        ...item,
-        component({ value }) {
-          return value != null
-            ? value
-                .map((val, key) => <Chip key={key} label={`${key}=${val}`} />)
                 .toList()
             : null;
         },

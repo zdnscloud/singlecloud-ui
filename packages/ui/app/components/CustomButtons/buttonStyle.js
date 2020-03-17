@@ -193,7 +193,7 @@ const buttonStyle = (theme) => ({
   action: {
     fontSize:14,
     padding: '0 8px',
-    color: theme.palette.highlight.normal,
+    color: theme.palette.highlight.main,
     boxShadow: 'none',
     backgroundColor: 'transparent',
     '&:hover': {
@@ -203,7 +203,7 @@ const buttonStyle = (theme) => ({
     },
     '&:focus': {
       backgroundColor: 'transparent',
-      color: theme.palette.highlight.normal,
+      color: theme.palette.highlight.main,
       boxShadow: 'none',
     },
   },

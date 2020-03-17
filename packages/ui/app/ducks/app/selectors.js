@@ -49,6 +49,9 @@ export const makeSelectLastNamespace = () =>
 export const makeSelectTermUrl = () =>
   createSelector(selectDomain, (appState) => appState.get('termUrl'));
 
+export const makeSelectHttpError = () =>
+  createSelector(selectDomain, (appState) => appState.get('httpError'));
+
 export const makeSelectUserMenus = () =>
   createSelector(
     selectDomain,
@@ -106,20 +109,6 @@ export const makeSelectLeftMenus = () =>
             icon: ManagementIcon,
             adminOnly: true,
           },
-          // {
-          //   name: 'ContainerManagement',
-          //   children: [
-          //     {
-          //       name: 'ContainerWatch',
-          //       path: `/clusters/${cluster}/container-watch`,
-          //     },
-          //     {
-          //       name: 'ImageManagement',
-          //       path: `/clusters/${cluster}/image-management`,
-          //     },
-          //   ],
-          //   icon: SystemIcon,
-          // },
           {
             name: 'ServiceGovernance',
             children: [
