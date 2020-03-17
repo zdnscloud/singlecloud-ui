@@ -56,7 +56,7 @@ export const StatefulSet = ({
   };
 
   return (
-    <GridContainer className={classes.grid}>
+    <Fragment>
       <GridItem xs={12} sm={12} md={12}>
         <Card>
           <CardHeader>
@@ -64,9 +64,9 @@ export const StatefulSet = ({
               <FormattedMessage {...messages.statefulSetDetail} />
             </h4>
           </CardHeader>
-          <CardBody style={{ paddingLeft: 0, paddingRight: 0 }}>
+          <CardBody>
             <GridItem xs={12} sm={12} md={12}>
-              <GridContainer style={{ paddingLeft: 30, paddingRight: 30 }}>
+              <GridContainer>
                 <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
                   <ReadOnlyInput
                     labelText={<FormattedMessage {...messages.formName} />}
@@ -146,7 +146,7 @@ export const StatefulSet = ({
             </h4>
           </CardHeader>
           <CardBody>
-            <List component="ul">
+            <List component="ul" className={classes.noPaddingList}>
               {statefulSet &&
                 statefulSet.get('containers') &&
                 statefulSet.get('containers').map((c, i) => (
@@ -199,7 +199,7 @@ export const StatefulSet = ({
                           {c.get('env') ? (
                             <GridContainer>
                               <GridItem>
-                                <List component="ul">
+                                <List component="ul" className={classes.noPaddingList}>
                                   <ListItem>
                                     <ListItemText
                                       primary={
@@ -254,7 +254,7 @@ export const StatefulSet = ({
                           {c.get('volumes') ? (
                             <GridContainer>
                               <GridItem>
-                                <List component="ul">
+                                <List component="ul" className={classes.noPaddingList}>
                                   <ListItem>
                                     <ListItemText
                                       primary={
@@ -324,7 +324,7 @@ export const StatefulSet = ({
                           {c.get('exposedPorts') ? (
                             <GridContainer>
                               <GridItem>
-                                <List component="ul">
+                                <List component="ul" className={classes.noPaddingList}>
                                   <ListItem>
                                     <ListItemText
                                       primary={
@@ -468,7 +468,7 @@ export const StatefulSet = ({
         </Card>
       </GridItem>
       <GridItem xs={12} sm={12} md={12}>
-        <Card style={{ marginTop: 20, marginBottom: 0 }}>
+        <Card>
           <CardHeader>
             <h4>
               <FormattedMessage {...messages.formVolumeClaimTemplate} />
@@ -513,7 +513,7 @@ export const StatefulSet = ({
           </CardBody>
         </Card>
       </GridItem>
-    </GridContainer>
+    </Fragment>
   );
 };
 

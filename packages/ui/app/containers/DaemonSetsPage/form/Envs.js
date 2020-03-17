@@ -49,7 +49,7 @@ import MinusIcon from 'components/Icons/Minus';
 import messages from '../messages';
 
 const Envs = ({ fields, meta: { error, submitFailed }, role, classes }) => (
-  <List component="ul">
+  <List component="ul" className={classes.noPaddingList}>
     <ListItem>
       <ListItemText>
         {role === 'update' ? (

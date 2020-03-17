@@ -55,7 +55,7 @@ export const Deployment = ({
     ),
   };
   return (
-    <GridContainer className={classes.grid}>
+    <Fragment>
       <GridItem xs={12} sm={12} md={12}>
         <Card>
           <CardHeader>
@@ -63,9 +63,9 @@ export const Deployment = ({
               <FormattedMessage {...messages.deploymentDetail} />
             </h4>
           </CardHeader>
-          <CardBody style={{ paddingLeft: 0, paddingRight: 0 }}>
+          <CardBody>
             <GridItem xs={12} sm={12} md={12}>
-              <GridContainer style={{ paddingLeft: 30, paddingRight: 30 }}>
+              <GridContainer>
                 <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
                   <ReadOnlyInput
                     labelText={<FormattedMessage {...messages.formName} />}
@@ -145,7 +145,7 @@ export const Deployment = ({
             </h4>
           </CardHeader>
           <CardBody>
-            <List component="ul">
+            <List component="ul" className={classes.noPaddingList}>
               {deployment &&
                 deployment.get('containers') &&
                 deployment.get('containers').map((c, i) => (
@@ -198,7 +198,7 @@ export const Deployment = ({
                           {c.get('env') ? (
                             <GridContainer>
                               <GridItem>
-                                <List component="ul">
+                                <List component="ul" className={classes.noPaddingList}>
                                   <ListItem>
                                     <ListItemText
                                       primary={
@@ -253,7 +253,7 @@ export const Deployment = ({
                           {c.get('volumes') ? (
                             <GridContainer>
                               <GridItem>
-                                <List component="ul">
+                                <List component="ul" className={classes.noPaddingList}>
                                   <ListItem>
                                     <ListItemText
                                       primary={
@@ -323,7 +323,7 @@ export const Deployment = ({
                           {c.get('exposedPorts') ? (
                             <GridContainer>
                               <GridItem>
-                                <List component="ul">
+                                <List component="ul" className={classes.noPaddingList}>
                                   <ListItem>
                                     <ListItemText
                                       primary={
@@ -465,9 +465,7 @@ export const Deployment = ({
             ) : null}
           </CardBody>
         </Card>
-      </GridItem>
-      <GridItem xs={12} sm={12} md={12}>
-        <Card style={{ marginTop: 20, marginBottom: 0 }}>
+        <Card>
           <CardHeader>
             <h4>
               <FormattedMessage {...messages.formVolumeClaimTemplate} />
@@ -512,7 +510,7 @@ export const Deployment = ({
           </CardBody>
         </Card>
       </GridItem>
-    </GridContainer>
+    </Fragment>
   );
 };
 

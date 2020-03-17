@@ -326,6 +326,11 @@ const styles = (theme) => ({
     marginLeft:theme.spacing(3.5),
     color:theme.palette.text.b,
   },
+  noPaddingList:{
+    '& .MuiList-padding , .MuiListItem-gutters':{
+      padding:0,
+    },
+  },
 });
 
 export default styles;

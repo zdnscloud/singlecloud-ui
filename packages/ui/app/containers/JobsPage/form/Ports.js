@@ -55,10 +55,11 @@ const Ports = ({ fields, meta: { error, submitFailed },classes }) => {
   ];
 
   return (
-    <List component="ul">
+    <List component="ul" className={classes.noPaddingList}>
       <ListItem>
         <ListItemText>
           <Button
+            className={classes.addNodeBtn}
             variant="contained" color="primary"
             onClick={(evt) => fields.push(fromJS({ protocol: 'tcp' }))}
           >

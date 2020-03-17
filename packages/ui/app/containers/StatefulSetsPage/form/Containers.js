@@ -63,7 +63,7 @@ const Containers = ({
         </h4>
       </CardHeader>
       <CardBody>
-        <List component="ul">
+        <List component="ul" className={classes.noPaddingList}>
           {role === 'update' ? null : (
             <ListItem>
               <ListItemText>

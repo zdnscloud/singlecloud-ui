@@ -55,7 +55,7 @@ const Ports = ({ fields, meta: { error, submitFailed }, role, classes }) => {
   ];
 
   return (
-    <List component="ul">
+    <List component="ul" className={classes.noPaddingList}>
       <ListItem>
         <ListItemText>
           {role === 'update' ? (

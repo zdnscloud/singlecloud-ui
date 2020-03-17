@@ -93,8 +93,8 @@ export const DeploymentDetailPage = ({
             },
           ]}
         />
-        <Item deployment={deployment} />
         <GridContainer className={classes.grid}>
+          <Item deployment={deployment} />
           <GridItem xs={12} sm={12} md={12}>
             <Card>
               <CardHeader>
