@@ -48,13 +48,13 @@ import MinusIcon from 'components/Icons/Minus';
 
 import messages from '../messages';
 
-const Envs = ({ fields, meta: { error, submitFailed } }) => (
+const Envs = ({ fields, meta: { error, submitFailed },classes }) => (
   <List component="ul">
     <ListItem>
       <ListItemText>
-        <Button color="secondary" onClick={(evt) => fields.push(fromJS({}))}>
+        <Button  variant="contained" color="primary" onClick={(evt) => fields.push(fromJS({}))}>
+          <AddIcon className={classes.plusIcon} />
           <FormattedMessage {...messages.formENV} />
-          <PlusIcon />
         </Button>
       </ListItemText>
     </ListItem>

@@ -56,13 +56,14 @@ const Volumes = ({
   fields,
   formValues,
   meta: { error, submitFailed },
+  classes,
 }) => (
   <List component="ul">
     <ListItem>
       <ListItemText>
-        <Button color="secondary" onClick={(evt) => fields.push(fromJS({}))}>
+        <Button  variant="contained" color="primary" onClick={(evt) => fields.push(fromJS({}))}>
+          <AddIcon className={classes.plusIcon} />
           <FormattedMessage {...messages.formVolumes} />
-          <PlusIcon />
         </Button>
       </ListItemText>
     </ListItem>

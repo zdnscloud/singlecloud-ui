@@ -58,6 +58,7 @@ const Volumes = ({
   formValues,
   meta: { error, submitFailed },
   role,
+  classes,
 }) => (
   <List component="ul">
     <ListItem>
@@ -65,9 +66,9 @@ const Volumes = ({
         {role === 'update' ? (
           <FormattedMessage {...messages.formVolumes} />
         ) : (
-          <Button color="secondary" onClick={(evt) => fields.push(fromJS({}))}>
+          <Button  variant="contained" color="primary" onClick={(evt) => fields.push(fromJS({}))}>
+            <AddIcon className={classes.plusIcon} />
             <FormattedMessage {...messages.formVolumes} />
-            <PlusIcon />
           </Button>
         )}
       </ListItemText>

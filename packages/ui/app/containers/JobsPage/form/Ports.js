@@ -48,7 +48,7 @@ import MinusIcon from 'components/Icons/Minus';
 
 import messages from '../messages';
 
-const Ports = ({ fields, meta: { error, submitFailed } }) => {
+const Ports = ({ fields, meta: { error, submitFailed },classes }) => {
   const options = [
     { label: 'TCP', value: 'tcp' },
     { label: 'UDP', value: 'udp' },
@@ -59,11 +59,11 @@ const Ports = ({ fields, meta: { error, submitFailed } }) => {
       <ListItem>
         <ListItemText>
           <Button
-            color="secondary"
+            variant="contained" color="primary"
             onClick={(evt) => fields.push(fromJS({ protocol: 'tcp' }))}
           >
+            <AddIcon className={classes.plusIcon} />
             <FormattedMessage {...messages.formExposedPorts} />
-            <PlusIcon />
           </Button>
         </ListItemText>
       </ListItem>

@@ -7,6 +7,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
+import AddIcon from '@material-ui/icons/Add';
 
 import Card from 'components/Card/Card';
 import CardBody from 'components/Card/CardBody';
@@ -65,11 +66,11 @@ const Containers = ({
           <ListItem>
             <ListItemText>
               <Button
-                color="secondary"
+                variant="contained" color="primary"
                 onClick={(evt) => fields.push(fromJS({}))}
               >
+                <AddIcon className={classes.plusIcon} />
                 <FormattedMessage {...messages.formAddContainer} />
-                <PlusIcon />
               </Button>
             </ListItemText>
           </ListItem>
@@ -119,7 +120,7 @@ const Containers = ({
                     </GridContainer>
                     <GridContainer>
                       <GridItem xs={6} sm={6} md={6}>
-                        <FieldArray name={`${f}.env`} component={Envs} />
+                        <FieldArray name={`${f}.env`} component={Envs} classes={classes} />
                       </GridItem>
                     </GridContainer>
                     <GridContainer>
@@ -131,6 +132,7 @@ const Containers = ({
                           configMapsOptions={configMapsOptions}
                           secretsOptions={secretsOptions}
                           formValues={formValues}
+                          classes={classes}
                         />
                       </GridItem>
                     </GridContainer>
@@ -139,6 +141,7 @@ const Containers = ({
                         <FieldArray
                           name={`${f}.exposedPorts`}
                           component={Ports}
+                          classes={classes}
                         />
                       </GridItem>
                     </GridContainer>
