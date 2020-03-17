@@ -6,7 +6,7 @@ export const styles = (theme) => ({
   formPlusIcon: {
     position: 'absolute',
     left: '24%',
-    top: -40,
+    top: -45,
   },
   table: {
     '& thead tr': {

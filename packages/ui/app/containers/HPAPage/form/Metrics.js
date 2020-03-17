@@ -14,7 +14,7 @@ import Danger from 'components/Typography/Danger';
 import GridItem from 'components/Grid/GridItem';
 import GridContainer from 'components/Grid/GridContainer';
 import SelectField from 'components/Field/SelectField';
-import PlusIcon from 'components/Icons/Plus';
+import PlusIcon from 'images/icons/plusHl.svg';
 import MinusIcon from 'components/Icons/Minus';
 import ReadOnlyInput from 'components/CustomInput/ReadOnlyInput';
 
@@ -49,7 +49,7 @@ const Metrics = ({
               return fields.push(renderMetricsItem(metricsType));
             }}
           >
-            <PlusIcon />
+            <img src={PlusIcon} alt='PlusIcon' />
           </Button>
         </ListItemText>
       </ListItem>
