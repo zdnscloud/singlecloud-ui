@@ -64,7 +64,7 @@ const Form = ({
           </GridItem>
         ) : null}
         {memuRole === 'registries' ? (
-          <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
+          <GridItem xs={3} sm={3} md={3}>
             <ReadOnlyInput
               label={<FormattedMessage {...messages.leftMenuDialogFormUser} />}
               value={role.get('user')}

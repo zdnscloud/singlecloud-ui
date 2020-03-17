@@ -96,7 +96,6 @@ const OutLinks = ({
   };
   const [open, setOpen] = useState(false);
   const [memuRole, setMemuRole] = useState(null);
-  const [error, setError] = useState(null);
 
   const handleMemuClick = (r) => {
     setMemuRole(r);
@@ -138,23 +137,6 @@ const OutLinks = ({
     }
   }
 
-  const handleMonitorInstall = () => {
-    const url = cluster.getIn(['links', memuRole]);
-    createMonitor(
-      {},
-      {
-        url,
-        clusterID,
-        resolve() {
-          setOpen(false);
-        },
-        reject(e) {
-          setError(e);
-        },
-      }
-    );
-  };
-
   const outLinks = (
     <List component="div" disablePadding>
       {menus.map((prop, key) => {
@@ -184,35 +166,23 @@ const OutLinks = ({
         open={!!open}
         onClose={() => {
           setOpen(false);
-          setError(null);
           handleClose();
         }}
         maxWidth="lg"
         title={<FormattedMessage {...messages.leftMenuDialogTitle} />}
         content={
-          memuRole === 'monitors' ? (
-            <>
-              {error ? (
-                <Danger>{getByKey(error, ['response', 'message'])}</Danger>
-              ) : null}
-              <FormattedMessage {...messages.leftMenuDialogContent} />
-            </>
-          ) : (
-            <RegistryForm
-              isOpen={!!open}
-              clusterID={clusterID}
-              loadStorageClasses={loadStorageClasses}
-              storageClasses={storageClasses}
-              storageClassesURL={storageClassesURL}
-              role={role}
-              onSubmit={doSubmit}
-              memuRole={memuRole}
-            />
-          )
+          <RegistryForm
+            isOpen={!!open}
+            clusterID={clusterID}
+            loadStorageClasses={loadStorageClasses}
+            storageClasses={storageClasses}
+            storageClassesURL={storageClassesURL}
+            role={role}
+            onSubmit={doSubmit}
+            memuRole={memuRole}
+          />
         }
-        onAction={() =>
-          memuRole === 'monitors' ? handleMonitorInstall() : submitForm()
-        }
+        onAction={submitForm}
         sureButtonText={messages.leftMenuDialogButtonInstall}
       />
     </Fragment>
