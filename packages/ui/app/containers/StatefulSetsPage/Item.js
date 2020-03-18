@@ -412,7 +412,7 @@ export const StatefulSet = ({
               <Fragment>
                 <GridContainer>
                   <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
-                    <ReadOnlyInput
+                    <ReadOnlyCheckbox
                       labelText={
                         <FormattedMessage
                           {...messages.formReloadWhenConfigChange}
@@ -421,6 +421,17 @@ export const StatefulSet = ({
                       value={statefulSet.getIn([
                         'advancedOptions',
                         'reloadWhenConfigChange',
+                      ])}
+                    />
+                  </GridItem>
+                  <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
+                    <ReadOnlyCheckbox
+                      labelText={
+                        <FormattedMessage {...messages.formInjectServiceMesh} />
+                      }
+                      value={statefulSet.getIn([
+                        'advancedOptions',
+                        'injectServiceMesh',
                       ])}
                     />
                   </GridItem>
@@ -447,17 +458,6 @@ export const StatefulSet = ({
                         'advancedOptions',
                         'exposedMetric',
                         'port',
-                      ])}
-                    />
-                  </GridItem>
-                  <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
-                    <ReadOnlyCheckbox
-                      labelText={
-                        <FormattedMessage {...messages.formInjectServiceMesh} />
-                      }
-                      value={statefulSet.getIn([
-                        'advancedOptions',
-                        'injectServiceMesh',
                       ])}
                     />
                   </GridItem>
