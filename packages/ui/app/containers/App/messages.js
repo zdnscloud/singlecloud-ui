@@ -37,6 +37,10 @@ export default defineMessages({
     id: `${scope}.userEdit`,
     defaultMessage: 'Edit',
   },
+  userUserQuotas: {
+    id: `${scope}.userUserQuotas`,
+    defaultMessage: 'UserQuotas',
+  },
   userPasswd: {
     id: `${scope}.userPasswd`,
     defaultMessage: 'Passwd',
@@ -153,14 +157,6 @@ export default defineMessages({
     id: `${scope}.leftMenuNetwork`,
     defaultMessage: 'Network',
   },
-  leftMenuUserQuotas: {
-    id: `${scope}.leftMenuUserQuotas`,
-    defaultMessage: 'UserQuotas',
-  },
-  leftMenuUserQuotasList: {
-    id: `${scope}.leftMenuUserQuotasList`,
-    defaultMessage: 'UserQuotasList',
-  },
   leftMenuImageRegistry: {
     id: `${scope}.leftMenuImageRegistry`,
     defaultMessage: 'ImageRegistry',
@@ -181,6 +177,10 @@ export default defineMessages({
     id: `${scope}.leftMenuAppConfiguration`,
     defaultMessage: 'AppConfiguration',
   },
+  leftMenuBasicResources: {
+    id: `${scope}.leftMenuBasicResources`,
+    defaultMessage: 'BasicResources',
+  },
   leftMenuApplicationStore: {
     id: `${scope}.leftMenuApplicationStore`,
     defaultMessage: 'ApplicationStore',
@@ -189,9 +189,9 @@ export default defineMessages({
     id: `${scope}.leftMenuApplications`,
     defaultMessage: 'Applications',
   },
-  leftMenuServiceAndRouting: {
-    id: `${scope}.leftMenuServiceAndRouting`,
-    defaultMessage: 'ServiceAndRouting',
+  leftMenuContinuousIntegration: {
+    id: `${scope}.leftMenuContinuousIntegration`,
+    defaultMessage: 'ContinuousIntegration',
   },
   leftMenuAppStore: {
     id: `${scope}.leftMenuAppStore`,

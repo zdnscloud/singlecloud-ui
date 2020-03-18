@@ -59,6 +59,10 @@ export const makeSelectUserMenus = () =>
     makeSelectRole(),
     (appState, isAdmin, role) =>
       [
+        {
+          name: 'UserQuotas',
+          path: isAdmin ? '/adminUserQuotas' : '/userQuotas',
+        },
         { name: 'Edit', path: `/users/${role.get('user')}/edit` },
         { name: 'Profile', path: `/users/${role.get('user')}/profile` },
         { name: 'Passwd', path: `/users/${role.get('user')}/passwd` },
@@ -132,12 +136,18 @@ export const makeSelectLeftMenus = () =>
             icon: ServiceGovernanceIcon,
           },
           {
-            name: 'AppManagement',
+            name: 'AppStore',
             children: [
               {
-                name: 'WorkFlows',
-                path: `/clusters/${cluster}/namespaces/${namespace}/workFlows`,
+                name: 'LocalAppTemplates',
+                path: `/clusters/${cluster}/namespaces/${namespace}/charts`,
               },
+            ],
+            icon: ApplicationStoreIcon,
+          },
+          {
+            name: 'AppManagement',
+            children: [
               {
                 name: 'Applications',
                 path: `/clusters/${cluster}/namespaces/${namespace}/applications`,
@@ -145,6 +155,42 @@ export const makeSelectLeftMenus = () =>
               {
                 name: 'HPA',
                 path: `/clusters/${cluster}/namespaces/${namespace}/horizontalPodAutoscalers`,
+              },
+            ],
+            icon: SystemIcon,
+          },
+          {
+            name: 'ContinuousIntegration',
+            children: [
+              {
+                name: 'WorkFlows',
+                path: `/clusters/${cluster}/namespaces/${namespace}/workFlows`,
+              },
+            ],
+            icon: ServiceAndRoutingIcon,
+          },
+          {
+            name:'BasicResources',
+            children: [
+              {
+                name: 'Services',
+                path: `/clusters/${cluster}/namespaces/${namespace}/services`,
+              },
+              {
+                name: 'Ingresses',
+                path: `/clusters/${cluster}/namespaces/${namespace}/ingresses`,
+              },
+              {
+                name: 'UdpIngresses',
+                path: `/clusters/${cluster}/namespaces/${namespace}/udpIngresses`,
+              },
+              {
+                name: 'ConfigMaps',
+                path: `/clusters/${cluster}/namespaces/${namespace}/configmaps`,
+              },
+              {
+                name: 'Secrets',
+                path: `/clusters/${cluster}/namespaces/${namespace}/secrets`,
               },
               {
                 name: 'Deployments',
@@ -173,48 +219,6 @@ export const makeSelectLeftMenus = () =>
             ],
             icon: SystemIcon,
           },
-          {
-            name: 'AppConfiguration',
-            children: [
-              {
-                name: 'ConfigMaps',
-                path: `/clusters/${cluster}/namespaces/${namespace}/configmaps`,
-              },
-              {
-                name: 'Secrets',
-                path: `/clusters/${cluster}/namespaces/${namespace}/secrets`,
-              },
-            ],
-            icon: AppConfigurationIcon,
-          },
-          {
-            name: 'ServiceAndRouting',
-            children: [
-              {
-                name: 'Services',
-                path: `/clusters/${cluster}/namespaces/${namespace}/services`,
-              },
-              {
-                name: 'Ingresses',
-                path: `/clusters/${cluster}/namespaces/${namespace}/ingresses`,
-              },
-              {
-                name: 'UdpIngresses',
-                path: `/clusters/${cluster}/namespaces/${namespace}/udpIngresses`,
-              },
-            ],
-            icon: ServiceAndRoutingIcon,
-          },
-          {
-            name: 'AppStore',
-            children: [
-              {
-                name: 'LocalAppTemplates',
-                path: `/clusters/${cluster}/namespaces/${namespace}/charts`,
-              },
-            ],
-            icon: ApplicationStoreIcon,
-          },
         ]);
       }
       if (cluster !== '' && !isManage) {
@@ -236,18 +240,6 @@ export const makeSelectLeftMenus = () =>
           },
         ]);
       }
-      menus = menus.concat([
-        {
-          name: 'UserQuotas',
-          children: [
-            {
-              name: 'UserQuotasList',
-              path: isAdmin ? '/adminUserQuotas' : '/userQuotas',
-            },
-          ],
-          icon: UserQuotasIcon,
-        },
-      ]);
       if (!isAdmin) {
         menus = menus.filter((m) => {
           m.children = m.children.filter((c) => c.adminOnly === undefined);

@@ -98,7 +98,6 @@ const LeftMenu = ({
         if (rnIsGlobalConfig || rnIsAuditLogs) {
           return path.includes(routeName);
         }
-        return path.includes('adminUserQuotas') || path.includes('userQuotas');
       }
       if (
         ((isShow || isCreate || isEdit || isUpdate || isLogs) && !rnIsNS) ||

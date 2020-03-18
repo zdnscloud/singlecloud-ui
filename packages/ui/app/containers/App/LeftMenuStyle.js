@@ -54,14 +54,18 @@ export const styles = (theme) => ({
     marginTop:5,
   },
   itemText: {
-    display: ({ showText }) => (showText ? 'flex' : 'none'),
+    display: ({ showText }) => (showText ? 'inline-block' : 'none'),
     fontSize: 14,
     paddingLeft: 5,
+    whiteSpace: 'nowrap',
+    textOverflow: 'ellipsis',
+    overflow: 'hidden',
+    marginRight:20,
   },
   chevronRight:{
     fontSize: 16,
     position:'absolute',
-    right:25,
+    right:6,
     top:17,
   },
   sidebarWrapper: {
