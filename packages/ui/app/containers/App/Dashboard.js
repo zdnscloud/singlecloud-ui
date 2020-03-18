@@ -154,6 +154,7 @@ export const Dashboard = ({
                   />
                 ))}
                 <Redirect exact from="/" to={redirectUrl} />
+                <Redirect exact from="/index" to={redirectUrl} />
                 <Route component={NotFoundPage} />
               </Switch>
             </div>
