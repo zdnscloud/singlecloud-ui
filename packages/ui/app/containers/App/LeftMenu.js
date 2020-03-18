@@ -210,10 +210,10 @@ const LeftMenu = ({
                 disableTypography
               />
               <ChevronRight  
-                className={classNames(classes.itemText)} 
-                style={{
-                  fontSize: 16,
-                }}
+                className={classNames(
+                  classes.itemText,
+                  classes.chevronRight,
+                )}
               />
             </ListItem>
             {openingMenu && prop.name === openingMenu[0] && prop.children ? (

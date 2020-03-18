@@ -58,6 +58,12 @@ export const styles = (theme) => ({
     fontSize: 14,
     paddingLeft: 5,
   },
+  chevronRight:{
+    fontSize: 16,
+    position:'absolute',
+    right:25,
+    top:17,
+  },
   sidebarWrapper: {
     flex: 1,
     overflow: 'hidden',
