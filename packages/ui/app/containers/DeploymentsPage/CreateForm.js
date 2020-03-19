@@ -134,17 +134,22 @@ export const Form = ({
               <FormSection name="advancedOptions">
                 <GridContainer>
                   <GridItem
-                    xs={12}
-                    sm={12}
-                    md={12}
+                    xs={3} sm={3} md={3} 
                     className={classes.formLine}
                   >
-                    <SwitchField
+                    <CheckboxField
                       name="reloadWhenConfigChange"
                       label={
-                        <FormattedMessage
-                          {...messages.formReloadWhenConfigChange}
-                        />
+                        <FormattedMessage {...messages.formReloadWhenConfigChange} />
+                      }
+                      disabled={role === 'update'}
+                    />
+                  </GridItem>
+                  <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
+                    <CheckboxField
+                      name="injectServiceMesh"
+                      label={
+                        <FormattedMessage {...messages.formInjectServiceMesh} />
                       }
                       disabled={role === 'update'}
                     />
@@ -176,15 +181,6 @@ export const Form = ({
                         max: 65535,
                       }}
                       name="exposedMetric.port"
-                      disabled={role === 'update'}
-                    />
-                  </GridItem>
-                  <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
-                    <CheckboxField
-                      name="injectServiceMesh"
-                      label={
-                        <FormattedMessage {...messages.formInjectServiceMesh} />
-                      }
                       disabled={role === 'update'}
                     />
                   </GridItem>
