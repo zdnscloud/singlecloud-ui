@@ -9,6 +9,8 @@ import OverviewIcon from 'components/Icons/Overview';
 import ManagementIcon from 'components/Icons/Management';
 import AppConfigurationIcon from 'components/Icons/AppConfiguration';
 import SystemIcon from 'components/Icons/System';
+import BasicResourcesIcon from 'components/Icons/BasicResources';
+import ContinuousIntegrationIcon from 'components/Icons/ContinuousIntegration';
 import UserQuotasIcon from 'components/Icons/UserQuotas';
 import SystenToolsIcon from 'components/Icons/SystenTools';
 import ApplicationStoreIcon from 'components/Icons/ApplicationStore';
@@ -167,7 +169,7 @@ export const makeSelectLeftMenus = () =>
                 path: `/clusters/${cluster}/namespaces/${namespace}/workFlows`,
               },
             ],
-            icon: ServiceAndRoutingIcon,
+            icon: ContinuousIntegrationIcon,
           },
           {
             name:'BasicResources',
@@ -217,7 +219,7 @@ export const makeSelectLeftMenus = () =>
                 path: `/clusters/${cluster}/namespaces/${namespace}/persistentVolumeClaims`,
               },
             ],
-            icon: SystemIcon,
+            icon: BasicResourcesIcon,
           },
         ]);
       }
