@@ -1078,7 +1078,7 @@
   "app.containers.WorkFlowsPage.pageDesc": "工作流",
   "app.containers.WorkFlowsPage.pageTitle": "工作流",
   "app.containers.WorkFlowsPage.save": "保存",
-  "app.containers.WorkFlowsPage.tabContainerStatus": "容器状态",
+  "app.containers.WorkFlowsPage.tabContainerStatus": "任务状态",
   "app.containers.WorkFlowsPage.tabTitleLogs": "日志",
   "app.containers.WorkFlowsPage.tabTitleStatus": "状态",
   "app.containers.WorkFlowsPage.tableButtonModify": "修改",
