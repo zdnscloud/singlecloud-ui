@@ -98,7 +98,6 @@ const LeftMenu = ({
         if (rnIsGlobalConfig || rnIsAuditLogs) {
           return path.includes(routeName);
         }
-        return path.includes('adminUserQuotas') || path.includes('userQuotas');
       }
       if (
         ((isShow || isCreate || isEdit || isUpdate || isLogs) && !rnIsNS) ||
@@ -210,10 +209,10 @@ const LeftMenu = ({
                 disableTypography
               />
               <ChevronRight  
-                className={classNames(classes.itemText)} 
-                style={{
-                  fontSize: 16,
-                }}
+                className={classNames(
+                  classes.itemText,
+                  classes.chevronRight,
+                )}
               />
             </ListItem>
             {openingMenu && prop.name === openingMenu[0] && prop.children ? (
