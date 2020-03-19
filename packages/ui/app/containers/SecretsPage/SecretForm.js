@@ -33,7 +33,7 @@ const renderConfigs = ({ fields, meta: { error, submitFailed }, classes }) => (
           variant="contained" color="primary"
           onClick={(evt) => fields.push(fromJS({}))}
         >
-          <span className={classes.plusIcon}>+</span>
+          <AddIcon className={classes.plusIcon} />
           <FormattedMessage {...messages.formData} />
         </Button>
       </GridItem>

@@ -102,7 +102,7 @@ const Form = ({ formValues, handleSubmit, error, services }) => {
             </h4>
           </CardHeader>
           <CardBody>
-            <GridContainer style={{ margin: 0 }}>
+            <GridContainer>
               <GridItem xs={3} sm={3} md={3}>
                 <InputField
                   label={<FormattedMessage {...messages.formName} />}
@@ -134,7 +134,7 @@ const Form = ({ formValues, handleSubmit, error, services }) => {
             </h4>
           </CardHeader>
           <CardBody>
-            <GridContainer style={{ margin: 0 }}>
+            <GridContainer>
               <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
                 <SelectField
                   label={<FormattedMessage {...messages.formServiceName} />}

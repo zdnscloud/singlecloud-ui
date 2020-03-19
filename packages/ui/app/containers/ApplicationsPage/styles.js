@@ -150,7 +150,7 @@ export const styles = (theme) => ({
     top: '-10px',
     width: 0,
     height: 0,
-    borderTop: '38px solid #5B8FF9',
+    borderTop: `38px solid ${theme.palette.highlight.main}`,
     borderLeft: '48px solid transparent',
   },
   meshText: {

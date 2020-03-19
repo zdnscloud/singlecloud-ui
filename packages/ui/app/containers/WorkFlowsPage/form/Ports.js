@@ -5,6 +5,7 @@ import { FormattedMessage } from 'react-intl';
 
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
+import AddIcon from '@material-ui/icons/Add';
 
 import GridItem from 'components/Grid/GridItem';
 import GridContainer from 'components/Grid/GridContainer';
@@ -44,7 +45,7 @@ export const Ports = ({
                   .push(fromJS({}))
               }
             >
-              <span className={classes.plusIcon}>+</span>
+              <AddIcon className={classes.plusIcon} />
               <FormattedMessage {...messages.formExposedPortBtn} />
             </Button>
           )}

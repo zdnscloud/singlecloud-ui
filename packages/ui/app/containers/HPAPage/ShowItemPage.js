@@ -148,7 +148,7 @@ export const HPADetailPage = ({
                     />
                   </GridItem>
                 </GridContainer>
-                <List component="ul">
+                <List component="ul" className={classes.noPaddingList}>
                   {metrics.size > 0 &&
                     metrics.map((c, i) => {
                       const metricsType =

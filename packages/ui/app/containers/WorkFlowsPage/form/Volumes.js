@@ -5,6 +5,7 @@ import { FormattedMessage } from 'react-intl';
 
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
+import AddIcon from '@material-ui/icons/Add';
 
 import Danger from 'components/Typography/Danger';
 import GridItem from 'components/Grid/GridItem';
@@ -39,7 +40,7 @@ export const Volumes = ({
               fields.push(fromJS({}))
             }
           >
-            <span className={classes.plusIcon}>+</span>
+            <AddIcon className={classes.plusIcon} />
             <FormattedMessage {...messages.formVolumeBtn} />
           </Button>
         )}

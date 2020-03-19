@@ -6,7 +6,7 @@ export const styles = (theme) => ({
   formPlusIcon: {
     position: 'absolute',
     left: '25%',
-    top: -33,
+    top: -36,
   },
   formTable: {
     marginTop: 30,

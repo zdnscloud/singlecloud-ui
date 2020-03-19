@@ -39,7 +39,7 @@ const validate = (values) => {
       errors[field] = 'Required';
     }
   });
-  const gitFields = ['repositoryUrl','revision','user','password'];
+  const gitFields = ['repositoryUrl','revision'];
   gitFields.forEach((field) => {
     if (!values.getIn(['git',field])) {
       errors.git[field] = 'Required';

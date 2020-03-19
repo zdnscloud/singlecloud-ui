@@ -221,10 +221,6 @@ export default defineMessages({
     id: `${scope}.formPvStorageClassName`,
     defaultMessage: 'StorageClassName',
   },
-  formUpdateMemo:{
-    id: `${scope}.formUpdateMemo`,
-    defaultMessage: 'UpdateMemo',
-  },
   updatePageTitle: {
     id: `${scope}.updatePageTitle`,
     defaultMessage: 'Update workFlow',
