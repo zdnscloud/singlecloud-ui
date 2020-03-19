@@ -96,7 +96,14 @@ export const StoragePage = ({
                     <GridItem xs={2} sm={2} md={2}>
                       <ReadOnlyInput
                         labelText={<FormattedMessage {...messages.formTarget} />}
-                        value={`${iscsi.get('target')}`}
+                        value={`${iscsi.getIn(['targets', 0])}`}
+                        fullWidth
+                      />
+                    </GridItem>
+                    <GridItem xs={2} sm={2} md={2}>
+                      <ReadOnlyInput
+                        labelText={<FormattedMessage {...messages.formTarget} />}
+                        value={`${iscsi.getIn(['targets', 1])}`}
                         fullWidth
                       />
                     </GridItem>

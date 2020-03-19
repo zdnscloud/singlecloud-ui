@@ -113,7 +113,16 @@ const StorageForm = ({
                           label={
                             <FormattedMessage {...messages.formTarget} />
                           }
-                          name="parameter.target"
+                          name="parameter.targets[0]"
+                          fullWidth
+                        />
+                      </GridItem>
+                      <GridItem xs={3} sm={3} md={3}>
+                        <InputField
+                          label={
+                            <FormattedMessage {...messages.formTarget} />
+                          }
+                          name="parameter.targets[1]"
                           fullWidth
                         />
                       </GridItem>
