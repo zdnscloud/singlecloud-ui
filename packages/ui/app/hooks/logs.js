@@ -18,9 +18,9 @@ export const useLogs = () => {
         .pipe(
           map((l) => l),
           catchError((err) => {
-            const { type, code, reason, message } = err;
+            const { type, code = '', reason = '', message = '' } = err;
             const time = dayjs().toISOString();
-            return of(`${time} [${type} ${code}] ${reason || message || ''}`);
+            return of(`${time} \x1b[41m[${type} ${code}] ${reason} ${message}\x1b[0m`);
           })
         )
         .pipe(
