@@ -33,8 +33,10 @@ export const useTerm = () => {
       subject.next({ cols: term.cols, rows: term.rows });
       subject.subscribe(
         (data) => term.write(data),
-        ({ type, code, reason, message }) =>
-          term.write(`[${type} ${code}] ${reason || message || ''}`)
+        (eventOrError) => {
+          const { type, code = '', reason = '', message = '' } = eventOrError;
+          return term.write(`\x1b[41m[${type} ${code}] ${reason} ${message}\x1b[0m`)
+        }
       );
 
       const resizeListener = _.debounce(() => {
