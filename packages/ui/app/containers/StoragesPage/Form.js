@@ -30,6 +30,7 @@ import SwitchField from 'components/Field/SwitchField';
 import messages from './messages';
 import Hosts from './form/Hosts';
 import Initiators from './form/Initiators';
+import Targets from './form/Targets';
 
 const StorageForm = ({
   handleSubmit,
@@ -111,24 +112,6 @@ const StorageForm = ({
                       <GridItem xs={3} sm={3} md={3}>
                         <InputField
                           label={
-                            <FormattedMessage {...messages.formTarget} />
-                          }
-                          name="parameter.targets[0]"
-                          fullWidth
-                        />
-                      </GridItem>
-                      <GridItem xs={3} sm={3} md={3}>
-                        <InputField
-                          label={
-                            <FormattedMessage {...messages.formTarget} />
-                          }
-                          name="parameter.targets[1]"
-                          fullWidth
-                        />
-                      </GridItem>
-                      <GridItem xs={3} sm={3} md={3}>
-                        <InputField
-                          label={
                             <FormattedMessage {...messages.formPort} />
                           }
                           name="parameter.port"
@@ -179,6 +162,16 @@ const StorageForm = ({
                           </GridItem>
                         </>
                       ) : null}
+                    </GridContainer>
+                    <GridContainer>
+                      <GridItem>
+                        <FieldArray
+                          name="parameter.targets"
+                          classes={classes}
+                          component={Targets}
+                          formValues={formValues}
+                        />
+                      </GridItem>
                     </GridContainer>
                   </GridItem>
                 </>

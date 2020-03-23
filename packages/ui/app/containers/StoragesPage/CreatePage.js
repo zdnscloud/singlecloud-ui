@@ -67,7 +67,7 @@ const CreateStorageForm = reduxForm({
   validate,
 })(StorageForm);
 
-const initFormValue = fromJS({ name: '', type: '', parameter: { hosts: [], initiators: [] } });
+const initFormValue = fromJS({ name: '', type: '', parameter: { hosts: [], initiators: [],targets:[''] } });
 
 export const CreateStoragePage = ({
   loadBlockDevices,

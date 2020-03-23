@@ -189,4 +189,8 @@ export default defineMessages({
     id: `${scope}.editButton`,
     defaultMessage: 'edit',
   },
+  formAddTarget:{
+    id: `${scope}.formAddTarget`,
+    defaultMessage: 'Add Target',
+  },
 });

@@ -23,6 +23,13 @@ export const styles = (theme) => ({
     float: 'left',
     width: '50%',
   },
+  addBtn:{
+    marginBottom:0,
+    marginTop:15,
+  },
+  addList:{
+    paddingLeft:0,
+  },
 });
 
 export default makeStyles(styles);
