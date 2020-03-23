@@ -26,9 +26,11 @@
     "@loadable/component": "5.11.0",
     "@material-ui/system": "4.7.1",
     "@material-ui/utils": "4.7.1",
+    "final-form": "^4.18.7",
     "prop-types": "^15.7.2",
     "react": "16.12.0",
     "react-dom": "16.12.0",
+    "react-final-form": "^6.3.5",
     "styled-components": "4.4.1",
     "warning": "^4.0.3"
   },
