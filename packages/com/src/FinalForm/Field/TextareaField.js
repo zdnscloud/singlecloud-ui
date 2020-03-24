@@ -1,10 +1,9 @@
 import React from 'react';
 import { Field } from 'react-final-form';
-import CustomInput from '../CustomInput/CustomInput';
-
+import CustomTextarea from '../CustomTextarea/CustomTextarea';
 
 const Input = ({ label, input, meta, inputProps, ...custom }) => (
-  <CustomInput
+  <CustomTextarea
     labelText={label}
     meta={meta}
     formControlProps={{ ...custom }}
@@ -16,10 +15,10 @@ const Input = ({ label, input, meta, inputProps, ...custom }) => (
   />
 );
 
-const InputField = (props) => {
+const TextareaField = (props) => {
   const { component, ...rest } = props;
 
   return <Field {...rest} component={Input} />;
 };
 
-export default InputField;
+export default TextareaField;

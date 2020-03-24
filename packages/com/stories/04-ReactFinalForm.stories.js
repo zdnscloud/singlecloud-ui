@@ -1,15 +1,15 @@
 import React from 'react';
-import CreateFinalForm from '../src/FinalForm/CreateForm';
+import FiledCollection from '../src/FinalForm/FiledCollection';
 
 export default {
-  title: 'ReactFinalForm',
+  title: 'FiledCollection',
 };
 
 export const Base = () => (
   <div>
-    <h3>ReactFinalForm:</h3>
+    <h3>FiledCollection:</h3>
     <div>
-      <CreateFinalForm />
+      <FiledCollection />
     </div>
   </div>
 );
