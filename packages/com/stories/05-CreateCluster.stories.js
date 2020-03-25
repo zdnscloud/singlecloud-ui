@@ -28,6 +28,7 @@ export const Base = () => {
         <CreateFinalForm 
           onSubmit={onSubmit} 
           formRef={formRef}
+          subscription={{ submitting: true, pristine: true }}
         />
          <button
           onClick={() => {

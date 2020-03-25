@@ -87,7 +87,7 @@ export const CreateForm = ({formRef ,onSubmit}) => {
         {({ handleSubmit, values, submitError , form: {
           mutators: { push, pop }
         },}) => {
-          console.log('values',values);
+          console.log('values',values,);
           return (
             <form 
               onSubmit={handleSubmit}
@@ -135,11 +135,10 @@ export const CreateForm = ({formRef ,onSubmit}) => {
                   />
                 </Grid>
               </Grid>
-              {values && values.enableAdvancedOptions ? ( 
               <FormSpy 
-                subscription={{ values: true }}
+                subscription={{ values: true}}
               >
-                  {({ values }) => (
+                {({ values, props }) => (values.enableAdvancedOptions ?  
                   <Grid container spacing={3}>
                       <Grid item xs={3}>
                         <InputField
@@ -159,6 +158,7 @@ export const CreateForm = ({formRef ,onSubmit}) => {
                         <RadioField
                           name="radio"
                           label='type'
+                          type="radio"
                           classes={{
                             formControl: classes.radioControl,
                             formLabel: classes.radioLabel,
@@ -172,9 +172,10 @@ export const CreateForm = ({formRef ,onSubmit}) => {
                           formLabelComponent="div"
                         />
                       </Grid>
-                  </Grid>
-                  )}
-                </FormSpy>): null}
+                    </Grid> 
+                    : null) 
+                  }
+                </FormSpy>
                 <Grid container spacing={3}>
                    <Grid item xs={12}>
                     <button

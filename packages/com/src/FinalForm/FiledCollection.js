@@ -220,6 +220,7 @@ const FiledCollection =(props, ref) => {
                   <RadioField
                     name="radio"
                     label='formRadio'
+                    type="radio"
                     classes={{
                       formControl: classes.radioControl,
                       formLabel: classes.radioLabel,
