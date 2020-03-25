@@ -24,8 +24,9 @@ if (!/:\d{1,5}$/.test(backend)) {
 }
 
 const proxier = proxy({
-  target: `http://${backend}`,
+  target: `https://${backend}`,
   changeOrigin: false,
+  secure: false,
   ws: true,
 });
 app.use('/apis', proxier);
