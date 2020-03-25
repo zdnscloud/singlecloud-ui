@@ -26,13 +26,9 @@ const ApplicationTemplate = ({
 
   const renderName = () => {
     switch (true) {
-      case item.get('status') === 'failed'  &&  !item.get('deletionTimestamp'):
-        return(  <p className={classes.appName} title={item.get('name')}>
-          {item.get('name')}
-        </p>)
-      case  item.get('status') === 'succeed' ||  item.get('status') === '':
+      case  item.get('status') === 'succeed' && item.get('deletionTimestamp') === null:
         return( <Button
-          link
+          link 
           to={`/clusters/${clusterID}/namespaces/${namespaceID}/applications/${item.get(
             'id'
           )}/show`}
@@ -42,16 +38,16 @@ const ApplicationTemplate = ({
         >
           {item.get('name')}
         </Button>)
-      case item.get('deletionTimestamp') && item.get('status') === 'failed':
+      case item.get('deletionTimestamp') !== null:
         return( <p className={classes.strikeoutAppName} title={item.get('name')}>
           {item.get('name')}
         </p>)
       default:
-        break;
+        return( <p className={classes.appName} title={item.get('name')}>
+          {item.get('name')}
+        </p>)
     }
-    return null;
   };
-
 
   return (
     <Fragment>
