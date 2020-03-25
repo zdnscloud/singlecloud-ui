@@ -93,21 +93,16 @@ export const StoragePage = ({
               <CardBody>
                 {type === 'iscsi' ? (
                   <GridContainer>
-                    {}
-                    <GridItem xs={2} sm={2} md={2}>
-                      <ReadOnlyInput
-                        labelText={<FormattedMessage {...messages.formTarget} />}
-                        value={`${iscsi.getIn(['targets', 0])}`}
-                        fullWidth
-                      />
-                    </GridItem>
-                    <GridItem xs={2} sm={2} md={2}>
-                      <ReadOnlyInput
-                        labelText={<FormattedMessage {...messages.formTarget} />}
-                        value={`${iscsi.getIn(['targets', 1])}`}
-                        fullWidth
-                      />
-                    </GridItem>
+                    {iscsi.get('targets') &&
+                   iscsi.get('targets').map((item, index) => (  
+                     <GridItem xs={2} sm={2} md={2} key={index}>
+                       <ReadOnlyInput
+                         labelText={<FormattedMessage {...messages.formTarget} />}
+                         value={item}
+                         fullWidth
+                       />
+                     </GridItem>
+                   ))}
                     <GridItem xs={2} sm={2} md={2}>
                       <ReadOnlyInput
                         labelText={<FormattedMessage {...messages.formPort} />}
