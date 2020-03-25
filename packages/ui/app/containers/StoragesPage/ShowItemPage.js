@@ -93,6 +93,7 @@ export const StoragePage = ({
               <CardBody>
                 {type === 'iscsi' ? (
                   <GridContainer>
+                    {}
                     <GridItem xs={2} sm={2} md={2}>
                       <ReadOnlyInput
                         labelText={<FormattedMessage {...messages.formTarget} />}

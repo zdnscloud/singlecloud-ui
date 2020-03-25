@@ -158,6 +158,7 @@ const StorageForm = ({
                               }
                               name="parameter.password"
                               fullWidth
+                              inputProps={{ type: 'password', autoComplete: 'off' }}
                             />
                           </GridItem>
                         </>
