@@ -1,4 +1,3 @@
-/* eslint-disable import/named */
 // @material-ui/icons
 import Dashboard from '@material-ui/icons/Dashboard';
 import Person from '@material-ui/icons/Person';
@@ -643,9 +642,20 @@ const appRoutes = [
     component: ApplicationStorePage,
   },
   {
-    path:
-      '/clusters/:cluster_id/namespaces/:namespace_id/charts/:chart_id/show',
+    path: '/clusters/:cluster_id/namespaces/:namespace_id/charts/:chart_id/show',
     name: 'Show Chart Detail',
+    icon: Dashboard,
+    component: CreateApplicationPage,
+  },
+  {
+    path: '/clusters/:cluster_id/namespaces/:namespace_id/userCharts',
+    name: 'Users Applications Store',
+    icon: Dashboard,
+    component: ApplicationStorePage,
+  },
+  {
+    path: '/clusters/:cluster_id/namespaces/:namespace_id/userCharts/:chart_id/show',
+    name: 'Show Users Chart Detail',
     icon: Dashboard,
     component: CreateApplicationPage,
   },

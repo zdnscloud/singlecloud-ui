@@ -7,7 +7,7 @@ import RightArrowIcon from 'components/Icons/RightArrow';
 import messages from '../messages';
 import useStyles from '../styles';
 
-const ApplicationTemplate = ({ clusterID, namespaceID, item }) => {
+const ApplicationTemplate = ({ clusterID, namespaceID, item, res }) => {
   const classes = useStyles();
   return (
     <GridItem xs={3} sm={3} md={3}>
@@ -17,7 +17,7 @@ const ApplicationTemplate = ({ clusterID, namespaceID, item }) => {
         <p className={classes.aapName}>{item.get('name')}</p>
         <p className={classes.appDiscribe}>{item.get('description')}</p>
         <Button
-          to={`/clusters/${clusterID}/namespaces/${namespaceID}/charts/${item.get(
+          to={`/clusters/${clusterID}/namespaces/${namespaceID}/${res}/${item.get(
             'id'
           )}/show`}
           component={Link}

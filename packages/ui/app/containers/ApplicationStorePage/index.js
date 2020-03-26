@@ -27,6 +27,8 @@ import { makeSelectCurrentID as makeSelectCurrentNamespaceID } from 'ducks/names
 import { makeSelectURL } from 'ducks/charts/selectors';
 import * as actions from 'ducks/charts/actions';
 
+import { useLocation } from 'hooks/router';
+
 import messages from './messages';
 import useStyles from './styles';
 import ApplicationsList from './ApplicationsList';
@@ -53,9 +55,19 @@ const ApplicationStorePage = ({
 }) => {
   const classes = useStyles();
   const [filter, setFilter] = useState({});
+  const location = useLocation();
+  const { pathname } = location;
+
+  const reg = new RegExp('^/clusters/[^/]+/namespaces/[^/]+/([^/]+)');
+  const [path, res] = reg.exec(pathname) || [];
+  let isZcloudChart = false;
+  if (res === 'charts') {
+    isZcloudChart = true;
+  }
+
   useEffect(() => {
     if (url) {
-      loadCharts(url, {
+      loadCharts(`${url}?${isZcloudChart ? 'is_zcloud_chart=true' : 'is_user_chart=true'}`, {
         clusterID,
         namespaceID,
       });
@@ -63,22 +75,25 @@ const ApplicationStorePage = ({
     return () => {
       // try cancel something when unmount
     };
-  }, [clusterID, loadCharts, namespaceID, url]);
+  }, [clusterID, isZcloudChart, loadCharts, namespaceID, url]);
 
   const doSubmit = (formValues) => {
     setFilter(formValues.toJS());
   };
 
+  const pageTitle = isZcloudChart ? messages.pageTitle : messages.pageTitleUsers;
+  const pageDesc = isZcloudChart ? messages.pageDesc : messages.pageDescUsers;
+
   return (
     <div className={classes.root}>
-      <Helmet title={messages.pageTitle} description={messages.pageDesc} />
+      <Helmet title={pageTitle} description={pageDesc} />
       <CssBaseline />
       <div className={classes.content}>
         <Breadcrumbs
           data={[
             {
-              path: `/clusters/${clusterID}/namespaces/${namespaceID}/charts`,
-              name: <FormattedMessage {...messages.pageTitle} />,
+              path: `/clusters/${clusterID}/namespaces/${namespaceID}/${res}`,
+              name: <FormattedMessage {...pageTitle} />,
             },
           ]}
         />
@@ -103,7 +118,7 @@ const ApplicationStorePage = ({
                   </Button>
                 </GridItem>
               </GridContainer>
-              <ApplicationsList filter={filter} />
+              <ApplicationsList filter={filter} res={res} />
             </Card>
           </GridItem>
         </GridContainer>

@@ -70,10 +70,6 @@ export default defineMessages({
     id: `${scope}.configurationOptions`,
     defaultMessage: 'Configuration Options',
   },
-  applicationStorePage: {
-    id: `${scope}.applicationStorePage`,
-    defaultMessage: 'applicationStorePage',
-  },
   createApplication: {
     id: `${scope}.createApplication`,
     defaultMessage: 'Create Application',

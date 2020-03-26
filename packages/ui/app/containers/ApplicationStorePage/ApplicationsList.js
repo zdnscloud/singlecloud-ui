@@ -1,4 +1,3 @@
-/* eslint-disable no-unreachable */
 /**
  *
  * ApplicationsList
@@ -24,7 +23,7 @@ import messages from './messages';
 import useStyles from './styles';
 import ApplicationTemplate from './application/applicationTemplate';
 
-export const ApplicationsList = ({ data, filter, clusterID, namespaceID }) => {
+export const ApplicationsList = ({ data, filter, clusterID, namespaceID, res }) => {
   const classes = useStyles();
   const chartData = data.filter((item) => {
     let flag = true;
@@ -42,6 +41,7 @@ export const ApplicationsList = ({ data, filter, clusterID, namespaceID }) => {
           namespaceID={namespaceID}
           key={key}
           item={item}
+          res={res}
         />
       ))}
     </GridContainer>
