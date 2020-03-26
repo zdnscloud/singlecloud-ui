@@ -21,6 +21,8 @@ import SelectField from './Field/SelectField';
 import ReadOnlyInput from './CustomInput/ReadOnlyInput';
 import ReadOnlyTextarea from './CustomTextarea/ReadOnlyTextarea';
 
+import { FieldPrefix, PrefixedField } from './Field/Prefix';
+
 const useStyles = makeStyles((theme) => ({
   root: {
     padding:20,
@@ -135,23 +137,26 @@ export const CreateForm = ({formRef ,onSubmit}) => {
                   />
                 </Grid>
               </Grid>
+              <FieldPrefix prefix="advancedOptions">
               <FormSpy 
                 subscription={{ values: true}}
               >
                 {({ values, props }) => (values.enableAdvancedOptions ?  
                   <Grid container spacing={3}>
-                      <Grid item xs={3}>
-                        <InputField
-                          label="formPort"
-                          name="port"
-                          fullWidth
-                          normalize={(val) => (val ? Number(val) : val)}
-                          inputProps={{  
-                            type: 'number',
-                            autoComplete: 'off',
-                            min: 1,
-                            max: 255,
-                          }}
+                    <Grid item xs={3}>
+                      <PrefixedField
+                        name="port" 
+                        component={InputField}
+                        label="formPort"
+                        placeholder="Street"
+                        normalize={(val) => (val ? Number(val) : val)}
+                        fullWidth
+                        inputProps={{  
+                          type: 'number',
+                          autoComplete: 'off',
+                          min: 1,
+                          max: 255,
+                        }}
                         />
                       </Grid>
                       <Grid item xs={9}>
@@ -175,7 +180,9 @@ export const CreateForm = ({formRef ,onSubmit}) => {
                     </Grid> 
                     : null) 
                   }
+                
                 </FormSpy>
+                </FieldPrefix>
                 <Grid container spacing={3}>
                    <Grid item xs={12}>
                     <button
