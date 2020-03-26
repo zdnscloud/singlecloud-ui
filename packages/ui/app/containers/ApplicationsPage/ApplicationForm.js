@@ -91,17 +91,6 @@ const ApplicationForm = ({
         <Card>
           <CardHeader>
             <h4>
-              <FormattedMessage {...messages.detailedDesc} />
-            </h4>
-          </CardHeader>
-          <CardBody>
-            <p className={classes.detailedDesc}>detailedDesc</p>
-          </CardBody>
-        </Card>
-
-        <Card>
-          <CardHeader>
-            <h4>
               <FormattedMessage {...messages.configurationOptions} />
             </h4>
           </CardHeader>

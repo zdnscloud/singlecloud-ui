@@ -141,8 +141,12 @@ export const makeSelectLeftMenus = () =>
             name: 'AppStore',
             children: [
               {
-                name: 'LocalAppTemplates',
+                name: 'SystemCharts',
                 path: `/clusters/${cluster}/namespaces/${namespace}/charts`,
+              },
+              {
+                name: 'UserCharts',
+                path: `/clusters/${cluster}/namespaces/${namespace}/userCharts`,
               },
             ],
             icon: ApplicationStoreIcon,

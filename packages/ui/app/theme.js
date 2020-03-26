@@ -16,7 +16,7 @@ const theme = createMuiTheme({
       minor: '#1B9CCE',
     },
     secondary: {
-      main: '#1A435F',
+      main: '#40A9FF',
       light: '#1A435F',
       minor: `rgba(${hexToRgb('#1B9CCE')}, 0.2)`,
     },

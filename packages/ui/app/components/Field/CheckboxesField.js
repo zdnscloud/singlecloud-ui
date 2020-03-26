@@ -52,7 +52,7 @@ const renderCheckboxesGroup = ({
         {options.map((opt, i) => (
           <FormControlLabel
             key={i}
-            control={<Checkbox onChange={onChange} color="primary" />}
+            control={<Checkbox onChange={onChange} />}
             label={opt.label}
             value={opt.value}
             style={{ marginRight: '40px' }}

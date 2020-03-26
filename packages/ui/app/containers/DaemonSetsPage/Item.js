@@ -353,7 +353,7 @@ export const DaemonSet = ({
               <Fragment>
                 <GridContainer>
                   <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
-                    <ReadOnlyInput
+                    <ReadOnlyCheckbox
                       labelText={
                         <FormattedMessage
                           {...messages.formReloadWhenConfigChange}
@@ -362,6 +362,17 @@ export const DaemonSet = ({
                       value={daemonSet.getIn([
                         'advancedOptions',
                         'reloadWhenConfigChange',
+                      ])}
+                    />
+                  </GridItem>
+                  <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
+                    <ReadOnlyCheckbox
+                      labelText={
+                        <FormattedMessage {...messages.formInjectServiceMesh} />
+                      }
+                      value={daemonSet.getIn([
+                        'advancedOptions',
+                        'injectServiceMesh',
                       ])}
                     />
                   </GridItem>
@@ -388,17 +399,6 @@ export const DaemonSet = ({
                         'advancedOptions',
                         'exposedMetric',
                         'port',
-                      ])}
-                    />
-                  </GridItem>
-                  <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
-                    <ReadOnlyCheckbox
-                      labelText={
-                        <FormattedMessage {...messages.formInjectServiceMesh} />
-                      }
-                      value={daemonSet.getIn([
-                        'advancedOptions',
-                        'injectServiceMesh',
                       ])}
                     />
                   </GridItem>

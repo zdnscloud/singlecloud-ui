@@ -14,7 +14,7 @@ import { reduxForm, getFormValues } from 'redux-form/immutable';
 import { SubmissionError, submit } from 'redux-form';
 import { Link } from 'react-router-dom';
 
-import { usePush } from 'hooks/router';
+import { usePush, useLocation } from 'hooks/router';
 
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Typography from '@material-ui/core/Typography';
@@ -29,6 +29,7 @@ import {
   makeSelectURL as makeSelectChartsURL,
   makeSelectCurrentID as makeSelectCurrentChartID,
   makeSelectCurrent as makeSelectCurrentChart,
+  makeSelectCharts,
 } from 'ducks/charts/selectors';
 import * as chartsActions from 'ducks/charts/actions';
 import * as actions from 'ducks/applications/actions';
@@ -42,6 +43,7 @@ import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
 import messages from './messages';
 import useStyles from './styles';
 import ApplicationForm from './ApplicationForm';
+import chartsMessages from '../ApplicationStorePage/messages';
 
 export const formName = 'createApplicationForm';
 
@@ -65,19 +67,28 @@ const CreateApplicationForm = reduxForm({
 export const CreateApplicationPage = ({
   clusterID,
   namespaceID,
-  chartID,
   chartsUrl,
   readChart,
   submitForm,
   createApplication,
-  chart,
   loadStorageClasses,
   storageClasses,
   storageClassesURL,
+  charts,
   values,
 }) => {
   const classes = useStyles();
   const push = usePush();
+  const location = useLocation();
+  const { pathname } = location;
+
+  const reg = new RegExp('^/clusters/[^/]+/namespaces/[^/]+/([^/]+)/([^/]+)');
+  const [path, res, chartID] = reg.exec(pathname) || [];
+  let isZcloudChart = false;
+  if (res === 'charts') {
+    isZcloudChart = true;
+  }
+  const chart = charts.get(chartID) || charts.clear();
 
   useEffect(() => {
     readChart(chartID, {
@@ -121,6 +132,8 @@ export const CreateApplicationPage = ({
     }
   }
 
+  const storeTitle = isZcloudChart ? chartsMessages.pageTitle : chartsMessages.pageTitleUsers;
+
   return (
     <div className={classes.root}>
       <Helmet title={messages.pageTitle} description={messages.pageDesc} />
@@ -129,8 +142,8 @@ export const CreateApplicationPage = ({
         <Breadcrumbs
           data={[
             {
-              path: `/clusters/${clusterID}/namespaces/${namespaceID}/charts`,
-              name: <FormattedMessage {...messages.applicationStorePage} />,
+              path: `/clusters/${clusterID}/namespaces/${namespaceID}/${res}`,
+              name: <FormattedMessage {...storeTitle} />,
             },
             {
               name: <FormattedMessage {...messages.createApplication} />,
@@ -180,10 +193,9 @@ const mapStateToProps = createStructuredSelector({
   clusterID: makeSelectCurrentClusterID(),
   namespaceID: makeSelectCurrentNamespaceID(),
   chartsUrl: makeSelectChartsURL(),
-  chart: makeSelectCurrentChart(),
-  chartID: makeSelectCurrentChartID(),
   storageClasses: makeSelectStorageClasses(),
   storageClassesURL: makeSelectStorageClassesURL(),
+  charts: makeSelectCharts(),
   values: getFormValues(formName),
 });
 

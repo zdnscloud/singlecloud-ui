@@ -78,6 +78,9 @@ const customInputStyle = (theme) => ({
       opacity: '1',
     },
   },
+  lowerCaseInput: {
+    textTransform: 'lowercase',
+  },
 });
 
 export default customInputStyle;

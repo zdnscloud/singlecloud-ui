@@ -411,7 +411,7 @@ export const Deployment = ({
               <Fragment>
                 <GridContainer>
                   <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
-                    <ReadOnlyInput
+                    <ReadOnlyCheckbox
                       labelText={
                         <FormattedMessage
                           {...messages.formReloadWhenConfigChange}
@@ -420,6 +420,17 @@ export const Deployment = ({
                       value={deployment.getIn([
                         'advancedOptions',
                         'reloadWhenConfigChange',
+                      ])}
+                    />
+                  </GridItem>
+                  <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
+                    <ReadOnlyCheckbox
+                      labelText={
+                        <FormattedMessage {...messages.formInjectServiceMesh} />
+                      }
+                      value={deployment.getIn([
+                        'advancedOptions',
+                        'injectServiceMesh',
                       ])}
                     />
                   </GridItem>
@@ -449,17 +460,7 @@ export const Deployment = ({
                       ])}
                     />
                   </GridItem>
-                  <GridItem xs={3} sm={3} md={3} className={classes.formLine}>
-                    <ReadOnlyCheckbox
-                      labelText={
-                        <FormattedMessage {...messages.formInjectServiceMesh} />
-                      }
-                      value={deployment.getIn([
-                        'advancedOptions',
-                        'injectServiceMesh',
-                      ])}
-                    />
-                  </GridItem>
+                 
                 </GridContainer>
               </Fragment>
             ) : null}

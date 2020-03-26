@@ -11,15 +11,19 @@ export const scope = 'app.containers.ApplicationStorePage';
 export default defineMessages({
   pageTitle: {
     id: `${scope}.pageTitle`,
-    defaultMessage: 'ApplicationStorePage',
+    defaultMessage: 'ZcloudCharts Title',
   },
   pageDesc: {
     id: `${scope}.pageDesc`,
-    defaultMessage: 'Description of ApplicationStorePage',
+    defaultMessage: 'Description of ZcloudChartsPage',
   },
-  header: {
-    id: `${scope}.header`,
-    defaultMessage: 'This is the ApplicationStorePage container!',
+  pageTitleUsers: {
+    id: `${scope}.pageTitleUsers`,
+    defaultMessage: 'UsersCharts Title',
+  },
+  pageDescUsers: {
+    id: `${scope}.pageDescUsers`,
+    defaultMessage: 'Description of UsersCharsPage',
   },
   applicationStore: {
     id: `${scope}.applicationStore`,

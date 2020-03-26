@@ -197,9 +197,13 @@ export default defineMessages({
     id: `${scope}.leftMenuAppStore`,
     defaultMessage: 'AppStore',
   },
-  leftMenuLocalAppTemplates: {
-    id: `${scope}.leftMenuLocalAppTemplates`,
-    defaultMessage: 'LocalAppTemplates',
+  leftMenuSystemCharts: {
+    id: `${scope}.leftMenuSystemCharts`,
+    defaultMessage: 'SystemCharts',
+  },
+  leftMenuUserCharts: {
+    id: `${scope}.leftMenuUserCharts`,
+    defaultMessage: 'UserCharts',
   },
   leftMenuClusterList: {
     id: `${scope}.leftMenuClusterList`,
