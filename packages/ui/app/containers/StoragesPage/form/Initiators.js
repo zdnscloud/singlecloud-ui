@@ -33,9 +33,9 @@ import GridItem from 'components/Grid/GridItem';
 
 import messages from '../messages';
 
-const Hosts = ({
+const Initiators = ({
   input,
-  blockDevices,
+  nodes,
   classes,
   fields,
   meta: { error, submitFailed },
@@ -75,38 +75,29 @@ const Hosts = ({
               <FormattedMessage {...messages.formNodeName} />
             </TableCell>
             <TableCell
+              style={{ minWidth: 80 }}
               className={`${classes.tableCell} ${classes.tableHeadCell}`}
             >
-              <FormattedMessage {...messages.formBlockDevices} />
+              <FormattedMessage {...messages.formNodeAddress} />
             </TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {blockDevices.map((b, i) => (
+          {nodes.filter((node) => node.get('roles').includes('worker')).map((node, i) => (
             <TableRow key={i}>
               <TableCell className={classes.tableCell}>
                 <Checkbox
-                  checked={input.value.includes(b && b.get('nodeName'))}
+                  checked={input.value.includes(node && node.get('name'))}
                   onChange={onChange}
-                  value={b && b.get('nodeName')}
+                  value={node && node.get('name')}
                   color="primary"
                 />
               </TableCell>
               <TableCell className={`${classes.tableCell}`}>
-                {b && b.get('nodeName')}
+                {node && node.get('name')}
               </TableCell>
-              <TableCell
-                className={`${classes.tableCell}`}
-                style={{ wordBreak: 'break-all' }}
-              >
-                {b &&
-                  b.get('blockDevices') &&
-                  b.get('blockDevices').map((bd, j) => (
-                    <span key={j} style={{ marginRight: 18 }}>
-                      <span>{bd.get('name')}</span>
-                      <span>({bd.get('size')}GiB)</span>
-                    </span>
-                  ))}
+              <TableCell className={`${classes.tableCell}`}>
+                {node && node.get('address')}
               </TableCell>
             </TableRow>
           ))}
@@ -116,4 +107,4 @@ const Hosts = ({
   );
 };
 
-export default Hosts;
+export default Initiators;

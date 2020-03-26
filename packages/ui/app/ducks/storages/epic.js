@@ -1,6 +1,6 @@
 /**
- * Duck: StorageClusters
- * epic: storageClusters
+ * Duck: Storages
+ * epic: storages
  *
  */
 import { push } from 'connected-react-router';
@@ -21,26 +21,26 @@ import { ofType, combineEpics } from 'redux-observable';
 import * as c from './constants';
 import * as a from './actions';
 
-export const loadStorageClustersEpic = (action$, state$, { ajax, catchAjaxError }) =>
+export const loadStoragesEpic = (action$, state$, { ajax, catchAjaxError }) =>
   action$.pipe(
-    ofType(c.LOAD_STORAGE_CLUSTERS),
+    ofType(c.LOAD_STORAGES),
     mergeMap(({ payload, meta }) =>
       ajax(payload).pipe(
         map((resp) => {
           meta.resolve && meta.resolve(resp);
-          return a.loadStorageClustersSuccess(resp, meta);
+          return a.loadStoragesSuccess(resp, meta);
         }),
         catchAjaxError((error) => {
           meta.reject && meta.reject(error);
-          return a.loadStorageClustersFailure(error, meta);
+          return a.loadStoragesFailure(error, meta);
         })
       )
     )
   );
 
-export const createStorageClusterEpic = (action$, state$, { ajax, catchAjaxError }) =>
+export const createStorageEpic = (action$, state$, { ajax, catchAjaxError }) =>
   action$.pipe(
-    ofType(c.CREATE_STORAGE_CLUSTER),
+    ofType(c.CREATE_STORAGE),
     mergeMap(({ payload, meta }) =>
       ajax({
         url: `${meta.url}`,
@@ -49,19 +49,19 @@ export const createStorageClusterEpic = (action$, state$, { ajax, catchAjaxError
       }).pipe(
         map((resp) => {
           meta.resolve && meta.resolve(resp);
-          return a.createStorageClusterSuccess(resp, meta);
+          return a.createStorageSuccess(resp, meta);
         }),
         catchAjaxError((error) => {
           meta.reject && meta.reject(error);
-          return a.createStorageClusterFailure(error, meta);
+          return a.createStorageFailure(error, meta);
         })
       )
     )
   );
 
-export const updateStorageClusterEpic = (action$, state$, { ajax, catchAjaxError }) =>
+export const updateStorageEpic = (action$, state$, { ajax, catchAjaxError }) =>
   action$.pipe(
-    ofType(c.UPDATE_STORAGE_CLUSTER),
+    ofType(c.UPDATE_STORAGE),
     mergeMap(({ payload, meta }) =>
       ajax({
         url: `${meta.url}`,
@@ -70,19 +70,19 @@ export const updateStorageClusterEpic = (action$, state$, { ajax, catchAjaxError
       }).pipe(
         map((resp) => {
           meta.resolve && meta.resolve(resp);
-          return a.updateStorageClusterSuccess(resp, meta);
+          return a.updateStorageSuccess(resp, meta);
         }),
         catchAjaxError((error) => {
           meta.reject && meta.reject(error);
-          return a.updateStorageClusterFailure(error, meta);
+          return a.updateStorageFailure(error, meta);
         })
       )
     )
   );
 
-export const readStorageClusterEpic = (action$, state$, { ajax, catchAjaxError }) =>
+export const readStorageEpic = (action$, state$, { ajax, catchAjaxError }) =>
   action$.pipe(
-    ofType(c.READ_STORAGE_CLUSTER),
+    ofType(c.READ_STORAGE),
     mergeMap(({ payload, meta }) =>
       ajax({
         url: `${meta.url}`,
@@ -90,19 +90,19 @@ export const readStorageClusterEpic = (action$, state$, { ajax, catchAjaxError }
       }).pipe(
         map((resp) => {
           meta.resolve && meta.resolve(resp);
-          return a.readStorageClusterSuccess(resp, { ...meta, id: payload });
+          return a.readStorageSuccess(resp, { ...meta, id: payload });
         }),
         catchAjaxError((error) => {
           meta.reject && meta.reject(error);
-          return a.readStorageClusterFailure(error, { ...meta, id: payload });
+          return a.readStorageFailure(error, { ...meta, id: payload });
         })
       )
     )
   );
 
-export const removeStorageClusterEpic = (action$, state$, { ajax, catchAjaxError }) =>
+export const removeStorageEpic = (action$, state$, { ajax, catchAjaxError }) =>
   action$.pipe(
-    ofType(c.REMOVE_STORAGE_CLUSTER),
+    ofType(c.REMOVE_STORAGE),
     mergeMap(({ payload, meta }) =>
       ajax({
         url: `${meta.url}`,
@@ -110,20 +110,20 @@ export const removeStorageClusterEpic = (action$, state$, { ajax, catchAjaxError
       }).pipe(
         map((resp) => {
           meta.resolve && meta.resolve(resp);
-          return a.removeStorageClusterSuccess(resp, { ...meta, id: payload });
+          return a.removeStorageSuccess(resp, { ...meta, id: payload });
         }),
         catchAjaxError((error) => {
           meta.reject && meta.reject(error);
-          return a.removeStorageClusterFailure(error, { ...meta, id: payload });
+          return a.removeStorageFailure(error, { ...meta, id: payload });
         })
       )
     )
   );
 
 export default combineEpics(
-  loadStorageClustersEpic,
-  createStorageClusterEpic,
-  updateStorageClusterEpic,
-  readStorageClusterEpic,
-  removeStorageClusterEpic,
+  loadStoragesEpic,
+  createStorageEpic,
+  updateStorageEpic,
+  readStorageEpic,
+  removeStorageEpic,
 );

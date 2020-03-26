@@ -35,7 +35,7 @@ import registriesEpic from 'ducks/registries/epic';
 import monitorsEpic from 'ducks/monitors/epic';
 import efksEpic from 'ducks/efks/epic';
 import chartsEpic from 'ducks/charts/epic';
-import storageClustersEpic from 'ducks/storageClusters/epic';
+import storagesEpic from 'ducks/storages/epic';
 import storageClassesEpic from 'ducks/storageClasses/epic';
 import blockDevicesEpic from 'ducks/blockDevices/epic';
 import innerServicesEpic from 'ducks/innerServices/epic';
@@ -91,7 +91,7 @@ export default function createEpic(injectedEpics = {}) {
     monitorsEpic,
     efksEpic,
     chartsEpic,
-    storageClustersEpic,
+    storagesEpic,
     storageClassesEpic,
     blockDevicesEpic,
     innerServicesEpic,

@@ -1,6 +1,6 @@
 /**
- * Duck: StorageClusters
- * reducer: storageClusters
+ * Duck: Storages
+ * reducer: storages
  *
  */
 import _ from 'lodash';
@@ -28,15 +28,15 @@ export const reducer = (
   { type, payload, error, meta }
 ) => {
   switch (type) {
-    case c.LOAD_STORAGE_CLUSTERS:
+    case c.LOAD_STORAGES:
       return state;
-    case c.LOAD_STORAGE_CLUSTERS_SUCCESS: {
+    case c.LOAD_STORAGES_SUCCESS: {
       const { data, list } = procCollectionData(payload);
       const {
         clusterID,
       } = meta;
       return state
-        .update('errorsList', (errors) => errors.filterNot((e) => e.type === c.LOAD_STORAGE_CLUSTERS_FAILURE))
+        .update('errorsList', (errors) => errors.filterNot((e) => e.type === c.LOAD_STORAGES_FAILURE))
         .setIn([
           'data',
           clusterID,
@@ -46,12 +46,12 @@ export const reducer = (
           clusterID,
         ], fromJS(list));
     }
-    case c.LOAD_STORAGE_CLUSTERS_FAILURE:
+    case c.LOAD_STORAGES_FAILURE:
       return state.update('errorsList', (errors) => errors.filterNot((e) => e.type === type).push({ type, payload, meta }));
 
-    case c.CREATE_STORAGE_CLUSTER:
+    case c.CREATE_STORAGE:
       return state;
-    case c.CREATE_STORAGE_CLUSTER_SUCCESS: {
+    case c.CREATE_STORAGE_SUCCESS: {
       const data = payload.response;
       const {
         clusterID,
@@ -61,14 +61,14 @@ export const reducer = (
         clusterID,
         data.id,
       ], fromJS(data))
-        .update('errorsList', (errors) => errors.filterNot((e) => e.type === c.CREATE_STORAGE_CLUSTER_FAILURE));
+        .update('errorsList', (errors) => errors.filterNot((e) => e.type === c.CREATE_STORAGE_FAILURE));
     }
-    case c.CREATE_STORAGE_CLUSTER_FAILURE:
+    case c.CREATE_STORAGE_FAILURE:
       return state.update('errorsList', (errors) => errors.filterNot((e) => e.type === type).push({ type, payload, meta }));
 
-    case c.UPDATE_STORAGE_CLUSTER:
+    case c.UPDATE_STORAGE:
       return state;
-    case c.UPDATE_STORAGE_CLUSTER_SUCCESS: {
+    case c.UPDATE_STORAGE_SUCCESS: {
       const id = getByKey(payload, ['response', 'id']);
       const data = getByKey(payload, ['response']);
       const {
@@ -80,16 +80,16 @@ export const reducer = (
           clusterID,
           id,
         ], fromJS(data))
-          .update('errorsList', (errors) => errors.filterNot((e) => e.type === c.UPDATE_STORAGE_CLUSTER_FAILURE));
+          .update('errorsList', (errors) => errors.filterNot((e) => e.type === c.UPDATE_STORAGE_FAILURE));
       }
       return state;
     }
-    case c.UPDATE_STORAGE_CLUSTER_FAILURE:
+    case c.UPDATE_STORAGE_FAILURE:
       return state.update('errorsList', (errors) => errors.filterNot((e) => e.type === type).push({ type, payload, meta }));
 
-    case c.READ_STORAGE_CLUSTER:
+    case c.READ_STORAGE:
       return state;
-    case c.READ_STORAGE_CLUSTER_SUCCESS: {
+    case c.READ_STORAGE_SUCCESS: {
       const id = getByKey(payload, ['response', 'id']);
       const data = getByKey(payload, ['response']);
       const {
@@ -101,23 +101,23 @@ export const reducer = (
           clusterID,
           id,
         ], fromJS(data))
-          .update('errorsList', (errors) => errors.filterNot((e) => e.type === c.READ_STORAGE_CLUSTER_FAILURE));
+          .update('errorsList', (errors) => errors.filterNot((e) => e.type === c.READ_STORAGE_FAILURE));
       }
       return state;
     }
-    case c.READ_STORAGE_CLUSTER_FAILURE:
+    case c.READ_STORAGE_FAILURE:
       return state.update('errorsList', (errors) => errors.filterNot((e) => e.type === type).push({ type, payload, meta }));
 
-    case c.REMOVE_STORAGE_CLUSTER:
+    case c.REMOVE_STORAGE:
       return state;
-    case c.REMOVE_STORAGE_CLUSTER_SUCCESS: {
+    case c.REMOVE_STORAGE_SUCCESS: {
       const { id } = meta;
       const {
         clusterID,
       } = meta;
       const status = getByKey(payload, ['status']);
       if (status === 202) {
-        return state.update('errorsList', (errors) => errors.filterNot((e) => e.type === c.REMOVE_STORAGE_CLUSTER_FAILURE));
+        return state.update('errorsList', (errors) => errors.filterNot((e) => e.type === c.REMOVE_STORAGE_FAILURE));
       }
       return state
         .removeIn([
@@ -129,9 +129,9 @@ export const reducer = (
           'list',
           clusterID,
         ], (l) => l.filterNot((i) => i === id))
-        .update('errorsList', (errors) => errors.filterNot((e) => e.type === c.REMOVE_STORAGE_CLUSTER_FAILURE));
+        .update('errorsList', (errors) => errors.filterNot((e) => e.type === c.REMOVE_STORAGE_FAILURE));
     }
-    case c.REMOVE_STORAGE_CLUSTER_FAILURE:
+    case c.REMOVE_STORAGE_FAILURE:
       return state.update('errorsList', (errors) => errors.filterNot((e) => e.type === type).push({ type, payload, meta }));
 
     case c.CLEAR_ERRORS_LIST:

@@ -3,7 +3,7 @@
  * Edit Storage Page
  *
  */
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
@@ -27,23 +27,28 @@ import Card from 'components/Card/Card';
 import CardHeader from 'components/Card/CardHeader';
 import CardBody from 'components/Card/CardBody';
 import CardFooter from 'components/Card/CardFooter';
+import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
 
 import { makeSelectCurrentID as makeSelectClusterID } from 'ducks/clusters/selectors';
-import * as actions from 'ducks/storageClusters/actions';
+import * as actions from 'ducks/storages/actions';
 import {
   makeSelectURL,
   makeSelectCurrent,
   makeSelectCurrentID,
-} from 'ducks/storageClusters/selectors';
+} from 'ducks/storages/selectors';
 import * as bdActions from 'ducks/blockDevices/actions';
 import {
   makeSelectURL as makeSelectBlockDevicesURL,
   makeSelectBlockDevicesList,
 } from 'ducks/blockDevices/selectors';
+import * as nodesActions from 'ducks/nodes/actions';
+import {
+  makeSelectURL as makeSelectNodesURL,
+  makeSelectNodesList,
+} from 'ducks/nodes/selectors';
 
 import { usePush, useLocation } from 'hooks/router';
 
-import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
 import messages from './messages';
 import useStyles from './styles';
 import StorageForm from './Form';
@@ -70,10 +75,13 @@ export const EditStoragePage = ({
   loadBlockDevices,
   devicesURL,
   blockDevices,
+  loadNodes,
+  nodesURL,
+  nodes,
   clusterID,
   id,
-  readStorageCluster,
-  updateStorageCluster,
+  readStorage,
+  updateStorage,
   submitForm,
   storage,
   url,
@@ -82,28 +90,34 @@ export const EditStoragePage = ({
   const classes = useStyles();
   const push = usePush();
   const location = useLocation();
+  const [ready, setReady] = useState(false);
   useEffect(() => {
-    readStorageCluster(id, { clusterID, url: `${url}/${id}` });
+    readStorage(id, { clusterID, url: `${url}/${id}`, resolve: () => setTimeout(() => setReady(true), 20) });
     if (devicesURL) {
       loadBlockDevices(devicesURL, { clusterID });
     }
-  }, [devicesURL, url, id, clusterID, readStorageCluster, loadBlockDevices]);
+    if (nodesURL) {
+      loadNodes(nodesURL, { clusterID });
+    }
+  }, [nodesURL, devicesURL, url, id, clusterID, readStorage, loadBlockDevices, loadNodes]);
 
   const itemUrl = storage.getIn(['links', 'update']);
   async function doSubmit(formValues) {
     try {
-      const data = formValues.toJS();
+      const data = formValues.set(formValues.get('type'), formValues.get('parameter')).remove('parameter').toJS();
       await new Promise((resolve, reject) => {
-        updateStorageCluster(
+        updateStorage(
           { ...data },
           { resolve, reject, clusterID, url: itemUrl }
         );
       });
-      push(`/clusters/${clusterID}/storageClusters`);
+      push(`/clusters/${clusterID}/storages`);
     } catch (error) {
       throw new SubmissionError({ _error: error });
     }
   }
+
+  const initialValues = storage.set('parameter', storage.get(storage.get('type')));
 
   return (
     <div className={classes.root}>
@@ -113,7 +127,7 @@ export const EditStoragePage = ({
         <Breadcrumbs
           data={[
             {
-              path: `/clusters/${clusterID}/storageClusters`,
+              path: `/clusters/${clusterID}/storages`,
               name: <FormattedMessage {...messages.pageTitle} />,
             },
             {
@@ -122,17 +136,18 @@ export const EditStoragePage = ({
           ]}
         />
         <Typography component="div">
-          {storage.size > 0 ? (
+          {ready > 0 ? (
             <EditStorageForm
               classes={classes}
               onSubmit={doSubmit}
-              initialValues={storage}
+              initialValues={storage.set('parameter', storage.get(storage.get('type')))}
               blockDevices={blockDevices.filter(
                 (b) =>
                   !b.get('usedby') ||
-                  b.get('usedby') === storage.get('storageType')
+                  b.get('usedby') === storage.get('name')
               )}
-              formValues={values || storage}
+              nodes={nodes}
+              formValues={values || storage.set('parameter', storage.get(storage.get('type')))}
               edit
             />
           ) : null}
@@ -159,6 +174,8 @@ const mapStateToProps = createStructuredSelector({
   url: makeSelectURL(),
   devicesURL: makeSelectBlockDevicesURL(),
   blockDevices: makeSelectBlockDevicesList(),
+  nodesURL: makeSelectNodesURL(),
+  nodes: makeSelectNodesList(),
   values: getFormValues(formName),
   storage: makeSelectCurrent(),
 });
@@ -168,6 +185,7 @@ const mapDispatchToProps = (dispatch) =>
     {
       ...actions,
       ...bdActions,
+      ...nodesActions,
       submitForm: () => submit(formName),
     },
     dispatch

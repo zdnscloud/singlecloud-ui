@@ -1,6 +1,6 @@
 /**
  *
- * ConfigMapsPage
+ * Show Storage Page
  *
  */
 
@@ -30,12 +30,12 @@ import ReadOnlyInput from 'components/CustomInput/ReadOnlyInput';
 import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
 
 import { makeSelectCurrentID as makeSelectClusterID } from 'ducks/clusters/selectors';
-import * as actions from 'ducks/storageClusters/actions';
+import * as actions from 'ducks/storages/actions';
 import {
   makeSelectURL,
   makeSelectCurrent,
   makeSelectCurrentID,
-} from 'ducks/storageClusters/selectors';
+} from 'ducks/storages/selectors';
 
 import messages from './messages';
 import useStyles from './styles';
@@ -45,26 +45,28 @@ import PVTable from './PVTable';
 /* eslint-disable react/prefer-stateless-function */
 export const StoragePage = ({
   clusterID,
-  readStorageCluster,
+  readStorage,
   id,
   url,
-  storageCluster,
+  storage,
 }) => {
   const classes = useStyles();
   useEffect(() => {
     if (url && id) {
-      readStorageCluster(id, { clusterID, url: `${url}/${id}` });
+      readStorage(id, { clusterID, url: `${url}/${id}` });
     }
-  }, [clusterID, url, id, readStorageCluster]);
+  }, [clusterID, url, id, readStorage]);
   const [checkedNode, setCheckedNode] = useState(null);
 
-  const storageType = storageCluster.get('storageType');
-  const totalSize = storageCluster.get('size');
-  const freeSize = storageCluster.get('freeSize');
-  const usedSize = storageCluster.get('usedSize');
-  const nodes = storageCluster.get('nodes');
-  const pvs = storageCluster.get('pvs');
-  const enableFilter = storageCluster.get('storageType') === 'lvm';
+  const type = storage.get('type');
+  const totalSize = storage.get('size');
+  const freeSize = storage.get('freeSize');
+  const usedSize = storage.get('usedSize');
+  const nodes = storage.get('nodes');
+  const pvs = storage.get('pvs');
+  const enableFilter = storage.get('type') === 'lvm';
+  const iscsi = storage.get('iscsi');
+  const nfs = storage.get('nfs');
 
   return (
     <div className={classes.root}>
@@ -74,7 +76,7 @@ export const StoragePage = ({
         <Breadcrumbs
           data={[
             {
-              path: `/clusters/${clusterID}/storageClusters`,
+              path: `/clusters/${clusterID}/storages`,
               name: <FormattedMessage {...messages.pageTitle} />,
             },
             {
@@ -86,9 +88,73 @@ export const StoragePage = ({
           <GridItem xs={12} sm={12} md={12}>
             <Card className={classes.cardMargin}>
               <CardHeader>
-                <h4>{storageType}</h4>
+                <h4>{type}</h4>
               </CardHeader>
               <CardBody>
+                {type === 'iscsi' ? (
+                  <GridContainer>
+                    {iscsi.get('targets') &&
+                   iscsi.get('targets').map((item, index) => (  
+                     <GridItem xs={2} sm={2} md={2} key={index}>
+                       <ReadOnlyInput
+                         labelText={<FormattedMessage {...messages.formTarget} />}
+                         value={item}
+                         fullWidth
+                       />
+                     </GridItem>
+                   ))}
+                    <GridItem xs={2} sm={2} md={2}>
+                      <ReadOnlyInput
+                        labelText={<FormattedMessage {...messages.formPort} />}
+                        value={`${iscsi.get('port')}`}
+                        fullWidth
+                      />
+                    </GridItem>
+                    <GridItem xs={2} sm={2} md={2}>
+                      <ReadOnlyInput
+                        labelText={<FormattedMessage {...messages.formIqn} />}
+                        value={`${iscsi.get('iqn')}`}
+                        fullWidth
+                      />
+                    </GridItem>
+                    {iscsi.get('chap') === true ? (
+                      <>
+                        <GridItem xs={2} sm={2} md={2}>
+                          <ReadOnlyInput
+                            labelText={<FormattedMessage {...messages.formUsername} />}
+                            value={`${iscsi.get('username')}`}
+                            fullWidth
+                          />
+                        </GridItem>
+                        <GridItem xs={2} sm={2} md={2}>
+                          <ReadOnlyInput
+                            labelText={<FormattedMessage {...messages.formPassword} />}
+                            value={`${iscsi.get('password')}`}
+                            fullWidth
+                          />
+                        </GridItem>
+                      </>
+                    ) : null}
+                  </GridContainer>
+                ) : null}
+                {type === 'nfs' ? (
+                  <GridContainer>
+                    <GridItem xs={2} sm={2} md={2}>
+                      <ReadOnlyInput
+                        labelText={<FormattedMessage {...messages.formServer} />}
+                        value={`${nfs.get('server')}`}
+                        fullWidth
+                      />
+                    </GridItem>
+                    <GridItem xs={2} sm={2} md={2}>
+                      <ReadOnlyInput
+                        labelText={<FormattedMessage {...messages.formPath} />}
+                        value={`${nfs.get('path')}`}
+                        fullWidth
+                      />
+                    </GridItem>
+                  </GridContainer>
+                ) : null}
                 <GridContainer>
                   <GridItem xs={2} sm={2} md={2}>
                     <ReadOnlyInput
@@ -97,6 +163,7 @@ export const StoragePage = ({
                       inputProps={{
                         endAdornment: <span className={classes.text}>G</span>,
                       }}
+                      fullWidth
                     />
                   </GridItem>
                   <GridItem xs={2} sm={2} md={2}>
@@ -106,6 +173,7 @@ export const StoragePage = ({
                       inputProps={{
                         endAdornment: <span className={classes.text}>G</span>,
                       }}
+                      fullWidth
                     />
                   </GridItem>
                   <GridItem xs={2} sm={2} md={2}>
@@ -115,6 +183,7 @@ export const StoragePage = ({
                       inputProps={{
                         endAdornment: <span className={classes.text}>G</span>,
                       }}
+                      fullWidth
                     />
                   </GridItem>
                 </GridContainer>
@@ -177,7 +246,7 @@ const mapStateToProps = createStructuredSelector({
   clusterID: makeSelectClusterID(),
   id: makeSelectCurrentID(),
   url: makeSelectURL(),
-  storageCluster: makeSelectCurrent(),
+  storage: makeSelectCurrent(),
 });
 
 const mapDispatchToProps = (dispatch) =>

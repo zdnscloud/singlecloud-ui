@@ -33,6 +33,11 @@ import {
   makeSelectCurrentID as makeSelectCurrentClusterID,
   makeSelectCurrent as makeSelectCurrentCluster,
 } from 'ducks/clusters/selectors';
+import {
+  makeSelectStorageClasses,
+  makeSelectURL as makeSelectStorageClassesURL,
+} from 'ducks/storageClasses/selectors';
+import * as storagesActions from 'ducks/storageClasses/actions';
 
 import messages from './messages';
 import useStyles from './LeftMenuStyle';
@@ -56,6 +61,9 @@ const OutLinks = ({
   isAdmin,
   handleClose,
   setHidden,
+  loadStorageClasses,
+  storageClasses,
+  storageClassesURL,
 }) => {
   let menus = [
     {
@@ -88,7 +96,6 @@ const OutLinks = ({
   };
   const [open, setOpen] = useState(false);
   const [memuRole, setMemuRole] = useState(null);
-  const [error, setError] = useState(null);
 
   const handleMemuClick = (r) => {
     setMemuRole(r);
@@ -130,23 +137,6 @@ const OutLinks = ({
     }
   }
 
-  const handleMonitorInstall = () => {
-    const url = cluster.getIn(['links', memuRole]);
-    createMonitor(
-      {},
-      {
-        url,
-        clusterID,
-        resolve() {
-          setOpen(false);
-        },
-        reject(e) {
-          setError(e);
-        },
-      }
-    );
-  };
-
   const outLinks = (
     <List component="div" disablePadding>
       {menus.map((prop, key) => {
@@ -176,25 +166,23 @@ const OutLinks = ({
         open={!!open}
         onClose={() => {
           setOpen(false);
-          setError(null);
           handleClose();
         }}
+        maxWidth="lg"
         title={<FormattedMessage {...messages.leftMenuDialogTitle} />}
         content={
-          memuRole === 'monitors' ? (
-            <>
-              {error ? (
-                <Danger>{getByKey(error, ['response', 'message'])}</Danger>
-              ) : null}
-              <FormattedMessage {...messages.leftMenuDialogContent} />
-            </>
-          ) : (
-            <RegistryForm role={role} onSubmit={doSubmit} memuRole={memuRole} />
-          )
+          <RegistryForm
+            isOpen={!!open}
+            clusterID={clusterID}
+            loadStorageClasses={loadStorageClasses}
+            storageClasses={storageClasses}
+            storageClassesURL={storageClassesURL}
+            role={role}
+            onSubmit={doSubmit}
+            memuRole={memuRole}
+          />
         }
-        onAction={() =>
-          memuRole === 'monitors' ? handleMonitorInstall() : submitForm()
-        }
+        onAction={submitForm}
         sureButtonText={messages.leftMenuDialogButtonInstall}
       />
     </Fragment>
@@ -208,12 +196,15 @@ const mapStateToProps = createStructuredSelector({
   role: makeSelectRole(),
   formValues: getFormValues(formName),
   isAdmin: makeSelectIsAdmin(),
+  storageClasses: makeSelectStorageClasses(),
+  storageClassesURL: makeSelectStorageClassesURL(),
 });
 
 const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
       ...actions,
+      ...storagesActions,
       loadMonitors: mActions.loadMonitors,
       createMonitor: mActions.createMonitor,
       loadRegistries: rActions.loadRegistries,

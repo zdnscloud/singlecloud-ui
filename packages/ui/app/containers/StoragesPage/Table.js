@@ -1,6 +1,6 @@
 /**
  *
- * StorageClusters Table
+ * Storages Table
  *
  */
 
@@ -16,11 +16,11 @@ import { SimpleTable } from '@gsmlg/com';
 
 import { makeSelectLocation } from 'ducks/app/selectors';
 import { makeSelectCurrentID as makeSelectClusterID } from 'ducks/clusters/selectors';
-import * as actions from 'ducks/storageClusters/actions';
+import * as actions from 'ducks/storages/actions';
 import {
-  makeSelectStorageClusters,
-  makeSelectStorageClustersList,
-} from 'ducks/storageClusters/selectors';
+  makeSelectStorages,
+  makeSelectStoragesList,
+} from 'ducks/storages/selectors';
 
 import { usePush, useLocation } from 'hooks/router';
 
@@ -31,7 +31,7 @@ import schema from './tableSchema';
 export const StoragesTable = ({
   clusterID,
   data,
-  removeStorageCluster,
+  removeStorage,
   setError,
 }) => {
   const classes = useStyles();
@@ -42,13 +42,13 @@ export const StoragesTable = ({
       if (sch.id === 'actions') {
         return {
           ...sch,
-          props: { removeStorageCluster, clusterID, pathname, setError },
+          props: { removeStorage, clusterID, pathname, setError },
         };
       }
-      if (sch.id === 'storageType') {
+      if (sch.id === 'name') {
         return {
           ...sch,
-          props: { pathname,classes },
+          props: { pathname, classes },
         };
       }
       return sch;
@@ -71,7 +71,7 @@ export const StoragesTable = ({
 
 const mapStateToProps = createStructuredSelector({
   clusterID: makeSelectClusterID(),
-  data: makeSelectStorageClustersList(),
+  data: makeSelectStoragesList(),
 });
 
 const mapDispatchToProps = (dispatch) =>

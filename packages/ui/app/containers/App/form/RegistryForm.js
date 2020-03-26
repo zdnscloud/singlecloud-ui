@@ -1,4 +1,4 @@
-import React, { PureComponent, Fragment, useState } from 'react';
+import React, { PureComponent, Fragment, useEffect, useState } from 'react';
 import { fromJS } from 'immutable';
 import { compose } from 'redux';
 import { FormattedMessage } from 'react-intl';
@@ -15,6 +15,7 @@ import Danger from 'components/Typography/Danger';
 import GridItem from 'components/Grid/GridItem';
 import GridContainer from 'components/Grid/GridContainer';
 import InputField from 'components/Field/InputField';
+import SelectField from 'components/Field/SelectField';
 import ReadOnlyInput from 'components/CustomInput/ReadOnlyInput';
 
 import useStyles from '../LeftMenuStyle';
@@ -27,8 +28,28 @@ const validate = (values) => {
   return errors;
 };
 
-const Form = ({ formValues, handleSubmit, error, role, memuRole }) => {
+const Form = ({
+  formValues,
+  handleSubmit,
+  error,
+  role,
+  memuRole,
+  clusterID,
+  loadStorageClasses,
+  storageClasses,
+  storageClassesURL,
+  isOpen,
+}) => {
   const classes = useStyles();
+  useEffect(() => {
+    if (storageClassesURL && isOpen) {
+      loadStorageClasses(storageClassesURL, { clusterID });
+    }
+  }, [clusterID, loadStorageClasses, storageClassesURL, isOpen]);
+  const storageClassesOptions = storageClasses.toList().map((sc) => ({
+    label: sc.get('name'),
+    value: sc.get('name'),
+  }));
 
   return (
     <form
@@ -43,7 +64,7 @@ const Form = ({ formValues, handleSubmit, error, role, memuRole }) => {
           </GridItem>
         ) : null}
         {memuRole === 'registries' ? (
-          <GridItem xs={4} sm={4} md={4} className={classes.formLine}>
+          <GridItem xs={3} sm={3} md={3}>
             <ReadOnlyInput
               label={<FormattedMessage {...messages.leftMenuDialogFormUser} />}
               value={role.get('user')}
@@ -51,7 +72,7 @@ const Form = ({ formValues, handleSubmit, error, role, memuRole }) => {
             />
           </GridItem>
         ) : null}
-        <GridItem xs={4} sm={4} md={4}>
+        <GridItem xs={3} sm={3} md={3}>
           <InputField
             label={
               <FormattedMessage {...messages.leftMenuDialogFormIngressDomain} />
@@ -61,7 +82,7 @@ const Form = ({ formValues, handleSubmit, error, role, memuRole }) => {
             inputProps={{ type: 'text', autoComplete: 'off' }}
           />
         </GridItem>
-        <GridItem xs={4} sm={4} md={4}>
+        <GridItem xs={3} sm={3} md={3}>
           <InputField
             label={
               <FormattedMessage {...messages.leftMenuDialogFormStorageSize} />
@@ -74,6 +95,16 @@ const Form = ({ formValues, handleSubmit, error, role, memuRole }) => {
               autoComplete: 'off',
               endAdornment: 'Gi',
             }}
+          />
+        </GridItem>
+        <GridItem xs={3} sm={3} md={3}>
+          <SelectField
+            label={
+              <FormattedMessage {...messages.leftMenuDialogFormStorageClass} />
+            }
+            name="storageClass"
+            options={storageClassesOptions}
+            fullWidth
           />
         </GridItem>
       </GridContainer>

@@ -33,6 +33,11 @@ import {
 } from 'ducks/charts/selectors';
 import * as chartsActions from 'ducks/charts/actions';
 import * as actions from 'ducks/applications/actions';
+import {
+  makeSelectStorageClasses,
+  makeSelectURL as makeSelectStorageClassesURL,
+} from 'ducks/storageClasses/selectors';
+import * as storagesActions from 'ducks/storageClasses/actions';
 
 import Breadcrumbs from 'components/Breadcrumbs/Breadcrumbs';
 import messages from './messages';
@@ -66,6 +71,9 @@ export const CreateApplicationPage = ({
   readChart,
   submitForm,
   createApplication,
+  loadStorageClasses,
+  storageClasses,
+  storageClassesURL,
   charts,
   values,
 }) => {
@@ -88,7 +96,10 @@ export const CreateApplicationPage = ({
       namespaceID,
       url: `${chartsUrl}/${chartID}`,
     });
-  }, [chartID, chartsUrl, clusterID, namespaceID, readChart]);
+    if (storageClassesURL) {
+      loadStorageClasses(storageClassesURL, { clusterID });
+    }
+  }, [chartID, chartsUrl, clusterID, loadStorageClasses, namespaceID, readChart, storageClassesURL]);
 
   async function doSubmit(formValues) {
     try {
@@ -150,6 +161,7 @@ export const CreateApplicationPage = ({
                   injectServiceMesh: true,
                 })}
                 chart={chart}
+                storageClasses={storageClasses}
                 clusterID={clusterID}
                 namespaceID={namespaceID}
                 formValues={values}
@@ -181,6 +193,8 @@ const mapStateToProps = createStructuredSelector({
   clusterID: makeSelectCurrentClusterID(),
   namespaceID: makeSelectCurrentNamespaceID(),
   chartsUrl: makeSelectChartsURL(),
+  storageClasses: makeSelectStorageClasses(),
+  storageClassesURL: makeSelectStorageClassesURL(),
   charts: makeSelectCharts(),
   values: getFormValues(formName),
 });
@@ -189,6 +203,7 @@ const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
       ...chartsActions,
+      ...storagesActions,
       ...actions,
       submitForm: () => submit(formName),
     },
