@@ -24,7 +24,7 @@ jobs:
       uses: elgohr/Publish-Docker-Github-Action@2.14
       with:
         # The name of the image you would like to push
-        name: zdnscloud/singlecloud-ui
+        name: ${{ secrets.DOCKERHUB_REPO }}
         # The login username for the registry
         username: ${{ secrets.DOCKERHUB_USER }}
         # The login password for the registry
